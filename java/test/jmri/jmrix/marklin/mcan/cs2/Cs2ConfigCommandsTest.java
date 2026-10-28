@@ -68,6 +68,13 @@ public class Cs2ConfigCommandsTest {
         assertEquals(Cs2Command.PING, cf.cs2Header().resolvedCommand());
     }
 
+    @Test
+    public void testBuildPingParsesToPingRequestFrame() {
+        ClassifiedFrame cf = ProtocolClassifier.classify(Cs2ConfigCommands.buildPing());
+        Cs2ClassifiedFrame typed = Cs2FrameParser.parse(cf);
+        assertInstanceOf(Cs2ConfigCommands.PingRequestFrame.class, typed);
+    }
+
     // --- parsePingReply / PingReplyFrame ---
 
     private static int[] buildPingReply(long uid, int version, int deviceType) {
@@ -317,9 +324,95 @@ public class Cs2ConfigCommandsTest {
         assertEquals(2, ((Cs2ConfigCommands.ReadConfigDataReplyFrame) parsed).channelIndex());
     }
 
+    // --- BootCanRequestFrame ---
+
     @Test
-    public void testReadConfigDataReplyFramePacketCount() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildReadConfigDataReply(0x11223344L, 1, 0, 7));
-        assertEquals(7, ((Cs2ConfigCommands.ReadConfigDataReplyFrame) parsed).packetCount());
+    public void testBuildCanBootRoundtripsToBootCanRequestFrame() {
+        Cs2ClassifiedFrame parsed = roundtrip(Cs2ConfigCommands.buildCanBoot());
+        assertInstanceOf(Cs2ConfigCommands.BootCanRequestFrame.class, parsed);
+    }
+
+    @Test
+    public void testBuildCanBootIsGleisboxActivation() {
+        Cs2ClassifiedFrame parsed = roundtrip(Cs2ConfigCommands.buildCanBoot());
+        assertTrue(((Cs2ConfigCommands.BootCanRequestFrame) parsed).isGleisboxActivation());
+    }
+
+    @Test
+    public void testBuildBootloaderModeRoundtripsToBootCanRequestFrame() {
+        Cs2ClassifiedFrame parsed = roundtrip(Cs2ConfigCommands.buildBootloaderMode());
+        assertInstanceOf(Cs2ConfigCommands.BootCanRequestFrame.class, parsed);
+    }
+
+    @Test
+    public void testBuildBootloaderModeIsNotGleisboxActivation() {
+        Cs2ClassifiedFrame parsed = roundtrip(Cs2ConfigCommands.buildBootloaderMode());
+        assertFalse(((Cs2ConfigCommands.BootCanRequestFrame) parsed).isGleisboxActivation());
+    }
+
+    // --- UpdateOfferRequestFrame ---
+
+    private static int[] buildUpdateOfferRequest(long uid, int version) {
+        int[] data = new int[]{
+            (int)((uid >> 24) & 0xFF), (int)((uid >> 16) & 0xFF),
+            (int)((uid >>  8) & 0xFF), (int)( uid        & 0xFF),
+            (version >> 8) & 0xFF, version & 0xFF
+        };
+        return Cs2FrameBuilder.buildFrame(0, Cs2ConfigCommands.COMMAND_UPDATE_OFFER,
+                false, 0x0300, 6, data);
+    }
+
+    @Test
+    public void testUpdateOfferRequestRoundtripsToUpdateOfferRequestFrame() {
+        Cs2ClassifiedFrame parsed = roundtrip(buildUpdateOfferRequest(0x11223344L, 0x0163));
+        assertInstanceOf(Cs2ConfigCommands.UpdateOfferRequestFrame.class, parsed);
+    }
+
+    @Test
+    public void testUpdateOfferRequestFrameUid() {
+        Cs2ClassifiedFrame parsed = roundtrip(buildUpdateOfferRequest(0x11223344L, 0x0163));
+        assertEquals(0x11223344L, ((Cs2ConfigCommands.UpdateOfferRequestFrame) parsed).uid());
+    }
+
+    @Test
+    public void testUpdateOfferRequestFrameVersion() {
+        Cs2ClassifiedFrame parsed = roundtrip(buildUpdateOfferRequest(0x11223344L, 0x0163));
+        assertEquals(0x0163, ((Cs2ConfigCommands.UpdateOfferRequestFrame) parsed).version());
+    }
+
+    // --- ReadConfigDataRequestFrame ---
+
+    private static int[] buildReadConfigDataRequest(long uid, int channel, int sub) {
+        int[] data = new int[]{
+            (int)((uid >> 24) & 0xFF), (int)((uid >> 16) & 0xFF),
+            (int)((uid >>  8) & 0xFF), (int)( uid        & 0xFF),
+            channel & 0xFF, sub & 0xFF
+        };
+        return Cs2FrameBuilder.buildFrame(0, Cs2ConfigCommands.COMMAND_READ_CONFIG_DATA,
+                false, 0x0300, 6, data);
+    }
+
+    @Test
+    public void testReadConfigDataRequestRoundtripsToReadConfigDataRequestFrame() {
+        Cs2ClassifiedFrame parsed = roundtrip(buildReadConfigDataRequest(0x11223344L, 1, 0));
+        assertInstanceOf(Cs2ConfigCommands.ReadConfigDataRequestFrame.class, parsed);
+    }
+
+    @Test
+    public void testReadConfigDataRequestFrameUid() {
+        Cs2ClassifiedFrame parsed = roundtrip(buildReadConfigDataRequest(0xAABBCCDDL, 1, 0));
+        assertEquals(0xAABBCCDDL, ((Cs2ConfigCommands.ReadConfigDataRequestFrame) parsed).uid());
+    }
+
+    @Test
+    public void testReadConfigDataRequestFrameChannelIndex() {
+        Cs2ClassifiedFrame parsed = roundtrip(buildReadConfigDataRequest(0x11223344L, 3, 7));
+        assertEquals(3, ((Cs2ConfigCommands.ReadConfigDataRequestFrame) parsed).channelIndex());
+    }
+
+    @Test
+    public void testReadConfigDataRequestFrameSubIndex() {
+        Cs2ClassifiedFrame parsed = roundtrip(buildReadConfigDataRequest(0x11223344L, 3, 7));
+        assertEquals(7, ((Cs2ConfigCommands.ReadConfigDataRequestFrame) parsed).subIndex());
     }
 }

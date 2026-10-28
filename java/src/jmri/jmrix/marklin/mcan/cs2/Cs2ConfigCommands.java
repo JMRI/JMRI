@@ -184,6 +184,64 @@ public final class Cs2ConfigCommands {
     // --- typed result classes ---
 
     /**
+     * Typed result for a parsed ping request frame (DLC=0, broadcast).
+     * Sent periodically by CS2-capable devices to announce their presence.
+     */
+    public static final class PingRequestFrame extends Cs2ClassifiedFrame {
+        PingRequestFrame(Cs2Header header, Cs2Data data, ClassifiedFrame parent) {
+            super(header, data, parent);
+        }
+    }
+
+    /**
+     * A CAN BOOT request frame (0x1B).
+     * <ul>
+     *   <li>DLC=0: enter firmware update (bootloader) mode.</li>
+     *   <li>DLC=5: normal Gleisbox activation (data byte 4 = 0x11 magic).</li>
+     * </ul>
+     */
+    public static final class BootCanRequestFrame extends Cs2ClassifiedFrame {
+        BootCanRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+
+        /** Returns true when this is a normal Gleisbox activation (DLC=5, magic byte present). */
+        public boolean isGleisboxActivation() {
+            return header().dlc() == 5 && data().byteAt(4) == GLEISBOX_MAGIC;
+        }
+    }
+
+    /**
+     * A firmware Update Offer request (0x19, DLC=6): UID + 2-byte version.
+     * Sent to a device to announce that a firmware update is available.
+     */
+    public static final class UpdateOfferRequestFrame extends Cs2ClassifiedFrame {
+        UpdateOfferRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+
+        /** 32-bit target device UID. */
+        public long uid() { return data().int32At(0); }
+
+        /** 16-bit firmware version being offered. */
+        public int version() { return data().int16At(4); }
+    }
+
+    /**
+     * A Read Config Data request (0x1A, DLC=6 or DLC=8).
+     * Requests the device identified by {@code uid()} to stream its configuration data
+     * for the given channel and sub-index.
+     */
+    public static final class ReadConfigDataRequestFrame extends Cs2ClassifiedFrame {
+        ReadConfigDataRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+
+        /** 32-bit target device UID. */
+        public long uid() { return data().int32At(0); }
+
+        /** Channel index to read. */
+        public int channelIndex() { return data().byteAt(4); }
+
+        /** Sub-index within the channel. */
+        public int subIndex() { return data().byteAt(5); }
+    }
+
+    /**
      * Typed result for a parsed ping reply frame.
      * Data layout: UID (4 bytes) + software version (2 bytes) + device type (2 bytes).
      */
@@ -294,12 +352,20 @@ public final class Cs2ConfigCommands {
 
     static Cs2ClassifiedFrame parse(Cs2Header header, Cs2Data data, ClassifiedFrame parent) {
         switch (header.resolvedCommand()) {
+            case PING:
+                return new PingRequestFrame(header, data, parent);
             case PING_REPLY:
                 return parsePingReply(header, data, parent);
+            case BOOT_CAN:
+                return new BootCanRequestFrame(header, data, parent);
             case BOOT_CAN_REPLY:
                 return new CanBootReplyFrame(header, data, parent);
+            case UPDATE_OFFER:
+                return new UpdateOfferRequestFrame(header, data, parent);
             case UPDATE_OFFER_REPLY:
                 return new UpdateOfferReplyFrame(header, data, parent);
+            case READ_CONFIG_DATA:
+                return new ReadConfigDataRequestFrame(header, data, parent);
             case READ_CONFIG_DATA_REPLY:
                 return header.dlc() == 8 ? new ReadConfigDataReplyFrame(header, data, parent)
                         : new Cs2ClassifiedFrame(header, data, parent);

@@ -124,6 +124,20 @@ public class MarklinMessageFormatterTest {
         assertTrue(result.contains("Broadcast"), "Expected 'Broadcast' in: " + result);
     }
 
+    @Test
+    public void testGleisboxActivationContainsGleisboxActivate() {
+        int[] raw = Cs2ConfigCommands.buildCanBoot();
+        String result = MarklinMessageFormatter.formatRaw(raw, null);
+        assertTrue(result.contains("CAN BOOT Gleisbox Activate"), "Expected 'CAN BOOT Gleisbox Activate' in: " + result);
+    }
+
+    @Test
+    public void testBootloaderModeContainsBootloaderMode() {
+        int[] raw = Cs2ConfigCommands.buildBootloaderMode();
+        String result = MarklinMessageFormatter.formatRaw(raw, null);
+        assertTrue(result.contains("CAN BOOT Bootloader Mode"), "Expected 'CAN BOOT Bootloader Mode' in: " + result);
+    }
+
     // ---------------------------------------------------------------------------
     // UNKNOWN protocol
     // ---------------------------------------------------------------------------

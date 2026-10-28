@@ -137,48 +137,87 @@ public class MarklinMessageFormatter {
 
     private static void appendCs2Command(Cs2ClassifiedFrame frame, StringBuilder sb, I18nProvider i18n) {
         // System commands (0x00)
-        if (frame instanceof Cs2SystemCommands.SystemStopFrame) {
+        if (frame instanceof Cs2SystemCommands.SystemStopRequestFrame) {
             sb.append("System Stop");
-        } else if (frame instanceof Cs2SystemCommands.SystemGoFrame) {
+        } else if (frame instanceof Cs2SystemCommands.SystemStopReplyFrame) {
+            sb.append("System Stop Reply");
+        } else if (frame instanceof Cs2SystemCommands.SystemGoRequestFrame) {
             sb.append("System Go");
-        } else if (frame instanceof Cs2SystemCommands.SystemHaltFrame) {
+        } else if (frame instanceof Cs2SystemCommands.SystemGoReplyFrame) {
+            sb.append("System Go Reply");
+        } else if (frame instanceof Cs2SystemCommands.SystemHaltRequestFrame) {
             sb.append("System Halt");
-        } else if (frame instanceof Cs2SystemCommands.LocoEmergencyStopFrame) {
-            Cs2SystemCommands.LocoEmergencyStopFrame f = (Cs2SystemCommands.LocoEmergencyStopFrame) frame;
+        } else if (frame instanceof Cs2SystemCommands.SystemHaltReplyFrame) {
+            sb.append("System Halt Reply");
+        } else if (frame instanceof Cs2SystemCommands.LocoEmergencyStopRequestFrame) {
+            Cs2SystemCommands.LocoEmergencyStopRequestFrame f = (Cs2SystemCommands.LocoEmergencyStopRequestFrame) frame;
             sb.append("System Loco Emergency Stop ").append(f.locId());
-        } else if (frame instanceof Cs2SystemCommands.LocoCycleStopFrame) {
-            Cs2SystemCommands.LocoCycleStopFrame f = (Cs2SystemCommands.LocoCycleStopFrame) frame;
+        } else if (frame instanceof Cs2SystemCommands.LocoEmergencyStopReplyFrame) {
+            Cs2SystemCommands.LocoEmergencyStopReplyFrame f = (Cs2SystemCommands.LocoEmergencyStopReplyFrame) frame;
+            sb.append("System Loco Emergency Stop Reply ").append(f.locId());
+        } else if (frame instanceof Cs2SystemCommands.LocoCycleStopRequestFrame) {
+            Cs2SystemCommands.LocoCycleStopRequestFrame f = (Cs2SystemCommands.LocoCycleStopRequestFrame) frame;
             sb.append("System Cycle Stop ").append(f.locId());
-        } else if (frame instanceof Cs2SystemCommands.LocoDataProtocolFrame) {
-            Cs2SystemCommands.LocoDataProtocolFrame f = (Cs2SystemCommands.LocoDataProtocolFrame) frame;
+        } else if (frame instanceof Cs2SystemCommands.LocoCycleStopReplyFrame) {
+            Cs2SystemCommands.LocoCycleStopReplyFrame f = (Cs2SystemCommands.LocoCycleStopReplyFrame) frame;
+            sb.append("System Cycle Stop Reply ").append(f.locId());
+        } else if (frame instanceof Cs2SystemCommands.LocoDataProtocolRequestFrame) {
+            Cs2SystemCommands.LocoDataProtocolRequestFrame f = (Cs2SystemCommands.LocoDataProtocolRequestFrame) frame;
             sb.append("System Loco Data Protocol ").append(f.locId()).append(" prot=").append(f.protocol());
-        } else if (frame instanceof Cs2SystemCommands.AccessorySwitchTimeFrame) {
-            Cs2SystemCommands.AccessorySwitchTimeFrame f = (Cs2SystemCommands.AccessorySwitchTimeFrame) frame;
+        } else if (frame instanceof Cs2SystemCommands.LocoDataProtocolReplyFrame) {
+            Cs2SystemCommands.LocoDataProtocolReplyFrame f = (Cs2SystemCommands.LocoDataProtocolReplyFrame) frame;
+            sb.append("System Loco Data Protocol Reply ").append(f.locId()).append(" prot=").append(f.protocol());
+        } else if (frame instanceof Cs2SystemCommands.AccessorySwitchTimeRequestFrame) {
+            Cs2SystemCommands.AccessorySwitchTimeRequestFrame f = (Cs2SystemCommands.AccessorySwitchTimeRequestFrame) frame;
             sb.append("System Accessory Switch Time ").append(f.targetUid()).append(" t=").append(f.time10ms()).append("0ms");
-        } else if (frame instanceof Cs2SystemCommands.FastReadMfxFrame) {
-            Cs2SystemCommands.FastReadMfxFrame f = (Cs2SystemCommands.FastReadMfxFrame) frame;
+        } else if (frame instanceof Cs2SystemCommands.AccessorySwitchTimeReplyFrame) {
+            Cs2SystemCommands.AccessorySwitchTimeReplyFrame f = (Cs2SystemCommands.AccessorySwitchTimeReplyFrame) frame;
+            sb.append("System Accessory Switch Time Reply ").append(f.targetUid()).append(" t=").append(f.time10ms()).append("0ms");
+        } else if (frame instanceof Cs2SystemCommands.FastReadMfxRequestFrame) {
+            Cs2SystemCommands.FastReadMfxRequestFrame f = (Cs2SystemCommands.FastReadMfxRequestFrame) frame;
             sb.append("System Fast Read MFX ").append(f.senderUid()).append(" sid=").append(f.mfxSid());
-        } else if (frame instanceof Cs2SystemCommands.EnableTrackProtocolFrame) {
-            Cs2SystemCommands.EnableTrackProtocolFrame f = (Cs2SystemCommands.EnableTrackProtocolFrame) frame;
+        } else if (frame instanceof Cs2SystemCommands.FastReadMfxReplyFrame) {
+            Cs2SystemCommands.FastReadMfxReplyFrame f = (Cs2SystemCommands.FastReadMfxReplyFrame) frame;
+            sb.append("System Fast Read MFX Reply ").append(f.senderUid()).append(" sid=").append(f.mfxSid());
+        } else if (frame instanceof Cs2SystemCommands.EnableTrackProtocolRequestFrame) {
+            Cs2SystemCommands.EnableTrackProtocolRequestFrame f = (Cs2SystemCommands.EnableTrackProtocolRequestFrame) frame;
             sb.append(String.format("System Enable Track Protocol %d mask=0x%02X", f.targetUid(), f.protocolMask()));
-        } else if (frame instanceof Cs2SystemCommands.MfxReregistrationFrame) {
-            Cs2SystemCommands.MfxReregistrationFrame f = (Cs2SystemCommands.MfxReregistrationFrame) frame;
+        } else if (frame instanceof Cs2SystemCommands.EnableTrackProtocolReplyFrame) {
+            Cs2SystemCommands.EnableTrackProtocolReplyFrame f = (Cs2SystemCommands.EnableTrackProtocolReplyFrame) frame;
+            sb.append(String.format("System Enable Track Protocol Reply %d mask=0x%02X", f.targetUid(), f.protocolMask()));
+        } else if (frame instanceof Cs2SystemCommands.MfxReregistrationRequestFrame) {
+            Cs2SystemCommands.MfxReregistrationRequestFrame f = (Cs2SystemCommands.MfxReregistrationRequestFrame) frame;
             sb.append("System MFX Reregistration ").append(f.targetUid());
+        } else if (frame instanceof Cs2SystemCommands.MfxReregistrationReplyFrame) {
+            Cs2SystemCommands.MfxReregistrationReplyFrame f = (Cs2SystemCommands.MfxReregistrationReplyFrame) frame;
+            sb.append("System MFX Reregistration Reply ").append(f.targetUid());
         } else if (frame instanceof Cs2SystemCommands.SystemOverloadFrame) {
             Cs2SystemCommands.SystemOverloadFrame f = (Cs2SystemCommands.SystemOverloadFrame) frame;
             sb.append("System Overload ").append(f.senderUid()).append(" ch=").append(f.channel());
-        } else if (frame instanceof Cs2SystemCommands.SystemStatusFrame) {
-            Cs2SystemCommands.SystemStatusFrame f = (Cs2SystemCommands.SystemStatusFrame) frame;
+        } else if (frame instanceof Cs2SystemCommands.SystemStatusRequestFrame) {
+            Cs2SystemCommands.SystemStatusRequestFrame f = (Cs2SystemCommands.SystemStatusRequestFrame) frame;
             sb.append("System Status ").append(f.deviceUid()).append(" ch=").append(f.channel());
-        } else if (frame instanceof Cs2SystemCommands.DeviceIdentifierFrame) {
-            Cs2SystemCommands.DeviceIdentifierFrame f = (Cs2SystemCommands.DeviceIdentifierFrame) frame;
-            sb.append("System Device Identifier ").append(f.targetUid());
-        } else if (frame instanceof Cs2SystemCommands.MfxSeekFrame) {
-            Cs2SystemCommands.MfxSeekFrame f = (Cs2SystemCommands.MfxSeekFrame) frame;
+        } else if (frame instanceof Cs2SystemCommands.SystemStatusReplyFrame) {
+            Cs2SystemCommands.SystemStatusReplyFrame f = (Cs2SystemCommands.SystemStatusReplyFrame) frame;
+            sb.append("System Status Reply ").append(f.deviceUid()).append(" ch=").append(f.channel()).append(" val=").append(f.measuredValue());
+        } else if (frame instanceof Cs2SystemCommands.DeviceIdentifierRequestFrame) {
+            Cs2SystemCommands.DeviceIdentifierRequestFrame f = (Cs2SystemCommands.DeviceIdentifierRequestFrame) frame;
+            sb.append("System Device Identifier Query ").append(f.targetUid());
+        } else if (frame instanceof Cs2SystemCommands.DeviceIdentifierReplyFrame) {
+            Cs2SystemCommands.DeviceIdentifierReplyFrame f = (Cs2SystemCommands.DeviceIdentifierReplyFrame) frame;
+            sb.append(String.format("System Device Identifier %d id=0x%04X", f.targetUid(), f.identifier()));
+        } else if (frame instanceof Cs2SystemCommands.MfxSeekRequestFrame) {
+            Cs2SystemCommands.MfxSeekRequestFrame f = (Cs2SystemCommands.MfxSeekRequestFrame) frame;
             sb.append("System MFX Seek ").append(f.senderUid());
-        } else if (frame instanceof Cs2SystemCommands.SystemResetFrame) {
-            Cs2SystemCommands.SystemResetFrame f = (Cs2SystemCommands.SystemResetFrame) frame;
+        } else if (frame instanceof Cs2SystemCommands.MfxSeekReplyFrame) {
+            Cs2SystemCommands.MfxSeekReplyFrame f = (Cs2SystemCommands.MfxSeekReplyFrame) frame;
+            sb.append("System MFX Seek Reply ").append(f.senderUid());
+        } else if (frame instanceof Cs2SystemCommands.SystemResetRequestFrame) {
+            Cs2SystemCommands.SystemResetRequestFrame f = (Cs2SystemCommands.SystemResetRequestFrame) frame;
             sb.append("System Reset ").append(f.targetUid());
+        } else if (frame instanceof Cs2SystemCommands.SystemResetReplyFrame) {
+            Cs2SystemCommands.SystemResetReplyFrame f = (Cs2SystemCommands.SystemResetReplyFrame) frame;
+            sb.append("System Reset Reply ").append(f.targetUid());
 
         // Decoder commands (0x03–0x0A)
         } else if (frame instanceof Cs2DecoderCommands.LocoEmergencyStopFrame) {
@@ -276,14 +315,25 @@ public class MarklinMessageFormatter {
             sb.append(String.format("Feedback Broadcast module=%d state=0x%04X", f.moduleIndex(), f.state()));
 
         // Config commands (0x18–0x1C)
+        } else if (frame instanceof Cs2ConfigCommands.PingRequestFrame) {
+            sb.append("Ping Request");
         } else if (frame instanceof Cs2ConfigCommands.PingReplyFrame) {
             Cs2ConfigCommands.PingReplyFrame f = (Cs2ConfigCommands.PingReplyFrame) frame;
             sb.append(String.format("Ping Reply uid=0x%08X type=0x%04X sw=0x%04X", f.uid(), f.deviceType(), f.softwareVersion()));
+        } else if (frame instanceof Cs2ConfigCommands.BootCanRequestFrame) {
+            Cs2ConfigCommands.BootCanRequestFrame f = (Cs2ConfigCommands.BootCanRequestFrame) frame;
+            sb.append(f.isGleisboxActivation() ? "CAN BOOT Gleisbox Activate" : "CAN BOOT Bootloader Mode");
         } else if (frame instanceof Cs2ConfigCommands.CanBootReplyFrame) {
             sb.append("CAN BOOT Reply");
+        } else if (frame instanceof Cs2ConfigCommands.UpdateOfferRequestFrame) {
+            Cs2ConfigCommands.UpdateOfferRequestFrame f = (Cs2ConfigCommands.UpdateOfferRequestFrame) frame;
+            sb.append(String.format("Update Offer uid=0x%08X sw=0x%04X", f.uid(), f.version()));
         } else if (frame instanceof Cs2ConfigCommands.UpdateOfferReplyFrame) {
             Cs2ConfigCommands.UpdateOfferReplyFrame f = (Cs2ConfigCommands.UpdateOfferReplyFrame) frame;
             sb.append(String.format("Update Offer uid=0x%08X type=0x%04X", f.uid(), f.deviceType()));
+        } else if (frame instanceof Cs2ConfigCommands.ReadConfigDataRequestFrame) {
+            Cs2ConfigCommands.ReadConfigDataRequestFrame f = (Cs2ConfigCommands.ReadConfigDataRequestFrame) frame;
+            sb.append(String.format("Read Config Data uid=0x%08X ch=%d", f.uid(), f.channelIndex()));
         } else if (frame instanceof Cs2ConfigCommands.ReadConfigDataReplyFrame) {
             Cs2ConfigCommands.ReadConfigDataReplyFrame f = (Cs2ConfigCommands.ReadConfigDataReplyFrame) frame;
             sb.append(String.format("Read Config Data uid=0x%08X", f.uid()));
@@ -292,8 +342,14 @@ public class MarklinMessageFormatter {
             sb.append(String.format("Boot Request uid=0x%08X", f.uid()));
 
         // GUI commands (0x20–0x22)
+        } else if (frame instanceof Cs2GuiCommands.StatusDataConfigRequestFrame) {
+            Cs2GuiCommands.StatusDataConfigRequestFrame f = (Cs2GuiCommands.StatusDataConfigRequestFrame) frame;
+            sb.append(String.format("Status Data Config uid=0x%08X idx=%d", f.deviceUid(), f.index()));
         } else if (frame instanceof Cs2GuiCommands.StatusDataConfigReplyFrame) {
             sb.append("Status Data Config");
+        } else if (frame instanceof Cs2GuiCommands.RequestConfigDataRequestFrame) {
+            Cs2GuiCommands.RequestConfigDataRequestFrame f = (Cs2GuiCommands.RequestConfigDataRequestFrame) frame;
+            sb.append("Request Config Data ").append(f.filename());
         } else if (frame instanceof Cs2GuiCommands.RequestConfigDataReplyFrame) {
             Cs2GuiCommands.RequestConfigDataReplyFrame f = (Cs2GuiCommands.RequestConfigDataReplyFrame) frame;
             sb.append("Request Config Data ").append(f.filename());

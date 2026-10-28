@@ -212,4 +212,41 @@ public class Cs2GuiCommandsTest {
         assertEquals(42 & 0x1F8F,
                 ((Cs2GuiCommands.ConfigDataStreamPacketFrame) parsed).packetNumber());
     }
+
+    // --- StatusDataConfigRequestFrame ---
+
+    @Test
+    public void testBuildStatusDataConfigRoundtripsToRequestFrame() {
+        Cs2ClassifiedFrame parsed = roundtrip(Cs2GuiCommands.buildStatusDataConfig(0x11223344L, 2));
+        assertInstanceOf(Cs2GuiCommands.StatusDataConfigRequestFrame.class, parsed);
+    }
+
+    @Test
+    public void testStatusDataConfigRequestFrameDeviceUid() {
+        Cs2ClassifiedFrame parsed = roundtrip(Cs2GuiCommands.buildStatusDataConfig(0xAABBCCDDL, 0));
+        assertEquals(0xAABBCCDDL,
+                ((Cs2GuiCommands.StatusDataConfigRequestFrame) parsed).deviceUid());
+    }
+
+    @Test
+    public void testStatusDataConfigRequestFrameIndex() {
+        Cs2ClassifiedFrame parsed = roundtrip(Cs2GuiCommands.buildStatusDataConfig(0x11223344L, 5));
+        assertEquals(5,
+                ((Cs2GuiCommands.StatusDataConfigRequestFrame) parsed).index());
+    }
+
+    // --- RequestConfigDataRequestFrame ---
+
+    @Test
+    public void testBuildRequestConfigDataRoundtripsToRequestFrame() {
+        Cs2ClassifiedFrame parsed = roundtrip(Cs2GuiCommands.buildRequestConfigData("loks"));
+        assertInstanceOf(Cs2GuiCommands.RequestConfigDataRequestFrame.class, parsed);
+    }
+
+    @Test
+    public void testRequestConfigDataRequestFrameFilename() {
+        Cs2ClassifiedFrame parsed = roundtrip(Cs2GuiCommands.buildRequestConfigData("lokinfo"));
+        assertEquals("lokinfo",
+                ((Cs2GuiCommands.RequestConfigDataRequestFrame) parsed).filename());
+    }
 }

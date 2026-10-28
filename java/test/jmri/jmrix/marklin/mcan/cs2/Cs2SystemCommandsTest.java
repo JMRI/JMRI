@@ -59,9 +59,9 @@ public class Cs2SystemCommandsTest {
     }
 
     @Test
-    public void testBuildSystemStopRoundtripsToSystemStopFrame() {
+    public void testBuildSystemStopRoundtripsToSystemStopRequestFrame() {
         Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildSystemStop());
-        assertInstanceOf(Cs2SystemCommands.SystemStopFrame.class, parsed);
+        assertInstanceOf(Cs2SystemCommands.SystemStopRequestFrame.class, parsed);
     }
 
     // --- buildSystemGo ---
@@ -78,9 +78,9 @@ public class Cs2SystemCommandsTest {
     }
 
     @Test
-    public void testBuildSystemGoRoundtripsToSystemGoFrame() {
+    public void testBuildSystemGoRoundtripsToSystemGoRequestFrame() {
         Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildSystemGo());
-        assertInstanceOf(Cs2SystemCommands.SystemGoFrame.class, parsed);
+        assertInstanceOf(Cs2SystemCommands.SystemGoRequestFrame.class, parsed);
     }
 
     @Test
@@ -99,7 +99,7 @@ public class Cs2SystemCommandsTest {
         ClassifiedFrame cf = ProtocolClassifier.classify(frame);
         assertTrue(cf.cs2Header().response());
         Cs2ClassifiedFrame parsed = Cs2FrameParser.parse(cf);
-        assertInstanceOf(Cs2SystemCommands.SystemStopFrame.class, parsed);
+        assertInstanceOf(Cs2SystemCommands.SystemStopReplyFrame.class, parsed);
         assertTrue(parsed.header().response());
     }
 
@@ -109,7 +109,7 @@ public class Cs2SystemCommandsTest {
         ClassifiedFrame cf = ProtocolClassifier.classify(frame);
         assertTrue(cf.cs2Header().response());
         Cs2ClassifiedFrame parsed = Cs2FrameParser.parse(cf);
-        assertInstanceOf(Cs2SystemCommands.SystemGoFrame.class, parsed);
+        assertInstanceOf(Cs2SystemCommands.SystemGoReplyFrame.class, parsed);
     }
 
     // --- Cs2Command resolution ---
@@ -248,28 +248,28 @@ public class Cs2SystemCommandsTest {
     // --- typed frame roundtrips for new sub-commands ---
 
     @Test
-    public void testLocoEmergencyStopRoundtripsToLocoEmergencyStopFrame() {
+    public void testLocoEmergencyStopRoundtripsToLocoEmergencyStopRequestFrame() {
         Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildLocoEmergencyStop(0x4000L));
-        assertInstanceOf(Cs2SystemCommands.LocoEmergencyStopFrame.class, parsed);
+        assertInstanceOf(Cs2SystemCommands.LocoEmergencyStopRequestFrame.class, parsed);
     }
 
     @Test
     public void testLocoEmergencyStopFrameLocId() {
         Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildLocoEmergencyStop(0x4001L));
-        assertEquals(0x4001L, ((Cs2SystemCommands.LocoEmergencyStopFrame) parsed).locId());
+        assertEquals(0x4001L, ((Cs2SystemCommands.LocoEmergencyStopRequestFrame) parsed).locId());
     }
 
     @Test
-    public void testLocoCycleStopRoundtripsToLocoCycleStopFrame() {
+    public void testLocoCycleStopRoundtripsToLocoCycleStopRequestFrame() {
         Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildLocoCycleStop(0x4000L));
-        assertInstanceOf(Cs2SystemCommands.LocoCycleStopFrame.class, parsed);
+        assertInstanceOf(Cs2SystemCommands.LocoCycleStopRequestFrame.class, parsed);
     }
 
     @Test
-    public void testLocoDataProtocolRoundtripsToLocoDataProtocolFrame() {
+    public void testLocoDataProtocolRoundtripsToLocoDataProtocolRequestFrame() {
         Cs2ClassifiedFrame parsed = roundtrip(
                 Cs2SystemCommands.buildLocoDataProtocol(0x4000L, Cs2SystemCommands.PROTOCOL_DCC_SHORT_28));
-        assertInstanceOf(Cs2SystemCommands.LocoDataProtocolFrame.class, parsed);
+        assertInstanceOf(Cs2SystemCommands.LocoDataProtocolRequestFrame.class, parsed);
     }
 
     @Test
@@ -277,14 +277,14 @@ public class Cs2SystemCommandsTest {
         Cs2ClassifiedFrame parsed = roundtrip(
                 Cs2SystemCommands.buildLocoDataProtocol(0x4000L, Cs2SystemCommands.PROTOCOL_DCC_LONG_126));
         assertEquals(Cs2SystemCommands.PROTOCOL_DCC_LONG_126,
-                ((Cs2SystemCommands.LocoDataProtocolFrame) parsed).protocol());
+                ((Cs2SystemCommands.LocoDataProtocolRequestFrame) parsed).protocol());
     }
 
     @Test
-    public void testEnableTrackProtocolRoundtripsToEnableTrackProtocolFrame() {
+    public void testEnableTrackProtocolRoundtripsToEnableTrackProtocolRequestFrame() {
         Cs2ClassifiedFrame parsed = roundtrip(
                 Cs2SystemCommands.buildEnableTrackProtocol(0L, Cs2SystemCommands.TRACK_PROTOCOL_DCC));
-        assertInstanceOf(Cs2SystemCommands.EnableTrackProtocolFrame.class, parsed);
+        assertInstanceOf(Cs2SystemCommands.EnableTrackProtocolRequestFrame.class, parsed);
     }
 
     @Test
@@ -292,13 +292,13 @@ public class Cs2SystemCommandsTest {
         int mask = Cs2SystemCommands.TRACK_PROTOCOL_MM2 | Cs2SystemCommands.TRACK_PROTOCOL_DCC;
         Cs2ClassifiedFrame parsed = roundtrip(
                 Cs2SystemCommands.buildEnableTrackProtocol(0L, mask));
-        assertEquals(mask, ((Cs2SystemCommands.EnableTrackProtocolFrame) parsed).protocolMask());
+        assertEquals(mask, ((Cs2SystemCommands.EnableTrackProtocolRequestFrame) parsed).protocolMask());
     }
 
     @Test
-    public void testSystemResetRoundtripsToSystemResetFrame() {
+    public void testSystemResetRoundtripsToSystemResetRequestFrame() {
         Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildSystemReset(0L, 0));
-        assertInstanceOf(Cs2SystemCommands.SystemResetFrame.class, parsed);
+        assertInstanceOf(Cs2SystemCommands.SystemResetRequestFrame.class, parsed);
     }
 
     // --- MFX Seek (sub-cmd 0x30) ---
@@ -321,19 +321,70 @@ public class Cs2SystemCommandsTest {
     }
 
     @Test
-    public void testBuildMfxSeekRoundtripsToMfxSeekFrame() {
+    public void testBuildMfxSeekRoundtripsToMfxSeekRequestFrame() {
         Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildMfxSeek(0x11223344L, 5));
-        assertInstanceOf(Cs2SystemCommands.MfxSeekFrame.class, parsed);
+        assertInstanceOf(Cs2SystemCommands.MfxSeekRequestFrame.class, parsed);
     }
 
     @Test
     public void testMfxSeekFrameRange() {
         Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildMfxSeek(0x11223344L, 7));
-        assertEquals(7, ((Cs2SystemCommands.MfxSeekFrame) parsed).range());
+        assertEquals(7, ((Cs2SystemCommands.MfxSeekRequestFrame) parsed).range());
     }
 
     @Test
     public void testMfxSeekFrameSenderUid() {
         Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildMfxSeek(0x11223344L, 0));
-        assertEquals(0x11223344L, ((Cs2SystemCommands.MfxSeekFrame) parsed).senderUid());
-    }}
+        assertEquals(0x11223344L, ((Cs2SystemCommands.MfxSeekRequestFrame) parsed).senderUid());
+    }
+
+    // --- reply-direction roundtrips ---
+
+    @Test
+    public void testBuildSystemHaltReplyRoundtripsToSystemHaltReplyFrame() {
+        Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildSystemHaltReply());
+        assertInstanceOf(Cs2SystemCommands.SystemHaltReplyFrame.class, parsed);
+    }
+
+    @Test
+    public void testBuildLocoEmergencyStopReplyRoundtripsToLocoEmergencyStopReplyFrame() {
+        Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildLocoEmergencyStopReply(0x4000L));
+        assertInstanceOf(Cs2SystemCommands.LocoEmergencyStopReplyFrame.class, parsed);
+    }
+
+    @Test
+    public void testBuildLocoEmergencyStopReplyFrameLocId() {
+        Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildLocoEmergencyStopReply(0x4001L));
+        assertEquals(0x4001L, ((Cs2SystemCommands.LocoEmergencyStopReplyFrame) parsed).locId());
+    }
+
+    @Test
+    public void testBuildSystemStatusReplyRoundtripsToSystemStatusReplyFrame() {
+        Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildSystemStatusReply(0L, 1, 42));
+        assertInstanceOf(Cs2SystemCommands.SystemStatusReplyFrame.class, parsed);
+    }
+
+    @Test
+    public void testBuildSystemStatusReplyFrameMeasuredValue() {
+        Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildSystemStatusReply(0L, 1, 42));
+        assertEquals(42, ((Cs2SystemCommands.SystemStatusReplyFrame) parsed).measuredValue());
+    }
+
+    @Test
+    public void testBuildDeviceIdentifierReplyRoundtripsToDeviceIdentifierReplyFrame() {
+        Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildDeviceIdentifierReply(0L, 0x0042));
+        assertInstanceOf(Cs2SystemCommands.DeviceIdentifierReplyFrame.class, parsed);
+    }
+
+    @Test
+    public void testBuildDeviceIdentifierReplyFrameIdentifier() {
+        Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildDeviceIdentifierReply(0L, 0x0042));
+        assertEquals(0x0042, ((Cs2SystemCommands.DeviceIdentifierReplyFrame) parsed).identifier());
+    }
+
+    @Test
+    public void testBuildSystemOverloadReplyRoundtripsToSystemOverloadFrame() {
+        Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildSystemOverloadReply(0x11223344L, 1));
+        assertInstanceOf(Cs2SystemCommands.SystemOverloadFrame.class, parsed);
+    }
+}

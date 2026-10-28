@@ -60,11 +60,14 @@ public class MarklinPowerManager extends AbstractPowerManager<MarklinSystemConne
         if (frame == null) {
             return;
         }
-        if (frame instanceof Cs2SystemCommands.SystemGoFrame) {
+        if (frame instanceof Cs2SystemCommands.SystemGoRequestFrame
+                || frame instanceof Cs2SystemCommands.SystemGoReplyFrame) {
             power = ON;
             firePowerPropertyChange(old, power);
-        } else if (frame instanceof Cs2SystemCommands.SystemStopFrame
-                || frame instanceof Cs2SystemCommands.SystemHaltFrame) {
+        } else if (frame instanceof Cs2SystemCommands.SystemStopRequestFrame
+                || frame instanceof Cs2SystemCommands.SystemStopReplyFrame
+                || frame instanceof Cs2SystemCommands.SystemHaltRequestFrame
+                || frame instanceof Cs2SystemCommands.SystemHaltReplyFrame) {
             power = OFF;
             firePowerPropertyChange(old, power);
         }

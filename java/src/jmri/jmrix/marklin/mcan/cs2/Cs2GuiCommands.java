@@ -132,8 +132,12 @@ public final class Cs2GuiCommands {
 
     static Cs2ClassifiedFrame parse(Cs2Header header, Cs2Data data, ClassifiedFrame parent) {
         switch (header.resolvedCommand()) {
+            case STATUS_DATA_CONFIG:
+                return new StatusDataConfigRequestFrame(header, data, parent);
             case STATUS_DATA_CONFIG_REPLY:
                 return new StatusDataConfigReplyFrame(header, data, parent);
+            case REQUEST_CONFIG_DATA:
+                return new RequestConfigDataRequestFrame(header, data, parent);
             case REQUEST_CONFIG_DATA_REPLY:
                 return new RequestConfigDataReplyFrame(header, data, parent);
             case CONFIG_DATA_STREAM:
@@ -154,6 +158,42 @@ public final class Cs2GuiCommands {
     }
 
     // --- typed result classes ---
+
+    /**
+     * A Status Data Config request (0x20, DLC=5).
+     * Queries the measurement/configuration channel description at {@code index}
+     * from the device identified by {@code deviceUid}.
+     */
+    public static final class StatusDataConfigRequestFrame extends Cs2ClassifiedFrame {
+        StatusDataConfigRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+
+        /** 32-bit target device UID. */
+        public long deviceUid() { return data().int32At(0); }
+
+        /** Channel index to query (0 = device description). */
+        public int index() { return data().byteAt(4); }
+    }
+
+    /**
+     * A Request Config Data request (0x21, DLC=8).
+     * Requests the named configuration file from the CS2 / CdB.
+     */
+    public static final class RequestConfigDataRequestFrame extends Cs2ClassifiedFrame {
+        RequestConfigDataRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+
+        /** The 8-byte ASCII filename. */
+        public String filename() {
+            byte[] buf = new byte[FILENAME_MAX_BYTES];
+            int len = 0;
+            for (int i = 0; i < FILENAME_MAX_BYTES; i++) {
+                int b = data().byteAt(i);
+                if (b == 0) break;
+                buf[i] = (byte) b;
+                len++;
+            }
+            return new String(buf, 0, len, StandardCharsets.US_ASCII);
+        }
+    }
 
     /**
      * A Status Data Config reply  -  arrives as a data stream; this frame is

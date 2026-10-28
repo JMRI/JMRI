@@ -398,63 +398,125 @@ public final class Cs2SystemCommands {
      * Called by {@link Cs2FrameParser} after command resolution.
      */
     static Cs2ClassifiedFrame parse(Cs2Header header, Cs2Data data, ClassifiedFrame parent) {
+        boolean rep = header.response();
         int sub = data.byteAt(4);
         switch (sub) {
-            case SUB_STOP:                  return new SystemStopFrame(header, data, parent);
-            case SUB_GO:                    return new SystemGoFrame(header, data, parent);
-            case SUB_HALT:                  return new SystemHaltFrame(header, data, parent);
-            case SUB_LOCO_EMERGENCY_STOP:   return new LocoEmergencyStopFrame(header, data, parent);
-            case SUB_LOCO_CYCLE_STOP:       return new LocoCycleStopFrame(header, data, parent);
-            case SUB_LOCO_DATA_PROTOCOL:    return new LocoDataProtocolFrame(header, data, parent);
-            case SUB_ACCESSORY_SWITCH_TIME: return new AccessorySwitchTimeFrame(header, data, parent);
-            case SUB_FAST_READ_MFX:         return new FastReadMfxFrame(header, data, parent);
-            case SUB_ENABLE_TRACK_PROTOCOL: return new EnableTrackProtocolFrame(header, data, parent);
-            case SUB_MFX_REREGISTRATION:    return new MfxReregistrationFrame(header, data, parent);
-            case SUB_SYSTEM_OVERLOAD:       return new SystemOverloadFrame(header, data, parent);
-            case SUB_SYSTEM_STATUS:         return new SystemStatusFrame(header, data, parent);
-            case SUB_DEVICE_IDENTIFIER:     return new DeviceIdentifierFrame(header, data, parent);
-            case SUB_MFX_SEEK:              return new MfxSeekFrame(header, data, parent);
-            case SUB_SYSTEM_RESET:          return new SystemResetFrame(header, data, parent);
-            default:                        return new Cs2ClassifiedFrame(header, data, parent);
+            case SUB_STOP:
+                return rep ? new SystemStopReplyFrame(header, data, parent)
+                           : new SystemStopRequestFrame(header, data, parent);
+            case SUB_GO:
+                return rep ? new SystemGoReplyFrame(header, data, parent)
+                           : new SystemGoRequestFrame(header, data, parent);
+            case SUB_HALT:
+                return rep ? new SystemHaltReplyFrame(header, data, parent)
+                           : new SystemHaltRequestFrame(header, data, parent);
+            case SUB_LOCO_EMERGENCY_STOP:
+                return rep ? new LocoEmergencyStopReplyFrame(header, data, parent)
+                           : new LocoEmergencyStopRequestFrame(header, data, parent);
+            case SUB_LOCO_CYCLE_STOP:
+                return rep ? new LocoCycleStopReplyFrame(header, data, parent)
+                           : new LocoCycleStopRequestFrame(header, data, parent);
+            case SUB_LOCO_DATA_PROTOCOL:
+                return rep ? new LocoDataProtocolReplyFrame(header, data, parent)
+                           : new LocoDataProtocolRequestFrame(header, data, parent);
+            case SUB_ACCESSORY_SWITCH_TIME:
+                return rep ? new AccessorySwitchTimeReplyFrame(header, data, parent)
+                           : new AccessorySwitchTimeRequestFrame(header, data, parent);
+            case SUB_FAST_READ_MFX:
+                return rep ? new FastReadMfxReplyFrame(header, data, parent)
+                           : new FastReadMfxRequestFrame(header, data, parent);
+            case SUB_ENABLE_TRACK_PROTOCOL:
+                return rep ? new EnableTrackProtocolReplyFrame(header, data, parent)
+                           : new EnableTrackProtocolRequestFrame(header, data, parent);
+            case SUB_MFX_REREGISTRATION:
+                return rep ? new MfxReregistrationReplyFrame(header, data, parent)
+                           : new MfxReregistrationRequestFrame(header, data, parent);
+            case SUB_SYSTEM_OVERLOAD:
+                return new SystemOverloadFrame(header, data, parent);
+            case SUB_SYSTEM_STATUS:
+                return rep ? new SystemStatusReplyFrame(header, data, parent)
+                           : new SystemStatusRequestFrame(header, data, parent);
+            case SUB_DEVICE_IDENTIFIER:
+                return rep ? new DeviceIdentifierReplyFrame(header, data, parent)
+                           : new DeviceIdentifierRequestFrame(header, data, parent);
+            case SUB_MFX_SEEK:
+                return rep ? new MfxSeekReplyFrame(header, data, parent)
+                           : new MfxSeekRequestFrame(header, data, parent);
+            case SUB_SYSTEM_RESET:
+                return rep ? new SystemResetReplyFrame(header, data, parent)
+                           : new SystemResetRequestFrame(header, data, parent);
+            default:
+                return new Cs2ClassifiedFrame(header, data, parent);
         }
     }
 
     // --- typed result classes ---
 
-    /** A system-stop (track power off) frame, request or reply. */
-    public static final class SystemStopFrame extends Cs2ClassifiedFrame {
-        SystemStopFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    /** System Stop request (track power off). */
+    public static final class SystemStopRequestFrame extends Cs2ClassifiedFrame {
+        SystemStopRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
     }
 
-    /** A system-go (track power on) frame, request or reply. */
-    public static final class SystemGoFrame extends Cs2ClassifiedFrame {
-        SystemGoFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    /** System Stop reply. */
+    public static final class SystemStopReplyFrame extends Cs2ClassifiedFrame {
+        SystemStopReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
     }
 
-    /** A system-halt frame (all locos to speed 0), request or reply. */
-    public static final class SystemHaltFrame extends Cs2ClassifiedFrame {
-        SystemHaltFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    /** System Go request (track power on). */
+    public static final class SystemGoRequestFrame extends Cs2ClassifiedFrame {
+        SystemGoRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
     }
 
-    /** A loco emergency stop frame (immediate protocol-specific stop). */
-    public static final class LocoEmergencyStopFrame extends Cs2ClassifiedFrame {
-        LocoEmergencyStopFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    /** System Go reply. */
+    public static final class SystemGoReplyFrame extends Cs2ClassifiedFrame {
+        SystemGoReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    }
+
+    /** System Halt request (all locos to speed 0). */
+    public static final class SystemHaltRequestFrame extends Cs2ClassifiedFrame {
+        SystemHaltRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    }
+
+    /** System Halt reply. */
+    public static final class SystemHaltReplyFrame extends Cs2ClassifiedFrame {
+        SystemHaltReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    }
+
+    /** Loco Emergency Stop request (immediate protocol-specific stop). */
+    public static final class LocoEmergencyStopRequestFrame extends Cs2ClassifiedFrame {
+        LocoEmergencyStopRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
 
         /** The 32-bit Loc-ID of the target loco. */
         public long locId() { return data().int32At(0); }
     }
 
-    /** A loco cycle stop frame (removes loco from GFP refresh cycle). */
-    public static final class LocoCycleStopFrame extends Cs2ClassifiedFrame {
-        LocoCycleStopFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    /** Loco Emergency Stop reply. */
+    public static final class LocoEmergencyStopReplyFrame extends Cs2ClassifiedFrame {
+        LocoEmergencyStopReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+
+        /** The 32-bit Loc-ID of the target loco. */
+        public long locId() { return data().int32At(0); }
+    }
+
+    /** Loco Cycle Stop request (removes loco from GFP refresh cycle). */
+    public static final class LocoCycleStopRequestFrame extends Cs2ClassifiedFrame {
+        LocoCycleStopRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
 
         /** The 32-bit Loc-ID (or UID_BROADCAST). */
         public long locId() { return data().int32At(0); }
     }
 
-    /** A loco data protocol frame (selects sub-protocol without changing the base protocol). */
-    public static final class LocoDataProtocolFrame extends Cs2ClassifiedFrame {
-        LocoDataProtocolFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    /** Loco Cycle Stop reply. */
+    public static final class LocoCycleStopReplyFrame extends Cs2ClassifiedFrame {
+        LocoCycleStopReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+
+        /** The 32-bit Loc-ID (or UID_BROADCAST). */
+        public long locId() { return data().int32At(0); }
+    }
+
+    /** Loco Data Protocol request (selects sub-protocol without changing the base protocol). */
+    public static final class LocoDataProtocolRequestFrame extends Cs2ClassifiedFrame {
+        LocoDataProtocolRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
 
         /** The 32-bit Loc-ID. */
         public long locId() { return data().int32At(0); }
@@ -463,9 +525,20 @@ public final class Cs2SystemCommands {
         public int protocol() { return data().byteAt(5); }
     }
 
-    /** An accessory switch time frame (sets the default accessory switching duration). */
-    public static final class AccessorySwitchTimeFrame extends Cs2ClassifiedFrame {
-        AccessorySwitchTimeFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    /** Loco Data Protocol reply. */
+    public static final class LocoDataProtocolReplyFrame extends Cs2ClassifiedFrame {
+        LocoDataProtocolReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+
+        /** The 32-bit Loc-ID. */
+        public long locId() { return data().int32At(0); }
+
+        /** Sub-protocol value (see PROTOCOL_* constants). */
+        public int protocol() { return data().byteAt(5); }
+    }
+
+    /** Accessory Switch Time request (sets the default accessory switching duration). */
+    public static final class AccessorySwitchTimeRequestFrame extends Cs2ClassifiedFrame {
+        AccessorySwitchTimeRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
 
         /** Target device UID. */
         public long targetUid() { return data().int32At(0); }
@@ -474,9 +547,20 @@ public final class Cs2SystemCommands {
         public int time10ms() { return data().int16At(5); }
     }
 
-    /** A Fast Read MFX frame (suppresses inter-read wait for the addressed SID). */
-    public static final class FastReadMfxFrame extends Cs2ClassifiedFrame {
-        FastReadMfxFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    /** Accessory Switch Time reply. */
+    public static final class AccessorySwitchTimeReplyFrame extends Cs2ClassifiedFrame {
+        AccessorySwitchTimeReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+
+        /** Target device UID. */
+        public long targetUid() { return data().int32At(0); }
+
+        /** Switch time in 10 ms increments (0 = factory default). */
+        public int time10ms() { return data().int16At(5); }
+    }
+
+    /** Fast Read MFX request (suppresses inter-read wait for the addressed SID). */
+    public static final class FastReadMfxRequestFrame extends Cs2ClassifiedFrame {
+        FastReadMfxRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
 
         /** Sender device UID. */
         public long senderUid() { return data().int32At(0); }
@@ -485,9 +569,20 @@ public final class Cs2SystemCommands {
         public int mfxSid() { return data().int16At(5); }
     }
 
-    /** An enable track protocol frame (selects which protocols the GFP transmits). */
-    public static final class EnableTrackProtocolFrame extends Cs2ClassifiedFrame {
-        EnableTrackProtocolFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    /** Fast Read MFX reply. */
+    public static final class FastReadMfxReplyFrame extends Cs2ClassifiedFrame {
+        FastReadMfxReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+
+        /** Sender device UID. */
+        public long senderUid() { return data().int32At(0); }
+
+        /** 16-bit MFX track address (SID). */
+        public int mfxSid() { return data().int16At(5); }
+    }
+
+    /** Enable Track Protocol request (selects which protocols the GFP transmits). */
+    public static final class EnableTrackProtocolRequestFrame extends Cs2ClassifiedFrame {
+        EnableTrackProtocolRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
 
         /** Target device UID. */
         public long targetUid() { return data().int32At(0); }
@@ -496,9 +591,20 @@ public final class Cs2SystemCommands {
         public int protocolMask() { return data().byteAt(5); }
     }
 
-    /** An MFX re-registration counter frame. */
-    public static final class MfxReregistrationFrame extends Cs2ClassifiedFrame {
-        MfxReregistrationFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    /** Enable Track Protocol reply. */
+    public static final class EnableTrackProtocolReplyFrame extends Cs2ClassifiedFrame {
+        EnableTrackProtocolReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+
+        /** Target device UID. */
+        public long targetUid() { return data().int32At(0); }
+
+        /** Protocol enable bitmask (see TRACK_PROTOCOL_* constants). */
+        public int protocolMask() { return data().byteAt(5); }
+    }
+
+    /** MFX Re-registration counter request. */
+    public static final class MfxReregistrationRequestFrame extends Cs2ClassifiedFrame {
+        MfxReregistrationRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
 
         /** Target device UID. */
         public long targetUid() { return data().int32At(0); }
@@ -507,7 +613,18 @@ public final class Cs2SystemCommands {
         public int counter() { return data().int16At(5); }
     }
 
-    /** A system overload notification (channel exceeded operating limit). */
+    /** MFX Re-registration counter reply. */
+    public static final class MfxReregistrationReplyFrame extends Cs2ClassifiedFrame {
+        MfxReregistrationReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+
+        /** Target device UID. */
+        public long targetUid() { return data().int32At(0); }
+
+        /** 16-bit re-registration counter value. */
+        public int counter() { return data().int16At(5); }
+    }
+
+    /** System Overload notification (channel exceeded operating limit). Reply-only by spec. */
     public static final class SystemOverloadFrame extends Cs2ClassifiedFrame {
         SystemOverloadFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
 
@@ -518,55 +635,89 @@ public final class Cs2SystemCommands {
         public int channel() { return data().byteAt(5); }
     }
 
-    /** A system status query or reply frame (measurement channel value). */
-    public static final class SystemStatusFrame extends Cs2ClassifiedFrame {
-        SystemStatusFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    /** System Status query (DLC=6): requests measurement value for a channel. */
+    public static final class SystemStatusRequestFrame extends Cs2ClassifiedFrame {
+        SystemStatusRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
 
-        /** Target/sender device UID. */
+        /** Target device UID. */
+        public long deviceUid() { return data().int32At(0); }
+
+        /** Channel number to query. */
+        public int channel() { return data().byteAt(5); }
+    }
+
+    /** System Status reply (DLC=8): carries the measured value for the queried channel. */
+    public static final class SystemStatusReplyFrame extends Cs2ClassifiedFrame {
+        SystemStatusReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+
+        /** Sender device UID. */
         public long deviceUid() { return data().int32At(0); }
 
         /** Channel number. */
         public int channel() { return data().byteAt(5); }
 
-        /**
-         * 16-bit measured value (present in reply with DLC=8 only).
-         * Returns 0 for query frames (DLC=6).
-         */
+        /** 16-bit measured value. */
         public int measuredValue() { return data().int16At(6); }
     }
 
-    /** A device identifier frame (query or set/reply for the 16-bit device identifier). */
-    public static final class DeviceIdentifierFrame extends Cs2ClassifiedFrame {
-        DeviceIdentifierFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    /** Device Identifier query (DLC=5): asks the device to report its 16-bit identifier. */
+    public static final class DeviceIdentifierRequestFrame extends Cs2ClassifiedFrame {
+        DeviceIdentifierRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+
+        /** Target device UID. */
+        public long targetUid() { return data().int32At(0); }
+    }
+
+    /** Device Identifier set/reply (DLC=7): carries or assigns the 16-bit device identifier. */
+    public static final class DeviceIdentifierReplyFrame extends Cs2ClassifiedFrame {
+        DeviceIdentifierReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
 
         /** Target device UID. */
         public long targetUid() { return data().int32At(0); }
 
-        /**
-         * 16-bit device identifier (present in set/reply frames with DLC=7 only).
-         * Returns 0 for query frames (DLC=5).
-         */
+        /** 16-bit device identifier. */
         public int identifier() { return data().int16At(5); }
     }
 
     /**
-     * An MFX Seek frame (sub-cmd 0x30).
-     * DLC=6: seek request with UID + range. Higher DLC variants carry
-     * intermediate recognition results; byte layout is GFP-firmware-specific.
+     * MFX Seek request (sub-cmd 0x30, DLC=6): seek with UID + range.
+     * Higher DLC variants carry intermediate recognition results.
      */
-    public static final class MfxSeekFrame extends Cs2ClassifiedFrame {
-        MfxSeekFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class MfxSeekRequestFrame extends Cs2ClassifiedFrame {
+        MfxSeekRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
 
-        /** Sender/target device UID. */
+        /** Sender device UID. */
         public long senderUid() { return data().int32At(0); }
 
         /** MFX seek range value (data byte 5; 0 = force re-registration). */
         public int range() { return data().byteAt(5); }
     }
 
-    /** A system reset frame. */
-    public static final class SystemResetFrame extends Cs2ClassifiedFrame {
-        SystemResetFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    /** MFX Seek reply. */
+    public static final class MfxSeekReplyFrame extends Cs2ClassifiedFrame {
+        MfxSeekReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+
+        /** Sender device UID. */
+        public long senderUid() { return data().int32At(0); }
+
+        /** MFX seek range value (data byte 5). */
+        public int range() { return data().byteAt(5); }
+    }
+
+    /** System Reset request. */
+    public static final class SystemResetRequestFrame extends Cs2ClassifiedFrame {
+        SystemResetRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+
+        /** Target device UID. */
+        public long targetUid() { return data().int32At(0); }
+
+        /** Reset target parameter (device-specific). */
+        public int resetTarget() { return data().byteAt(5); }
+    }
+
+    /** System Reset reply. */
+    public static final class SystemResetReplyFrame extends Cs2ClassifiedFrame {
+        SystemResetReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
 
         /** Target device UID. */
         public long targetUid() { return data().int32At(0); }
