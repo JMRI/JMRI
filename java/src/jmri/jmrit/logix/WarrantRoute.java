@@ -1029,6 +1029,9 @@ abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListen
         }
         if (msg == null) {
             log.debug("Params OK. findRoute() is creating a RouteFinder");
+            if (_routeFinder != null) {
+                _routeFinder.cancel();  // a previous search must not report after this one
+            }
             _routeFinder = new RouteFinder(this, _origin.getOrder(), _destination.getOrder(),
                     _via.getOrder(), _avoid.getOrder(), getDepth());
             jmri.util.ThreadingUtil.newThread(_routeFinder).start();

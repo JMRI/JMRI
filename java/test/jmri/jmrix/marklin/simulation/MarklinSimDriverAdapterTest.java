@@ -27,6 +27,12 @@ public class MarklinSimDriverAdapterTest {
         Assertions.assertNotNull(memo);
         var tc = memo.getTrafficController();
         Assertions.assertNotNull(tc);
+        Assertions.assertTrue(memo.provides(jmri.LightManager.class));
+        jmri.Light light = jmri.InstanceManager.lightManagerInstance().provideLight("MLMM12");
+        Assertions.assertSame(light, memo.getLightManager().getLight("MLMM12"));
+        light.setState(jmri.Light.ON);
+        Assertions.assertEquals(jmri.Light.ON, light.getState());
+        light.dispose();
         tc.terminateThreads();
         memo.dispose();
     }

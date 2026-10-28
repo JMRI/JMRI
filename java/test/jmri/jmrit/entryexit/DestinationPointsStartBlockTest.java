@@ -102,11 +102,8 @@ public class DestinationPointsStartBlockTest {
         JUnitUtil.waitFor(() -> !dp.isActive(), "route cleared down by the train");
         assertNull(JUnitAppender.checkForMessageStartingWith("Block Left TO"), "block was part of the route");
 
-        // The signal mast logic had queued a delayed check of the destination before NX removed the
-        // temporary destination. The check runs after the removal and the signal mast logic logs an
-        // error. This comes from the signal mast logic, not from the NX route, and is not changed here.
-        JUnitUtil.waitFor(() -> !JUnitAppender.getBacklog().isEmpty(), "queued signal logic check");
-        JUnitAppender.assertErrorMessageStartsWith("checkStateDetails called even though this has been disposed of");
+        // The signal mast logic may have queued a delayed check of the destination before NX removed the
+        // temporary destination. Such a check does nothing when it runs after the removal.
     }
 
     @BeforeEach

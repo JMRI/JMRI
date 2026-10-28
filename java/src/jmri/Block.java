@@ -896,7 +896,21 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         cntOfPossibleEntrancePaths = 0;
     }
 
+    /**
+     * Take the value of a neighbour Block that has just been emptied, if this
+     * Block could not decide between its occupied neighbours when it became
+     * occupied and that neighbour was one of them. The value is only taken
+     * while this Block is still occupied.
+     *
+     * @param b the neighbour Block that has become unoccupied
+     * @return true if the value of b was taken
+     */
     boolean setAsEntryBlockIfPossible(Block b) {
+        if (getState() != OCCUPIED) {
+            // this Block has been emptied since, the train that entered it has gone
+            resetCandidateEntrancePaths();
+            return false;
+        }
         for (int i = 0; i < cntOfPossibleEntrancePaths; i++) {
             Block candidateBlock = pListOfPossibleEntrancePaths[i].getBlock();
             if (candidateBlock == b) {
@@ -939,14 +953,29 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         }
     }
 
+    /**
+     * Handles Block sensor going UNKNOWN: the value is cleared.
+     * <p>
+     * The time is recorded as for a Block going unoccupied, so that the value
+     * is restored if the sensor goes active again within a short time, for
+     * example after a brief loss of the connection.
+     */
     public void goingUnknown() {
         setValue(null);
         setState(UNKNOWN);
+        _timeLastInactive = Instant.now();
     }
 
+    /**
+     * Handles Block sensor going INCONSISTENT: the value is cleared.
+     * <p>
+     * The time is recorded as for a Block going unoccupied, so that the value
+     * is restored if the sensor goes active again within a short time.
+     */
     public void goingInconsistent() {
         setValue(null);
         setState(INCONSISTENT);
+        _timeLastInactive = Instant.now();
     }
 
     /**
@@ -974,6 +1003,8 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                 b.setAsEntryBlockIfPossible(this);
             }
         }
+        // the train that could not be identified when it entered has left
+        resetCandidateEntrancePaths();
         setValue(null);
         setDirection(Path.NONE);
         setState(UNOCCUPIED);

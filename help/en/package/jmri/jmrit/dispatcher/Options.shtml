@@ -141,6 +141,12 @@
           Editor alternate unoccupied color for allocated Blocks in Layout Editor panels. This
           option is designed to make it easier for the dispatcher to see which Sections have been
           allocated.</p>
+
+          <p>If the panels use Signal Mast Logic, this option also lets a signal mast show its Stop
+          aspect when a Block on its route is allocated to another train. This applies to SML based
+          Sections created by <strong>Tools &gt; Generate Sections</strong> in the Signal Mast Logic
+          table. When using block based Sections, Signal Mast Logic does not check which Blocks are
+          allocated.</p>
         </li>
 
         <li>

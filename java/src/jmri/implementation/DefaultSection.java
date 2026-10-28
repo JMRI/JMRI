@@ -118,6 +118,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      * Operational instance variables (not saved between runs).
      */
     private int mState = FREE;
+    private Object mAllocatedTo = null;
     private int mOccupancy = UNOCCUPIED;
     private boolean mOccupancyInitialized = false;
     private Block mFirstBlock = null;
@@ -155,6 +156,9 @@ public class DefaultSection extends AbstractNamedBean implements Section {
             int old = mState;
             mState = state;
             firePropertyChange(PROPERTY_STATE, old, mState);
+            if (state == Section.FREE) {
+                setAllocatedTo(null);
+            }
             // update the forward/reverse blocking sensors as needed
             Sensor fbSensor = getForwardBlockingSensor();
             Sensor rbSensor = getReverseBlockingSensor();
@@ -2595,7 +2599,9 @@ public class DefaultSection extends AbstractNamedBean implements Section {
                 }
             }
         } else if (getState() == REVERSE) {
-            for (Block b : mBlockEntries) {
+            // the train moves towards the first Block, so the Blocks ahead of it come before it in the list
+            for (int i = mBlockEntries.size() - 1; i >= 0; i--) {
+                Block b = mBlockEntries.get(i);
                 if (b.getState() == Block.OCCUPIED) {
                     beenSet = true;
                 }
@@ -2639,6 +2645,13 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         }
     }
 
+    /**
+     * Set the block values for the Blocks of this Section from the first
+     * occupied Block, in the direction of travel, to the end of the Section.
+     * If no Block is occupied, or the Section is free, all Blocks are set.
+     *
+     * @param value the value to set
+     */
     @Override
     public void setNameFromActiveBlock(Object value) {
         boolean beenSet = false;
@@ -2654,7 +2667,9 @@ public class DefaultSection extends AbstractNamedBean implements Section {
                 }
             }
         } else if (getState() == REVERSE) {
-            for (Block b : mBlockEntries) {
+            // the train moves towards the first Block, so the Blocks ahead of it come before it in the list
+            for (int i = mBlockEntries.size() - 1; i >= 0; i--) {
+                Block b = mBlockEntries.get(i);
                 if (b.getState() == Block.OCCUPIED) {
                     beenSet = true;
                 }
@@ -2788,6 +2803,27 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         return report;
     }
 
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Object getAllocatedTo() {
+        return mAllocatedTo;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setAllocatedTo(Object holder) {
+        Object old = mAllocatedTo;
+        if (old == holder) {
+            return;
+        }
+        mAllocatedTo = holder;
+        firePropertyChange(PROPERTY_ALLOCATED_TO, old, holder);
+    }
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultSection.class);
 
 }

@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import javax.swing.JButton;
@@ -243,11 +242,15 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                     return;
                 } else {
                     log.error("Block {} went active but it is not part of our NX path", lBlock.getDisplayName());  // NOI18N
+                    return;
                 }
             }
             if (routeDetails.indexOf(lBlock) != 0) {
                 log.debug("A block has been skipped will set the value of the active block to that of the original one");  // NOI18N
-                lBlock.getBlock().setValue(lastSeenActiveBlockObject);
+                // Only give a value to a block that has none, and never clear one
+                if (lastSeenActiveBlockObject != null && lBlock.getBlock().getValue() == null) {
+                    lBlock.getBlock().setValue(lastSeenActiveBlockObject);
+                }
                 if (routeDetails.indexOf(lBlock) != -1) {
                     while (routeDetails.indexOf(lBlock) != 0) {
                         LayoutBlock tbr = routeDetails.get(0);
@@ -298,17 +301,20 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
     }
 
     //For a clear down we need to add a message, if it is a cancel, manual clear down or I didn't mean it.
-    // For creating routes, this is run in a thread.
+    // For creating routes, the route is then set in steps on the layout thread.
     void setRoute(boolean state) {
         log.debug("[setRoute] Start, dp = {}", getUserName());
 
         if (disposed) {
             log.error("Set route called even though interlock has been disposed of");  // NOI18N
+            manager.routeSettingDone(this, false);
             return;
         }
 
         if (routeDetails == null) {
             log.error("No route to set or clear down");  // NOI18N
+            // Nothing is set, but there is nothing left to clear down either
+            manager.routeSettingDone(this, !state);
             setActiveEntryExit(false);
             setRouteTo(false);
             setRouteFrom(false);
@@ -328,12 +334,15 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                     break;
                 case EntryExitPairs.AUTOCANCEL:
                     cancelClearInterlock(EntryExitPairs.CANCELROUTE);
+                    manager.routeSettingDone(this, true);
                     break;
                 case EntryExitPairs.AUTOCLEAR:
                     cancelClearInterlock(EntryExitPairs.CLEARROUTE);
+                    manager.routeSettingDone(this, true);
                     break;
                 case EntryExitPairs.AUTOSTACK:
                     cancelClearInterlock(EntryExitPairs.STACKROUTE);
+                    manager.routeSettingDone(this, false);
                     break;
                 default:
                     cancelClearOptionBox();
@@ -344,28 +353,6 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         }
         if (manager.isRouteStacked(this, false)) {
             manager.cancelStackedRoute(this, false);
-        }
-        /* We put the setting of the route into a seperate thread and put a glass pane in front of the layout editor.
-         The swing thread for flashing the icons will carry on without interuption. */
-        final List<Color> realColorStd = new ArrayList<>();
-        final List<Color> realColorXtra = new ArrayList<>();
-        final List<LayoutBlock> routeBlocks = new ArrayList<>();
-        if (manager.useDifferentColorWhenSetting()) {
-            boolean first = true;
-            for (LayoutBlock lbk : routeDetails) {
-                if (first) {
-                    // Don't change the color for the facing block
-                    first = false;
-                    continue;
-                }
-                routeBlocks.add(lbk);
-                realColorXtra.add(lbk.getBlockExtraColor());
-                realColorStd.add(lbk.getBlockTrackColor());
-                lbk.setBlockExtraColor(manager.getSettingRouteColor());
-                lbk.setBlockTrackColor(manager.getSettingRouteColor());
-            }
-            //Force a redraw, to reflect color change
-            src.getPoint().getPanel().redrawPanel();
         }
         ActiveTrain tmpat = null;
         if (manager.getDispatcherIntegration() && InstanceManager.getNullableDefault(DispatcherFrame.class) != null) {
@@ -395,236 +382,361 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                 routeDetails.remove(0);
             }
         }
-        Runnable setRouteRun = new Runnable() {
-            @Override
-            public void run() {
-                src.getPoint().getPanel().getGlassPane().setVisible(true);
+        /* The route is set in steps on the layout thread. Each step sets one turnout and schedules
+         the next one, so nothing waits while the turnouts move and the panel, including the
+         flashing of the NX buttons, carries on as normal. */
+        RouteSetting setting = new RouteSetting(blocks, at);
+        routeSetting = setting;
+        manager.routeSettingStarted();
+        ThreadingUtil.runOnLayoutEventually(setting::start);
+        log.debug("[setRoute] Route setting started, dp = {}", getUserName());
+    }
 
-                try {
-                    Hashtable<Turnout, Integer> turnoutSettings = new Hashtable<>();
+    /**
+     * The route setting in progress, or the last one.
+     */
+    private volatile RouteSetting routeSetting = null;
 
-                    ConnectivityUtil connection = new ConnectivityUtil(point.getPanel());
-//                     log.info("@@ New ConnectivityUtil = '{}'", point.getPanel().getLayoutName());
+    /**
+     * Delay in milliseconds after which the hold on the source mast is removed
+     * even if the turnouts have not reported their new state.
+     */
+    int mastReleaseTimeout = 10000;
 
-                    // This for loop was after the if statement
-                    // Last block in the route is the one that we are protecting at the last sensor/signalmast
-                    for (int i = 0; i < blocks.size(); i++) {
-                        //if we are not using the dispatcher and the signal logic is dynamic, then set the turnouts
-                        if (at == null && isSignalLogicDynamic()) {
-                            if (i > 0) {
-                                List<LayoutTrackExpectedState<LayoutTurnout>> turnoutlist;
-                                int nxtBlk = i + 1;
-                                int preBlk = i - 1;
-                                if (i < blocks.size() - 1) {
-                                    turnoutlist = connection.getTurnoutList(blocks.get(i).getBlock(), blocks.get(preBlk).getBlock(), blocks.get(nxtBlk).getBlock());
-                                    for (int x = 0; x < turnoutlist.size(); x++) {
-                                        if (turnoutlist.get(x).getObject() instanceof LayoutSlip) {
-                                            int slipState = turnoutlist.get(x).getExpectedState();
-                                            LayoutSlip ls = (LayoutSlip) turnoutlist.get(x).getObject();
-                                            int taState = ls.getTurnoutState(slipState);
-                                            Turnout t = ls.getTurnout();
-                                            if (t==null) {
-                                                log.warn("Found unexpected Turnout reference at {}: {}",i,ls);
-                                                continue; // not sure what else do to here
-                                            }
-                                            turnoutSettings.put(t, taState);
+    /**
+     * Sets the route of this destination point on the layout thread.
+     * <p>
+     * The turnouts are set one at a time, 250 ms plus the turnout set delay
+     * apart. Each step schedules the next one, and the last step completes the
+     * route: signal mast logic, colours, Dispatcher and NX buttons. The result
+     * is reported to the manager once, when the route has been set or setting
+     * it has failed. If the route is cleared down, set again or disposed of
+     * while its turnouts are being set, the remaining steps are not run.
+     */
+    private class RouteSetting {
 
-                                            int tbState = ls.getTurnoutBState(slipState);
-                                            ls.getTurnoutB().setCommandedState(tbState);
-                                            turnoutSettings.put(ls.getTurnoutB(), tbState);
-                                        } else {
-                                            String t = turnoutlist.get(x).getObject().getTurnoutName();
-                                            Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(t);
-                                            if (turnout != null) {
-                                                turnoutSettings.put(turnout, turnoutlist.get(x).getExpectedState());
-                                                if (turnoutlist.get(x).getObject().getSecondTurnout() != null) {
-                                                    turnoutSettings.put(turnoutlist.get(x).getObject().getSecondTurnout(),
-                                                            turnoutlist.get(x).getExpectedState());
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
+        private final List<LayoutBlock> blocks;
+        private final ActiveTrain at;
+        private final Hashtable<Turnout, Integer> turnoutSettings = new Hashtable<>();
+        private final List<Turnout> turnoutsToSet = new ArrayList<>();
+        private final List<Color> realColorStd = new ArrayList<>();
+        private final List<Color> realColorXtra = new ArrayList<>();
+        private final List<LayoutBlock> routeBlocks = new ArrayList<>();
+        private boolean ended = false;
+
+        RouteSetting(List<LayoutBlock> blocks, ActiveTrain at) {
+            this.blocks = blocks;
+            this.at = at;
+        }
+
+        private boolean isCancelled() {
+            return disposed || routeSetting != this || routeDetails == null;
+        }
+
+        /**
+         * First step: show that the route is being set, add the block
+         * listeners and find the turnouts to set.
+         */
+        void start() {
+            if (isCancelled()) {
+                cancelled();
+                return;
+            }
+            try {
+                if (manager.useDifferentColorWhenSetting()) {
+                    boolean first = true;
+                    for (LayoutBlock lbk : blocks) {
+                        if (first) {
+                            // Don't change the color for the facing block
+                            first = false;
+                            continue;
                         }
-                        if ((getEntryExitType() == EntryExitPairs.FULLINTERLOCK)) {
-                            blocks.get(i).getBlock().addPropertyChangeListener(propertyBlockListener); // was set against occupancy sensor
-                            if (i > 0) {
-                                blocks.get(i).setUseExtraColor(true);
-                            }
-                        } else {
-                            blocks.get(i).getBlock().removePropertyChangeListener(propertyBlockListener); // was set against occupancy sensor
-                        }
+                        routeBlocks.add(lbk);
+                        realColorXtra.add(lbk.getBlockExtraColor());
+                        realColorStd.add(lbk.getBlockTrackColor());
+                        lbk.setBlockExtraColor(manager.getSettingRouteColor());
+                        lbk.setBlockTrackColor(manager.getSettingRouteColor());
                     }
-                    if (at == null) {
-                        if (!isSignalLogicDynamic()) {
-                            SignalMastLogic tmSml = InstanceManager.getDefault(SignalMastLogicManager.class).getSignalMastLogic((SignalMast) src.sourceSignal);
-                            for (Turnout t : tmSml.getAutoTurnouts((SignalMast) getSignal())) {
-                                turnoutSettings.put(t, tmSml.getAutoTurnoutState(t, (SignalMast) getSignal()));
-                            }
-                        }
-                        for (Map.Entry< Turnout, Integer> entry : turnoutSettings.entrySet()) {
-                            entry.getKey().setCommandedState(entry.getValue());
-//                             log.info("**> Set turnout '{}'", entry.getKey().getDisplayName());
-                            Runnable r = new Runnable() {
-                                @Override
-                                public void run() {
-                                    try {
-                                        Thread.sleep(250 + manager.turnoutSetDelay);
-                                    } catch (InterruptedException ex) {
-                                        Thread.currentThread().interrupt();
-                                    }
-                                }
-                            };
-                            Thread thr = ThreadingUtil.newThread(r, "Entry Exit Route: Turnout Setting");  // NOI18N
-                            thr.start();
-                            try {
-                                thr.join();
-                            } catch (InterruptedException ex) {
-                                //            log.info("interrupted at join " + ex);
-                            }
-                        }
-                    }
-                    src.getPoint().getPanel().redrawPanel();
-                    if (getEntryExitType() != EntryExitPairs.SETUPTURNOUTSONLY) {
-                        if (getEntryExitType() == EntryExitPairs.FULLINTERLOCK) {
-                            //If our start block is already active we will set it as our lastSeenActiveBlock.
-                            if (src.getStart().getState() == Block.OCCUPIED) {
-                                src.getStart().getBlock().removePropertyChangeListener(propertyBlockListener);
-                                lastSeenActiveBlockObject = src.getStart().getBlock().getValue();
-                                log.debug("Last seen value {}", lastSeenActiveBlockObject);
-                            }
-                        }
-                        if ((src.sourceSignal instanceof SignalMast) && (getSignal() instanceof SignalMast)) {
-                            SignalMast smSource = (SignalMast) src.sourceSignal;
-                            SignalMast smDest = (SignalMast) getSignal();
-                            synchronized (this) {
-                                sml = InstanceManager.getDefault(SignalMastLogicManager.class).newSignalMastLogic(smSource);
-                                if (!sml.isDestinationValid(smDest)) {
-                                    //if no signalmastlogic existed then created it, but set it not to be stored.
-                                    sml.setDestinationMast(smDest);
-                                    sml.setStore(SignalMastLogic.STORENONE, smDest);
-                                }
-                            }
-
-                            synchronized (this) {
-                                releaseMast(smSource, turnoutSettings);
-                                //Only change the block and turnout details if this a temp signalmast logic
-                                if (sml.getStoreState(smDest) == SignalMastLogic.STORENONE) {
-                                    LinkedHashMap<Block, Integer> blks = new LinkedHashMap<>();
-                                    for (int i = 0; i < routeDetails.size(); i++) {
-                                        if (routeDetails.get(i).getBlock().getState() == Block.UNKNOWN) {
-                                            routeDetails.get(i).getBlock().setState(Block.UNOCCUPIED);
-                                        }
-                                        blks.put(routeDetails.get(i).getBlock(), Block.UNOCCUPIED);
-                                    }
-                                    sml.setAutoBlocks(blks, smDest);
-                                    sml.setAutoTurnouts(turnoutSettings, smDest);
-                                    sml.initialise(smDest);
-                                }
-                            }
-                            smSource.addPropertyChangeListener(new PropertyChangeListener() {
-                                @Override
-                                public void propertyChange(PropertyChangeEvent e) {
-                                    SignalMast source = (SignalMast) e.getSource();
-                                    source.removePropertyChangeListener(this);
-                                    setRouteFrom(true);
-                                    setRouteTo(true);
-                                }
-                            });
-                            src.pd.extendedtime = true;
-                            point.extendedtime = true;
-                        } else {
-                            if (src.sourceSignal instanceof SignalMast) {
-                                SignalMast mast = (SignalMast) src.sourceSignal;
-                                releaseMast(mast, turnoutSettings);
-                            } else if (src.sourceSignal instanceof SignalHead) {
-                                SignalHead head = (SignalHead) src.sourceSignal;
-                                head.setHeld(false);
-                            }
-                            setRouteFrom(true);
-                            setRouteTo(true);
-                        }
-                    }
-                    if (manager.useDifferentColorWhenSetting()) {
-                        //final List<Color> realColorXtra = realColorXtra;
-                        javax.swing.Timer resetColorBack = new javax.swing.Timer(manager.getSettingTimer(), new java.awt.event.ActionListener() {
-                            @Override
-                            public void actionPerformed(java.awt.event.ActionEvent e) {
-                                for (int i = 0; i < routeBlocks.size(); i++) {
-                                    LayoutBlock lbk = routeBlocks.get(i);
-                                    lbk.setBlockExtraColor(realColorXtra.get(i));
-                                    lbk.setBlockTrackColor(realColorStd.get(i));
-                                }
-                                src.getPoint().getPanel().redrawPanel();
-                            }
-                        });
-                        resetColorBack.setRepeats(false);
-                        resetColorBack.start();
-                    }
-
-                    if (at != null) {
-                        Section sec;
-                        if (sml != null && sml.getAssociatedSection((SignalMast) getSignal()) != null) {
-                            sec = sml.getAssociatedSection((SignalMast) getSignal());
-                        } else {
-                            String secUserName = src.getPoint().getDisplayName() + ":" + point.getDisplayName();
-                            sec = InstanceManager.getDefault(SectionManager.class).getSection(secUserName);
-                            if (sec == null) {
-                                sec = InstanceManager.getDefault(SectionManager.class).createNewSection(secUserName);
-                                sec.setSectionType(Section.DYNAMICADHOC);
-                            }
-                            if (sec.getSectionType() == Section.DYNAMICADHOC) {
-                                sec.removeAllBlocksFromSection();
-                                for (LayoutBlock key : routeDetails) {
-                                    if (key != src.getStart()) {
-                                        sec.addBlock(key.getBlock());
-                                    }
-                                }
-                                String dir = Path.decodeDirection(src.getStart().getNeighbourDirection(routeDetails.get(0).getBlock()));
-                                EntryPoint ep = new EntryPoint(routeDetails.get(0).getBlock(), src.getStart().getBlock(), dir);
-                                ep.setTypeForward();
-                                sec.addToForwardList(ep);
-
-                                LayoutBlock proDestLBlock = point.getProtecting().get(0);
-                                if (proDestLBlock != null) {
-                                    dir = Path.decodeDirection(proDestLBlock.getNeighbourDirection(point.getFacing()));
-                                    ep = new EntryPoint(point.getFacing().getBlock(), proDestLBlock.getBlock(), dir);
-                                    ep.setTypeReverse();
-                                    sec.addToReverseList(ep);
-                                }
-                            }
-                        }
-                        InstanceManager.getDefault(DispatcherFrame.class).extendActiveTrainsPath(sec, at, src.getPoint().getPanel());
-                    }
-
-                    src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
-                    point.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
-                } catch (RuntimeException ex) {
-                    log.error("An error occurred while setting the route", ex);  // NOI18N
-                    src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
-                    point.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
-                    if (manager.useDifferentColorWhenSetting()) {
-                        for (int i = 0; i < routeBlocks.size(); i++) {
-                            LayoutBlock lbk = routeBlocks.get(i);
-                            lbk.setBlockExtraColor(realColorXtra.get(i));
-                            lbk.setBlockTrackColor(realColorStd.get(i));
-                        }
-                    }
+                    //Force a redraw, to reflect color change
                     src.getPoint().getPanel().redrawPanel();
                 }
-                src.getPoint().getPanel().getGlassPane().setVisible(false);
-                //src.setMenuEnabled(true);
+                if (!manager.isSkipGuiFix()) {
+                    // With the old GUI behavior clicks are held back instead, so that a second
+                    // click on the destination can start the next route
+                    src.getPoint().getPanel().getGlassPane().setVisible(true);
+                }
+
+                ConnectivityUtil connection = new ConnectivityUtil(point.getPanel());
+
+                // Last block in the route is the one that we are protecting at the last sensor/signalmast
+                for (int i = 0; i < blocks.size(); i++) {
+                    //if we are not using the dispatcher and the signal logic is dynamic, then set the turnouts
+                    if (at == null && isSignalLogicDynamic()) {
+                        if (i > 0) {
+                            List<LayoutTrackExpectedState<LayoutTurnout>> turnoutlist;
+                            int nxtBlk = i + 1;
+                            int preBlk = i - 1;
+                            if (i < blocks.size() - 1) {
+                                turnoutlist = connection.getTurnoutList(blocks.get(i).getBlock(), blocks.get(preBlk).getBlock(), blocks.get(nxtBlk).getBlock());
+                                for (int x = 0; x < turnoutlist.size(); x++) {
+                                    if (turnoutlist.get(x).getObject() instanceof LayoutSlip) {
+                                        int slipState = turnoutlist.get(x).getExpectedState();
+                                        LayoutSlip ls = (LayoutSlip) turnoutlist.get(x).getObject();
+                                        int taState = ls.getTurnoutState(slipState);
+                                        Turnout t = ls.getTurnout();
+                                        if (t==null) {
+                                            log.warn("Found unexpected Turnout reference at {}: {}",i,ls);
+                                            continue; // not sure what else do to here
+                                        }
+                                        turnoutSettings.put(t, taState);
+
+                                        int tbState = ls.getTurnoutBState(slipState);
+                                        ls.getTurnoutB().setCommandedState(tbState);
+                                        turnoutSettings.put(ls.getTurnoutB(), tbState);
+                                    } else {
+                                        String t = turnoutlist.get(x).getObject().getTurnoutName();
+                                        Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(t);
+                                        if (turnout != null) {
+                                            turnoutSettings.put(turnout, turnoutlist.get(x).getExpectedState());
+                                            if (turnoutlist.get(x).getObject().getSecondTurnout() != null) {
+                                                turnoutSettings.put(turnoutlist.get(x).getObject().getSecondTurnout(),
+                                                        turnoutlist.get(x).getExpectedState());
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if ((getEntryExitType() == EntryExitPairs.FULLINTERLOCK)) {
+                        blocks.get(i).getBlock().addPropertyChangeListener(propertyBlockListener); // was set against occupancy sensor
+                        if (i > 0) {
+                            blocks.get(i).setUseExtraColor(true);
+                        }
+                    } else {
+                        blocks.get(i).getBlock().removePropertyChangeListener(propertyBlockListener); // was set against occupancy sensor
+                    }
+                }
+                if (at == null) {
+                    if (!isSignalLogicDynamic()) {
+                        SignalMastLogic tmSml = InstanceManager.getDefault(SignalMastLogicManager.class).getSignalMastLogic((SignalMast) src.sourceSignal);
+                        for (Turnout t : tmSml.getAutoTurnouts((SignalMast) getSignal())) {
+                            turnoutSettings.put(t, tmSml.getAutoTurnoutState(t, (SignalMast) getSignal()));
+                        }
+                    }
+                    turnoutsToSet.addAll(turnoutSettings.keySet());
+                }
+            } catch (RuntimeException ex) {
+                failed(ex);
+                return;
             }
-        };
-        Thread thrMain = ThreadingUtil.newThread(setRouteRun, "Entry Exit Set Route");  // NOI18N
-        thrMain.start();
-        try {
-            thrMain.join();
-        } catch (InterruptedException e) {
-            log.error("Interuption exception {}", e.toString());  // NOI18N
+            setTurnout(0);
         }
-        log.debug("[setRoute] Done, dp = {}", getUserName());
+
+        /**
+         * Set one turnout and schedule the next step after the turnout delay.
+         * When all turnouts are set, complete the route.
+         *
+         * @param index the index of the turnout to set
+         */
+        private void setTurnout(int index) {
+            if (index >= turnoutsToSet.size()) {
+                complete();
+                return;
+            }
+            if (isCancelled()) {
+                cancelled();
+                return;
+            }
+            try {
+                Turnout turnout = turnoutsToSet.get(index);
+                turnout.setCommandedState(turnoutSettings.get(turnout));
+            } catch (RuntimeException ex) {
+                failed(ex);
+                return;
+            }
+            ThreadingUtil.runOnLayoutDelayed(() -> setTurnout(index + 1), 250 + manager.turnoutSetDelay);
+        }
+
+        /**
+         * Last step: set up the signal mast logic and the Dispatcher, and
+         * update the colours and NX buttons.
+         */
+        private void complete() {
+            if (isCancelled()) {
+                cancelled();
+                return;
+            }
+            try {
+                src.getPoint().getPanel().redrawPanel();
+                if (getEntryExitType() != EntryExitPairs.SETUPTURNOUTSONLY) {
+                    if (getEntryExitType() == EntryExitPairs.FULLINTERLOCK) {
+                        //If our start block is already active we will set it as our lastSeenActiveBlock.
+                        if (src.getStart().getState() == Block.OCCUPIED) {
+                            src.getStart().getBlock().removePropertyChangeListener(propertyBlockListener);
+                            lastSeenActiveBlockObject = src.getStart().getBlock().getValue();
+                            log.debug("Last seen value {}", lastSeenActiveBlockObject);
+                        }
+                    }
+                    if ((src.sourceSignal instanceof SignalMast) && (getSignal() instanceof SignalMast)) {
+                        SignalMast smSource = (SignalMast) src.sourceSignal;
+                        SignalMast smDest = (SignalMast) getSignal();
+                        synchronized (DestinationPoints.this) {
+                            sml = InstanceManager.getDefault(SignalMastLogicManager.class).newSignalMastLogic(smSource);
+                            if (!sml.isDestinationValid(smDest)) {
+                                //if no signalmastlogic existed then created it, but set it not to be stored.
+                                sml.setDestinationMast(smDest);
+                                sml.setStore(SignalMastLogic.STORENONE, smDest);
+                            }
+                        }
+
+                        releaseMast(smSource, turnoutSettings);
+                        //Only change the block and turnout details if this a temp signalmast logic
+                        if (sml.getStoreState(smDest) == SignalMastLogic.STORENONE) {
+                            LinkedHashMap<Block, Integer> blks = new LinkedHashMap<>();
+                            for (int i = 0; i < routeDetails.size(); i++) {
+                                if (routeDetails.get(i).getBlock().getState() == Block.UNKNOWN) {
+                                    routeDetails.get(i).getBlock().setState(Block.UNOCCUPIED);
+                                }
+                                blks.put(routeDetails.get(i).getBlock(), Block.UNOCCUPIED);
+                            }
+                            sml.setAutoBlocks(blks, smDest);
+                            sml.setAutoTurnouts(turnoutSettings, smDest);
+                            sml.initialise(smDest);
+                        }
+                        smSource.addPropertyChangeListener(new PropertyChangeListener() {
+                            @Override
+                            public void propertyChange(PropertyChangeEvent e) {
+                                SignalMast source = (SignalMast) e.getSource();
+                                source.removePropertyChangeListener(this);
+                                setRouteFrom(true);
+                                setRouteTo(true);
+                            }
+                        });
+                        src.pd.extendedtime = true;
+                        point.extendedtime = true;
+                    } else {
+                        if (src.sourceSignal instanceof SignalMast) {
+                            SignalMast mast = (SignalMast) src.sourceSignal;
+                            releaseMast(mast, turnoutSettings);
+                        } else if (src.sourceSignal instanceof SignalHead) {
+                            SignalHead head = (SignalHead) src.sourceSignal;
+                            head.setHeld(false);
+                        }
+                        setRouteFrom(true);
+                        setRouteTo(true);
+                    }
+                }
+                if (manager.useDifferentColorWhenSetting()) {
+                    javax.swing.Timer resetColorBack = new javax.swing.Timer(manager.getSettingTimer(), new java.awt.event.ActionListener() {
+                        @Override
+                        public void actionPerformed(java.awt.event.ActionEvent e) {
+                            restoreColors();
+                            src.getPoint().getPanel().redrawPanel();
+                        }
+                    });
+                    resetColorBack.setRepeats(false);
+                    resetColorBack.start();
+                }
+
+                if (at != null) {
+                    Section sec;
+                    if (sml != null && sml.getAssociatedSection((SignalMast) getSignal()) != null) {
+                        sec = sml.getAssociatedSection((SignalMast) getSignal());
+                    } else {
+                        String secUserName = src.getPoint().getDisplayName() + ":" + point.getDisplayName();
+                        sec = InstanceManager.getDefault(SectionManager.class).getSection(secUserName);
+                        if (sec == null) {
+                            sec = InstanceManager.getDefault(SectionManager.class).createNewSection(secUserName);
+                            sec.setSectionType(Section.DYNAMICADHOC);
+                        }
+                        if (sec.getSectionType() == Section.DYNAMICADHOC) {
+                            sec.removeAllBlocksFromSection();
+                            for (LayoutBlock key : routeDetails) {
+                                if (key != src.getStart()) {
+                                    sec.addBlock(key.getBlock());
+                                }
+                            }
+                            String dir = Path.decodeDirection(src.getStart().getNeighbourDirection(routeDetails.get(0).getBlock()));
+                            EntryPoint ep = new EntryPoint(routeDetails.get(0).getBlock(), src.getStart().getBlock(), dir);
+                            ep.setTypeForward();
+                            sec.addToForwardList(ep);
+
+                            LayoutBlock proDestLBlock = point.getProtecting().get(0);
+                            if (proDestLBlock != null) {
+                                dir = Path.decodeDirection(proDestLBlock.getNeighbourDirection(point.getFacing()));
+                                ep = new EntryPoint(point.getFacing().getBlock(), proDestLBlock.getBlock(), dir);
+                                ep.setTypeReverse();
+                                sec.addToReverseList(ep);
+                            }
+                        }
+                    }
+                    InstanceManager.getDefault(DispatcherFrame.class).extendActiveTrainsPath(sec, at, src.getPoint().getPanel());
+                }
+
+                src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
+                point.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
+            } catch (RuntimeException ex) {
+                failed(ex);
+                return;
+            }
+            try {
+                src.getPoint().getPanel().getGlassPane().setVisible(false);
+                log.debug("[setRoute] Done, dp = {}", getUserName());
+            } finally {
+                end(true, true);
+            }
+        }
+
+        private void failed(RuntimeException ex) {
+            try {
+                log.error("An error occurred while setting the route", ex);  // NOI18N
+                src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
+                point.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
+                restoreColors();
+                src.getPoint().getPanel().redrawPanel();
+                src.getPoint().getPanel().getGlassPane().setVisible(false);
+            } finally {
+                // Always report, so that a route over several pairs and held clicks are not left waiting
+                end(false, true);
+            }
+        }
+
+        private void cancelled() {
+            // When the route has been set again, the new route setting reports the result
+            boolean current = routeSetting == this;
+            try {
+                log.debug("[setRoute] Route setting stopped, dp = {}", getUserName());
+                if (current) {
+                    src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
+                    point.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
+                }
+                restoreColors();
+                src.getPoint().getPanel().redrawPanel();
+                src.getPoint().getPanel().getGlassPane().setVisible(false);
+            } finally {
+                end(false, current);
+            }
+        }
+
+        private void restoreColors() {
+            for (int i = 0; i < routeBlocks.size(); i++) {
+                LayoutBlock lbk = routeBlocks.get(i);
+                lbk.setBlockExtraColor(realColorXtra.get(i));
+                lbk.setBlockTrackColor(realColorStd.get(i));
+            }
+        }
+
+        private void end(boolean success, boolean report) {
+            if (ended) {
+                return;
+            }
+            ended = true;
+            if (report) {
+                manager.routeSettingDone(DestinationPoints.this, success);
+            }
+            manager.routeSettingFinished();
+        }
     }
 
     /**
@@ -632,42 +744,73 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
      * This only applies to turnouts using ONESENSOR feedback.  TWOSENSOR has an
      * intermediate inconsistent state which prevents erroneous signal aspects.
      * The maximum wait time is 10 seconds.
+     * <p>
+     * The turnouts are watched with a listener and the hold is removed on the
+     * layout thread.
      *
      * @since 4.11.1
      * @param mast The signal mast that will be released.
      * @param turnoutSettings The turnouts that are being set for the current NX route.
      */
     private void releaseMast(SignalMast mast, Hashtable<Turnout, Integer> turnoutSettings) {
-        Hashtable<Turnout, Integer> turnoutList = new Hashtable<>(turnoutSettings);
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    for (int i = 20; i > 0; i--) {
-                        int active = 0;
-                        for (Map.Entry< Turnout, Integer> entry : turnoutList.entrySet()) {
-                            Turnout tout = entry.getKey();
-                            if (tout.getFeedbackMode() == Turnout.ONESENSOR) {
-                                // Check state
-                                if (tout.getKnownState() != tout.getCommandedState()) {
-                                    active += 1;
-                                }
-                            }
-                        }
-                        if (active == 0) {
-                            break;
-                        }
-                        Thread.sleep(500);
-                    }
-                    log.debug("[releaseMast] mast = {}", mast.getDisplayName());
-                    mast.setHeld(false);
-                } catch (InterruptedException ex) {
-                    Thread.currentThread().interrupt();
+        new MastRelease(mast, turnoutSettings).start();
+    }
+
+    /**
+     * Removes the hold on a signal mast when the ONESENSOR turnouts of a route
+     * have reached their commanded state, or after the time out.
+     */
+    private class MastRelease implements PropertyChangeListener {
+
+        private final SignalMast mast;
+        private final List<Turnout> turnouts = new ArrayList<>();
+        private boolean released = false;
+
+        MastRelease(SignalMast mast, Hashtable<Turnout, Integer> turnoutSettings) {
+            this.mast = mast;
+            for (Turnout tout : turnoutSettings.keySet()) {
+                if (tout.getFeedbackMode() == Turnout.ONESENSOR) {
+                    turnouts.add(tout);
                 }
             }
-        };
-        Thread thr = ThreadingUtil.newThread(r, "Entry Exit Route: Release Mast");  // NOI18N
-        thr.start();
+        }
+
+        void start() {
+            for (Turnout tout : turnouts) {
+                tout.addPropertyChangeListener(this);
+            }
+            ThreadingUtil.runOnLayoutDelayed(this::release, mastReleaseTimeout);
+            ThreadingUtil.runOnLayoutEventually(this::check);
+        }
+
+        @Override
+        public void propertyChange(PropertyChangeEvent e) {
+            if (Turnout.PROPERTY_KNOWN_STATE.equals(e.getPropertyName())
+                    || Turnout.PROPERTY_COMMANDED_STATE.equals(e.getPropertyName())) {
+                ThreadingUtil.runOnLayoutEventually(this::check);
+            }
+        }
+
+        private void check() {
+            for (Turnout tout : turnouts) {
+                if (tout.getKnownState() != tout.getCommandedState()) {
+                    return;
+                }
+            }
+            release();
+        }
+
+        private void release() {
+            if (released) {
+                return;
+            }
+            released = true;
+            for (Turnout tout : turnouts) {
+                tout.removePropertyChangeListener(this);
+            }
+            log.debug("[releaseMast] mast = {}", mast.getDisplayName());
+            mast.setHeld(false);
+        }
     }
 
     private boolean isSignalLogicDynamic() {
@@ -713,21 +856,25 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                 cancelClearFrame.setVisible(false);
                 threadAutoClearFrame.interrupt();
                 cancelClearInterlock(EntryExitPairs.CLEARROUTE);
+                manager.routeSettingDone(this, true);
             });
             jButton_Cancel.addActionListener( e -> {
                 cancelClearFrame.setVisible(false);
                 threadAutoClearFrame.interrupt();
                 cancelClearInterlock(EntryExitPairs.CANCELROUTE);
+                manager.routeSettingDone(this, true);
             });
             jButton_Stack.addActionListener( e -> {
                 cancelClearFrame.setVisible(false);
                 threadAutoClearFrame.interrupt();
                 cancelClearInterlock(EntryExitPairs.STACKROUTE);
+                manager.routeSettingDone(this, false);
             });
             jButton_Exit.addActionListener( e -> {
                 cancelClearFrame.setVisible(false);
                 threadAutoClearFrame.interrupt();
                 cancelClearInterlock(EntryExitPairs.EXITROUTE);
+                manager.routeSettingDone(this, false);
                 firePropertyChange(PROPERTY_NO_CHANGE, null, null);
             });
             src.getPoint().getPanel().setGlassPane(manager.getGlassPane());
@@ -754,6 +901,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                     Thread.sleep(NXMESSAGEBOXCLEARTIMEOUT * 1000);
                     cancelClearFrame.setVisible(false);
                     cancelClearInterlock(EntryExitPairs.EXITROUTE);
+                    manager.routeSettingDone(DestinationPoints.this, false);
                 } catch (InterruptedException ex) {
                     log.debug("Flash timer cancelled");  // NOI18N
                 }
@@ -979,6 +1127,22 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
     }
 
     synchronized void activeBean(boolean reverseDirection, boolean showMessage) {
+        routeChangeStarted = false;
+        setOrClearRoute(reverseDirection, showMessage);
+        if (!routeChangeStarted) {
+            // The route is neither being set nor cleared down, so a route over several pairs
+            // must not go on to its next pair
+            manager.routeSettingDone(this, false);
+        }
+    }
+
+    /**
+     * True when the route is being set or cleared down. The result is then
+     * reported to the manager when that has finished.
+     */
+    private boolean routeChangeStarted = false;
+
+    private void setOrClearRoute(boolean reverseDirection, boolean showMessage) {
         // Clear any previous memory message
         MemoryManager mgr = InstanceManager.getDefault(MemoryManager.class);
         Memory nxMem = mgr.getMemory(manager.getMemoryOption());
@@ -1001,6 +1165,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
             log.debug("{}  We have a valid match on our end point so we can clear down", getUserName());  // NOI18N
             //setRouteTo(false);
             //src.pd.setRouteFrom(false);
+            routeChangeStarted = true;
             setRoute(false);
         } else {
             if (isRouteToPointSet()) {
@@ -1174,18 +1339,14 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                     setActiveEntryExit(true, reverseDirection);
                 }
 
-                if (manager.isSkipGuiFix()) {
-                    log.debug("[activeBean] Start setRoute without thread, dp = {}", getUserName());
+                routeChangeStarted = true;
+                // The route is set in steps on the layout thread, so this does not wait for the turnouts
+                log.debug("[activeBean] Start setRoute, dp = {}", getUserName());
+                try {
                     setRoute(true);
-                } else {
-                    log.debug("[activeBean] Start setRoute thread, dp = {}", getUserName());
-                    ThreadingUtil.newThread(() -> {
-                        try {
-                            setRoute(true);
-                        } catch (Exception e) {
-                            log.error("[activeBean] setRoute thread exception: {}", e.getMessage());
-                        }
-                    }, "NX set route thread").start();
+                } catch (Exception e) {
+                    log.error("[activeBean] setRoute exception: {}", e.getMessage());
+                    manager.routeSettingDone(this, false);
                 }
             }
         }

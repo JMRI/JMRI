@@ -20,6 +20,15 @@ public class MarklinSystemConnectionMemoTest extends SystemConnectionMemoTestBas
         Assertions.assertNotNull(c);
     }
 
+    @Test
+    public void testLightManager() {
+        Assertions.assertTrue(scm.provides(jmri.LightManager.class));
+        Assertions.assertSame(scm.getLightManager(), scm.get(jmri.LightManager.class));
+        jmri.Light light = jmri.InstanceManager.lightManagerInstance().provideLight("MLDCC45");
+        Assertions.assertSame(light, scm.getLightManager().getLight("MLDCC45"));
+        light.dispose();
+    }
+
     @Override
     @Test
     public void testProvidesConsistManager() {

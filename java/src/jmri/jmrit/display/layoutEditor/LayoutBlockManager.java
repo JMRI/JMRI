@@ -155,6 +155,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
      * @param block the block to remove.
      */
     public void deleteLayoutBlock(LayoutBlock block) {
+        layoutBlockByBlock.values().remove(block);
         deregister(block);
     }
 
@@ -177,13 +178,29 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         return getBySystemName(name);
     }
 
+    // LayoutBlock found for each Block, checked on every use as either may change
+    private final java.util.Map<Block, LayoutBlock> layoutBlockByBlock = new java.util.concurrent.ConcurrentHashMap<>();
+
     @CheckReturnValue
     @CheckForNull
     public LayoutBlock getLayoutBlock(@CheckForNull Block block) {
+        if (block != null) {
+            LayoutBlock found = layoutBlockByBlock.get(block);
+            if ((found != null) && (found.getBlock() == block)
+                    && (getBySystemName(found.getSystemName()) == found)) {
+                return found;
+            }
+        }
         for (LayoutBlock lb : getNamedBeanSet()) {
             if (lb.getBlock() == block) {
+                if (block != null) {
+                    layoutBlockByBlock.put(block, lb);
+                }
                 return lb;
             }
+        }
+        if (block != null) {
+            layoutBlockByBlock.remove(block);
         }
         return null;
     }
@@ -2669,6 +2686,11 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
             return;
         }
+        if (!ThreadingUtil.isLayoutThread()) {
+            // routing tables are only changed on the layout thread
+            ThreadingUtil.runOnLayout(this::initializeLayoutBlockRouting);
+            return;
+        }
         firstRoutingChange = System.nanoTime();
 
         //cycle through all LayoutBlocks, completing initialization of the layout block routing
@@ -2686,76 +2708,107 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
     private final LayoutBlockConnectivityTools lbct = new LayoutBlockConnectivityTools();
 
-    private long lastRoutingChange;
+    private volatile long lastRoutingChange;
 
     void setLastRoutingChange() {
         log.debug("setLastRoutingChange");
-        lastRoutingChange = System.nanoTime();
-        stabilised = false;
+        synchronized (stabilisedLock) {
+            lastRoutingChange = System.nanoTime();
+            stabilised = false;
+        }
         setRoutingStabilised();
     }
 
+    // guards lastRoutingChange, stabilised and checking together, so that a
+    // change can not be made between finding the tables unchanged and
+    // reporting them as stable; the events are posted to the layout thread
+    // while holding it, so they arrive in the order the changes were made
+    private final Object stabilisedLock = new Object();
     private boolean checking = false;
-    boolean stabilised = false;
+    volatile boolean stabilised = false;
+
+    // how long the routing tables must be unchanged to be reported as stable
+    private long stabilisedDelayMsec = 2000L;
+
+    /**
+     * Set how long the routing tables must be unchanged before the routing
+     * is reported as stable. For tests.
+     *
+     * @param msec the time in milliseconds, 2000 by default
+     */
+    void setStabilisedDelay(long msec) {
+        stabilisedDelayMsec = msec;
+    }
 
     public void setRoutingStabilised() {
-        if (checking) {
-            return;
-        }
-        log.debug("routing table change has been initiated");
-        checking = true;
-
-        if (namedStabilisedIndicator != null) {
-            try {
-                namedStabilisedIndicator.getBean().setState(Sensor.INACTIVE);
-            } catch (JmriException ex) {
-                log.debug("Error setting stability indicator sensor");
+        synchronized (stabilisedLock) {
+            if (checking) {
+                return;
             }
+            log.debug("routing table change has been initiated");
+            checking = true;
+            stabilised = false;
+
+            ThreadingUtil.runOnLayoutEventually(() -> {
+                if (namedStabilisedIndicator != null) {
+                    try {
+                        namedStabilisedIndicator.getBean().setState(Sensor.INACTIVE);
+                    } catch (JmriException ex) {
+                        log.debug("Error setting stability indicator sensor");
+                    }
+                }
+                firePropertyChange(PROPERTY_TOPOLOGY, true, false);
+            });
         }
+        long delay = stabilisedDelayMsec;
         Runnable r = () -> {
             try {
-                firePropertyChange(PROPERTY_TOPOLOGY, true, false);
                 long oldvalue = lastRoutingChange;
 
-                while (!stabilised) {
-                    Thread.sleep(2000L); //two seconds
+                while (true) {
+                    Thread.sleep(delay);
 
-                    if (oldvalue == lastRoutingChange) {
-                        log.debug("routing table has now been stable for 2 seconds");
-                        checking = false;
-                        stabilised = true;
-                        ThreadingUtil.runOnLayoutEventually(() -> firePropertyChange(PROPERTY_TOPOLOGY, false, true));
-
-                        if (namedStabilisedIndicator != null) {
-                            ThreadingUtil.runOnLayoutEventually(() -> {
-                                log.debug("Setting StabilisedIndicator Sensor {} ACTIVE",
-                                        namedStabilisedIndicator.getBean().getDisplayName());
-                                try {
-                                    namedStabilisedIndicator.getBean().setState(Sensor.ACTIVE);
-                                } catch (JmriException ex) {
-                                    log.debug("Error setting stability indicator sensor");
-                                }
-                            });
-                        } else {
-                            log.debug("Stable, no sensor to set");
+                    synchronized (stabilisedLock) {
+                        if (oldvalue == lastRoutingChange) {
+                            log.debug("routing table has now been stable for {} msec", delay);
+                            checking = false;
+                            stabilised = true;
+                            ThreadingUtil.runOnLayoutEventually(this::reportRoutingStabilised);
+                            break;
                         }
-                    } else {
-                        long seconds = (long) ((lastRoutingChange - firstRoutingChange) / 1e9);
-                        log.debug("routing table not stable after {} in {}",
-                                String.format("%d:%02d:%02d", seconds / 3600, (seconds / 60) % 60, seconds % 60),
-                                Thread.currentThread().getName());
                     }
+                    long seconds = (long) ((lastRoutingChange - firstRoutingChange) / 1e9);
+                    log.debug("routing table not stable after {} in {}",
+                            String.format("%d:%02d:%02d", seconds / 3600, (seconds / 60) % 60, seconds % 60),
+                            Thread.currentThread().getName());
                     oldvalue = lastRoutingChange;
                 }
             } catch (InterruptedException ex) {
                 Thread.currentThread().interrupt();
-                checking = false;
-
+                synchronized (stabilisedLock) {
+                    checking = false;
+                }
             }
         };
         thr = ThreadingUtil.newThread(r, "Routing stabilising timer");
         thr.start();
     } //setRoutingStabilised
+
+    private void reportRoutingStabilised() {
+        firePropertyChange(PROPERTY_TOPOLOGY, false, true);
+
+        if (namedStabilisedIndicator != null) {
+            log.debug("Setting StabilisedIndicator Sensor {} ACTIVE",
+                    namedStabilisedIndicator.getBean().getDisplayName());
+            try {
+                namedStabilisedIndicator.getBean().setState(Sensor.ACTIVE);
+            } catch (JmriException ex) {
+                log.debug("Error setting stability indicator sensor");
+            }
+        } else {
+            log.debug("Stable, no sensor to set");
+        }
+    }
 
     private Thread thr = null;
 

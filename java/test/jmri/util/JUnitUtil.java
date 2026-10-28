@@ -46,6 +46,7 @@ import jmri.managers.*;
 import jmri.profile.*;
 import jmri.progdebugger.DebugProgrammerManager;
 import jmri.util.gui.GuiLafPreferencesManager;
+import jmri.util.junit.ThreadSafeTimeouts;
 import jmri.util.managers.*;
 import jmri.util.prefs.*;
 import jmri.util.zeroconf.MockZeroConfServiceManager;
@@ -267,6 +268,10 @@ public class JUnitUtil {
 
         // silence the Jemmy GUI unit testing framework
         JUnitUtil.silenceGUITestOutput();
+        // let the Jemmy timeouts be shared with the threads that close dialogs
+        if (!(JemmyProperties.getCurrentTimeouts() instanceof ThreadSafeTimeouts)) {
+            JemmyProperties.setCurrentTimeouts(new ThreadSafeTimeouts());
+        }
 
         // ideally this would be resetWindows(false, true) to force an error if an earlier
         // test left a window open, but different platforms seem to have just
@@ -340,7 +345,7 @@ public class JUnitUtil {
      * A bit expensive, so only used when needed.
      */
     public static void clearTurnoutThreads(){
-        removeMatchingThreads("setCommandedStateAtInterval"); // must stay consistent with AbstractTurnout
+        removeMatchingThreads("setCommandedStateAtInterval"); // AbstractTurnout no longer starts these
     }
 
     /**

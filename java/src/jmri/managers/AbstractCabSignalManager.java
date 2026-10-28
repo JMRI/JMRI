@@ -1,6 +1,7 @@
 package jmri.managers;
 
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
@@ -37,12 +38,18 @@ public abstract class AbstractCabSignalManager implements CabSignalManager, jmri
     // keep a list of Blocks with listeners.
     private final ArrayList<Block> _blocksWithListeners;
 
+    // the BlockManager and listeners this manager registers with; kept so
+    // that the listeners removed are the ones that were added
+    private final BlockManager blockManager;
+    private final PropertyChangeListener blockConfigListener = this::handleBlockConfigChanged;
+    private final PropertyChangeListener blockListener = this::handleBlockChange;
+
     public AbstractCabSignalManager(){
         signalList = new HashMap<>();
         listListeners = new ArrayList<>();
         _blocksWithListeners = new ArrayList<>();
-        InstanceManager.getDefault(BlockManager.class)
-            .addPropertyChangeListener(BlockManager.PROPERTY_BEANS, this::handleBlockConfigChanged);
+        blockManager = InstanceManager.getDefault(BlockManager.class);
+        blockManager.addPropertyChangeListener(BlockManager.PROPERTY_BEANS, blockConfigListener);
     }
 
     /**
@@ -142,16 +149,16 @@ public abstract class AbstractCabSignalManager implements CabSignalManager, jmri
 
     // Adds changelistener to blocks
     private void initBlocks(){
-        Set<Block> blockSet = InstanceManager.getDefault(BlockManager.class).getNamedBeanSet();
+        Set<Block> blockSet = blockManager.getNamedBeanSet();
         for (Block b : blockSet) {
-            b.addPropertyChangeListener(this::handleBlockChange);
+            b.addPropertyChangeListener(blockListener);
             _blocksWithListeners.add(b);
         }
     }
 
     private void removeListenerFromBlocks(){
         for (Block b : _blocksWithListeners) {
-            b.removePropertyChangeListener(this::handleBlockChange);
+            b.removePropertyChangeListener(blockListener);
         }
         _blocksWithListeners.clear();
     }
@@ -183,8 +190,7 @@ public abstract class AbstractCabSignalManager implements CabSignalManager, jmri
 
     @Override
     public void dispose(){
-        InstanceManager.getDefault(BlockManager.class)
-            .removePropertyChangeListener(BlockManager.PROPERTY_BEANS, this::handleBlockConfigChanged);
+        blockManager.removePropertyChangeListener(BlockManager.PROPERTY_BEANS, blockConfigListener);
         for(CabSignal c : signalList.values()){
             c.dispose();
         }

@@ -1081,6 +1081,8 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.SPROGCBUS);
         memo.setTrafficController(tc);
         memo.configureManagers();
+        // No background fetch of node details, so the only messages sent are the throttle requests
+        memo.get(CbusPreferences.class).setNodeBackgroundFetchDelay(0);
         tm = memo.get(ThrottleManager.class);
 
     }

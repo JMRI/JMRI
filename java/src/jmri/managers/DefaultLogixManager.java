@@ -96,6 +96,10 @@ public class DefaultLogixManager extends AbstractManager<Logix>
         // delete the Logix
         deregister(x);
         x.dispose();
+        jmri.ConditionalManager cm = InstanceManager.getNullableDefault(jmri.ConditionalManager.class);
+        if (cm != null) {
+            cm.forgetParentLogix(x);
+        }
     }
 
     /**

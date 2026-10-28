@@ -1,7 +1,8 @@
 
     <h3>Hardware Support</h3>
         <ul>
-          <li></li>
+          <li>Fixed a race in the shared transmit code used by most connections,
+              which could occasionally delay sending a message by about 100 ms.</li>
         </ul>
 
         <h4>Acela CTI</h4>
@@ -34,6 +35,11 @@
                 <li>CBUS programming reports a busy command station or a CV
                     error straight away, instead of waiting for the programming
                     timeout.</li>
+                <li>The CANCMD node variable editor shows and writes the current
+                    limits as the raw values the CANCMD firmware uses, writes
+                    the walkabout timeout from its own control, and opens for
+                    modules whose settings are outside the previous limited
+                    ranges.</li>
                 <li>Closing the CBUS bootloader window stops all of its timers,
                     and the fast write speed choice is now saved.</li>
                 <li>The CBUS bootloader only accepts parameter replies from the
@@ -110,7 +116,15 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li></li>
+                <li>DCC-EX: turnout commands sent with a Turnout Automation retry policy
+                (e.g. "NoFeedback") were previously sent only once, ignoring the configured
+                retry interval and count. <code>DCCppTurnout</code> now defers to the configured
+                automation like every other connection type
+                (<a href="https://github.com/JMRI/JMRI/issues/15471">issue #15471</a>).</li>
+                <li>DCC-EX: messages sent by EXRAIL <code>MESSAGE()</code> commands are now
+                shown in a new DCC-EX Messages window, which opens automatically when one
+                arrives. A Messages display can also be added to Panel Editor and Layout
+                Editor panels.</li>
             </ul>
 
         <h4>DCC4pc</h4>
@@ -142,6 +156,13 @@
         <h4>ESU</h4>
             <ul>
                 <li></li>
+            </ul>
+
+        <h4>Grapevine</h4>
+            <ul>
+                <li>Closing the Node Table window now stops its check of the
+                    nodes. Before, polls went on being sent for several
+                    seconds afterwards.</li>
             </ul>
 
         <h4>Hornby</h4>
@@ -230,6 +251,9 @@
                     produce or consume an event.</li>
                 <li>Change the default events for the STL Editor IQYZ tables from all zeros to
                     unique zero based events.</li>
+                <li>When configuring a node, the Segment and Group levels are now
+                    color coded (blue for invalid value; orange for changed value)
+                    the way the group tabs and individual values have been.
             </ul>
 
         <h4>Powerline</h4>
@@ -239,7 +263,10 @@
 
         <h4>RFID</h4>
             <ul>
-                <li></li>
+                <li>MERG Concentrator and stand-alone RFID readers: a tag
+                    that is still being read no longer disappears from its
+                    Reporter every 2 seconds, and the Reporter is cleared on the
+                    layout thread rather than from a thread of its own.</li>
             </ul>
 
         <h4>Raspberry PI</h4>
@@ -564,6 +591,52 @@
                  scale speed shown for the minimum throttle now follow the
                  "Run in reverse" setting, and the scale km/h entry is no
                  longer labelled as scale mph.</li>
+             <li>Fix TSA Go to Manual and Resume from Manual.</li>
+             <li>Automatic release of Sections no longer releases a Section
+                 when the next Section has not been entered, or when the
+                 train is stopped, waiting or in manual mode.</li>
+             <li>Trains using "Head Only" or "Head and Tail" train
+                 detection must now have a Max Train Length, whether or not
+                 they run automatically. A train without one is refused when
+                 it is added or loaded, with a message saying why. The Max
+                 Train Length field is now shown for these trains even when
+                 they do not run automatically.</li>
+             <li>Sections behind a "Head Only" train are now released using
+                 the train length for every train, not only automatic ones.
+                 Previously a dispatched or manual "Head Only" train had each
+                 Section released as soon as the locomotive left it.</li>
+             <li>For a "Head and Tail" train a Section is now released
+                 using the train length, measured to the head, as for a
+                 "Head Only" train. Previously, if the tail lost detection,
+                 for example through dirty wheels, Sections could be released
+                 while the train was still in them, all the way up to the
+                 head.</li>
+             <li>An automatic train's speed ramp no longer carries on after
+                 the train is halted, and a new ramp no longer runs alongside
+                 an old one when the speed is changed quickly.</li>
+             <li>An automatic train now always finds the correct next Block
+                 in its Section. Before, block or signal changes at the same
+                 moment could give it the wrong Block or none. Reversing or
+                 resetting a train that fills its Section no longer fails.</li>
+             <li>Restarting a train no longer starts allocating before the
+                 release of its old Sections has finished, and no longer
+                 freezes the screen while it waits. A second Restart of a
+                 train that is already being reset is ignored.</li>
+             <li>Automatic release of Sections is faster when many Sections
+                 are allocated, as each check now goes through the allocated
+                 Sections once. Which Sections are released is unchanged.</li>
+             <li>When an automatic train's stop is cancelled, for example
+                 because the signal clears or an allocation arrives, its end,
+                 reversal or reset action is now dropped too. Before, it could
+                 run later, wherever the train next stopped.</li>
+             <li>An automatic train's Block changes are now handled one at
+                 a time, in the order they happen. Before, each change was
+                 handled separately, so a train entering two Blocks in quick
+                 succession could be stopped for entering a Block out of
+                 turn, a short Block crossed at speed could be missed, and a
+                 train could be stopped with "No next Block". Every change is
+                 now acted on, including a detector that bounces, so use the
+                 sensor debounce settings for such detectors.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -581,11 +654,46 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
+            <li>With advanced block routing on, through paths whose turnouts
+                were already set when routing started, for example after the
+                start-up state query, are now marked active, so routes
+                through them are found. A route is no longer marked invalid
+                while another active path in the block still uses it, and
+                removed routes and through paths stop listening to their
+                block and turnouts.</li>
+            <li>With advanced block routing on, a block now sends a routing
+                update to its neighbours only when its status (occupied,
+                reserved, empty or unknown) changes, not on every change to
+                the block such as a new reporter value. This reduces the
+                work done on large layouts.</li>
+            <li>Finding the Layout Block for a Block no longer searches
+                every Layout Block each time. This speeds up advanced block
+                routing, Signal Mast Logic, Dispatcher and Entry/Exit on
+                large layouts.</li>
+            <li>With advanced block routing on, the shortest route to a
+                destination is now found when it is the first or only route,
+                so changes to block lengths are passed on through the
+                layout.</li>
+            <li>With advanced block routing on, when two routes to a
+                destination are equally good, the same one is now always
+                chosen: the one with fewer blocks, then by the name of the
+                next block. Before, the choice could change after an
+                unrelated edit to the layout.</li>
             <li>Layout Editor block routing: the path search now finds
                 routes that exist when the preferred branch has two or more
                 dead-end or occupied sub-branches. Before, NX, Dispatcher ad-hoc
                 routes and Signal Mast Logic could report "no route" in these
                 cases.</li>
+            <li>An allocated block, that is one set to use its extra color,
+                for example by the LogixNG Block action "Alternate Color On"
+                or by a script, now keeps its extra color until it is turned
+                off, for example by the LogixNG Block action "Alternate Color
+                Off". The LogixNG Block expression "Is Allocated" tests this.
+                Before, with advanced block routing on, the block was switched
+                back to its normal color without notice as soon as it became
+                occupied. LogixNG and scripts that set it must now also clear
+                it, for example when the train has left. Dispatcher and
+                Entry/Exit are not affected: they clear their own blocks.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -594,12 +702,25 @@
                     while the route is still being set, the first block of the
                     route stays protected. Before, it was dropped and the entry
                     signal could stay clear behind the train.</li>
+                <li>NX: when a train reaches a block of a route without being
+                    seen in the block before it, that block now keeps the value
+                    it already has, for example from RFID, and is only given the
+                    train's value if it has none. A block that is not part of
+                    the route is no longer changed. Block values further along
+                    a route might therefore differ from earlier versions.</li>
+                <li>NX: a route made up of several Entry/Exit pairs now sets
+                    every pair, one after the other. Before, it could stop after
+                    the first pair unless that pair used full interlocking, and
+                    the remaining pairs were then set by the next, unrelated
+                    request.</li>
             </ul>
 
     <h3>LccPro</h3>
         <a id="LccPro" name="LccPro"></a>
         <ul>
-          <li></li>
+          <li>Added a new item to the popup menu on a node line:  Refresh Node Info.
+              This lets you update the info on that line from the node without
+              refreshing the entire table (which can take a while for large networks)</li>
         </ul>
 
     <h3>Logix</h3>
@@ -610,6 +731,12 @@
               JMRI was restarted. This includes a Logix that was loaded
               disabled and enabled later, which could not be stopped this way
               even where the delete did deactivate it.</li>
+          <li>Logix: Logixes whose actions trigger each other in an endless
+              loop are now stopped, and an error names the Conditionals in
+              the loop. Before, the loop ran until Java's stack overflowed,
+              and other listeners on the sensor or turnout that started it
+              were skipped. A loop through so many Logixes that the stack
+              still overflows first now logs where it started.</li>
         </ul>
 
     <h3>LogixNG</h3>
@@ -618,6 +745,13 @@
           <li>LogixNG formulas: comparing a decimal value with a whole
               number now gives the right answer. Before, 1.5 == 2 was true and
               2.5 &lt; 3 was false.</li>
+          <li>LogixNG Block, Section and Transit expressions now only run
+              their ConditionalNG when a property they can test changes (block
+              state, value and allocation; section state and occupancy;
+              transit state), not on every change of the bean, for example
+              each time a Reporter writes a new value into a Block. A
+              ConditionalNG that relied on running for other changes of these
+              beans will now run less often.</li>
           <li>LogixNG formulas: the &amp;&amp; and || operators now only
               evaluate the right-hand side when the left-hand side does not
               already decide the result, as in most programming languages.
@@ -727,6 +861,33 @@
                     block on its route becomes occupied, instead of first
                     waiting for the signal logic delay; changes back towards
                     clear are still delayed as before.</li>
+                <li>Generating Signal Mast Logic Sections no longer stops at
+                    the first Source:Destination pair whose Section name is
+                    already used by a user-defined Section: only that pair is
+                    skipped. A user-defined Section also keeps its forward
+                    mast.</li>
+                <li>Signal Mast Logic now only sends an aspect to its source
+                    mast when the aspect changes. Before, every re-check of the
+                    logic, for example when a block or turnout changed on any
+                    route from the mast, sent the same aspect again, giving
+                    extra traffic on the layout and a brief flicker on masts
+                    set to reset previous states. A mast whose hardware has
+                    lost its aspect, for example after a power cycle, now keeps
+                    its old output until the aspect next changes.</li>
+                <li>A Signal Mast Logic mast keeps following its logic if
+                    setting its held aspect fails. Before, it stopped changing
+                    until JMRI was restarted. If the held aspect is disabled for
+                    the mast, the danger aspect is used instead.</li>
+                <li>When Signal Mast Logic starts, it now uses the same route
+                    checks as when a block, turnout or mast changes. Before, a
+                    user-set mast overriding an automatic one was tested the
+                    wrong way round, blocks set to "any state" always failed and
+                    Dispatcher reservations were ignored until the first change.
+                    Starting the logic again no longer adds its listeners
+                    twice.</li>
+                <li>Turning off "Use Layout Editor Paths" for one destination of
+                    a source mast no longer stops Signal Mast Logic Sections
+                    being generated for that mast's other destinations.</li>
             </ul>
 
         <h4>Signal Groups</h4>
@@ -776,19 +937,65 @@
    <h3>Tracker</h3>
         <a id="Tr" name="Tr"></a>
         <ul>
-            <li></li>
+            <li>Tracker: when a tracked train passes through a dark
+                (undetected) block, the Tracker now attaches the dark block that
+                actually leads to the block entered, at the correct end of the
+                train.</li>
         </ul>
 
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>Turnouts with DELAYED feedback no longer flip back to an
+                earlier position when two commands are given within the feedback
+                delay, including CBUS turnouts changed by events on the bus, and
+                turnout commands spaced by the connection's output interval
+                (Routes, Dispatcher, matrix signal masts) are always sent in the
+                order requested.</li>
+            <li>Editing a turnout's automation settings from the "Edit Auto" button
+                in the Turnout Table or the Feedback tab of the Edit Turnout window
+                now actually saves the change.
+                Previously, if the turnout's automation was set to a named operation
+                (rather than "Default"), the edit landed on a disconnected copy and
+                the turnout kept using its old settings. The automation dropdown also
+                now shows the right type (for example "Raw") for a turnout with its
+                own settings, instead of always showing the first one.</li>
+            <li>A turnout with its own custom automation settings now keeps automation
+                turned on after the panel file is reloaded. Previously it came back
+                with automation off, and saving again replaced the custom settings
+                with "Off".</li>
         </ul>
 
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li></li>
+            <li>A number of bug fixes have been made to Warrants. If this causes problems for you,
+                you can ask for support on <a href="https://groups.io/g/jmriusers/topics">the JMRI users list</a>.
+                The changes are:</li>
+            <li>Warrants: a "Wait Sensor" command in a warrant script now
+                holds the train until the sensor really reaches the requested
+                state; before, the train could leave early when a signal
+                cleared, a train ahead moved on, or a speed change finished.
+                Resume, Increase Speed and Move into next block still release
+                a train held at a sensor, so the operator can get past a sensor
+                that has failed.</li>
+            <li>A delayed speed change that replaces an earlier one can now be cancelled, and a cancelled
+                one stops at once.</li>
+            <li>A slow-down or stop is no longer sometimes missed. An error while a warrant runs now stops
+                the train and the warrant. Script function commands can use all the functions of the
+                throttle, not only F0 to F28.</li>
+            <li>A warrant no longer moves its train on when a block further ahead becomes occupied while
+                a detected block in between is still empty.</li>
+            <li>A planned slow-down in a script now starts at the right time. Before, it could start late,
+                or at once after a Speed 0 command.</li>
+            <li>Each change of an OBlock is now reported once, not twice, to track icons, Tracker,
+                warrants and the Web Server.</li>
+            <li>The Stop button of the route search now stops the search and shows the routes found so
+                far. Pressing Calculate again cancels the search still running.</li>
+            <li>A signal controlled (SCWarrant) train waiting for its next block no longer adds another
+                listener to that block every few seconds.</li>
+            <li>A speed measured during a warrant run is now merged once into the speed profile. The
+                first measurement for a direction is no longer halved.</li>
         </ul>
 
    <h3>Web Access</h3>
@@ -800,7 +1007,17 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <ii>Previously, you had to reload a panel window to pick up
+                any changes to icon graphics settings: background color, font, 
+                border color, etc.  The server and panel code has been updated to automatically
+                do that update when any of those parameters change.
+            <li>Previously, some colors would display differently on web clients
+                from their appearance on a native JMRI screen.  This was most
+                noticeable with green, light and dark grey, and orange.  JMRI
+                now sends the exact RGB codes to the web client to ensure colors match.</li>
+            <li>If two icons of different type, e.g. a block and a memory, displayed
+                objects with the same user name, the web display could show the 
+                wrong object in one of the icons.  This is now fixed.<li>
         </ul>
 
     <h3>Where Used</h3>
@@ -830,6 +1047,7 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Looking up and renaming items is faster on large layouts,
+                and the memory used by deleted items is now released.</li>
         </ul>
 
