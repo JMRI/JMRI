@@ -239,8 +239,8 @@ public class ActiveTrain implements PropertyChangeProvider {
     private String mTrainName = "";
     private int mTrainSource = ROSTER;
     private jmri.jmrit.roster.RosterEntry mRoster = null;
-    private int mStatus = WAITING;
-    private int mMode = DISPATCHED;
+    private volatile int mStatus = WAITING;
+    private volatile int mMode = DISPATCHED;
     private boolean mTransitReversed = false;  // true if Transit is running in reverse
     private boolean mAllocationReversed = false;  // true if allocating Sections in reverse
     private AutoActiveTrain mAutoActiveTrain = null;
@@ -843,6 +843,47 @@ public class ActiveTrain implements PropertyChangeProvider {
 
     public AutoActiveTrain getAutoActiveTrain() {
         return mAutoActiveTrain;
+    }
+
+    // Block state changes in this train's Allocated Sections are handled one at a
+    // time, in the order they happened. The worker thread ends when there is nothing
+    // left to handle, and a new one is started for the next change.
+    private final java.util.concurrent.ThreadPoolExecutor blockChangeExecutor =
+            new java.util.concurrent.ThreadPoolExecutor(0, 1, 0L, java.util.concurrent.TimeUnit.MILLISECONDS,
+                    new java.util.concurrent.LinkedBlockingQueue<>(),
+                    (Runnable r) -> jmri.util.ThreadingUtil.newThread(r, "Allocated Section Block Change for " + getActiveTrainName()));
+    private final java.util.concurrent.atomic.AtomicInteger blockChangesPending = new java.util.concurrent.atomic.AtomicInteger();
+
+    /**
+     * Queue the handling of a Block state change in one of this train's
+     * Allocated Sections. Changes are handled one at a time, off the event
+     * thread, in the order they were queued.
+     *
+     * @param handler the handling of the change
+     */
+    protected void queueBlockStateChange(@Nonnull Runnable handler) {
+        blockChangesPending.incrementAndGet();
+        try {
+            blockChangeExecutor.execute(() -> {
+                try {
+                    handler.run();
+                } finally {
+                    blockChangesPending.decrementAndGet();
+                }
+            });
+        } catch (java.util.concurrent.RejectedExecutionException e) {
+            // the train has been disposed
+            blockChangesPending.decrementAndGet();
+        }
+    }
+
+    /**
+     * Check whether all queued Block state changes have been handled.
+     *
+     * @return true if none is waiting or being handled
+     */
+    protected boolean isBlockStateChangeQueueIdle() {
+        return blockChangesPending.get() == 0;
     }
 
     public int getRunningDirectionFromSectionAndSeq(Section s, int seqNo) {
@@ -1461,6 +1502,8 @@ public class ActiveTrain implements PropertyChangeProvider {
         if (getTransit()!=null) {
             getTransit().removeTemporarySections();
         }
+        // changes already queued are still handled
+        blockChangeExecutor.shutdown();
     }
 
     // Property Change Support

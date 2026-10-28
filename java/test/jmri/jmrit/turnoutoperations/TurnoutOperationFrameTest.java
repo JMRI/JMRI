@@ -136,7 +136,8 @@ public class TurnoutOperationFrameTest {
             // constructor for jdo will wait until the dialog is visible
             JDialogOperator jdoo = new JDialogOperator(Bundle.getMessage("EnterNewNameTitle"));
             Assertions.assertNotNull(jdoo);
-            new JTextFieldOperator(jdoo).enterText("Changed Name");
+            // set the name without pressing Enter, which would close the dialog before OK is found
+            new JTextFieldOperator(jdoo).setText("Changed Name");
             new JButtonOperator(jdoo, Bundle.getMessage("ButtonOK")).pushNoBlock();
         });
         t4.setName("Operator ReName Close Dialog Thread");

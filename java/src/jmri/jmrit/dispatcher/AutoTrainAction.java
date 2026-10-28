@@ -219,6 +219,11 @@ public class AutoTrainAction {
 
     // this method is called when the state of a Block in an Allocated Section changes
     protected synchronized void handleBlockStateChange(AllocatedSection as, Block b) {
+        handleBlockStateChange(as, b, b.getState());
+    }
+
+    // this method is called with the state the Block changed to
+    protected synchronized void handleBlockStateChange(AllocatedSection as, Block b, int state) {
         // Ignore call if not waiting on Block state change
         for (int i = 0; i < _activeActionList.size(); i++) {
             if (_activeActionList.get(i).getWaitingForBlock()) {
@@ -226,8 +231,8 @@ public class AutoTrainAction {
                 Block target = InstanceManager.getDefault(jmri.BlockManager.class).getBlock(tsa.getStringWhen());
                 if (b == target) {
                     // waiting on state change for this block
-                    if (((b.getState() == Block.OCCUPIED) && (tsa.getWhenCode() == TransitSectionAction.BLOCKENTRY))
-                            || ((b.getState() == Block.UNOCCUPIED) && (tsa.getWhenCode() == TransitSectionAction.BLOCKEXIT))) {
+                    if (((state == Block.OCCUPIED) && (tsa.getWhenCode() == TransitSectionAction.BLOCKENTRY))
+                            || ((state == Block.UNOCCUPIED) && (tsa.getWhenCode() == TransitSectionAction.BLOCKEXIT))) {
                         checkDelay(tsa);
                     }
                 }

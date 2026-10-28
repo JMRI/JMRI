@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
@@ -103,7 +104,11 @@ public class DestinationPointsRouteSettingTest {
         assertTrue(commandedOnLayoutThread.get(), "turnout set on the layout thread");
         assertTrue(returnedBeforeCommand.get(), "the layout thread did not wait for the turnouts");
         assertEquals(Turnout.CLOSED, leftTO.getKnownState(), "turnout set for the route");
-        assertTrue(settingTime >= 550_000_000L, "route completed after the turnout delay: " + settingTime);
+        // The next step is scheduled on a java.util.Timer, which counts in whole milliseconds of
+        // the wall clock, so measured here it can come a fraction of a millisecond before the
+        // 250 ms step plus the turnout delay. Without the turnout delay it would come after 250 ms.
+        assertTrue(settingTime >= TimeUnit.MILLISECONDS.toNanos(eep.turnoutSetDelay),
+                "route completed after the turnout delay: " + settingTime);
         JUnitUtil.waitFor(() -> !eep.isSettingRoutes(), "route setting finished");
         assertTrue(dp.isActive(), "route active");
     }

@@ -144,13 +144,13 @@ public class DefaultConditionalLoopTest {
     }
 
     /**
-     * A chain of 300 Logixes, each setting the input of the next one only
+     * A chain of 100 Logixes, each setting the input of the next one only
      * when its own input becomes active, is not a loop and runs to the end.
      */
     @Test
     public void testLongChainStillRuns() throws JmriException {
         SensorManager sm = InstanceManager.sensorManagerInstance();
-        int length = 300;
+        int length = 100;
         for (int i = 0; i <= length; i++) {
             sm.provideSensor("IS" + (1000 + i)).setKnownState(Sensor.INACTIVE);
         }

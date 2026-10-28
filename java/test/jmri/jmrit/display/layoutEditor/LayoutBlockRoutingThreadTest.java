@@ -49,13 +49,14 @@ public class LayoutBlockRoutingThreadTest {
         lbm.enableAdvancedRouting(true);
         LayoutBlock layoutBlock = new LayoutBlock("ILB996", "Routing Thread Block");
         layoutBlock.initializeLayoutBlock();
+        // the thread is recorded first: the test goes on once the update is counted
+        layoutBlock.addPropertyChangeListener(recordThread("layout block"));
         List<Object> updates = Collections.synchronizedList(new ArrayList<>());
         layoutBlock.addPropertyChangeListener(e -> {
             if (LayoutBlock.PROPERTY_ROUTING.equals(e.getPropertyName())) {
                 updates.add(e.getNewValue());
             }
         });
-        layoutBlock.addPropertyChangeListener(recordThread("layout block"));
 
         runOnNewThread(() -> layoutBlock.setUseExtraColor(true));
         JUnitUtil.waitFor(() -> updates.size() == 1, "routing update sent");
@@ -67,13 +68,14 @@ public class LayoutBlockRoutingThreadTest {
     @Test
     public void testStabilisedReportedOnLayoutThread() throws InterruptedException {
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
+        // the thread is recorded first: the test goes on once the events are counted
+        lbm.addPropertyChangeListener(recordThread("manager"));
         List<Object> topology = Collections.synchronizedList(new ArrayList<>());
         lbm.addPropertyChangeListener(e -> {
             if (LayoutBlockManager.PROPERTY_TOPOLOGY.equals(e.getPropertyName())) {
                 topology.add(e.getNewValue());
             }
         });
-        lbm.addPropertyChangeListener(recordThread("manager"));
 
         lbm.setStabilisedDelay(20);
 

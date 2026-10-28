@@ -142,6 +142,11 @@ public class MemoryInputIcon extends PositionableJPanelWithColumns implements ja
         return namedMemory.getBean();
     }
 
+    @Override
+    public jmri.NamedBean getNamedBean() {
+        return getMemory();
+    }
+
     // update icon as state of Memory changes
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {

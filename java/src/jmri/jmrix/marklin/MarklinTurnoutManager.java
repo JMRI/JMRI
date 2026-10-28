@@ -24,7 +24,7 @@ public class MarklinTurnoutManager extends jmri.managers.AbstractTurnoutManager 
 
     /** Regex for the address portion after stripping system-prefix + type letter. */
     private static final java.util.regex.Pattern ADDRESS_PATTERN =
-            java.util.regex.Pattern.compile("^(MM|DCC|CAN)?(\\d+)$");
+            MarklinAccessoryAddress.ADDRESS_PATTERN;
 
     public MarklinTurnoutManager(MarklinSystemConnectionMemo memo) {
         super(memo);

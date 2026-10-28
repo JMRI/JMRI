@@ -2634,6 +2634,12 @@ $(document).ready(function() {
         // note: the functions and parameter names must match exactly those in web/js/jquery.jmri.js
         // see for example jmri/server/json/turnout/turnout-server.json
         jmri = $.JMRI({
+            hello: function() {
+                // The JSON socket is ready only after the hello handshake.
+                jmri.socket.send("panelDisplayOptions", {
+                    name: decodeURIComponent(panelName.split("/").pop())
+                });
+            },
             didReconnect: function() {
                 // if a reconnect is triggered, reload the page - it is the
                 // simplest method to refresh every object in the panel
@@ -2693,6 +2699,13 @@ $(document).ready(function() {
             },
             layoutBlock: function(name, value, data) {
                 setBlockColor(name, data.blockColor);
+            },
+            panelDisplayOptions: function(name, value) {
+                if (name === $gPanel.name) {
+                    // The XML contains the authoritative display options and
+                    // the existing renderer rebuilds the panel from that XML.
+                    location.reload(false);
+                }
             },
             memory: function(name, value, data) {
                 if (value !== null) {

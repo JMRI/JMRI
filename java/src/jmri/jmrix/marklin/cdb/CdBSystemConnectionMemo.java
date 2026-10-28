@@ -12,6 +12,7 @@ import jmri.jmrix.marklin.MarklinTrafficController;
 import jmri.jmrix.marklin.MarklinSensorManager;
 import jmri.jmrix.marklin.MarklinThrottleManager;
 import jmri.jmrix.marklin.MarklinTurnoutManager;
+import jmri.jmrix.marklin.MarklinLightManager;
 import jmri.jmrix.marklin.MarklinPowerManager;
 import jmri.jmrix.marklin.MarklinSystemConnectionMemo;
 
@@ -80,6 +81,9 @@ public class CdBSystemConnectionMemo extends MarklinSystemConnectionMemo {
         InstanceManager.setTurnoutManager(turnoutManager);
         store(turnoutManager,TurnoutManager.class);
 
+        LightManager lightManager = getLightManager();
+        InstanceManager.setLightManager(lightManager);
+
         ThrottleManager throttleManager = new MarklinThrottleManager(this);
         InstanceManager.setThrottleManager(throttleManager);
         store(throttleManager,ThrottleManager.class);
@@ -120,6 +124,12 @@ public class CdBSystemConnectionMemo extends MarklinSystemConnectionMemo {
     }
 
     @Override
+    public MarklinLightManager getLightManager() {
+        return (MarklinLightManager) classObjectMap.computeIfAbsent(LightManager.class,
+                (Class<?> c) -> new MarklinLightManager(this));
+    }
+
+    @Override
     public MarklinSensorManager getSensorManager() {
         return (MarklinSensorManager) classObjectMap.computeIfAbsent(SensorManager.class, (Class<?> c) -> { return new MarklinSensorManager(this); });
     }
@@ -145,6 +155,5 @@ public class CdBSystemConnectionMemo extends MarklinSystemConnectionMemo {
         super.dispose();
     }
 }
-
 
 

@@ -1,7 +1,5 @@
 package jmri.jmrix.marklin;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
 
@@ -27,15 +25,8 @@ import jmri.implementation.AbstractTurnout;
  */
 public class MarklinTurnout extends AbstractTurnout implements MarklinListener {
 
-    /** Matches the address portion after stripping system-prefix + 'T'. */
-    private static final Pattern ADDRESS_PATTERN =
-            Pattern.compile("^(MM|DCC|CAN)?(\\d+)$");
-
-    enum Protocol { MM, DCC, CAN }
-
     private final MarklinTrafficController tc;
-    private final int _number;
-    private final Protocol protocol;
+    private final int canAddress;
 
     /**
      * Create a MarklinTurnout from its full system name.
@@ -48,21 +39,7 @@ public class MarklinTurnout extends AbstractTurnout implements MarklinListener {
         super(systemName);
         this.tc = tc;
 
-        // Strip prefix + 'T' to get the address string, e.g. "DCC45" or "123"
-        String addr = systemName.substring(prefix.length() + 1);
-        Matcher m = ADDRESS_PATTERN.matcher(addr);
-        if (!m.matches()) {
-            throw new IllegalArgumentException("Cannot parse Marklin turnout address from '" + systemName + "'");
-        }
-        String protocolStr = m.group(1); // null if unprefixed
-        _number = Integer.parseInt(m.group(2));
-        if ("MM".equals(protocolStr)) {
-            protocol = Protocol.MM;
-        } else if ("CAN".equals(protocolStr)) {
-            protocol = Protocol.CAN;
-        } else {
-            protocol = Protocol.DCC; // DCC explicit or unprefixed legacy
-        }
+        canAddress = MarklinAccessoryAddress.toCANAddress(systemName.substring(prefix.length() + 1));
 
         tc.addMarklinListener(this);
     }
@@ -96,17 +73,13 @@ public class MarklinTurnout extends AbstractTurnout implements MarklinListener {
     /**
      * Return the wire address for the accessory command.
      * <ul>
-     *   <li>DCC: {@code _number + DCCACCSTART - 1}</li>
-     *   <li>MM:  {@code _number + MM1ACCSTART - 1}</li>
-     *   <li>CAN: {@code _number} verbatim (raw CAN address)</li>
+     *   <li>DCC: {@code number + DCCACCSTART - 1}</li>
+     *   <li>MM:  {@code number + MM1ACCSTART - 1}</li>
+     *   <li>CAN: {@code number} verbatim (raw CAN address)</li>
      * </ul>
      */
     int getCANAddress() {
-        switch (protocol) {
-            case MM:  return _number + MarklinConstants.MM1ACCSTART - 1;
-            case CAN: return _number;
-            default:  return _number + MarklinConstants.DCCACCSTART - 1; // DCC
-        }
+        return canAddress;
     }
 
     protected void sendMessage(final boolean newstate) {

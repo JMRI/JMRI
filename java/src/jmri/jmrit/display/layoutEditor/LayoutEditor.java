@@ -8533,6 +8533,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
     public void setDefaultTrackColor(@Nonnull Color color) {
         defaultTrackColor = color;
         JmriColorChooser.addRecentColor(color);
+        notifyWebPanelDisplayOptionsChanged();
     }
 
     /**
@@ -8541,6 +8542,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
     public void setDefaultOccupiedTrackColor(@Nonnull Color color) {
         defaultOccupiedTrackColor = color;
         JmriColorChooser.addRecentColor(color);
+        notifyWebPanelDisplayOptionsChanged();
     }
 
     /**
@@ -8549,6 +8551,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
     public void setDefaultAlternativeTrackColor(@Nonnull Color color) {
         defaultAlternativeTrackColor = color;
         JmriColorChooser.addRecentColor(color);
+        notifyWebPanelDisplayOptionsChanged();
     }
 
     /**
@@ -8561,6 +8564,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
             turnoutCircleColor = color;
             JmriColorChooser.addRecentColor(color);
         }
+        notifyWebPanelDisplayOptionsChanged();
     }
 
     /**
@@ -8573,6 +8577,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
             turnoutCircleThrownColor = color;
             JmriColorChooser.addRecentColor(color);
         }
+        notifyWebPanelDisplayOptionsChanged();
     }
 
     /**
@@ -8585,6 +8590,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
         if (turnoutFillControlCircles != state) {
             turnoutFillControlCircles = state;
             turnoutFillControlCirclesCheckBoxMenuItem.setSelected(turnoutFillControlCircles);
+            notifyWebPanelDisplayOptionsChanged();
         }
     }
 
@@ -8597,6 +8603,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
         circleDiameter = 2.0 * circleRadius;
 
         setOptionMenuTurnoutCircleSize();
+        notifyWebPanelDisplayOptionsChanged();
     }
 
     /**
@@ -8609,6 +8616,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
         if (turnoutDrawUnselectedLeg != state) {
             turnoutDrawUnselectedLeg = state;
             turnoutDrawUnselectedLegCheckBoxMenuItem.setSelected(turnoutDrawUnselectedLeg);
+            notifyWebPanelDisplayOptionsChanged();
         }
     }
 
@@ -8631,6 +8639,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
     public void setDefaultTextColor(@Nonnull Color color) {
         defaultTextColor = color;
         JmriColorChooser.addRecentColor(color);
+        notifyWebPanelDisplayOptionsChanged();
     }
 
     /**
@@ -8639,6 +8648,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
     public void setDefaultBackgroundColor(@Nonnull Color color) {
         defaultBackgroundColor = color;
         JmriColorChooser.addRecentColor(color);
+        notifyWebPanelDisplayOptionsChanged();
     }
 
     public void setLayoutName(@Nonnull String name) {
@@ -8829,6 +8839,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
             if (turnoutCirclesOnCheckBoxMenuItem != null) {
                 turnoutCirclesOnCheckBoxMenuItem.setSelected(turnoutCirclesWithoutEditMode);
             }
+            notifyWebPanelDisplayOptionsChanged();
         }
     }
 
