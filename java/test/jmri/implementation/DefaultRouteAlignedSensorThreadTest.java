@@ -39,9 +39,10 @@ public class DefaultRouteAlignedSensorThreadTest {
                 events.add(e.getNewValue() + (ThreadingUtil.isLayoutThread() ? "" : " off layout thread")));
 
         ThreadingUtil.runOnLayout(r::setRoute);
-        JUnitUtil.waitFor(() -> aligned.getKnownState() == Sensor.ACTIVE, "aligned sensor ACTIVE");
+        JUnitUtil.waitFor(() -> events.size() >= 2, "two aligned sensor events");
         JUnitUtil.waitFor(() -> !r.isRouteBusy(), "route not busy");
 
+        assertEquals(Sensor.ACTIVE, aligned.getKnownState(), "aligned sensor ACTIVE");
         assertEquals("[" + Sensor.INCONSISTENT + ", " + Sensor.ACTIVE + "]", events.toString(),
                 "aligned sensor changes");
     }
