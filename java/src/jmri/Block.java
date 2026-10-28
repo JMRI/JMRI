@@ -7,6 +7,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -75,6 +76,13 @@ import jmri.util.PhysicalLocation;
  * but the direction of this block (b2 in the example) is not updated.
  * In other words,
  * we're not noticing that the train must have reversed to go back out.
+ * <li> When a Block can't tell which of its occupied neighbours' trains
+ * entered it, a neighbour becoming unoccupied is taken as its train entering
+ * this Block, unless that train is known to have gone elsewhere: a Block
+ * beyond the neighbour became occupied after this one, or holds that train.
+ * If detection drops out as the train passes between the neighbour and the
+ * Block beyond, so that the neighbour reads empty before the Block beyond
+ * reads occupied, its train leaving is still taken as entering this Block.
  * </ul>
  * <p>
  * Do not assume that a Block object uniquely represents a piece of track.
@@ -930,13 +938,12 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      * one neighbour.
      * <p>
      * If only one neighbour could have entered, its value is taken. Otherwise
-     * every possible entrant is remembered, and the first of them to become
-     * unoccupied is taken to be the train that entered, see
-     * {@link #setAsEntryBlockIfPossible(Block)}. Until then, if all the
-     * entrants holding a value hold the same one, this Block takes it, since
-     * it is the only train known to be there. If none of them holds a value,
-     * this Block's value is cleared, and if they hold different values it is
-     * left as it is.
+     * every possible entrant is remembered until a later event shows which
+     * train entered, see {@link #setAsEntryBlockIfPossible(Block)}. Until
+     * then, if all the entrants holding a value hold the same one, this Block
+     * takes it, since it is the only train known to be there. If none of them
+     * holds a value, this Block's value is cleared, and if they hold different
+     * values it is left as it is.
      *
      * @param entrants the paths a train could have entered by
      */
@@ -945,8 +952,24 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
             takeValueFrom(entrants.get(0));
             return;
         }
+        if (!takeAgreedValue(entrants)) {
+            log.warn("count of {} ACTIVE neighbors with proper direction can't be handled for"
+                + " block {} but maybe it can be determined when another block becomes free",
+                entrants.size(), getDisplayName());
+        }
+        rememberPossibleEntrants(entrants);
+    }
+
+    /**
+     * Take the value that all the possible entrants holding a value agree on.
+     * If none of them holds a value, this Block's value is cleared.
+     *
+     * @param entrants the paths a train could have entered by
+     * @return false if the entrants hold different values, so that this
+     *         Block's value was left as it is
+     */
+    private boolean takeAgreedValue(List<Path> entrants) {
         Path identified = null;
-        boolean allIdentifiedAgree = true;
         for (Path p : entrants) {
             Object value = p.getBlock().getValue();
             if (value == null) {
@@ -955,19 +978,19 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
             if (identified == null) {
                 identified = p;
             } else if (!value.equals(identified.getBlock().getValue())) {
-                allIdentifiedAgree = false;
+                return false;
             }
         }
         if (identified == null) {
             // no train is known to be there
             setValue(null);
-        } else if (allIdentifiedAgree) {
-            takeValueFrom(identified);
         } else {
-            log.warn("count of {} ACTIVE neighbors with proper direction can't be handled for"
-                + " block {} but maybe it can be determined when another block becomes free",
-                entrants.size(), getDisplayName());
+            takeValueFrom(identified);
         }
+        return true;
+    }
+
+    private void rememberPossibleEntrants(List<Path> entrants) {
         pListOfPossibleEntrancePaths = entrants.toArray(new Path[0]);
         cntOfPossibleEntrancePaths = pListOfPossibleEntrancePaths.length;
     }
@@ -980,10 +1003,18 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     }
 
     /**
-     * Take the value of a neighbour Block that has just been emptied, if this
-     * Block could not decide between its occupied neighbours when it became
-     * occupied and that neighbour was one of them. The value is only taken
-     * while this Block is still occupied.
+     * Settle which train entered this Block, now that a neighbour has become
+     * unoccupied, if this Block could not decide between its occupied
+     * neighbours when it became occupied and that neighbour was one of them.
+     * <p>
+     * A neighbour becoming unoccupied is either its train arriving here or its
+     * train leaving the other way. If its train is known to have gone
+     * elsewhere (see {@link #trainLeftAwayFrom(Block)}), it did not enter this
+     * Block and is no longer a possible entrant; if only one possible entrant
+     * is then left, that is the train that entered. Otherwise its train is
+     * taken to have entered this Block, and this Block takes its value.
+     * <p>
+     * Nothing is taken unless this Block is still occupied.
      *
      * @param b the neighbour Block that has become unoccupied
      * @return true if the value of b was taken
@@ -995,22 +1026,88 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
             return false;
         }
         for (int i = 0; i < cntOfPossibleEntrancePaths; i++) {
-            Block candidateBlock = pListOfPossibleEntrancePaths[i].getBlock();
-            if (candidateBlock == b) {
-                Object value = candidateBlock.getValue();
-                if (!Objects.equals(value, getValue())) {
-                    log.info("Block {} gets LATE new value from {}, direction= {}",
-                        getDisplayName(), candidateBlock.getDisplayName(),
-                        Path.decodeDirection(pListOfPossibleEntrancePaths[i].getFromBlockDirection()));
-                }
-                setValue(value);
-                setDirection(pListOfPossibleEntrancePaths[i].getFromBlockDirection());
-                resetCandidateEntrancePaths();
+            Path entrant = pListOfPossibleEntrancePaths[i];
+            if (entrant.getBlock() != b) {
+                continue;
+            }
+            if (b.trainLeftAwayFrom(this)) {
+                log.debug("Block {}: the train in {} left the other way, so it did not enter",
+                    getDisplayName(), b.getDisplayName());
+                rulePossibleEntrantOut(i);
+                return false;
+            }
+            takeLateValueFrom(entrant);
+            resetCandidateEntrancePaths();
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Whether the train in this Block, which is becoming unoccupied, is known
+     * to have gone somewhere other than the given Block. That is so when a
+     * Block reached from this one along a set path is occupied and either
+     * became occupied after the given Block did, or holds this Block's train.
+     *
+     * @param entered the Block the train may instead have entered
+     * @return true if the train is known to have gone elsewhere
+     */
+    private boolean trainLeftAwayFrom(Block entered) {
+        Object train = getValue();
+        for (Path p : paths) {
+            Block other = p.getBlock();
+            if (other == null || other == entered || other.getState() != OCCUPIED || !p.checkPathSet()) {
+                continue;
+            }
+            if (other.occupiedOrder > entered.occupiedOrder
+                    || (train != null && train.equals(other.getValue()))) {
                 return true;
             }
         }
         return false;
     }
+
+    /**
+     * Rule out a possible entrant whose train is known not to have entered.
+     * If only one is left, it is the train that entered; otherwise the others
+     * are kept, and this Block takes the value they agree on, if any.
+     *
+     * @param index the index of the entrant in the list of possible entrants
+     */
+    private void rulePossibleEntrantOut(int index) {
+        List<Path> remaining = new ArrayList<>();
+        for (int i = 0; i < cntOfPossibleEntrancePaths; i++) {
+            if (i != index) {
+                remaining.add(pListOfPossibleEntrancePaths[i]);
+            }
+        }
+        if (remaining.size() == 1) {
+            takeLateValueFrom(remaining.get(0));
+            resetCandidateEntrancePaths();
+        } else {
+            takeAgreedValue(remaining);
+            rememberPossibleEntrants(remaining);
+        }
+    }
+
+    private void takeLateValueFrom(Path entrant) {
+        if (!Objects.equals(entrant.getBlock().getValue(), getValue())) {
+            log.info("Block {} gets LATE new value from {}, direction= {}",
+                getDisplayName(), entrant.getBlock().getDisplayName(),
+                Path.decodeDirection(entrant.getFromBlockDirection()));
+        }
+        setValue(entrant.getBlock().getValue());
+        setDirection(entrant.getFromBlockDirection());
+    }
+
+    /**
+     * Counts Blocks becoming occupied, so that the order in which two Blocks
+     * became occupied can be told without comparing times.
+     */
+    private static final AtomicLong OCCUPIED_COUNT = new AtomicLong();
+
+    /** The value of {@link #OCCUPIED_COUNT} when this Block last became occupied. */
+    private long occupiedOrder;
 
     /**
      * Handle change in sensor state.
@@ -1110,6 +1207,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
             return;
         }
         log.debug("Block {} goes OCCUPIED", getDisplayName());
+        occupiedOrder = OCCUPIED_COUNT.incrementAndGet();
         resetCandidateEntrancePaths();
         // index through the paths, counting
         int count = 0;
