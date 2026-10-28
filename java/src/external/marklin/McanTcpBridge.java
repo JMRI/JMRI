@@ -809,6 +809,8 @@ public class McanTcpBridge {
         private void startSerialReader() {
             Thread readerThread = new Thread(() -> {
                 byte[] buffer = new byte[BUFFER_SIZE];
+                byte[] frameBuffer = new byte[CAN_MESSAGE_SIZE];
+                int framePos = 0;
 
                 log.info("[{}:{}] Serial reader started", serialPortName, tcpPort);
 
@@ -816,6 +818,7 @@ public class McanTcpBridge {
                     try {
                         // Wait for serial port to be available
                         if (!serialPortConnected || serialPort == null) {
+                            framePos = 0; // discard any partial frame from the previous connection
                             Thread.sleep(1000);
                             continue;
                         }
@@ -824,6 +827,7 @@ public class McanTcpBridge {
                         if (serialIn == null) {
                             log.warn("[{}:{}] Serial input stream unavailable", serialPortName, tcpPort);
                             serialPortConnected = false;
+                            framePos = 0;
                             Thread.sleep(1000);
                             continue;
                         }
@@ -841,11 +845,21 @@ public class McanTcpBridge {
                                          serialPortName, tcpPort, bytesRead, hex);
                             }
 
-                            broadcastToClients(buffer, bytesRead);
+                            // Accumulate bytes into complete 13-byte CAN frames before
+                            // forwarding. A single read() may deliver a partial frame, a
+                            // complete frame, or several frames concatenated.
+                            for (int i = 0; i < bytesRead; i++) {
+                                frameBuffer[framePos++] = buffer[i];
+                                if (framePos == CAN_MESSAGE_SIZE) {
+                                    broadcastToClients(frameBuffer, CAN_MESSAGE_SIZE);
+                                    framePos = 0;
+                                }
+                            }
                         } else if (bytesRead < 0) {
                             // End of stream - port disconnected
                             log.warn("[{}:{}] Serial port disconnected (EOF)", serialPortName, tcpPort);
                             serialPortConnected = false;
+                            framePos = 0;
                         }
                     } catch (java.io.InterruptedIOException e) {
                         // 100ms read timeout (SerialPortTimeoutException is an
@@ -855,6 +869,7 @@ public class McanTcpBridge {
                             log.warn("[{}:{}] Serial read error (device may be unplugged): {}",
                                     serialPortName, tcpPort, e.getMessage());
                             serialPortConnected = false;
+                            framePos = 0;
                             try {
                                 Thread.sleep(1000);
                             } catch (InterruptedException ie) {
