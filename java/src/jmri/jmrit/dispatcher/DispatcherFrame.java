@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -3039,34 +3040,41 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * previous minute change. The clock can move on by more than one minute
      * at a time, for example when it is set forward, runs at a high rate or
      * the minute change is handled late, so a time that was passed over still
-     * counts as reached. If the clock has been set back only the exact time
-     * counts.
+     * counts as reached. If the clock has been set back, or the previous time
+     * is not known, only the exact minute counts.
+     * <p>
+     * Departure and restart times are kept as an hour and minute with no
+     * date, so the time is taken as its latest occurrence not after now: on
+     * the fast clock's current day, or the day before if that is later than
+     * now.
      *
      * @param hr       the hour to test against (0-23)
      * @param min      the minute to test against (0-59)
      * @param previous the fast clock time at the previous minute change, or
      *                 null if not known
      * @param now      the fast clock time now
-     * @return true if the time is now, or is after previous and before now
+     * @return true if the time is in the current minute, or is after
+     *         previous and not after now
      */
-    static boolean isFastClockTimeReached(int hr, int min, java.util.Date previous, @Nonnull java.util.Date now) {
-        int minutesPerDay = 24 * 60;
+    static boolean isFastClockTimeReached(int hr, int min, @CheckForNull java.util.Date previous,
+            @Nonnull java.util.Date now) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(now);
-        int nowMinutes = (cal.get(Calendar.HOUR_OF_DAY) * 60) + cal.get(Calendar.MINUTE);
-        int sinceTime = Math.floorMod(nowMinutes - ((hr * 60) + min), minutesPerDay);
-        if (sinceTime == 0) {
-            return true;
+        cal.set(Calendar.HOUR_OF_DAY, hr);
+        cal.set(Calendar.MINUTE, min);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        if (cal.getTime().after(now)) {
+            cal.add(Calendar.DAY_OF_MONTH, -1);
+        }
+        java.util.Date time = cal.getTime();
+        if (now.getTime() - time.getTime() < 60000L) {
+            return true;  // the exact minute
         }
         if (previous == null || !previous.before(now)) {
             return false;
         }
-        if (now.getTime() - previous.getTime() >= minutesPerDay * 60000L) {
-            return true;
-        }
-        cal.setTime(previous);
-        int previousMinutes = (cal.get(Calendar.HOUR_OF_DAY) * 60) + cal.get(Calendar.MINUTE);
-        return sinceTime < Math.floorMod(nowMinutes - previousMinutes, minutesPerDay);
+        return time.after(previous);
     }
 
     // option access methods

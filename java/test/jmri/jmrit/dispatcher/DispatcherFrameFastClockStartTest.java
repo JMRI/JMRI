@@ -1,5 +1,8 @@
 package jmri.jmrit.dispatcher;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -66,6 +69,32 @@ public class DispatcherFrameFastClockStartTest {
         ActiveTrain at = delayedTrain(0, 5);
         clock.setTime(time(2, 0, 10));
         verify(at).setStarted();
+    }
+
+    @Test
+    public void testStartsWhenClockJumpsMoreThanADay() {
+        ActiveTrain at = delayedTrain(8, 0);
+        // from 07:58 on the 1st to 07:30 on the 3rd: 08:00 on the 2nd was passed
+        clock.setTime(time(3, 7, 30));
+        verify(at).setStarted();
+    }
+
+    @Test
+    public void testStartsWhenClockJumpsToTheSameTimeNextDay() {
+        ActiveTrain at = delayedTrain(8, 0);
+        // from 07:58 on the 1st to 07:58 on the 2nd: 08:00 on the 1st was passed,
+        // but the fast clock reports no minute change for the same hour and minute
+        clock.setTime(time(2, 7, 58));
+        verify(at, never()).setStarted();
+        // at the next minute change the passed time is seen
+        clock.setTime(time(2, 7, 59));
+        verify(at).setStarted();
+    }
+
+    @Test
+    public void testExactMinuteOnlyWhenPreviousTimeUnknown() {
+        assertTrue(DispatcherFrame.isFastClockTimeReached(8, 0, null, time(1, 8, 0)), "the exact minute");
+        assertFalse(DispatcherFrame.isFastClockTimeReached(8, 0, null, time(1, 8, 5)), "a minute already passed");
     }
 
     @Test
