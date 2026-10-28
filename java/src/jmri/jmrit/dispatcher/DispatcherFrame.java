@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -850,9 +851,118 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         });
     }
 
+    /**
+     * Release an Allocated Section when the dispatcher clicks its Release
+     * button in the Allocated Sections table.
+     * <p>
+     * Only a train's oldest Section, once the train has left it, or its
+     * furthest allocated Section, if the train has not reached it, can be
+     * released, so that the train's route is never left with a gap. The
+     * Section directly ahead of the train can only be released while the
+     * train is stopped, and the dispatcher is then offered to terminate the
+     * train. With Auto Allocate on, a release ahead of the train puts the
+     * train's allocation on hold, so that the Section is not allocated to it
+     * again straight away. Scripts and Dispatcher's own releases are not
+     * restricted.
+     *
+     * @param index the row of the Allocated Section in the table
+     */
     void releaseAllocatedSectionFromTable(int index) {
         AllocatedSection as = allocatedSections.get(index);
+        String refusal = getManualReleaseRefusal(as);
+        if (refusal != null) {
+            JmriJOptionPane.showMessageDialog(dispatcherFrame, refusal,
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        ActiveTrain at = as.getActiveTrain();
+        boolean aheadOfTrain = !as.getEntered();
+        boolean nextOfTrain = aheadOfTrain && isNextSectionOfTrain(as);
+        if (aheadOfTrain && _AutoAllocate) {
+            // before the release is queued, so that the allocator cannot allocate it again first
+            at.holdAllocation(true);
+            activeTrainsTableModel.fireTableDataChanged();
+        }
         releaseAllocatedSection(as, false);
+        if (nextOfTrain) {
+            int selectedValue = JmriJOptionPane.showOptionDialog(dispatcherFrame,
+                    java.text.MessageFormat.format(Bundle.getMessage("QuestionTerminateAfterRelease"),
+                            new Object[]{as.getSectionName(), at.getActiveTrainName()}),
+                    Bundle.getMessage("MessageTitle"),
+                    JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.QUESTION_MESSAGE, null,
+                    new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo")},
+                    Bundle.getMessage("ButtonNo"));
+            if (selectedValue == 0) { // array position 0, Yes pressed
+                terminateActiveTrain(at, true, false);
+            }
+        }
+    }
+
+    /**
+     * Get why the dispatcher may not release an Allocated Section from the
+     * Allocated Sections table.
+     *
+     * @param as the Allocated Section
+     * @return the reason, to show to the dispatcher, or null if it may be
+     *         released
+     */
+    @CheckForNull
+    String getManualReleaseRefusal(@Nonnull AllocatedSection as) {
+        if (as.getSection().getOccupancy() == Section.OCCUPIED) {
+            return java.text.MessageFormat.format(Bundle.getMessage("ReleaseRefusedOccupied"),
+                    new Object[]{as.getSectionName()});
+        }
+        AllocatedSection oldest = null;
+        AllocatedSection furthest = null;
+        for (AllocatedSection a : as.getActiveTrain().getAllocatedSectionList()) {
+            if (oldest == null || a.getAllocationNumber() < oldest.getAllocationNumber()) {
+                oldest = a;
+            }
+            if (furthest == null || a.getAllocationNumber() > furthest.getAllocationNumber()) {
+                furthest = a;
+            }
+        }
+        if (as == oldest && as.getExited()) {
+            return null;
+        }
+        if (as == furthest && !as.getEntered()) {
+            if (isNextSectionOfTrain(as) && !isTrainStopped(as.getActiveTrain())) {
+                return java.text.MessageFormat.format(Bundle.getMessage("ReleaseRefusedMoving"),
+                        new Object[]{as.getSectionName(), as.getActiveTrain().getActiveTrainName()});
+            }
+            return null;
+        }
+        return java.text.MessageFormat.format(Bundle.getMessage("ReleaseRefusedMiddle"),
+                new Object[]{as.getSectionName(), as.getActiveTrain().getActiveTrainName()});
+    }
+
+    /**
+     * Whether an Allocated Section is the one directly ahead of its train:
+     * the train has not entered it, nor any Section allocated before it.
+     */
+    private boolean isNextSectionOfTrain(@Nonnull AllocatedSection as) {
+        if (as.getEntered()) {
+            return false;
+        }
+        for (AllocatedSection a : as.getActiveTrain().getAllocatedSectionList()) {
+            if (a != as && !a.getEntered() && a.getAllocationNumber() < as.getAllocationNumber()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Whether a train is stopped, so that the Section ahead of it may be
+     * released: an automatic train's engineer must have stopped it, and any
+     * other train must be STOPPED or WAITING.
+     */
+    private boolean isTrainStopped(@Nonnull ActiveTrain at) {
+        if (at.getMode() == ActiveTrain.AUTOMATIC && at.getAutoActiveTrain() != null) {
+            AutoActiveTrain.AutoEngineer engineer = at.getAutoActiveTrain().getAutoEngineer();
+            return engineer == null || engineer.isStopped();
+        }
+        return at.getStatus() == ActiveTrain.STOPPED || at.getStatus() == ActiveTrain.WAITING;
     }
 
     // allocate extra window variables
