@@ -69,13 +69,17 @@ public class AbstractSensorDebounceOrderTest {
 
         s.setOwnState(Sensor.ACTIVE);
         assertEquals(Sensor.INACTIVE, s.getKnownState(), "before the debounce time");
-        JUnitUtil.waitFor(() -> s.getKnownState() == Sensor.ACTIVE, "ACTIVE after debounce");
+        // The known state is set before the listeners are told, so wait for
+        // the listener, not for the state.
+        JUnitUtil.waitFor(() -> consistent.size() == 1, "listeners told after debounce");
+        assertEquals(Sensor.ACTIVE, s.getKnownState(), "ACTIVE after debounce");
 
         // flapping: only the last raw state is applied
         s.setOwnState(Sensor.INACTIVE);
         s.setOwnState(Sensor.ACTIVE);
         s.setOwnState(Sensor.INACTIVE);
-        JUnitUtil.waitFor(() -> s.getKnownState() == Sensor.INACTIVE, "INACTIVE after debounce");
+        JUnitUtil.waitFor(() -> consistent.size() == 2, "listeners told again after debounce");
+        assertEquals(Sensor.INACTIVE, s.getKnownState(), "INACTIVE after debounce");
 
         assertEquals("[" + Sensor.INACTIVE + "->" + Sensor.ACTIVE + ", "
                 + Sensor.ACTIVE + "->" + Sensor.INACTIVE + "]", events.toString(), "events");
