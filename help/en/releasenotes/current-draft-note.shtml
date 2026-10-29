@@ -916,6 +916,12 @@
             <li></li>
         </ul>
 
+    <h3>Consist tool</h3>
+        <a id="consistTool" name="consistTool"></a>
+        <ul>
+            <li>Consist composition text font now the same as default one in consist combobox (see <a href="https://github.com/JMRI/JMRI/issues/15693"> #15693 </a>)</li>
+        </ul>
+
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
