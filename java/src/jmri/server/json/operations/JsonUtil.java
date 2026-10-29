@@ -379,6 +379,7 @@ public class JsonUtil {
         data.put(JSON.DEPARTURE_TIME, train.getFormatedDepartureTime());
         data.put(JSON.DESCRIPTION, train.getDescription());
         data.put(JSON.COMMENT, train.getCommentCurrent());
+        data.put(JSON.COMMENT_TERMINATION, train.getCommentTerminationCurrent());
         if (train.getRoute() != null) {
             data.put(JSON.ROUTE, train.getRoute().getName());
             data.put(JSON.ROUTE_ID, train.getRoute().getId());

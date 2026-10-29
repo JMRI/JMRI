@@ -41,7 +41,7 @@ public class HtmlConductor extends HtmlTrainCommon {
                     StringEscapeUtils.escapeHtml4(train.getDescription()), 
                     convertToHTMLColor(
                             StringEscapeUtils
-                                    .escapeHtml4(TrainCommon.getTextSizeString(train.getCommentCurrentWithColor()))),
+                                    .escapeHtml4(TrainCommon.getTextSizeString(train.getCommentTerminationCurrentWithColor()))),
                     Setup.isPrintRouteCommentsEnabled() ? train.getRoute().getComment() : "",
                     strings.getProperty("Terminated"), 
                     "", // terminated train has nothing to do // NOI18N
