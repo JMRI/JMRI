@@ -44,5 +44,5 @@ public class Z21MonActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Z21MonActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(Z21MonActionTest.class);
 }

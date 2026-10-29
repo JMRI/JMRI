@@ -127,5 +127,5 @@ public class ChangeDepartureTimesFrame extends OperationsFrame {
         return Integer.toString(hour);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ChangeDepartureTimesFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(ChangeDepartureTimesFrame.class);
 }

@@ -160,5 +160,5 @@ public class AllocationPlan {
         // does nothing for now
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AllocationPlan.class);
+    private static final Logger log = LoggerFactory.getLogger(AllocationPlan.class);
 }

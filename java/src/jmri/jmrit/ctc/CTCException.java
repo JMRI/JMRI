@@ -37,17 +37,17 @@ public class CTCException extends Exception {
         logWarning(getExceptionString());
     }
 
-    static public void logError(String string) {
+    public static void logError(String string) {
         log.error(string);
         _ctcExceptionBuffer.logString(CTCExceptionBuffer.ExceptionBufferRecordSeverity.ERROR, string);
     }
 
-    static public void logWarning(String string) {
+    public static void logWarning(String string) {
         log.warn(string);
         _ctcExceptionBuffer.logString(CTCExceptionBuffer.ExceptionBufferRecordSeverity.WARN, string);
     }
 
-    static public void logInfo(String string) {
+    public static void logInfo(String string) {
         log.info(string);
         _ctcExceptionBuffer.logString(CTCExceptionBuffer.ExceptionBufferRecordSeverity.INFO, string);
     }

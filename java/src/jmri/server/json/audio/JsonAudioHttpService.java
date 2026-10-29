@@ -39,7 +39,7 @@ public class JsonAudioHttpService extends JsonNamedBeanHttpService<Audio> {
         }
         AudioSource audioSource = (AudioSource) audio;
         ObjectNode root = this.getNamedBean(audio, name, getType(), request); // throws JsonException if audio == null
-        ObjectNode data = root.with(JSON.DATA);
+        ObjectNode data = root.withObject(JSON.DATA);
         switch (audio.getState()) {
             case Audio.STATE_PLAYING:
                 data.put(JSON.STATE, JSON.AUDIO_PLAYING);

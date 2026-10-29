@@ -267,5 +267,5 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
         return SignalSystem.class;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultSignalSystemManager.class);
+    private static final Logger log = LoggerFactory.getLogger(DefaultSignalSystemManager.class);
 }

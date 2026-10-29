@@ -37,6 +37,6 @@ public class LocationsTableActionTest extends OperationsTestCase {
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LocationsTableActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(LocationsTableActionTest.class);
 
 }

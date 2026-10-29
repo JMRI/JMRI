@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet.loconetovertcp;
 
 import jmri.jmrix.loconet.LnNetworkPortController;
+import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,8 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
 
     public LnTcpDriverAdapter(LocoNetSystemConnectionMemo m) {
         super(m);
+        allowConnectionRecovery = true;
+        reconnectMaxAttempts = -1; // retry indefinitely
         option2Name = "CommandStation";
         option3Name = "TurnoutHandle";
         options.put(option2Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationNames, false));
@@ -30,11 +33,34 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
                 new String[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo")} )); // NOI18N
         options.put("LoconetProtocolAutoDetect", new Option(Bundle.getMessage("LoconetProtocolAutoDetectLabel"),
                 new String[]{Bundle.getMessage("LoconetProtocolAutoDetect"),Bundle.getMessage("ButtonNo")} )); // NOI18N
+        options.put("LoconetUpdateSlotOnMessageCreation",                                       // NOI18N
+                new Option(Bundle.getMessage("LoconetUpdateSlotOnMessageCreationLabel"),        // I18N
+                new String[]{Bundle.getMessage("ButtonNo"),Bundle.getMessage("ButtonYes")} ));  // I18N
 
     }
 
     public LnTcpDriverAdapter() {
         this(new LocoNetSystemConnectionMemo());
+    }
+
+    @Override
+    public void recover() {
+        if (allowConnectionRecovery && opened) {
+            log.info("Connection to {}:{} lost. Attempting to recover...", getHostName(), getPort());
+        }
+        super.recover();
+    }
+
+    // after reconnect, reattach the packetizer's streams and restart the receive thread
+    @Override
+    protected void resetupConnection() {
+        LnTrafficController tc = getSystemConnectionMemo().getLnTrafficController();
+        if (tc instanceof LnOverTcpPacketizer) {
+            LnOverTcpPacketizer packets = (LnOverTcpPacketizer) tc;
+            packets.setLoconetUpdateSlotOnMessageCreation(Bundle.getMessage("ButtonYes").equals(getOptionState("LoconetUpdateSlotOnMessageCreation")));
+            packets.connectPort(this);
+            packets.restartRcvThread();
+        }
     }
 
     /**
@@ -53,6 +79,7 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
 
         // connect to a packetizing traffic controller
         LnOverTcpPacketizer packets = new LnOverTcpPacketizer(this.getSystemConnectionMemo());
+        packets.setLoconetUpdateSlotOnMessageCreation(Bundle.getMessage("ButtonYes").equals(getOptionState("LoconetUpdateSlotOnMessageCreation")));
         packets.connectPort(this);
 
         // create memo
@@ -71,9 +98,6 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
         return opened;
     }
 
-    // private control members
-    private final boolean opened = false;
-
     @Override
     public void configureOption1(String value) {
         super.configureOption1(value);
@@ -81,6 +105,6 @@ public class LnTcpDriverAdapter extends LnNetworkPortController {
         setCommandStationType(value);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnTcpDriverAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(LnTcpDriverAdapter.class);
 
 }

@@ -97,6 +97,6 @@ public class LinkingLabel extends PositionableLabel implements LinkingObject {
         super.doMouseClicked(event);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LinkingLabel.class);
+    private static final Logger log = LoggerFactory.getLogger(LinkingLabel.class);
 
 }

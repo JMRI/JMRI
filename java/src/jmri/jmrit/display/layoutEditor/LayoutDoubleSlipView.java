@@ -26,7 +26,7 @@ public class LayoutDoubleSlipView extends LayoutSlipView {
         editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutDoubleSlipEditor(layoutEditor);
     }
         
-    // final private LayoutDoubleSlip slip;
+    // private final LayoutDoubleSlip slip;
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutDoubleSlipView.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutDoubleSlipView.class);
 }

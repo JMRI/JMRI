@@ -556,6 +556,6 @@ public class CompositeVariableValue extends EnumVariableValue {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(CompositeVariableValue.class);
+    private static final Logger log = LoggerFactory.getLogger(CompositeVariableValue.class);
 
 }

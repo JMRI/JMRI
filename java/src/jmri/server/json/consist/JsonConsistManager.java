@@ -25,7 +25,7 @@ public class JsonConsistManager extends Bean implements ConsistManager {
 
     private ConsistManager manager = null;
     private HashSet<ConsistListListener> listeners = new HashSet<>();
-    private final static Logger log = LoggerFactory.getLogger(JsonConsistManager.class);
+    private static final Logger log = LoggerFactory.getLogger(JsonConsistManager.class);
 
     public JsonConsistManager() {
         super();

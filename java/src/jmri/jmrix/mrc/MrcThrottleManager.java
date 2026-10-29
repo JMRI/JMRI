@@ -87,6 +87,6 @@ public class MrcThrottleManager extends AbstractThrottleManager {
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MrcThrottleManager.class);
+    private static final Logger log = LoggerFactory.getLogger(MrcThrottleManager.class);
 
 }

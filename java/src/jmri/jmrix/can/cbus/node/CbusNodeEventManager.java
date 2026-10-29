@@ -87,7 +87,27 @@ public class CbusNodeEventManager {
             _nodeEvents = new ArrayList<>();
         }
         _nodeEvents.add(newEvent);
-        
+
+        setEvIndexValid(false); // Also produces Property Change Event
+    }
+
+    /**
+     * Replace all node events with a number of new events with unknown
+     * node number, event number, index and event variables,
+     * ie. following a NUMEV response from the node.
+     * <p>
+     * Sets the Event Index as Invalid and notifies ALLEVUPDATE once,
+     * rather than once per event as with {@link #addNewEvent(CbusNodeEvent)}.
+     *
+     * @param numEvents the number of events on the node, 0 or more
+     * @param evVarsPerEvent the number of event variables per event
+     */
+    public void setUnknownEvents( int numEvents, int evVarsPerEvent ) {
+        ArrayList<CbusNodeEvent> newEvents = new ArrayList<>(Math.max(numEvents, 0));
+        for (int i = 0; i < numEvents; i++) {
+            newEvents.add( new CbusNodeEvent(_memo, -1, -1, _node.getNodeNumber(), -1, evVarsPerEvent) );
+        }
+        _nodeEvents = newEvents;
         setEvIndexValid(false); // Also produces Property Change Event
     }
 
@@ -383,7 +403,7 @@ public class CbusNodeEventManager {
      */
     protected void setEvIndexValid( boolean newval ) {
         _eventIndexValid = newval;
-        if (!newval){ // event index no longer valid so clear values in individual events
+        if (!newval && _nodeEvents != null ){ // event index no longer valid so clear values in individual events
             for (int i = 0; i < _nodeEvents.size(); i++) {
                 _nodeEvents.get(i).setIndex(-1);
             }

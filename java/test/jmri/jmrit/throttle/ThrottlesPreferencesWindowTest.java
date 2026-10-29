@@ -1,5 +1,6 @@
 package jmri.jmrit.throttle;
 
+import jmri.jmrit.throttle.preferences.ThrottlesPreferencesWindow;
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
 import jmri.util.junit.annotations.DisabledIfHeadless;

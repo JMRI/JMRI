@@ -1,5 +1,7 @@
 package jmri.server.json.operations;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -18,15 +20,6 @@ import jmri.util.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonOperationsHttpService> {
 
@@ -93,7 +86,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertTrue(result.path(JSON.METHOD).isMissingNode());
         assertEquals(42, result.path(JSON.ID).asInt());
         JsonNode data = result.path(JSON.DATA);
-        assertEquals( 39, data.size(), "Number of properties in Car");
+        assertEquals( 42, data.size(), "Number of properties in Car");
         assertEquals(car.getId(), data.path(JSON.NAME).asText());
         assertEquals(car.getRoadName(), data.path(JsonOperations.ROAD).asText());
         assertEquals(car.getNumber(), data.path(JsonOperations.NUMBER).asText());
@@ -108,7 +101,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertEquals(car.getLengthInteger(), data.path(JSON.LENGTH).asInt());
         assertEquals(car.getAdjustedWeightTons(), data.path(JsonOperations.WEIGHT).asInt());
         assertEquals(car.getWeightTons(), data.path(JsonOperations.WEIGHT_TONS).asText());
-        assertEquals(car.getColor(), data.path(JsonOperations.COLOR).asText());
+        assertEquals(car.getColorName(), data.path(JsonOperations.COLOR).asText());
         assertEquals(car.getOwnerName(), data.path(JsonOperations.OWNER).asText());
         assertEquals(car.getComment(), data.path(JsonOperations.COMMENT).asText());
         assertEquals(car.getLocationId(), data.path(JSON.LOCATION).path(JSON.NAME).asText());
@@ -162,7 +155,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertTrue(result.path(JSON.METHOD).isMissingNode());
         assertEquals(42, result.path(JSON.ID).asInt());
         data = result.path(JSON.DATA);
-        assertEquals( 39, data.size(), "Number of properties in Car");
+        assertEquals( 42, data.size(), "Number of properties in Car");
         assertEquals(car.getId(), data.path(JSON.NAME).asText());
         assertEquals(car.getRoadName(), data.path(JsonOperations.ROAD).asText());
         assertEquals(car.getNumber(), data.path(JsonOperations.NUMBER).asText());
@@ -177,7 +170,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertEquals(car.getLengthInteger(), data.path(JsonOperations.LENGTH).asInt());
         assertEquals(car.getWeight(), data.path(JsonOperations.WEIGHT).asText());
         assertEquals(car.getWeightTons(), data.path(JsonOperations.WEIGHT_TONS).asText());
-        assertEquals(car.getColor(), data.path(JsonOperations.COLOR).asText());
+        assertEquals(car.getColorName(), data.path(JsonOperations.COLOR).asText());
         assertEquals(car.getOwnerName(), data.path(JsonOperations.OWNER).asText());
         assertEquals(car.getBuilt(), data.path(JsonOperations.BUILT).asText());
         assertEquals(car.getComment(), data.path(JsonOperations.COMMENT).asText());
@@ -272,7 +265,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertEquals(42, result.path(JSON.ID).asInt());
         data = result.path(JSON.DATA);
         // rename not always present
-        assertEquals( 40, data.size(), "Number of properties in Car");
+        assertEquals( 43, data.size(), "Number of properties in Car");
         // TODO: verify against car and known values
         assertEquals(car.getId(), data.path(JSON.NAME).asText());
         assertEquals(car.getRoadName(), data.path(JsonOperations.ROAD).asText());
@@ -285,7 +278,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertEquals(car.getLengthInteger(), data.path(JsonOperations.LENGTH).asInt());
         //        assertEquals(car.getAdjustedWeightTons(), data.path(JsonOperations.WEIGHT).asInt());
         assertEquals(car.getWeightTons(), data.path(JsonOperations.WEIGHT_TONS).asText());
-        assertEquals(car.getColor(), data.path(JsonOperations.COLOR).asText());
+        assertEquals(car.getColorName(), data.path(JsonOperations.COLOR).asText());
         assertEquals(car.getOwnerName(), data.path(JsonOperations.OWNER).asText());
         assertEquals(car.getComment(), data.path(JsonOperations.COMMENT).asText());
         assertEquals(car.getLocationId(), data.path(JSON.LOCATION).path(JSON.NAME).asText());
@@ -353,7 +346,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertTrue(result.path(JSON.METHOD).isMissingNode());
         assertEquals(42, result.path(JSON.ID).asInt());
         JsonNode data = result.path(JSON.DATA);
-        assertEquals( 25, data.size(), "Number of properties in Engine");
+        assertEquals( 26, data.size(), "Number of properties in Engine");
         assertEquals(engine.getId(), data.path(JSON.NAME).asText());
         assertEquals(engine.getRoadName(), data.path(JsonOperations.ROAD).asText());
         assertEquals(engine.getNumber(), data.path(JsonOperations.NUMBER).asText());
@@ -368,7 +361,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertEquals(engine.getLengthInteger(), data.path(JsonOperations.LENGTH).asInt());
         assertEquals(engine.getAdjustedWeightTons(), data.path(JsonOperations.WEIGHT).asInt());
         assertEquals(engine.getWeightTons(), data.path(JsonOperations.WEIGHT_TONS).asText());
-        assertEquals(engine.getColor(), data.path(JsonOperations.COLOR).asText());
+        assertEquals(engine.getColorName(), data.path(JsonOperations.COLOR).asText());
         assertEquals(engine.getOwnerName(), data.path(JsonOperations.OWNER).asText());
         assertEquals(engine.getComment(), data.path(JsonOperations.COMMENT).asText());
         assertEquals(engine.getLocationId(), data.path(JSON.LOCATION).path(JSON.NAME).asText());
@@ -398,7 +391,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertTrue(result.path(JSON.METHOD).isMissingNode());
         assertEquals(42, result.path(JSON.ID).asInt());
         data = result.path(JSON.DATA);
-        assertEquals( 25, data.size(), "Number of properties in Engine");
+        assertEquals( 26, data.size(), "Number of properties in Engine");
         assertEquals(engine.getId(), data.path(JSON.NAME).asText());
         assertEquals(engine.getRoadName(), data.path(JsonOperations.ROAD).asText());
         assertEquals(engine.getNumber(), data.path(JsonOperations.NUMBER).asText());
@@ -418,7 +411,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertEquals(engine.getWeightTons(), data.path(JsonOperations.WEIGHT_TONS).asText());
         assertEquals(0.0, data.path(JsonOperations.WEIGHT_TONS).asDouble(), 0.0);
 
-        assertEquals(engine.getColor(), data.path(JsonOperations.COLOR).asText());
+        assertEquals(engine.getColorName(), data.path(JsonOperations.COLOR).asText());
         assertEquals(engine.getOwnerName(), data.path(JsonOperations.OWNER).asText());
         assertEquals(engine.getComment(), data.path(JsonOperations.COMMENT).asText());
         assertEquals(engine.getLocationId(), data.path(JSON.LOCATION).path(JSON.NAME).asText());
@@ -489,7 +482,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertEquals(42, result.path(JSON.ID).asInt());
         data = result.path(JSON.DATA);
         // rename not always present
-        assertEquals( 26, data.size(), "Number of properties in Engine");
+        assertEquals( 27, data.size(), "Number of properties in Engine");
         assertEquals("BM216", data.path(JSON.NAME).asText());
         assertEquals("BM", data.path(JsonOperations.ROAD).asText());
         assertEquals("216", data.path(JsonOperations.NUMBER).asText());
@@ -501,7 +494,7 @@ public class JsonOperationsHttpServiceTest extends JsonHttpServiceTestBase<JsonO
         assertEquals(0, data.path(JsonOperations.LENGTH).asInt());
         assertEquals(engine.getAdjustedWeightTons(), data.path(JsonOperations.WEIGHT).asInt());
         assertEquals(engine.getWeightTons(), data.path(JsonOperations.WEIGHT_TONS).asText());
-        assertEquals(engine.getColor(), data.path(JsonOperations.COLOR).asText());
+        assertEquals(engine.getColorName(), data.path(JsonOperations.COLOR).asText());
         assertEquals(engine.getOwnerName(), data.path(JsonOperations.OWNER).asText());
         assertEquals(engine.getComment(), data.path(JsonOperations.COMMENT).asText());
         assertEquals(engine.getLocationId(), data.path(JSON.LOCATION).path(JSON.NAME).asText());

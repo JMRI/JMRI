@@ -99,7 +99,7 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="SpeedPanelType">
+  <xs:complexType name="SimpleWindowType">
     <xs:sequence>
       <xs:element type="windowType" name="window"/>
     </xs:sequence>
@@ -117,7 +117,9 @@
       <xs:element type="ControlPanelType" name="ControlPanel" minOccurs="0"/>
       <xs:element type="FunctionPanelType" name="FunctionPanel" minOccurs="0"/>
       <xs:element type="AddressPanelType" name="AddressPanel" minOccurs="0"/>
-      <xs:element type="SpeedPanelType" name="SpeedPanel" minOccurs="0"/>
+      <xs:element type="SimpleWindowType" name="SpeedPanel" minOccurs="0"/>
+      <xs:element type="SimpleWindowType" name="LocoIconPanel" minOccurs="0"/>
+      <xs:element type="SimpleWindowType" name="ConsistFunctionsPanel" minOccurs="0"/>
       <xs:element type="JynstrumentType" name="Jynstrument" maxOccurs="unbounded" minOccurs="0"/>
     </xs:sequence>
     <xs:attribute type="xs:integer" name="border" use="optional"/>

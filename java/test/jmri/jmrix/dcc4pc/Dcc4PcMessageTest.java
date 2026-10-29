@@ -71,6 +71,23 @@ public class Dcc4PcMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     } 
 
     @Test
+    public void checkSpeedMessages(){
+       Dcc4PcMessage m = Dcc4PcMessage.setBoardSpeed(1, Dcc4PcMessage.SPEED_62K5);
+       Assert.assertTrue("for child",m.isForChildBoard());
+       Assert.assertTrue("child set speed has a reply",m.replyExpected());
+       Assert.assertEquals("child set speed", "0xb.0x1.0x4.0x4", m.toString());
+       m = Dcc4PcMessage.busSetSpeed(1, 0);
+       Assert.assertFalse("not for child",m.isForChildBoard());
+       Assert.assertFalse("BUS Set Speed answers with no data",m.replyExpected());
+       Assert.assertTrue(m.isNoDataReply());
+       Assert.assertEquals("bus set speed", "0x7.0x1.0x0", m.toString());
+       m = Dcc4PcMessage.busResetSpeeds();
+       Assert.assertFalse("BUS Reset Speeds answers with no data",m.replyExpected());
+       Assert.assertEquals("bus reset speeds", "0xd", m.toString());
+       Assert.assertTrue("Get Info has a reply",Dcc4PcMessage.getInfo(1).replyExpected());
+    }
+
+    @Test
     public void checkResetBoardData(){
        Dcc4PcMessage m = Dcc4PcMessage.resetBoardData(1);
        Assert.assertNotNull(m);
@@ -93,7 +110,7 @@ public class Dcc4PcMessageTest extends jmri.jmrix.AbstractMessageTestBase {
        Assert.assertEquals("board",1,m.getBoard());
        Assert.assertEquals("message type",Dcc4PcMessage.CHILDPOLL,m.getMessageType());
        Assert.assertEquals("retries",1,m.getRetries());
-       Assert.assertEquals("timeout",500,m.getTimeout());
+       Assert.assertEquals("timeout",3000,m.getTimeout());
        Assert.assertEquals(0x0b,m.getElement(0));
        Assert.assertEquals(1,m.getElement(1));
        Assert.assertEquals(Dcc4PcMessage.CHILDPOLL,m.getElement(2));
@@ -175,6 +192,6 @@ public class Dcc4PcMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Dcc4PcMessageTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(Dcc4PcMessageTest.class);
 
 }

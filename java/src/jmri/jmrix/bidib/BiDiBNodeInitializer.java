@@ -364,5 +364,5 @@ public class BiDiBNodeInitializer implements Runnable {
         log.debug("thread finished for node");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BiDiBNodeInitializer.class);
+    private static final Logger log = LoggerFactory.getLogger(BiDiBNodeInitializer.class);
 }

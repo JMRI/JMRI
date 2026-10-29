@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  *
  * @Author Paul Bender Copyright (C) 2014
  */
-final public class XBeeIOStream extends AbstractPortController {
+public final class XBeeIOStream extends AbstractPortController {
 
     private DataOutputStream pout = null; // for output to other classes
     private DataInputStream pin = null; // for input from other classes
@@ -133,7 +133,7 @@ final public class XBeeIOStream extends AbstractPortController {
     public void recover() {
     }
 
-    static private class TransmitThread implements Runnable {
+    private static class TransmitThread implements Runnable {
 
         private RemoteXBeeDevice node = null;
         private XBeeTrafficController xtc = null;
@@ -189,7 +189,7 @@ final public class XBeeIOStream extends AbstractPortController {
 
     }
 
-    static private class ReceiveThread implements Runnable {
+    private static class ReceiveThread implements Runnable {
 
         private final RemoteXBeeDevice node;
         private final XBeeTrafficController xtc;
@@ -230,6 +230,6 @@ final public class XBeeIOStream extends AbstractPortController {
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XBeeIOStream.class);
+    private static final Logger log = LoggerFactory.getLogger(XBeeIOStream.class);
 
 }

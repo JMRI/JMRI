@@ -58,6 +58,6 @@ public class PrintLocationsActionTest extends OperationsTestCase {
         JUnitUtil.dispose(plf);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PrintLocationsActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PrintLocationsActionTest.class);
 
 }

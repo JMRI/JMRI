@@ -255,18 +255,18 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
         return returnval;
     }
 
-    static public String getContentDetail(String str) {
+    public static String getContentDetail(String str) {
         int start = str.indexOf("[") + 1;
         int end = str.indexOf("]");
         return str.substring(start, end);
     }
 
-    static public String getContentDetails(String line, String item) {
+    public static String getContentDetails(String line, String item) {
         int startval = line.indexOf(item) + item.length() + 1;
         int endval = (line.substring(startval)).indexOf("]") + startval;
         return line.substring(startval, endval);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosReply.class);
+    private static final Logger log = LoggerFactory.getLogger(EcosReply.class);
 
 }

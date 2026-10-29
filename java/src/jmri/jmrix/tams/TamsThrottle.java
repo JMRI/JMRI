@@ -23,7 +23,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
     private final Queue<TamsMessage> tmq = new LinkedList<>();
 
     //This dummy message is used in case we expect a reply from polling
-    static private TamsMessage myDummy() {
+    private static TamsMessage myDummy() {
         log.trace("*** myDummy ***");
         TamsMessage m = new TamsMessage(2);
         m.setElement(0, TamsConstants.POLLMSG & TamsConstants.MASKFF);
@@ -394,6 +394,6 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(TamsThrottle.class);
+    private static final Logger log = LoggerFactory.getLogger(TamsThrottle.class);
 
 }

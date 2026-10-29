@@ -199,6 +199,6 @@ public class CbusEventTableXmlActionTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusEventTableActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusEventTableActionTest.class);
 
 }

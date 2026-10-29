@@ -39,6 +39,6 @@ public class NetBiDiBPairingRequestDialogTest {
         JUnitUtil.tearDown();
     }
     
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NetBiDiBPairingRequestDialogTest.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NetBiDiBPairingRequestDialogTest.class);
 }
 

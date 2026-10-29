@@ -459,5 +459,5 @@ public class PositionableJComponent extends JComponent implements Positionable {
         _logixNG.setInlineLogixNG(this);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PositionableJComponent.class);
+    private static final Logger log = LoggerFactory.getLogger(PositionableJComponent.class);
 }

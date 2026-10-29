@@ -97,6 +97,6 @@ public class SpecificDriverAdapter extends SerialPortController {
         return 0;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SpecificDriverAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(SpecificDriverAdapter.class);
 
 }

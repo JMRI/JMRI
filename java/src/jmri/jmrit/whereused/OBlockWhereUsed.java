@@ -17,7 +17,7 @@ public class OBlockWhereUsed {
      * @param oblock The oblock bean.
      * @return a populated textarea.
      */
-    static public JTextArea getWhereUsed(NamedBean oblock) {
+    public static JTextArea getWhereUsed(NamedBean oblock) {
         JTextArea textArea = new JTextArea();
         String label = Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameOBlock"));  // NOI18N
         textArea.append(Bundle.getMessage("ReferenceTitle", label, oblock.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME)));  // NOI18N

@@ -50,14 +50,16 @@ public class DCCppTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
         assertEquals(42, num);
         
         int[] vals = DCCppTurnout.getModeValues();
-        assertEquals(6, vals.length);
+        assertEquals(7, vals.length);
         assertEquals(Turnout.MONITORING, vals[4]);
         assertEquals(Turnout.EXACT, vals[5]);
-        
+        assertEquals(Turnout.CS_VPIN, vals[6]);
+
         String[] names = DCCppTurnout.getModeNames();
-        assertEquals(6, names.length);
+        assertEquals(7, names.length);
         assertEquals("BSTURNOUT", names[4]);
         assertEquals("BSOUTPUT", names[5]);
+        assertEquals("CS VPIN", names[6]);
         // TODO: CHeck some othr stuff
         
         // Check a few basic things
@@ -185,6 +187,21 @@ public class DCCppTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
         assertTrue(m.isAccessoryMessage());
         assertEquals(0, m.getAccessoryStateInt());
         assertEquals(Turnout.CLOSED, t.getState());
+    }
+
+    @Test
+    public void testSetCommandedStateUsesTurnoutOperator() {
+        // DIRECT is the feedback mode used with NoFeedback automation in issue #15471
+        t.setFeedbackMode(Turnout.DIRECT);
+        t.setInhibitOperation(false);
+        t.setTurnoutOperation(new jmri.NoFeedbackTurnoutOperation("TestRetry", 100, 3));
+
+        t.setCommandedState(Turnout.THROWN);
+
+        JUnitUtil.waitFor(() -> dnis.outbound.size() >= 3, "automation retries sent to layout");
+
+        assertEquals(3, dnis.outbound.size(), "commands sent to layout by automation");
+        assertEquals(Turnout.THROWN, t.getKnownState(), "known state set once automation completes");
     }
 
     @Test

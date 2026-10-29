@@ -10,7 +10,7 @@ import java.nio.ByteBuffer;
  */
 @org.openide.util.lookup.ServiceProvider(service = Packet.class)
 public class AcknowledgementPacket extends Packet {
-  public final static byte IDENT = 4;
+  public static final byte IDENT = 4;
   private short ackReason;
 
   @Override

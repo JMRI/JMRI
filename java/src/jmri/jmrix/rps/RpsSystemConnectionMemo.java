@@ -160,6 +160,6 @@ public class RpsSystemConnectionMemo extends DefaultSystemConnectionMemo impleme
         return NameValidity.VALID;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RpsSystemConnectionMemo.class);
+    private static final Logger log = LoggerFactory.getLogger(RpsSystemConnectionMemo.class);
 
 }

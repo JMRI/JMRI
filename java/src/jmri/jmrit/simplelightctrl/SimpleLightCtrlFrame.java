@@ -482,6 +482,6 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SimpleLightCtrlFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(SimpleLightCtrlFrame.class);
 
 }

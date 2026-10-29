@@ -66,6 +66,6 @@ public class LnCabSignalTest extends jmri.implementation.DefaultCabSignalTest {
         JUnitUtil.tearDown();
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(LnCabSignalTest.class);
+    //private static final Logger log = LoggerFactory.getLogger(LnCabSignalTest.class);
 
 }

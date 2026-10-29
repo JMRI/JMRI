@@ -79,7 +79,7 @@ public class EcosMonPane extends jmri.jmrix.AbstractMonPane implements EcosListe
     /**
      * Nested class to create one of these using old-style defaults
      */
-    static public class Default extends jmri.jmrix.ecos.swing.EcosNamedPaneAction {
+    public static class Default extends jmri.jmrix.ecos.swing.EcosNamedPaneAction {
 
         public Default() {
             super("ECoS Command Monitor",

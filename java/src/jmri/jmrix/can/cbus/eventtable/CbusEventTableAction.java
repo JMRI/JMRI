@@ -145,9 +145,12 @@ public class CbusEventTableAction implements PropertyChangeListener {
     }
 
     private void updateStatColumnsinGui( int row){
-        for (int i : CbusEventTableDataModel.canFrameCols) {
-            updateGuiCell(row,i);
+        if (row < 0) {
+            return;
         }
+        // One row update rather than one update per statistics column,
+        // as this is called for every event frame.
+        ThreadingUtil.runOnGUIEventually(() -> _model.fireTableRowsUpdated(row, row));
     }
 
         /**
@@ -171,5 +174,5 @@ public class CbusEventTableAction implements PropertyChangeListener {
         addRemoveListenersToNbManagers(false);
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusEventTableAction.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusEventTableAction.class);
 }

@@ -16,6 +16,6 @@ public class LocationsTableModelTest extends OperationsTestCase {
         Assert.assertNotNull("exists",t);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LocationsTableModelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(LocationsTableModelTest.class);
 
 }

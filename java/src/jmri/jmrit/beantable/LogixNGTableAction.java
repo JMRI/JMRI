@@ -308,7 +308,7 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
     protected class TableModel extends AbstractLogixNGTableAction<LogixNG>.TableModel {
 
         // overlay the state column with the edit column
-        static public final int STARTUP_COL = NUMCOLUMN;
+        public static final int STARTUP_COL = NUMCOLUMN;
 
         /** {@inheritDoc} */
         @Override
@@ -437,6 +437,6 @@ public class LogixNGTableAction extends AbstractLogixNGTableAction<LogixNG> {
 
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGTableAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogixNGTableAction.class);
 
 }

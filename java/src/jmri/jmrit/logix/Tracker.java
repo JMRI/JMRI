@@ -174,8 +174,8 @@ public class Tracker {
                } else if (!getPathsSet(blkB, portal).isEmpty()) {
                    hasEnterB = true;
                }
-           } else if ((block.getState() & Block.UNDETECTED) != 0) {
-               darkBlocks.add(block);
+           } else if ((block.getState() & Block.UNDETECTED) != 0 && isAdjacent(block, blkB)) {
+               darkBlocks.add(block);   // only a dark block that connects to blkB
            }
        }
        if (pathset != PathSet.SET) {
@@ -211,6 +211,15 @@ public class Tracker {
        return pathset;
    }
        
+   private static boolean isAdjacent(OBlock blkA, OBlock blkB) {
+       for (Portal portal : blkA.getPortals()) {
+           if (blkB.equals(portal.getOpposingBlock(blkA))) {
+               return true;
+           }
+       }
+       return false;
+   }
+
    private PathSet hasDarkBlockPathBetween(OBlock blkA, OBlock block, OBlock blkB)
        throws JmriException {
        PathSet pathset = PathSet.NOTSET;
@@ -227,7 +236,8 @@ public class Tracker {
     protected PathSet hasPathInto(OBlock block) throws JmriException {
         _darkBlock = null;
         OBlock blk = getHeadBlock();
-        if (blk != null) {
+        // a block in the tail range is entered from the tail
+        if (blk != null && (_tailRange == null || !_tailRange.contains(block))) {
             PathSet pathSet = hasPathBetween(blk, block, true);
             if (pathSet != PathSet.NOWAY) {
                 return pathSet;

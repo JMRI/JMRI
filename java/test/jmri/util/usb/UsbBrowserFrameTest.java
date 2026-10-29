@@ -39,6 +39,6 @@ public class UsbBrowserFrameTest extends jmri.util.JmriJFrameTestBase {
         super.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(UsbBrowserFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(UsbBrowserFrameTest.class);
 
 }

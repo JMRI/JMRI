@@ -247,7 +247,7 @@ public class AllocatedSection {
     /**
      * Methods
      */
-    final protected void setStoppingSensors() {
+    protected final void setStoppingSensors() {
         if (mSection.getState() == Section.FORWARD) {
             mForwardStoppingSensor = mSection.getForwardStoppingSensor();
             mReverseStoppingSensor = mSection.getReverseStoppingSensor();
@@ -328,15 +328,12 @@ public class AllocatedSection {
             }
 
             Block b = mBlockList.get(index);
-            if (!isInActiveBlockList(b)) {
-                int occ = b.getState();
-                Runnable handleBlockChange = new RespondToBlockStateChange(b, occ, this);
-                Thread tBlockChange = jmri.util.ThreadingUtil.newThread(handleBlockChange, "Allocated Section Block Change on " + b.getDisplayName());
-                tBlockChange.start();
-                addToActiveBlockList(b);
-                if (InstanceManager.getDefault(DispatcherFrame.class).getSupportVSDecoder()) {
-                    firePropertyChangeEvent("BlockStateChange", null, b.getSystemName()); // NOI18N
-                }
+            // Handle every change, with the state it changed to, in the order the
+            // changes happen; all the train's Blocks share one queue.
+            int occ = (e.getNewValue() instanceof Integer) ? (Integer) e.getNewValue() : b.getState();
+            mActiveTrain.queueBlockStateChange(new RespondToBlockStateChange(b, occ, this));
+            if (InstanceManager.getDefault(DispatcherFrame.class).getSupportVSDecoder()) {
+                firePropertyChangeEvent("BlockStateChange", null, b.getSystemName()); // NOI18N
             }
         }
     }
@@ -364,6 +361,8 @@ public class AllocatedSection {
         return null;
     }
 
+    // The active Block list is no longer used by Dispatcher, which now queues every
+    // Block change; these methods are kept for compatibility.
     protected synchronized void addToActiveBlockList(Block b) {
         if (b != null) {
             mActiveBlockList.add(b);
@@ -404,7 +403,7 @@ public class AllocatedSection {
     }
 
 // _________________________________________________________________________________________
-    // This class responds to Block state change in a separate thread
+    // This class responds to a Block state change, run from the train's Block change queue
     class RespondToBlockStateChange implements Runnable {
 
         public RespondToBlockStateChange(Block b, int occ, AllocatedSection as) {
@@ -419,9 +418,13 @@ public class AllocatedSection {
             // The forced delay has been removed. The delay can be controlled by the debounce
             // values in the sensor table. The use of an additional fixed 250 milliseconds
             // caused it to always fail when crossing small blocks at speed.
+            if (mActiveTrain.getMode() == ActiveTrain.TERMINATED) {
+                // the train was terminated while this change was waiting to be handled
+                return;
+            }
             if (mActiveTrain.getAutoActiveTrain() != null) {
                 // automatically running train
-                mActiveTrain.getAutoActiveTrain().handleBlockStateChange(_aSection, _block);
+                mActiveTrain.getAutoActiveTrain().handleBlockStateChange(_aSection, _block, _occ);
             } else if (_occ == Block.OCCUPIED) {
                 // manual running train - block newly occupied
                 if (!mActiveTrain.getAutoRun()) {
@@ -440,8 +443,6 @@ public class AllocatedSection {
                     }
                 }
             }
-            // remove from lists
-            removeFromActiveBlockList(_block);
         }
 
         private Block _block = null;
@@ -465,5 +466,5 @@ public class AllocatedSection {
         pcs.firePropertyChange(name, oldVal, newVal);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AllocatedSection.class);
+    private static final Logger log = LoggerFactory.getLogger(AllocatedSection.class);
 }

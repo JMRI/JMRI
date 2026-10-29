@@ -14,6 +14,13 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusParameters {
 
+    /**
+     * Maximum number of parameters.
+     * paramData holds the parameter count at index 0, then the parameters
+     * at indexes 1 to MAX_PARAMS.
+     */
+    public static final int MAX_PARAMS = 32;
+
     protected int [] paramData = null;
     protected boolean valid = false;
 
@@ -22,7 +29,7 @@ public class CbusParameters {
      * Create blank parameters
      */
     public CbusParameters() {
-        paramData = new int[33];
+        paramData = new int[MAX_PARAMS + 1];
         Arrays.fill(paramData, -1);
     }
     
@@ -35,7 +42,7 @@ public class CbusParameters {
     public CbusParameters(byte [] d) {
         this();
         
-        if (d.length > 32) {
+        if (d.length > MAX_PARAMS) {
             log.error("Too many parameters");
             valid = false;
         } else {
@@ -56,8 +63,8 @@ public class CbusParameters {
     public int getParam(int i) {
         return paramData[i];
     }
-    
-    
+
+
     /**
      * Set a parameter
      * @param i index of the parameter to set
@@ -66,19 +73,30 @@ public class CbusParameters {
     public void setParam(int i, int v) {
         paramData[i] = v;
     }
-    
-    
+
+
+    /**
+     * Check if a parameter index can be used with getParam or setParam
+     *
+     * @param i index of the parameter
+     * @return true if the index is within the parameter array
+     */
+    public boolean isValidIndex(int i) {
+        return (i >= 0) && (i < paramData.length);
+    }
+
+
     /**
      * Valid parameter block in a hex file by comparing against one
      * read from hardware (or some other source)
-     * 
+     *
      * @param fp Parameters from hex file
      * @param hp parameters to validate against
      * @return true if parameter blocks match
      */
     public boolean validate(CbusParameters fp, CbusParameters hp) {
 
-        if (!fp.valid || !hp.valid) {
+        if ((fp == null) || (hp == null) || !fp.valid || !hp.valid) {
             return false;
         }
 
@@ -158,7 +176,9 @@ public class CbusParameters {
             return Bundle.getMessage("ParamsInvalid");
         } else {
             StringBuilder sb = new StringBuilder();
-            for (int i = 1; i < paramData[0]; i++) {
+            // Parameter 0 is the number of parameters that follow
+            int n = Math.min(paramData[0], paramData.length - 1);
+            for (int i = 1; i <= n; i++) {
                 sb.append(paramData[i] + " ");
             }
             return sb.toString();
@@ -185,6 +205,6 @@ public class CbusParameters {
         valid = s;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(CbusParameters.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusParameters.class);
     
 }

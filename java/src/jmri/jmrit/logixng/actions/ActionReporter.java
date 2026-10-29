@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import javax.annotation.Nonnull;
@@ -21,16 +19,15 @@ import jmri.util.TypeConversionUtil;
  * @author Daniel Bergqvist Copyright 2021
  * @author Dave Sand Copyright 2021
  */
-public class ActionReporter extends AbstractDigitalAction
-        implements PropertyChangeListener {
+public class ActionReporter extends AbstractDigitalAction {
 
     private final LogixNG_SelectNamedBean<Reporter> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Reporter.class, InstanceManager.getDefault(ReporterManager.class), this);
+                    this, Reporter.class, InstanceManager.getDefault(ReporterManager.class));
 
     private final LogixNG_SelectNamedBean<Memory> _selectMemoryNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class));
 
     private ReporterValue _reporterValue = ReporterValue.CopyCurrentReport;
 
@@ -279,18 +276,6 @@ public class ActionReporter extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public void registerListenersForThisClass() {
-        _selectNamedBean.registerListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        _selectNamedBean.unregisterListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void disposeMe() {
     }
 
@@ -319,12 +304,6 @@ public class ActionReporter extends AbstractDigitalAction
         _selectMemoryNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
-    }
-
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionReporter.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionReporter.class);
 
 }

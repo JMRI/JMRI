@@ -51,8 +51,8 @@ public class DefaultIdTag extends AbstractIdTag {
         setWhereLastSeen(null);
     }
 
-    public final static String PROPERTY_WHEN_LAST_SEEN = "whenLastSeen";
-    public final static String PROPERTY_WHERE_LAST_SEEN = "whereLastSeen";
+    public static final String PROPERTY_WHEN_LAST_SEEN = "whenLastSeen";
+    public static final String PROPERTY_WHERE_LAST_SEEN = "whereLastSeen";
 
     @Override
     public int compareTo(NamedBean n2) {

@@ -78,7 +78,7 @@ public class Bundle extends apps.Bundle {
         return getBundle().handleGetMessage(key, subs);
     }
 
-    private final static Bundle b = new Bundle();
+    private static final Bundle b = new Bundle();
 
     @Override
     @CheckForNull

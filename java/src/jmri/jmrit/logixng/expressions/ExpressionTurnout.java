@@ -24,7 +24,7 @@ public class ExpressionTurnout extends AbstractDigitalExpression
 
     private final LogixNG_SelectNamedBean<Turnout> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Turnout.class, InstanceManager.getDefault(TurnoutManager.class), this);
+                    this, Turnout.class, InstanceManager.getDefault(TurnoutManager.class));
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
     private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
     private TurnoutState _turnoutState = TurnoutState.Thrown;
@@ -232,7 +232,6 @@ public class ExpressionTurnout extends AbstractDigitalExpression
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
             _selectNamedBean.addPropertyChangeListener("KnownState", this);
-            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -242,7 +241,6 @@ public class ExpressionTurnout extends AbstractDigitalExpression
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             _selectNamedBean.removePropertyChangeListener("KnownState", this);
-            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }
@@ -272,7 +270,7 @@ public class ExpressionTurnout extends AbstractDigitalExpression
             this._text = text;
         }
 
-        static public TurnoutState get(int id) {
+        public static TurnoutState get(int id) {
             switch (id) {
                 case Turnout.CLOSED:
                     return Closed;
@@ -303,6 +301,6 @@ public class ExpressionTurnout extends AbstractDigitalExpression
         _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Expression);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionTurnout.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionTurnout.class);
 
 }

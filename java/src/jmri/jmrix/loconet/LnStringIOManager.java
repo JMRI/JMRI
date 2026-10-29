@@ -91,6 +91,6 @@ public class LnStringIOManager extends jmri.managers.AbstractStringIOManager imp
         // reach here for LocoNet sensor input command; make sure we know about this one
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LnStringIOManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LnStringIOManager.class);
 
 }

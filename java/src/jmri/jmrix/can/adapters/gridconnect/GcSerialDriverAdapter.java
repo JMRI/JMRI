@@ -78,7 +78,7 @@ public class GcSerialDriverAdapter extends GcPortController {
             return Bundle.getMessage("SerialPortNotFound", portName);
         }
         log.info("Connecting CAN to {} {}", portName, currentSerialPort);
-        
+
         // try to set it for communication via SerialDriver
         // find the baud rate value, configure comm options
         int baud = currentBaudNumber(mBaudRate);
@@ -88,7 +88,7 @@ public class GcSerialDriverAdapter extends GcPortController {
 
         // get and save stream
         serialStream = currentSerialPort.getInputStream();
-        // this is referenced in several other methods, 
+        // this is referenced in several other methods,
         // so can't easily be removed.
 
         // report status
@@ -99,7 +99,7 @@ public class GcSerialDriverAdapter extends GcPortController {
         return null; // indicates OK return
     }
 
-    /** 
+    /**
      * Local set up the flow contro, here to allow override
      */
     protected void localSetFlowControl() {
@@ -138,7 +138,7 @@ public class GcSerialDriverAdapter extends GcPortController {
     protected void resetupConnection() {
         if (!getSystemConnectionMemo().getTrafficController().status()) {
             getSystemConnectionMemo().getTrafficController().connectPort(this);
-            ConnectionStatus.instance().setConnectionState(getUserName(), getCurrentPortName(),
+            ConnectionStatus.instance().setConnectionState(getSystemConnectionMemo(),
                 ((getSystemConnectionMemo().getTrafficController().status() && status()) ? ConnectionStatus.CONNECTION_UP : ConnectionStatus.CONNECTION_DOWN));
         }
     }
@@ -190,7 +190,8 @@ public class GcSerialDriverAdapter extends GcPortController {
      */
     private static class AsyncBufferInputStream extends FilterInputStream {
 
-        private boolean active;
+        // written by close() on another thread
+        private volatile boolean active;
 
         /**
          * Create new AsyncBufferInputStream.
@@ -249,9 +250,17 @@ public class GcSerialDriverAdapter extends GcPortController {
                 if (tail == null) {
                     return;
                 }
-                // NOTE: in order to reuse this class in a generic context, we need to add support
-                // for the underlying input stream persistently returning EOF. That does not
-                // happen on a serial port.
+                // End of stream. jSerialComm signals a removed USB serial port
+                // (eg. a CANUSB4 unplugged on Windows) by read() returning -1
+                // rather than by throwing. Retrying would spin this maximum
+                // priority thread on a whole core forever, and the reader
+                // would never find out. Hand the end of stream on to the
+                // reader, so the traffic controller sees the connection fail
+                // and starts recovery, and stop this thread.
+                if (tail.len < 0) {
+                    readAhead.add(tail);
+                    return;
+                }
                 if (tail.len > 0 || tail.e != null) {
                     readAhead.add(tail);
                 } else {
@@ -263,6 +272,10 @@ public class GcSerialDriverAdapter extends GcPortController {
                 do {
                     tail = tryRead(128);
                     if (tail == null) {
+                        return;
+                    }
+                    if (tail.len < 0) {
+                        readAhead.add(tail); // end of stream, see above
                         return;
                     }
                     if (tail.len > 0 || tail.e != null) {
@@ -312,11 +325,18 @@ public class GcSerialDriverAdapter extends GcPortController {
             if (skip != 0) {
                 throw new UnsupportedOperationException();
             }
+            if (head != null && head.len < 0) {
+                return -1; // end of stream already reached, the read thread has stopped
+            }
             if (head == null || headOfs >= head.len) {
                 try {
                     head = readAhead.take();
                 } catch (InterruptedException e) {
+                    // Interrupted while waiting, eg. connection closing.
+                    // Must not fall through, as head is either null or the
+                    // previous, already returned, entry, which would be replayed.
                     Thread.currentThread().interrupt();
+                    throw new java.io.InterruptedIOException("Interrupted waiting for data from " + portName);
                 }
                 if (head.e != null) {
                     throw head.e;
@@ -338,7 +358,7 @@ public class GcSerialDriverAdapter extends GcPortController {
         private final String portName;
         // After this many consecutive read attempts resulting in an exception we will terminate
         // the read thread and return the last exception to the reader.
-        private final static int MAX_IO_ERRORS_TO_ABORT = 10;
+        private static final int MAX_IO_ERRORS_TO_ABORT = 10;
         // Queue holding the buffered data.
         private final BlockingQueue<BufferEntry> readAhead = new LinkedBlockingQueue<>();
         // The last entry we got from the queue if there are still bytes we need to return from it.
@@ -409,6 +429,6 @@ public class GcSerialDriverAdapter extends GcPortController {
     // Stream wrapper that buffers the input bytes.
     private InputStream bufferedStream = null;
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(GcSerialDriverAdapter.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(GcSerialDriverAdapter.class);
 
 }

@@ -65,10 +65,10 @@ public class Mx1Message extends jmri.jmrix.NetMessage {
         return false;
     }
 
-    final static int PRIMARY = 0x00;
-    final static int ACKREP1 = 0x40;
-    final static int REPLY2 = 0x20;
-    final static int ACK2 = 0x60;
+    static final int PRIMARY = 0x00;
+    static final int ACKREP1 = 0x40;
+    static final int REPLY2 = 0x20;
+    static final int ACK2 = 0x60;
 
     /**
      * Indicates where the message is to/from in the header byte.
@@ -121,13 +121,13 @@ public class Mx1Message extends jmri.jmrix.NetMessage {
      *
      * @see #messageSource()
      */
-    final static boolean CS = true;
+    static final boolean CS = true;
     /**
      * Indicates the message source is a command station. {@value #PC}
      *
      * @see #messageSource()
      */
-    final static boolean PC = false;
+    static final boolean PC = false;
 
     /**
      * Indicates the source of the message.
@@ -469,25 +469,25 @@ public class Mx1Message extends jmri.jmrix.NetMessage {
         }
     }
 
-    final static int NO_ERROR = 0x00;
-    final static int ERR_ADDRESS = 0x01;
-    final static int ERR_INDEX = 0x02;
-    final static int ERR_FORWARD = 0x03;
-    final static int ERR_BUSY = 0x04;
-    final static int ERR_NO_MOT = 0x05;
-    final static int ERR_NO_DCC = 0x06;
-    final static int ERR_CV_ADDRESS = 0x07;
-    final static int ERR_SECTION = 0x08;
-    final static int ERR_NO_MODUL = 0x09;
-    final static int ERR_MESSAGE = 0x0a;
-    final static int ERR_SPEED = 0x0b;
+    static final int NO_ERROR = 0x00;
+    static final int ERR_ADDRESS = 0x01;
+    static final int ERR_INDEX = 0x02;
+    static final int ERR_FORWARD = 0x03;
+    static final int ERR_BUSY = 0x04;
+    static final int ERR_NO_MOT = 0x05;
+    static final int ERR_NO_DCC = 0x06;
+    static final int ERR_CV_ADDRESS = 0x07;
+    static final int ERR_SECTION = 0x08;
+    static final int ERR_NO_MODUL = 0x09;
+    static final int ERR_MESSAGE = 0x0a;
+    static final int ERR_SPEED = 0x0b;
 
-    final static int TRACKCTL = 0x02;
-    final static int PROGCMD = 0x13;
-    final static int LOCOCMD = 0x03;
-    final static int ACCCMD = 0x07;
+    static final int TRACKCTL = 0x02;
+    static final int PROGCMD = 0x13;
+    static final int LOCOCMD = 0x03;
+    static final int ACCCMD = 0x07;
 
-    static public Mx1Message getCmdStnDetails() {
+    public static Mx1Message getCmdStnDetails() {
         Mx1Message m = new Mx1Message(4);
         m.setElement(1, 0x10);
         m.setElement(2, 0x13);
@@ -500,7 +500,7 @@ public class Mx1Message extends jmri.jmrix.NetMessage {
      *
      * @return MrcMessage
      */
-    static public Mx1Message setPowerOff() {
+    public static Mx1Message setPowerOff() {
         Mx1Message m = new Mx1Message(4, Mx1Packetizer.BINARY);
         m.setElement(1, 0x10); // PC control short message
 
@@ -509,7 +509,7 @@ public class Mx1Message extends jmri.jmrix.NetMessage {
         return m;
     }
 
-    static public Mx1Message setPowerOn() {
+    public static Mx1Message setPowerOn() {
         Mx1Message m = new Mx1Message(4, Mx1Packetizer.BINARY);
         m.setElement(1, 0x10); // PC control short message
 
@@ -518,7 +518,7 @@ public class Mx1Message extends jmri.jmrix.NetMessage {
         return m;
     }
 
-    static public Mx1Message getTrackStatus() {
+    public static Mx1Message getTrackStatus() {
         Mx1Message m = new Mx1Message(4, Mx1Packetizer.BINARY);
         m.setElement(1, 0x10); // PC control short message
 
@@ -537,7 +537,7 @@ public class Mx1Message extends jmri.jmrix.NetMessage {
      * @return a message to read or write a CV
      */
     // javadoc did indicate locoAddress could be blank to use programming track, but that's not possible with an int
-    static public Mx1Message getDecProgCmd(int locoAddress, int cv, int value, boolean dcc) {
+    public static Mx1Message getDecProgCmd(int locoAddress, int cv, int value, boolean dcc) {
         Mx1Message m;
         if (value == -1) {
             m = new Mx1Message(7, Mx1Packetizer.BINARY);
@@ -575,7 +575,7 @@ public class Mx1Message extends jmri.jmrix.NetMessage {
      * @param cData3      functions output 9-12
      * @return message controlling a locomotive
      */
-    static public Mx1Message getLocoControl(int locoAddress, int speed, boolean dcc, int cData1, int cData2, int cData3) {
+    public static Mx1Message getLocoControl(int locoAddress, int speed, boolean dcc, int cData1, int cData2, int cData3) {
         Mx1Message m = new Mx1Message(9, Mx1Packetizer.BINARY);
         m.setElement(0, 0x00);
         m.setElement(1, 0x10); // PC control short message
@@ -597,7 +597,7 @@ public class Mx1Message extends jmri.jmrix.NetMessage {
         return m;
     }
 
-    static public Mx1Message getSwitchMsg(int accAddress, int setting, boolean dcc) {
+    public static Mx1Message getSwitchMsg(int accAddress, int setting, boolean dcc) {
         Mx1Message m = new Mx1Message(6, Mx1Packetizer.BINARY);
         m.setElement(0, 0x00);
         m.setElement(1, 0x10); // PC control short message

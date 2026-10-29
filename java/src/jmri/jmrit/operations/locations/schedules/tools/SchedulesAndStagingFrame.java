@@ -24,7 +24,7 @@ import jmri.jmrit.operations.setup.Control;
  * tracks that will service the car type and the spurs that will accept the
  * selected load name.
  *
- * @author Dan Boudreau Copyright (C) 2023
+ * @author Dan Boudreau Copyright (C) 2023, 2026
  */
 public class SchedulesAndStagingFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -100,6 +100,9 @@ public class SchedulesAndStagingFrame extends OperationsFrame implements java.be
         toolMenu.addSeparator();
         toolMenu.add(new PrintCarLoadsAction(true));
         toolMenu.add(new PrintCarLoadsAction(false));
+        toolMenu.addSeparator();
+        toolMenu.add(new PrintStagingAndSchedulesByTypeAndLoadAction(true, this));
+        toolMenu.add(new PrintStagingAndSchedulesByTypeAndLoadAction(false, this));
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_ShowStagingAndSchedulesByCarTypeAndLoad", true); // NOI18N
@@ -141,9 +144,11 @@ public class SchedulesAndStagingFrame extends OperationsFrame implements java.be
         addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("CarLoadOptions")), 2, 0);
         addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("ShipLoadOption")), 3, 0);
         addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Load")), 4, 0);
-        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("destinationTrack")), 5, 0);
-        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("LoadOption")), 6, 0);
-        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Schedule")), 7, 0);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Destination")), 5, 0);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Track")), 6, 0);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("LoadOption")), 7, 0);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Schedule")), 8, 0);
+        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Id")), 9, 0);
 
         x = 1;
         for (Location location : locationManager.getLocationsByNameList()) {
@@ -169,7 +174,7 @@ public class SchedulesAndStagingFrame extends OperationsFrame implements java.be
         repaint();
     }
 
-    private String getTrackCarLoadOptions(Track track) {
+    public String getTrackCarLoadOptions(Track track) {
         StringBuffer options = new StringBuffer();
         if (track.isLoadSwapEnabled()) {
             options.append(Bundle.getMessage("ABV_SwapDefaultLoads") + " ");
@@ -247,15 +252,27 @@ public class SchedulesAndStagingFrame extends OperationsFrame implements java.be
                                         (si.getReceiveLoadName().equals(ScheduleItem.NONE) &&
                                                 !generatedLoadsCheckBox.isSelected()))) {
                             addItemLeft(locationsPanel, new JLabel(load), 4, x);
-                            addItemLeft(locationsPanel, new JLabel(location.getName() + " (" + spur.getName() + ")"), 5,
-                                    x);
-                            addItemLeft(locationsPanel, new JLabel(spur.getLoadOptionString()), 6, x);
-                            addItemLeft(locationsPanel, new JLabel(sch.getName() + " " + si.getId()), 7, x++);
+                            addItemLeft(locationsPanel, new JLabel(location.getName()), 5, x);
+                            addItemLeft(locationsPanel, new JLabel(spur.getName()), 6, x);
+                            addItemLeft(locationsPanel, new JLabel(spur.getLoadOptionString()), 7, x);
+                            addItemLeft(locationsPanel, new JLabel(sch.getName()), 8, x);
+                            addItemLeft(locationsPanel, new JLabel(si.getId()), 9, x++);
                         }
                     }
                 }
             }
         }
+    }
+
+    public String getCarType() {
+        return (String) typesComboBox.getSelectedItem();
+    }
+
+    public String getCarLoad() {
+        if (allLoadsCheckBox.isSelected()) {
+            return null;
+        }
+        return (String) loadsComboBox.getSelectedItem();
     }
 
     @Override
@@ -297,6 +314,6 @@ public class SchedulesAndStagingFrame extends OperationsFrame implements java.be
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SchedulesAndStagingFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(SchedulesAndStagingFrame.class);
 
 }

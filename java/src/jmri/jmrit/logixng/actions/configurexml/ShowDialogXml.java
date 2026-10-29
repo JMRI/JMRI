@@ -190,5 +190,5 @@ public class ShowDialogXml extends jmri.managers.configurexml.AbstractNamedBeanM
         return true;
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ShowDialogXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ShowDialogXml.class);
 }

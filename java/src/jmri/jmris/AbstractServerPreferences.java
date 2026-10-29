@@ -23,7 +23,7 @@ abstract public class AbstractServerPreferences extends Bean {
     private int port;
     // as loaded prefences
     private int asLoadedPort;
-    private final static Logger log = LoggerFactory.getLogger(AbstractServerPreferences.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractServerPreferences.class);
 
     public AbstractServerPreferences(String fileName) {
         boolean migrate = false;

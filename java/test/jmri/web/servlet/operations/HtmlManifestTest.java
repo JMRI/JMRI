@@ -8,7 +8,7 @@ import org.junit.jupiter.api.*;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 /**
@@ -41,16 +41,17 @@ public class HtmlManifestTest {
         JUnitUtil.initIdTagManager();
         jmri.util.JUnitOperationsUtil.setupOperationsTests();
         jmri.util.JUnitOperationsUtil.initOperationsData();
-        // default font chars per line, prevents headless exception when using HardcopyWriter
-        InstanceManager.getDefault(TrainManager.class).setHardcopyWriterLineLength("Monospaced", 0, 10, TrainCommon.getPageSize("Portrait"), false, 89);
     }
 
     @AfterEach
     public void tearDown() {
+        // GitHub CI workflows doesn't have a default printer
+        JUnitAppender.suppressWarnMessage("No default printer found");
+
         JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(HtmlManifestTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(HtmlManifestTest.class);
 
 }

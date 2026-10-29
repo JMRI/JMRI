@@ -243,7 +243,7 @@ public class TurnoutOperationManager implements InstanceManagerAutoDefault {
      * @param types list of types possibly containing duplicates
      * @return list reduced as described above
      */
-    static public String[] concatenateTypeLists(@Nonnull String[] types) {
+    public static String[] concatenateTypeLists(@Nonnull String[] types) {
         List<String> outTypes = new LinkedList<>();
         boolean noFeedbackWanted = false;
         for (String type : types) {
@@ -292,7 +292,9 @@ public class TurnoutOperationManager implements InstanceManagerAutoDefault {
             return Bundle.getMessage("TurnoutOperationOffTip");
         }
         if ( t != null && operatorName.equals(Bundle.getMessage("TurnoutOperationDefault"))) {
-            return Bundle.getMessage("UseGlobal", getMatchingOperationAlways(t).getName());
+            TurnoutOperation op = getMatchingOperationAlways(t);
+            if (op == null) return null;
+            return Bundle.getMessage("UseGlobal", op.getName());
         }
         for ( TurnoutOperation to : getTurnoutOperations() ) {
             if (operatorName.equals(to.getName())) {
@@ -302,5 +304,5 @@ public class TurnoutOperationManager implements InstanceManagerAutoDefault {
         return null;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TurnoutOperationManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TurnoutOperationManager.class);
 }

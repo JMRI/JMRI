@@ -54,5 +54,5 @@ public class StringActionMemoryXml extends jmri.managers.configurexml.AbstractNa
         return true;
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringActionMemoryXml.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringActionMemoryXml.class);
 }

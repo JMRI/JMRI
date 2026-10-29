@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -18,14 +16,14 @@ import jmri.util.*;
  * @author Daniel Bergqvist Copyright 2025
  */
 public class ForEachWithDelay extends AbstractDigitalAction
-        implements FemaleSocketListener, PropertyChangeListener {
+        implements FemaleSocketListener {
 
     private final LogixNG_SelectString _selectVariable =
-            new LogixNG_SelectString(this, this);
+            new LogixNG_SelectString(this);
 
     private final LogixNG_SelectNamedBean<Memory> _selectMemoryNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class));
 
     private boolean _useCommonSource = true;
     private CommonManager _commonManager = CommonManager.Sensors;
@@ -502,35 +500,7 @@ public class ForEachWithDelay extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public void registerListenersForThisClass() {
-        if (!_listenersAreRegistered) {
-            if (_userSpecifiedSource == UserSpecifiedSource.Memory) {
-                _selectMemoryNamedBean.registerListeners();
-            }
-            _listenersAreRegistered = true;
-        }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        if (_listenersAreRegistered) {
-            if (_userSpecifiedSource == UserSpecifiedSource.Memory) {
-                _selectMemoryNamedBean.unregisterListeners();
-            }
-            _listenersAreRegistered = false;
-        }
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void disposeMe() {
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
     }
 
 
@@ -586,6 +556,6 @@ public class ForEachWithDelay extends AbstractDigitalAction
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ForEachWithDelay.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ForEachWithDelay.class);
 
 }

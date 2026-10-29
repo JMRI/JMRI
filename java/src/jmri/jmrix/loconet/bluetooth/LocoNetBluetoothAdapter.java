@@ -42,7 +42,10 @@ public class LocoNetBluetoothAdapter extends LnPortController {
         options.put(option1Name, new Option(Bundle.getMessage("CommandStationTypeLabel"), commandStationNames, false));
         options.put(option2Name, new Option(Bundle.getMessage("TurnoutHandling"),
                 new String[]{Bundle.getMessage("HandleNormal"), Bundle.getMessage("HandleSpread"), Bundle.getMessage("HandleOneOnly"), Bundle.getMessage("HandleBoth")})); // I18N
-    }
+        options.put("LoconetUpdateSlotOnMessageCreation",                                       // NOI18N
+                new Option(Bundle.getMessage("LoconetUpdateSlotOnMessageCreationLabel"),        // I18N
+                new String[]{Bundle.getMessage("ButtonNo"),Bundle.getMessage("ButtonYes")} ));  // I18N
+     }
 
     @Override
     public Vector<String> getPortNames() {
@@ -136,7 +139,8 @@ public class LocoNetBluetoothAdapter extends LnPortController {
         }
 
         if (!opened) {
-            ConnectionStatus.instance().setConnectionState(null, portName, ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(
+                    getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
             if (exception[0] != null) {
                 log.error("Exception when connecting to {}", portName);
                 return exception[0].getLocalizedMessage();
@@ -177,6 +181,7 @@ public class LocoNetBluetoothAdapter extends LnPortController {
         setTurnoutHandling(getOptionState(option2Name));
         // connect to a packetizing traffic controller
         LnPacketizer packets = new LnPacketizer(this.getSystemConnectionMemo());
+        packets.setLoconetUpdateSlotOnMessageCreation(Bundle.getMessage("ButtonYes").equals(getOptionState("LoconetUpdateSlotOnMessageCreation")));
         packets.connectPort(this);
 
         // create memo
@@ -251,6 +256,6 @@ public class LocoNetBluetoothAdapter extends LnPortController {
         return portNameVector;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoNetBluetoothAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(LocoNetBluetoothAdapter.class);
 
 }

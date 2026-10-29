@@ -24,6 +24,11 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
 
     protected MrcSystemConnectionMemo memo;
 
+    // the traffic controller this programmer is listening to for a reply,
+    // kept so that the listener is removed from the controller it was added
+    // to; null when not listening
+    private MrcTrafficController listeningTo = null;
+
     public MrcProgrammer(MrcSystemConnectionMemo memo) {
         this.memo = memo;
         super.SHORT_TIMEOUT = 15000;
@@ -105,8 +110,7 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
             // start the error timer
             startShortTimer();//we get no confirmation back that the packet has been read.
             // format and send the write message
-            memo.getMrcTrafficController().addTrafficListener(MrcInterface.PROGRAMMING, this);
-            memo.getMrcTrafficController().sendMrcMessage(progTaskStart(getMode(), _val, _cv));
+            listenForReply().sendMrcMessage(progTaskStart(getMode(), _val, _cv));
         } catch (jmri.ProgrammerException e) {
             progState = NOTPROGRAMMING;
             throw e;
@@ -139,9 +143,8 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
             // start the error timer
             startLongTimer();
 
-            // format and send the write message
-            memo.getMrcTrafficController().addTrafficListener(MrcInterface.PROGRAMMING, this);
-            memo.getMrcTrafficController().sendMrcMessage(progTaskStart(getMode(), -1, _cv));
+            // format and send the read message
+            listenForReply().sendMrcMessage(progTaskStart(getMode(), -1, _cv));
         } catch (jmri.ProgrammerException e) {
             progState = NOTPROGRAMMING;
             throw e;
@@ -256,16 +259,26 @@ public class MrcProgrammer extends AbstractProgrammer implements MrcTrafficListe
     void cleanup() {
     }
 
+    // start listening for the reply to a programming message
+    private MrcTrafficController listenForReply() {
+        listeningTo = memo.getMrcTrafficController();
+        listeningTo.addTrafficListener(MrcInterface.PROGRAMMING, this);
+        return listeningTo;
+    }
+
     // internal method to notify of the final result
     protected void notifyProgListenerEnd(int value, int status) {
         log.debug("notifyProgListenerEnd value {} status {}", value, status); // NOI18N
         // the programmingOpReply handler might send an immediate reply, so
         // clear the current listener _first_
-        memo.getMrcTrafficController().removeTrafficListener(MrcInterface.PROGRAMMING, this);
+        if (listeningTo != null) {
+            listeningTo.removeTrafficListener(MrcInterface.PROGRAMMING, this);
+            listeningTo = null;
+        }
         jmri.ProgListener temp = _usingProgrammer;
         _usingProgrammer = null;
         notifyProgListenerEnd(temp,value,status);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MrcProgrammer.class);
+    private static final Logger log = LoggerFactory.getLogger(MrcProgrammer.class);
 }

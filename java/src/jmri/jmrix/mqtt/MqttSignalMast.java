@@ -205,6 +205,6 @@ public class MqttSignalMast extends AbstractSignalMast implements MqttEventListe
      */
     private static volatile int lastRef = 0;
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MqttSignalMast.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MqttSignalMast.class);
 
 }

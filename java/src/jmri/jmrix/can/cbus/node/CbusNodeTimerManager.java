@@ -105,7 +105,9 @@ public class CbusNodeTimerManager {
                 else if ( fetchNvTimeoutCount == 10 ) {
                     log.error("Aborting NV Fetch from node {}",_node.getNodeNumber() ); //
                     _node.getNodeNvManager().reset();
-                    _node.getNodeParamManager().setParameter(5,-1); // reset number of NV's to unknown and force refresh
+                    // reset number of NV's to unknown and force refresh
+                    _node.getNodeParamManager().setParameter(CbusNodeConstants.NUM_NV_IDX,-1);
+                    fetchNvTimeoutCount = 0;
                 }
                 
                 _node.getTableModel().triggerUrgentFetch();
@@ -128,8 +130,10 @@ public class CbusNodeTimerManager {
 
     /**
      * Start timer for a single event variable request.
-     * 
-     * If 10 failed requests aborts loop and sets events to 0
+     *
+     * If 10 failed requests aborts loop and sets events to unknown.
+     * The timeout count is left at 10 so the fetch is not automatically
+     * re-attempted by the background fetch, see {@link #eventFetchAbandoned()}
      * @param eventVarIndex Event Variable Index
      * @param eventString User Friendly Event Text
      */
@@ -143,18 +147,33 @@ public class CbusNodeTimerManager {
                     log.info("Event Var fetch Timeout from Node {} event {}index {}",
                         _node.getNodeStats().getNodeNumberName(),eventString,eventVarIndex);
                 }
-                if ( fetchEvVarTimeoutCount == 10 ) {
+                if ( fetchEvVarTimeoutCount >= MAX_TIMEOUTS ) {
                     log.error("Aborting Event Variable fetch from Node {} Event {}Index {}",
                         _node.getNodeStats().getNodeNumberName(),eventString,eventVarIndex);
                     _node.getNodeEventManager().resetNodeEvents();
-                    fetchEvVarTimeoutCount = 0;
                 }
-                
+
                 _node.getTableModel().triggerUrgentFetch();
             }
         };
         TimerUtil.schedule(nextEvTimerTask, SINGLE_MESSAGE_TIMEOUT_TIME);
     }
+
+    /**
+     * Check if a fetch of the node events has been abandoned following repeated timeouts,
+     * ie. from an RQEVN ( total events ), NERD ( event index ) or REVAL ( event variable ) request.
+     * <p>
+     * Counts are reset when a response is received, or by {@link #resetTimeOutCounts()}.
+     *
+     * @return true if an event fetch has been abandoned, else false.
+     */
+    protected boolean eventFetchAbandoned() {
+        return numEvTimeoutCount >= MAX_TIMEOUTS
+            || fetchEvVarTimeoutCount >= MAX_TIMEOUTS
+            || allEvTimeoutCount >= MAX_TIMEOUTS;
+    }
+
+    private static final int MAX_TIMEOUTS = 10;
 
     /**
      * Stop timer for event total RQEVN request.
@@ -169,8 +188,10 @@ public class CbusNodeTimerManager {
 
     /**
      * Start timer for event total RQEVN request.
-     * 
-     * If 10 failed requests aborts loop and sets event number to 0
+     *
+     * If 10 failed requests aborts loop and leaves event number unknown.
+     * The timeout count is left at 10 so the request is not automatically
+     * re-attempted by the background fetch, see {@link #eventFetchAbandoned()}
      */
     protected void setNumEvTimeout() {
         numEvTimerTask = new TimerTask() {
@@ -178,17 +199,16 @@ public class CbusNodeTimerManager {
             public void run() {
                 numEvTimerTask = null;
                 if ( _node.getNodeEventManager().getTotalNodeEvents() < 0 ) {
-                    
+
                     numEvTimeoutCount++;
                     // the process will be re-attempted by the background fetch routine,
                     // we don't start it here to give a little bit more time for network / node to recover.
                     if ( numEvTimeoutCount == 1 ) {
                         log.info("No reponse to RQEVN ( Get Total Events ) from node {}", _node );
                     }
-                    if ( numEvTimeoutCount == 10 ) {
+                    if ( numEvTimeoutCount >= MAX_TIMEOUTS ) {
                         log.info("Aborting requests for Total Events from node {}", _node );
                         _node.getNodeEventManager().resetNodeEvents();
-                        numEvTimeoutCount = 0;
                     }
                 }
             }
@@ -222,8 +242,8 @@ public class CbusNodeTimerManager {
                 clearAllEvTimeout();
                 if ( _node.getNodeEventManager().getOutstandingIndexNodeEvents() > 0 ) {
                     allEvTimeoutCount++;
-                    
-                    if ( allEvTimeoutCount < 10 ) {
+
+                    if ( allEvTimeoutCount < MAX_TIMEOUTS ) {
                         log.warn("Re-attempting event index fetch from node {}", _node );
                         log.warn("NUMEV reports {} events, {} outstanding via ENRSP.",
                             _node.getNodeEventManager().getTotalNodeEvents(),

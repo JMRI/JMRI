@@ -116,6 +116,6 @@ public class ComboCheckBoxTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(ComboCheckBoxTest.class);
+    private static final Logger log = LoggerFactory.getLogger(ComboCheckBoxTest.class);
 
 }

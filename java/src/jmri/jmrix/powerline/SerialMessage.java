@@ -98,7 +98,7 @@ abstract public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     // static methods to return a formatted message
-    static public SerialMessage getPoll(int addr) {
+    public static SerialMessage getPoll(int addr) {
         // Powerline implementation does not currently poll
         return null;
     }

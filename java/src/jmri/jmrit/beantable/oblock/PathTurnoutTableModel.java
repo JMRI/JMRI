@@ -376,6 +376,6 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
         InstanceManager.turnoutManagerInstance().removePropertyChangeListener(this);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PathTurnoutTableModel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(PathTurnoutTableModel.class);
 
 }

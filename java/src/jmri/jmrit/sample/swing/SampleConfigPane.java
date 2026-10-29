@@ -58,7 +58,7 @@ public class SampleConfigPane extends jmri.util.swing.JmriPanel {
     /**
      * Nested class to create one of these using old-style defaults.
      */
-    static public class Default extends jmri.util.swing.JmriNamedPaneAction {
+    public static class Default extends jmri.util.swing.JmriNamedPaneAction {
 
         public Default() {
             super("Open Sample Pane",  // eventually Bundle.getMessage("MenuItemSampleConfig"), for I18N

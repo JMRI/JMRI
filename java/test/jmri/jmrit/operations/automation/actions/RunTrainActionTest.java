@@ -131,6 +131,6 @@ public class RunTrainActionTest extends OperationsTestCase {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RunTrainActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(RunTrainActionTest.class);
 
 }

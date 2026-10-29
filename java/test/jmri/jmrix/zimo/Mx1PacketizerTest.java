@@ -27,6 +27,6 @@ public class Mx1PacketizerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Mx1PacketizerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(Mx1PacketizerTest.class);
 
 }

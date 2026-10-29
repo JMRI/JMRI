@@ -26,6 +26,6 @@ public class SystemConsoleTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SystemConsoleTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SystemConsoleTest.class);
 
 }

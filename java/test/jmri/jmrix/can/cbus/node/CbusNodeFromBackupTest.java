@@ -203,6 +203,6 @@ public class CbusNodeFromBackupTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusNodeFromBackupTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusNodeFromBackupTest.class);
 
 }

@@ -31,6 +31,7 @@
 <mapID target="html.hardware.can.index" url="html/hardware/can/index.shtml"/>
 <mapID target="html.hardware.cmri.CMRI" url="html/hardware/cmri/CMRI.shtml"/>
 <mapID target="html.hardware.cmri.Signals" url="html/hardware/cmri/Signals.shtml"/>
+<mapID target="html.hardware.dcc-ex.index" url="html/hardware/dcc-ex/index.shtml"/>
 <mapID target="html.hardware.easydcc.EasyDCC" url="html/hardware/easydcc/EasyDCC.shtml"/>
 <mapID target="html.hardware.ecos.index" url="html/hardware/ecos/index.shtml"/>
 <mapID target="html.hardware.grapevine.Names" url="html/hardware/grapevine/Names.shtml"/>

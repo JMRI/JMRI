@@ -163,6 +163,6 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
     public void disposeMe() {
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TriggerOnce.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TriggerOnce.class);
 
 }

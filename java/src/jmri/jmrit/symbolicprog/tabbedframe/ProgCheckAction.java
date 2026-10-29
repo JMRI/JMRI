@@ -71,7 +71,7 @@ public class ProgCheckAction extends AbstractAction {
      * @param el   the element to search
      * @param list the list that will be populated with the found elements
      */
-    static protected void expandElement(Element el, List<Element> list) {
+    protected static void expandElement(Element el, List<Element> list) {
         // get the leaves here
         list.addAll(el.getChildren("display"));
 
@@ -256,6 +256,6 @@ public class ProgCheckAction extends AbstractAction {
     }
 
     // initialize logging
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProgCheckAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProgCheckAction.class);
 
 }

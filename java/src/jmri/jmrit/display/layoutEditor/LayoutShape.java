@@ -876,5 +876,5 @@ public class LayoutShape {
         Curve;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutShape.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutShape.class);
 }

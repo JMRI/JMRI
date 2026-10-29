@@ -66,5 +66,5 @@ public class SimpleTimebaseXmlTest {
         tb.dispose();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SimpleTimebaseXmlTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SimpleTimebaseXmlTest.class);
 }

@@ -61,6 +61,6 @@ public class CbusCabSignalIT extends jmri.implementation.DefaultCabSignalIT {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusCabSignalTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusCabSignalTest.class);
 
 }

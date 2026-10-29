@@ -49,6 +49,6 @@ public class CbusEventInterfaceTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusNodeSingleEventTableDataModelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusNodeSingleEventTableDataModelTest.class);
 
 }

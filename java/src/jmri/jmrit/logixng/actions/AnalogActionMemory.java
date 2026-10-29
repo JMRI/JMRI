@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import jmri.*;
@@ -14,12 +12,11 @@ import jmri.jmrit.logixng.util.parser.ParserException;
  *
  * @author Daniel Bergqvist Copyright 2018
  */
-public class AnalogActionMemory extends AbstractAnalogAction
-        implements PropertyChangeListener {
+public class AnalogActionMemory extends AbstractAnalogAction {
 
     private final LogixNG_SelectNamedBean<Memory> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class), this);
+                    this, Memory.class, InstanceManager.getDefault(MemoryManager.class));
 
     public AnalogActionMemory(String sys, String user) {
         super(sys, user);
@@ -91,18 +88,6 @@ public class AnalogActionMemory extends AbstractAnalogAction
 
     /** {@inheritDoc} */
     @Override
-    public void registerListenersForThisClass() {
-        _selectNamedBean.registerListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        _selectNamedBean.unregisterListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void disposeMe() {
     }
 
@@ -112,12 +97,6 @@ public class AnalogActionMemory extends AbstractAnalogAction
         _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Action);
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
-    }
-
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogActionMemory.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AnalogActionMemory.class);
 
 }

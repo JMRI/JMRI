@@ -118,6 +118,6 @@ public class ActionEntryExitSwing extends AbstractDigitalActionSwing {
     }
 
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionEntryExitSwing.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionEntryExitSwing.class);
 
 }

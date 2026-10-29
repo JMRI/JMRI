@@ -26,6 +26,6 @@ public class ProgDebuggerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ProgDebuggerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ProgDebuggerTest.class);
 
 }

@@ -101,5 +101,5 @@ public class BiDiBReporterManager extends jmri.managers.AbstractReporterManager 
         return entryToolTip;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BiDiBReporterManager.class);
+    private static final Logger log = LoggerFactory.getLogger(BiDiBReporterManager.class);
 }

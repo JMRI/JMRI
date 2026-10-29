@@ -207,7 +207,7 @@ public class MrcPackets {
     private static final String TXT_OFF = Bundle.getMessage("MrcPacketsFunctionOff"); // NOI18N
     //Need to test toString() for POM
 
-    static public String toString(MrcMessage m) {
+    public static String toString(MrcMessage m) {
         StringBuilder txt = new StringBuilder();
         if ((m.getNumDataElements() < 4)
                 || (m.getNumDataElements() >= 4 && m.getElement(0) != m.getElement(2) && m.getElement(1) != 0x01)) {  // is && right there?
@@ -488,7 +488,7 @@ public class MrcPackets {
 
     //In principle last two are the checksum, the first four indicate the packet type and ignored.
     //the rest should be XOR'd.
-    static public boolean validCheckSum(MrcMessage m) {
+    public static boolean validCheckSum(MrcMessage m) {
         if (m.getNumDataElements() > 6) {
             int result = 0;
             for (int i = 4; i < m.getNumDataElements() - 2; i++) {

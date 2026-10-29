@@ -30,7 +30,7 @@ import jmri.util.ThreadingUtil;
 @DisabledIfSystemProperty(named ="jmri.skipTestsRequiringSeparateRunning", matches ="true")
 public class OlcbSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
-    private final static Logger log = LoggerFactory.getLogger(OlcbSensorTest.class);
+    private static final Logger log = LoggerFactory.getLogger(OlcbSensorTest.class);
     protected PropertyChangeListenerScaffold l;
 
     @Override

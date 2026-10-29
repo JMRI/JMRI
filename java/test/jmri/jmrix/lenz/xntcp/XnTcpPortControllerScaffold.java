@@ -14,7 +14,7 @@ import jmri.util.JUnitUtil;
  */
 class XnTcpPortControllerScaffold extends XnTcpAdapter {
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(XnTcpPortControllerScaffold.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(XnTcpPortControllerScaffold.class);
 
     public java.util.Vector<String> getPortNames() {
         return null;

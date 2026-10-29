@@ -1,5 +1,6 @@
 package jmri.jmrit.throttle;
 
+import jmri.jmrit.throttle.panels.SpeedPanel;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -27,6 +28,6 @@ public class SpeedPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SpeedPanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SpeedPanelTest.class);
 
 }

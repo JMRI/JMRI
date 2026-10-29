@@ -15,7 +15,7 @@ import java.awt.GraphicsEnvironment;
 public class SwingShutDownTaskTest {
 
     private boolean modalDialogStopsTest = false;
-    private final static Logger log = LoggerFactory.getLogger(SwingShutDownTaskTest.class);
+    private static final Logger log = LoggerFactory.getLogger(SwingShutDownTaskTest.class);
 
     @Test
     public void testCTor() {

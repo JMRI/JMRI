@@ -1,6 +1,7 @@
 package jmri.jmrit.vsdecoder;
 
 import jmri.*;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
@@ -30,9 +31,13 @@ public class SteamSoundTest {
     public void tearDown() {
         JUnitUtil.removeMatchingThreads("VSDecoderManagerThread");
         JUnitUtil.clearShutDownManager();
+
+        // GitHub Headless CI workflow doesn't have sound
+        JUnitAppender.suppressWarnMessage("Error loading OpenAL libraries: Could not initialize class jogamp.openal.ALImpl");
+
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SteamSoundTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SteamSoundTest.class);
 
 }

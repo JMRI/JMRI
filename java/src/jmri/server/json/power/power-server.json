@@ -8,6 +8,10 @@
             "type": "string",
             "description": "System name the connection associated with power manager"
         },
+        "prefix": {
+            "type": "string",
+            "description": "System prefix of the connection associated with this power manager"
+        },
         "default": {
             "type": "boolean",
             "description": "True if system connection has default power manager"

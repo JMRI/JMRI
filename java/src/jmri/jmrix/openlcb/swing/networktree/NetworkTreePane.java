@@ -139,7 +139,7 @@ public class NetworkTreePane extends JmriPanel implements CanListener, CanPanelI
     public synchronized void reply(CanReply l) {  // receive a reply and log it
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(NetworkTreePane.class);
+    //private static final Logger log = LoggerFactory.getLogger(NetworkTreePane.class);
 
     /**
      * Nested class to open specific windows when proper tree element is picked.
@@ -235,7 +235,7 @@ public class NetworkTreePane extends JmriPanel implements CanListener, CanPanelI
     }
 
     // Create the panel-name of this node depending on what's available
-    static public String augmentedNodeName(MimicNodeStore.NodeMemo nodememo) {
+    public static String augmentedNodeName(MimicNodeStore.NodeMemo nodememo) {
         var node = nodememo.getNodeID();
         var ident = nodememo.getSimpleNodeIdent();
 

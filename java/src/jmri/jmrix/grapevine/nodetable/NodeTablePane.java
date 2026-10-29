@@ -140,8 +140,11 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
 
     /**
      * Start the check of the actual hardware.
+     * Any check already running is stopped first.
      */
     public void startPoll() {
+        stopPoll();
+
         // mark as none seen
         for (int i = 0; i < 128; i++) {
             scanSeen[i] = false;
@@ -163,8 +166,7 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
                 node++;
                 if (node >= 128) {
                     // yes, stop
-                    timer.stop();
-                    timer = null;
+                    stopPoll();
                     // if nothing seen yet, this is a failure
                     if (status.getText().equals(Bundle.getMessage("StatusStart"))) {
                         status.setText(Bundle.getMessage("StatusFail"));
@@ -180,6 +182,25 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
 
         // redisplay the table
         nodesModel.fireTableDataChanged();
+    }
+
+    /**
+     * Stop the check of the actual hardware, if one is running.
+     */
+    void stopPoll() {
+        if (timer != null) {
+            timer.stop();
+            timer = null;
+        }
+    }
+
+    /**
+     * Release resources when the pane is no longer needed. Stops any check of
+     * the hardware still running, so no more messages are sent once the
+     * containing window has closed.
+     */
+    public void dispose() {
+        stopPoll();
     }
 
     // indicate whether node has been seen
@@ -227,12 +248,12 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
      * </ol>
      */
     public class NodesModel extends AbstractTableModel {
-        static private final int ADDRCOL = 0;
-        static private final int STATUSCOL = 1;
-        static private final int EDITCOL = 2;
-        static private final int INITCOL = 3;
+        private static final int ADDRCOL = 0;
+        private static final int STATUSCOL = 1;
+        private static final int EDITCOL = 2;
+        private static final int INITCOL = 3;
 
-        static private final int LAST = 3;
+        private static final int LAST = 3;
 
         @Override
         public int getColumnCount() {
@@ -331,6 +352,6 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NodeTablePane.class);
+    private static final Logger log = LoggerFactory.getLogger(NodeTablePane.class);
 
 }

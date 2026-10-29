@@ -4,6 +4,7 @@ import java.awt.*;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.awt.event.WindowEvent;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,6 +34,8 @@ class NodeBackupAction {
     static JFileChooser directoryChooser = new JFileChooser();
     static final String PREFNAME = "backupDirectory";
     
+    static boolean fileConfigured;
+    
     static {
         directoryChooser.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
         directoryChooser.setDialogTitle(Bundle.getMessage("ChooseADirectory"));
@@ -42,21 +45,30 @@ class NodeBackupAction {
         var dirPref = prefsMgr.getProperty(NodeBackupAction.class.getName(), PREFNAME);
         if (dirPref != null) {
             directoryChooser.setSelectedFile(new File(dirPref.toString()));
+            fileConfigured = true;
+        } else {
+            fileConfigured = false;
         }
 
     }
     
-    static public void showOpenDialog(Component here) {
+    public static void showOpenDialog(Component here) {
         var response = directoryChooser.showOpenDialog(here);
         
         if (response == JFileChooser.APPROVE_OPTION) {
             String directory = directoryChooser.getSelectedFile().getAbsolutePath();
             var prefsMgr = InstanceManager.getDefault(UserPreferencesManager.class);
             prefsMgr.setProperty(NodeBackupAction.class.getName(), PREFNAME, directory);
+            fileConfigured = true;
         }
     }
     
     public void doBackup(MimicNodeStore.NodeMemo nodememo, CanSystemConnectionMemo memo, String name) {
+        
+        if (!fileConfigured) {
+            showOpenDialog(null); // no Component in this case
+        }
+        
         var node = nodememo.getNodeID();
         _name = name;
         log.info("Backup {} '{}' ", node.toString(), _name);    
@@ -65,18 +77,30 @@ class NodeBackupAction {
         
         _cdi = iface.getConfigForNode(node);
                
+        // always show the status
+        JmriJOptionPane.showMessageDialogNonModal(null,
+                Bundle.getMessage("MessageCdiLoad", _name, node),
+                Bundle.getMessage("TitleCdiLoad", name),
+                JmriJOptionPane.INFORMATION_MESSAGE,
+                null);
+
         if (_cdi.getRoot() != null) {
+            // configuration cache present, store and
+            // cancel window after short delay
             storeCdiData();
+            jmri.util.ThreadingUtil.runOnGUIDelayed(() -> {
+                closeStatusWindow();
+                }, 1000); 
+
         } else {
-            JmriJOptionPane.showMessageDialogNonModal(null,
-                    Bundle.getMessage("MessageCdiLoad", _name, node),
-                    Bundle.getMessage("TitleCdiLoad", name),
-                    JmriJOptionPane.INFORMATION_MESSAGE,
-                    null);
+            // configuration cache present, wait for it
+            // to arrive
             _cdi.addPropertyChangeListener(new CdiListener());
         }
     }
     
+    // close the progress window and save the contents 
+    // when the CDI has been completely read
     private class CdiListener implements PropertyChangeListener {
         @Override
         public void propertyChange(PropertyChangeEvent e) {
@@ -84,17 +108,20 @@ class NodeBackupAction {
             log.debug("CdiListener event = {}", propertyName);
 
             if (propertyName.equals("UPDATE_CACHE_COMPLETE")) {
-                Window[] windows = Window.getWindows();
-                for (Window window : windows) {
-                    if (window instanceof JDialog) {
-                        JDialog dialog = (JDialog) window;
-                        if (Bundle.getMessage("TitleCdiLoad", _name).equals(dialog.getTitle())) {
-                            dialog.dispose();
-                            break;
-                        }
-                    }
-                }
+                closeStatusWindow();
                 storeCdiData();
+            }
+        }
+    }
+    
+    protected void closeStatusWindow() {
+        Window[] windows = Window.getWindows();
+        for (Window window : windows) {
+            if (window instanceof JDialog) {
+                JDialog dialog = (JDialog) window;
+                if (Bundle.getMessage("TitleCdiLoad", _name).equals(dialog.getTitle())) {
+                    dialog.dispatchEvent(new WindowEvent(dialog, WindowEvent.WINDOW_CLOSING));
+                }
             }
         }
     }

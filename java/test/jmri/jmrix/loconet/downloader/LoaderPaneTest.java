@@ -52,6 +52,6 @@ public class LoaderPaneTest extends jmri.util.swing.JmriPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LoaderPaneTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(LoaderPaneTest.class);
 
 }

@@ -2,6 +2,7 @@ package jmri.jmrit.throttle;
 
 import javax.swing.JFrame;
 
+import jmri.jmrit.throttle.preferences.ThrottlesPreferencesPane;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.DisabledIfHeadless;
 import jmri.util.ThreadingUtil;

@@ -30,7 +30,7 @@ public class SprogPacketGenAction extends AbstractAction {
         }
         f.setVisible(true);
     }
-    private final static Logger log = LoggerFactory.getLogger(SprogPacketGenAction.class);
+    private static final Logger log = LoggerFactory.getLogger(SprogPacketGenAction.class);
 }
 
 

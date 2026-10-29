@@ -387,5 +387,5 @@ public class CbusLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusLightManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusLightManagerTest.class);
 }

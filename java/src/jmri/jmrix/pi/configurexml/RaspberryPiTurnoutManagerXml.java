@@ -28,6 +28,6 @@ public class RaspberryPiTurnoutManagerXml extends jmri.managers.configurexml.Abs
         return loadTurnouts(shared, perNode);
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(RaspberryPiTurnoutManagerXml.class);
+//    private static final Logger log = LoggerFactory.getLogger(RaspberryPiTurnoutManagerXml.class);
 
 }

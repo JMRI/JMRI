@@ -111,5 +111,5 @@ public class PaneServiceProgFrameTest {
         ); // end of adding contents
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PaneServiceProgFrameTest.class.getName());
+    // private static final Logger log = LoggerFactory.getLogger(PaneServiceProgFrameTest.class.getName());
 }

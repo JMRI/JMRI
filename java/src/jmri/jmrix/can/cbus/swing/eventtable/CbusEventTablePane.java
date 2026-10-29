@@ -272,7 +272,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
      * Nested class to create one of these using old-style defaults.
      * Used as a startup action
      */
-    static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
+    public static class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
 
         public Default() {
             super(Bundle.getMessage("MenuItemEventTable"),
@@ -282,6 +282,6 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         }
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusEventTablePane.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusEventTablePane.class);
 
 }

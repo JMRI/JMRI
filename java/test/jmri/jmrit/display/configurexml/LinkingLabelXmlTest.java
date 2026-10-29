@@ -27,6 +27,6 @@ public class LinkingLabelXmlTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LinkingLabelXmlTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(LinkingLabelXmlTest.class);
 
 }

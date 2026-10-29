@@ -144,6 +144,11 @@ public class GlobalVariableSpinnerIcon extends PositionableJPanel implements Cha
     }
 
     @Override
+    public jmri.NamedBean getNamedBean() {
+        return getGlobalVariable();
+    }
+
+    @Override
     public void stateChanged(ChangeEvent e) {
         spinnerUpdated();
     }
@@ -278,5 +283,5 @@ public class GlobalVariableSpinnerIcon extends PositionableJPanel implements Cha
         namedGlobalVariable = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(GlobalVariableSpinnerIcon.class);
+    private static final Logger log = LoggerFactory.getLogger(GlobalVariableSpinnerIcon.class);
 }

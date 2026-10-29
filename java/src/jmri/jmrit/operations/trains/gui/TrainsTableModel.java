@@ -7,8 +7,7 @@ import java.util.Hashtable;
 import java.util.List;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableCellEditor;
+import javax.swing.table.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.beantable.EnablingCheckboxRenderer;
@@ -160,6 +159,11 @@ public class TrainsTableModel extends OperationsTableModel implements PropertyCh
             tcm.getColumn(i).setPreferredWidth(_tableColumnWidths[i]);
         }
         _frame.loadTableDetails(_table);
+        
+        // don't allow sorting for Time or Done columns
+        TableRowSorter<? extends TableModel> sorter = (TableRowSorter<? extends TableModel>) _table.getRowSorter();
+        sorter.setSortable(TIME_COLUMN, false);
+        sorter.setSortable(DONE_COLUMN, false);
 
         // turn off column
         updateColumnVisible();
@@ -529,13 +533,18 @@ public class TrainsTableModel extends OperationsTableModel implements PropertyCh
             train.printBuildReport();
         } else if (trainManager.getTrainsFrameTrainAction().equals(TrainsTableFrame.RESET)) {
             log.debug("Reset train ({})", train.getName());
+            Train t = trainManager.getTrainBuiltAfter(train);
             // check to see if departure track was reused
             if (train.checkDepartureTrack()) {
                 log.debug("Train is departing staging that already has inbound cars");
                 JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("StagingTrackUsed",
                                 train.getDepartureTrack().getName()),
-                        Bundle.getMessage("CanNotResetTrain"), JmriJOptionPane.INFORMATION_MESSAGE);
+                        Bundle.getMessage("CanNotResetTrain"), JmriJOptionPane.WARNING_MESSAGE);
+            } else if (Setup.isBuildOnTime() && t != null) {
+                JmriJOptionPane.showMessageDialog(null,
+                        Bundle.getMessage("TrainAfterBuilt", t, train), Bundle.getMessage("CanNotResetTrain"),
+                        JmriJOptionPane.WARNING_MESSAGE);
             } else if (!train.reset()) {
                 JmriJOptionPane.showMessageDialog(null,
                         Bundle.getMessage("TrainIsInRoute",

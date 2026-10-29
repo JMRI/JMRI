@@ -3,17 +3,15 @@ package jmri.jmrit.operations.locations.tools;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.jupiter.api.Test;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.locations.gui.SpurEditFrame;
-import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
+import jmri.util.*;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -36,8 +34,7 @@ public class TrackEditCommentsActionTest extends OperationsTestCase {
         LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Location location = lManager.getLocationById("20");
         Track track = location.getTrackById("20s1");
-        SpurEditFrame tf = new SpurEditFrame();
-        tf.initComponents(location, track);
+        SpurEditFrame tf = new SpurEditFrame(track);
         
         TrackEditCommentsAction a = new TrackEditCommentsAction(tf);
         Assert.assertNotNull("exists", a);
@@ -49,6 +46,6 @@ public class TrackEditCommentsActionTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrackEditCommentsActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TrackEditCommentsActionTest.class);
 
 }

@@ -76,6 +76,6 @@ public class SetPhysicalLocationActionTest extends OperationsTestCase {
         Assert.assertNull("does not exist", plf);
     }
 
-     //private final static Logger log = LoggerFactory.getLogger(SetPhysicalLocationActionTest.class);
+     //private static final Logger log = LoggerFactory.getLogger(SetPhysicalLocationActionTest.class);
 
 }

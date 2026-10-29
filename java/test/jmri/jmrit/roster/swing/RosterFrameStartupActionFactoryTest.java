@@ -26,6 +26,6 @@ public class RosterFrameStartupActionFactoryTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RosterFrameStartupActionFactoryTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(RosterFrameStartupActionFactoryTest.class);
 
 }

@@ -19,6 +19,6 @@ public class BackupSetTest extends OperationsTestCase {
         Assert.assertNotNull("exists",t);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(BackupSetTest.class.getName());
+    // private static final Logger log = LoggerFactory.getLogger(BackupSetTest.class.getName());
 
 }

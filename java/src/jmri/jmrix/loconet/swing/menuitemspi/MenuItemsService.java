@@ -71,5 +71,5 @@ public final class MenuItemsService {
         }
         return menus;
     }
-    private final static Logger log = LoggerFactory.getLogger(MenuItemsService.class);
+    private static final Logger log = LoggerFactory.getLogger(MenuItemsService.class);
 }

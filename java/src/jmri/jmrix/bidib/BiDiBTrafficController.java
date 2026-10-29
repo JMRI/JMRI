@@ -264,7 +264,7 @@ public class BiDiBTrafficController implements CommandStation {
             @Override
             public void boosterState(byte[] address, int messageNum, BoosterState state, BoosterControl control) {
                 Node node = getNodeByAddr(address);
-                log.info("BOOSTER STATE & CONTROL was signalled: {}, control: {}", state.getType(), control.getType());
+                log.debug("BOOSTER STATE & CONTROL was signalled: {}, control: {}", state, control);
                 if (node != getFirstCommandStationNode()  &&  node == currentGlobalProgrammerNode  &&  control != BoosterControl.LOCAL) {
                     currentGlobalProgrammerNode = null;
                 }
@@ -1820,6 +1820,6 @@ public class BiDiBTrafficController implements CommandStation {
 //    }
 //
     
-    private final static Logger log = LoggerFactory.getLogger(BiDiBTrafficController.class);
+    private static final Logger log = LoggerFactory.getLogger(BiDiBTrafficController.class);
 
 }

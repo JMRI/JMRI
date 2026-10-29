@@ -31,15 +31,15 @@ public class SchedulesTableModel extends OperationsTableModel implements Propert
     ScheduleManager scheduleManager; // There is only one manager
 
     // Defines the columns
-    static final int ID_COLUMN = 0;
-    static final int NAME_COLUMN = ID_COLUMN + 1;
-    static final int SCHEDULE_STATUS_COLUMN = NAME_COLUMN + 1;
-    static final int SPUR_NUMBER_COLUMN = SCHEDULE_STATUS_COLUMN + 1;
-    static final int SPUR_COLUMN = SPUR_NUMBER_COLUMN + 1;
-    static final int STATUS_COLUMN = SPUR_COLUMN + 1;
-    static final int MODE_COLUMN = STATUS_COLUMN + 1;
-    static final int EDIT_COLUMN = MODE_COLUMN + 1;
-    static final int DELETE_COLUMN = EDIT_COLUMN + 1;
+    protected static final int ID_COLUMN = 0;
+    protected static final int NAME_COLUMN = ID_COLUMN + 1;
+    protected static final int SCHEDULE_STATUS_COLUMN = NAME_COLUMN + 1;
+    protected static final int SPUR_NUMBER_COLUMN = SCHEDULE_STATUS_COLUMN + 1;
+    protected static final int SPUR_COLUMN = SPUR_NUMBER_COLUMN + 1;
+    protected static final int STATUS_COLUMN = SPUR_COLUMN + 1;
+    protected static final int MODE_COLUMN = STATUS_COLUMN + 1;
+    protected static final int EDIT_COLUMN = MODE_COLUMN + 1;
+    protected static final int DELETE_COLUMN = EDIT_COLUMN + 1;
 
     private static final int HIGHEST_COLUMN = DELETE_COLUMN + 1;
 

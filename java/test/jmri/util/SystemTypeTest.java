@@ -26,6 +26,6 @@ public class SystemTypeTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SystemTypeTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SystemTypeTest.class);
 
 }

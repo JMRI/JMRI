@@ -85,9 +85,11 @@
          <xs:enumeration value="Memory"/>
          <xs:enumeration value="OBlock"/>
          <xs:enumeration value="Reporter"/>
+         <xs:enumeration value="Section"/>
          <xs:enumeration value="Sensor"/>
          <xs:enumeration value="SignalHead"/>
          <xs:enumeration value="SignalMast"/>
+         <xs:enumeration value="Transit"/>
          <xs:enumeration value="Turnout"/>
          <xs:enumeration value="Warrant"/>
        </xs:restriction>

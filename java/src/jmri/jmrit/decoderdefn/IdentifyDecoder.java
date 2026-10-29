@@ -514,6 +514,6 @@ public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
     protected abstract void message(String m);
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(IdentifyDecoder.class);
+    private static final Logger log = LoggerFactory.getLogger(IdentifyDecoder.class);
 
 }

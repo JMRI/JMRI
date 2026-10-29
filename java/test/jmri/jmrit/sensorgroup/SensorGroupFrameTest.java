@@ -30,5 +30,5 @@ public class SensorGroupFrameTest extends jmri.util.JmriJFrameTestBase {
         super.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SensorGroupFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SensorGroupFrameTest.class);
 }

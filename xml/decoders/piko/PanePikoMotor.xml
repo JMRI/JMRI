@@ -110,7 +110,7 @@
         <label>
             <text> </text>
         </label>
-        <group include="PIKO40501-18,PIKO46440-18,PIKO46442-16,PIKO46443-22">
+        <group include="PIKO SmartDecoder 4.1">
             <!--Piko SmartDecoder 4.1-->
             <row>
                 <column>
@@ -154,8 +154,8 @@
                 </column>
             </row>
         </group>
-        <group include="PIKO46505-18,PIKO46540-18,PIKO46548-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16,PIKO56627-22,PIKO36505-G,PIKO36537-G">
-            <!--Piko SmartDecoder XP5.1-->
+        <group include="PIKO SmartDecoder XP5.1 (version 1.17+),PIKO SmartDecoder XP5.1 (version 1.8+),PIKO SmartDecoder XP5.1 (version 1.5+),PIKO SmartDecoder XP5.1 (version 1.1+)">
+            <!--Piko SmartDecoder XP5.1 alle Versionen-->
             <row>
                 <column>
                     <label>

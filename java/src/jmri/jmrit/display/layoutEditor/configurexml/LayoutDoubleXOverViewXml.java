@@ -24,5 +24,5 @@ public class LayoutDoubleXOverViewXml extends LayoutXOverViewXml {
         element.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LayoutDoubleXOverXml");
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutDoubleXOverViewXml.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutDoubleXOverViewXml.class);
 }

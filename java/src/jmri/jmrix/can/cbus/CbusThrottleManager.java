@@ -5,7 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.awt.GraphicsEnvironment;
 
 import jmri.*;
-import jmri.jmrit.throttle.ThrottlesPreferences;
+import jmri.jmrit.throttle.preferences.ThrottlesPreferences;
 import jmri.jmrix.AbstractThrottleManager;
 import jmri.jmrix.can.*;
 import jmri.util.TimerUtil;
@@ -183,8 +183,10 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
                         throttle.throttleDispose();
                         // remove from abstract list
                         forceDisposeThrottle(throttle.getLocoAddress());
-                        // Remove the Throttle from the managed list
-                        softThrottles.remove(throttle.getHandle());
+                        // Remove the Throttle from the managed list.
+                        // throttleDispose() has just set the Throttle handle to -1,
+                        // so the map key must be used, not throttle.getHandle()
+                        softThrottles.remove(entry.getKey());
                     }
                 }
                 _singleThrottleInUse = false;
@@ -235,12 +237,16 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
                         _singleThrottleInUse = true;
                     }
 
-                    // check if the PLOC has come from a throttle session cancel notification
+                    // check if the PLOC has come from a throttle session cancel notification,
+                    // only a stolen throttle for the SAME loco address can be re-bound to this session
                     for (Map.Entry<Integer, CbusThrottle> entry : softThrottles.entrySet()) {
                         CbusThrottle throttle = entry.getValue();
-                        if (throttle.isStolen()) {
+                        if (throttle.isStolen() && rcvdDccAddr.equals(throttle.getLocoAddress())) {
                             log.debug("setting handle from {} to {}",throttle.getHandle(),handle);
+                            // re-key the throttle under its new session handle
+                            softThrottles.remove(entry.getKey());
                             throttle.setHandle(handle);
+                            softThrottles.put(handle, throttle);
                             // uses timeout to help prevent steal loops
                            // jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> {
                                 throttle.setStolen(false); // sends the reactivation PCL
@@ -484,16 +490,15 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
             throttle.isStolen(), throttle.getHandle(), throttle.getNumRecoverAttempts(),
             softThrottles.size() );
 
-        int oldhandle = throttle.getHandle();
-
         throttle.increaseNumRecoverAttempts();
 
         if (throttle.getNumRecoverAttempts() > 10) { // catch runaways
             _handleExpected = false;
             throttle.throttleDispose(); // stop throttle keep-alive messages, send PCL ThrottleConnected false
             showSessionCancelDialogue(throttle.getLocoAddress());
-            softThrottles.remove(oldhandle); // remove from local list
+            removeSoftThrottle(throttle); // remove from local list
             forceDisposeThrottle( throttle.getLocoAddress() ); // remove from JMRI share list
+            return; // throttle disposed, do not request a further steal / share
         }
 
         throttle.setStolen(true);
@@ -527,9 +532,30 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
         } else {
             throttle.throttleDispose(); // stop throttle keep-alive messages, send PCL ThrottleConnected false
             showSessionCancelDialogue(throttle.getLocoAddress());
-            softThrottles.remove(oldhandle); // remove from local list
+            removeSoftThrottle(throttle); // remove from local list
             forceDisposeThrottle( throttle.getLocoAddress() ); // remove from JMRI share list
         }
+    }
+
+    /**
+     * Remove a Throttle from the list of managed Throttles.
+     * <p>
+     * Removes by Throttle instance rather than by session handle, as the
+     * handle is set to -1 when a Throttle is stolen or disposed.
+     * @param throttle the Throttle to remove
+     */
+    private void removeSoftThrottle(CbusThrottle throttle) {
+        boolean removed = softThrottles.entrySet().removeIf( entry -> entry.getValue() == throttle );
+        log.debug("throttle {} removed from managed list: {}", throttle, removed);
+    }
+
+    /**
+     * Get the number of Throttles in the managed session list.
+     * Package access for testing.
+     * @return number of managed Throttles, including any awaiting session recovery.
+     */
+    int getManagedThrottleCount() {
+        return softThrottles.size();
     }
 
     /**
@@ -646,6 +672,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
      * Start timer to wait for command station to respond to RLOC or GLOC
      */
     private void startThrottleRequestTimer(boolean isRecovery) {
+        stopThrottleRequestTimer(); // do not leave a previous request timer running
         throttleRequestTimer = new TimerTask() {
             @Override
             public void run() {
@@ -674,10 +701,11 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
 
             for (Map.Entry<Integer, CbusThrottle> entry : softThrottles.entrySet()) {
                 CbusThrottle throttle = entry.getValue();
-                if (throttle.getLocoAddress() == _dccAddr) {
+                if (Objects.equals(throttle.getLocoAddress(), _dccAddr)) {
                     throttle.throttleDispose();
                     showSessionCancelDialogue(_dccAddr);
-                    softThrottles.remove(throttle.getHandle());
+                    // handle is now -1, remove by map key
+                    softThrottles.remove(entry.getKey());
                 }
             }
         }
@@ -715,6 +743,10 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
                 lnt.throttleDispose();
                 // forceDisposeThrottle( (DccLocoAddress) lnt.getLocoAddress() );
                 log.debug("called throttleDispose");
+                // The KLOC sent by releaseFromCommandStation is echoed back to message()
+                // after the handle has been set to -1, so it will not match there;
+                // remove the Throttle from the managed list here.
+                removeSoftThrottle(lnt);
                 _singleThrottleInUse = false;
                 return true;
             }
@@ -739,7 +771,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
         log.debug("throttle {} notification that num. users is now {}",la,numUsers);
         for (Map.Entry<Integer, CbusThrottle> entry : softThrottles.entrySet()) {
             CbusThrottle throttle = entry.getValue();
-            if (throttle.getLocoAddress() == la) {
+            if (Objects.equals(throttle.getLocoAddress(), la)) {
                 if ((numUsers == 1) && throttle.getSpeedSetting() > 0) {
                     throttle.setDispatchActive(true);
                     return;

@@ -64,6 +64,6 @@ public class DefaultMemoryManagerTest extends AbstractProvidingManagerTestBase<j
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DefaultMemoryManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DefaultMemoryManagerTest.class);
 
 }

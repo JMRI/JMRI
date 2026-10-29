@@ -48,7 +48,7 @@ public class JsonReporterHttpService extends JsonNamedBeanHttpService<Reporter> 
     @Override
     public ObjectNode doGet(Reporter reporter, String name, String type, JsonRequest request) throws JsonException {
         ObjectNode root = getNamedBean(reporter, name, getType(), request); // throws JsonException if reporter == null
-        ObjectNode data = root.with(JSON.DATA);
+        ObjectNode data = root.withObject(JSON.DATA);
         data.put(JSON.STATE, reporter.getState());
         Object cr = reporter.getCurrentReport();
         if (cr != null) {
@@ -104,7 +104,7 @@ public class JsonReporterHttpService extends JsonNamedBeanHttpService<Reporter> 
     protected ReporterManager getProvidingManager() {
         return InstanceManager.getDefault(ReporterManager.class);
     }
-    
+
     @Override
     protected String getType() {
         return REPORTER;

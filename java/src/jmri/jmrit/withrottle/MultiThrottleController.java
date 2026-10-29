@@ -4,7 +4,7 @@ import java.beans.PropertyChangeEvent;
 
 import jmri.*;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrit.throttle.ThrottlesPreferences;
+import jmri.jmrit.throttle.preferences.ThrottlesPreferences;
 
 /**
  * @author Brett Hoffman Copyright (C) 2011

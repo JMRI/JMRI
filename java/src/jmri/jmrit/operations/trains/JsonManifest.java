@@ -1,18 +1,14 @@
 package jmri.jmrit.operations.trains;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
-
-import org.apache.commons.text.StringEscapeUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Track;
@@ -24,6 +20,10 @@ import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.server.json.JSON;
 import jmri.server.json.operations.JsonOperations;
 import jmri.server.json.operations.JsonUtil;
+
+import org.apache.commons.text.StringEscapeUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A minimal manifest in JSON.
@@ -47,7 +47,7 @@ public class JsonManifest extends TrainCommon {
     private final ObjectMapper mapper = new ObjectMapper();
     private final JsonUtil utilities = new JsonUtil(mapper);
 
-    private final static Logger log = LoggerFactory.getLogger(JsonManifest.class);
+    private static final Logger log = LoggerFactory.getLogger(JsonManifest.class);
 
     public JsonManifest(Train train) {
         this.train = train;
@@ -72,7 +72,7 @@ public class JsonManifest extends TrainCommon {
             // The operationsServlet will need to change this to a usable URL
             root.put(JSON.IMAGE, this.train.getManifestLogoPathName());
         }
-        root.put(JsonOperations.DATE, TrainCommon.getISO8601Date(true)); // Validity
+        root.put(JsonOperations.DATE, TrainCommon.getDate(true)); // Validity
         this.mapper.writeValue(InstanceManager.getDefault(TrainManagerXml.class).createManifestFile(this.train.getName(), JSON.JSON), root);
     }
 
@@ -207,7 +207,7 @@ public class JsonManifest extends TrainCommon {
     protected ArrayNode pickupEngines(List<Engine> engines, RouteLocation routeLocation) {
         ArrayNode node = this.mapper.createArrayNode();
         for (Engine engine : engines) {
-            if (engine.getRouteLocation() != null && engine.getRouteLocation().equals(routeLocation)) {
+            if (engine.getRouteLocation() != null && engine.getRouteLocation() == routeLocation) {
                 node.add(this.utilities.getEngine(engine, locale));
             }
         }

@@ -153,6 +153,6 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnection
         super.dispose();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(EcosSystemConnectionMemo.class);
+    // private static final Logger log = LoggerFactory.getLogger(EcosSystemConnectionMemo.class);
 
 }

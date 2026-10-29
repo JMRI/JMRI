@@ -40,7 +40,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
     public static final String NO_PORTS_FOUND = Bundle.getMessage("noPortsFound");
     public static final String NONE = Bundle.getMessage("none");
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(JmrixConfigPane.class);
+    private static final Logger log = LoggerFactory.getLogger(JmrixConfigPane.class);
 
     /*
      * Create panel is separated off from the instance and synchronized, so that only
@@ -297,12 +297,17 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
         // first choice is -no- protocol chosen
         log.debug("new selection is {} {}", current, modeBox.getSelectedItem());
         if ((current != 0) && (current != -1)) {
+            ConnectionConfig.Config config = null;
             if ((ccCurrent != null) && (ccCurrent != classConnectionList[current])) {
+                config = ccCurrent.getConfig();
                 ccCurrent.dispose();
             }
             ccCurrent = classConnectionList[current];
             ccCurrent.setManufacturer((String) manuBox.getSelectedItem());
             ccCurrent.loadDetails(details);
+            if (config != null) {
+                ccCurrent.setConfig(config);
+            }
         } else {
             if (ccCurrent != null) {
                 ccCurrent.dispose();

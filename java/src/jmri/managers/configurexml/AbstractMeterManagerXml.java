@@ -139,6 +139,6 @@ public class AbstractMeterManagerXml extends AbstractNamedBeanManagerConfigXML {
         return InstanceManager.getDefault(MeterManager.class).getXMLOrder();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractMeterManagerXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractMeterManagerXml.class);
 
 }

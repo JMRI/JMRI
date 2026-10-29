@@ -101,7 +101,7 @@ public final class TreeModel extends DefaultTreeModel {
      *
      * @return the default instance of the TreeModel; creating it if necessary
      */
-    static public TreeModel instance() {
+    public static TreeModel instance() {
         if (instanceValue == null) {
             instanceValue = new TreeModel();
         }
@@ -117,7 +117,7 @@ public final class TreeModel extends DefaultTreeModel {
         runner.join();
     }
 
-    static private TreeModel instanceValue = null;
+    private static TreeModel instanceValue = null;
 
     class Runner extends Thread {
 
@@ -334,5 +334,5 @@ public final class TreeModel extends DefaultTreeModel {
         pcs.removePropertyChangeListener(l);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TreeModel.class);
+    private static final Logger log = LoggerFactory.getLogger(TreeModel.class);
 }

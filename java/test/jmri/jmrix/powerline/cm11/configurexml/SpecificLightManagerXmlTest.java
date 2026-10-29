@@ -27,6 +27,6 @@ public class SpecificLightManagerXmlTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SpecificLightManagerXmlTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SpecificLightManagerXmlTest.class);
 
 }

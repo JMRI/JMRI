@@ -1,5 +1,6 @@
 package jmri.jmrix.can.cbus;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -324,7 +325,74 @@ public class CbusAddressTest {
     @Test
     public void testCbusAddressHashcode() {
         CbusAddress a = new CbusAddress("X9801D203A4");
-        assertEquals( 530, a.hashCode(), "a hashcode is present");
+        assertEquals( java.util.Arrays.hashCode(new int[]{0x98, 0x01, 0xD2, 0x03, 0xA4}),
+            a.hashCode(), "a hashcode is present");
+        assertEquals( new CbusAddress("+N123E456").hashCode(), new CbusAddress("x90007B01C8").hashCode(),
+            "equal addresses have equal hashcodes");
+    }
+
+    @Test
+    public void testUnsignedSameAsSigned() {
+        // an unsigned value is interpreted exactly as the + form
+        assertEquals(new CbusAddress("+100001"), new CbusAddress("100001"), "100001 same as +100001");
+        assertEquals(new CbusAddress("+N1E1"), new CbusAddress("100001"), "100001 is node 1 event 1");
+        assertEquals(new CbusAddress("+2700012"), new CbusAddress("2700012"), "2700012 same as +2700012");
+        assertEquals(new CbusAddress("+12"), new CbusAddress("12"), "12 same as +12");
+        assertTrue(new CbusAddress("2700012").match(
+            new CanReply(new int[]{CbusConstants.CBUS_ACON, 0x00, 0x1b, 0x00, 12})), "unsigned long event matches ACON");
+        assertTrue(new CbusAddress("12").match(
+            new CanReply(new int[]{CbusConstants.CBUS_ASON, 0x00, 0x00, 0x00, 12})), "unsigned short event matches ASON");
+        assertFalse(new CbusAddress("100001").match(
+            new CanReply(new int[]{CbusConstants.CBUS_ASON, 0x00, 0x00, 0x00, 1})), "100001 is not short event 1");
+    }
+
+    @Test
+    public void testLargeNodeNumberNoOverflow() {
+        // node 21475 * 100000 exceeds Integer.MAX_VALUE
+        CbusAddress a = new CbusAddress("+2147500000");
+        assertTrue(a.check(), "node 21475 event 0 is valid");
+        assertEquals(new CbusAddress("+N21475E0"), a, "node 21475 event 0 parsed");
+
+        a = new CbusAddress("-6553565535");
+        assertTrue(a.check(), "node 65535 event 65535 is valid");
+        assertEquals(new CbusAddress("-N65535E65535"), a, "max node and event parsed");
+        assertTrue(a.match(new CanReply(new int[]{CbusConstants.CBUS_ACOF, 0xff, 0xff, 0xff, 0xff})),
+            "max node and event matches");
+    }
+
+    @Test
+    public void testOutOfRangeIsInvalidNotException() {
+        String[] invalid = new String[]{
+            "+6553600000", // node 65536
+            "6553600000", // node 65536 unsigned
+            "+165536", // node 1 event 65536
+            "+99999999999999999999", // exceeds a long
+            "+N65536E1", // NE form node too large
+            "-N1E65536", // NE form event too large
+            "N99999999999E1" // NE form exceeds an int
+        };
+        for (String addr : invalid) {
+            CbusAddress a = assertDoesNotThrow(() -> new CbusAddress(addr), "no exception for " + addr);
+            assertFalse(a.check(), addr + " is invalid");
+            assertFalse(a.checkSplit(), addr + " does not split");
+            assertEquals(0, new CbusAddress(addr + ";-1").split().length, addr + " in multi address does not split");
+        }
+    }
+
+    @Test
+    @SuppressWarnings({"unlikely-arg-type", "IncompatibleEquals"})
+    public void testEqualsHashcodeInvalidAddress() {
+        CbusAddress invalid = new CbusAddress("ABC");
+        CbusAddress invalidToo = new CbusAddress("+6553600000");
+        CbusAddress valid = new CbusAddress("+1");
+        assertFalse(invalid.check(), "ABC is invalid");
+        assertEquals(0, invalid.hashCode(), "invalid hashcode is 0");
+        assertEquals(0, invalidToo.hashCode(), "out of range hashcode is 0");
+        assertFalse(invalid.equals(valid), "invalid not equal to valid");
+        assertFalse(valid.equals(invalid), "valid not equal to invalid");
+        assertFalse(invalid.equals(null), "invalid not equal to null");
+        assertFalse(invalid.equals("ABC"), "invalid not equal to String");
+        assertTrue(invalid.equals(invalidToo), "two invalid addresses are equal");
     }
 
     @Test
@@ -370,5 +438,5 @@ public class CbusAddressTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusAddressTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusAddressTest.class);
 }

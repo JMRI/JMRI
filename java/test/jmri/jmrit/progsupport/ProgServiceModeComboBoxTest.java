@@ -26,6 +26,6 @@ public class ProgServiceModeComboBoxTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ProgServiceModeComboBoxTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ProgServiceModeComboBoxTest.class);
 
 }

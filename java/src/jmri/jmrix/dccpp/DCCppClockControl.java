@@ -28,8 +28,8 @@ public class DCCppClockControl extends DefaultClockControl implements DCCppListe
     Calendar _cal;    
     java.beans.PropertyChangeListener minuteChangeListener;
     boolean isRunning; //track clock's pause state (Note: timebase.isRun() is updated too late) 
-    final static long MSECPERHOUR = 3600000;
-    final static long MSECPERMINUTE = 60000;
+    static final long MSECPERHOUR = 3600000;
+    static final long MSECPERMINUTE = 60000;
 
     public DCCppClockControl(DCCppSystemConnectionMemo memo) {
         log.trace("DCCppClockControl (DCCppSystemConnectionMemo {})", memo); // NOI18N
@@ -192,7 +192,7 @@ public class DCCppClockControl extends DefaultClockControl implements DCCppListe
         log.trace("notifyTimeout(DCCppMessage {})", msg); // NOI18N        
     }  
 
-    private final static Logger log = LoggerFactory.getLogger(DCCppClockControl.class);
+    private static final Logger log = LoggerFactory.getLogger(DCCppClockControl.class);
 }
 
 

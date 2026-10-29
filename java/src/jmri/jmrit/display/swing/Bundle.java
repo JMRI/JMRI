@@ -27,7 +27,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class Bundle extends jmri.jmrit.display.Bundle {
 
     @CheckForNull
-    private final static String name = null; // no local Bundle
+    private static final String name = null; // no local Bundle
 
     //
     // below here is boilerplate to be copied exactly
@@ -80,7 +80,7 @@ public class Bundle extends jmri.jmrit.display.Bundle {
         return getBundle().handleGetMessage(locale, key, subs);
     }
 
-    private final static Bundle b = new Bundle();
+    private static final Bundle b = new Bundle();
 
     @Override
     @CheckForNull

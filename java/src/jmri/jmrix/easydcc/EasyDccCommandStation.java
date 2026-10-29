@@ -75,6 +75,6 @@ public class EasyDccCommandStation implements CommandStation {
         return memo.getSystemPrefix();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EasyDccCommandStation.class);
+    private static final Logger log = LoggerFactory.getLogger(EasyDccCommandStation.class);
 
 }

@@ -127,6 +127,6 @@ public class DragJLabel extends JLabel implements DragGestureListener, DragSourc
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DragJLabel.class);
+    private static final Logger log = LoggerFactory.getLogger(DragJLabel.class);
 
 }

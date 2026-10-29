@@ -42,11 +42,11 @@ import jmri.jmrit.display.ToolTip;
  *
  *    Wye           Three-way
  *
- *       B                D
+ *       C                D
  *      //               //
  * A ==**           A ==**== B
  *      \\               \\
- *       C                C
+ *       B                C
  *
  *           Crossovers
  * Right-hand            left-hand
@@ -2934,5 +2934,5 @@ abstract public class LayoutTurnout extends LayoutTrack {
         return getId();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurnout.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTurnout.class);
 }

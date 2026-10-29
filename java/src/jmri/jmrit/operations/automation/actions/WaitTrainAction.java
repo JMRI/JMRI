@@ -93,6 +93,6 @@ public class WaitTrainAction extends Action implements PropertyChangeListener {
         trainUpdate(evt);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WaitTrainAction.class);
+    private static final Logger log = LoggerFactory.getLogger(WaitTrainAction.class);
 
 }

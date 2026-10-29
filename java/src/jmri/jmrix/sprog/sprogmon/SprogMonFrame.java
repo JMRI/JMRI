@@ -50,6 +50,6 @@ public class SprogMonFrame extends jmri.jmrix.AbstractMonFrame implements SprogL
         log.debug("reply heard");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogMonFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(SprogMonFrame.class);
 
 }

@@ -172,5 +172,5 @@ public class Station<To extends Enum<To>, From extends Enum<From>> {
     ArrayList<To> sentValues;
     ArrayList<From> indicationValues;
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Station.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Station.class);
 }

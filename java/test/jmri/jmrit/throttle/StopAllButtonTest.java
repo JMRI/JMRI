@@ -2,6 +2,8 @@ package jmri.jmrit.throttle;
 
 import org.junit.jupiter.api.*;
 
+import jmri.jmrit.throttle.buttons.StopAllButton;
+
 /**
  * Test simple functioning of StopAllButton
  *

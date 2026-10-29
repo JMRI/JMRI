@@ -142,6 +142,11 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
     }
 
     @Override
+    public jmri.NamedBean getNamedBean() {
+        return getMemory();
+    }
+
+    @Override
     public void stateChanged(ChangeEvent e) {
         spinnerUpdated();
     }
@@ -276,5 +281,5 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
         namedMemory = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MemorySpinnerIcon.class);
+    private static final Logger log = LoggerFactory.getLogger(MemorySpinnerIcon.class);
 }

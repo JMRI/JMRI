@@ -28,5 +28,5 @@ public class HexFileSystemConnectionMemoTest extends LnSystemConnectionMemoTestB
         super.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LocoNetSystemConnectionMemoTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(LocoNetSystemConnectionMemoTest.class);
 }

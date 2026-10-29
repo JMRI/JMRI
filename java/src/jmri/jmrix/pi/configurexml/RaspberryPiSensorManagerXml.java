@@ -36,6 +36,6 @@ public class RaspberryPiSensorManagerXml extends jmri.managers.configurexml.Abst
         return loadSensors(shared);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RaspberryPiSensorManagerXml.class);
+    private static final Logger log = LoggerFactory.getLogger(RaspberryPiSensorManagerXml.class);
 
 }

@@ -17,7 +17,7 @@ import jmri.jmrix.ipocs.protocol.packets.RequestStatusPacket;
  * @since 4.21.2
  */
 public class IpocsSensor extends AbstractSensor implements IpocsClientListener {
-  private final static Logger log = LoggerFactory.getLogger(IpocsSensor.class);
+  private static final Logger log = LoggerFactory.getLogger(IpocsSensor.class);
   private final IpocsPortController portController;
 
   public IpocsSensor(IpocsPortController portController, String systemName, String userName) {

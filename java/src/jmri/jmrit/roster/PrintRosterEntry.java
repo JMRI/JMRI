@@ -370,6 +370,6 @@ public class PrintRosterEntry implements PaneContainer {
         w.setFont(null, Font.PLAIN, null);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintRosterEntry.class);
+    private static final Logger log = LoggerFactory.getLogger(PrintRosterEntry.class);
 
 }

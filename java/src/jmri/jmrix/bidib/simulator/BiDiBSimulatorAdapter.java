@@ -225,7 +225,7 @@ public class BiDiBSimulatorAdapter extends BiDiBSerialPortController {
     }
 
 
-    private final static Logger log = LoggerFactory.getLogger(BiDiBSimulatorAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(BiDiBSimulatorAdapter.class);
     private static final Logger MSG_RAW_LOGGER = LoggerFactory.getLogger("RAW");
 
 }

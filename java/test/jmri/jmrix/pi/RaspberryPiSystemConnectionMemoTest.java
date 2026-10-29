@@ -1,8 +1,5 @@
 package jmri.jmrix.pi;
 
-import com.pi4j.io.gpio.GpioFactory;
-import com.pi4j.io.gpio.GpioProvider;
-
 import jmri.InstanceManager;
 import jmri.jmrix.SystemConnectionMemoTestBase;
 import jmri.util.JUnitUtil;
@@ -121,9 +118,8 @@ public class RaspberryPiSystemConnectionMemoTest extends SystemConnectionMemoTes
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
-        
-        GpioProvider myprovider = new PiGpioProviderScaffold();
-        GpioFactory.setDefaultProvider(myprovider);
+
+        new PiGpioProviderScaffold();
 
         scm = new RaspberryPiSystemConnectionMemo();
         scm.configureManagers();

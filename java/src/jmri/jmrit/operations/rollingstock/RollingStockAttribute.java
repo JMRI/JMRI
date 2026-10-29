@@ -222,6 +222,6 @@ public abstract class RollingStockAttribute extends PropertyChangeSupport {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RollingStockAttribute.class);
+    private static final Logger log = LoggerFactory.getLogger(RollingStockAttribute.class);
 
 }

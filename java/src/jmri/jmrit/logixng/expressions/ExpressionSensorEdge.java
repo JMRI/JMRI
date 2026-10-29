@@ -18,13 +18,13 @@ public class ExpressionSensorEdge extends AbstractDigitalExpression
 
     private final LogixNG_SelectNamedBean<Sensor> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Sensor.class, InstanceManager.getDefault(SensorManager.class), this);
+                    this, Sensor.class, InstanceManager.getDefault(SensorManager.class));
 
     private final LogixNG_SelectEnum<SensorState> _selectEnumFromState =
-            new LogixNG_SelectEnum<>(this, SensorState.values(), SensorState.Active, this);
+            new LogixNG_SelectEnum<>(this, SensorState.values(), SensorState.Active);
 
     private final LogixNG_SelectEnum<SensorState> _selectEnumToState =
-            new LogixNG_SelectEnum<>(this, SensorState.values(), SensorState.Active, this);
+            new LogixNG_SelectEnum<>(this, SensorState.values(), SensorState.Active);
 
     private boolean _onlyTrueOnce = false;
 
@@ -138,7 +138,6 @@ public class ExpressionSensorEdge extends AbstractDigitalExpression
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
             _selectNamedBean.addPropertyChangeListener("KnownState", this);
-            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -148,7 +147,6 @@ public class ExpressionSensorEdge extends AbstractDigitalExpression
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             _selectNamedBean.removePropertyChangeListener("KnownState", this);
-            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
             lastSensorState = null;
             currentSensorState = null;
@@ -187,7 +185,7 @@ public class ExpressionSensorEdge extends AbstractDigitalExpression
             this._text = text;
         }
 
-        static public SensorState get(int id) {
+        public static SensorState get(int id) {
             switch (id) {
                 case Sensor.UNKNOWN:
                     return Inactive;
@@ -224,5 +222,5 @@ public class ExpressionSensorEdge extends AbstractDigitalExpression
         _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Expression);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSensorEdge.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionSensorEdge.class);
 }

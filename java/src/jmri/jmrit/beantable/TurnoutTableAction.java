@@ -203,7 +203,10 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
                 cb.setSelectedIndex(1);
             } else {
                 if (turnOp.isNonce()) {
-                    cb.setSelectedIndex(2);
+                    // show the type the turnout's own copy was made from, else the first type as before
+                    TurnoutOperation definitive = turnOp.getDefinitive();
+                    int index = (definitive != null) ? strings.indexOf(definitive.getName()) : -1;
+                    cb.setSelectedIndex(index > 1 ? index : 2);
                 } else {
                     cb.setSelectedItem(turnOp.getName());
                 }
@@ -709,6 +712,6 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         return Bundle.getMessage("TitleTurnoutTable");
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TurnoutTableAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TurnoutTableAction.class);
 
 }

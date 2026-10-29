@@ -748,6 +748,6 @@ public class NamedBeanComboBoxTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NamedBeanComboBoxTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(NamedBeanComboBoxTest.class);
 
 }

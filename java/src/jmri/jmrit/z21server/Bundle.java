@@ -73,7 +73,7 @@ public class Bundle extends jmri.jmrit.Bundle {
     }
 
 
-    private final static jmri.jmrit.z21server.Bundle b = new jmri.jmrit.z21server.Bundle();
+    private static final jmri.jmrit.z21server.Bundle b = new jmri.jmrit.z21server.Bundle();
 
     @Override
     @CheckForNull

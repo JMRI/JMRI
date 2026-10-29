@@ -79,6 +79,10 @@ public class OperationsFrame extends JmriJFrame {
         this.getContentPane().addItemWidth(p, c, width, x, y);
     }
 
+    protected JPanel getColorChooserPanel(String text, JColorChooser chooser, JCheckBox checkBox) {
+        return this.getContentPane().getColorChooserPanel(text, chooser, checkBox);
+    }
+
     /**
      * Gets the number of checkboxes(+1) that can fix in one row see
      * OperationsFrame.MIN_CHECKBOXES and OperationsFrame.MAX_CHECKBOXES

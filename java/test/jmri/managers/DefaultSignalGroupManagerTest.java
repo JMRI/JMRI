@@ -57,6 +57,6 @@ public class DefaultSignalGroupManagerTest extends AbstractManagerTestBase<Signa
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DefaultSignalGroupManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DefaultSignalGroupManagerTest.class);
 
 }

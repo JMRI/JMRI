@@ -173,6 +173,6 @@ public class CbusDccProgrammerManager extends DefaultProgrammerManager {
         return null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusDccProgrammerManager.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusDccProgrammerManager.class);
 
 }

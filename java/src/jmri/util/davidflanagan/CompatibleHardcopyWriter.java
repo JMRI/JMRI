@@ -37,7 +37,7 @@ public class CompatibleHardcopyWriter extends HardcopyWriter {
      */
     public int getCurrentLineNumber() {
         if (page != null) {
-            return getCurrentVPos() / getLineHeight();
+            return (int) (getCurrentVPos() / getLineHeight());
         }
         return 0; // new page
     }
@@ -49,7 +49,7 @@ public class CompatibleHardcopyWriter extends HardcopyWriter {
      * @return the number of lines per page
      */
     public int getLinesPerPage() {
-        return getPrintablePagesizePoints().height / getLineHeight();
+        return (int) (getPrintablePagesizePoints().height / getLineHeight());
     }
 
     /**
@@ -63,10 +63,10 @@ public class CompatibleHardcopyWriter extends HardcopyWriter {
      * @param endColumn The ending column number
      */
     public void write(int startLine, int startColumn, int endLine, int endColumn) {
-        int startVPos = startLine * getLineHeight();
-        int endVPos = endLine * getLineHeight();
-        int startHPos = (int) (startColumn * getCharWidth());
-        int endHPos = (int) (endColumn * getCharWidth());
+        float startVPos = startLine * getLineHeight();
+        float endVPos = endLine * getLineHeight();
+        float startHPos = startColumn * getCharWidth();
+        float endHPos = endColumn * getCharWidth();
 
         super.writeLine(startVPos, startHPos, endVPos, endHPos);
     }

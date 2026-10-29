@@ -68,7 +68,7 @@ public class NceProgrammerManager extends DefaultProgrammerManager {
     // this centralizes the isGlobalProgrammerAvailable logic.  It
     // has to be static so it can be called during the construction of
     // an object of this class
-    static private boolean checkGlobalProgrammerAvailable(@Nonnull NceTrafficController tc) {
+    private static boolean checkGlobalProgrammerAvailable(@Nonnull NceTrafficController tc) {
         switch (tc.getUsbSystem()) {
             case NceTrafficController.USB_SYSTEM_NONE: // Serial or Simulator
             case NceTrafficController.USB_SYSTEM_POWERCAB:
@@ -112,6 +112,6 @@ public class NceProgrammerManager extends DefaultProgrammerManager {
         return null;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceProgrammerManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceProgrammerManager.class);
 
 }

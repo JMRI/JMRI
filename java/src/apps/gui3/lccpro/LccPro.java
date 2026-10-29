@@ -98,7 +98,7 @@ public class LccPro extends Apps3 {
                         return "Next you need to configure your LCC connection.\n\nThen select the serial port or enter in the IP address of the device";
                     }
                 };
-            }      
+            }
         };
         prefsAction.setApp(this);
         prefsAction.actionPerformed(null);
@@ -134,9 +134,9 @@ public class LccPro extends Apps3 {
         app.start();
     }
 
-    static public void preInit(String[] args) {
+    public static void preInit(String[] args) {
         apps.gui3.Apps3.preInit(applicationName);
-        apps.gui3.Apps3.setConfigFilename("LccProConfig.xml", args);
+        apps.gui3.Apps3.setConfigFilename("LccProConfig.properties", args);
     }
 
     /**
@@ -164,6 +164,6 @@ public class LccPro extends Apps3 {
         });
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LccPro.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LccPro.class);
 
 }

@@ -32,6 +32,7 @@ public class PrintMoreOptionPanel extends OperationsPreferencesPanel {
     JTextField tab1TextField = new JTextField(2);
     JTextField tab2TextField = new JTextField(2);
     JTextField tab3TextField = new JTextField(2);
+    JTextField manifestTabTextField = new JTextField(2);
 
     // text area
     // combo boxes
@@ -58,10 +59,16 @@ public class PrintMoreOptionPanel extends OperationsPreferencesPanel {
         pTab3.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutTab3")));
         pTab3.add(tab3TextField);
         p1.add(pTab3);
+        
+        JPanel pManifestTab = new JPanel();
+        pManifestTab.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutManifestTab")));
+        pManifestTab.add(manifestTabTextField);
+        p1.add(pManifestTab);
 
         tab1TextField.setText(Integer.toString(Setup.getTab1Length()));
         tab2TextField.setText(Integer.toString(Setup.getTab2Length()));
         tab3TextField.setText(Integer.toString(Setup.getTab3Length()));
+        manifestTabTextField.setText(Integer.toString(Setup.getManifestTabLength()));
 
         // add tool tips
         saveButton.setToolTipText(Bundle.getMessage("SaveToolTip"));
@@ -108,6 +115,7 @@ public class PrintMoreOptionPanel extends OperationsPreferencesPanel {
             Setup.setTab1length(Integer.parseInt(tab1TextField.getText()));
             Setup.setTab2length(Integer.parseInt(tab2TextField.getText()));
             Setup.setTab3length(Integer.parseInt(tab3TextField.getText()));
+            Setup.setManifestTablength(Integer.parseInt(manifestTabTextField.getText()));
         } catch (NumberFormatException e) {
             log.error("Tab wasn't a number");
         }
@@ -121,9 +129,10 @@ public class PrintMoreOptionPanel extends OperationsPreferencesPanel {
     @Override
     public boolean isDirty() {
         try {
-            return (Setup.getTab1Length() != Integer.parseInt(tab1TextField.getText())
-                    || Setup.getTab2Length() != Integer.parseInt(tab2TextField.getText())
-                    || Setup.getTab3Length() != Integer.parseInt(tab3TextField.getText()));
+            return (Setup.getTab1Length() != Integer.parseInt(tab1TextField.getText()) ||
+                    Setup.getTab2Length() != Integer.parseInt(tab2TextField.getText()) ||
+                    Setup.getTab3Length() != Integer.parseInt(tab3TextField.getText()) ||
+                    Setup.getManifestTabLength() != Integer.parseInt(manifestTabTextField.getText()));
         } catch (NumberFormatException e) {
             log.error("Tab wasn't a number");
         }

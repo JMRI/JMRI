@@ -15,7 +15,7 @@ import javax.swing.AbstractAction;
  */
 public class ManageBackupsAction extends AbstractAction {
 
-//    private final static Logger log = LoggerFactory.getLogger(ManageBackupsAction.class);
+//    private static final Logger log = LoggerFactory.getLogger(ManageBackupsAction.class);
 
     public ManageBackupsAction() {
         super(Bundle.getMessage("ManageAutoBackups"));

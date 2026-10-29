@@ -18,7 +18,7 @@ import jmri.util.JUnitUtil;
 public class PickSinglePanelDemo implements ListSelectionListener {
 
     // Main entry point
-    static public void main(String[] args) {
+    public static void main(String[] args) {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();

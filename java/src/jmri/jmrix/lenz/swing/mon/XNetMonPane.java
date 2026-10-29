@@ -111,7 +111,7 @@ public class XNetMonPane extends jmri.jmrix.AbstractMonPane implements XNetListe
     /**
      * Nested class to create one of these using old-style defaults
      */
-    static public class Default extends jmri.util.swing.JmriNamedPaneAction {
+    public static class Default extends jmri.util.swing.JmriNamedPaneAction {
 
         public Default() {
             super(Bundle.getMessage("MenuItemXNetCommandMonitor"), XNetMonPane.class.getName());

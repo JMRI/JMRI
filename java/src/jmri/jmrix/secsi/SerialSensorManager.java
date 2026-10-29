@@ -170,6 +170,6 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         return Bundle.getMessage("AddInputEntryToolTip");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialSensorManager.class);
+    private static final Logger log = LoggerFactory.getLogger(SerialSensorManager.class);
 
 }

@@ -151,5 +151,5 @@ public class LinkingLabelXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.LABELS, element);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LinkingLabelXml.class);
+    private static final Logger log = LoggerFactory.getLogger(LinkingLabelXml.class);
 }

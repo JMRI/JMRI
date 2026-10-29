@@ -54,7 +54,6 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
      */
     public AbstractLogixNGTableAction(String s) {
         super(s);
-        super.setEnabled(false);
     }
 
     protected abstract AbstractLogixNGEditor<E> getEditor(BeanTableDataModel<E> m, String sName);
@@ -704,8 +703,8 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     protected class TableModel extends BeanTableDataModel<E> {
 
         // overlay the state column with the edit column
-        static public final int ENABLECOL = VALUECOL;
-        static public final int EDITCOL = DELETECOL;
+        public static final int ENABLECOL = VALUECOL;
+        public static final int EDITCOL = DELETECOL;
         protected String enabledString = Bundle.getMessage("ColumnHeadEnabled");  // NOI18N
 
         @Override
@@ -896,6 +895,6 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractLogixNGTableAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractLogixNGTableAction.class);
 
 }

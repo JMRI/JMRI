@@ -7,7 +7,6 @@ import org.junit.jupiter.api.*;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.JUnitUtil;
 
 /**
@@ -45,8 +44,6 @@ public class HtmlConductorTest {
         JUnitUtil.initIdTagManager();
         jmri.util.JUnitOperationsUtil.setupOperationsTests();
         jmri.util.JUnitOperationsUtil.initOperationsData();
-        // default font chars per line, prevents headless exception when using HardcopyWriter
-        InstanceManager.getDefault(TrainManager.class).setHardcopyWriterLineLength("Monospaced", 0, 10, TrainCommon.getPageSize("Portrait"), false, 89);
     }
 
     @AfterEach
@@ -55,6 +52,6 @@ public class HtmlConductorTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(HtmlConductorTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(HtmlConductorTest.class);
 
 }

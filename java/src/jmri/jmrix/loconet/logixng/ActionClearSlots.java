@@ -111,6 +111,6 @@ public class ActionClearSlots extends AbstractDigitalAction {
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionClearSlots.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionClearSlots.class);
 
 }

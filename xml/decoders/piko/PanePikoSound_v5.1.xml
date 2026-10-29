@@ -75,7 +75,7 @@
     <name xml:lang="fr">Volume des Sons</name>
     <name xml:lang="it">Livelli dei Suoni</name>
     <name xml:lang="nl">Geluidvolume</name>
-    <group exclude="PIKO46505-18,PIKO46540-18,PIKO46548-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16,PIKO56627-22,PIKO36505-G,PIKO36537-G">
+    <group exclude="PIKO SmartDecoder XP5.1 (version 1.17+),PIKO SmartDecoder XP5.1 (version 1.8+),PIKO SmartDecoder XP5.1 (version 1.5+),PIKO SmartDecoder XP5.1 (version 1.1+)">
         <!--Piko SmartDecoder XP5.1-->
         <label>
             <text>CV Bank not available for this Piko SmartDecoder</text>
@@ -86,7 +86,7 @@
             </label>
         </row>
     </group>
-    <group include="PIKO46505-18,PIKO46540-18,PIKO46548-18,PIKO46550-18,PIKO46551-18,PIKO56505-22,PIKO56508-16,PIKO56627-22,PIKO36505-G,PIKO36537-G">
+    <group include="PIKO SmartDecoder XP5.1 (version 1.17+),PIKO SmartDecoder XP5.1 (version 1.8+),PIKO SmartDecoder XP5.1 (version 1.5+),PIKO SmartDecoder XP5.1 (version 1.1+)">
         <!--Piko SmartDecoder XP5.1-->
         <group include="PIKO SmartDecoder XP5.1 (version 1.1+)">
             <label>

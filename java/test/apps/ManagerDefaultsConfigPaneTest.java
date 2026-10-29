@@ -27,6 +27,6 @@ public class ManagerDefaultsConfigPaneTest extends PreferencesPanelTestBase<Mana
         Assertions.assertTrue(prefsPanel.isPersistant());
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ManagerDefaultsConfigPaneTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ManagerDefaultsConfigPaneTest.class);
 
 }

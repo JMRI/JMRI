@@ -78,6 +78,6 @@ public class SRCPClientVisitor extends SRCPClientParserDefaultVisitor {
         return node.childrenAccept(this, data);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SRCPClientVisitor.class);
+    private static final Logger log = LoggerFactory.getLogger(SRCPClientVisitor.class);
 
 }

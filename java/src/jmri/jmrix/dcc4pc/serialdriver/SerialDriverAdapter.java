@@ -45,7 +45,7 @@ public class SerialDriverAdapter extends Dcc4PcPortController {
         try {
             CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
             try {
-                activeSerialPort = portID.open(appName, 2000);
+                activeSerialPort = portID.open(getSystemConnectionMemo(), 2000);
             } catch (PortInUseException p) {
                 return handlePortBusy(p, portName, log);
             }
@@ -94,6 +94,30 @@ public class SerialDriverAdapter extends Dcc4PcPortController {
     }
 
     /**
+     * Close the port after it has failed, so it can be opened again with
+     * {@link #openPort}.
+     */
+    public void closeSerialPort() {
+        opened = false;
+        jmri.jmrix.purejavacomm.SerialPort p = activeSerialPort;
+        if (p != null) {
+            try {
+                p.close();
+            } catch (RuntimeException e) {
+                log.debug("Closing the failed port", e);
+            }
+        }
+    }
+
+    /**
+     * @return true if the operating system lists this connection's port. A
+     *         USB interface's port disappears while it is unplugged.
+     */
+    public boolean isPortPresent() {
+        return getActualPortNames().contains(getCurrentPortName());
+    }
+
+    /**
      * Option 1 controls the connection used for programming.
      * @return array with options for programming.
      */
@@ -117,6 +141,27 @@ public class SerialDriverAdapter extends Dcc4PcPortController {
         } else {
             return new String[]{""};
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * The Programmer choices are worked out each time: the list made when
+     * this connection was created can't include connections that start after
+     * it, and LocoNet often does. The saved choice stays in the list even if
+     * that connection isn't running, so opening Preferences doesn't clear it.
+     */
+    @Override
+    public String[] getOptionChoices(String option) {
+        if (!option1Name.equals(option)) {
+            return super.getOptionChoices(option);
+        }
+        List<String> choices = new ArrayList<>(java.util.Arrays.asList(validOption1()));
+        String current = getOptionState(option1Name);
+        if (current != null && !current.isEmpty() && !choices.contains(current)) {
+            choices.add(current);
+        }
+        return choices.toArray(new String[choices.size()]);
     }
 
     /**
@@ -202,9 +247,12 @@ public class SerialDriverAdapter extends Dcc4PcPortController {
         this.getSystemConnectionMemo().setDcc4PcTrafficController(control);
         control.connectPort(this);
         this.getSystemConnectionMemo().configureManagers();
+        // Programming on Main goes out through another connection (by default, the default
+        // command station's); RailCom brings the reply back
+        this.getSystemConnectionMemo().useProgrammerFrom(getOptionState(option1Name));
 
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }

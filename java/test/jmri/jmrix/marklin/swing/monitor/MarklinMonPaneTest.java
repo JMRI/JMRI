@@ -44,7 +44,7 @@ public class MarklinMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
 
         JUnitUtil.waitFor( () -> !pane.getFrameText().isEmpty(), "text populated");
 
-        Assertions.assertTrue( pane.getFrameText().contains("00 00 47 11 05 00 00 00 00 01 00 00 00"));
+        Assertions.assertTrue( pane.getFrameText().contains("00 00 03 00 05"), "getEnableMain frame hex in pane"); // hash=0x0300, DLC=5
 
         ampScaff.clickClearButton();
         JUnitUtil.waitFor( () -> pane.getFrameText().isEmpty(), "text cleared");

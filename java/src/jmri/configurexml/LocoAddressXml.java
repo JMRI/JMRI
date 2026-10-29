@@ -65,5 +65,5 @@ public class LocoAddressXml extends jmri.configurexml.AbstractXmlAdapter {
         return new jmri.DccLocoAddress(addr, prot);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoAddressXml.class);
+    private static final Logger log = LoggerFactory.getLogger(LocoAddressXml.class);
 }

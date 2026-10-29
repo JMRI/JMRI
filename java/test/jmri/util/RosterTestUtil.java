@@ -152,6 +152,6 @@ public class RosterTestUtil {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RosterTestUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(RosterTestUtil.class);
 
 }

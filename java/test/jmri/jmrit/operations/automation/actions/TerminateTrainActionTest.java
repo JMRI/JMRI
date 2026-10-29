@@ -68,6 +68,6 @@ public class TerminateTrainActionTest extends OperationsTestCase {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TerminateTrainActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TerminateTrainActionTest.class);
 
 }

@@ -26,6 +26,6 @@ public class LicenseActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LicenseActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(LicenseActionTest.class);
 
 }

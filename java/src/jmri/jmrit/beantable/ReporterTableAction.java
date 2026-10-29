@@ -307,6 +307,6 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         super.setMessagePreferencesDetails();
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ReporterTableAction.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ReporterTableAction.class);
 
 }

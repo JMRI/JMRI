@@ -26,6 +26,6 @@ public class SystemConsolePreferencesManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SystemConsolePreferencesManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SystemConsolePreferencesManagerTest.class);
 
 }

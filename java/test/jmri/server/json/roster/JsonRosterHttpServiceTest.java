@@ -28,8 +28,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
  */
 public class JsonRosterHttpServiceTest extends JsonHttpServiceTestBase<JsonRosterHttpService> {
 
-    private final static String TEST_GROUP1 = "testGroup1";
-    private final static String TEST_ENTRY1 = "testEntry1";
+    private static final String TEST_GROUP1 = "testGroup1";
+    private static final String TEST_ENTRY1 = "testEntry1";
 
     @BeforeEach
     @Override

@@ -380,5 +380,5 @@ public class DirectorySearcher implements InstanceManagerAutoDefault {
         cancelLooking();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DirectorySearcher.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DirectorySearcher.class);
 }

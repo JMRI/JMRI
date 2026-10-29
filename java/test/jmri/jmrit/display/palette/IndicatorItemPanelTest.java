@@ -33,6 +33,6 @@ public class IndicatorItemPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(IndicatorItemPanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(IndicatorItemPanelTest.class);
 
 }

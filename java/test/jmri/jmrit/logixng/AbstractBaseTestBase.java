@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import java.beans.PropertyChangeEvent;
@@ -34,7 +35,7 @@ import org.junit.jupiter.api.Test;
  */
 public abstract class AbstractBaseTestBase {
 
-    final static String TREE_INDENT = "   ";
+    static final String TREE_INDENT = "   ";
     protected Base _base;
     protected MaleSocket _baseMaleSocket;
     protected LogixNG_Category _category;
@@ -436,7 +437,7 @@ public abstract class AbstractBaseTestBase {
 
         // Some item doesn't support adding new sockets.
         // End here if the item under test doesn't.
-        org.junit.Assume.assumeTrue( "Item doesn't support adding new sockets", addNewSocket());
+        assumeTrue(addNewSocket(), "Item doesn't support adding new sockets");
 
         assertTrue( ab.get(), "PropertyChangeEvent fired");
         assertEquals(Base.PROPERTY_CHILD_COUNT, ar.get().getPropertyName());
@@ -572,6 +573,6 @@ public abstract class AbstractBaseTestBase {
     }
 
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractBaseTestBase.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractBaseTestBase.class);
 
 }

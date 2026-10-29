@@ -30,6 +30,6 @@ public class LogAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LogAction.class);
 
 }

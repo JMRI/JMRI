@@ -1,7 +1,7 @@
 package jmri.jmrit.z21server;
 
-import jmri.jmrit.throttle.LargePowerManagerButton;
-import jmri.jmrit.throttle.StopAllButton;
+import jmri.jmrit.throttle.buttons.LargePowerManagerButton;
+import jmri.jmrit.throttle.buttons.StopAllButton;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 

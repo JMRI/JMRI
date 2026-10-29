@@ -581,7 +581,7 @@ public class JmriJTablePersistenceManagerTest {
         JUnitUtil.tearDown();
     }
 
-    private final static class JmriJTablePersistenceManagerSpy extends JmriJTablePersistenceManager {
+    private static final class JmriJTablePersistenceManagerSpy extends JmriJTablePersistenceManager {
 
         @Override
         public boolean isDirty() {

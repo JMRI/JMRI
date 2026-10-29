@@ -183,7 +183,7 @@ public class SpecificMessage extends SerialMessage {
     }
 
     // static methods to return a formatted message
-    static public SerialMessage getPoll(int addr) {
+    public static SerialMessage getPoll(int addr) {
         // eventually this will have to include logic for reading
         // various bytes on the card, but our supported
         // cards don't require that yet
@@ -196,7 +196,7 @@ public class SpecificMessage extends SerialMessage {
         return null;
     }
 
-    static public SpecificMessage setCM11Time(int housecode) {
+    public static SpecificMessage setCM11Time(int housecode) {
         SpecificMessage msg = new SpecificMessage(7);
         msg.setElement(0, 0x9B);
         msg.setElement(5, 0x01);
@@ -204,7 +204,7 @@ public class SpecificMessage extends SerialMessage {
         return msg;
     }
 
-    static public SpecificMessage getAddress(int housecode, int devicecode) {
+    public static SpecificMessage getAddress(int housecode, int devicecode) {
         SpecificMessage m = new SpecificMessage(2);
         m.setInterlocked(true);
         m.setElement(0, 0x04);
@@ -212,7 +212,7 @@ public class SpecificMessage extends SerialMessage {
         return m;
     }
 
-    static public SpecificMessage getAddressDim(int housecode, int devicecode, int dimcode) {
+    public static SpecificMessage getAddressDim(int housecode, int devicecode, int dimcode) {
         SpecificMessage m = new SpecificMessage(2);
         m.setInterlocked(true);
         if (dimcode > 0) {
@@ -224,7 +224,7 @@ public class SpecificMessage extends SerialMessage {
         return m;
     }
 
-    static public SpecificMessage getFunctionDim(int housecode, int function, int dimcode) {
+    public static SpecificMessage getFunctionDim(int housecode, int function, int dimcode) {
         SpecificMessage m = new SpecificMessage(2);
         m.setInterlocked(true);
         if (dimcode > 0) {
@@ -236,7 +236,7 @@ public class SpecificMessage extends SerialMessage {
         return m;
     }
 
-    static public SpecificMessage getFunction(int housecode, int function) {
+    public static SpecificMessage getFunction(int housecode, int function) {
         SpecificMessage m = new SpecificMessage(2);
         m.setInterlocked(true);
         m.setElement(0, 0x06);
@@ -244,7 +244,7 @@ public class SpecificMessage extends SerialMessage {
         return m;
     }
 
-    static public SpecificMessage getExtCmd(int housecode, int devicecode, int function, int dimcode) {
+    public static SpecificMessage getExtCmd(int housecode, int devicecode, int function, int dimcode) {
         SpecificMessage m = new SpecificMessage(5);
         m.setInterlocked(true);
         m.setElement(0, 0x07);

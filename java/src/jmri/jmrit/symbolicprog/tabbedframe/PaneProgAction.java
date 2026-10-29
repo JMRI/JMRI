@@ -121,6 +121,6 @@ public class PaneProgAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PaneProgAction.class);
+    private static final Logger log = LoggerFactory.getLogger(PaneProgAction.class);
 
 }

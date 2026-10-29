@@ -101,5 +101,5 @@ public class DownCounterAction extends Action implements PropertyChangeListener 
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DownCounterAction.class);
+    private static final Logger log = LoggerFactory.getLogger(DownCounterAction.class);
 }

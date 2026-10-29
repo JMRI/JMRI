@@ -245,6 +245,6 @@ public class BlockEditAction extends BeanEditAction<Block> {
         return basic;
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(BlockEditAction.class);
+    // private static final Logger log = LoggerFactory.getLogger(BlockEditAction.class);
 
 }

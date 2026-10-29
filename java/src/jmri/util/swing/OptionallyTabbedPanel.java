@@ -35,7 +35,7 @@ public class OptionallyTabbedPanel extends JPanel {
         singlePane.setLayout(new WrapLayout(FlowLayout.LEFT, 2, 2));
     }
 
-    final private int tabMax;  // must be provided in ctor
+    private final int tabMax;  // must be provided in ctor
     private ArrayList<Component> components = new ArrayList<>(); // to allow re-layout
     
     private boolean currentlyTabbed;

@@ -31,7 +31,7 @@ public class LayoutLHXOverView extends LayoutXOverView {
         editor = new jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutLHXOverEditor(layoutEditor);
     }
 
-    // final private LayoutLHXOver xover;
+    // private final LayoutLHXOver xover;
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutLHXOverView.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutLHXOverView.class);
 }

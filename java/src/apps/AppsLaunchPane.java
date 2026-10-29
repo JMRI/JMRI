@@ -101,7 +101,7 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
             log.error("Error while creating Jynstrument {}", path);
             return;
         }
-        TransparencyUtils.setTransparent(it);
+        TransparencyUtils.setOpacityRec(it);
         it.setVisible(true);
         _jynstrumentSpace.setVisible(true);
         _jynstrumentSpace.add(it);
@@ -156,7 +156,7 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
             cs.setText(" ");
             return;
         }
-        ConnectionStatus.instance().addConnection(conn.name(), conn.getInfo());
+        ConnectionStatus.instance().addConnection(conn.getAdapter().getSystemConnectionMemo());
         cs.setFont(pane.getFont());
         updateLine(conn, cs);
         pane.add(cs);
@@ -170,7 +170,7 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
         if (name == null) {
             name = conn.getManufacturer();
         }
-        if (ConnectionStatus.instance().isConnectionOk(null, conn.getInfo())) {
+        if (ConnectionStatus.instance().isConnectionOk(conn.getAdapter().getSystemConnectionMemo())) {
             cs.setForeground(Color.black);
             String cf = Bundle.getMessage("ConnectionSucceeded", name, conn.name(), conn.getInfo());
             cs.setText(cf);
@@ -242,7 +242,7 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
     //int[] connection = {-1,-1,-1,-1};
     ConnectionConfig[] connection = {null, null, null, null};
 
-    static protected void setJmriSystemProperty(String key, String value) {
+    protected static void setJmriSystemProperty(String key, String value) {
         try {
             String current = System.getProperty("org.jmri.Apps." + key);
             if (current == null) {
@@ -262,7 +262,7 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
      * @see apps.startup.CreateButtonModelFactory
      * @return null if no such space exists
      */
-    static public JComponent buttonSpace() {
+    public static JComponent buttonSpace() {
         return _buttonSpace;
     }
     static JComponent _buttonSpace = null;
@@ -287,7 +287,7 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
      * @param def  Default value if no other is provided
      * @param args Argument array from the main routine
      */
-    static protected void setConfigFilename(String def, String[] args) {
+    protected static void setConfigFilename(String def, String[] args) {
         // if the property org.jmri.Apps.configFilename was set, skip
         if (System.getProperty("org.jmri.Apps.configFilename") != null) {
             return;
@@ -308,7 +308,7 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
         setJmriSystemProperty("configFilename", def);
     }
 
-    static public String getConfigFileName() {
+    public static String getConfigFileName() {
         log.debug("getConfigFileName() called, shouldn't have been", new Exception("bad call traceback"));
         return null;
         // was hopefully set by setJmriSystemProperty("configFilename", def) earlier, recover
@@ -342,5 +342,5 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
      */
     protected abstract String windowHelpID();
 
-    private final static Logger log = LoggerFactory.getLogger(AppsLaunchPane.class);
+    private static final Logger log = LoggerFactory.getLogger(AppsLaunchPane.class);
 }

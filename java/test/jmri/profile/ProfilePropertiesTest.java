@@ -32,6 +32,6 @@ public class ProfilePropertiesTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ProfilePropertiesTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ProfilePropertiesTest.class);
 
 }

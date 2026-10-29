@@ -82,7 +82,7 @@ public class InstanceManagerTest {
         assertTrue(InstanceManager.isInitialized(jmri.InstanceManagerTest.InstanceManagerInitCheck.class));
     }
 
-    static public class InstanceManagerInitCheck implements jmri.InstanceManagerAutoDefault {
+    public static class InstanceManagerInitCheck implements jmri.InstanceManagerAutoDefault {
         public InstanceManagerInitCheck() {}
     }
 
@@ -302,6 +302,17 @@ public class InstanceManagerTest {
 
     }
 
+    @Test
+    public void testDisposeInClearAll() {
+        OkToDispose d1 = new OkToDispose();
+
+        InstanceManager.store(d1, OkToDispose.class);
+        // clearAll makes a new default InstanceManager before clearing this
+        // one; the items this one holds must still be disposed
+        InstanceManager.getDefault().clearAll();
+        JUnitAppender.assertWarnMessage(OkToDispose.MESSAGE + 1);
+    }
+
     /**
      * Test of types that have defaults, even with no system attached.
      */
@@ -440,5 +451,5 @@ public class InstanceManagerTest {
         JUnitUtil.tearDown();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InstanceManagerTest.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InstanceManagerTest.class);
 }

@@ -293,6 +293,6 @@ public class ColorDialog extends JDialog implements ChangeListener {
             update();
         }
 
-        private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ColorDialog.class);
+        private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ColorDialog.class);
 }
 

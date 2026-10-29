@@ -367,12 +367,13 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 
         private void handleActiveTrainListen(java.beans.PropertyChangeEvent e) {
             if (e.getNewValue() != null) {
-            log.trace("Property[{}] newValue[{}]",e.getPropertyName(),e.getNewValue());
+                log.trace("Property[{}] newValue[{}]",e.getPropertyName(),e.getNewValue());
             } else {
                 log.trace("Property[{}] newValue[{}]",e.getPropertyName(),"NULL");
             }
             if (e.getPropertyName().equals("mode")) {
                 int newValue = ((Integer) e.getNewValue()).intValue();
+                int oldValue = ((Integer) e.getOldValue()).intValue();
                 if (newValue == ActiveTrain.DISPATCHED) {
                     stopButton.setVisible(false);
                     manualButton.setVisible(false);
@@ -385,7 +386,8 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
                             throttleListener);
                 } else if (newValue == ActiveTrain.AUTOMATIC) {
                     log.trace("[{}]:Set auto", autoActiveTrain.getActiveTrain().getActiveTrainName());
-                    if (throttle == null && autoActiveTrain.getThrottle() != null) {
+                    if (throttle == null && autoActiveTrain.getThrottle() != null
+                            || oldValue == ActiveTrain.DISPATCHED) {
                         log.trace("[{}]:Set new throttle", autoActiveTrain.getActiveTrain().getActiveTrainName());
                         throttle = autoActiveTrain.getThrottle();
                         throttleListener = new java.beans.PropertyChangeListener() {
@@ -672,7 +674,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AutoTrainsFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(AutoTrainsFrame.class);
 
 }
 

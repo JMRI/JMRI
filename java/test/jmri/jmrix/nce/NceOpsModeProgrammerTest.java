@@ -30,6 +30,6 @@ public class NceOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgramm
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NceOpsModeProgrammerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(NceOpsModeProgrammerTest.class);
 
 }

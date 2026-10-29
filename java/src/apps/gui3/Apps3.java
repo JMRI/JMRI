@@ -47,7 +47,7 @@ public abstract class Apps3 extends AppsBase {
      *
      * @param applicationName application name
      */
-    static public void preInit(String applicationName) {
+    public static void preInit(String applicationName) {
         AppsBase.preInit(applicationName);
 
         // Initialise system console
@@ -94,19 +94,20 @@ public abstract class Apps3 extends AppsBase {
     protected boolean wizardLaunchCheck() {
         return false;
     }
-    
+
     public void launchFirstTimeStartupWizard() {
         FirstTimeStartUpWizardAction prefsAction = new FirstTimeStartUpWizardAction("Start Up Wizard");
         prefsAction.setApp(this);
         prefsAction.actionPerformed(null);
     }
-    
+
     /**
      * For compatability with adding in buttons to the toolbar using the
      * existing createbuttonmodel
      */
     protected static void setButtonSpace() {
         _buttonSpace = new JPanel();
+        _buttonSpace.setOpaque(false);
         _buttonSpace.setLayout(new FlowLayout(FlowLayout.LEFT));
     }
 
@@ -117,7 +118,7 @@ public abstract class Apps3 extends AppsBase {
      * @see apps.startup.CreateButtonModelFactory
      * @return null if no such space exists
      */
-    static public JComponent buttonSpace() {
+    public static JComponent buttonSpace() {
         return _buttonSpace;
     }
     static JComponent _buttonSpace = null;
@@ -158,7 +159,7 @@ public abstract class Apps3 extends AppsBase {
                 }
             }
         }, eventMask);
-        
+
         // A Shutdown manager handles the quiting of the application
         mainFrame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         displayMainFrame(mainFrame.getMaximumSize());
@@ -189,7 +190,7 @@ public abstract class Apps3 extends AppsBase {
         splash(false);
     }
 
-    static protected void splash(boolean show) {
+    protected static void splash(boolean show) {
         splash(show, false);
     }
 
@@ -198,7 +199,7 @@ public abstract class Apps3 extends AppsBase {
     static boolean debugFired = false;
     static boolean debugmsg = false;
 
-    static protected void splash(boolean show, boolean debug) {
+    protected static void splash(boolean show, boolean debug) {
         if (debugListener == null && debug) {
             // set a global listener for debug options
             debugFired = false;
@@ -239,7 +240,7 @@ public abstract class Apps3 extends AppsBase {
         }
     }
 
-    static protected JPanel splashDebugMsg() {
+    protected static JPanel splashDebugMsg() {
         JLabel panelLabelDisableLogix = new JLabel(Bundle.getMessage("PressF8ToDebug"));
         panelLabelDisableLogix.setFont(panelLabelDisableLogix.getFont().deriveFont(9f));
         JLabel panelLabelDisableLogixNG = new JLabel(Bundle.getMessage("PressF9ToDisableLogixNG"));
@@ -251,7 +252,7 @@ public abstract class Apps3 extends AppsBase {
         return panel;
     }
 
-    static protected void startupDebug() {
+    protected static void startupDebug() {
         debugFired = true;
         debugmsg = true;
 
@@ -319,9 +320,6 @@ public abstract class Apps3 extends AppsBase {
         }
         try {
             ProfileManagerDialog.getStartingProfile(sp);
-            // Manually setting the configFilename property since calling
-            // Apps.setConfigFilename() does not reset the system property
-            System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
             Profile profile = ProfileManager.getDefault().getActiveProfile();
             if (profile != null) {
                 log.info("Starting with profile {}", profile.getId());
@@ -360,6 +358,6 @@ public abstract class Apps3 extends AppsBase {
         }
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Apps3.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Apps3.class);
 
 }

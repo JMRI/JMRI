@@ -328,7 +328,7 @@ public class DefaultModule extends AbstractBase
 
     /** {@inheritDoc} */
     @Override
-    final public void setup() {
+    public final void setup() {
         if (!_femaleRootSocket.isConnected()
                 || !_femaleRootSocket.getConnectedSocket().getSystemName()
                         .equals(_socketSystemName)) {
@@ -358,7 +358,7 @@ public class DefaultModule extends AbstractBase
 
     /** {@inheritDoc} */
     @Override
-    final public void disposeMe() {
+    public final void disposeMe() {
         _femaleRootSocket.dispose();
     }
 
@@ -402,6 +402,6 @@ public class DefaultModule extends AbstractBase
         return true;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultModule.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultModule.class);
 
 }

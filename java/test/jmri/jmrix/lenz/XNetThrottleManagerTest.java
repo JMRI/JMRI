@@ -41,6 +41,6 @@ public class XNetThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         JUnitUtil.tearDown();
     }
 
-    //private final static Logger log = LoggerFactory.getLogger(XNetThrottleManager.class);
+    //private static final Logger log = LoggerFactory.getLogger(XNetThrottleManager.class);
 
 }

@@ -118,6 +118,12 @@ public class PointDetails {
             setButtonState(EntryExitPairs.NXBUTTONINACTIVE);
             return;
         }
+        int changesWhenClicked = getButtonChanges();
+        if (InstanceManager.getDefault(EntryExitPairs.class).holdButtonClick(() -> handleHeldClick(e, changesWhenClicked))) {
+            // The click is handled when the route being set is complete. The sensor is not
+            // written now, so that a hardware button only sees the click itself.
+            return;
+        }
 
         DestinationPoints destPoint = null;
 
@@ -183,6 +189,50 @@ public class PointDetails {
         jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).setMultiPointRoute(this, panel);
     }
 
+    /**
+     * Number of changes NX has made to the state of this button or to its
+     * sensor. A held click compares it to tell if the route changed the button.
+     */
+    private int buttonChanges = 0;
+
+    private synchronized int getButtonChanges() {
+        return buttonChanges;
+    }
+
+    private synchronized void buttonChanged() {
+        buttonChanges++;
+    }
+
+    /**
+     * Handle a click on the button that was held back while a route was being
+     * set.
+     * <p>
+     * If nothing has changed the button since the click, the click is handled
+     * as it happened, without writing the sensor again. If the route changed
+     * the button, the click is handled as if it happened now: like a click, it
+     * changes the sensor to its other state. This is how the click was handled
+     * when the panel waited for the route to be set.
+     *
+     * @param e                  the sensor change of the click
+     * @param changesWhenClicked the number of button changes when the click was
+     *                           held back
+     */
+    private void handleHeldClick(PropertyChangeEvent e, int changesWhenClicked) {
+        Sensor s = getSensor();
+        if (s == null) {
+            return;
+        }
+        if (getButtonChanges() == changesWhenClicked && e.getNewValue().equals(s.getKnownState())) {
+            nxButtonStateChange(e);
+            return;
+        }
+        try {
+            s.setKnownState(s.getKnownState() == Sensor.ACTIVE ? Sensor.INACTIVE : Sensor.ACTIVE);
+        } catch (jmri.JmriException ex) {
+            log.error("Could not set Sensor known state.", ex);
+        }
+    }
+
     void setSignalMast(SignalMast mast) {
         signalmast = mast;
     }
@@ -235,6 +285,7 @@ public class PointDetails {
             stopFlashSensor();
         }
         nxButtonState = state;
+        buttonChanged();
     }
 
     public int getNXState() {
@@ -431,6 +482,7 @@ public class PointDetails {
 
         //Might need to clear listeners at the stage and then reapply them after.
         if (getSensor().getKnownState() != sensorState) {
+            buttonChanged();
             removeSensorList();
             try {
                 getSensor().setKnownState(sensorState);
@@ -765,5 +817,5 @@ public class PointDetails {
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PointDetails.class);
+    private static final Logger log = LoggerFactory.getLogger(PointDetails.class);
 }

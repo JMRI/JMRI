@@ -141,5 +141,5 @@ public class SectionTableActionTest extends AbstractTableActionBase<Section> {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SectionTableActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SectionTableActionTest.class);
 }

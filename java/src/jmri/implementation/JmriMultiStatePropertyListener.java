@@ -2,6 +2,7 @@ package jmri.implementation;
 
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
+import java.util.List;
 import jmri.Conditional;
 import jmri.NamedBeanHandle;
 import org.slf4j.Logger;
@@ -48,6 +49,18 @@ public class JmriMultiStatePropertyListener extends JmriSimplePropertyListener {
         _states.add(Integer.valueOf(state));
     }
 
+    /**
+     * Add a Conditional for the state set next by {@link #setState(int)}.
+     * Each state has its own entry in the client list, so a Conditional
+     * watching several states is listed once for each of them.
+     *
+     * @param client the Conditional to calculate
+     */
+    @Override
+    public void addConditional(Conditional client) {
+        _clients.add(client);
+    }
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         log.debug("\"{}\" sent PropertyChangeEvent {}, old value =\"{}\", new value =\"{}, enabled = {}", _varName, evt.getPropertyName(), evt.getOldValue(), evt.getNewValue(), _enabled);
@@ -55,14 +68,17 @@ public class JmriMultiStatePropertyListener extends JmriSimplePropertyListener {
             int newState = ((Number) evt.getNewValue()).intValue();
             int oldState = ((Number) evt.getOldValue()).intValue();
             if (newState != oldState) {
+                List<Conditional> calculated = new ArrayList<>();
                 for (int i = 0; i < _states.size(); i++) {
                     int state = _states.get(i).intValue();
-                    if (oldState == state || newState == state) {
+                    if ((oldState == state || newState == state) && !calculated.contains(_clients.get(i))) {
+                        // calculate each Conditional once, even if it watches both states
+                        calculated.add(_clients.get(i));
                         calculateClient(i, evt);
                     }
                 }
             }
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(JmriMultiStatePropertyListener.class);
+    private static final Logger log = LoggerFactory.getLogger(JmriMultiStatePropertyListener.class);
 }

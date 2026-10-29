@@ -26,9 +26,9 @@ public class MarklinMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         assertEquals(0x00, bootMessage.getElement(0), "Element 0 (command high bits)");
         assertEquals(0x36, bootMessage.getElement(1), "Element 1 (command low bits)");
 
-        // Hash bytes
-        assertEquals(0x47, bootMessage.getElement(2), "Element 2 (hash byte 1)");
-        assertEquals(0x11, bootMessage.getElement(3), "Element 3 (hash byte 2)");
+        // Hash bytes (mcan broadcast hash 0x0300)
+        assertEquals(0x03, bootMessage.getElement(2), "Element 2 (hash byte 1)");
+        assertEquals(0x00, bootMessage.getElement(3), "Element 3 (hash byte 2)");
 
         // DLC should be 5
         assertEquals(0x05, bootMessage.getElement(4), "Element 4 (DLC)");
@@ -57,9 +57,9 @@ public class MarklinMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         assertEquals(0x00, bootloaderMessage.getElement(0), "Element 0 (command high bits)");
         assertEquals(0x36, bootloaderMessage.getElement(1), "Element 1 (command low bits)");
 
-        // Hash bytes
-        assertEquals(0x47, bootloaderMessage.getElement(2), "Element 2 (hash byte 1)");
-        assertEquals(0x11, bootloaderMessage.getElement(3), "Element 3 (hash byte 2)");
+        // Hash bytes (mcan broadcast hash 0x0300)
+        assertEquals(0x03, bootloaderMessage.getElement(2), "Element 2 (hash byte 1)");
+        assertEquals(0x00, bootloaderMessage.getElement(3), "Element 3 (hash byte 2)");
 
         // DLC should be 0 (no data bytes)
         assertEquals(0x00, bootloaderMessage.getElement(4), "Element 4 (DLC)");
@@ -104,5 +104,5 @@ public class MarklinMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MarklinMessageTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(MarklinMessageTest.class);
 }

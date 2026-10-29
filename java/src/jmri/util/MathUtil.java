@@ -1526,6 +1526,6 @@ public final class MathUtil {
         return ((b.getX() - a.getX()) * (c.getY() - a.getY())) > ((b.getY() - a.getY()) * (c.getX() - a.getX()));
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MathUtil.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MathUtil.class);
 
 }

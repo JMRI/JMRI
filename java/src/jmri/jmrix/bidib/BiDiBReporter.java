@@ -59,6 +59,14 @@ public class BiDiBReporter extends jmri.implementation.AbstractRailComReporter i
      * {@inheritDoc}
      */
     @Override
+    public boolean hasExitReports() {
+        return true;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public BiDiBAddress getAddr() {
         return addr;
     }
@@ -186,6 +194,6 @@ public class BiDiBReporter extends jmri.implementation.AbstractRailComReporter i
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(BiDiBReporter.class);
+    private static final Logger log = LoggerFactory.getLogger(BiDiBReporter.class);
 
 }

@@ -118,6 +118,6 @@ public class CsvExportAction extends AbstractAction implements ReadingListener {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CsvExportAction.class);
+    private static final Logger log = LoggerFactory.getLogger(CsvExportAction.class);
 
 }

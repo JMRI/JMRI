@@ -30,7 +30,7 @@ public class RailComTableDataModel extends BeanTableDataModel<IdTag> {
     }
 
     @SuppressWarnings("hiding")     // Field has same name as a field in the super class
-    static public final int VALUECOL = 0;
+    public static final int VALUECOL = 0;
     public static final int WHERECOL = VALUECOL + 1;
     public static final int WHENCOL = WHERECOL + 1;
     public static final int CLEARCOL = WHENCOL + 1;
@@ -47,10 +47,10 @@ public class RailComTableDataModel extends BeanTableDataModel<IdTag> {
     public static final int LOCATIONCOL = WATERCOL + 1;
     public static final int ROUTINGCOL = LOCATIONCOL + 1;
     @SuppressWarnings("hiding")     // Field has same name as a field in the super class
-    static public final int DELETECOL = ROUTINGCOL + 1;
+    public static final int DELETECOL = ROUTINGCOL + 1;
 
     @SuppressWarnings("hiding")     // Field has same name as a field in the super class
-    static public final int NUMCOLUMN = DELETECOL + 1;
+    public static final int NUMCOLUMN = DELETECOL + 1;
 
     @Override
     public String getValue(String name) {

@@ -269,5 +269,5 @@ public class MultiThrottle {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MultiThrottle.class);
+    private static final Logger log = LoggerFactory.getLogger(MultiThrottle.class);
 }

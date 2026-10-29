@@ -32,7 +32,7 @@ import org.junit.platform.suite.api.SuiteDisplayName;
 @SuiteDisplayName("AllTest")
 public class AllTest {
 
-    static public void main(String[] args) {
+    public static void main(String[] args) {
         run();
         System.exit(0);
     }

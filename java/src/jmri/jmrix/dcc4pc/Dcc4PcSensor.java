@@ -58,8 +58,8 @@ public class Dcc4PcSensor extends AbstractSensor {
         super.setOwnState(stateConvert);
     }
 
-    final public static int ORIENTA = 0x10;
-    final public static int ORIENTB = 0x20;
+    public static final int ORIENTA = 0x10;
+    public static final int ORIENTB = 0x20;
     int realState = UNKNOWN;
 
     public int getRailCommState() {

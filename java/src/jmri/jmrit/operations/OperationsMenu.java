@@ -32,5 +32,5 @@ public class OperationsMenu extends JMenu {
 
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(OperationsMenu.class);
+//    private static final Logger log = LoggerFactory.getLogger(OperationsMenu.class);
 }

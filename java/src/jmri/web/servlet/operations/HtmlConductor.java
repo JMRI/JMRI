@@ -3,10 +3,6 @@ package jmri.web.servlet.operations;
 import java.io.IOException;
 import java.util.*;
 
-import org.apache.commons.text.StringEscapeUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -19,13 +15,17 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.FileUtil;
 
+import org.apache.commons.text.StringEscapeUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  *
  * @author Randall Wood
  */
 public class HtmlConductor extends HtmlTrainCommon {
 
-    private final static Logger log = LoggerFactory.getLogger(HtmlConductor.class);
+    private static final Logger log = LoggerFactory.getLogger(HtmlConductor.class);
 
     public HtmlConductor(Locale locale, Train train) throws IOException {
         super(locale, train);
@@ -40,8 +40,9 @@ public class HtmlConductor extends HtmlTrainCommon {
                     train.getIconName(), 
                     StringEscapeUtils.escapeHtml4(train.getDescription()), 
                     convertToHTMLColor(
-                            StringEscapeUtils.escapeHtml4(train.getCommentWithColor())),
-                    Setup.isPrintRouteCommentsEnabled() ? train.getRoute().getComment() : "", 
+                            StringEscapeUtils
+                                    .escapeHtml4(TrainCommon.getTextSizeString(train.getCommentCurrentWithColor()))),
+                    Setup.isPrintRouteCommentsEnabled() ? train.getRoute().getComment() : "",
                     strings.getProperty("Terminated"), 
                     "", // terminated train has nothing to do // NOI18N
                     "", // engines in separate section
@@ -66,7 +67,7 @@ public class HtmlConductor extends HtmlTrainCommon {
                 FileUtil.readURL(FileUtil.findURL(Bundle.getMessage(locale,"ConductorSnippet.html"))), 
                 train.getIconName(), 
                 StringEscapeUtils.escapeHtml4(train.getDescription()),
-                convertToHTMLColor(StringEscapeUtils.escapeHtml4(train.getCommentWithColor())),
+                convertToHTMLColor(StringEscapeUtils.escapeHtml4(train.getCommentCurrentWithColor())),
                 Setup.isPrintRouteCommentsEnabled() ? train.getRoute().getComment() : "", 
                 getCurrentAndNextLocation(),
                 convertToHTMLColor(getLocationComments()),

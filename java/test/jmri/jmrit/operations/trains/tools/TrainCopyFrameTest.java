@@ -23,5 +23,5 @@ public class TrainCopyFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(t);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainCopyFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TrainCopyFrameTest.class);
 }

@@ -44,6 +44,6 @@ public class PrintTrainsByCarTypesActionTest extends OperationsTestCase {
         JUnitUtil.dispose(printPreviewFrame);      
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PrintTrainsByCarTypesActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PrintTrainsByCarTypesActionTest.class);
 
 }

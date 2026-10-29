@@ -136,8 +136,33 @@ public class CbusBasicNodeTableFetch extends CbusBasicNodeTableOperations {
     }
     
     private boolean sentOutstandingEvs(CbusNode thisnode) {
-        if ( thisnode!=null && thisnode.getNodeEventManager().getOutstandingEvVars() > 0 ) { // this events
+        if ( thisnode == null ) {
+            return false;
+        }
+        if ( thisnode.getNodeEventManager().getOutstandingEvVars() > 0 ) { // this events
             thisnode.getNodeEventManager().sendNextEvVarToFetch();
+            return true;
+        }
+        return sentOutstandingEvTotal(thisnode);
+    }
+
+    /**
+     * Re-request the total number of events from a node where the events are unknown,
+     * eg. invalidated following a fetch failure or an invalid event index,
+     * but the parameters are already complete so the total would not otherwise
+     * be requested again as part of the parameter fetch.
+     * <p>
+     * Not sent if the node has abandoned an event fetch following repeated timeouts,
+     * the node timers or a node reset will clear this.
+     * @param thisnode the node to check
+     * @return true if a request was sent, else false
+     */
+    private boolean sentOutstandingEvTotal(CbusNode thisnode) {
+        if ( thisnode.getNodeEventManager().getTotalNodeEvents() < 0
+            && thisnode.getNodeParamManager().getOutstandingParams() == 0
+            && thisnode.getNodeParamManager().getParameter(CbusNodeConstants.EV_PER_EN_IDX) > -1
+            && !thisnode.getNodeTimerManager().eventFetchAbandoned() ) {
+            thisnode.getNodeParamManager().requestEventTot();
             return true;
         }
         return false;
@@ -226,5 +251,5 @@ public class CbusBasicNodeTableFetch extends CbusBasicNodeTableOperations {
         trickleFetch = null;
     }
     
-    // private final static Logger log = LoggerFactory.getLogger(CbusBasicNodeTableFetch.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusBasicNodeTableFetch.class);
 }

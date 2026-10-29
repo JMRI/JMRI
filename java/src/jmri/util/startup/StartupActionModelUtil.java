@@ -5,6 +5,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.ServiceLoader;
 import javax.annotation.Nonnull;
@@ -29,10 +30,11 @@ public class StartupActionModelUtil extends Bean implements Disposable {
 
     private HashMap<Class<?>, ActionAttributes> actions = null;
     private HashMap<String, Class<?>> overrides = null;
+    private HashSet<Class<?>> serviceClasses = null; // offered by ServiceLoader factories, never removed
     private ArrayList<String> actionNames = null; // built on demand, invalidated in changes to actions
     private final PropertyChangeListener memosListener = this::memoChanged;
     private final PropertyChangeListener actionFactoryListener = this::actionFactoryChanged;
-    private final static Logger log = LoggerFactory.getLogger(StartupActionModelUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(StartupActionModelUtil.class);
 
     /**
      * Get the default StartupActionModelUtil instance, creating it if
@@ -41,7 +43,7 @@ public class StartupActionModelUtil extends Bean implements Disposable {
      * @return the default instance
      */
     @Nonnull
-    static public StartupActionModelUtil getDefault() {
+    public static StartupActionModelUtil getDefault() {
         return InstanceManager.getOptionalDefault(StartupActionModelUtil.class).orElseGet(() -> {
             return InstanceManager.setDefault(StartupActionModelUtil.class, new StartupActionModelUtil());
         });
@@ -127,14 +129,25 @@ public class StartupActionModelUtil extends Bean implements Disposable {
             this.overrides = new HashMap<>();
 
             ServiceLoader<StartupActionFactory> jusLoader = ServiceLoader.load(StartupActionFactory.class);
-            jusLoader.forEach(factory -> addActions(factory));
+            this.serviceClasses = new HashSet<>();
+            jusLoader.forEach(factory -> {
+                addActions(factory);
+                serviceClasses.addAll(Arrays.asList(factory.getActionClasses()));
+            });
             jusLoader.reload(); // allow factories to be garbage collected
 
             InstanceManager.getList(SystemConnectionMemo.class).forEach(memo -> addActions(memo.getActionFactory()));
-            InstanceManager.getList(SystemConnectionMemo.class).forEach(memo -> memo.addPropertyChangeListener("actionFactory", actionFactoryListener));
+            InstanceManager.getList(SystemConnectionMemo.class).forEach(memo -> listenTo(memo));
 
             firePropertyChange("length", 0, actions.size());
         }
+    }
+
+    // add the listener once only, even if both prepareActionsHashMap() and
+    // memoChanged() see the same new memo
+    private void listenTo(SystemConnectionMemo memo) {
+        memo.removePropertyChangeListener("actionFactory", actionFactoryListener);
+        memo.addPropertyChangeListener("actionFactory", actionFactoryListener);
     }
 
     private void addActions(StartupActionFactory factory) {
@@ -145,8 +158,34 @@ public class StartupActionModelUtil extends Bean implements Disposable {
         });
     }
 
-    private void removeActions(StartupActionFactory factory) {
-        Arrays.stream(factory.getActionClasses()).forEach(actions::remove);
+    /**
+     * Remove the actions of a factory that is going away.
+     * <p>
+     * Several connections of the same type (for example two CBUS connections)
+     * offer the same action classes. A class is only removed if no remaining
+     * connection, and no general factory, still offers it. Otherwise removing
+     * one connection would make the startup actions of the others unknown.
+     *
+     * @param factory the factory being removed
+     * @param leaving the connection the factory belongs to, which is not
+     *                counted as still offering the actions; may be null
+     */
+    private void removeActions(StartupActionFactory factory, @CheckForNull SystemConnectionMemo leaving) {
+        Arrays.stream(factory.getActionClasses())
+                .filter(clazz -> !isOfferedElsewhere(clazz, leaving))
+                .forEach(actions::remove);
+    }
+
+    private boolean isOfferedElsewhere(Class<?> clazz, @CheckForNull SystemConnectionMemo leaving) {
+        if (serviceClasses != null && serviceClasses.contains(clazz)) {
+            return true;
+        }
+        for (SystemConnectionMemo memo : InstanceManager.getList(SystemConnectionMemo.class)) {
+            if (memo != leaving && Arrays.asList(memo.getActionFactory().getActionClasses()).contains(clazz)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @CheckForNull
@@ -171,12 +210,12 @@ public class StartupActionModelUtil extends Bean implements Disposable {
         if (src instanceof SystemConnectionMemo) {
             SystemConnectionMemo memo = (SystemConnectionMemo) src;
             addActions(memo.getActionFactory());
-            memo.addPropertyChangeListener("actionFactory", actionFactoryListener);
+            listenTo(memo);
         } else {
             src = evt.getOldValue();
             if (src instanceof SystemConnectionMemo) {
                 SystemConnectionMemo memo = (SystemConnectionMemo) src;
-                removeActions(memo.getActionFactory());
+                removeActions(memo.getActionFactory(), memo);
                 memo.removePropertyChangeListener("actionFactory", actionFactoryListener);
             }
         }
@@ -189,7 +228,9 @@ public class StartupActionModelUtil extends Bean implements Disposable {
         int size = actions.size();
         Object value = evt.getOldValue();
         if (value instanceof StartupActionFactory) {
-            removeActions((StartupActionFactory) value);
+            Object source = evt.getSource();
+            removeActions((StartupActionFactory) value,
+                    source instanceof SystemConnectionMemo ? (SystemConnectionMemo) source : null);
         }
         value = evt.getNewValue();
         if (value instanceof StartupActionFactory) {

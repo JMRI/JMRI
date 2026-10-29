@@ -1,10 +1,8 @@
 package jmri.jmrit.operations.trains.trainbuilder;
 
 import java.awt.Color;
+import java.time.LocalDateTime;
 import java.util.List;
-
-import org.junit.Assert;
-import org.junit.jupiter.api.Test;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -12,6 +10,9 @@ import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the TrainCommon class
@@ -21,9 +22,8 @@ import jmri.util.JUnitOperationsUtil;
 public class TrainCommonTest extends OperationsTestCase {
 
     @Test
-    public void testGetDate_DateArgument() {
-        java.util.Calendar calendar = java.util.Calendar.getInstance();
-        String date = TrainCommon.getDate(calendar.getTime());
+    public void testGetDate_DateArgument() {        
+        String date = TrainCommon.getDate(LocalDateTime.now());
         Assert.assertNotNull("Date String", date);
     }
 
@@ -36,13 +36,27 @@ public class TrainCommonTest extends OperationsTestCase {
     @Test
     public void testGetTextColorString() {
         String testString = TrainCommon.formatColorString("Test Color Text", Color.YELLOW);
-        Assert.assertEquals("text", "Test Color Text", TrainCommon.getTextColorString(testString));
+        Assert.assertEquals("text", "Test Color Text", TrainCommon.getOnlyText(testString));
+        Assert.assertEquals("text is not bold", false, TrainCommon.isTextBold(testString));
     }
 
     @Test
     public void testGetTextColor() {
         String testString = TrainCommon.formatColorString("Test Color Text", Color.YELLOW);
         Assert.assertEquals("text", Color.YELLOW, TrainCommon.getTextColor(testString));
+    }
+    
+    @Test
+    public void testGetTextBoldString() {
+        String testString = TrainCommon.formatColorString("Test Color Text", Color.YELLOW, true);
+        Assert.assertEquals("text is bold", true, TrainCommon.isTextBold(testString));
+    }
+    
+    
+    @Test
+    public void testGetTextNotBoldString() {
+        String testString = TrainCommon.formatColorString("Test Color Text", Color.YELLOW, false);
+        Assert.assertEquals("text is not bold", false, TrainCommon.isTextBold(testString));
     }
     
     @Test
@@ -131,5 +145,24 @@ public class TrainCommonTest extends OperationsTestCase {
         // 30 x 24 x 60 + 12 x 60 + 59
         Assert.assertEquals("pm time with days", 43979, TrainCommon.convertStringTime("30:12:59 PM"));
     }
+    
+    @Test
+    public void testConvertStringToLocalDateTime() {
+        Assert.assertEquals("blank time", null, TrainCommon.convertStringToLocalDateTime(""));
+
+        LocalDateTime dateTime = LocalDateTime.of(1956, 12, 1, 21, 45, 01);
+        Assert.assertEquals("MM/dd/yyyy HH:mm:ss", dateTime, TrainCommon.convertStringToLocalDateTime("12/01/1956 21:45:01"));
+ 
+        dateTime = LocalDateTime.of(1956, 12, 1, 10, 5);
+        Assert.assertEquals("MM/dd/yyyy hh:mm a", dateTime, TrainCommon.convertStringToLocalDateTime("12/01/1956 10:05 AM"));
+
+        dateTime = LocalDateTime.of(1956, 12, 1, 21, 3);
+        Assert.assertEquals("MM/dd/yyyy hh:mm a", dateTime, TrainCommon.convertStringToLocalDateTime("12/01/1956 09:03 PM"));
+        
+        dateTime = LocalDateTime.of(1956, 12, 1, 3, 3);
+        Assert.assertEquals("MM/dd/yyyy HH:mm", dateTime, TrainCommon.convertStringToLocalDateTime("12/01/1956 03:03"));
+    }
+    
+    
     
 }

@@ -67,27 +67,37 @@ public class MarklinSensorManagerTest extends jmri.managers.AbstractSensorMgrTes
         Assertions.assertNotNull(sensor);
         sensor.setCommandedState(Sensor.INACTIVE);
 
+        // A zeroed frame is not CS2_NATIVE, so should be ignored
         MarklinReply reply = new MarklinReply();
         ((MarklinSensorManager)l).reply(reply);
         Assertions.assertEquals(Sensor.INACTIVE, sensor.getState());
 
-        reply.setCommand(MarklinConstants.S88EVENT);
-        reply.setElement(MarklinConstants.CANADDRESSBYTE1, 0); // Module 1 hi
-        reply.setElement(MarklinConstants.CANADDRESSBYTE2, 1); // Module 1 lo
-        reply.setElement(MarklinConstants.CANADDRESSBYTE3, 0); // Contact 1 hi
-        reply.setElement(MarklinConstants.CANADDRESSBYTE4, 1); // Contact 1 lo
-        reply.setElement(9, 0x00); // Sensor ACTIVE
-        reply.setElement(10, 0x01); // Sensor ACTIVE
+        // Build a CS2-fingerprinted S88 event frame (command 0x11, hash 0x0300)
+        // contactId encodes module=1, contact=1 as 0x0101
+        // byte0=0x00, byte1=(0x11<<1)|0=0x22, hash=0x03 0x00, DLC=0x08
+        int[] frame = new int[13];
+        frame[0] = 0x00;
+        frame[1] = 0x22; // command 0x11, response=false
+        frame[2] = 0x03; // hash high
+        frame[3] = 0x00; // hash low
+        frame[4] = 0x08; // DLC=8
+        frame[5] = 0x01; // contactId high = module 1
+        frame[6] = 0x01; // contactId low  = contact 1
+        frame[7] = 0x00; // oldState=0
+        frame[8] = 0x01; // newState=1 (active)
+        // bytes 9-12: zero (time=0)
 
+        reply = new MarklinReply(frame);
         ((MarklinSensorManager)l).reply(reply);
         Assertions.assertEquals(Sensor.ACTIVE, sensor.getState());
 
-        reply.setElement(9, 0x01); // Sensor INACTIVE
-        reply.setElement(10, 0x00); // SENSOR INACTIVE
+        frame[7] = 0x01; // oldState=1
+        frame[8] = 0x00; // newState=0 (inactive)
+        reply = new MarklinReply(frame);
         ((MarklinSensorManager)l).reply(reply);
         Assertions.assertEquals(Sensor.INACTIVE, sensor.getState());
 
-        JUnitUtil.waitFor(() -> tc.getSentMessages().size()==1, "Sensor booard Poll message sent");
+        JUnitUtil.waitFor(() -> tc.getSentMessages().size()==1, "Sensor board Poll message sent");
         Assertions.assertEquals(MarklinMessage.sensorPollMessage(1), tc.getLastMessageSent());
 
     }
@@ -101,18 +111,31 @@ public class MarklinSensorManagerTest extends jmri.managers.AbstractSensorMgrTes
         sensor.setCommandedState(Sensor.INACTIVE);
         sensor2.setCommandedState(Sensor.ACTIVE);
 
-        MarklinReply reply = new MarklinReply();
-        reply.setCommand(MarklinConstants.FEECOMMANDSTART);
-        reply.setElement(9, 0x01); // S88 Module Number
-        reply.setElement(10, 0b00000000); // status hi
-        reply.setElement(11, 0b00000001); // status lo
+        // Build a CS2-fingerprinted S88 poll reply (command 0x10, response=true, hash 0x0300)
+        // MY_UID at bytes 5-8, module number at byte 9, status at bytes 10-11
+        int[] frame = new int[13];
+        frame[0] = 0x00;
+        frame[1] = 0x21; // command 0x10, response=true: (0x10<<1)|1 = 0x21
+        frame[2] = 0x03; // hash high
+        frame[3] = 0x00; // hash low
+        frame[4] = 0x07; // DLC=7 (UID 4 bytes + module 1 byte + state 2 bytes)
+        // bytes 5-8: MY_UID (0x12345678)  -  these are the UID data bytes
+        frame[5] = 0x12;
+        frame[6] = 0x34;
+        frame[7] = 0x56;
+        frame[8] = 0x78;
+        frame[9]  = 0x01; // S88 Module Number = 1
+        frame[10] = 0x00; // status hi
+        frame[11] = 0x01; // status lo (contact 1 = active)
 
+        MarklinReply reply = new MarklinReply(frame);
         ((MarklinSensorManager)l).reply(reply);
         Assertions.assertEquals(Sensor.ACTIVE, sensor.getState());
         Assertions.assertEquals(Sensor.INACTIVE, sensor2.getState());
 
-        reply.setElement(10, 0b10000000); // status hi
-        reply.setElement(11, 0b00000000); // status lo
+        frame[10] = 0x80; // status hi (contact 16 = active)
+        frame[11] = 0x00; // status lo
+        reply = new MarklinReply(frame);
         ((MarklinSensorManager)l).reply(reply);
         Assertions.assertEquals(Sensor.INACTIVE, sensor.getState());
         Assertions.assertEquals(Sensor.ACTIVE, sensor2.getState());
@@ -140,6 +163,6 @@ public class MarklinSensorManagerTest extends jmri.managers.AbstractSensorMgrTes
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MarklinSensorManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(MarklinSensorManagerTest.class);
 
 }

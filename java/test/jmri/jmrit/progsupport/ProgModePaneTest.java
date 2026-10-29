@@ -26,6 +26,6 @@ public class ProgModePaneTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(ProgModePaneTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(ProgModePaneTest.class);
 
 }

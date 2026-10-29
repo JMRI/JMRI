@@ -160,6 +160,6 @@ public class Not extends AbstractDigitalExpression implements FemaleSocketListen
     public void disposeMe() {
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Not.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Not.class);
 
 }

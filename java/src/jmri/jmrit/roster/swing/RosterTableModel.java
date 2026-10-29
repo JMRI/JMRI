@@ -1,11 +1,12 @@
 package jmri.jmrit.roster.swing;
 
-import com.fasterxml.jackson.databind.util.StdDateFormat;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.ParseException;
-import java.util.*;
+import java.util.Date;
+import java.util.Objects;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.annotation.CheckForNull;
 import javax.swing.Icon;
@@ -15,18 +16,20 @@ import javax.swing.JTable;
 import javax.swing.RowSorter;
 import javax.swing.table.DefaultTableModel;
 
+import com.fasterxml.jackson.databind.util.StdDateFormat;
+
 import jmri.BooleanPermission;
 import jmri.InstanceManager;
 import jmri.PermissionManager;
-import jmri.PermissionsSystemAdmin;
+import jmri.PermissionsProgrammer;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterIconFactory;
 import jmri.jmrit.roster.rostergroup.RosterGroup;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
-import jmri.util.swing.ResizableRowDataModel;
 import jmri.util.gui.GuiLafPreferencesManager;
+import jmri.util.swing.ResizableRowDataModel;
 
 /**
  * Table data model for display of Roster variable values.
@@ -59,9 +62,9 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     public static final int NUMCOL = COMMENT + 1;
     private String rosterGroup = null;
     boolean editable = false;
-    
+
     static final PermissionManager permissionManager = InstanceManager.getDefault(PermissionManager.class);
-    
+
     public RosterTableModel() {
         this(false);
     }
@@ -89,13 +92,13 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     public void setAssociatedTable(JTable associatedTable) {
         this.associatedTable = associatedTable;
     }
-    
+
     RowSorter<RosterTableModel> associatedSorter;
     public void setAssociatedSorter(RowSorter<RosterTableModel> associatedSorter) {
         this.associatedSorter = associatedSorter;
     }
-    
-    
+
+
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (e.getPropertyName().equals(Roster.ADD)) {
@@ -245,7 +248,7 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
         if (editable) {
             // permission to edit optional columns?
             if ( col >= NUMCOL && col < getColumnCount() ) {
-                if (! permissionManager.hasAtLeastPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PREFERENCES,
+                if (! permissionManager.hasAtLeastPermission(PermissionsProgrammer.PERMISSION_ROSTER_ADDED_COLUMNS,
                                                     BooleanPermission.BooleanValue.TRUE)) {
                     return false;
                 }
@@ -329,40 +332,51 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     }
 
     int findMaxLines(int row, RosterEntry re) {
-        int lines = countLinesIn(re.getComment());
+        int lines = 1;   
 
+        var columnModel = (jmri.util.swing.XTableColumnModel) associatedTable.getColumnModel();
+        boolean visible = columnModel.isColumnVisible(columnModel.getColumnByModelIndex(RosterTableModel.COMMENT));
+        if (visible) {
+            lines = Math.max(lines, countLinesIn(re.getComment()));
+        }
+        
         String[] auxAttributeNames = getModelAttributeKeyColumnNames();
         for (String attributeKey : auxAttributeNames) {
             String value = re.getAttribute(attributeKey);
             if (value != null) {
+                int index = getAttributeColumn(attributeKey);
+                visible = columnModel.isColumnVisible(columnModel.getColumnByModelIndex(index));
+
                 int count = countLinesIn(value);
-                lines = Math.max(lines, count);
+                if (visible) {
+                    lines = Math.max(lines, count);
+                }
             }
         }
         return lines;
     }
-    
+
     int countLinesIn(String text) {
         String[] sections = text.split("\n");
         int lines = sections.length;
         return lines;
     }
-    
+
     @Override
     public void resizeRowToText(int modelRow, int heightInLines) {
         if (associatedSorter == null || associatedTable == null ) {
             return; // because not initialized, can't act - useful for tests
         }
-        
+
         if (heightInLines < 1) heightInLines = 1;       // always show at least one line
-        
+
         var viewRow = associatedSorter.convertRowIndexToView(modelRow);
         int height = heightInLines * (InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize() + 4); // same line height as in RosterTable
         if (height != associatedTable.getRowHeight(viewRow)) {
             associatedTable.setRowHeight(viewRow, height);
         }
     }
-    
+
     private Object getValueAtAttribute(RosterEntry re, int col){
         String attributeKey = getAttributeKey(col);
         String value = re.getAttribute(attributeKey); // NOI18N
@@ -372,16 +386,20 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
             }
             try {
                 return new StdDateFormat().parse(value);
-            } catch (ParseException ex){
-                return null;
+            } catch (ParseException e){
+                log.debug("could not parse date in {}", value, e);
             }
+            return null;
         }
         if ( RosterEntry.ATTRIBUTE_OPERATING_DURATION.equals( attributeKey) ) {
+            if (value == null) {
+                return 0;
+            }
             try {
                 return Integer.valueOf(value);
             }
             catch (NumberFormatException e) {
-                log.debug("could not format duration ( String integer of total seconds ) in {}", value, e);
+                log.debug("could not parse duration ( String integer of total seconds ) in {}", value, e);
             }
             return 0;
         }
@@ -406,6 +424,12 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
         String valueToSet = (String) value;
         switch (col) {
             case IDCOL:
+                // don't allow setting to existing ID
+                if (Roster.getDefault().getEntryForId(valueToSet)!=null) {
+                    jmri.util.swing.JmriJOptionPane.showMessageDialog(associatedTable, Bundle.getMessage("MessageIdAlreadyPresent"));
+                    return;
+                }
+                // here unique
                 re.setId(valueToSet);
                 break;
             case ROADNAMECOL:
@@ -428,11 +452,11 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
                 break;
             default:
                 // permission to edit optional columns?
-                if (! permissionManager.ensureAtLeastPermission(PermissionsSystemAdmin.PERMISSION_EDIT_PREFERENCES,
+                if (! permissionManager.ensureAtLeastPermission(PermissionsProgrammer.PERMISSION_ROSTER_ADDED_COLUMNS,
                                                         BooleanPermission.BooleanValue.TRUE)) {
                     return;
                 }
-                
+
                 setValueAtAttribute(valueToSet, re, col);
                 break;
         }
@@ -480,7 +504,7 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     }
 
     // access via method to ensure not null
-    private String[] attributeKeys = null; 
+    private String[] attributeKeys = null;
 
     private String[] getModelAttributeKeyColumnNames() {
         if ( attributeKeys == null ) {
@@ -497,6 +521,16 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
         return attributeKeys;
     }
 
+    private int getAttributeColumn(String attr) {
+        var names = getModelAttributeKeyColumnNames();
+        for (int i = 0; i < names.length; i++) {
+            if (names[i].equals(attr)) {
+                return i + NUMCOL;
+            }
+        }
+        return 0;
+    }
+    
     private String getAttributeKey(int col) {
         if ( col >= NUMCOL && col < getColumnCount() ) {
             return getModelAttributeKeyColumnNames()[col - NUMCOL ];

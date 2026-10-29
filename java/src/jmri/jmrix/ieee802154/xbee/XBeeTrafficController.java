@@ -402,6 +402,6 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
        }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XBeeTrafficController.class);
+    private static final Logger log = LoggerFactory.getLogger(XBeeTrafficController.class);
 
 }

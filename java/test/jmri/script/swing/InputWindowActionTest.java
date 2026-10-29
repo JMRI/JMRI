@@ -26,6 +26,6 @@ public class InputWindowActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(InputWindowActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(InputWindowActionTest.class);
 
 }

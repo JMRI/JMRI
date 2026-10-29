@@ -22,7 +22,7 @@ public class Dcs52UsbModeSelectPane extends jmri.jmrix.loconet.pr3.swing.Pr3Sele
     /**
      * Nested class to create one of these using old-style defaults
      */
-    static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
+    public static class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
 
         public Default() {
             super(Bundle.getMessage("MenuItemUsbDcs52ModeSelect"),
@@ -32,6 +32,6 @@ public class Dcs52UsbModeSelectPane extends jmri.jmrix.loconet.pr3.swing.Pr3Sele
         }
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(Dcs52UsbModeSelectPane.class);
+//    private static final Logger log = LoggerFactory.getLogger(Dcs52UsbModeSelectPane.class);
 
 }

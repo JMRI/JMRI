@@ -8,8 +8,8 @@ package jmri.jmrit.operations.trains;
  */
 public class BuildFailedException extends Exception {
 
-    public final static String NORMAL = "normal"; // NOI18N
-    public final static String STAGING = "staging"; // NOI18N
+    public static final String NORMAL = "normal"; // NOI18N
+    public static final String STAGING = "staging"; // NOI18N
     private String type = NORMAL;
 
     public BuildFailedException(String s, String type) {

@@ -236,7 +236,7 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
                     break;
                     
                 case Sprog3PlusPaneProvider.CAN_DISABLE:
-                    disable.setEnabled(value != 0);
+                    disable.setSelected(value != 0); // show the NV state, not grey out the indicator
                     break;
 
                 case Sprog3PlusPaneProvider.INPUT_VOLTAGE:
@@ -607,6 +607,6 @@ public class Sprog3PlusEditNVPane extends AbstractEditNVPane {
         }
     }
     
-    private final static Logger log = LoggerFactory.getLogger(Sprog3PlusEditNVPane.class);
+    private static final Logger log = LoggerFactory.getLogger(Sprog3PlusEditNVPane.class);
 
 }

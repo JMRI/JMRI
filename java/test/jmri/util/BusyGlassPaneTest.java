@@ -41,6 +41,6 @@ public class BusyGlassPaneTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(BusyGlassPaneTest.class.getName());
+    // private static final Logger log = LoggerFactory.getLogger(BusyGlassPaneTest.class.getName());
 
 }

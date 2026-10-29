@@ -2,6 +2,8 @@ package jmri.jmrit.display;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -10,7 +12,6 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import jmri.InstanceManager;
@@ -33,10 +34,7 @@ import org.slf4j.LoggerFactory;
  * @author Dave Sand Copyright (c) 2026
  * @since 5.15.4
  */
-public class BlockContentsInputIcon extends PositionableJPanel implements java.beans.PropertyChangeListener {
-
-    JTextField _textBox = new JTextField();
-    int _nCols;
+public class BlockContentsInputIcon extends PositionableJPanelWithColumns implements java.beans.PropertyChangeListener {
 
     // the associated Block object
     private NamedBeanHandle<Block> namedBlock;
@@ -55,12 +53,20 @@ public class BlockContentsInputIcon extends PositionableJPanel implements java.b
             @Override
             public void keyReleased(KeyEvent e) {
                 int key = e.getKeyCode();
-                if (key == KeyEvent.VK_ENTER || key == KeyEvent.VK_TAB) {
+                if (key == KeyEvent.VK_ENTER) {
                     updateBlock();
+                    transferFocus();  // this field should no longer be in edit mode
                 }
             }
         });
         _textBox.setColumns(_nCols);
+        _textBox.setBorder(null);  // drop default border so user can configure entire border appearance
+        _textBox.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                updateBlock();
+            }
+        });
         _textBox.addMouseMotionListener(_mouseMotionListener);
         _textBox.addMouseListener(_mouseListener);
         setPopupUtility(new PositionablePopupUtil(this, _textBox));
@@ -86,6 +92,7 @@ public class BlockContentsInputIcon extends PositionableJPanel implements java.b
     public void mouseExited(JmriMouseEvent e) {
         updateBlock();
         super.mouseExited(e);
+        transferFocus();  // this field should no longer be in edit mode
     }
 
     /**
@@ -125,11 +132,6 @@ public class BlockContentsInputIcon extends PositionableJPanel implements java.b
         }
     }
 
-    public void setNumColumns(int nCols) {
-        _textBox.setColumns(nCols);
-        _nCols = nCols;
-    }
-
     public NamedBeanHandle<Block> getNamedBlock() {
         return namedBlock;
     }
@@ -141,8 +143,9 @@ public class BlockContentsInputIcon extends PositionableJPanel implements java.b
         return namedBlock.getBean();
     }
 
-    public int getNumColumns() {
-        return _nCols;
+    @Override
+    public jmri.NamedBean getNamedBean() {
+        return getBlock();
     }
 
     // update icon as state of Block changes
@@ -172,6 +175,7 @@ public class BlockContentsInputIcon extends PositionableJPanel implements java.b
 
     @Override
     public void mouseMoved(JmriMouseEvent e) {
+        super.mouseMoved(e);
         updateBlock();
     }
 
@@ -267,5 +271,5 @@ public class BlockContentsInputIcon extends PositionableJPanel implements java.b
         namedBlock = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BlockContentsInputIcon.class);
+    private static final Logger log = LoggerFactory.getLogger(BlockContentsInputIcon.class);
 }

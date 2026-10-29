@@ -26,7 +26,7 @@ public class EndSound extends SdfMacro {
         return 2;
     }
 
-    static public SdfMacro match(SdfBuffer buff) {
+    public static SdfMacro match(SdfBuffer buff) {
         if ((buff.getAtIndex() & 0xFF) != 0x00) {
             return null;
         }

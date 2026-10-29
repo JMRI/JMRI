@@ -303,6 +303,6 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
         return Bundle.getMessage("BeanNameSignalHead");
     }
 
-//     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractSignalHead.class);
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractSignalHead.class);
 
 }

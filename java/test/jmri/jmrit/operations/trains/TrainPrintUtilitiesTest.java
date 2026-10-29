@@ -16,6 +16,6 @@ public class TrainPrintUtilitiesTest extends OperationsTestCase {
         Assert.assertNotNull("exists",t);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainPrintUtilitiesTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TrainPrintUtilitiesTest.class);
 
 }

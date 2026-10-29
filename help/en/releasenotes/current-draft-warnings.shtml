@@ -1,7 +1,40 @@
 
     <!-- contains new warnings for the release under development -->
+    <li>
+        <strong>LogixNG formulas: &amp;&amp; and || no longer always
+        evaluate both sides.</strong>
+        The right-hand side is now skipped when the left-hand side already
+        decides the result. A formula that relies on both sides running, for
+        example to call methods for their side effects, may now behave
+        differently. See the LogixNG section of the release notes for an
+        example and how to change it.
+    </li>
+    <li>If you use OpenLCB/LCC native signal masts:  These can no longer 
+        be defined to use the event ID's that start with 00.  
+        The value 00.00.00.00.00.00.00.00 was previously the default 
+        for "this event ID hasn't been configured".
+        The default is now a blank entry field that doesn't
+        produce or consume an event.  If you have 
+        defined any of the signal mast entries to start with 00,
+        they will be migrated to be empty fields that no longer 
+        produce or consume an event.
+    </li>
+    <li>
+        <strong>Layout Editor: an allocated block no longer automatically
+        loses its extra color when it becomes occupied.</strong>
+        In a Layout Block, "allocated" means the block is set to use its
+        extra color, for example by the LogixNG Block action "Alternate Color
+        On" or by a script, and it is what the LogixNG Block expression
+        "Is Allocated" tests. Before, with advanced block routing on, a block
+        set this way was switched back to its normal color without notice as
+        soon as it became occupied. It now keeps its extra color until it is
+        turned off, for example by the LogixNG Block action "Alternate Color
+        Off". LogixNG and scripts that set it must now also clear it, for
+        example when the train has left. Dispatcher and Entry/Exit are not
+        affected: they clear their own blocks. See the Layout Editor section
+        of the release notes.
+    </li>
     <li>The fast clock implementation has been reworked and therefore
         tables and panel files stored with this JMRI release will not
         load with earlier JMRI releases.</li>
-    <li>
     </li>

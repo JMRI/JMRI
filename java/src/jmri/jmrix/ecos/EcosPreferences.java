@@ -384,7 +384,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/ {
         pcs.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosPreferences.class);
+    private static final Logger log = LoggerFactory.getLogger(EcosPreferences.class);
 
     /**
      * @return the adaptermemo

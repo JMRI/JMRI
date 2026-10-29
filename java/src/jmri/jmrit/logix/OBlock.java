@@ -103,7 +103,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     public static final int OUT_OF_SERVICE = 0x40; // OBlock that should not be used
     public static final int TRACK_ERROR = 0x80;    // OBlock has Error
     // UNDETECTED state bit is used for DARK blocks
-    // static final public int DARK = 0x01;        // meaning: OBlock has no Sensor, same as UNKNOWN
+    // public static final int DARK = 0x01;        // meaning: OBlock has no Sensor, same as UNKNOWN
 
     private static final Color DEFAULT_FILL_COLOR = new Color(200, 0, 200);
 
@@ -372,17 +372,15 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
 
     /**
      * Update the OBlock status.
-     * Override Block because change must come from an OBlock for Web Server to receive it
+     * Block.setState fires the "state" property change with this OBlock as
+     * its source, as used by the Web Server and CPE indicator track icons.
      *
      * @param v the new state, from OBlock.ALLOCATED etc, named 'status' in JSON Servlet and Web Server
      */
     @Override
     public void setState(int v) {
-        int old = getState();
         super.setState(v);
-        // override Block to get proper source to be recognized by listener in Web Server
         log.debug("\"{}\" setState({})", getDisplayName(), getState());
-        firePropertyChange(PROPERTY_STATE, old, getState()); // used by CPE indicator track icons
     }
 
     /**
@@ -476,10 +474,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             log.debug("Allocate OBlock \"{}\" to warrant \"{}\".",
                     getDisplayName(), warrant.getDisplayName());
         }
-        int old = getState();
-        int newState = old | ALLOCATED;
-        super.setState(newState);
-        firePropertyChange(PROPERTY_STATE, old, newState);
+        super.setState(getState() | ALLOCATED);
         return null;
     }
 
@@ -574,9 +569,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                 }
             }
         }
-        int old = getState();
-        super.setState(old & ~(ALLOCATED | RUNNING));  // unset allocated and running bits
-        firePropertyChange(PROPERTY_STATE, old, getState());
+        super.setState(getState() & ~(ALLOCATED | RUNNING));  // unset allocated and running bits
         return true;
     }
 

@@ -39,7 +39,8 @@ public class LogixNG_SelectEnumXml<E extends Enum<?>> {
         if (memory != null) {
             enumElement.addContent(new Element("memory").addContent(memory.getName()));
         }
-        enumElement.addContent(new Element("listenToMemory").addContent(selectEnum.getListenToMemory() ? "yes" : "no"));
+        // Not used anymore. It's kept to not change old tables and panels files
+        enumElement.addContent(new Element("listenToMemory").addContent("no"));
         if (selectEnum.getLocalVariable() != null && !selectEnum.getLocalVariable().isEmpty()) {
             enumElement.addContent(new Element("localVariable").addContent(selectEnum.getLocalVariable()));
         }
@@ -80,11 +81,6 @@ public class LogixNG_SelectEnumXml<E extends Enum<?>> {
                     Memory m = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim());
                     if (m != null) selectEnum.setMemory(m);
                     else selectEnum.removeMemory();
-                }
-
-                Element listenToMemoryElem = enumElement.getChild("listenToMemory");
-                if (listenToMemoryElem != null) {
-                    selectEnum.setListenToMemory("yes".equals(listenToMemoryElem.getTextTrim()));
                 }
 
                 elem = enumElement.getChild("localVariable");

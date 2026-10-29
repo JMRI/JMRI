@@ -353,7 +353,7 @@ public final class OlcbAddress {
 
     /**
      * Provide as dotted pairs.
-     * @return dotted pair form off string.
+     * @return dotted pair form of string.
      */
     public String toDottedString() {
         String retval = "";
@@ -456,7 +456,7 @@ public final class OlcbAddress {
         return Integer.signum(array1.length - array2.length);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbAddress.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbAddress.class);
 
 }
 

@@ -52,6 +52,6 @@ public class PacketGenAction extends XBeeSystemConnectionAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PacketGenAction.class);
+    private static final Logger log = LoggerFactory.getLogger(PacketGenAction.class);
 
 }

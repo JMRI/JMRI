@@ -32,8 +32,8 @@ import org.junit.jupiter.api.Test;
  */
 public class ActionScriptTest extends AbstractDigitalActionTestBase {
 
-    private final static String SCRIPT_TEXT = "lights.provideLight(\"IL1\").commandedState = ON";
-    private final static String ECMA_SCRIPT = "var DigitalIO = Java.type(\"jmri.DigitalIO\"); lights.provideLight(\"IL1\").setState(DigitalIO.ON);";
+    private static final String SCRIPT_TEXT = "lights.provideLight(\"IL1\").commandedState = ON";
+    private static final String ECMA_SCRIPT = "var DigitalIO = Java.type(\"jmri.DigitalIO\"); lights.provideLight(\"IL1\").setState(DigitalIO.ON);";
 
 
     private LogixNG logixNG;

@@ -335,7 +335,7 @@ public class DccLocoAddressSelector extends JPanel {
        text.addKeyListener(l);
     }
 
-    final static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.DccLocoAddressSelectorBundle");
+    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.DccLocoAddressSelectorBundle");
 
-    private final static Logger log = LoggerFactory.getLogger(DccLocoAddressSelector.class);
+    private static final Logger log = LoggerFactory.getLogger(DccLocoAddressSelector.class);
 }

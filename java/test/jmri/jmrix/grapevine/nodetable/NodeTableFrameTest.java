@@ -3,6 +3,7 @@ package jmri.jmrix.grapevine.nodetable;
 import java.awt.GraphicsEnvironment;
 
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
 
@@ -17,6 +18,16 @@ import jmri.jmrix.grapevine.SerialTrafficControlScaffold;
 public class NodeTableFrameTest extends jmri.util.JmriJFrameTestBase {
 
     private GrapevineSystemConnectionMemo memo = null; 
+
+    @DisabledIfHeadless
+    @Test
+    public void testDisposeStopsCheck() {
+        frame.initComponents();
+        NodeTablePane pane = ((NodeTableFrame) frame).p;
+        Assertions.assertTrue(pane.timer.isRunning(), "check of the nodes started when the window opened");
+        JUnitUtil.dispose(frame);
+        Assertions.assertNull(pane.timer, "check of the nodes stopped when the window closed");
+    }
 
     @BeforeEach
     @Override
@@ -37,6 +48,6 @@ public class NodeTableFrameTest extends jmri.util.JmriJFrameTestBase {
         super.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(NodeTableFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(NodeTableFrameTest.class);
 
 }

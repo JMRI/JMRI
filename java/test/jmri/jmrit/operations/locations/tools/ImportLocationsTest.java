@@ -23,7 +23,7 @@ import jmri.util.swing.JemmyUtil;
  */
 public class ImportLocationsTest extends OperationsTestCase {
 
-    private final static Logger log = LoggerFactory.getLogger(ImportLocationsTest.class);
+    private static final Logger log = LoggerFactory.getLogger(ImportLocationsTest.class);
 
     @Test
     public void testCTor() {
@@ -106,6 +106,6 @@ public class ImportLocationsTest extends OperationsTestCase {
     public void verifyFields() {
         Assert.assertEquals("FIELD_LOCATION", 0, ImportLocations.FIELD_LOCATION);
         Assert.assertEquals("FIELD_DIVISION", 8, ImportLocations.FIELD_DIVISION);
-        Assert.assertEquals("FIELD_COMMENT_SETOUTS", 45, ImportLocations.FIELD_COMMENT_SETOUTS);
+        Assert.assertEquals("FIELD_COMMENT_SETOUTS", 46, ImportLocations.FIELD_COMMENT_SETOUTS);
     }
 }

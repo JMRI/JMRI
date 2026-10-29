@@ -217,6 +217,6 @@ public class StringIOTableDataModel extends BeanTableDataModel<StringIO> {
         return null;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringIOTableDataModel.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringIOTableDataModel.class);
 
 }

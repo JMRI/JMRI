@@ -2,6 +2,8 @@ package jmri.jmrit.display;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
@@ -10,7 +12,6 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
 import jmri.InstanceManager;
@@ -33,10 +34,7 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Bergqvist Copyright (C) 2022
  * @since 2.7.2
  */
-public class GlobalVariableInputIcon extends PositionableJPanel implements java.beans.PropertyChangeListener {
-
-    JTextField _textBox = new JTextField();
-    int _nCols;
+public class GlobalVariableInputIcon extends PositionableJPanelWithColumns implements java.beans.PropertyChangeListener {
 
     // the associated GlobalVariable object
     private NamedBeanHandle<GlobalVariable> namedGlobalVariable;
@@ -55,12 +53,20 @@ public class GlobalVariableInputIcon extends PositionableJPanel implements java.
             @Override
             public void keyReleased(KeyEvent e) {
                 int key = e.getKeyCode();
-                if (key == KeyEvent.VK_ENTER || key == KeyEvent.VK_TAB) {
+                if (key == KeyEvent.VK_ENTER) {
                     updateGlobalVariable();
+                    transferFocus();  // this field should no longer be in edit mode
                 }
             }
         });
         _textBox.setColumns(_nCols);
+        _textBox.setBorder(null);  // drop default border so user can configure entire border appearance
+        _textBox.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                updateGlobalVariable();
+            }
+        });
         _textBox.addMouseMotionListener(_mouseMotionListener);
         _textBox.addMouseListener(_mouseListener);
         setPopupUtility(new PositionablePopupUtil(this, _textBox));
@@ -86,6 +92,7 @@ public class GlobalVariableInputIcon extends PositionableJPanel implements java.
     public void mouseExited(JmriMouseEvent e) {
         updateGlobalVariable();
         super.mouseExited(e);
+        transferFocus();  // this field should no longer be in edit mode
     }
 
     /**
@@ -125,11 +132,6 @@ public class GlobalVariableInputIcon extends PositionableJPanel implements java.
         }
     }
 
-    public void setNumColumns(int nCols) {
-        _textBox.setColumns(nCols);
-        _nCols = nCols;
-    }
-
     public NamedBeanHandle<GlobalVariable> getNamedGlobalVariable() {
         return namedGlobalVariable;
     }
@@ -141,8 +143,9 @@ public class GlobalVariableInputIcon extends PositionableJPanel implements java.
         return namedGlobalVariable.getBean();
     }
 
-    public int getNumColumns() {
-        return _nCols;
+    @Override
+    public jmri.NamedBean getNamedBean() {
+        return getGlobalVariable();
     }
 
     // update icon as state of GlobalVariable changes
@@ -172,6 +175,7 @@ public class GlobalVariableInputIcon extends PositionableJPanel implements java.
 
     @Override
     public void mouseMoved(JmriMouseEvent e) {
+        super.mouseMoved(e);
         updateGlobalVariable();
     }
 
@@ -267,5 +271,5 @@ public class GlobalVariableInputIcon extends PositionableJPanel implements java.
         namedGlobalVariable = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(GlobalVariableInputIcon.class);
+    private static final Logger log = LoggerFactory.getLogger(GlobalVariableInputIcon.class);
 }

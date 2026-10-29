@@ -25,6 +25,6 @@ public class LocoStatsPanelTest extends jmri.util.swing.JmriPanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LocoStatsPanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(LocoStatsPanelTest.class);
 
 }

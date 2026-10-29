@@ -392,6 +392,6 @@ public class DnDJTable extends JTable implements DropTargetListener,
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DnDJTable.class);
+    private static final Logger log = LoggerFactory.getLogger(DnDJTable.class);
 
 }

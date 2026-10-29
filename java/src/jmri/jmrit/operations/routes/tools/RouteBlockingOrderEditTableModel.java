@@ -248,5 +248,5 @@ public class RouteBlockingOrderEditTableModel extends javax.swing.table.Abstract
         fireTableDataChanged();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RouteBlockingOrderEditTableModel.class);
+    private static final Logger log = LoggerFactory.getLogger(RouteBlockingOrderEditTableModel.class);
 }

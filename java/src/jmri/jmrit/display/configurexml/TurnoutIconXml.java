@@ -209,5 +209,5 @@ public class TurnoutIconXml extends PositionableLabelXml {
         return icon;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TurnoutIconXml.class);
+    private static final Logger log = LoggerFactory.getLogger(TurnoutIconXml.class);
 }

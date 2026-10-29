@@ -104,6 +104,6 @@ public class SignalPairTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalPairTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SignalPairTest.class);
 
 }

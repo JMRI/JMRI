@@ -6,7 +6,7 @@ import jmri.util.startup.StartupActionFactory;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * Factory for DCC++ server startup actions.
+ * Factory for DCC-EX server startup actions.
  * 
  * @author Randall Wood Copyright 2020
  */

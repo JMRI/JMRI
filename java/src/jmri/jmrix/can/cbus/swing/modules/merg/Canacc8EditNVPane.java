@@ -437,6 +437,6 @@ public class Canacc8EditNVPane extends AbstractEditNVPane {
         }
     }
     
-    private final static Logger log = LoggerFactory.getLogger(Canacc8EditNVPane.class);
+    private static final Logger log = LoggerFactory.getLogger(Canacc8EditNVPane.class);
 
 }

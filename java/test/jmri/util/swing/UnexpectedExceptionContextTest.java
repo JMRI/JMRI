@@ -38,6 +38,6 @@ public class UnexpectedExceptionContextTest extends ExceptionContextTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(UnexpectedExceptionContextTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(UnexpectedExceptionContextTest.class);
 
 }

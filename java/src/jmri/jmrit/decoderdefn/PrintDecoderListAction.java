@@ -109,5 +109,5 @@ public class PrintDecoderListAction extends AbstractAction {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintDecoderListAction.class);
+    private static final Logger log = LoggerFactory.getLogger(PrintDecoderListAction.class);
 }

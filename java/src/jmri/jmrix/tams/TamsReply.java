@@ -75,6 +75,6 @@ public class TamsReply extends jmri.jmrix.AbstractMRReply {
             return val;
         }
     }
-    private final static Logger log = LoggerFactory.getLogger(TamsReply.class);
+    private static final Logger log = LoggerFactory.getLogger(TamsReply.class);
 
 }

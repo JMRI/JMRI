@@ -14,17 +14,17 @@ public class Xml {
     }
 
     // Common to operation xml files
-    static final String ID = "id"; // NOI18N
-    static final String NAME = "name"; // NOI18N
-    static final String COMMENT = "comment"; // NOI18N
+    protected static final String ID = "id"; // NOI18N
+    protected static final String NAME = "name"; // NOI18N
+    protected static final String COMMENT = "comment"; // NOI18N
 
     // TrainSchedule.java
-    static final String SCHEDULE = "schedule"; // NOI18N
-    static final String TRAIN_IDS = "trainIds"; // NOI18N
+    protected static final String SCHEDULE = "schedule"; // NOI18N
+    protected static final String TRAIN_IDS = "trainIds"; // NOI18N
 
     // TrainScheduleManager.java
     public static final String TRAIN_SCHEDULE_OPTIONS = "trainScheduleOptions"; // NOI18N
     public static final String ACTIVE_ID = "activeId"; // NOI18N
-    static final String SCHEDULES = "schedules"; // NOI18N
+    protected static final String SCHEDULES = "schedules"; // NOI18N
 
 }

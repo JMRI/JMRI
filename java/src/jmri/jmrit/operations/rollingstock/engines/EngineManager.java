@@ -1,13 +1,10 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.beans.PropertyChangeEvent;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import javax.swing.JComboBox;
-
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.*;
 import jmri.jmrit.operations.OperationsPanel;
@@ -17,6 +14,10 @@ import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManifestHeaderText;
+
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Manages the engines.
@@ -188,7 +189,7 @@ public class EngineManager extends RollingStockManager<Engine> implements Instan
      * @param startTime The date and time the clones were moved
      * @return clone for this engine
      */
-    public Engine createClone(Engine engine, Track track, Train train, Date startTime) {
+    public Engine createClone(Engine engine, Track track, Train train, LocalDateTime startTime) {
         Engine clone = createClone(engine);
         createCloneConsist(engine, track, train, startTime, clone);
         // move engine to new location for later pick up
@@ -196,7 +197,7 @@ public class EngineManager extends RollingStockManager<Engine> implements Instan
         return clone;
     }
 
-    private void createCloneConsist(Engine engine, Track track, Train train, Date startTime, Engine cloneEng) {
+    private void createCloneConsist(Engine engine, Track track, Train train, LocalDateTime startTime, Engine cloneEng) {
         if (engine.getConsist() != null) {
             String consistName = engine.getConsistName() + Engine.CLONE + padNumber(engine.getCloneOrder());
             Consist consist = InstanceManager.getDefault(ConsistManager.class).newConsist(consistName);
@@ -252,7 +253,7 @@ public class EngineManager extends RollingStockManager<Engine> implements Instan
         super.propertyChange(evt);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EngineManager.class);
+    private static final Logger log = LoggerFactory.getLogger(EngineManager.class);
 
     @Override
     public void initialize() {

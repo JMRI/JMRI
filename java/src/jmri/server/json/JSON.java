@@ -699,6 +699,10 @@ public final class JSON {
      * {@value #OFF}
      */
     public static final int OFF = 0x04;
+    /**
+     * {@value #IDLE}
+     */
+    public static final int IDLE = 0x08;
 
     /* NamedBean state */
     /**

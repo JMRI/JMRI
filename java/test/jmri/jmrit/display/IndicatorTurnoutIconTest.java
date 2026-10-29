@@ -68,6 +68,6 @@ public class IndicatorTurnoutIconTest extends PositionableIconTest {
         p = to;
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(IndicatorTurnoutIconTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(IndicatorTurnoutIconTest.class);
 
 }

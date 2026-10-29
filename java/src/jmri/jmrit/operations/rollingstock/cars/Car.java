@@ -4,9 +4,6 @@ import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.*;
 import jmri.jmrit.operations.locations.schedules.Schedule;
@@ -17,11 +14,14 @@ import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Represents a car on the layout
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2012, 2013, 2014,
- *         2015, 2023, 2025
+ *         2015, 2023, 2025, 2026
  */
 public class Car extends RollingStock {
 
@@ -84,7 +84,6 @@ public class Car extends RollingStock {
         super(road, number);
         loaded = true;
         log.debug("New car ({} {})", road, number);
-        addPropertyChangeListeners();
     }
 
     @Override
@@ -98,7 +97,10 @@ public class Car extends RollingStock {
         car.setCaboose(isCaboose());
         car.setFred(hasFred());
         car.setPassenger(isPassenger());
+        car.setUtility(isUtility());
         car.setLoadGeneratedFromStaging(isLoadGeneratedFromStaging());
+        car.setFinalDestination(getFinalDestination());
+        car.setFinalDestinationTrack(getFinalDestinationTrack());
         car.loaded = true;
         return car;
     }
@@ -107,7 +109,7 @@ public class Car extends RollingStock {
         boolean old = _hazardous;
         _hazardous = hazardous;
         if (!old == hazardous) {
-            setDirtyAndFirePropertyChange("car hazardous", old ? "true" : "false", hazardous ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("car hazardous", old, hazardous); // NOI18N
         }
     }
 
@@ -132,7 +134,7 @@ public class Car extends RollingStock {
         boolean old = _passenger;
         _passenger = passenger;
         if (!old == passenger) {
-            setDirtyAndFirePropertyChange("car passenger", old ? "true" : "false", passenger ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("car passenger", old, passenger); // NOI18N
         }
     }
 
@@ -144,7 +146,7 @@ public class Car extends RollingStock {
         boolean old = _fred;
         _fred = fred;
         if (!old == fred) {
-            setDirtyAndFirePropertyChange("car has fred", old ? "true" : "false", fred ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("car has fred", old, fred); // NOI18N
         }
     }
 
@@ -256,8 +258,8 @@ public class Car extends RollingStock {
         if (track != null && track.isSpur() && !getScheduleItemId().equals(NONE)) {
             Schedule sch = track.getSchedule();
             if (sch == null) {
-                log.error("Schedule missing for car ({}) to spur ({}, {})", toString(), track.getLocation().getName(),
-                        track.getName());
+                log.error("Schedule {} missing for car ({}) to spur ({}, {})", getScheduleItemId(), toString(),
+                        track.getLocation().getName(), track.getName());
             } else {
                 si = sch.getItemById(getScheduleItemId());
             }
@@ -350,6 +352,15 @@ public class Car extends RollingStock {
         return _pickupScheduleId;
     }
 
+    /**
+     * Provides the train schedule name for pick up day if one available, or if
+     * assigned to a train the pick up time.
+     * 
+     * @return If assigned to a train, the car's pick up time. Otherwise if
+     *         there's a train schedule day/name assigned for pick up, the train
+     *         schedule name. Default train schedule names are Sunday through
+     *         Saturday.
+     */
     public String getPickupScheduleName() {
         if (getTrain() != null) {
             return getPickupTime();
@@ -580,7 +591,7 @@ public class Car extends RollingStock {
         boolean old = _caboose;
         _caboose = caboose;
         if (!old == caboose) {
-            setDirtyAndFirePropertyChange("car is caboose", old ? "true" : "false", caboose ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("car is caboose", old, caboose); // NOI18N
         }
     }
 
@@ -592,7 +603,7 @@ public class Car extends RollingStock {
         boolean old = _utility;
         _utility = utility;
         if (!old == utility) {
-            setDirtyAndFirePropertyChange("car is utility", old ? "true" : "false", utility ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("car is utility", old, utility); // NOI18N
         }
     }
 
@@ -613,7 +624,7 @@ public class Car extends RollingStock {
         if (getRouteLocation() == null || getRouteDestination() == null) {
             return false;
         }
-        if (getRouteLocation().equals(getRouteDestination()) && getTrack() != null) {
+        if (getRouteLocation() == getRouteDestination() && getTrack() != null) {
             return true;
         }
         if (getTrain().isLocalSwitcher() &&
@@ -641,7 +652,7 @@ public class Car extends RollingStock {
                         return false;
                     }
                 }
-                if (getRouteLocation().equals(rl)) {
+                if (getRouteLocation() == rl) {
                     foundRl = true;
                 }
             }
@@ -845,9 +856,9 @@ public class Car extends RollingStock {
             return status;
         }
         // is car going to its final destination?
-        removeCarFinalDestination();
+        removeCarFinalDestination(getDestination(), getDestinationTrack());
         // now check to see if the track has a schedule
-        if (track != null && destinationTrack != track && loaded) {
+        if (track != null && destinationTrack != track && loaded && !isClone()) {
             status = track.scheduleNext(this);
             if (!status.equals(Track.OKAY)) {
                 return status;
@@ -875,8 +886,8 @@ public class Car extends RollingStock {
      * 
      * @param scheduleItem The schedule item to be applied this this car
      */
-    public void loadCarFinalDestination(ScheduleItem scheduleItem) {
-        if (scheduleItem != null) {
+    private void loadCarFinalDestination(ScheduleItem scheduleItem) {
+        if (scheduleItem != null && scheduleItem.getDestination() != null) {
             // set the car's final destination and track
             setFinalDestination(scheduleItem.getDestination());
             setFinalDestinationTrack(scheduleItem.getDestinationTrack());
@@ -888,12 +899,9 @@ public class Car extends RollingStock {
     /*
      * remove the car's final destination if sent to that destination
      */
-    private void removeCarFinalDestination() {
-        if (getDestination() != null &&
-                getDestination().equals(getFinalDestination()) &&
-                getDestinationTrack() != null &&
-                (getDestinationTrack().equals(getFinalDestinationTrack()) ||
-                        getFinalDestinationTrack() == null)) {
+    public void removeCarFinalDestination(Location location, Track track) {
+        if (location == getFinalDestination() &&
+                track == getFinalDestinationTrack()) {
             setFinalDestination(null);
             setFinalDestinationTrack(null);
         }
@@ -1123,14 +1131,25 @@ public class Car extends RollingStock {
             carManager.deregister(this);
         }
     }
+  
+    /**
+     * Returns a clone's original car.
+     * @param clone requesting the original
+     * @return car that created the clone.
+     */
+    public Car getOriginal(Car clone) {
+        CarManager carManager = InstanceManager.getDefault(CarManager.class);
+        // get the original car's road and number
+        String[] number = getNumber().split(Car.CLONE_REGEX);
+        Car car = carManager.getByRoadAndNumber(getRoadName(), number[0]);
+        return car;
+    }
 
     @Override
     public void dispose() {
         setKernel(null);
         setFinalDestination(null); // removes property change listener
         setFinalDestinationTrack(null); // removes property change listener
-        InstanceManager.getDefault(CarTypes.class).removePropertyChangeListener(this);
-        InstanceManager.getDefault(CarLengths.class).removePropertyChangeListener(this);
         super.dispose();
     }
 
@@ -1233,7 +1252,6 @@ public class Car extends RollingStock {
         if ((a = e.getAttribute(Xml.ROUTE_PATH)) != null) {
             _routePath = a.getValue();
         }
-        addPropertyChangeListeners();
     }
 
     /**
@@ -1342,9 +1360,18 @@ public class Car extends RollingStock {
         super.setDirtyAndFirePropertyChange(p, old, n);
     }
 
-    private void addPropertyChangeListeners() {
+    @Override
+    protected void addPropertyChangeListeners() {
         InstanceManager.getDefault(CarTypes.class).addPropertyChangeListener(this);
         InstanceManager.getDefault(CarLengths.class).addPropertyChangeListener(this);
+        super.addPropertyChangeListeners();
+    }
+    
+    @Override
+    protected void removePropertyChangeListeners() {
+        InstanceManager.getDefault(CarTypes.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarLengths.class).removePropertyChangeListener(this);
+        super.removePropertyChangeListeners();
     }
 
     @Override
@@ -1378,6 +1405,6 @@ public class Car extends RollingStock {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Car.class);
+    private static final Logger log = LoggerFactory.getLogger(Car.class);
 
 }

@@ -107,10 +107,10 @@ public class EcosLocoTableAction extends AbstractTableAction<NamedBean> {
     List<String> ecosObjectIdList = null;
     JTable table;
 
-    static public final int PROTOCOL = 5;
-    static public final int ADDTOROSTERCOL = 6;
-    static public final int SPEEDDIR = 7;
-    static public final int STOP = 8;
+    public static final int PROTOCOL = 5;
+    public static final int ADDTOROSTERCOL = 6;
+    public static final int SPEEDDIR = 7;
+    public static final int STOP = 8;
 
     @Override
     protected void createModel() {

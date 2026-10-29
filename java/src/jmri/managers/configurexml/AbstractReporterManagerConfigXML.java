@@ -106,6 +106,6 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
         return InstanceManager.getDefault(jmri.ReporterManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractReporterManagerConfigXML.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractReporterManagerConfigXML.class);
 
 }

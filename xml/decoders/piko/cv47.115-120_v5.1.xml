@@ -38,16 +38,9 @@
             <revremark>Add Decoder BR80 36537 / 36505 Spur G</revremark>
         </revision>
     </revhistory>
-    <variable item="Spezialfunktionen" CV="47" default="1" minOut="4" include="PIKO46505-18,PIKO46540-18,PIKO46550-18,PIKO46551-18">
-        <!-- Next-18 Decoder -->
+    <variable item="Spezialfunktionen" CV="47">
         <decVal max="63"/>
         <label>Special Functions (CV 47)</label>
-        <label xml:lang="de">Spezialfunktionen Zuordnung (CV 47)</label>
-    </variable>
-    <variable item="Spezialfunktionen" CV="47" default="44" minOut="7" include="PIKO56554-22,PIKO3505-G">
-        <!-- Next-22 Decoder with digital coupling-->
-        <decVal max="63"/>
-        <label>Special funktions (CV 47)</label>
         <label xml:lang="de">Spezialfunktionen Zuordnung (CV 47)</label>
     </variable>
     <variable item="SUSI Bit 0" CV="47" default="1" mask="XXXXXXXV">
@@ -72,7 +65,7 @@
     <variable item="Coupling option 1" CV="47" default="0" mask="XXXXXVXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Digital coupling AUX4</label>
-        <label xml:lang="de">Digitalkupplung A4 vorn</label>
+        <label xml:lang="de">Digitalkupplung A4  vorn </label>
         <tooltip>Activation coupling sequenz reverse</tooltip>
         <tooltip xml:lang="de">Auch zur Aktivierung Kupplungswalzer rückwärts</tooltip>
     </variable>

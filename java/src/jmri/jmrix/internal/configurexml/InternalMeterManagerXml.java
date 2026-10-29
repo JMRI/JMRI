@@ -23,6 +23,6 @@ public class InternalMeterManagerXml extends jmri.managers.configurexml.Abstract
         meters.setAttribute("class", this.getClass().getName());
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(InternalMeterManagerXml.class);
+//    private static final Logger log = LoggerFactory.getLogger(InternalMeterManagerXml.class);
 
 }

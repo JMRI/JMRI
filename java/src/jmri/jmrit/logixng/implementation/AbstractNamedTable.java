@@ -347,7 +347,7 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
         return _internalTable.getColumnNumber(columnName);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractNamedTable.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractNamedTable.class);
 
     /*
     protected void insertColumn(int col) {

@@ -132,6 +132,6 @@ public class SprogCbusSprog3PlusModeSwitcherFrame extends SprogCbusModeSwitcherF
     }
 
     
-    private final static Logger log = LoggerFactory.getLogger(SprogCbusSprog3PlusModeSwitcherFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(SprogCbusSprog3PlusModeSwitcherFrame.class);
     
 }

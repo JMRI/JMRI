@@ -5,6 +5,7 @@ import static jmri.server.json.JSON.F;
 import static jmri.server.json.JSON.FORWARD;
 import static jmri.server.json.JSON.IS_LONG_ADDRESS;
 import static jmri.server.json.JSON.NAME;
+import static jmri.server.json.JSON.PREFIX;
 import static jmri.server.json.JSON.STATUS;
 import static jmri.server.json.roster.JsonRoster.ROSTER_ENTRY;
 
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import javax.annotation.CheckForNull;
 import javax.servlet.http.HttpServletResponse;
 
 import jmri.BasicRosterEntry;
@@ -26,7 +28,10 @@ import jmri.InstanceManager;
 import jmri.LocoAddress;
 import jmri.Throttle;
 import jmri.ThrottleListener;
+import jmri.ThrottleManager;
 import jmri.jmrit.roster.Roster;
+import jmri.SystemConnectionMemo;
+import jmri.jmrix.SystemConnectionMemoManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import org.slf4j.Logger;
@@ -66,10 +71,24 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     private Throttle throttle;
     private int speedSteps = 1; // Number of speed steps.
     private DccLocoAddress address = null;
+    private String connectionPrefix = null;
     private static final Logger log = LoggerFactory.getLogger(JsonThrottle.class);
+    // Holds the one most recent command received before acquisition
+    // completes, so it can be replayed once the throttle is actually ready
+    // instead of being dropped -- only the FIRST acquisition gets this
+    // treatment (see everAcquired), which is separate from the "ignore
+    // after release" behavior.
+    private JsonNode pendingData;
+    private JsonThrottleSocketService pendingServer;
+    private boolean everAcquired = false;
 
     protected JsonThrottle(DccLocoAddress address, JsonThrottleSocketService server) {
         this.address = address;
+    }
+
+    protected JsonThrottle(DccLocoAddress address, JsonThrottleSocketService server, @CheckForNull String connectionPrefix) {
+        this.address = address;
+        this.connectionPrefix = connectionPrefix;
     }
 
     /**
@@ -101,11 +120,30 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
         BasicRosterEntry entry = null;
         Locale locale = server.getConnection().getLocale();
         JsonThrottleManager manager = InstanceManager.getDefault(JsonThrottleManager.class);
+
+        // Resolve the ThrottleManager: use the connection-specific one when a
+        // prefix is supplied, otherwise fall back to the default.
+        String prefix = data.path(PREFIX).asText();
+        ThrottleManager throttleManager;
+        if (!prefix.isEmpty()) {
+            SystemConnectionMemo memo = SystemConnectionMemoManager.getDefault()
+                    .getSystemConnectionMemoForSystemPrefix(prefix);
+            if (memo != null && memo.provides(ThrottleManager.class)) {
+                throttleManager = memo.get(ThrottleManager.class);
+            } else {
+                throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
+                        Bundle.getMessage(locale, "ErrorUnknownPrefix", prefix), id);
+            }
+        } else {
+            throttleManager = InstanceManager.getDefault(ThrottleManager.class);
+            prefix = null;
+        }
+
         if (!data.path(ADDRESS).isMissingNode()) {
-            if (manager.canBeLongAddress(data.path(ADDRESS).asInt()) ||
-                    manager.canBeShortAddress(data.path(ADDRESS).asInt())) {
+            if (throttleManager.canBeLongAddress(data.path(ADDRESS).asInt()) ||
+                    throttleManager.canBeShortAddress(data.path(ADDRESS).asInt())) {
                 address = new DccLocoAddress(data.path(ADDRESS).asInt(),
-                        data.path(IS_LONG_ADDRESS).asBoolean(!manager.canBeShortAddress(data.path(ADDRESS).asInt())));
+                        data.path(IS_LONG_ADDRESS).asBoolean(!throttleManager.canBeShortAddress(data.path(ADDRESS).asInt())));
             } else {
                 log.warn("Address \"{}\" is not a valid address.", data.path(ADDRESS).asInt());
                 throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
@@ -125,28 +163,31 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
             throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
                     Bundle.getMessage(locale, "ErrorThrottleNoAddress"), id); // NOI18N
         }
+        // NOTE: JsonThrottleManager keys by DccLocoAddress only. If the same address is
+        // requested on two different connections (different prefix), the existing JsonThrottle
+        // (and its underlying connection) is reused and the new prefix is ignored. Fixing this
+        // would require keying on (address, prefix) — a separate, larger change.
         if (manager.containsKey(address)) {
             throttle = manager.get(address);
             manager.put(throttle, server);
             throttle.sendMessage(server.getConnection().getObjectMapper().createObjectNode().put(CLIENTS,
                     manager.getServers(throttle).size()));
         } else {
-            throttle = new JsonThrottle(address, server);
-            if (entry!=null) {
-                if (!manager.requestThrottle(entry, throttle)) {
+            throttle = new JsonThrottle(address, server, prefix);
+            if (entry != null) {
+                if (!throttleManager.requestThrottle(entry, throttle, false)) {
                     log.error("Unable to get rostered throttle for \"{}\".", entry.getId());
                     throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle
                             .getMessage(server.getConnection().getLocale(), "ErrorThrottleUnableToGetThrottle", entry.getId()),
                             id);
                 }
             } else {
-                if (!manager.requestThrottle(address, throttle)) {
+                if (!throttleManager.requestThrottle(address, throttle, false)) {
                     log.error("Unable to get throttle for \"{}\".", address);
                     throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle
                             .getMessage(server.getConnection().getLocale(), "ErrorThrottleUnableToGetThrottle", address),
                             id);
                 }
-
             }
             manager.put(address, throttle);
             manager.put(throttle, server);
@@ -191,7 +232,31 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     }
 
     public void onMessage(Locale locale, JsonNode data, JsonThrottleSocketService server) {
-        data.fields().forEachRemaining((entry) -> {
+        // this.throttle is null from construction until the async
+        // ThrottleListener callback (notifyThrottleFound(), below) sets it,
+        // and null again after release(). A command received during either
+        // window is ignored here rather than crashing (every field handler
+        // below dereferences this.throttle unconditionally). If this is
+        // before the FIRST acquisition, queue it for replay in
+        // notifyThrottleFound() instead of dropping it -- see pendingData
+        // above.
+        if (this.throttle == null) {
+            if (!this.everAcquired) {
+                log.warn("onMessage(): received a command for {} before its throttle was available -- queuing for replay once acquired",
+                        this.address);
+                this.pendingData = data;
+                this.pendingServer = server;
+            } else {
+                log.warn("onMessage(): received a command for {} after its throttle was released -- ignoring",
+                        this.address);
+            }
+            return;
+        }
+        applyFields(data, server);
+    }
+
+    private void applyFields(JsonNode data, JsonThrottleSocketService server) {
+        for (var entry : data.properties()) {
             String k = entry.getKey();
             JsonNode v = entry.getValue();
             switch (k) {
@@ -209,16 +274,27 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
                     this.throttle.setIsForward(v.asBoolean());
                     break;
                 case RELEASE:
+                    // server.release(this) nulls out this.throttle. Returning
+                    // immediately (matching ESTOP above) stops the loop from
+                    // processing any remaining fields in this message against
+                    // a now-null throttle -- JSON object field order isn't
+                    // guaranteed, so a field after "release" could otherwise
+                    // still be reached.
                     server.release(this);
-                    break;
+                    return;
                 case STATUS:
                     this.sendStatus(server);
                     break;
                 case ADDRESS:
                 case NAME:
+                case PREFIX:
                 case THROTTLE:
                 case ROSTER_ENTRY:
-                    // no action for address, name, or throttle property
+                case IS_LONG_ADDRESS:
+                    // no action for address, name, prefix, throttle, or
+                    // isLongAddress property -- isLongAddress previously
+                    // fell through to default (see the field report on
+                    // RELEASE above for how that combination crashed).
                     break;
                 default:
                     for ( int i = 0; i< this.throttle.getFunctions().length; i++ ) {
@@ -233,7 +309,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
                     // catch those
                     break;
             }
-        });
+        }
     }
 
     public void sendMessage(ObjectNode data) {
@@ -279,9 +355,21 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     public void notifyThrottleFound(DccThrottle throttle) {
         log.debug("Found throttle {}", throttle.getLocoAddress());
         this.throttle = throttle;
+        this.everAcquired = true;
         throttle.addPropertyChangeListener(this);
         this.speedSteps = throttle.getSpeedStepMode().numSteps;
         this.sendStatus();
+        // Replay whatever command arrived before this.throttle was ready --
+        // see pendingData above. Applied after sendStatus() so a client
+        // watching for state changes sees the acquisition first, then the
+        // requested command.
+        if (this.pendingData != null) {
+            JsonNode replay = this.pendingData;
+            JsonThrottleSocketService replayServer = this.pendingServer;
+            this.pendingData = null;
+            this.pendingServer = null;
+            applyFields(replay, replayServer);
+        }
     }
 
     @Override
@@ -343,6 +431,9 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
         data.put(CLIENTS, InstanceManager.getDefault(JsonThrottleManager.class).getServers(this).size());
         if (this.throttle.getRosterEntry() != null) {
             data.put(ROSTER_ENTRY, this.throttle.getRosterEntry().getId());
+        }
+        if (this.connectionPrefix != null && !this.connectionPrefix.isEmpty()) {
+            data.put(PREFIX, this.connectionPrefix);
         }
         return data;
     }

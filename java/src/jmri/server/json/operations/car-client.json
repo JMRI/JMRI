@@ -8,6 +8,10 @@
             "type": "string",
             "description": "Operations id of the car being requested"
         },
+         "order": {
+            "type": "string",
+            "description": "The car order"
+        },
         "road": {
             "type": "string",
             "description": "The car owning railroad"
@@ -194,6 +198,14 @@
         "last train": {
             "type": "string",
             "description": "Last train to carry car"
+        },
+        "last moved": {
+            "type": "string",
+            "description": "date the car was last moved"
+        },
+        "last location": {
+            "type": "string",
+            "description": "The car's last location"
         }
     },
     "additionalProperties": false,

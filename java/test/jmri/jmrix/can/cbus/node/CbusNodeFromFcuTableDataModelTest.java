@@ -126,6 +126,6 @@ public class CbusNodeFromFcuTableDataModelTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusNodeFromFcuTableDataModelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusNodeFromFcuTableDataModelTest.class);
 
 }

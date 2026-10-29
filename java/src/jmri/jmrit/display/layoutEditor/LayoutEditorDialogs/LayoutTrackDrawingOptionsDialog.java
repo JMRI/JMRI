@@ -1475,6 +1475,6 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
     /*====================*\
     |* initialize logging *|
     \*====================*/
-    private final static Logger log
+    private static final Logger log
             = LoggerFactory.getLogger(LayoutTrackDrawingOptionsDialog.class);
 }

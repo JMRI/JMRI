@@ -267,6 +267,6 @@ public class ClipboardMany extends AbstractBase
     }
     
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ClipboardMany.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ClipboardMany.class);
 
 }

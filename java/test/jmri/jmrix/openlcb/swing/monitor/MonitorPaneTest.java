@@ -66,5 +66,5 @@ public class MonitorPaneTest extends AbstractMonPaneTestBase {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MonitorPaneTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(MonitorPaneTest.class);
 }

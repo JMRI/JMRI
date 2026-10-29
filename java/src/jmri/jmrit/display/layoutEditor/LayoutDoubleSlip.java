@@ -45,5 +45,5 @@ public class LayoutDoubleSlip extends LayoutSlip {
         super(id, layoutEditor, TurnoutType.DOUBLE_SLIP);
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutDoubleSlip.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutDoubleSlip.class);
 }

@@ -27,7 +27,7 @@ public class MarklinSimDriverAdapter extends MarklinPortController {
     public void connect() {
         opened = true;
         ConnectionStatus.instance().setConnectionState(
-            null, m_HostName, ConnectionStatus.CONNECTION_UP);
+            getSystemConnectionMemo(), ConnectionStatus.CONNECTION_UP);
     }
 
     @Override

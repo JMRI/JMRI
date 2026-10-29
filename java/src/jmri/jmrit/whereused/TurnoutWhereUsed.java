@@ -17,7 +17,7 @@ public class TurnoutWhereUsed {
      * @param turnout The turnout bean.
      * @return a populated textarea.
      */
-    static public JTextArea getWhereUsed(NamedBean turnout) {
+    public static JTextArea getWhereUsed(NamedBean turnout) {
         JTextArea textArea = new JTextArea();
         String label = Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout"));  // NOI18N
         textArea.append(Bundle.getMessage("ReferenceTitle", label, turnout.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME)));  // NOI18N

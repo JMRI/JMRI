@@ -2,19 +2,19 @@ package jmri.jmrit.operations;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
+import java.io.File;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.io.TempDir;
 import org.netbeans.jemmy.QueueTool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.ShutDownManager;
-import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 
@@ -27,19 +27,20 @@ import jmri.util.JUnitUtil;
  */
 public class OperationsTestCase {
 
+    @TempDir
+    File tempDir;
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
         reset();
         JUnitOperationsUtil.setupOperationsTests();
-        // default font chars per line, prevents headless exception when using HardcopyWriter
-        InstanceManager.getDefault(TrainManager.class).setHardcopyWriterLineLength("Monospaced", 0, 10, TrainCommon.getPageSize("Portrait"), false, 89);
     }
 
     // Set things up outside of operations
     public void reset() {
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager(tempDir);
         JUnitUtil.initTimeProviderManager();
         JUnitUtil.initRosterConfigManager();
         JUnitUtil.initInternalTurnoutManager();
@@ -108,5 +109,5 @@ public class OperationsTestCase {
         sem.release();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(OperationsTestCase.class);
+    private static final Logger log = LoggerFactory.getLogger(OperationsTestCase.class);
 }

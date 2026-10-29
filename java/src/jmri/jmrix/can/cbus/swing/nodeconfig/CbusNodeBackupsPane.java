@@ -395,10 +395,11 @@ public class CbusNodeBackupsPane extends CbusNodeConfigTab implements TableModel
     @Override
     public void dispose() {
         // bupFile.getBackupModel().removeTableModelListener(this);
-        disposeOfNode(nodeOfInterest);
-        nodeOfInterest.removePropertyChangeListener(cbusNodeBackupTableModel);
+        // nodeOfInterest is null if the pane was never shown for a node,
+        // CbusNodeConfigTab.dispose() calls disposeOfNode() when not null.
+        super.dispose();
     }
     
-    private final static Logger log = LoggerFactory.getLogger(CbusNodeBackupsPane.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusNodeBackupsPane.class);
     
 }

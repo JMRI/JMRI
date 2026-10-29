@@ -372,5 +372,5 @@ public class Digitrax7thGenAccyRoutesXML {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Digitrax7thGenAccyRoutesXML.class);
+    private static final Logger log = LoggerFactory.getLogger(Digitrax7thGenAccyRoutesXML.class);
 }

@@ -131,6 +131,9 @@ public class RosterSpeedProfileTest {
         ThrottleListen throtListen = new ThrottleListen();
         ThrottleManager tm = InstanceManager.getDefault(ThrottleManager.class);
         assertTrue( tm.requestThrottle(rF1, throtListen, false) );
+        // Throttle acquisition is deferred (see AbstractThrottleManager) --
+        // without this wait, testScene() below NPE'd on a still-null throttle.
+        JUnitUtil.waitFor(() -> throtListen.throttle != null, "wait for throttle found");
         stmLimit = stm.numSteps;
         resultSummary.testTotalCount = 0;
         for (float testDistance = fromDistanceMm; testDistance <= toDistanceMm; testDistance += byDistanceMm) {
@@ -359,6 +362,24 @@ public class RosterSpeedProfileTest {
     }
 
     @Test
+    public void testconvertThrottleSettingToScaleSpeedWithShortUnits(){
+
+        SignalSpeedMap ssm = InstanceManager.getDefault(SignalSpeedMap.class);
+        setSpeedInterpretation(ssm, SignalSpeedMap.PERCENT_NORMAL);
+        assertEquals("0.50 mm/s",RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(0.5f,true));
+
+        setSpeedInterpretation(ssm, SignalSpeedMap.PERCENT_THROTTLE);
+        assertEquals("0.50 mm/s",RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(0.5f,true));
+
+        setSpeedInterpretation(ssm, SignalSpeedMap.SPEED_KMPH);
+        assertEquals("0.16 kph",RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(0.5f,true));
+
+        setSpeedInterpretation(ssm, SignalSpeedMap.SPEED_MPH);
+        assertEquals("0.10 mph",RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(0.5f,true));
+
+    }
+
+    @Test
     public void testMmsToScaleSpeed(){
 
         org.jdom2.Element f1 = getLocoElement100();
@@ -393,6 +414,30 @@ public class RosterSpeedProfileTest {
         setSpeedInterpretation(ssm, SignalSpeedMap.SPEED_KMPH);
         Assertions.assertEquals(3.13559f, rsp.mmsToScaleSpeed(10, false), 0.001);
         Assertions.assertEquals(6.27119f, rsp.mmsToScaleSpeed(10, true), 0.001);
+    }
+
+    @Test
+    public void testSetMinMaxLimitsKmhScaleCapReplacesPercentFallback() {
+        org.jdom2.Element f1 = getLocoElement100();
+        RosterEntry rF1 = new RosterEntry(f1) {
+            @Override
+            protected void warnShortLong(String s) {
+            }
+        };
+        RosterSpeedProfile sp = rF1.getSpeedProfile();
+        // 36 km/h at 1:100 scale equals 100 mm/s model speed, which is throttle 1.0
+        // in the test profile (step 1000 -> 100 mm/s forward and reverse).
+        sp.setMinMaxLimitsKmh(0.0f, 0.25f, 36.0f, 100.0f, true);
+        assertEquals(1.0f, sp.getMaxOperatingSpeed(), 0.001f);
+    }
+
+    @Test
+    public void testSetMinMaxLimitsKmhPercentFallbackWithNoProfileForDirection() {
+        RosterSpeedProfile sp = new RosterSpeedProfile(new RosterEntry());
+        sp.setForwardSpeed(1.0f, 100.0f);
+        // No reverse speeds: the scale cap cannot apply in reverse, so the percent fallback remains.
+        sp.setMinMaxLimitsKmh(0.0f, 0.25f, 36.0f, 100.0f, false);
+        assertEquals(0.25f, sp.getMaxOperatingSpeed(), 0.0001f);
     }
 
     private void setSpeedInterpretation(SignalSpeedMap map, int interpretation) {

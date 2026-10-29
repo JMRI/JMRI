@@ -82,10 +82,11 @@ public class EditErrorHandlingModuleAction extends JmriAbstractAction {
          */
         public ErrorModuleEditor() {
             super(InstanceManager.getDefault(LogixNG_Manager.class).getErrorHandlingModuleSocket(),
-                    TreeEditor.EnableClipboard.EnableClipboard,
-                    TreeEditor.EnableRootRemoveCutCopy.EnableRootRemoveCutCopy,
-                    TreeEditor.EnableRootPopup.EnableRootPopup,
-                    TreeEditor.EnableExecuteEvaluate.DisableExecuteEvaluate
+                    EnableClipboard.EnableClipboard,
+                    EnableRootRemoveCutCopy.EnableRootRemoveCutCopy,
+                    EnableRootPopup.EnableRootPopup,
+                    EnableExecuteEvaluate.DisableExecuteEvaluate,
+                    EnableChangeUsernameForRoot.EnableChangeUsername
             );
 
             ErrorModuleEditor.this.setTitle(Bundle.getMessage("TitleErrorHandlingModuleEditor"));

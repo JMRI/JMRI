@@ -35,6 +35,6 @@ public class LocoStatsFuncTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LocoStatsFuncTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(LocoStatsFuncTest.class);
 
 }

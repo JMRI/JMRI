@@ -131,7 +131,7 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation {
      * @param flags the flags to be interpreted
      * @return string representing the broadcast flags.
      */
-    static public String getZ21BroadcastFlagsString(int flags) {
+    public static String getZ21BroadcastFlagsString(int flags) {
         StringBuilder flagStringBuilder = new StringBuilder();
         if((flags & XPressNetFlag) == XPressNetFlag){
             flagStringBuilder.append("XpressNet Messages");

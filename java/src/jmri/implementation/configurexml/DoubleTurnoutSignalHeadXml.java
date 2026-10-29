@@ -137,6 +137,6 @@ public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DoubleTurnoutSignalHeadXml.class);
+    private static final Logger log = LoggerFactory.getLogger(DoubleTurnoutSignalHeadXml.class);
 
 }

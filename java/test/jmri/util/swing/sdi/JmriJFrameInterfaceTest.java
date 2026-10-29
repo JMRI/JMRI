@@ -26,7 +26,7 @@ public class JmriJFrameInterfaceTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JmriJFrameInterfaceTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(JmriJFrameInterfaceTest.class);
 
 }
 

@@ -2,10 +2,12 @@ package jmri.configurexml;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import jmri.util.JUnitUtil;
 
+import org.jdom2.Element;
 import org.junit.jupiter.api.*;
 
 /**
@@ -18,7 +20,9 @@ public class DefaultJavaBeanConfigXMLTest {
     @Test
     public void testStoreBean() {
         DefaultJavaBeanConfigXML x = new DefaultJavaBeanConfigXML();
-        x.store(new TestBean1());
+        TestBean1 tb = new TestBean1();
+        Element t = x.store(tb);
+        assertNotNull(t);
     }
 
     @Test

@@ -43,6 +43,6 @@ public class SignalHeadIconDialogTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SignalHeadIconDialogTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SignalHeadIconDialogTest.class);
 
 }

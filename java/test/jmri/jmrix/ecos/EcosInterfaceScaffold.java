@@ -68,6 +68,6 @@ public class EcosInterfaceScaffold extends EcosTrafficController {
     public void receiveLoop() {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EcosInterfaceScaffold.class);
+    private static final Logger log = LoggerFactory.getLogger(EcosInterfaceScaffold.class);
 
 }

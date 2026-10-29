@@ -50,7 +50,7 @@ import javax.swing.JButton as JButton
 import javax.swing.ImageIcon as ImageIcon
 import javax.swing.SwingUtilities as SwingUtilities
 import thread
-import jmri.jmrit.throttle.AddressListener as AddressListener
+import jmri.jmrit.throttle.interfaces.AddressListener as AddressListener
 import jmri.jmrit.jython.Jynstrument as Jynstrument
 import javax.swing.JOptionPane as JOptionPane
 import javax.swing.JTextArea as JTextArea
@@ -71,10 +71,10 @@ class WiimoteThrottle2(Jynstrument, PropertyChangeListener, AddressListener, Wii
     
     def init(self):
         self.getContext().addPropertyChangeListener(self) #ThrottleFrame change
-        if ( self.getContext().getCurrentThrottleFrame() != None ):
-            self.addressPanel= self.getContext().getCurrentThrottleFrame().getAddressPanel();
+        if ( self.getContext().getCurentThrottleController() != None ):
+            self.addressPanel= self.getContext().getCurentThrottleController().getAddressPanel();
             self.addressPanel.addAddressListener(self) # change of throttle in Current frame
-            self.throttle = self.getContext().getCurrentThrottleFrame().getAddressPanel().getThrottle() # the throttle
+            self.throttle = self.getContext().getCurentThrottleController().getAddressPanel().getThrottle() # the throttle
         else:
             self.addressPanel = None
             self.throttle = None

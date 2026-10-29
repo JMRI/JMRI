@@ -1087,5 +1087,5 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
 
     private boolean waitingForIplReply;
 
-    private final static Logger log = LoggerFactory.getLogger(LnIPLImplementation.class);
+    private static final Logger log = LoggerFactory.getLogger(LnIPLImplementation.class);
 }

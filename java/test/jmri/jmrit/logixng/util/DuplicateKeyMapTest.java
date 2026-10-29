@@ -195,5 +195,5 @@ public class DuplicateKeyMapTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DuplicateKeyMapTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DuplicateKeyMapTest.class);
 }

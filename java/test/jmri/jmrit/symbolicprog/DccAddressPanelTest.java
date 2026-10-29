@@ -34,6 +34,6 @@ public class DccAddressPanelTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DccAddressPanelTest.class.getName());
+    // private static final Logger log = LoggerFactory.getLogger(DccAddressPanelTest.class.getName());
 
 }

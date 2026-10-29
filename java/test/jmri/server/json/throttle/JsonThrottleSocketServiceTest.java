@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
+import javax.servlet.http.HttpServletResponse;
 
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
@@ -13,6 +14,7 @@ import jmri.JmriException;
 import jmri.Throttle;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
@@ -67,6 +69,9 @@ public class JsonThrottleSocketServiceTest {
         // get the throttle
         data.put(JSON.NAME, "42").put(JSON.ADDRESS, 42);
         service.onMessage(JsonThrottle.THROTTLE, data, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        // Throttle acquisition is deferred (see AbstractThrottleManager), so
+        // the status message isn't sent synchronously within onMessage().
+        JUnitUtil.waitFor(() -> !connection.getMessages().isEmpty(), "wait for throttle status message");
         assertEquals( 1, manager.getThrottles().size(), "One throttle");
         JsonNode message = connection.getMessage();
         assertNotNull(message);
@@ -173,11 +178,18 @@ public class JsonThrottleSocketServiceTest {
         data.put(JSON.NAME, "42").put(JsonRoster.ROSTER_ENTRY, 42);
         service.onMessage(JsonThrottle.THROTTLE, data, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
         assertEquals( 1, manager.getThrottles().size(), "One throttle");
+        // Throttle acquisition is deferred (see AbstractThrottleManager),
+        // so not available synchronously right after onMessage() returns.
+        JUnitUtil.waitFor(() -> manager.get(new DccLocoAddress(3, false)).getThrottle() != null, "wait for throttle found");
         Throttle throttle = manager.get(new DccLocoAddress(3, false)).getThrottle();
         throttle.setFunctionMomentary( 0, !re.getFunctionLockable(0));
         throttle.setFunctionMomentary( 1, !re.getFunctionLockable(1));
         assertFalse( throttle.getFunctionMomentary(0), "F0 is not momentary");
         assertTrue( throttle.getFunctionMomentary(1), "F1 is momentary");
+        // the throttle-found status message itself may still be in flight even
+        // though the throttle object above is already set (see field report) --
+        // wait for it to actually arrive rather than assuming it's already queued.
+        JUnitUtil.waitFor(() -> !connection.getMessages().isEmpty(), "wait for throttle status message");
         JsonNode message = connection.getMessage();
         assertNotNull(message);
         assertEquals( 3, message.path(JSON.DATA).path(JSON.ADDRESS).asInt(), "Address");
@@ -256,6 +268,9 @@ public class JsonThrottleSocketServiceTest {
         // get the throttle by JsonThrottle.THROTTLE produces WARN client1
         service1.onMessage(JsonThrottle.THROTTLE, data1.put(JSON.ADDRESS, 3), new JsonRequest(locale, JSON.V5, JSON.POST, 42));
         JUnitAppender.assertWarnMessage("JSON throttle \"client1\" requested using \"throttle\" instead of \"name\"");
+        // Throttle acquisition is deferred (see AbstractThrottleManager), so
+        // the status message isn't sent synchronously within onMessage().
+        JUnitUtil.waitFor(() -> !connection1.getMessages().isEmpty(), "wait for throttle status message");
         JsonNode message1 = connection1.getMessage();
         assertNotNull(message1);
         assertEquals( 1, message1.path(JSON.DATA).path(JsonThrottle.CLIENTS).asInt(), "One client");
@@ -344,6 +359,62 @@ public class JsonThrottleSocketServiceTest {
         assertEquals( 400, ex.getCode(), "Error code is HTTP Bad Request");
         assertEquals( "Throttles must be assigned a client ID.", ex.getMessage(), "Error message");
         JUnitAppender.assertWarnMessage("JSON throttle \"\" requested using \"throttle\" instead of \"name\"");
+    }
+
+    /**
+     * Test that a throttle request with a {@code prefix} field uses the
+     * specified connection's ThrottleManager and that the prefix is echoed
+     * back in the status response.
+     */
+    @Test
+    public void testRunThrottleWithPrefix() throws IOException, JmriException, JsonException {
+        InternalSystemConnectionMemo memo2 = new InternalSystemConnectionMemo("J", "Juliet");
+        JUnitUtil.initDebugThrottleManager(memo2);
+
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        JsonThrottleSocketService service = new JsonThrottleSocketService(connection);
+        JsonThrottleManager manager = InstanceManager.getDefault(JsonThrottleManager.class);
+        assertEquals(0, manager.getThrottles().size(), "No throttles initially");
+
+        ObjectNode data = connection.getObjectMapper().createObjectNode();
+        data.put(JSON.NAME, "myThrottle");
+        data.put(JSON.ADDRESS, 42);
+        data.put(JSON.PREFIX, "J");
+
+        service.onMessage(JsonThrottle.THROTTLE, data, new JsonRequest(locale, JSON.V5, JSON.POST, 0));
+        assertEquals(1, manager.getThrottles().size(), "One throttle acquired");
+
+        // Throttle acquisition is deferred (see AbstractThrottleManager), so
+        // the status message isn't sent synchronously within onMessage().
+        JUnitUtil.waitFor(() -> !connection.getMessages().isEmpty(), "wait for throttle status message");
+        JsonNode message = connection.getMessage();
+        assertNotNull(message);
+        assertEquals(42, message.path(JSON.DATA).path(JSON.ADDRESS).asInt(), "Address");
+        assertEquals("J", message.path(JSON.DATA).path(JSON.PREFIX).asText(), "Prefix echoed in status");
+        assertEquals("myThrottle", message.path(JSON.DATA).path(JSON.NAME).asText(), "Name");
+
+        service.onClose();
+        assertEquals(0, manager.getThrottles().size(), "No throttles after close");
+    }
+
+    /**
+     * Test that a throttle request with an unknown {@code prefix} returns HTTP 400.
+     */
+    @Test
+    public void testRunThrottleWithUnknownPrefix() throws IOException, JmriException {
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        JsonThrottleSocketService service = new JsonThrottleSocketService(connection);
+        JsonThrottleManager manager = InstanceManager.getDefault(JsonThrottleManager.class);
+
+        ObjectNode data = connection.getObjectMapper().createObjectNode();
+        data.put(JSON.NAME, "myThrottle");
+        data.put(JSON.ADDRESS, 42);
+        data.put(JSON.PREFIX, "Z"); // unknown prefix — should fail with HTTP 400
+
+        JsonException ex = assertThrows(JsonException.class, () ->
+                service.onMessage(JsonThrottle.THROTTLE, data, new JsonRequest(locale, JSON.V5, JSON.POST, 0)));
+        assertEquals(HttpServletResponse.SC_BAD_REQUEST, ex.getCode());
+        assertEquals(0, manager.getThrottles().size(), "No throttle acquired");
     }
 
     @BeforeEach

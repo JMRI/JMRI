@@ -67,11 +67,33 @@ public class CbusCommandStation implements CommandStation {
     }
 
     /**
+     * Check that a session handle is valid before it is sent to the layout.
+     * <p>
+     * A CbusThrottle has a handle of -1 when disposed, or when its session has
+     * been stolen and is awaiting recovery. A negative handle must never be
+     * put on the CAN bus.
+     *
+     * @param handle the session handle to check
+     * @param opName the operation, for logging
+     * @return true if the handle is valid, else false
+     */
+    private boolean isValidHandle(int handle, String opName) {
+        if (handle < 0) {
+            log.warn("Invalid session handle {} for {}, not sent to layout", handle, opName);
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Release a session freeing up the slot for reuse.
      *
      * @param handle the handle for the session to be released
      */
     protected void releaseSession(int handle) {
+        if (!isValidHandle(handle, "KLOC")) {
+            return;
+        }
         // Send KLOC
         CanMessage msg = new CanMessage(2, tc.getCanid());
         msg.setOpCode(CbusConstants.CBUS_KLOC);
@@ -85,6 +107,9 @@ public class CbusCommandStation implements CommandStation {
      * @param handle    The handle of the session to which it applies
      */
     protected void sendKeepAlive(int handle) {
+        if (!isValidHandle(handle, "DKEEP")) {
+            return;
+        }
         CanMessage msg = new CanMessage(2, tc.getCanid());
         msg.setOpCode(CbusConstants.CBUS_DKEEP);
         msg.setElement(1, handle);
@@ -99,6 +124,9 @@ public class CbusCommandStation implements CommandStation {
      * @param speed_dir Bit 7 is direction (1 = forward) 6:0 are speed
      */
     protected void setSpeedDir(int handle, int speed_dir) {
+        if (!isValidHandle(handle, "DSPD")) {
+            return;
+        }
         CanMessage msg = new CanMessage(3, tc.getCanid());
         msg.setOpCode(CbusConstants.CBUS_DSPD);
         msg.setElement(1, handle);
@@ -115,6 +143,9 @@ public class CbusCommandStation implements CommandStation {
      * @param functions Function bits
      */
     protected void setFunctions(int group, int handle, int functions) {
+        if (!isValidHandle(handle, "DFUN")) {
+            return;
+        }
         log.debug("Set function group {} Fns {} for session handle {}", group, functions, handle);
         CanMessage msg = new CanMessage(4, tc.getCanid());
         msg.setOpCode(CbusConstants.CBUS_DFUN);
@@ -131,6 +162,9 @@ public class CbusCommandStation implements CommandStation {
      * @param mode the speed step mode
      */
     protected void setSpeedSteps(int handle, int mode) {
+        if (!isValidHandle(handle, "STMOD")) {
+            return;
+        }
         log.debug("Set speed step mode {} for session handle {}", mode, handle);
         CanMessage msg = new CanMessage(3, tc.getCanid());
         msg.setOpCode(CbusConstants.CBUS_STMOD);
@@ -214,6 +248,6 @@ public class CbusCommandStation implements CommandStation {
         return adapterMemo.getSystemPrefix();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusCommandStation.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusCommandStation.class);
 
 }

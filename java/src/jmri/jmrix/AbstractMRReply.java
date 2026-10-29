@@ -210,7 +210,7 @@ abstract public class AbstractMRReply extends AbstractMessage {
     public int maxSize() {
         return DEFAULTMAXSIZE;
     }
-    static public final int DEFAULTMAXSIZE = 120;
+    public static final int DEFAULTMAXSIZE = 120;
 
     protected String sourceLetter = "R";
     /** 
@@ -225,6 +225,6 @@ abstract public class AbstractMRReply extends AbstractMessage {
     // contents
     private boolean unsolicited;
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractMRReply.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractMRReply.class);
 
 }

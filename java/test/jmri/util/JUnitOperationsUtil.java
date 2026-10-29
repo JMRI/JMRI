@@ -41,7 +41,7 @@ import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
  */
 public class JUnitOperationsUtil {
 
-    private final static int DIRECTION_ALL = Location.EAST + Location.WEST + Location.NORTH + Location.SOUTH;
+    private static final int DIRECTION_ALL = Location.EAST + Location.WEST + Location.NORTH + Location.SOUTH;
 
     /**
      * Setup the operations test file names and test locations.
@@ -183,7 +183,7 @@ public class JUnitOperationsUtil {
         createAndPlaceCar("CP", "888", "Boxcar", "60", "DAB", "1985", l20yard1, 0);
         createAndPlaceCar("CP", "99", "Flat", "90", "AT", "6-80", l20yard1, 0);
 
-        c1.setColor("Red");
+        c1.setColorName("Red");
         // make sure the ID tags exist before we
         // try to add it to a car.
         jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 3");
@@ -518,7 +518,7 @@ public class JUnitOperationsUtil {
         car.setOwnerName(owner);
         car.setBuilt(built);
         car.setMoves(moves);
-        car.setColor("Black");
+        car.setColorName("Black");
 
         if (track != null) {
             assertEquals( Track.OKAY, car.setLocation(track.getLocation(), track), "place car");
@@ -752,5 +752,5 @@ public class JUnitOperationsUtil {
         sm.deregister(operationShutdownTask);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JUnitOperationsUtil.class);
+    // private static final Logger log = LoggerFactory.getLogger(JUnitOperationsUtil.class);
 }

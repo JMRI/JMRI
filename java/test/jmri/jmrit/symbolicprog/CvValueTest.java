@@ -123,7 +123,7 @@ public class CvValueTest {
         Assert.assertEquals("edited color", AbstractValue.ValueState.EDITED.getColor(), cv.getTableEntry().getBackground());
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CvValueTest.class);
+    private static final Logger log = LoggerFactory.getLogger(CvValueTest.class);
 
     @BeforeEach
     public void setUp() {

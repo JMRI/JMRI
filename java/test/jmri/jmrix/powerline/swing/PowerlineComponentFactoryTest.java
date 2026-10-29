@@ -40,6 +40,6 @@ public class PowerlineComponentFactoryTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PowerlineComponentFactoryTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PowerlineComponentFactoryTest.class);
 
 }

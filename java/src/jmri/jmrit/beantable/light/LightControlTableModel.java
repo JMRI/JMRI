@@ -251,6 +251,6 @@ public class LightControlTableModel extends javax.swing.table.AbstractTableModel
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LightControlTableModel.class);
+    // private static final Logger log = LoggerFactory.getLogger(LightControlTableModel.class);
 
 }

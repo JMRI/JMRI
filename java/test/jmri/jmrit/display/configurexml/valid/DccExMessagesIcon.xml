@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-5-5-5.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-5-5-5.xsd">
+  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="DCC-EX Messages Test Panel" x="38" y="23" height="341" width="419" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="yes" panelmenu="yes" scrollable="both">
+    <dccex_messages x="10" y="20" class="jmri.jmrix.dccpp.swing.messages.configurexml.MessagesPositionableXml">
+      <dccex_messages_config>
+        <systemConnection>D</systemConnection>
+        <expirySeconds>45</expirySeconds>
+        <maxLines>4</maxLines>
+        <autoOpen>true</autoOpen>
+        <playSound>true</playSound>
+        <soundFile>program:resources/sounds/bell_stroke.wav</soundFile>
+        <foreground>red</foreground>
+        <background>black</background>
+        <numColumns>30</numColumns>
+        <numLines>3</numLines>
+      </dccex_messages_config>
+    </dccex_messages>
+  </paneleditor>
+</layout-config>

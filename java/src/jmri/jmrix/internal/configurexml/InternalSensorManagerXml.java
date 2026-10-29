@@ -67,5 +67,5 @@ public class InternalSensorManagerXml extends jmri.managers.configurexml.Abstrac
         return load;
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(InternalSensorManagerXml.class);
+//    private static final Logger log = LoggerFactory.getLogger(InternalSensorManagerXml.class);
 }

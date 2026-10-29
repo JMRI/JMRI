@@ -27,7 +27,7 @@
             <text>   </text>
         </label>
         <xi:include href="http://jmri.org/xml/decoders/piko/projectInfoDisplay.xml"/>
-		<label>
+        <label>
             <text>   </text>
         </label>
     </column>

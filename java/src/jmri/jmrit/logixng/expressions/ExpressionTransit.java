@@ -23,12 +23,12 @@ public class ExpressionTransit extends AbstractDigitalExpression
 
     private final LogixNG_SelectNamedBean<Transit> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, Transit.class, InstanceManager.getDefault(TransitManager.class), this);
+                    this, Transit.class, InstanceManager.getDefault(TransitManager.class));
 
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
 
     private final LogixNG_SelectEnum<TransitState> _selectEnum =
-            new LogixNG_SelectEnum<>(this, TransitState.values(), TransitState.Idle, this);
+            new LogixNG_SelectEnum<>(this, TransitState.values(), TransitState.Idle);
 
     public ExpressionTransit(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -135,7 +135,6 @@ public class ExpressionTransit extends AbstractDigitalExpression
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
             _selectNamedBean.addPropertyChangeListener(this);
-            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -145,7 +144,6 @@ public class ExpressionTransit extends AbstractDigitalExpression
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             _selectNamedBean.removePropertyChangeListener(this);
-            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }
@@ -153,7 +151,11 @@ public class ExpressionTransit extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
+        // Only execute the ConditionalNG if a property that this expression
+        // checks has changed.
+        if (Transit.PROPERTY_STATE.equals(evt.getPropertyName())) {
+            getConditionalNG().execute();
+        }
     }
 
     /** {@inheritDoc} */
@@ -190,6 +192,6 @@ public class ExpressionTransit extends AbstractDigitalExpression
         _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Expression);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionTransit.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionTransit.class);
 
 }

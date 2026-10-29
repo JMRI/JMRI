@@ -15,11 +15,11 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class ConfigurationManager {
 
-    final public static String SPROGCBUS = "SPROG CBUS";
-    final public static String MERGCBUS = "MERG CBUS";
-    final public static String OPENLCB = "OpenLCB";
-    final public static String RAWCAN = "Raw CAN"; // TODO I18N
-    final public static String TEST = "Test - do not use";
+    public static final String SPROGCBUS = "SPROG CBUS";
+    public static final String MERGCBUS = "MERG CBUS";
+    public static final String OPENLCB = "OpenLCB";
+    public static final String RAWCAN = "Raw CAN"; // TODO I18N
+    public static final String TEST = "Test - do not use";
 
     public enum SubProtocol {
         NONE,
@@ -50,14 +50,14 @@ abstract public class ConfigurationManager {
      * Provide the current set of "Option1" values
      * @return Copy of System Options Array
      */
-    static public String[] getSystemOptions() {
+    public static String[] getSystemOptions() {
         return Arrays.copyOf(options, options.length);
     }
 
     /**
      * Set the list of protocols to start with OpenLCB.
      */
-    static public void setOpenLCB() {
+    public static void setOpenLCB() {
         log.debug("setOpenLCB");
         options = new String[]{OPENLCB, MERGCBUS, RAWCAN, TEST};
     }
@@ -65,7 +65,7 @@ abstract public class ConfigurationManager {
     /**
      * Set the list of protocols to start with MERG.
      */
-    static public void setMERG() {
+    public static void setMERG() {
         log.debug("setMERG");
         options = new String[]{MERGCBUS, OPENLCB, RAWCAN, TEST};
     }
@@ -73,7 +73,7 @@ abstract public class ConfigurationManager {
     /**
      * Set the list of protocols to start with SPROG.
      */
-    static public void setSPROG() {
+    public static void setSPROG() {
         log.debug("setSPROG");
         options = new String[]{SPROGCBUS};
     }
@@ -98,6 +98,6 @@ abstract public class ConfigurationManager {
 
     abstract protected ResourceBundle getActionModelResourceBundle();
 
-    private final static Logger log = LoggerFactory.getLogger(ConfigurationManager.class);
+    private static final Logger log = LoggerFactory.getLogger(ConfigurationManager.class);
 
 }

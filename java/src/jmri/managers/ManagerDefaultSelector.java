@@ -55,7 +55,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
     public final HashMap<Class<?>, String> defaults = new HashMap<>();
     private PropertyChangeListener memoListener;
     private boolean allInternalDefaultsValid = false;
-    public final static String ALL_INTERNAL_DEFAULTS = "allInternalDefaults";
+    public static final String ALL_INTERNAL_DEFAULTS = "allInternalDefaults";
 
     public ManagerDefaultSelector() {
         memoListener = (PropertyChangeEvent e) -> {
@@ -274,7 +274,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
     // Define set of items that we remember defaults for, manually maintained because
     // there are lots of JMRI-internal types of no interest to the user and/or not system-specific.
     // This grows if you add something to the SystemConnectionMemo system
-    final public Item[] knownManagers = new Item[]{
+    public final Item[] knownManagers = new Item[]{
         new Item("<html>Throttles</html>", ThrottleManager.class),
         new Item("<html>Power<br>Control</html>", PowerManager.class),
         new Item("<html>Command<br>Station</html>", CommandStation.class),
@@ -453,5 +453,5 @@ public class ManagerDefaultSelector extends AbstractPreferencesManager {
         this.allInternalDefaultsValid = isAllInternalDefaultsValid;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ManagerDefaultSelector.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ManagerDefaultSelector.class);
 }

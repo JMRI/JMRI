@@ -69,14 +69,14 @@ public class PrintCvAction extends AbstractAction {
             int cvCount = mModel.getRowCount();
             int tableLeft = 1;
             int tableRight = TABLE_COLS * 24 + 1;   // ISSUE: this is wrong
-            int tableTopPos;
+            float tableTopPos;
             int tableBottomPos;
-            int tableHeightPoints = (cvCount / TABLE_COLS) * writer.getLineHeight();  
+            float tableHeightPoints = (float) Math.ceil(cvCount / (double) TABLE_COLS) * writer.getLineHeight();  
             if (cvCount % TABLE_COLS > 0) {
                 tableHeightPoints += writer.getLineHeight();
             }
 
-            int tableHeightRows = tableHeightPoints / writer.getLineHeight();
+            int tableHeightRows = (int) (tableHeightPoints / writer.getLineHeight());
 
             /*
              * Start drawing the table of CVs. Set up the table with 4 columns
@@ -99,11 +99,11 @@ public class PrintCvAction extends AbstractAction {
             tableTopPos = writer.getCurrentVPos();
 
             //set the bottom of the table
-            tableBottomPos = tableTopPos + tableHeightPoints + 2;
+            tableBottomPos = (int) (tableTopPos + tableHeightPoints + 2);
 
             float useCharWidth = writer.getCharWidth();
 
-            writer.writeLine(tableTopPos, (int) (tableLeft * useCharWidth), tableTopPos, (int) (tableRight * useCharWidth));
+            writer.writeLine(tableTopPos, tableLeft * useCharWidth, tableTopPos, tableRight * useCharWidth);
 
             //Draw vertical lines for columns
             for (int i = 1; i < 76; i += 24) {

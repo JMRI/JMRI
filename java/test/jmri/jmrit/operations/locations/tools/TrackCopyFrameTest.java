@@ -181,6 +181,6 @@ public class TrackCopyFrameTest extends OperationsTestCase {
         JUnitUtil.dispose(tcf);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrackCopyFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TrackCopyFrameTest.class);
 
 }

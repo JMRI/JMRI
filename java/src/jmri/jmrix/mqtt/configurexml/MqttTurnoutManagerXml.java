@@ -28,5 +28,5 @@ public class MqttTurnoutManagerXml extends jmri.managers.configurexml.AbstractTu
     }
 
     // initialize logging
-//    private final static Logger log = LoggerFactory.getLogger(MqttTurnoutManagerXml.class);
+//    private static final Logger log = LoggerFactory.getLogger(MqttTurnoutManagerXml.class);
 }

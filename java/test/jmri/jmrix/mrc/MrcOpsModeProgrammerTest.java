@@ -36,6 +36,6 @@ public class MrcOpsModeProgrammerTest extends jmri.jmrix.AbstractOpsModeProgramm
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MrcOpsModeProgrammerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(MrcOpsModeProgrammerTest.class);
 
 }

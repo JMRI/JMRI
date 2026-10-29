@@ -194,7 +194,7 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
         InstanceManager.getDefault(LogixNG_Manager.class).getNamedBeanSet().forEach(logixNG -> {
             for (int i = 0; i < logixNG.getNumConditionalNGs(); i++) {
                 if (logixNG.getConditionalNG(i) != null) {
-                    logixNG.getConditionalNG(i).setRunDelayed(false);
+                    logixNG.getConditionalNG(i).setRunDelayed(value);
                 }
             }
         });
@@ -203,7 +203,7 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
     static volatile DefaultConditionalNGManager _instance = null;
 
     @InvokeOnGuiThread  // this method is not thread safe
-    static public DefaultConditionalNGManager instance() {
+    public static DefaultConditionalNGManager instance() {
         if (!ThreadingUtil.isGUIThread()) {
             LoggingUtil.warnOnce(log, "instance() called on wrong thread");
         }
@@ -266,5 +266,5 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultConditionalNGManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultConditionalNGManager.class);
 }

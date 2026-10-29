@@ -54,6 +54,6 @@ public class OptionsFileTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(OptionsFileTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(OptionsFileTest.class);
 
 }

@@ -814,5 +814,5 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainInfoFile.class);
+    private static final Logger log = LoggerFactory.getLogger(TrainInfoFile.class);
 }

@@ -6,7 +6,7 @@
 
   <title>Hardware Support: Using Arduinos with JMRI</title>
   <meta name="author" content="Jerry Grochow">
-  <meta name="keywords" content="JMRI arduino DCC++ CMRI serial">
+  <meta name="keywords" content="JMRI arduino DCC-EX CMRI serial">
   <!--#include virtual="/help/en/parts/Style.shtml" -->
 </head>
 <body>
@@ -86,7 +86,7 @@
       </ul>
 
       <p>JMRI provides support to use an arduino as a DCC command station ( <a href=
-      "../dccpp/index.shtml">DCC++</a>) or as a DCC decoder (by setting up a <a href=
+      "../dccpp/index.shtml">DCC-EX</a>) or as a DCC decoder (by setting up a <a href=
       "../../apps/DecoderPro/CreateDecoder.shtml">decoder definition file</a>. You can also use
       arduinos to control one or more auxiliary devices on your railroad by connecting the arduino
       to your computer running JMRI either through the tracks (in which case it will receive

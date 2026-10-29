@@ -27,7 +27,7 @@ public class TrainPrintBuildReport extends TrainCommon {
      * @param isPreview true if preview
      */
     public static void printReport(File file, String name, boolean isPreview) {
-        // obtain a OriginalHardcopyWriter to do this
+        // obtain a HardcopyWriter to do this
 
         String printerName = "";
         int fontSize = Setup.getBuildReportFontSize();
@@ -185,5 +185,5 @@ public class TrainPrintBuildReport extends TrainCommon {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainPrintBuildReport.class);
+    private static final Logger log = LoggerFactory.getLogger(TrainPrintBuildReport.class);
 }

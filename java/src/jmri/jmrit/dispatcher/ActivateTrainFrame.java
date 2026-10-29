@@ -721,6 +721,11 @@ public class ActivateTrainFrame extends JmriJFrame {
          jmri.jmrit.roster.RosterEntry re = (jmri.jmrit.roster.RosterEntry) sel;
          return re.getSpeedProfile() != null && re.getSpeedProfile().getProfileSize() > 0;
      }
+
+     // Direction for profile lookups: the "Run in reverse" checkbox selects reverse running.
+     private boolean isMaxSpeedProfileForward() {
+         return !runInReverseBox.isSelected();
+     }
     
      // Convert throttle % -> scale mph (via mm/s from profile)
      private float percentToScaleMph(float pct) {
@@ -730,7 +735,7 @@ public class ActivateTrainFrame extends JmriJFrame {
          jmri.jmrit.roster.RosterSpeedProfile sp = re.getSpeedProfile();
          if (sp == null || sp.getProfileSize() < 1) return cachedScaleMph;
     
-         float mms = sp.getSpeed(pct, true); // mm/s for this % (forward)
+         float mms = sp.getSpeed(pct, isMaxSpeedProfileForward()); // mm/s for this % in the selected direction
          float scaleRatio = getScaleRatioSafe();
          // mm/s -> m/s -> mph, then × scale ratio (scale speed)
          return (mms / 1000.0f) * 2.236936f * scaleRatio;
@@ -744,7 +749,7 @@ public class ActivateTrainFrame extends JmriJFrame {
          jmri.jmrit.roster.RosterSpeedProfile sp = re.getSpeedProfile();
          if (sp == null || sp.getProfileSize() < 1) return cachedScaleMph * 1.60934f;
     
-         float mms = sp.getSpeed(pct, true);
+         float mms = sp.getSpeed(pct, isMaxSpeedProfileForward());
          float scaleRatio = getScaleRatioSafe();
          // mm/s -> m/s -> km/h, then × scale ratio
          return (mms / 1000.0f) * 3.6f * scaleRatio;
@@ -763,11 +768,12 @@ public class ActivateTrainFrame extends JmriJFrame {
          float mps = isKmh ? (speedValue / 3.6f) : (speedValue / 2.236936f);
          float targetMms = (mps * 1000.0f) / scaleRatio;
     
-         // Bisection in [0.0 .. 1.0] on sp.getSpeed(%)
+         // Bisection in [0.0 .. 1.0] on sp.getSpeed(%) in the selected direction
          float lo = 0.0f, hi = 1.0f;
+         boolean fwd = isMaxSpeedProfileForward();
          for (int i = 0; i < 24; i++) {
              float mid = 0.5f * (lo + hi);
-             float midMms = sp.getSpeed(mid, true);
+             float midMms = sp.getSpeed(mid, fwd);
              if (midMms < targetMms) lo = mid; else hi = mid;
          }
          float pct = 0.5f * (lo + hi);
@@ -858,7 +864,7 @@ public class ActivateTrainFrame extends JmriJFrame {
                 // Typical scale speeds: 1 .. 320 km/h, step 0.1
                 maxSpeedSpinner.setModel(new SpinnerNumberModel(Float.valueOf(100.0f), Float.valueOf(1.0f), Float.valueOf(320.0f), Float.valueOf(0.1f)));
                 maxSpeedSpinner.setEditor(new JSpinner.NumberEditor(maxSpeedSpinner, "0.0"));
-                maxSpeedUnitLabel.setText(Bundle.getMessage("ScaleMilesPerHourShort"));
+                maxSpeedUnitLabel.setText(Bundle.getMessage("ScaleKilometresPerHourShort"));
                 maxSpeedSpinner.setToolTipText(Bundle.getMessage("MaxSpeedHint")); // reuse hint
                 break;
         }   
@@ -923,6 +929,21 @@ public class ActivateTrainFrame extends JmriJFrame {
         trainDetectionComboBox.addItem(new TrainDetectionItem(Bundle.getMessage("TrainDetectionWholeTrain"),TrainDetection.TRAINDETECTION_WHOLETRAIN));
         trainDetectionComboBox.addItem(new TrainDetectionItem(Bundle.getMessage("TrainDetectionHeadAndTail"),TrainDetection.TRAINDETECTION_HEADANDTAIL));
         trainDetectionComboBox.addItem(new TrainDetectionItem(Bundle.getMessage("TrainDetectionHeadOnly"),TrainDetection.TRAINDETECTION_HEADONLY));
+        trainDetectionComboBox.addActionListener(e -> updateTrainLengthVisibility());
+    }
+
+    /*
+     * A train whose tail is not always detected must have a length, whether
+     * or not it runs automatically, so show the length for it.
+     */
+    private boolean detectionNeedsLength() {
+        Object selected = trainDetectionComboBox.getSelectedItem();
+        return selected instanceof TrainDetectionItem
+                && ((TrainDetectionItem) selected).value != TrainDetection.TRAINDETECTION_WHOLETRAIN;
+    }
+
+    private void updateTrainLengthVisibility() {
+        pa4.setVisible(autoRunBox.isSelected() || detectionNeedsLength());
     }
 
     private void initializeScaleLengthBox() {
@@ -2913,8 +2934,8 @@ public class ActivateTrainFrame extends JmriJFrame {
             return;
         }
     
-        // Convert % -> mm/s, then format in the currently selected preferred units
-        float mms = sp.getSpeed(mROS, true);
+        // Convert % -> mm/s in the selected running direction, then format in the currently selected preferred units
+        float mms = sp.getSpeed(mROS, isMaxSpeedProfileForward());
         minReliableOperatingScaleSpeedLabel.setText(formatScaleSpeedWithPreferredUnits(mms));
     }
 
@@ -3071,7 +3092,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         pa2.setVisible(value);
         pa2a.setVisible(value);
         pa3.setVisible(value);
-        pa4.setVisible(value);
+        pa4.setVisible(value || detectionNeedsLength());
         pa5_FNumbers.setVisible(value);
     }
 

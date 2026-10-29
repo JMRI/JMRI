@@ -255,7 +255,7 @@ public class InputWindow extends JPanel {
         return results;
     }
 
-    static public File getFile(JFileChooser fileChooser) {
+    public static File getFile(JFileChooser fileChooser) {
         fileChooser.rescanCurrentDirectory();
         int retVal = fileChooser.showDialog(null, null);
         if (retVal != JFileChooser.APPROVE_OPTION) {
@@ -306,5 +306,5 @@ public class InputWindow extends JPanel {
         }
     }
     // initialize logging
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InputWindow.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InputWindow.class);
 }

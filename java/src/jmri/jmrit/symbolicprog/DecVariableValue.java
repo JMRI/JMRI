@@ -300,7 +300,7 @@ public class DecVariableValue extends VariableValue
             }
             default:
                 JTextField value = new VarTextField(_value.getDocument(), _value.getText(), fieldLength(), this);
-                if (getReadOnly() || getInfoOnly()) {
+                if (getReadOnly()) {
                     value.setEditable(false);
                 }
                 reps.add(value);
@@ -522,6 +522,6 @@ public class DecVariableValue extends VariableValue
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(DecVariableValue.class);
+    private static final Logger log = LoggerFactory.getLogger(DecVariableValue.class);
 
 }

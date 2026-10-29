@@ -29,6 +29,6 @@ public class DebuggerTimePaneTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DebuggerTimePaneTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DebuggerTimePaneTest.class);
 
 }

@@ -216,7 +216,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
         registerUserName(s);
 
         // notifications
-        int position = getPosition(s);
+        int position = isPositionNeeded() ? getPosition(s) : -1;
         fireDataListenersAdded(position, position, s);
         if (!silencedProperties.getOrDefault(PROPERTY_BEANS, false)) {
             fireIndexedPropertyChange(PROPERTY_BEANS, position, null, s);
@@ -229,10 +229,24 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     // not efficient, but does job for now
     private int getPosition(E s) {
         if (_beans.contains(s)) {
+            // beans are often added in order, check the ends before counting
+            if (_beans.last() == s) {
+                return _beans.size() - 1;
+            }
+            if (_beans.first() == s) {
+                return 0;
+            }
             return _beans.headSet(s, false).size();
         } else {
             return -1;
         }
+    }
+
+    // the position is only sent to data listeners and "beans" listeners
+    private boolean isPositionNeeded() {
+        return (!muted && !listeners.isEmpty())
+                || (!silencedProperties.getOrDefault(PROPERTY_BEANS, false)
+                        && propertyChangeSupport.hasListeners(PROPERTY_BEANS));
     }
 
     /**
@@ -273,7 +287,7 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
     @Override
     @OverridingMethodsMustInvokeSuper
     public void deregister(@Nonnull E s) {
-        int position = getPosition(s);
+        int position = isPositionNeeded() ? getPosition(s) : -1;
 
         // stop listening for user name changes
         s.removePropertyChangeListener(this);

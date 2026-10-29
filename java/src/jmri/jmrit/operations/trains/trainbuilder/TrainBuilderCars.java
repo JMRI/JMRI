@@ -2,10 +2,6 @@ package jmri.jmrit.operations.trains.trainbuilder;
 
 import java.util.*;
 
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
@@ -18,10 +14,14 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.BuildFailedException;
 import jmri.jmrit.operations.trains.Train;
 
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Contains methods for cars when building a train.
  * 
- * @author Daniel Boudreau Copyright (C) 2022, 2025
+ * @author Daniel Boudreau Copyright (C) 2022, 2025, 2026
  */
 public class TrainBuilderCars extends TrainBuilderEngines {
 
@@ -95,7 +95,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     }
                 }
                 if (checkAndAddCarForDestinationAndTrack(car, rl, rld)) {
-                    if (car.getTrain() == getTrain()) {
+                    // if destination track in quick service, car moved to location
+                    if (car.getTrain() == getTrain() || car.getLocation() == rld.getLocation()) {
                         foundCaboose = true;
                     }
                 } else if (findDestinationAndTrack(car, rl, rld)) {
@@ -256,7 +257,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     }
                 }
                 if (checkAndAddCarForDestinationAndTrack(car, rl, rld)) {
-                    if (car.getTrain() == getTrain()) {
+                    // if destination track in quick service, car moved to location
+                    if (car.getTrain() == getTrain() || car.getLocation() == rld.getLocation()) {
                         foundCarWithFred = true;
                     }
                 } else if (findDestinationAndTrack(car, rl, rld)) {
@@ -472,6 +474,9 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         boolean messageFlag = true;
         boolean foundCar = false;
         for (_carIndex = 0; _carIndex < getCarList().size(); _carIndex++) {
+            if (_reqNumOfMoves <= 0) {
+                break; // done
+            }
             Car car = getCarList().get(_carIndex);
             // second pass deals with cars that have a final destination equal
             // to this location.
@@ -500,103 +505,114 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 addLine(FIVE, BLANK_LINE);
                 continue;
             }
-            if (!rl.isLocalMovesAllowed() && car.getSplitFinalDestinationName().equals(rl.getSplitName())) {
-                addLine(FIVE,
-                        Bundle.getMessage("buildRouteNoLocalLocCar", getTrain().getRoute().getName(),
-                                rl.getId(), rl.getName(), car.toString()));
-            }
-            // can this car be pulled from an interchange or spur?
-            if (!checkPickupInterchangeOrSpur(car)) {
-                remove(car);
-                addLine(FIVE, BLANK_LINE);
-                continue; // no
-            }
-            // can this car be picked up?
-            if (!checkPickUpTrainDirection(car, rl)) {
-                addLine(FIVE, BLANK_LINE);
-                continue; // no
-            }
-            // do alternate track moves on the second pass (makes FIFO / LIFO work correctly)
-            if (Setup.isBuildAggressive() && !isSecondPass && car.getTrack().isAlternate() && _completedMoves != 0) {
-                continue;
-            }
-
-            showCarServiceOrder(car); // car on FIFO or LIFO track?
-
-            // is car departing staging and generate custom load?
-            if (!generateCarLoadFromStaging(car)) {
-                if (!generateCarLoadStagingToStaging(car) &&
-                        car.getTrack() == getDepartureStagingTrack() &&
-                        !getDepartureStagingTrack().isLoadNameAndCarTypeShipped(car.getLoadName(), car.getTypeName())) {
-                    // report build failure car departing staging with a
-                    // restricted load
-                    addLine(ONE, Bundle.getMessage("buildErrorCarStageLoad", car.toString(),
-                            car.getLoadName(), getDepartureStagingTrack().getName()));
-                    addLine(FIVE, BLANK_LINE);
-                    continue; // keep going and see if there are other cars with
-                              // issues outs of staging
-                }
-            }
-            // check for quick service track timing
-            if (!checkQuickServiceDeparting(car, rl)) {
-                continue;
-            }
-            // If car been given a home division follow division rules for car
-            // movement.
-            if (!findDestinationsForCarsWithHomeDivision(car)) {
-                addLine(FIVE,
-                        Bundle.getMessage("buildNoDestForCar", car.toString()));
-                addLine(FIVE, BLANK_LINE);
-                continue; // hold car at current location
-            }
-            // does car have a custom load without a destination?
-            // if departing staging, a destination for this car is needed, so
-            // keep going
-            if (findFinalDestinationForCarLoad(car) &&
-                    car.getDestination() == null &&
-                    car.getTrack() != getDepartureStagingTrack()) {
-                // done with this car, it has a custom load, and there are
-                // spurs/schedules, but no destination found
-                addLine(FIVE,
-                        Bundle.getMessage("buildNoDestForCar", car.toString()));
-                addLine(FIVE, BLANK_LINE);
-                continue;
-            }
-            // Check car for final destination, then an assigned destination, if
-            // neither, find a destination for the car
-            if (checkCarForFinalDestination(car)) {
-                log.debug("Car ({}) has a final desination that can't be serviced by train", car.toString());
-            } else if (checkCarForDestination(car, rl, getRouteList().indexOf(rl))) {
-                // car had a destination, could have been added to the train.
-                log.debug("Car ({}) has desination ({}) using train ({})", car.toString(), car.getDestinationName(),
-                        car.getTrainName());
-            } else {
-                findDestinationAndTrack(car, rl, getRouteList().indexOf(rl), getRouteList().size());
-            }
-            if (_reqNumOfMoves <= 0) {
-                break; // done
-            }
-            // build failure if car departing staging without a destination and
-            // a train we'll just put out a warning message here so we can find
-            // out how many cars have issues
-            if (car.getTrack() == getDepartureStagingTrack() &&
-                    (car.getDestination() == null || car.getDestinationTrack() == null || car.getTrain() == null)) {
-                addLine(ONE, Bundle.getMessage("buildWarningCarStageDest", car.toString()));
-                // does the car have a final destination to staging? If so we
-                // need to reset this car
-                if (car.getFinalDestinationTrack() != null &&
-                        car.getFinalDestinationTrack() == getTerminateStagingTrack()) {
-                    addLine(THREE,
-                            Bundle.getMessage("buildStagingCarHasFinal", car.toString(), car.getFinalDestinationName(),
-                                    car.getFinalDestinationTrackName()));
-                    car.reset();
-                }
-                addLine(SEVEN, BLANK_LINE);
-            }
+            findDestinationsFromLocation(rl, car, isSecondPass);
         }
         if (!foundCar && !isSecondPass) {
             addLine(FIVE, Bundle.getMessage("buildNoCarsAtLocation", rl.getName()));
             addLine(FIVE, BLANK_LINE);
+        }
+    }
+
+    protected void findDestinationsFromLocation(RouteLocation rl, Car car, boolean isSecondPass)
+            throws BuildFailedException {
+        if (!rl.isLocalMovesAllowed() && car.getSplitFinalDestinationName().equals(rl.getSplitName())) {
+            addLine(FIVE,
+                    Bundle.getMessage("buildRouteNoLocalLocCar", getTrain().getRoute().getName(),
+                            rl.getId(), rl.getName(), car.toString()));
+        }
+        // can this car be pulled from an interchange or spur?
+        if (!checkPickupInterchangeOrSpur(car)) {
+            log.debug("Removing car ({}) from list", car.toString());
+            remove(car);
+            addLine(FIVE, BLANK_LINE);
+            return; // no
+        }
+        // can this car be picked up?
+        if (!checkPickUpTrainDirection(car, rl)) {
+            addLine(FIVE, BLANK_LINE);
+            return; // no
+        }
+        // do alternate track moves on the second pass (makes FIFO / LIFO work correctly)
+        if (car.getTrack().isAlternate()) {
+            addLine(SEVEN, Bundle.getMessage("buildCarOnAlternateTrack", car.toString(),
+                    car.getTrack().getTrackTypeName(), car.getLocationName(), car.getTrackName(),
+                    car.getFinalDestinationName(), car.getFinalDestinationTrackName()));
+            if (Setup.isBuildAggressive() && !isSecondPass && _completedMoves != 0) {
+                addLine(SEVEN, BLANK_LINE);
+                return;
+            }
+        }
+
+        showCarServiceOrder(car); // car on FIFO or LIFO track?
+
+        car.setRouteDestinationTiming(rl); // for timing
+
+        // is car departing staging and generate custom load?
+        if (!generateCarLoadFromStaging(car)) {
+            if (!generateCarLoadStagingToStaging(car) &&
+                    car.getTrack() == getDepartureStagingTrack() &&
+                    !getDepartureStagingTrack().isLoadNameAndCarTypeShipped(car.getLoadName(), car.getTypeName())) {
+                // report build failure car departing staging with a
+                // restricted load
+                addLine(ONE, Bundle.getMessage("buildErrorCarStageLoad", car.toString(),
+                        car.getLoadName(), getDepartureStagingTrack().getName()));
+                addLine(FIVE, BLANK_LINE);
+                return; // keep going and see if there are other cars with
+                        // issues outs of staging
+            }
+        }
+        // check for quick service track timing
+        if (!checkQuickServiceDeparting(car, rl)) {
+            return;
+        }
+        // If car been given a home division follow division rules for car
+        // movement.
+        if (!findDestinationsForCarsWithHomeDivision(car)) {
+            addLine(FIVE,
+                    Bundle.getMessage("buildNoDestForCar", car.toString()));
+            addLine(FIVE, BLANK_LINE);
+            return; // hold car at current location
+        }
+        // does car have a custom load without a destination?
+        // if departing staging, a destination for this car is needed, so
+        // keep going
+        if (findFinalDestinationForCarLoad(car) &&
+                car.getDestination() == null &&
+                car.getTrack() != getDepartureStagingTrack()) {
+            // done with this car, it has a custom load, and there are
+            // spurs/schedules, but no destination found
+            addLine(FIVE,
+                    Bundle.getMessage("buildNoDestForCar", car.toString()));
+            addLine(FIVE, BLANK_LINE);
+            return;
+        }
+        // Check car for final destination, then an assigned destination, if
+        // neither, find a destination for the car
+        if (checkCarForFinalDestination(car)) {
+            log.debug("Car ({}) has a final desination that can't be serviced by train", car.toString());
+        } else if (checkCarForDestination(car, rl, getRouteList().indexOf(rl))) {
+            // car had a destination, could have been added to the train.
+            log.debug("Car ({}) has desination ({}) using train ({})", car.toString(), car.getDestinationName(),
+                    car.getTrainName());
+        } else {
+            findDestinationAndTrack(car, rl, getRouteList().indexOf(rl), getRouteList().size());
+        }
+        // build failure if car departing staging without a destination and
+        // a train we'll just put out a warning message here so we can find
+        // out how many cars have issues
+        if (car.getTrack() == getDepartureStagingTrack() &&
+                (car.getDestination() == null || car.getDestinationTrack() == null || car.getTrain() == null)) {
+            addLine(ONE, Bundle.getMessage("buildWarningCarStageDest", car.toString()));
+            // does the car have a final destination to staging? If so we
+            // need to reset this car
+            if (car.getFinalDestinationTrack() != null &&
+                    car.getFinalDestinationTrack() == getTerminateStagingTrack()) {
+                addLine(THREE,
+                        Bundle.getMessage("buildStagingCarHasFinal", car.toString(), car.getFinalDestinationName(),
+                                car.getFinalDestinationTrackName()));
+                car.reset();
+            }
+            addLine(SEVEN, BLANK_LINE);
         }
     }
 
@@ -905,8 +921,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                             car.getKernel().getSize(),
                             car.getKernel().getTotalLength(), Setup.getLengthUnit().toLowerCase()));
         }
-        // does train terminate into staging?
-        if (getTerminateStagingTrack() != null) {
+        // does train terminate into staging? and car not departing staging?
+        if (getTerminateStagingTrack() != null && !car.getTrack().getTrackType().equals(Track.STAGING)) {
             log.debug("Train terminates into staging track ({})", getTerminateStagingTrack().getName());
             // bias cars to staging
             if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
@@ -935,7 +951,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 }
             }
         } else {
-            // train doesn't terminate into staging
+            // train doesn't terminate into staging or the car is departing staging
             if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
                 log.debug("Car ({}) has home division ({}) and load type empty", car.toString(), car.getDivisionName());
                 if (car.getTrack().isYard() && car.getTrack().getDivision() == car.getDivision()) {
@@ -1046,9 +1062,9 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                           // destination set
         }
         addLine(FIVE,
-                Bundle.getMessage("buildSearchForSpur", car.toString(), car.getTypeName(),
-                        car.getLoadType().toLowerCase(), car.getLoadName(), car.getTrackType(), car.getLocationName(),
-                        car.getTrackName()));
+                Bundle.getMessage("buildSearchForSpur", car.toString(), car.getTypeName(), car.getTypeExtensions(),
+                        car.getLoadType().toLowerCase(), car.getLoadName(), car.getTrackTypeName(),
+                        car.getLocationName(), car.getTrackName()));
         if (car.getKernel() != null) {
             addLine(SEVEN,
                     Bundle.getMessage("buildCarLeadKernel", car.toString(), car.getKernelName(),
@@ -1164,6 +1180,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
      * @return false if there's an issue with using the spur
      */
     private boolean sendCarToDestinationSpur(Car car, Track track) {
+        addLine(SEVEN, BLANK_LINE);
         if (!checkBasicMoves(car, track)) {
             addLine(SEVEN, Bundle.getMessage("trainCanNotDeliverToDestination", getTrain().getName(),
                     car.toString(), track.getLocation().getName(), track.getName()));
@@ -1204,7 +1221,6 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                 }
             }
         }
-        addLine(SEVEN, BLANK_LINE);
         addLine(SEVEN,
                 Bundle.getMessage("buildSetFinalDestDiv", track.getTrackTypeName(), track.getLocation().getName(),
                         track.getName(), track.getDivisionName(), car.toString(), car.getLoadType().toLowerCase(),
@@ -1259,6 +1275,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             }
             car.setFinalDestination(null);
             car.setFinalDestinationTrack(null);
+            car.setScheduleItemId(Car.NONE);
             // don't move car if another train can
             if (router.getStatus().startsWith(Router.STATUS_NOT_THIS_TRAIN_PREFIX)) {
                 _routeToTrackFound = true;
@@ -1269,7 +1286,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             track.bumpMoves();
             // car is being routed to this track
             if (track.getSchedule() != null) {
-                car.setScheduleItemId(track.getCurrentScheduleItem().getId());
+                car.setScheduleItemId(track.getScheduleItemId());
                 track.bumpSchedule();
             }
         }
@@ -1344,8 +1361,9 @@ public class TrainBuilderCars extends TrainBuilderEngines {
 
         addLine(FIVE,
                 Bundle.getMessage("buildCarRoutingBegins", car.toString(), car.getTypeName(),
-                        car.getLoadType().toLowerCase(), car.getLoadName(), car.getTrackType(), car.getLocationName(),
-                        car.getTrackName(), car.getFinalDestinationName(), car.getFinalDestinationTrackName()));
+                        car.getLoadType().toLowerCase(), car.getLoadName(), car.getTrackTypeName(),
+                        car.getLocationName(), car.getTrackName(), car.getFinalDestinationName(),
+                        car.getFinalDestinationTrackName()));
 
         // no local moves for this train?
         if (!getTrain().isLocalSwitcher() &&
@@ -1356,19 +1374,13 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     Bundle.getMessage("buildCarHasFinalDestNoMove", car.toString(), car.getLocationName(),
                             car.getFinalDestinationName(), getTrain().getName()));
             addLine(FIVE, BLANK_LINE);
-            log.debug("Removing car ({}) from list", car.toString());
-            remove(car);
             return true; // car has a final destination, but no local moves by
                          // this train
         }
         // is the car's destination the terminal and is that allowed?
         if (!checkThroughCarsAllowed(car, car.getFinalDestinationName())) {
-            // don't remove car from list if departing staging
             if (car.getTrack() == getDepartureStagingTrack()) {
                 addLine(ONE, Bundle.getMessage("buildErrorCarStageDest", car.toString()));
-            } else {
-                log.debug("Removing car ({}) from list", car.toString());
-                remove(car);
             }
             return true; // car has a final destination, but through traffic not
                          // allowed by this train
@@ -1474,6 +1486,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         // the correct destination name
         for (int k = routeIndex; k < getRouteList().size(); k++) {
             rld = getRouteList().get(k);
+            car.setRouteDestinationTiming(rld); // for timing
             // if car can be picked up later at same location, skip
             if (checkForLaterPickUp(car, rl, rld)) {
                 addLine(SEVEN, BLANK_LINE);
@@ -1665,9 +1678,10 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         if (routeIndex + 1 == routeEnd) {
             log.debug("Car ({}) is at the last location in the train's route", car.toString());
         }
-        addLine(FIVE, Bundle.getMessage("buildFindDestinationForCar", car.toString(), car.getTypeName(),
-                car.getLoadType().toLowerCase(), car.getLoadName(), car.getTrackType(), car.getLocationName(),
-                car.getTrackName()));
+        addLine(FIVE,
+                Bundle.getMessage("buildFindDestinationForCar", car.toString(), car.getTypeName(),
+                        car.getTypeExtensions(), car.getLoadType().toLowerCase(), car.getLoadName(),
+                        car.getTrackTypeName(), car.getLocationName(), car.getTrackName()));
         if (car.getKernel() != null) {
             addLine(SEVEN, Bundle.getMessage("buildCarLeadKernel", car.toString(), car.getKernelName(),
                     car.getKernel().getSize(), car.getKernel().getTotalLength(), Setup.getLengthUnit().toLowerCase()));
@@ -1709,6 +1723,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         // now search for a destination for this car
         for (int k = start; k < routeEnd; k++) {
             rld = getRouteList().get(k);
+            car.setRouteDestinationTiming(rld); // for timing
             // if car can be picked up later at same location, set flag
             if (checkForLaterPickUp(car, rl, rld)) {
                 multiplePickup = true;
@@ -1940,7 +1955,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
     protected void addCarToTrain(Car car, RouteLocation rl, RouteLocation rld, Track track) {
         car = checkQuickServiceArrival(car, rld, track);
         addLine(THREE,
-                Bundle.getMessage("buildCarAssignedDest", car.toString(), rld.getName(), track.getName()));
+                Bundle.getMessage("buildCarAssignedDest", car.toString(), rld.getName(), track.getName(), rld.getId()));
         car.setDestination(track.getLocation(), track, Car.FORCE);
         int length = car.getTotalLength();
         int weightTons = car.getAdjustedWeightTons();
@@ -1995,11 +2010,12 @@ public class TrainBuilderCars extends TrainBuilderEngines {
      * issue of having cars placed at the alternate when the spur's cars get
      * pulled by this train, but cars were sent to the alternate because the
      * spur was full at the time it was tested.
-     *
+     * 
+     * @param rl route location were the cars are to be redirected if possible.
      * @return true if one or more cars were redirected
      * @throws BuildFailedException if coding issue
      */
-    protected boolean redirectCarsFromAlternateTrack() throws BuildFailedException {
+    protected boolean redirectCarsFromAlternateTrack(RouteLocation rl) throws BuildFailedException {
         // code check, should be aggressive
         if (!Setup.isBuildAggressive()) {
             throw new BuildFailedException("ERROR coding issue, should be using aggressive mode");
@@ -2009,7 +2025,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         for (Car car : cars) {
             // does the car have a final destination and the destination is this
             // one?
-            if (car.getFinalDestination() == null ||
+            if (car.getRouteDestination() != rl ||
+                    car.getFinalDestination() == null ||
                     car.getFinalDestinationTrack() == null ||
                     !car.getFinalDestinationName().equals(car.getDestinationName())) {
                 continue;
@@ -2024,6 +2041,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             }
             log.debug("Car ({}) alternate track ({}) has final destination track ({}) location ({})", car.toString(),
                     car.getDestinationTrackName(), car.getFinalDestinationTrackName(), car.getDestinationName()); // NOI18N
+            car.setRouteDestinationTiming(rl); // for timing
             if ((alternate.isYard() || alternate.isInterchange()) &&
                     car.checkDestination(car.getFinalDestination(), car.getFinalDestinationTrack())
                             .equals(Track.OKAY) &&
@@ -2044,6 +2062,7 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                                         car.getDestinationTrackName()));
                         // force car to track
                         k.setDestination(car.getFinalDestination(), car.getFinalDestinationTrack(), Car.FORCE);
+                        checkClone(k);
                     }
                 }
                 addLine(FIVE,
@@ -2051,12 +2070,27 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                                 car.getFinalDestinationTrackName(),
                                 car.toString(), car.getDestinationTrackName()));
                 car.setDestination(car.getFinalDestination(), car.getFinalDestinationTrack(), Car.FORCE);
-                // check for quick service
-                checkQuickServiceRedirected(car);
+                checkClone(car);
                 redirected = true;
             }
         }
         return redirected;
+    }
+
+    private void checkClone(Car car) {
+        if (car.isClone()) {
+            // move original car to spur
+            Car carOriginal = car.getOriginal(car);
+            addLine(SEVEN, Bundle.getMessage("buildRedirectYardToSpur", carOriginal.toString(),
+                    carOriginal.getTrack().getTrackTypeName(), carOriginal.getLocationName(),
+                    carOriginal.getTrackName(), car.getDestinationTrack().getTrackTypeName(), car.getDestinationName(),
+                    car.getDestinationTrackName()));
+            carOriginal.setFinalDestination(null);
+            carOriginal.setFinalDestinationTrack(null);
+            carOriginal.setLocation(car.getDestination(), car.getDestinationTrack(), Car.FORCE);
+        } else {
+            checkQuickServiceRedirected(car);
+        }
     }
 
     /*
@@ -2066,6 +2100,9 @@ public class TrainBuilderCars extends TrainBuilderEngines {
      * reassigned to the same train. Only lead car in a kernel is allowed.
      */
     private void checkQuickServiceRedirected(Car car) {
+        if (car.getKernel() != null && !car.isLead()) {
+            return;
+        }
         if (car.getDestinationTrack().isQuickServiceEnabled()) {
             RouteLocation rl = car.getRouteLocation();
             RouteLocation rld = car.getRouteDestination();
@@ -2076,6 +2113,11 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                     kar.reset();
             } else {
                 car.reset();
+            }
+            // restore moves counts location
+            rl.setCarMoves(rl.getCarMoves() - 1);
+            if (rl != rld) {
+                rld.setCarMoves(rld.getCarMoves() - 1);
             }
             getCarList().add(0, car);
             addCarToTrain(car, rl, rld, track);
@@ -2117,10 +2159,6 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         addLine(FIVE,
                 Bundle.getMessage("buildTrackQuickService", StringUtils.capitalize(track.getTrackTypeName()),
                         track.getLocation().getName(), track.getName(), cloneCar.toString(), car.toString()));
-        // for timing, use arrival times for the train that is building
-        // other trains will use their departure time, loaded when creating the Manifest
-        String expectedArrivalTime = getTrain().getExpectedArrivalTime(rld, true);
-        cloneCar.setSetoutTime(expectedArrivalTime);
         track.scheduleNext(car); // apply schedule to car
         car.loadNext(track); // update load, wait count
         if (car.getWait() > 0) {
@@ -2136,5 +2174,5 @@ public class TrainBuilderCars extends TrainBuilderEngines {
         return cloneCar; // return clone
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainBuilderCars.class);
+    private static final Logger log = LoggerFactory.getLogger(TrainBuilderCars.class);
 }

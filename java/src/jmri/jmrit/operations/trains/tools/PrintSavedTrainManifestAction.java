@@ -25,7 +25,7 @@ import jmri.util.FileUtil;
  */
 public class PrintSavedTrainManifestAction extends AbstractAction implements java.beans.PropertyChangeListener {
 
-    private final static Logger log = LoggerFactory.getLogger(PrintSavedTrainManifestAction.class);
+    private static final Logger log = LoggerFactory.getLogger(PrintSavedTrainManifestAction.class);
 
     public PrintSavedTrainManifestAction(boolean isPreview, Train train) {
         super(isPreview ? Bundle.getMessage("MenuItemPreviewSavedManifest")

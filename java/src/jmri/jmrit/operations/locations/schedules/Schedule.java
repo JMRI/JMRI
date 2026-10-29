@@ -111,10 +111,10 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
         log.debug("Adding new item to ({}) id: {}", getName(), id);
         ScheduleItem si = new ScheduleItem(id, type);
         si.setSequenceId(_sequenceNum);
-        Integer old = Integer.valueOf(_scheduleHashTable.size());
+        int old = _scheduleHashTable.size();
         _scheduleHashTable.put(si.getId(), si);
 
-        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_scheduleHashTable.size()));
+        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, _scheduleHashTable.size());
         // listen for set out and pick up changes to forward
         si.addPropertyChangeListener(this);
         return si;
@@ -146,7 +146,7 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
      * @param si The schedule item to add.
      */
     public void register(ScheduleItem si) {
-        Integer old = Integer.valueOf(_scheduleHashTable.size());
+        int old = _scheduleHashTable.size();
         _scheduleHashTable.put(si.getId(), si);
 
         // find last id created
@@ -159,7 +159,7 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
         if (si.getSequenceId() > _sequenceNum) {
             _sequenceNum = si.getSequenceId();
         }
-        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_scheduleHashTable.size()));
+        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, _scheduleHashTable.size());
         // listen for set out and pick up changes to forward
         si.addPropertyChangeListener(this);
     }
@@ -175,10 +175,10 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
             // subtract from the items's available track length
             String id = si.getId();
             si.dispose();
-            Integer old = Integer.valueOf(_scheduleHashTable.size());
+            int old = _scheduleHashTable.size();
             _scheduleHashTable.remove(id);
             resequenceIds();
-            setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_scheduleHashTable.size()));
+            setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, _scheduleHashTable.size());
         }
     }
 
@@ -283,7 +283,7 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
                 resequenceIds(); // error the sequence number is missing
             }
         }
-        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceId));
+        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, sequenceId);
     }
 
     /**
@@ -306,7 +306,7 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
                 resequenceIds(); // error the sequence number is missing
             }
         }
-        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceId));
+        setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, sequenceId);
     }
 
     public ScheduleItem getItemBySequenceId(int sequenceId) {
@@ -364,6 +364,12 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
                                 si.getRoadName()) == null)) {
             status = Bundle.getMessage("NotValid", si.getRoadName());
         }
+        else if (!si.getRoadName().equals(ScheduleItem.NONE) &&
+                !si.getReceiveLoadName().equals(ScheduleItem.NONE) &&
+                !track.isRoadNameAndLoadTypeAccepted(si.getRoadName(), InstanceManager.getDefault(CarLoads.class)
+                        .getLoadType(si.getTypeName(), si.getReceiveLoadName()))) {
+            status = Bundle.getMessage("NotValid", si.getRoadName() + CarRoads.SPLIT_CHAR + si.getReceiveLoadName());
+        }
         // check loads
         else if (!si.getReceiveLoadName().equals(ScheduleItem.NONE) &&
                 (!track.isLoadNameAndCarTypeAccepted(si.getReceiveLoadName(), si.getTypeName()) ||
@@ -392,7 +398,8 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
                         si.getDestinationTrack() + " (" + Bundle.getMessage("Type") + ")");
 
             } else if (!si.getRoadName().equals(ScheduleItem.NONE) &&
-                    !si.getDestinationTrack().isRoadNameAccepted(si.getRoadName())) {
+                    !si.getDestinationTrack().isRoadNameAndLoadTypeAccepted(si.getRoadName(), InstanceManager
+                            .getDefault(CarLoads.class).getLoadType(si.getTypeName(), si.getShipLoadName()))) {
                 status = Bundle.getMessage("NotValid",
                         si.getDestinationTrack() + " (" + Bundle.getMessage("Road") + ")");
             } else if (!si.getShipLoadName().equals(ScheduleItem.NONE) &&
@@ -614,6 +621,6 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
         firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Schedule.class);
+    private static final Logger log = LoggerFactory.getLogger(Schedule.class);
 
 }

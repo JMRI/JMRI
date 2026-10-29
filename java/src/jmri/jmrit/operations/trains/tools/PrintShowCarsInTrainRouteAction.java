@@ -50,5 +50,5 @@ public class PrintShowCarsInTrainRouteAction extends AbstractAction implements P
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintShowCarsInTrainRouteAction.class);
+    private static final Logger log = LoggerFactory.getLogger(PrintShowCarsInTrainRouteAction.class);
 }

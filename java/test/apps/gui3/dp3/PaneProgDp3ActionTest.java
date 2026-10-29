@@ -26,5 +26,5 @@ public class PaneProgDp3ActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PaneProgDp3ActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PaneProgDp3ActionTest.class);
 }

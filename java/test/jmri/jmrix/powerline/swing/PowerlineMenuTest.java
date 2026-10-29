@@ -41,6 +41,6 @@ public class PowerlineMenuTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PowerlineMenuTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PowerlineMenuTest.class);
 
 }

@@ -14,6 +14,8 @@ import jmri.InstanceManager;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.ThrottleListener;
+import jmri.jmrit.throttle.preferences.ThrottlesPreferences;
+import jmri.jmrit.throttle.panels.ControlPanel;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -46,8 +48,7 @@ public class ControlPanelTest {
         mainPanel.setOpaque(true);
         mainPanel.add(new JDesktopPane());
         mainPanel.add(panel);
-
-        panel.toFront();
+        
         panel.setVisible(true);
 
         frame.add(mainPanel);
@@ -88,7 +89,7 @@ public class ControlPanelTest {
     public void testCtor() {
         setupControlPanel();
 
-        checkFrameOverlap(panel.getContentPane());
+        checkFrameOverlap(panel);
         assertNotNull(panel.getSpeedSlider());
 
     }
@@ -99,16 +100,16 @@ public class ControlPanelTest {
         InstanceManager.getDefault(ThrottlesPreferences.class).setUsingFunctionIcon(false);
         setupControlPanel();
 
-        checkFrameOverlap(panel.getContentPane());
+        checkFrameOverlap(panel);
 
         panel.setSpeedController(ControlPanel.STEPDISPLAY);
-        checkFrameOverlap(panel.getContentPane());
+        checkFrameOverlap(panel);
 
         panel.setSpeedController(ControlPanel.SLIDERDISPLAY);
-        checkFrameOverlap(panel.getContentPane());
+        checkFrameOverlap(panel);
 
         panel.setSpeedController(ControlPanel.SLIDERDISPLAYCONTINUOUS);
-        checkFrameOverlap(panel.getContentPane());
+        checkFrameOverlap(panel);
     }
 
     @Test
@@ -118,16 +119,16 @@ public class ControlPanelTest {
         InstanceManager.getDefault(ThrottlesPreferences.class).setUsingFunctionIcon(true);
         setupControlPanel();
 
-        checkFrameOverlap(panel.getContentPane());
+        checkFrameOverlap(panel);
 
         panel.setSpeedController(ControlPanel.STEPDISPLAY);
-        checkFrameOverlap(panel.getContentPane());
+        checkFrameOverlap(panel);
 
         panel.setSpeedController(ControlPanel.SLIDERDISPLAY);
-        checkFrameOverlap(panel.getContentPane());
+        checkFrameOverlap(panel);
 
         panel.setSpeedController(ControlPanel.SLIDERDISPLAYCONTINUOUS);
-        checkFrameOverlap(panel.getContentPane());
+        checkFrameOverlap(panel);
     }
 
     @ParameterizedTest

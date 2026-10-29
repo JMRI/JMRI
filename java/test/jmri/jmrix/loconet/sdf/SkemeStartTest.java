@@ -27,6 +27,6 @@ public class SkemeStartTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SkemeStartTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SkemeStartTest.class);
 
 }

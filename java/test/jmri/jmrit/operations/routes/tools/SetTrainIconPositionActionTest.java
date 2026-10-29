@@ -36,6 +36,6 @@ public class SetTrainIconPositionActionTest extends OperationsTestCase {
         JUnitUtil.dispose(f);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SetTrainIconPositionActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SetTrainIconPositionActionTest.class);
 
 }

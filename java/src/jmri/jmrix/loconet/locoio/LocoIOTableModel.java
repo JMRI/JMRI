@@ -311,6 +311,6 @@ public class LocoIOTableModel
         log.debug("dispose"); // NOI18N
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LocoIOTableModel.class);
+    private static final Logger log = LoggerFactory.getLogger(LocoIOTableModel.class);
 
 }

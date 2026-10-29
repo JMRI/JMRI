@@ -1,7 +1,6 @@
 package jmri.jmrit.operations;
 
-import java.awt.Color;
-import java.awt.Component;
+import java.awt.*;
 import java.util.List;
 
 import javax.swing.*;
@@ -14,7 +13,7 @@ import jmri.util.swing.XTableColumnModel;
 /**
  * Common table model methods for operations.
  * 
- * @author Daniel Boudreau Copyright (C) 2023, 2025
+ * @author Daniel Boudreau Copyright (C) 2023, 2025, 2026
  */
 public abstract class OperationsTableModel extends javax.swing.table.AbstractTableModel {
     
@@ -30,6 +29,10 @@ public abstract class OperationsTableModel extends javax.swing.table.AbstractTab
 
     protected Color getForegroundColor(int row) {
         return _table.getForeground();
+    }
+    
+    protected Font getFont(int row) {
+        return _table.getFont();
     }
     
     /**
@@ -136,8 +139,9 @@ public abstract class OperationsTableModel extends javax.swing.table.AbstractTab
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
                 int row, int column) {
             Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            if (!isSelected) {
-                int modelRow = table.convertRowIndexToModel(row);
+            int modelRow = table.convertRowIndexToModel(row);
+            component.setFont(OperationsTableModel.this.getFont(modelRow));
+            if (!isSelected) {  
                 component.setForeground(getForegroundColor(modelRow));
             }
             return component;

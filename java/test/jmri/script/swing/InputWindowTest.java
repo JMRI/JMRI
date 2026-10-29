@@ -28,6 +28,6 @@ public class InputWindowTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(InputWindowTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(InputWindowTest.class);
 
 }

@@ -2583,7 +2583,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     // don't use page break because we want the table borders to be written
                     // to the bottom of the page
                     Dimension pagesize = w.getPrintablePagesizePoints();
-                    int here = w.getCurrentVPos();
+                    float here = w.getCurrentVPos();
                     w.writeLine(here, 0, pagesize.height, 0);
                     w.writeLine(here, pagesize.width, pagesize.height, pagesize.width);
                     w.pageBreak();

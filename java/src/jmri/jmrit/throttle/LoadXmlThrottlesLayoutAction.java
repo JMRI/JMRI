@@ -9,12 +9,24 @@ import javax.swing.SwingUtilities;
 
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.throttle.implementation.ThrottleUICore;
 import jmri.util.swing.JmriJOptionPane;
 
 import org.jdom2.Element;
 
 /**
  * Load throttles from XML
+ * 
+ * <hr>
+ * This file is part of JMRI.
+ * <p>
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
+ * <p>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author Glen Oberhauser 2004
  */
@@ -50,7 +62,7 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
         if (fileChooser == null) {
             fileChooser = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("PromptXmlFileTypes"), "xml");
             fileChooser.setDialogType(JFileChooser.OPEN_DIALOG);
-            fileChooser.setCurrentDirectory(new File(ThrottleFrame.getDefaultThrottleFolder()));
+            fileChooser.setCurrentDirectory(new File(ThrottleUICore.getDefaultThrottleFolder()));
         }
         int retVal = fileChooser.showOpenDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION) {
@@ -100,9 +112,7 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
             if ((throttles != null) && (throttles.size() > 0)) { // OLD FORMAT
                 for (Element e : throttles) {
                     SwingUtilities.invokeLater(() -> {
-                        ThrottleFrame tf = tfManager.createThrottleFrame();
-                        tf.setXml(e);
-                        tf.toFront();
+                        tfManager.createThrottleWindow(e).setVisible(true);                        
                     });
                 }
             } else {
@@ -132,7 +142,7 @@ public class LoadXmlThrottlesLayoutAction extends AbstractAction {
      *
      * @author glen
      */
-    static class ThrottlePrefs extends XmlFile {
+    public static class ThrottlePrefs extends XmlFile {
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LoadXmlThrottlesLayoutAction.class);

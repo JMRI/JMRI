@@ -1199,5 +1199,5 @@ public class LevelXing extends LayoutTrack {
         return Bundle.getMessage("TypeName_LevelXing");
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LevelXing.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LevelXing.class);
 }

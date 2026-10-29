@@ -93,6 +93,6 @@ public class CbusTableEventTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusTableEventTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusTableEventTest.class);
 
 }

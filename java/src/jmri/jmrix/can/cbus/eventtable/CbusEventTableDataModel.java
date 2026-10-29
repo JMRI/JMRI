@@ -105,7 +105,7 @@ public class CbusEventTableDataModel extends CbusBasicEventTableModel implements
 
     }; // Length = number of items in array should (at least) match number of columns
     
-    private final static String[] COLUMN_NAMES = new String[] {
+    private static final String[] COLUMN_NAMES = new String[] {
         "CbusNode","CbusEvent","ColumnName","CbusNodeName","ColumnComment","CbusEventOnOrOff", //0-5
         "ColumnToggle", "CbusSendOnHeader", "CbusSendOffHeader","CanID","ColumnLastHeard","ColumnStatusRequest", // 6-11
         "ColumnTotalSession","ColumnOnSession","ColumnOffSession","ColumnInSession","ColumnOutSession", // 12-16
@@ -120,7 +120,7 @@ public class CbusEventTableDataModel extends CbusBasicEventTableModel implements
         return Bundle.getMessage(COLUMN_NAMES[col]);
     }
     
-    public final static int[]BUTTON_COLUMNS = new int[]{TOGGLE_BUTTON_COLUMN, ON_BUTTON_COLUMN,
+    public static final int[]BUTTON_COLUMNS = new int[]{TOGGLE_BUTTON_COLUMN, ON_BUTTON_COLUMN,
         OFF_BUTTON_COLUMN, STATUS_REQUEST_BUTTON_COLUMN, DELETE_BUTTON_COLUMN};
     
     /**
@@ -134,7 +134,7 @@ public class CbusEventTableDataModel extends CbusBasicEventTableModel implements
         return getValueAt(0, col).getClass();
     }
     
-    private final static int[] EDITABLE_COLS =new int[]{ 
+    private static final int[] EDITABLE_COLS =new int[]{ 
         NAME_COLUMN, COMMENT_COLUMN, TOGGLE_BUTTON_COLUMN, ON_BUTTON_COLUMN, 
         OFF_BUTTON_COLUMN, STATUS_REQUEST_BUTTON_COLUMN, DELETE_BUTTON_COLUMN }; 
     
@@ -199,5 +199,5 @@ public class CbusEventTableDataModel extends CbusBasicEventTableModel implements
         removeTc(_memo);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusEventTableDataModel.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusEventTableDataModel.class);
 }

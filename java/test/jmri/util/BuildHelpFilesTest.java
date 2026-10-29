@@ -26,7 +26,7 @@ public class BuildHelpFilesTest {
 
 
     // The main() method is used when this class is run directly from ant
-    static public void main(String[] args) throws IOException, JDOMException {
+    public static void main(String[] args) throws IOException, JDOMException {
         boolean enResult = new BuildHelpFilesTest().buildIndex("en");
         boolean frResult = new BuildHelpFilesTest().buildIndex("fr");
         if (enResult && frResult) {
@@ -123,5 +123,5 @@ public class BuildHelpFilesTest {
         JUnitUtil.tearDown();
     }
 
-//     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BuildHelpFilesTest.class);
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BuildHelpFilesTest.class);
 }

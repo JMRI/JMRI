@@ -7,7 +7,7 @@ import org.junit.jupiter.api.*;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 /**
@@ -109,6 +109,9 @@ public class SimpleOperationsServerTest {
         a.parseStatus(inputString);
         // parsing the input causes a status report to be generated.
         assertThat(sb.toString()).withFailMessage("Train Command Response Check").isEqualTo("OPERATIONS , TRAIN=STF , TRAINLENGTH=160 , TRAINWEIGHT=56 , TRAINCARS=4 , TRAINCABOOSE=CP C10099 , TRAINLOCATION=North End Staging\n");
+
+        // GitHub CI workflows doesn't have a default printer
+        JUnitAppender.suppressWarnMessage("No default printer found");
     }
 
     @Test
@@ -162,8 +165,6 @@ public class SimpleOperationsServerTest {
         jmri.util.JUnitUtil.initDebugThrottleManager();
         jmri.util.JUnitOperationsUtil.setupOperationsTests();
         jmri.util.JUnitOperationsUtil.initOperationsData();
-        // default font chars per line, prevents headless exception when using HardcopyWriter
-        InstanceManager.getDefault(TrainManager.class).setHardcopyWriterLineLength("Monospaced", 0, 10, TrainCommon.getPageSize("Portrait"), false, 89);
 
         sb = new StringBuilder();
         output = new java.io.DataOutputStream(

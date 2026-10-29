@@ -117,5 +117,5 @@ public class SprogPowerManager extends AbstractPowerManager<SprogSystemConnectio
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SprogPowerManager.class);
+    private static final Logger log = LoggerFactory.getLogger(SprogPowerManager.class);
 }

@@ -512,7 +512,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
      * @return 0 if not verified; otherwise the number of valid stop sensors
      *         defined
      */
-    private int verifyInputs(boolean warn) {
+    int verifyInputs(boolean warn) {
 
         // Initially, no stop sensors are valid
         int verify = 0;

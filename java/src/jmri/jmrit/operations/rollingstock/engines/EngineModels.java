@@ -172,6 +172,17 @@ public class EngineModels extends RollingStockAttribute {
             setModelBunit(models[i], false); // there are no B units in the default files
         }
     }
+    
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
+            justification="I18N of Info Message")
+    @Override
+    public int getMaxNameLength() {
+        if (maxNameLength == 0) {
+            super.getMaxNameLength();
+            log.info(Bundle.getMessage("InfoMaxModel", maxName, maxNameLength));
+        }
+        return maxNameLength;
+    }
 
     /**
      * Create an XML element to represent this Entry. This member has to remain
@@ -194,7 +205,7 @@ public class EngineModels extends RollingStockAttribute {
         super.firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EngineModels.class);
+    private static final Logger log = LoggerFactory.getLogger(EngineModels.class);
 
     @ServiceProvider(service = InstanceInitializer.class)
     public static class Initializer extends AbstractInstanceInitializer {

@@ -2,11 +2,8 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import java.beans.PropertyChangeEvent;
 import java.text.NumberFormat;
+import java.time.LocalDateTime;
 import java.util.*;
-
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.*;
 import jmri.jmrit.operations.locations.Track;
@@ -17,6 +14,10 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManifestHeaderText;
+
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Manages the cars.
@@ -122,6 +123,7 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
     }
 
     // The special sort options for cars
+    private static final int BY_LOAD_TYPE = 29;
     private static final int BY_LOAD = 30;
     private static final int BY_KERNEL = 31;
     private static final int BY_RWE = 32; // Return When Empty
@@ -138,10 +140,12 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
     private static final int BY_SPLIT_LOCATION = 41;
     private static final int BY_SPLIT_DESTINATION = 42;
 
-    // add car options to sort comparator
     @Override
     protected java.util.Comparator<Car> getComparator(int attribute) {
         switch (attribute) {
+            case BY_LOAD_TYPE:
+                // load types "Empty" and "Load", load goes before empty
+                return (c1, c2) -> (c2.getLoadType().compareToIgnoreCase(c1.getLoadType()));
             case BY_LOAD:
                 return (c1, c2) -> (c1.getLoadName().compareToIgnoreCase(c2.getLoadName()));
             case BY_KERNEL:
@@ -200,37 +204,37 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
         // get a list of locations served by this route
         List<RouteLocation> routeList = route.getLocationsBySequenceList();
         // don't include Car at route destination
-        RouteLocation destination = null;
+        RouteLocation rlDestination = null;
         if (routeList.size() > 1) {
-            destination = routeList.get(routeList.size() - 1);
+            rlDestination = routeList.get(routeList.size() - 1);
             // However, if the destination is visited more than once, must
             // include all cars
             for (int i = 0; i < routeList.size() - 1; i++) {
-                if (destination.getName().equals(routeList.get(i).getName())) {
-                    destination = null; // include cars at destination
+                if (rlDestination.getName().equals(routeList.get(i).getName())) {
+                    rlDestination = null; // include cars at destination
                     break;
                 }
             }
-            // pickup allowed at destination? Don't include cars in staging
-            if (destination != null &&
-                    destination.isPickUpAllowed() &&
-                    destination.getLocation() != null &&
-                    !destination.getLocation().isStaging()) {
-                destination = null; // include cars at destination
+            // local moves allowed at destination? Don't include cars in staging
+            if (rlDestination != null &&
+                    rlDestination.isLocalMovesAllowed() &&
+                    rlDestination.getLocation() != null &&
+                    !rlDestination.getLocation().isStaging()) {
+                rlDestination = null; // include cars at destination
             }
         }
         // get rolling stock by track priority, load priority and then by moves
         List<Car> sortByPriority = sortByTrackPriority(sortByLoadPriority(getByMovesList()));
-        // now build list of available Car for this route
+        // now build list of available cars for this route
         for (Car car : sortByPriority) {
-            // only use Car with a location
+            // only use cars with a location
             if (car.getLocation() == null) {
                 continue;
             }
             RouteLocation rl = route.getLastLocationByName(car.getLocationName());
-            // get Car that don't have an assigned train, or the
+            // only allow cars that don't have an assigned train, or the
             // assigned train is this one
-            if (rl != null && rl != destination && (car.getTrain() == null || train.equals(car.getTrain()))) {
+            if (rl != null && rl != rlDestination && (car.getTrain() == null || train.equals(car.getTrain()))) {
                 out.add(car);
             }
         }
@@ -290,7 +294,8 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
      * @return Ordered list of cars assigned to the train
      */
     public List<Car> getByTrainDestinationList(Train train) {
-        List<Car> byFinal = getByList(getList(train), BY_SPLIT_FINAL_DEST);
+        List<Car> byLoadType = getByList(getList(train), BY_LOAD_TYPE);
+        List<Car> byFinal = getByList(byLoadType, BY_SPLIT_FINAL_DEST);
         List<Car> byLocation = getByList(byFinal, BY_SPLIT_LOCATION);
         List<Car> byHazard = getByList(byLocation, BY_HAZARD);
         List<Car> byDestination = getByList(byHazard, BY_SPLIT_DESTINATION);
@@ -525,19 +530,19 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
      * @param startTime The date and time the clones were moved
      * @return clone for this car
      */
-    public Car createClone(Car car, Track track, Train train, Date startTime) {
+    public Car createClone(Car car, Track track, Train train, LocalDateTime startTime) {
         Car clone = createClone(car);
         // for reset
         clone.setPreviousFinalDestination(car.getPreviousFinalDestination());
         clone.setPreviousFinalDestinationTrack(car.getPreviousFinalDestinationTrack());
         clone.setPreviousScheduleId(car.getScheduleItemId());
-        createCloneConsist(car, track, train, startTime, clone);
+        createCloneKernel(car, track, train, startTime, clone);
         // move car to new location for later pick up
         finshCreateClone(car, track, train, startTime, clone);
         return clone;
     }
 
-    private void createCloneConsist(Car car, Track track, Train train, Date startTime, Car cloneCar) {
+    private void createCloneKernel(Car car, Track track, Train train, LocalDateTime startTime, Car cloneCar) {
         if (car.getKernel() != null) {
             String kernelName = car.getKernelName() + Car.CLONE + padNumber(car.getCloneOrder());
             Kernel kernel = InstanceManager.getDefault(KernelManager.class).newKernel(kernelName);
@@ -623,7 +628,7 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
         super.propertyChange(evt);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CarManager.class);
+    private static final Logger log = LoggerFactory.getLogger(CarManager.class);
 
     @Override
     public void initialize() {

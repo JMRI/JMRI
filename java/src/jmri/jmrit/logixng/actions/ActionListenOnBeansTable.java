@@ -25,7 +25,7 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
     private NamedBeanType _namedBeanType = NamedBeanType.Light;
     private final LogixNG_SelectNamedBean<NamedTable> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, NamedTable.class, InstanceManager.getDefault(NamedTableManager.class), this);
+                    this, NamedTable.class, InstanceManager.getDefault(NamedTableManager.class));
     private TableRowOrColumn _tableRowOrColumn = TableRowOrColumn.Row;
     private String _rowOrColumnName = "";
     private boolean _includeCellsWithoutHeader = false;
@@ -337,7 +337,6 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
                 log.warn("The named bean \"{}\" cannot be found in the manager for {}", item, _namedBeanType.toString());
             }
         }
-        _selectNamedBean.registerListeners();
         _listenersAreRegistered = true;
     }
 
@@ -355,7 +354,6 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
             }
             namedBeanEntry.getKey().removePropertyChangeListener(namedBeanEntry.getValue(), this);
         }
-        _selectNamedBean.unregisterListeners();
         _listenersAreRegistered = false;
     }
 
@@ -393,6 +391,6 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
 */
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionListenOnBeansTable.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionListenOnBeansTable.class);
 
 }

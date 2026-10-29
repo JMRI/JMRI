@@ -11,6 +11,7 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import jmri.SystemConnectionMemo;
 import jmri.util.SystemType;
 
 /**
@@ -230,8 +231,23 @@ public class JSerialPort implements SerialPort {
     }
 
     @Override
+    public boolean isOpen() {
+        return this.serialPort.isOpen();
+    }
+
+    @Override
     public String getDescriptivePortName() {
         return this.serialPort.getDescriptivePortName();
+    }
+
+    @Override
+    public String getPortDescription() {
+        return this.serialPort.getPortDescription();
+    }
+
+    @Override
+    public String getPortLocation() {
+        return this.serialPort.getPortLocation();
     }
 
     @Override
@@ -242,14 +258,20 @@ public class JSerialPort implements SerialPort {
     /**
      * Open the port.
      *
-     * @param systemPrefix the system prefix
+     * @param memo the system memo
      * @param inputPortName local system name for the desired port
      * @param log Logger to use for errors, passed so that errors are logged from low-level class'
      * @param stop_bits The number of stop bits, either 1 or 2
      * @param parity one of the defined parity contants
      * @return the serial port object for later use
      */
-    public static JSerialPort activatePort(String systemPrefix, String inputPortName, org.slf4j.Logger log, int stop_bits, Parity parity) {
+    public static JSerialPort activatePort(
+            SystemConnectionMemo memo,
+            String inputPortName,
+            org.slf4j.Logger log,
+            int stop_bits,
+            Parity parity) {
+
         com.fazecast.jSerialComm.SerialPort serialPort;
 
         // check environment for overriding portName
@@ -268,7 +290,7 @@ public class JSerialPort implements SerialPort {
         } else {
             portName = inputPortName;
         }
-        
+
         // convert the 1 or 2 stop_bits argument to the proper jSerialComm code value
         int stop_bits_code;
         switch (stop_bits) {
@@ -292,7 +314,7 @@ public class JSerialPort implements SerialPort {
         } catch (java.io.IOException | com.fazecast.jSerialComm.SerialPortInvalidPortException ex) {
             // IOException includes
             //      com.fazecast.jSerialComm.SerialPortIOException
-            AbstractSerialPortController.handlePortNotFound(systemPrefix, portName, log, ex);
+            AbstractSerialPortController.handlePortNotFound(memo, portName, log, ex);
             return null;
         }
         return new JSerialPort(serialPort);
@@ -333,8 +355,10 @@ public class JSerialPort implements SerialPort {
                         && portNameVector.contains(getSymlinkTarget(file))
                         && !portNameVector.contains(file.getName())).map(File::getName).collect(Collectors.toSet());
                 portNameVector.addAll(symlinkPorts);
-                log.info("Adding symlink port {}", symlinkPorts);
-
+                if (symlinkPorts.size() > 0) {
+                    log.info("Adding symlink port {}", symlinkPorts);
+                }
+                
                 // Let the user add additional serial ports
                 String portnamePattern = System.getProperty("purejavacomm.portnamepattern");
                 if (portnamePattern != null) {
@@ -348,6 +372,20 @@ public class JSerialPort implements SerialPort {
             }
         }
         return portNameVector;
+    }
+
+    /**
+     * Get an unopened port wrapper for metadata queries.
+     * This allows access to port description and location without opening the port.
+     * The port must be opened separately with activatePort() before performing I/O.
+     *
+     * @param portName the system port name (e.g., "COM3", "/dev/ttyUSB0")
+     * @return unopened JSerialPort wrapper for metadata access
+     */
+    public static JSerialPort getPort(String portName) {
+        com.fazecast.jSerialComm.SerialPort serialPort =
+            com.fazecast.jSerialComm.SerialPort.getCommPort(portName);
+        return new JSerialPort(serialPort);
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JSerialPort.class);

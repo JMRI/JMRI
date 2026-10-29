@@ -9,7 +9,7 @@ package jmri.jmrix.nce.serialdriver;
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
-    public final static String NAME = Bundle.getMessage("TypeSerial");
+    public static final String NAME = Bundle.getMessage("TypeSerial");
 
     /**
      * Ctor for an object being created during load process; Swing init is

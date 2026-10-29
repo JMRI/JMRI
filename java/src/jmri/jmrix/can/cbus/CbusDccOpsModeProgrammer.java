@@ -136,5 +136,5 @@ public class CbusDccOpsModeProgrammer extends CbusDccProgrammer implements Addre
     void cleanup() {
     }
     
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusDccOpsModeProgrammer.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusDccOpsModeProgrammer.class);
 }

@@ -186,5 +186,5 @@ public class EditDayToNameMapPanel extends OperationsPreferencesPanel {
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(EditDayToNameMapPanel.class);
+    private static final Logger log = LoggerFactory.getLogger(EditDayToNameMapPanel.class);
 }

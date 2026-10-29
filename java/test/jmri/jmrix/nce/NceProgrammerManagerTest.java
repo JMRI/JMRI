@@ -66,6 +66,6 @@ public class NceProgrammerManagerTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    //private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceProgrammerManagerTest.class);
+    //private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceProgrammerManagerTest.class);
 
 }

@@ -120,7 +120,7 @@ public class ScheduleEditFrameTest extends OperationsTestCase {
         // test up button
         // findColumn return the first column with the characters "up"
 //        tbl.clickOnCell(0, tbl.findColumn(Bundle.getMessage("Up")));
-        tbl.clickOnCell(0, 13);
+        tbl.clickOnCell(0, tbl.findColumn(Bundle.getMessage("Down")) - 1);
         Assert.assertEquals("1st line item car type from table", carTypes[2], tbl.getValueAt(0, tbl.findColumn(Bundle.getMessage("Type"))));
         Assert.assertEquals("2nd line item car type from table", carTypes[3], tbl.getValueAt(1, tbl.findColumn(Bundle.getMessage("Type"))));
         Assert.assertEquals("3rd line item car type from table", carTypes[1], tbl.getValueAt(2, tbl.findColumn(Bundle.getMessage("Type"))));

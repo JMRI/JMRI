@@ -70,6 +70,6 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
     }
 
     // initialize logging
-//    private final static Logger log = LoggerFactory.getLogger(PerformFileModelXml.class);
+//    private static final Logger log = LoggerFactory.getLogger(PerformFileModelXml.class);
 
 }

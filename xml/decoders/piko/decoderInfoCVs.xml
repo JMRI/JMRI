@@ -32,7 +32,7 @@
         <splitVal/>
         <label> (decimal)</label>
         <label xml:lang="de"> (decimal)</label>
-    </variable>	
+    </variable>
     <variable CV="269:4.31=0.32=255" readOnly="yes" item="PDate">
         <splitDateTimeVal display="dateOnly" base="2000-01-01T00:00:00"/>
         <label>Production Date</label>
@@ -64,16 +64,16 @@
         <decVal/>
         <label>Firmware Major Version</label>
     </variable>
-	
+
     <variable CV="318.31=0.32=255" readOnly="yes" item="PCode Major Version">
         <decVal/>
     </variable>
     <variable CV="319.31=0.32=255" readOnly="yes" item="PCode Minor Version">
         <decVal/>
-    </variable>	
+    </variable>
     <variable CV="317.31=0.32=255,316.31=0.32=255,315.31=0.32=255" readOnly="no" item="Product Number">
         <splitVal factor="1" offset="0"/>
         <label>Project Number: </label>
         <label xml:lang="de">Projektnummer: </label>
-    </variable>	
+    </variable>
 </variables>

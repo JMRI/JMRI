@@ -29,9 +29,9 @@ public class SprogVersionAction extends AbstractAction {
         } catch (Exception ex) {
             log.warn("SprogIIUpdateAction starting SprogIIUpdateFrame: Exception: {}", ex.toString());
         }
-//        f.setVisible(true);
+        f.setVisible(true);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SprogVersionAction.class);
+    private static final Logger log = LoggerFactory.getLogger(SprogVersionAction.class);
 
 }

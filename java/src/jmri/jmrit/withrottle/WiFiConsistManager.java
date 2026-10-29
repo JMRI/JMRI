@@ -73,6 +73,6 @@ public class WiFiConsistManager extends NmraConsistManager {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(WiFiConsistManager.class);
+    private static final Logger log = LoggerFactory.getLogger(WiFiConsistManager.class);
 
 }

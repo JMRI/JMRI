@@ -37,6 +37,6 @@ public class LocationTrackBlockingOrderActionTest extends OperationsTestCase {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LocationTrackBlockingOrderActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(LocationTrackBlockingOrderActionTest.class);
 
 }

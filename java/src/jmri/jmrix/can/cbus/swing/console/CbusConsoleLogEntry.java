@@ -33,5 +33,5 @@ public class CbusConsoleLogEntry {
         return _highlighter;
     }
     
-    // private final static Logger log = LoggerFactory.getLogger(CbusConsoleLogEntry.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusConsoleLogEntry.class);
 }

@@ -420,7 +420,7 @@ public class PrintCarRosterFrame extends OperationsFrame {
                 weight = padAttribute(car.getWeight().trim(), Control.max_len_string_weight_name);
             }
             if (printCarColor.isSelected()) {
-                color = padAttribute(car.getColor().trim(),
+                color = padAttribute(car.getColorName().trim(),
                         InstanceManager.getDefault(CarColors.class).getMaxNameLength());
             }
             if (printCarLoad.isSelected()) {
@@ -583,5 +583,5 @@ public class PrintCarRosterFrame extends OperationsFrame {
                         1);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintCarRosterFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(PrintCarRosterFrame.class);
 }

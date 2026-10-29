@@ -110,6 +110,6 @@ public class LnSensorAddressTest {
         JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LnSensorAddressTest.class);
+    private static final Logger log = LoggerFactory.getLogger(LnSensorAddressTest.class);
 
 }

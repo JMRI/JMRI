@@ -27,6 +27,6 @@ public class DualDecoderSelectPaneTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DualDecoderSelectPaneTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DualDecoderSelectPaneTest.class);
 
 }

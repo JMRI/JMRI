@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.expressions;
 
-import java.beans.*;
 import java.io.*;
 import java.nio.file.Files;
 import java.util.*;
@@ -16,14 +15,13 @@ import jmri.jmrit.logixng.util.*;
  *
  * @author Daniel Bergqvist Copyright 2023
  */
-public class FileAsFlag extends AbstractDigitalExpression
-        implements PropertyChangeListener {
+public class FileAsFlag extends AbstractDigitalExpression {
 
     private final LogixNG_SelectString _selectFilename =
-            new LogixNG_SelectString(this, this);
+            new LogixNG_SelectString(this);
 
     private final LogixNG_SelectEnum<DeleteOrKeep> _selectDeleteOrKeep =
-            new LogixNG_SelectEnum<>(this, DeleteOrKeep.values(), DeleteOrKeep.Keep, this);
+            new LogixNG_SelectEnum<>(this, DeleteOrKeep.values(), DeleteOrKeep.Keep);
 
 
     public FileAsFlag(String sys, String user)
@@ -113,28 +111,6 @@ public class FileAsFlag extends AbstractDigitalExpression
 
     /** {@inheritDoc} */
     @Override
-    public void registerListenersForThisClass() {
-        if (!_listenersAreRegistered) {
-            _listenersAreRegistered = true;
-        }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        if (_listenersAreRegistered) {
-            _listenersAreRegistered = false;
-        }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void disposeMe() {
         // Do nothing
     }
@@ -158,6 +134,6 @@ public class FileAsFlag extends AbstractDigitalExpression
     }
 
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FileAsFlag.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FileAsFlag.class);
 
 }

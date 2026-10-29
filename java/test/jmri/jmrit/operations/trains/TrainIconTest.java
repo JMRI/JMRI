@@ -89,6 +89,6 @@ public class TrainIconTest extends OperationsTestCase {
         super.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(TrainIconTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(TrainIconTest.class);
 
 }

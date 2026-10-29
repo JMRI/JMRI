@@ -84,8 +84,17 @@ public class JmriSimplePropertyListener implements PropertyChangeListener {
         return _varName;
     }
 
+    /**
+     * Add a Conditional to be calculated when the property changes. A
+     * Conditional that is already a client is not added again, so that it is
+     * calculated only once for each change.
+     *
+     * @param client the Conditional to calculate
+     */
     public void addConditional(Conditional client) {
-        _clients.add(client);
+        if (!_clients.contains(client)) {
+            _clients.add(client);
+        }
     }
 
     public void setEnabled(boolean state) {

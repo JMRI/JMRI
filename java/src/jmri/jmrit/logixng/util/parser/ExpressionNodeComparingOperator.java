@@ -101,7 +101,7 @@ public class ExpressionNodeComparingOperator implements ExpressionNode {
         }
         
         if ((left instanceof Double) && (!(right instanceof Double))) {
-            right = ((Number)left).doubleValue();
+            right = ((Number)right).doubleValue();
         }
         if ((right instanceof Double) && (!(left instanceof Double))) {
             left = ((Number)left).doubleValue();

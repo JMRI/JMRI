@@ -33,7 +33,7 @@ import org.junit.platform.suite.api.SuiteDisplayName;
 public class HeadLessTest {
 
     // Main entry point
-    static public void main(String[] args) {
+    public static void main(String[] args) {
         // force headless operation
         System.setProperty("java.awt.headless", "true");
 

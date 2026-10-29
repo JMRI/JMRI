@@ -110,6 +110,6 @@ public class ExpressionLinuxLinePowerSwing extends AbstractDigitalExpressionSwin
     }
 
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionLinuxLinePowerSwing.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionLinuxLinePowerSwing.class);
 
 }

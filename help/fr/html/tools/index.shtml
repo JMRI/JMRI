@@ -199,10 +199,10 @@
 	<li><a href="../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Outil de Configuration des N&#339;uds</a></li>
 </ul>
 
-<h3><a href="../hardware/can/index.shtml#tools">Outils DCC++</a></h3>
-<p>Quand JMRI est connect&#233; &#224; un r&#233;seau via DCC++, le menu <b>DCC++</b> est montr&#233;:</p>
+<h3><a href="../hardware/can/index.shtml#tools">Outils DCC-EX</a></h3>
+<p>Quand JMRI est connect&#233; &#224; un r&#233;seau via DCC-EX, le menu <b>DCC-EX</b> est montr&#233;:</p>
 <ul>
-	<li>Moniteur Trafic DCC++
+	<li>Moniteur Trafic DCC-EX
 	<li>Envoi Commande DCC
 	<li>Mesure Courant Voie
 	<li>Configuration  Capteurs et Aiguillages</li>

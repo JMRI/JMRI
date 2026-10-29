@@ -26,6 +26,6 @@ public class LinkNodeInventoryTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LinkNodeInventoryTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(LinkNodeInventoryTest.class);
 
 }

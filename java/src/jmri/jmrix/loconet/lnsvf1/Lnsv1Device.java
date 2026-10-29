@@ -93,6 +93,6 @@ public class Lnsv1Device {
         cvValue = val;
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Lnsv1Device.class);
+    // private static final Logger log = LoggerFactory.getLogger(Lnsv1Device.class);
 
 }

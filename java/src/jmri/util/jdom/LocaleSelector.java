@@ -43,7 +43,7 @@ public class LocaleSelector {
      * @param name the name of the attribute or child element
      * @return the value of the attribute or null
      */
-    static public String getAttribute(Element el, String name) {
+    public static String getAttribute(Element el, String name) {
         String retval;
         // look for each suffix first
         for (String suffix : suffixes) {

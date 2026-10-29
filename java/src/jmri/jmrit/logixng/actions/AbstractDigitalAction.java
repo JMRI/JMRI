@@ -100,5 +100,5 @@ public abstract class AbstractDigitalAction extends AbstractBase
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractDigitalAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractDigitalAction.class);
 }

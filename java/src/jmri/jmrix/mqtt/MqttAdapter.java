@@ -27,14 +27,14 @@ import org.slf4j.LoggerFactory;
 @API(status=API.Status.MAINTAINED)
 public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implements MqttCallback {
 
-    private final static String PROTOCOL = "tcp://";
-    private final static String DEFAULT_BASETOPIC = Bundle.getMessage("TopicBase");
+    private static final String PROTOCOL = "tcp://";
+    private static final String DEFAULT_BASETOPIC = Bundle.getMessage("TopicBase");
 
     // 0.1 to get it to the front of the list
-    private final static String MQTT_USERNAME_OPTION = "0.1";
+    private static final String MQTT_USERNAME_OPTION = "0.1";
 
     // 0.2 to get it to the front of the list
-    private final static String MQTT_PASSWORD_OPTION = "0.2";
+    private static final String MQTT_PASSWORD_OPTION = "0.2";
 
     public boolean retained = true;  // public for script access
     public int      qosflag = 2;     // public for script access
@@ -430,6 +430,6 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         super.dispose();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(MqttAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(MqttAdapter.class);
 
 }

@@ -60,5 +60,5 @@ public class FunctionManager implements jmri.InstanceManagerAutoDefault {
         _constants.put(name, constant);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FunctionManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FunctionManager.class);
 }

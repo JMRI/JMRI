@@ -207,5 +207,5 @@ public class CbusEventHighlightFrame extends JmriJFrame {
         return highlightColors[i];
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusEventHighlightFrame.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusEventHighlightFrame.class);
 }

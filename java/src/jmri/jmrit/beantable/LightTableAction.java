@@ -650,6 +650,6 @@ public class LightTableAction extends AbstractTableAction<Light> {
         return LightTableAction.class.getName();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LightTableAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LightTableAction.class);
 
 }

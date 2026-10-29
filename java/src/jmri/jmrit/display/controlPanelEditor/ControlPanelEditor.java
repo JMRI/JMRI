@@ -32,9 +32,7 @@ import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 
-import jmri.CatalogTreeManager;
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
+import jmri.*;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.CoordinateEdit;
@@ -107,6 +105,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private boolean _disablePortalSelection = true;  // only select PortalIcon in CircuitBuilder
     private String _portalIconFamily = "Standard"; // initial default, must match xml, updated in setIconFamilysetPortalIconFamily
     private HashMap<String, NamedIcon> _portalIconMap;
+    private JCheckBoxMenuItem disableLocoMarkerPopupMenuItem;
 
     private final JCheckBoxMenuItem useGlobalFlagBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxGlobalFlags"));
     private final JCheckBoxMenuItem positionableBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxPositionable"));
@@ -153,6 +152,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
         super.setTargetPanel(null, null);
         super.setTargetPanelSize(300, 300);
+        setInputFocusTraversal();
         makeDataFlavors();
 
         // set scrollbar initial state
@@ -369,6 +369,25 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 removeMarkers();
             }
         });
+        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent(prefsMgr -> {
+            _markerMenu.addSeparator();
+            disableLocoMarkerPopupMenuItem = new JCheckBoxMenuItem(
+                    new AbstractAction(Bundle.getMessage("DisableLocoMarkerPopup")) {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            enableDisableLocoMarkerPopups();
+                        }
+            });
+            disableLocoMarkerPopupMenuItem.setSelected(isLocoMarkerPopupDisabled());
+            _markerMenu.add(disableLocoMarkerPopupMenuItem);
+        });
+    }
+
+    private void enableDisableLocoMarkerPopups() {
+        if (disableLocoMarkerPopupMenuItem != null) {
+            boolean selected = disableLocoMarkerPopupMenuItem.isSelected();
+            setLocoMarkerPopupDisabled(selected);
+        }
     }
 
     protected void makeOptionMenu() {
@@ -1651,7 +1670,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 setRemoveMenu(p, popup);
             }
         } else {
-            if (p instanceof LocoIcon) {
+            if ((p instanceof LocoIcon) && !isLocoMarkerPopupDisabled()) {
                 setCopyMenu(p, popup);
             }
             p.showPopUp(popup);
@@ -1895,7 +1914,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         evt.rejectDrop();
     }
 
-    static protected class PositionableListDnD implements Transferable {
+    protected static class PositionableListDnD implements Transferable {
 //        ControlPanelEditor _sourceEditor;
 
         List<Positionable> _sourceEditor;

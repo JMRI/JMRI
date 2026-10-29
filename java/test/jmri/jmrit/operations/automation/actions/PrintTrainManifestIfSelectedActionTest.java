@@ -104,6 +104,6 @@ public class PrintTrainManifestIfSelectedActionTest extends OperationsTestCase {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PrintTrainManifestIfSelectedActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PrintTrainManifestIfSelectedActionTest.class);
 
 }

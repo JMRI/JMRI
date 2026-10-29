@@ -327,6 +327,7 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
                     result = false;
                 }
                 TurnoutOperation toper = TurnoutOperationXml.loadOperation(myOpList.get(0));
+                t.setInhibitOperation(false); // turnout-specific operation implies automation is on
                 t.setTurnoutOperation(toper);
             } else {
                 a = elem.getAttribute("automate");
@@ -382,6 +383,6 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
         return InstanceManager.turnoutManagerInstance().getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractTurnoutManagerConfigXML.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractTurnoutManagerConfigXML.class);
 
 }

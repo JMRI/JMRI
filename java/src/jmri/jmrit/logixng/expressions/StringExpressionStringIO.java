@@ -18,7 +18,7 @@ public class StringExpressionStringIO extends AbstractStringExpression
 
     private final LogixNG_SelectNamedBean<StringIO> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, StringIO.class, InstanceManager.getDefault(StringIOManager.class), this);
+                    this, StringIO.class, InstanceManager.getDefault(StringIOManager.class));
 
     public StringExpressionStringIO(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -91,7 +91,6 @@ public class StringExpressionStringIO extends AbstractStringExpression
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
             _selectNamedBean.addPropertyChangeListener("KnownValue", this);
-            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -101,7 +100,6 @@ public class StringExpressionStringIO extends AbstractStringExpression
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             _selectNamedBean.removePropertyChangeListener("KnownValue", this);
-            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }
@@ -126,6 +124,6 @@ public class StringExpressionStringIO extends AbstractStringExpression
         _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Expression);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringExpressionStringIO.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(StringExpressionStringIO.class);
 
 }

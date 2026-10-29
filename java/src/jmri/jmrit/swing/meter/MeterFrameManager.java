@@ -17,7 +17,7 @@ import jmri.*;
  */
 public class MeterFrameManager {
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MeterFrameManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MeterFrameManager.class);
 
     private static final MeterFrameManager _instance = new MeterFrameManager();
 

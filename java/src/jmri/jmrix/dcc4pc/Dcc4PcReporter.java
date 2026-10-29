@@ -1,8 +1,16 @@
 package jmri.jmrix.dcc4pc;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
+import jmri.CollectingReporter;
+import jmri.DccLocoAddress;
+import jmri.IdTag;
 import jmri.RailCom;
+import jmri.Reporter;
 import jmri.Sensor;
 import jmri.implementation.AbstractRailComReporter;
 
@@ -16,10 +24,157 @@ import jmri.implementation.AbstractRailComReporter;
  *
  * @author Kevin Dickerson Copyright (C) 2012
  */
-public class Dcc4PcReporter extends AbstractRailComReporter {
+public class Dcc4PcReporter extends AbstractRailComReporter implements CollectingReporter {
 
     public Dcc4PcReporter(String systemName, String userName) {  // a human-readable Reporter number must be specified!
         super(systemName, userName);  // can't use prefix here, as still in construction
+    }
+
+    // The locos in this block, oldest first. Dcc4PcBlockLocos decides who is
+    // present, from channel 2 replies and clean channel 1 addresses, so that
+    // several locos in one block can be told apart.
+    // It's changed on the packet decode thread and read by the GUI (the Reporter
+    // table), so it's a copy-on-write list and readers always see a consistent
+    // snapshot.
+    private final List<IdTag> entryOrder = new CopyOnWriteArrayList<>();
+
+    /** @return the locos in this block, oldest first, as one consistent snapshot */
+    private IdTag[] entrySnapshot() {
+        return entryOrder.toArray(new IdTag[0]);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @SuppressWarnings("unchecked")
+    public Collection<Object> getCollection() {
+        return (Collection<Object>) (Collection<?>) Collections.unmodifiableCollection(entryOrder);
+    }
+
+    private static RailCom tagFor(int address) {
+        return (RailCom) jmri.InstanceManager.getDefault(jmri.RailComManager.class).provideIdTag("" + address);
+    }
+
+    /**
+     * A loco has been found in this block.
+     *
+     * @param address loco address
+     * @param isLong  true for a long (14-bit) address
+     */
+    void locoEntered(int address, boolean isLong) {
+        RailCom tag = tagFor(address);
+        tag.setDccAddress(new DccLocoAddress(address, isLong));
+        RailCom.Orientation o = orientation();
+        if (o != null) {
+            tag.setOrientation(o);
+        }
+        entryOrder.remove(tag);
+        entryOrder.add(tag);
+        notify(tag);
+    }
+
+    /**
+     * A loco already in this block has been heard again: update its "last
+     * seen" time. This doesn't make it the current report, so with several
+     * locos here the report doesn't flip between them.
+     *
+     * @param address loco address
+     */
+    void locoHeard(int address) {
+        RailCom tag = tagFor(address);
+        if (entryOrder.contains(tag)) {
+            tag.setWhereLastSeen(this);
+        }
+    }
+
+    /**
+     * A loco has left this block.
+     *
+     * @param address loco address
+     */
+    void locoExited(int address) {
+        RailCom tag = tagFor(address);
+        if (!entryOrder.remove(tag)) {
+            return;
+        }
+        if (getCurrentReport() == tag) {
+            updateCurrentReportAfterExit();
+        } else {
+            notifyCollectionUpdated();
+        }
+    }
+
+    /**
+     * Report the most recently entered loco still in this block, as
+     * {@link jmri.jmrix.openlcb.OlcbReporter} does.
+     */
+    private void updateCurrentReportAfterExit() {
+        IdTag[] tags = entrySnapshot();
+        if (tags.length == 0) {
+            notify(null);
+            return;
+        }
+        for (int i = tags.length - 1; i >= 0; i--) {
+            IdTag candidate = tags[i];
+            if (candidate.getWhereLastSeen() == this) {
+                notify(candidate);
+                return;
+            }
+        }
+        IdTag fallback = tags[tags.length - 1];
+        setReport(fallback);
+        setState(IdTag.SEEN);
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Exits are reported by {@link #locoExited(int)}, so a loco seen elsewhere
+     * stays in the collection until then; only the current report moves on.
+     */
+    @Override
+    public void notifySeenElsewhere(IdTag tag, Reporter newReporter) {
+        if (!this.equals(newReporter) && getCurrentReport() == tag) {
+            IdTag[] tags = entrySnapshot();
+            for (int i = tags.length - 1; i >= 0; i--) {
+                IdTag candidate = tags[i];
+                if (candidate != tag && candidate.getWhereLastSeen() == this) {
+                    notify(candidate);
+                    return;
+                }
+            }
+        }
+    }
+
+    /**
+     * The report text is worked out when a loco is reported; if that loco is
+     * the current report and its data (such as speed) changes later, work it
+     * out again so the Reporter table shows the new value.
+     */
+    private void refreshReport(RailCom tag) {
+        if (getCurrentReport() == tag) {
+            setReport(tag);
+            firePropertyChange("currentReport", null, tag);
+        }
+    }
+
+    /** @return the orientation the input reports, or null if it reports none */
+    private RailCom.Orientation orientation() {
+        if (state == REPRESENTS_RAILCOM_EAST) {
+            return RailCom.Orientation.EAST;
+        } else if (state == REPRESENTS_RAILCOM_WEST) {
+            return RailCom.Orientation.WEST;
+        }
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean hasExitReports() {
+        return true;
     }
 
     // data members
@@ -118,7 +273,7 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
             //We reset everything as the associated sensor has gone inactive
             synchronized (this) {
                 addr = 0;
-                address_part_1 = 0x100;
+                address_part_1 = 0; // no ADR_HIGH yet; 0x100 would pass for short-address high byte 0
                 address_part_2 = -1;
                 addr_type = -1;
                 actual_speed = -1;
@@ -131,12 +286,15 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
             }
             cvNumber = -1;
             cvValues = new Hashtable<>();
+            entryOrder.clear();
             setReport(null);
         } else if (ori == REPRESENTS_RAILCOM_EAST || ori == REPRESENTS_RAILCOM_WEST) {
-            if (super.getCurrentReport() != null && super.getCurrentReport() instanceof RailCom) {
-                var orientation = RailCom.Orientation.EAST;
-                if (ori == REPRESENTS_RAILCOM_WEST) orientation = RailCom.Orientation.WEST;
-                
+            // the reader gives one orientation per input, so it applies to every loco here
+            RailCom.Orientation orientation = orientation();
+            for (IdTag t : entryOrder) {
+                ((RailCom) t).setOrientation(orientation);
+            }
+            if (super.getCurrentReport() instanceof RailCom) {
                 ((RailCom) super.getCurrentReport()).setOrientation(orientation);
             }
             firePropertyChange("currentReport", null, null);
@@ -169,7 +327,7 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
     }
 
     int addr = 0;
-    int address_part_1 = 0x100;
+    int address_part_1 = 0; // 0x100 bit set once an ADR_HIGH has arrived
     int address_part_2 = -1;
     int addr_type = -1;
     int actual_speed = -1;
@@ -190,6 +348,15 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
 
     Hashtable<Integer, Integer> cvValues = new Hashtable<>();
 
+    /**
+     * The first two bytes of a cutout's data are channel 1. Channel 2 is a
+     * separate time slot, so a bad byte in channel 1 (often two decoders'
+     * address broadcasts colliding) mustn't throw away channel 2: on
+     * 2026-10-13 that discarded POM answers that came with channel 1
+     * {@code 95 04}.
+     */
+    static final int CHANNEL_1_LENGTH = 2;
+
     void decodeRailComInfo(RailComPacket rc, int packetTypeCmd) {
 
         synchronized(lock) {
@@ -198,6 +365,17 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
 
             if (super.getCurrentReport() instanceof RailCom) {
                 rcTag = (RailCom) super.getCurrentReport();
+            }
+            // Channel 2 data (POM values, DYN) comes from the loco the DCC packet was sent
+            // to, which with several locos here needn't be the current report.
+            // Only that decoder replies on channel 2, so if it isn't one of the locos here,
+            // the data belongs to nobody here; never give it to whichever loco is current.
+            RailCom ch2Tag = null;
+            if (rc.getDccAddress() > 0) {
+                RailCom dest = tagFor(rc.getDccAddress());
+                if (entryOrder.contains(dest)) {
+                    ch2Tag = dest;
+                }
             }
             int[] packet = rc.getPacket();
             char chbyte;
@@ -223,27 +401,16 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
                         log.debug("{} Error packet stage 1: {}", this.getDisplayName(), Integer.toHexString(packet[i]));
                     }
                     packetsinerror++;
+                    if (i < CHANNEL_1_LENGTH) {
+                        i = CHANNEL_1_LENGTH; // channel 2 is a separate slot: still decode it
+                        continue;
+                    }
                     return;
                 }
                 i++;
                 if ((chbyte & ACK) == ACK) {
-                    chbyte = (char) packet[i];
-                    i++;
-                    chbyte = decode[chbyte];
-                    if (chbyte == ERROR) {
-                        log.debug("{} Error packet stage 2", this.getDisplayName());
-                        packetsinerror++;
-                        return;
-                    }
-                    if ((chbyte & ACK) == ACK) {
-                        if (packet.length <= (i + 1)) {
-                            log.debug("No further data to process Only had the ack 1");
-                            break;
-                        }
-                        chbyte = (char) packet[i];
-                        i++;
-                        chbyte = decode[chbyte];
-                    }
+                    // ACK, NACK or BUSY: a single symbol, and channel 2 may hold several
+                    continue;
                 }
                 if (packet.length <= i) {
                     break;
@@ -257,22 +424,38 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
                     }
                     i++;
                     packetsinerror++;
+                    if (i <= CHANNEL_1_LENGTH) {
+                        i = CHANNEL_1_LENGTH; // channel 2 is a separate slot: still decode it
+                        continue;
+                    }
                     return;
                 }
 
                 chbyte = (char) (((type & 0x03) << 6) | (chbyte & 0x3f));
                 type = (char) ((type >> 2) & 0x0F);
+                // RCN-217: EXT (3) and DYN (7) datagrams are three symbols long and
+                // IDs 8-11 six; the rest are two. Skipping the extra symbols stops
+                // them being read as the start of another datagram, such as a
+                // bogus ADR_HIGH from a DYN subindex.
+                int extraSymbols = 0;
+                if (type == 3 || type == 7) {
+                    extraSymbols = 1;
+                } else if (type >= 8 && type <= 11) {
+                    extraSymbols = 4;
+                }
 
                 switch (type) {
                     case 0:
-                        log.debug("{} CV Value {}{}", this.getDisplayName(), (int) chbyte, rcTag);
+                        log.debug("{} CV Value {}{}", this.getDisplayName(), (int) chbyte, ch2Tag);
                         cvvalue = chbyte;
-                        if (rcTag != null) {
-                            rcTag.setWhereLastSeen(this);
-                            if (rcTag.getExpectedCv() != -1) {
-                                rcTag.setCvValue(chbyte);
+                        if (ch2Tag != null && rc.getCvNumber() > 0) {
+                            // Only the reply to a POM packet for the CV being read or written
+                            // answers it: replies to earlier POM packets, still being repeated,
+                            // arrive too, and were taken as the answer (2026-10-13).
+                            if (ch2Tag.getExpectedCv() == rc.getCvNumber()) {
+                                ch2Tag.setCvValue(chbyte);
                             } else {
-                                rcTag.setCV(rc.getCvNumber(), chbyte);
+                                ch2Tag.setCV(rc.getCvNumber(), chbyte);
                             }
                         }
                         break;
@@ -285,6 +468,11 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
                         break;
                     case 1: // Address byte 1
                         log.debug("Address Byte 1");
+                        // only 0 (short), 10xxxxxx (long) or 0110xxxx (consist) are addresses
+                        if (chbyte != 0 && (chbyte & 0xC0) != 0x80 && (chbyte & 0xF0) != 0x60) {
+                            log.debug("{} Ignoring invalid address byte 1 {}", this.getDisplayName(), Integer.toHexString(chbyte));
+                            break;
+                        }
                         address_part_1 = (0x100 | chbyte);
                         addressp1found = 0;
                         break;
@@ -301,21 +489,11 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
                             log.debug("{} Break at Address part 1, part one not complete", this.getDisplayName());
                             break;
                         }
+                        addr = combineAddress(address_part_1 & 0xFF, address_part_2);
                         rcTag = decodeAddress();
                         break;
-                    case 3: //Actual Speed / load
-                        if ((chbyte & 0x80) == 0x80) {
-                            actual_speed = (chbyte & 0x7f);
-                            log.debug("{} Actual Speed: {}", this.getDisplayName(), actual_speed);
-                        } else {
-                            actual_load = (chbyte & 0x7f);
-                            log.debug("{} Actual Load: {}", this.getDisplayName(), actual_load);
-                        }
-                        if (rcTag != null) {
-                            rcTag.setActualLoad(actual_load);
-                            rcTag.setActualSpeed(actual_speed);
-                            rcTag.setWhereLastSeen(this);
-                        }
+                    case 3: // EXT (RCN-217), location information; not decoded yet
+                        log.debug("{} EXT datagram", this.getDisplayName());
                         break;
                     case 5: //Routing number
                         routing_no = chbyte;
@@ -331,27 +509,31 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
                             rcTag.setWhereLastSeen(this);
                         }
                         break;
-                    case 7: //Fuel water
-                        if ((chbyte & 0x80) == 0x80) {
-                            fuelLevel = (chbyte & 0x7f);
-                        } else {
-                            waterLevel = (chbyte & 0x7f);
+                    case 7: // DYN (RCN-217): 8-bit value, then a 6-bit subindex in the third symbol
+                        if (i + 1 >= packet.length || decode[packet[i + 1]] == ERROR
+                                || (decode[packet[i + 1]] & ACK) == ACK) {
+                            log.debug("{} DYN datagram without a valid subindex", this.getDisplayName());
+                            break;
                         }
-
-                        if (rcTag != null) {
-                            rcTag.setWaterLevel(waterLevel);
-                            rcTag.setFuelLevel(fuelLevel);
-                            rcTag.setWhereLastSeen(this);
+                        int subindex = decode[packet[i + 1]] & 0x3F;
+                        log.debug("{} DYN subindex {} value {}", this.getDisplayName(), subindex, (int) chbyte);
+                        if (subindex == 0) { // actual speed 0-255
+                            actual_speed = chbyte;
+                        } else if (subindex == 1) { // actual speed 256-511
+                            actual_speed = chbyte + 256;
+                        } else {
+                            break; // other DYN values are not decoded yet
+                        }
+                        if (ch2Tag != null && ch2Tag.getActualSpeed() != actual_speed) {
+                            ch2Tag.setActualSpeed(actual_speed);
+                            refreshReport(ch2Tag);
                         }
                         break;
-                    case 8: //Temp
-                        if (!((chbyte & 0x80) == 0x80)) {
-                            actual_temperature = (chbyte & 0x7F);
-                        }
-                        if (rcTag != null) {
-                            rcTag.setActualTemperature(actual_temperature);
-                            rcTag.setWhereLastSeen(this);
-                        }
+                    case 8: // XPOM (RCN-217, IDs 8-11); not decoded yet
+                    case 9:
+                    case 10:
+                    case 11:
+                        log.debug("{} XPOM datagram", this.getDisplayName());
                         break;
                     case 15: //CV Address  Value
                         log.debug("{} CV Address and value:", this.getDisplayName());
@@ -359,10 +541,10 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
                         //len = 4;
                         break;
                     default:
-                        log.info("unknown railcom type packet {}", type);
+                        log.debug("unknown railcom type packet {}", type);
                         break;
                 }
-                i++;
+                i += 1 + extraSymbols;
 
             }
         }
@@ -403,8 +585,25 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
 
         address_part_1 = 0;
         address_part_2 = -1;
-        notify(rcTag);
+        // No notify(rcTag) here: Dcc4PcBlockLocos decides which locos are present
+        // and calls locoEntered(), which also sets the orientation.
         return rcTag;
+    }
+
+    /**
+     * Combine the ADR_HIGH and ADR_LOW payloads of a RailCom channel 1
+     * broadcast into a locomotive address (RCN-217 5.2.1).
+     *
+     * @param high ADR_HIGH payload: 0 for a short address, 10xxxxxx for the
+     *             top six bits of a long address, 0110xxxx for a consist
+     * @param low  ADR_LOW payload
+     * @return the address
+     */
+    static int combineAddress(int high, int low) {
+        if ((high & 0xC0) == 0x80) {
+            return ((high & 0x3F) << 8) | (low & 0xFF);
+        }
+        return low & 0x7F;
     }
 
     RailCom provideTag(int address, int addr_type) {
@@ -414,16 +613,16 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
         return rcTag;
     }
 
-    public final static char ACK = 0x80;
-    public final static char ACK_1 = 0x81;
-    public final static char ACK_2 = 0x82;
-    public final static char ACK_3 = 0x83;
-    public final static char ACK_4 = 0x84;
-    public final static char ACK_5 = 0x85;
-    public final static char ACK_6 = 0x86;
-    public final static char ERROR = 0xFF;
+    public static final char ACK = 0x80;
+    public static final char ACK_1 = 0x81;
+    public static final char ACK_2 = 0x82;
+    public static final char ACK_3 = 0x83;
+    public static final char ACK_4 = 0x84;
+    public static final char ACK_5 = 0x85;
+    public static final char ACK_6 = 0x86;
+    public static final char ERROR = 0xFF;
 
-    private final static char[] decode = new char[]{
+    private static final char[] decode = new char[]{
         ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR,
         ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ACK_1,
         ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, 0x33,
@@ -457,6 +656,6 @@ public class Dcc4PcReporter extends AbstractRailComReporter {
         ACK_4, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR,
         ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR, ERROR};
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Dcc4PcReporter.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Dcc4PcReporter.class);
 
 }

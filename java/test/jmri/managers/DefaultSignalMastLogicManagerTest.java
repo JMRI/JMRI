@@ -58,6 +58,6 @@ public class DefaultSignalMastLogicManagerTest extends AbstractManagerTestBase<j
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManagerTest.class);
 
 }

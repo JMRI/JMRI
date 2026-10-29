@@ -1,11 +1,17 @@
 package jmri.jmrix.openlcb.swing;
 
+import java.awt.*;
+import java.awt.datatransfer.*;
 import java.awt.event.*;
+
+import javax.swing.*;
 
 import jmri.util.swing.*;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.openlcb.OlcbAddress;
+import jmri.jmrix.openlcb.OlcbEventNameStore;
 
+import org.openlcb.EventID;
 import org.openlcb.swing.EventIdTextField;
 
 /**
@@ -48,10 +54,89 @@ public class NamedEventIdTextField extends OvertypeTextArea {
             @Override public void focusLost(FocusEvent e) {}
         });
 
-        EventIdTextField.configurePopUp(this);
-        
+        var popup = EventIdTextField.createPopupMenu(this);
+        // add a custom copy operator to capture the numerical value
+        JMenuItem menuItem = new JMenuItem("Copy Numerical Event ID");
+        popup.add(menuItem);
+        var self = this;
+        menuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String s = new OlcbAddress(self.getText(), memo).toDottedString();
+                SwingUtilities.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        self.selectAll();
+                    }
+                });
+                StringSelection eventToCopy = new StringSelection(s);
+                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                clipboard.setContents(eventToCopy, new ClipboardOwner() {
+                    @Override
+                    public void lostOwnership(Clipboard clipboard, Transferable transferable) {
+                    }
+                });
+            }
+        });
+        // add a custom operator to set an event name
+        menuItem = new JMenuItem("Name This Event");
+        popup.add(menuItem);
+        menuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String name = JmriJOptionPane.showInputDialog(
+                    self,
+                    "Enter a Name for the Event ID",
+                    "" )        ;
+                   
+                if (name == null || name.isEmpty() ) return; // no new name entered
+                        
+                memo.get(OlcbEventNameStore.class).addMatch(getEventID(), name);
+                // and update the NEITF object to get name displayed
+                self.setText(name);
+                self.repaint();
+            }
+        });
+       
+        // and set the updated popup menu
+        this.setComponentPopupMenu(popup);
     }
 
+    // Provide a placeholder display if the content is empty
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        // Draw the placeholder if the field is empty and not focused
+        if (getText().isEmpty() && !hasFocus()) {
+            Graphics2D g2d = (Graphics2D) g;
+            
+            // Enable anti-aliasing for smooth text rendering
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            
+            // Set the dim text color and match the current font
+            g2d.setColor(Color.LIGHT_GRAY); 
+            g2d.setFont(getFont());
+            
+            // Align placeholder horizontally with standard text padding
+            int padding = getInsets().left; 
+            
+            // Center the placeholder vertically within the text field
+            int textHeight = g2d.getFontMetrics().getAscent();
+            int height = getHeight();
+            int y = (height - textHeight) / 2 + textHeight;
+
+            g2d.drawString(placeholder, padding, y);
+        }
+    }
+
+    String placeholder = "Enter numeric event ID or event name";
+
+    public String getPlaceholder() {
+        return placeholder;
+    }
+    
+    
     final CanSystemConnectionMemo memo;
     
     protected String makeToolTipText(String fieldText) {
@@ -62,5 +147,13 @@ public class NamedEventIdTextField extends OvertypeTextArea {
         return "Enter an event ID or event name";
     }    
     
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NamedEventIdTextField.class);
+    public EventID getEventID() {
+        return new EventID(new OlcbAddress(getText(), memo).toDottedString());
+    }
+    
+    public String getEventIDAsDottedString() {
+        return new OlcbAddress(getText(), memo).toDottedString();
+    }
+    
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NamedEventIdTextField.class);
 }

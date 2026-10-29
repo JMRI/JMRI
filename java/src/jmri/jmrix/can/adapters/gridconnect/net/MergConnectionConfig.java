@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
  */
 public class MergConnectionConfig extends ConnectionConfig {
 
-    public final static String MERG_NAME = "CAN via MERG Network Interface";
+    public static final String MERG_NAME = "CAN via MERG Network Interface";
 
     /**
      * Create a connection configuration with a preexisting adapter.

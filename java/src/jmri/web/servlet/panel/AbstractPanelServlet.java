@@ -31,6 +31,7 @@ import jmri.jmrit.display.*;
 import jmri.server.json.JSON;
 import jmri.server.json.util.JsonUtilHttpService;
 import jmri.util.FileUtil;
+import jmri.util.ColorUtil;
 import jmri.web.server.WebServer;
 import jmri.web.servlet.ServletUtil;
 import jmri.web.servlet.permission.PermissionServlet;
@@ -50,7 +51,7 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractPanelServlet extends HttpServlet {
 
     protected ObjectMapper mapper;
-    private final static Logger log = LoggerFactory.getLogger(AbstractPanelServlet.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractPanelServlet.class);
 
     abstract protected String getPanelType();
 
@@ -347,6 +348,28 @@ public abstract class AbstractPanelServlet extends HttpServlet {
             parsePortableURIs(e);
         }
         return e;
+    }
+
+    /** Convert named colors in a panel response to CSS-compatible RGB hex values. */
+    protected void convertNamedColors(@Nonnull Element element) {
+        for (org.jdom2.Attribute attribute : element.getAttributes()) {
+            if (attribute.getName().toLowerCase(java.util.Locale.ROOT).contains("color")) {
+                String value = attribute.getValue();
+                if (value != null && !value.startsWith("#")) {
+                    try {
+                        java.awt.Color color = ColorUtil.stringToColor(value);
+                        if (color != null) {
+                            attribute.setValue(ColorUtil.colorToHexString(color));
+                        }
+                    } catch (IllegalArgumentException ex) {
+                        // Preserve non-color values such as the special "track" value.
+                    }
+                }
+            }
+        }
+        for (Element child : element.getChildren()) {
+            convertNamedColors(child);
+        }
     }
 
 }

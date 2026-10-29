@@ -37,7 +37,7 @@ public class OlcbReporterManagerXmlTest {
 
         mgr.newReporter("MR1.2.3.4.5.6.0.0", "rep1");
         t.flush();
-        t.assertSentMessage(":X194a4c4cN010203040506ffff;");
+        t.assertSentMessages(":X194a4c4cN010203040506ffff;", ":X19914c4cN0102030405060000;");
         t.assertNoSentMessages();
 
         Element stored = xmlmgr.store(mgr);
@@ -57,14 +57,14 @@ public class OlcbReporterManagerXmlTest {
         assertNotNull(r2);
         assertEquals("rep1", r2.getUserName());
         t.flush();
-        t.assertSentMessage(":X194a4c4cN010203040506ffff;");
+        t.assertSentMessages(":X194a4c4cN010203040506ffff;", ":X19914c4cN0102030405060000;");
         t.assertNoSentMessages();
 
         t.dispose();
     }
 
     private OlcbTestInterface t;
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbReporterManagerXmlTest.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbReporterManagerXmlTest.class);
 
     @BeforeAll
     public static void checkSeparate() {

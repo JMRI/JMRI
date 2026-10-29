@@ -325,6 +325,6 @@ public class GcSerialDriverAdapterTest {
     }
 
 
-    // private final static Logger log = LoggerFactory.getLogger(GcSerialDriverAdapterTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(GcSerialDriverAdapterTest.class);
 
 }

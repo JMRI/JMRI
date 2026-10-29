@@ -8,7 +8,7 @@ package jmri.jmrit.operations.setup.backup;
  */
 public class DefaultBackup extends BackupBase {
 
-//    private final static Logger log = LoggerFactory.getLogger(DefaultBackup.class);
+//    private static final Logger log = LoggerFactory.getLogger(DefaultBackup.class);
 
     /**
      * Creates a DefaultBackup instance and initializes the root directory to

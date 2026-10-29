@@ -278,42 +278,42 @@ public class MergSD2SignalHead extends DefaultSignalHead {
         mHome = boo;
     }
 
-    final static private int[] validStates2AspectHome = new int[]{
+    private static final int[] validStates2AspectHome = new int[]{
         RED,
         GREEN
     };
-    final static private String[] validStateKeys2AspectHome = new String[]{
+    private static final String[] validStateKeys2AspectHome = new String[]{
         "SignalHeadStateRed",
         "SignalHeadStateGreen"
     };
 
-    final static private int[] validStates2AspectDistant = new int[]{
+    private static final int[] validStates2AspectDistant = new int[]{
         YELLOW,
         GREEN
     };
-    final static private String[] validStateKeys2AspectDistant = new String[]{
+    private static final String[] validStateKeys2AspectDistant = new String[]{
         "SignalHeadStateYellow",
         "SignalHeadStateGreen"
     };
 
-    final static private int[] validStates3Aspect = new int[]{
+    private static final int[] validStates3Aspect = new int[]{
         RED,
         YELLOW,
         GREEN
     };
-    final static private String[] validStateKeys3Aspect = new String[]{
+    private static final String[] validStateKeys3Aspect = new String[]{
         "SignalHeadStateRed",
         "SignalHeadStateYellow",
         "SignalHeadStateGreen"
     };
 
-    final static private int[] validStates4Aspect = new int[]{
+    private static final int[] validStates4Aspect = new int[]{
         RED,
         YELLOW,
         LUNAR,
         GREEN
     };
-    final static private String[] validStateKeys4Aspect = new String[]{
+    private static final String[] validStateKeys4Aspect = new String[]{
         "SignalHeadStateRed",
         "SignalHeadStateYellow",
         "SignalHeadStateLunar",
@@ -388,6 +388,6 @@ public class MergSD2SignalHead extends DefaultSignalHead {
         return (mInput3 != null && t.equals(mInput3.getBean()));
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MergSD2SignalHead.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MergSD2SignalHead.class);
 
 }

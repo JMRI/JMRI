@@ -54,11 +54,11 @@ public class OlcbSignalMastTest {
     public void testUnsetEvents() {
         OlcbSignalMast t = new OlcbSignalMast("MF$olm:AAR-1946:PL-1-high-abs($1)");
 
-        Assert.assertEquals("lit", "00.00.00.00.00.00.00.00", t.getLitEventId());
-        Assert.assertEquals("not lit", "00.00.00.00.00.00.00.00", t.getNotLitEventId());
+        Assert.assertEquals("lit", "", t.getLitEventId());
+        Assert.assertEquals("not lit", "", t.getNotLitEventId());
 
-        Assert.assertEquals("held", "00.00.00.00.00.00.00.00", t.getHeldEventId());
-        Assert.assertEquals("lit", "00.00.00.00.00.00.00.00", t.getNotHeldEventId());
+        Assert.assertEquals("held", "", t.getHeldEventId());
+        Assert.assertEquals("lit", "", t.getNotHeldEventId());
     }
 
     @Test
@@ -367,7 +367,7 @@ public class OlcbSignalMastTest {
 
     @BeforeAll
     @SuppressWarnings("deprecation") // OlcbInterface(NodeID, Connection)
-    static public void preClassInit() {
+    public static void preClassInit() {
         JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
         nodeID = new NodeID(new byte[]{1, 0, 0, 0, 0, 0});

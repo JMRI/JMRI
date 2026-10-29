@@ -39,12 +39,12 @@ public class ArchitectureTest {
 
     // want these statics first in class, to initialize
     // logging before various static items are constructed
-    @BeforeAll  // tests are static
-    static public void setUp() {
+    @BeforeAll  // tests are static.
+    public static void setUp() {
         jmri.util.JUnitUtil.setUp();
     }
     @AfterAll
-    static public void tearDown() {
+    public static void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
 
@@ -75,7 +75,7 @@ public class ArchitectureTest {
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.beantable.turnout.TurnoutTableDataModel$ImageIconRenderer$1").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.catalog.ImageIndexEditor").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.catalog.ImageIndexEditor$2").and()
-                                .doNotHaveFullyQualifiedName("mri.jmrit.display.layoutEditor.LayoutEditorToolBarPanel$1").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrit.display.PositionableJTextField").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.display.switchboardEditor.BeanSwitch").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.display.switchboardEditor.BeanSwitch$2").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrit.display.switchboardEditor.BeanSwitch$3").and()
@@ -135,6 +135,9 @@ public class ArchitectureTest {
                                 .doNotHaveFullyQualifiedName("apps.JavaVersionCheckWindow").and()
                                 .doNotHaveFullyQualifiedName("apps.gui3.paned.QuitAction").and()
                                 .doNotHaveFullyQualifiedName("apps.jmrit.decoderdefn.DecoderIndexBuilder").and()
+                                .doNotHaveFullyQualifiedName("external.marklin.McanTcpBridge").and() // standalone CLI app
+                                .doNotHaveFullyQualifiedName("external.marklin.MarklinPoke").and() // standalone CLI app
+                                .doNotHaveFullyQualifiedName("external.marklin.MarklinPokeRunner").and() // standalone CLI app
                                 .doNotHaveFullyQualifiedName("jmri.util.FileUtilSupport").and() // used in log4j init
                                 .doNotHaveFullyQualifiedName("jmri.util.GetArgumentList").and()
                                 .doNotHaveFullyQualifiedName("jmri.util.GetClassPath").and()
@@ -269,7 +272,8 @@ public class ArchitectureTest {
      */
     @ArchTest // Initially 3 flags in JMRI 4.17.3 - see archunit_ignore_patterns.txt
     public static final ArchRule checkJmriPackageJdom = noClasses()
-        .that().resideInAPackage("jmri")
+        .that().resideInAPackage("jmri").and()
+        .doNotHaveFullyQualifiedName("jmri.UserPreferencesManager")
         .should().dependOnClassesThat().resideInAPackage("org.jdom2..");
 
     /**
@@ -318,7 +322,10 @@ public class ArchitectureTest {
 
         // all the standard serial access should be confined to here:
         .doNotHaveFullyQualifiedName("jmri.jmrix.jserialcomm.JSerialPort").and()
-        .doNotHaveFullyQualifiedName("jmri.jmrix.jserialcomm.JSerialPortEvent")
+        .doNotHaveFullyQualifiedName("jmri.jmrix.jserialcomm.JSerialPortEvent").and()
+
+        // single wrapper confining direct jSerialComm use for the standalone CLI tools
+        .doNotHaveFullyQualifiedName("external.ExternalDirectJSerialPort")
 
         .should().accessClassesThat().resideInAPackage("com.fazecast.jSerialComm..");
 

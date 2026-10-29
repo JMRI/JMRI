@@ -6,6 +6,7 @@ import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.*;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.*;
@@ -18,6 +19,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
 import jmri.jmrit.display.layoutEditor.LayoutTrackExpectedState;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
+import jmri.jmrit.display.layoutEditor.LayoutTraverser;
 import jmri.jmrit.display.layoutEditor.LayoutTurntable;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 import jmri.util.ThreadingUtil;
@@ -831,34 +833,53 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
      */
     boolean checkStates() {
         SignalMast oldActiveMast = destination;
-        if (destination != null) {
-            firePropertyChange(PROPERTY_STATE, oldActiveMast, null);
-            log.debug("Remove listener from destination");
-            destination.removePropertyChangeListener(propertyDestinationMastListener);
-            if (destList.containsKey(destination)) {
-                destList.get(destination).clearTurnoutLock();
-            }
-        }
+        SignalMast newActiveMast = null;
+        boolean pairChanged = false;
 
         Enumeration<SignalMast> en = destList.keys();
         log.debug("checkStates enumerates over {} mast(s)", destList.size());
         while (en.hasMoreElements()) {
             SignalMast key = en.nextElement();
+            DestinationMast dm = destList.get(key);
             log.debug("  Destination mast {}", key.getDisplayName());
-            log.debug("    isEnabled: {}", (destList.get(key)).isEnabled());
-            log.debug("    isActive: {}", destList.get(key).isActive());
+            log.debug("    isEnabled: {}", dm.isEnabled());
+            log.debug("    isActive: {}", dm.active);
 
-            if ((destList.get(key)).isEnabled() && (destList.get(key).isActive())) {
-                destination = key;
-                log.debug("      Add listener to destination");
-                destination.addPropertyChangeListener(propertyDestinationMastListener);
-                log.debug("      firePropertyChange: \"state\"");
-                firePropertyChange(PROPERTY_STATE, oldActiveMast, destination);
-                destList.get(key).lockTurnouts();
-                return true;
+            if (dm.active != dm.reportedActive) {
+                dm.reportedActive = dm.active;
+                pairChanged = true;
+            }
+            if (newActiveMast == null && dm.isEnabled() && dm.isActive()) {
+                newActiveMast = key;
             }
         }
-        return false;
+        if (newActiveMast == oldActiveMast) {
+            // no change, so leave the listener, the turnout locks and the state as they are
+            if (pairChanged) {
+                // but let listeners such as the signalling tables show the pair that changed
+                firePropertyChange(PROPERTY_STATE, null, newActiveMast);
+            }
+            return newActiveMast != null;
+        }
+
+        if (oldActiveMast != null) {
+            log.debug("Remove listener from destination");
+            oldActiveMast.removePropertyChangeListener(propertyDestinationMastListener);
+            if (destList.containsKey(oldActiveMast)) {
+                destList.get(oldActiveMast).clearTurnoutLock();
+            }
+        }
+        destination = newActiveMast;
+        if (newActiveMast == null) {
+            firePropertyChange(PROPERTY_STATE, oldActiveMast, null);
+            return false;
+        }
+        log.debug("      Add listener to destination");
+        newActiveMast.addPropertyChangeListener(propertyDestinationMastListener);
+        log.debug("      firePropertyChange: \"state\"");
+        firePropertyChange(PROPERTY_STATE, oldActiveMast, newActiveMast);
+        destList.get(newActiveMast).lockTurnouts();
+        return true;
     }
 
     /**
@@ -1016,20 +1037,54 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         return destList.get(destination).getMinimumSpeed();
     }
 
+    /**
+     * True from when a job to set the source mast aspect is scheduled until
+     * it, and any repeat of it, has finished.
+     */
     volatile boolean inWait = false;
 
     /**
-     * Before going active or checking that we can go active, wait 500ms
-     * for things to settle down to help prevent a race condition.
+     * True while the scheduled job is working out and setting the aspect.
+     * Guarded by this.
+     */
+    private boolean appearanceJobRunning = false;
+
+    /**
+     * True if a change arrived while the job was running, so the job must run
+     * again to take it into account. Guarded by this.
+     */
+    private boolean appearanceJobRepeat = false;
+
+    /**
+     * Before going active or checking that we can go active, wait half the
+     * signal logic delay for things to settle down to help prevent a race
+     * condition.
+     * <p>
+     * A change that arrives while a job is waiting to start needs nothing
+     * more, as the job will see it. A change that arrives while the job is
+     * running may come after the job has read the state it changed, so the
+     * job then runs again.
      */
     synchronized void setSignalAppearance() {
         log.debug("setMastAppearance (Aspect) called for {}", source.getDisplayName());
         if (inWait) {
-            log.debug("setMastAppearance (Aspect) called with inWait set, returning");
+            if (appearanceJobRunning) {
+                log.debug("setMastAppearance (Aspect) called while the aspect is being set, will run again");
+                appearanceJobRepeat = true;
+            } else {
+                log.debug("setMastAppearance (Aspect) called with inWait set, returning");
+            }
             return;
         }
         inWait = true;
+        scheduleAppearanceJob();
+    }
 
+    /**
+     * Schedule the job that sets the source mast aspect. Called with this
+     * locked.
+     */
+    private void scheduleAppearanceJob() {
         // The next line forces a single initialization of InstanceManager.getDefault(SignalSpeedMap.class)
         // before launching parallel threads
         InstanceManager.getDefault(SignalSpeedMap.class);
@@ -1038,14 +1093,33 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         // before launching delay
         int tempDelay = InstanceManager.getDefault(SignalMastLogicManager.class).getSignalLogicDelay() / 2;
         log.debug("SignalMastLogicManager started (delay)");
-        ThreadingUtil.runOnLayoutDelayed(
-                () -> {
-                    setMastAppearance();
-                    inWait = false;
-                },
-                tempDelay
-        );
+        ThreadingUtil.runOnLayoutDelayed(this::runAppearanceJob, tempDelay);
+    }
 
+    private void runAppearanceJob() {
+        synchronized (this) {
+            appearanceJobRunning = true;
+            appearanceJobRepeat = false;
+        }
+        try {
+            setMastAppearance();
+        } finally {
+            synchronized (this) {
+                appearanceJobRunning = false;
+                boolean repeat = appearanceJobRepeat && !disposing;
+                appearanceJobRepeat = false;
+                if (repeat) {
+                    try {
+                        scheduleAppearanceJob();
+                    } catch (RuntimeException ex) {
+                        inWait = false;
+                        log.error("Could not set the aspect of {} again", source.getDisplayName(), ex);
+                    }
+                } else {
+                    inWait = false;
+                }
+            }
+        }
     }
 
     /**
@@ -1053,27 +1127,33 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
      */
     void setMastAppearance() {
         log.debug("Set source Signal Mast Aspect");
+        if (disposing) {
+            // a delayed check can still run after the logic has been disposed
+            return;
+        }
         if (getSourceMast().getHeld()) {
             log.debug("Signal is at a Held state so will set to the aspect defined for Held or Danger");
 
             String heldAspect = getSourceMast().getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.HELD);
-            if (heldAspect != null) {
+            if (heldAspect != null && !getSourceMast().isAspectDisabled(heldAspect)) {
                 log.debug("  Setting to HELD value of {}", heldAspect);
-                ThreadingUtil.runOnLayout(() -> {
-                    getSourceMast().setAspect(heldAspect);
-                });
             } else {
-                String dangerAspect = getSourceMast().getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER);
-                log.debug("  Setting to DANGER value of {}", dangerAspect);
+                heldAspect = getSourceMast().getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER);
+                log.debug("  Setting to DANGER value of {}", heldAspect);
+            }
+            String aspectSet = heldAspect; // for lambda
+            try {
                 ThreadingUtil.runOnLayout(() -> {
-                    getSourceMast().setAspect(dangerAspect);
+                    getSourceMast().setAspect(aspectSet);
                 });
+            } catch (RuntimeException ex) {
+                log.error("Could not set held aspect {} on {}", aspectSet, getSourceMast().getDisplayName(), ex);
             }
             return;
         }
         if (!checkStates()) {
             log.debug("Advanced routes not clear, set Stop aspect");
-            getSourceMast().setAspect(stopAspect);
+            setSourceAspect(stopAspect);
             return;
         }
         String[] advancedAspect;
@@ -1224,7 +1304,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                 String aspectSet = aspect; // for lambda
                 try {
                     ThreadingUtil.runOnLayout(() -> {
-                        getSourceMast().setAspect(aspectSet);
+                        setSourceAspect(aspectSet);
                     });
                 } catch (Exception ex) {
                     log.error("Exception while setting Signal Logic", ex);
@@ -1234,8 +1314,31 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         }
         log.debug("Aspect returned is not valid, setting stop");
         ThreadingUtil.runOnLayout(() -> {
-            getSourceMast().setAspect(stopAspect);
+            setSourceAspect(stopAspect);
         });
+    }
+
+    /**
+     * Set the aspect of the source mast, unless it already shows that aspect.
+     * Hardware masts send a command to the layout every time their aspect is
+     * set, so an unchanged aspect is not sent again.
+     *
+     * A null aspect, for example a mast whose appearance map has no Danger
+     * aspect, is not passed to the mast.
+     *
+     * @param aspect the aspect to show
+     */
+    private void setSourceAspect(@CheckForNull String aspect) {
+        SignalMast mast = getSourceMast();
+        if (aspect == null) {
+            log.warn("No aspect to set on source mast {}", mast.getDisplayName());
+            return;
+        }
+        if (aspect.equals(mast.getAspect())) {
+            log.debug("Source mast {} already shows {}", mast.getDisplayName(), aspect);
+            return;
+        }
+        mast.setAspect(aspect);
     }
 
     /**
@@ -1317,7 +1420,8 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
         List<Block> xingAutoBlocks = new ArrayList<>(0);
         List<Block> dblCrossoverAutoBlocks = new ArrayList<>(0);
         SignalMast destinationSignalMast;
-        boolean active = false;
+        volatile boolean active = false;
+        boolean reportedActive = false; // active state last reported by checkStates
         boolean destMastInit = false;
 
         float minimumBlockSpeed = 0.0f;
@@ -1873,14 +1977,33 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             return autoMasts.get(mast);
         }
 
-        // the following 2 methods are not supplied in the implementation
-        boolean inWait = false;
+        /**
+         * True from when a check of this pair is scheduled until it, and any
+         * repeat of it, has finished.
+         */
+        volatile boolean inWait = false;
+
+        /**
+         * The number of checks of this pair running now: a scheduled one, and
+         * the first one, which {@link #initialise()} runs on its own thread.
+         * Guarded by this.
+         */
+        private int checksRunning = 0;
+
+        /**
+         * True if something on the route changed while a check was running,
+         * so what it found may be out of date and the check must run again.
+         * Guarded by this.
+         */
+        private boolean checkRepeat = false;
 
         /*
          * Before going active or checking that we can go active, wait
          * for things to settle down to help prevent a race condition.
+         * A change that arrives while a check is running may come after the
+         * check has read the item that changed, so the check then runs again.
          */
-        void checkState() {
+        synchronized void checkState() {
             if (disposed) {
                 log.error("checkState called even though this has been disposed of {}",
                     getSourceMast().getDisplayName());
@@ -1890,23 +2013,92 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             if (!enable) {
                 return;
             }
+            if (checksRunning > 0) {
+                checkRepeat = true;
+            }
             if (inWait) {
                 return;
             }
 
             log.debug("check Signal Dest State called");
             inWait = true;
+            scheduleCheck();
+        }
 
+        /**
+         * Schedule the check of this pair. Called with this locked.
+         */
+        private void scheduleCheck() {
             // The next line forces a single initialization of InstanceManager.getDefault(SignalMastLogicManager.class)
             // before launching parallel threads
             int tempDelay = InstanceManager.getDefault(SignalMastLogicManager.class).getSignalLogicDelay();
 
-            ThreadingUtil.runOnLayoutDelayed(
-                    () -> {
-                        checkStateDetails();
+            ThreadingUtil.runOnLayoutDelayed(() -> runCheck(true), tempDelay);
+        }
+
+        /**
+         * Check this pair, as a scheduled check or straight away.
+         *
+         * @param scheduled true for the check scheduled by
+         *                  {@link #checkState()}, which clears
+         *                  {@link #inWait} when it has finished
+         */
+        private void runCheck(boolean scheduled) {
+            synchronized (this) {
+                if (checksRunning == 0) {
+                    checkRepeat = false;
+                }
+                checksRunning++;
+            }
+            try {
+                // a delayed check can still run after this pair has been disposed
+                if (!disposed) {
+                    checkStateDetails();
+                }
+            } finally {
+                synchronized (this) {
+                    checksRunning--;
+                    boolean repeat = false;
+                    if (checksRunning == 0) {
+                        // a scheduled check that has not started yet will see the change anyway
+                        repeat = checkRepeat && !disposed && enable && (scheduled || !inWait);
+                        checkRepeat = false;
+                    }
+                    if (repeat) {
+                        inWait = true;
+                        try {
+                            scheduleCheck();
+                        } catch (RuntimeException ex) {
+                            inWait = false;
+                            log.error("Could not check {} to {} again", getSourceMast().getDisplayName(),
+                                destinationSignalMast.getDisplayName(), ex);
+                        }
+                    } else if (scheduled) {
                         inWait = false;
-                    }, tempDelay
-            );
+                    }
+                }
+            }
+        }
+
+        /**
+         * A bean on the route has changed so that the route is no longer
+         * set: go to danger at once. A check that is running may already have
+         * read that bean, so it must not put back what it found; it runs
+         * again instead. Called by the bean listeners, on whatever thread the
+         * bean reports its change on.
+         */
+        private void routeNoLongerSet() {
+            boolean wasActive;
+            synchronized (this) {
+                if (checksRunning > 0) {
+                    checkRepeat = true;
+                }
+                wasActive = active;
+                active = false;
+            }
+            if (wasActive) {
+                setSignalAppearance();
+            }
         }
 
         /**
@@ -1930,6 +2122,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             }
             log.debug("From {} to {} internal check state", getSourceMast().getDisplayName(),
                 destinationSignalMast.getDisplayName());
+            boolean wasActive = active;
             active = false;
             if ((useLayoutEditor) && (autoTurnouts.isEmpty()) && (autoBlocks.isEmpty())) {
                 return;
@@ -2042,42 +2235,43 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                     state = false;
             }
 
-            /*This check is purely for use with the dispatcher, it will check to see if any of the blocks are set to "useExtraColor"
-             which is a means to determine if the block is in a section that is occupied and it not ours thus we can set the signal to danger.*/
+            /*This check is purely for use with the dispatcher. A block set to "useExtraColor" has been
+             allocated; if it is held by a train other than the one approaching this mast, the signal
+             is set to danger.*/
             if (state && getAssociatedSection() != null
                     && InstanceManager.isInitialized(jmri.jmrit.dispatcher.DispatcherFrame.class)
-                    && InstanceManager.getNullableDefault(LayoutBlockManager.class) != null
-                    && getAssociatedSection().getState() != Section.FORWARD) {
+                    && InstanceManager.getNullableDefault(LayoutBlockManager.class) != null) {
 
                 LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
-                for (Block key : autoBlocks.keySet()) {
-                    LayoutBlock lb = lbm.getLayoutBlock(key);
-                    if (lb != null && lb.getUseExtraColor()) {
-                        state = false;
-                        break;
-                    }
+                List<Block> routeBlocks = new ArrayList<>(autoBlocks.keySet());
+                for (NamedBeanSetting nbh : userSetBlocks) {
+                    routeBlocks.add((Block) nbh.getBean());
+                }
+                if (isRouteHeldByAnotherTrain(routeBlocks, lbm)) {
+                    state = false;
+                }
+            }
+
+            synchronized (this) {
+                if (checkRepeat) {
+                    // something on the route changed while this check ran, so
+                    // what it found may be out of date: stay at danger until
+                    // the check has run again
+                    state = false;
                 }
                 if (!state) {
-                    for (NamedBeanSetting nbh : userSetBlocks) {
-                        Block key = (Block) nbh.getBean();
-                        LayoutBlock lb = lbm.getLayoutBlock(key);
-                        if (lb != null && lb.getUseExtraColor()) {
-                            state = false;
-                            break;
-                        }
-                    }
+                    turnoutThrown = false;
+                    permissiveBlock = false;
                 }
+                active = state;
             }
-
-            if (!state) {
-                turnoutThrown = false;
-                permissiveBlock = false;
+            // The source mast only needs setting again if this pair has changed
+            // or it is the pair the source mast is currently showing.
+            if (state != wasActive || destination == destinationSignalMast) {
+                ThreadingUtil.runOnLayout(() -> {
+                    setSignalAppearance();
+                });
             }
-
-            active = state;
-            ThreadingUtil.runOnLayout(() -> {
-                setSignalAppearance();
-            });
         }
 
         /**
@@ -2092,131 +2286,64 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             active = false;
             turnoutThrown = false;
             permissiveBlock = false;
-            boolean routeclear = true;
             if ((useLayoutEditor) && (autoTurnouts.isEmpty()) && (autoBlocks.isEmpty()) && (autoMasts.isEmpty())) {
                 return;
             }
 
             calculateSpeed();
 
+            // Each listener is removed before it is added, so that initialising
+            // again (e.g. after one list has been changed) does not add it twice.
             Enumeration<Turnout> keys = autoTurnouts.keys();
             while (keys.hasMoreElements()) {
                 Turnout key = keys.nextElement();
+                key.removePropertyChangeListener(propertyTurnoutListener);
                 key.addPropertyChangeListener(propertyTurnoutListener);
-
-                if (key.getKnownState() != autoTurnouts.get(key)) {
-                    if (key.getState() != autoTurnouts.get(key)) {
-                        if (isTurnoutIncluded(key)) {
-                            if (key.getState() != getTurnoutState(key)) {
-                                routeclear = false;
-                            } else if (key.getState() == Turnout.THROWN) {
-                                turnoutThrown = true;
-                            }
-                        } else {
-                            routeclear = false;
-                        }
-                    }
-                } else if (key.getState() == Turnout.THROWN) {
-                    turnoutThrown = true;
-                }
             }
 
             for (NamedBeanSetting nbh : userSetTurnouts) {
                 Turnout key = (Turnout) nbh.getBean();
+                key.removePropertyChangeListener(propertyTurnoutListener);
                 key.addPropertyChangeListener(propertyTurnoutListener, nbh.getBeanName(),
                     "Signal Mast Logic:" + source.getDisplayName() + " to " + destinationSignalMast.getDisplayName());
-                if (key.getKnownState() != nbh.getSetting()) {
-                    routeclear = false;
-                } else if (key.getState() == Turnout.THROWN) {
-                    turnoutThrown = true;
-                }
             }
 
             Enumeration<SignalMast> mastKeys = autoMasts.keys();
             while (mastKeys.hasMoreElements()) {
                 SignalMast key = mastKeys.nextElement();
                 log.debug("{} auto mast add list {}", destinationSignalMast.getDisplayName(), key.getDisplayName());
+                key.removePropertyChangeListener(propertySignalMastListener);
                 key.addPropertyChangeListener(propertySignalMastListener);
-                String aspect = key.getAspect();
-                if ( aspect != null && !aspect.equals(autoMasts.get(key))) {
-                    if (isSignalMastIncluded(key)) {
-                        if (aspect.equals(getSignalMastState(key))) {
-                            routeclear = false;
-                        }
-                    } else {
-                        routeclear = false;
-                    }
-                }
             }
 
             for (NamedBeanSetting nbh : userSetMasts) {
                 SignalMast key = (SignalMast) nbh.getBean();
+                key.removePropertyChangeListener(propertySignalMastListener);
                 key.addPropertyChangeListener(propertySignalMastListener);
-                String aspect = key.getAspect();
-                log.debug("mast '{}' key aspect '{}'", destinationSignalMast.getDisplayName(), aspect);
-                if ((aspect == null) || (!aspect.equals(nbh.getStringSetting()))) {
-                    routeclear = false;
-                }
             }
             for (NamedBeanSetting nbh : userSetSensors) {
                 Sensor sensor = (Sensor) nbh.getBean();
+                sensor.removePropertyChangeListener(propertySensorListener);
                 sensor.addPropertyChangeListener(propertySensorListener, nbh.getBeanName(),
                     "Signal Mast Logic:" + source.getDisplayName() + " to " + destinationSignalMast.getDisplayName());
-                if (sensor.getKnownState() != nbh.getSetting()) {
-                    routeclear = false;
-                }
             }
 
-            for (Map.Entry<Block, Integer> entry : this.autoBlocks.entrySet()) {
-                log.debug("{} auto block add list {}", destinationSignalMast.getDisplayName(),
-                    entry.getKey().getDisplayName());
-                entry.getKey().addPropertyChangeListener(propertyBlockListener);
-                if (entry.getKey().getState() != entry.getValue()) {
-                    if (isBlockIncluded(entry.getKey())) {
-                        if (entry.getKey().getState() != getBlockState(entry.getKey())) {
-                            if (entry.getKey().getState() == Block.OCCUPIED && entry.getKey().getPermissiveWorking()) {
-                                permissiveBlock = true;
-                            } else {
-                                routeclear = false;
-                            }
-                        }
-                    } else {
-                        if (entry.getKey().getState() == Block.OCCUPIED && entry.getKey().getPermissiveWorking()) {
-                            permissiveBlock = true;
-                        } else if (entry.getKey().getState() == Block.UNDETECTED) {
-                            log.debug("Block {} is UNDETECTED so treat as unoccupied", entry.getKey().getDisplayName());
-                        } else {
-                            routeclear = false;
-                        }
-                    }
-                }
+            for (Block key : autoBlocks.keySet()) {
+                log.debug("{} auto block add list {}", destinationSignalMast.getDisplayName(), key.getDisplayName());
+                key.removePropertyChangeListener(propertyBlockListener);
+                key.addPropertyChangeListener(propertyBlockListener);
             }
 
             for (NamedBeanSetting nbh : userSetBlocks) {
                 Block key = (Block) nbh.getBean();
+                key.removePropertyChangeListener(propertyBlockListener);
                 key.addPropertyChangeListener(propertyBlockListener);
-                if (key.getState() != getBlockState(key)) {
-                    if (key.getState() == Block.OCCUPIED && key.getPermissiveWorking()) {
-                        permissiveBlock = true;
-                    } else {
-                        routeclear = false;
-                    }
-                }
             }
-            if ( permissiveBlock
-                /* If a block has been found to be permissive, but the source signalmast
-                 does not support a call-on/permissive aspect then the route can not be set */
-                && getSourceMast().getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.PERMISSIVE) == null) {
-                    routeclear = false;
-            }
-            if (routeclear) {
-                active = true;
-                setSignalAppearance();
-            } else {
-                permissiveBlock = false;
-                turnoutThrown = false;
-            }
+            listenForSectionHolders();
             destMastInit = true;
+
+            // Use the same checks as when one of these beans changes.
+            runCheck(false);
         }
 
         void useLayoutEditor(boolean boo) throws JmriException {
@@ -2231,7 +2358,11 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                 setupLayoutEditorDetails();
             } else {
                 destinationBlock = null;
-                facingBlock = null;
+                // the facing block belongs to the source mast, so keep it while
+                // another destination still uses the Layout Editor
+                if (destList.values().stream().noneMatch(DestinationMast::useLayoutEditor)) {
+                    facingBlock = null;
+                }
                 protectingBlock = null;
                 setAutoBlocks(null);
                 setAutoTurnouts(null);
@@ -2263,20 +2394,20 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             // We don't care which Layout Editor panel the signal mast is on, just so long as
             // the routing is done via layout blocks.
             remoteProtectingBlock = null;
-            for (int i = 0; i < layout.size(); i++) {
-                log.debug("{} Layout name {}", destinationSignalMast.getDisplayName(), editor );
+            for (LayoutEditor panel : layout) {
+                log.debug("{} Layout name {}", destinationSignalMast.getDisplayName(), panel.getLayoutName());
                 if (facingBlock == null) {
-                    facingBlock = lbm.getFacingBlockByNamedBean(getSourceMast(), editor);
+                    facingBlock = lbm.getFacingBlockByNamedBean(getSourceMast(), panel);
                 }
                 if (protectingBlock == null && protectingBlocks.isEmpty()) {
                     //This is wrong
-                    protectingBlocks = lbm.getProtectingBlocksByNamedBean(getSourceMast(), editor);
+                    protectingBlocks = lbm.getProtectingBlocksByNamedBean(getSourceMast(), panel);
                 }
                 if (destinationBlock == null) {
-                    destinationBlock = lbm.getFacingBlockByNamedBean(destinationSignalMast, editor);
+                    destinationBlock = lbm.getFacingBlockByNamedBean(destinationSignalMast, panel);
                 }
                 if (remoteProtectingBlock == null) {
-                    remoteProtectingBlock = lbm.getProtectedBlockByNamedBean(destinationSignalMast, editor);
+                    remoteProtectingBlock = lbm.getProtectedBlockByNamedBean(destinationSignalMast, panel);
                 }
             }
             // At this point, if we are not using the Layout Editor turnout or block
@@ -2546,6 +2677,44 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                 }
             }
             // ----- End Turntable Alignment Check -----
+            // ----- Begin Traverser Alignment Check -----
+            for (LayoutEditor lay : layout) {
+                for (LayoutTraverser traverser : lay.getLayoutTraversers()) {
+                    // Check for a path from an Approach Mast to the Buffer Mast (Path 3).
+                    // The destination block is the traverser block, and the destination mast is the buffer mast.
+                    if (traverser.getLayoutBlock() == destinationBlock && traverser.getBufferMast() == destinationSignalMast) {
+                        // The source mast's facing block is the slot block for this path.
+                        for (LayoutTraverser.SlotTrack slot : traverser.getSlotList()) {
+                            if (slot.getConnect() != null && slot.getConnect().getLayoutBlock() == DefaultSignalMastLogic.this.facingBlock) {
+                                // This is the correct slot. Get its control turnout and required state.
+                                Turnout slotTurnout = slot.getTurnout();
+                                int requiredState = slot.getTurnoutState();
+                                if (slotTurnout != null) {
+                                    turnoutSettings.put(slotTurnout, requiredState);
+                                }
+                                break; // Found the slot, no need to check others.
+                            }
+                        }
+                    }
+                    // Check for a path from the Exit Mast to a remote mast (Path 1).
+                    // The source mast is the traverser's exit mast.
+                    if (traverser.getExitSignalMast() == getSourceMast()) {
+                        // The protecting block is the slot block for this path.
+                        for (LayoutTraverser.SlotTrack slot : traverser.getSlotList()) {
+                            if (slot.getConnect() != null && slot.getConnect().getLayoutBlock() == protectingBlock) {
+                                // This is the correct slot. Get its control turnout and required state.
+                                Turnout slotTurnout = slot.getTurnout();
+                                int requiredState = slot.getTurnoutState();
+                                if (slotTurnout != null) {
+                                    turnoutSettings.put(slotTurnout, requiredState);
+                                }
+                                break; // Found the slot, no need to check others.
+                            }
+                        }
+                    }
+                }
+            }
+            // ----- End Traverser Alignment Check -----
             if (useLayoutEditorTurnouts) {
                 setAutoTurnouts(turnoutSettings);
             }
@@ -2668,6 +2837,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
          */
         void dispose() {
             disposed = true;
+            stopListeningForSectionHolders();
             clearTurnoutLock();
             destinationSignalMast.removePropertyChangeListener(propertyDestinationMastListener);
             setBlocks(null);
@@ -2771,6 +2941,175 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
              minimumBlockSpeed==0.0f;*/
         }
 
+        /**
+         * Check whether a block on this route is reserved for a train other
+         * than the one approaching the source mast.
+         * <p>
+         * Only blocks marked as allocated (shown in the extra color) are
+         * checked. A Section records who holds it, see
+         * {@link Section#getAllocatedTo()}; the approaching train is the
+         * holder of the block the source mast faces. A marked block whose
+         * holder is not the approaching train, or that has no holder, puts the
+         * mast to danger. So does a marked block when no train holds the
+         * facing block.
+         *
+         * @param routeBlocks the blocks on this route
+         * @param lbm         the layout block manager
+         * @return true if the mast must show danger
+         */
+        private boolean isRouteHeldByAnotherTrain(List<Block> routeBlocks, LayoutBlockManager lbm) {
+            List<Block> marked = new ArrayList<>();
+            for (Block b : routeBlocks) {
+                LayoutBlock lb = lbm.getLayoutBlock(b);
+                if (lb != null && lb.getUseExtraColor()) {
+                    marked.add(b);
+                }
+            }
+            if (marked.isEmpty()) {
+                return false;
+            }
+            LayoutBlock approach = getApproachBlock(lbm);
+            Object approaching = (approach == null) ? null : heldBy(approach.getBlock());
+            for (Block b : marked) {
+                Object holder = heldBy(b);
+                if (holder == null || holder != approaching) {
+                    log.debug("{} block {} is held by {}, approaching train is {}",
+                            destinationSignalMast.getDisplayName(), b.getDisplayName(), holder, approaching);
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /*
+         * The block the source mast faces, where a train approaching the mast is.
+         * Found from the Layout Editor panels when this logic does not use the
+         * Layout Editor, without changing the stored facing block.
+         */
+        private LayoutBlock getApproachBlock(LayoutBlockManager lbm) {
+            if (getFacingBlock() != null) {
+                return getFacingBlock();
+            }
+            for (LayoutEditor editor : InstanceManager.getDefault(EditorManager.class).getAll(LayoutEditor.class)) {
+                LayoutBlock lb = lbm.getFacingBlockByNamedBean(getSourceMast(), editor);
+                if (lb != null) {
+                    return lb;
+                }
+            }
+            return null;
+        }
+
+        /*
+         * The Sections this logic listens to for a change of holder, and the
+         * blocks it cares about: those on the route and the block the source
+         * mast faces.
+         */
+        private final Set<Section> holderSections = new HashSet<>();
+        private final Set<Block> holderBlocks = new HashSet<>();
+
+        /*
+         * Listen for changes of holder on Sections, so the dispatcher check
+         * above is made again when a train is given or releases a Section
+         * containing one of the blocks this logic cares about. Every Section
+         * is listened to, and the blocks are checked when the holder changes,
+         * because a Section's blocks can be set after it is created without
+         * any event being sent.
+         */
+        private void listenForSectionHolders() {
+            stopListeningForSectionHolders();
+            // Only use a Section manager that already exists: with no Sections
+            // defined there is nothing to listen to, and asking for one would
+            // create it.
+            if (!InstanceManager.containsDefault(SectionManager.class)) {
+                return;
+            }
+            SectionManager sm = InstanceManager.getDefault(SectionManager.class);
+            holderBlocks.addAll(autoBlocks.keySet());
+            for (NamedBeanSetting nbh : userSetBlocks) {
+                holderBlocks.add((Block) nbh.getBean());
+            }
+            if (holderBlocks.isEmpty()) {
+                return;
+            }
+            if (InstanceManager.containsDefault(LayoutBlockManager.class)) {
+                LayoutBlock approach = getApproachBlock(InstanceManager.getDefault(LayoutBlockManager.class));
+                if (approach != null && approach.getBlock() != null) {
+                    holderBlocks.add(approach.getBlock());
+                }
+            }
+            sm.addPropertyChangeListener(Manager.PROPERTY_BEANS, sectionManagerListener);
+            for (Section sec : sm.getNamedBeanSet()) {
+                listenTo(sec);
+            }
+        }
+
+        private void listenTo(Section sec) {
+            if (!holderSections.contains(sec)) {
+                sec.addPropertyChangeListener(Section.PROPERTY_ALLOCATED_TO, sectionHolderListener);
+                holderSections.add(sec);
+            }
+        }
+
+        private void stopListeningForSectionHolders() {
+            for (Section sec : holderSections) {
+                sec.removePropertyChangeListener(Section.PROPERTY_ALLOCATED_TO, sectionHolderListener);
+            }
+            holderSections.clear();
+            holderBlocks.clear();
+            if (InstanceManager.containsDefault(SectionManager.class)) {
+                InstanceManager.getDefault(SectionManager.class)
+                        .removePropertyChangeListener(Manager.PROPERTY_BEANS, sectionManagerListener);
+            }
+        }
+
+        private final PropertyChangeListener sectionHolderListener = e -> {
+            Section sec = (Section) e.getSource();
+            for (Block b : holderBlocks) {
+                if (sec.containsBlock(b)) {
+                    log.debug("{} section {} now held by {}", destinationSignalMast.getDisplayName(),
+                            sec.getDisplayName(), e.getNewValue());
+                    checkState();
+                    return;
+                }
+            }
+        };
+
+        /*
+         * A Section added is listened to; one removed is dropped. An event
+         * without a Section (sent after a silenced bulk load) starts again.
+         */
+        private final PropertyChangeListener sectionManagerListener = e -> {
+            if (!destMastInit || disposed) {
+                return;
+            }
+            if (e.getNewValue() instanceof Section) {
+                listenTo((Section) e.getNewValue());
+            } else if (e.getOldValue() instanceof Section) {
+                Section sec = (Section) e.getOldValue();
+                if (holderSections.remove(sec)) {
+                    sec.removePropertyChangeListener(Section.PROPERTY_ALLOCATED_TO, sectionHolderListener);
+                }
+            } else {
+                listenForSectionHolders();
+            }
+        };
+
+        /*
+         * The holder of an allocated Section containing the block, or null.
+         */
+        private Object heldBy(Block b) {
+            if (b == null || !InstanceManager.containsDefault(SectionManager.class)) {
+                return null;
+            }
+            for (Section sec : InstanceManager.getDefault(SectionManager.class).getNamedBeanSet()) {
+                Object holder = sec.getAllocatedTo();
+                if (holder != null && sec.containsBlock(b)) {
+                    return holder;
+                }
+            }
+            return null;
+        }
+
         protected PropertyChangeListener propertySensorListener = new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent e) {
@@ -2782,10 +3121,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                     if (isSensorIncluded(sen) && getSensorState(sen) != now) {
                         log.debug("Sensor {} caused the signalmast to be set to danger", sen.getDisplayName());
                         //getSourceMast().setAspect(stopAspect);
-                        if (active == true) {
-                            active = false;
-                            setSignalAppearance();
-                        }
+                        routeNoLongerSet();
                     } else if (getSensorState(sen) == now) {
                         log.debug("{} sensor {} triggers a calculation of change", destinationSignalMast.getDisplayName(), sen.getDisplayName());
                         checkState();
@@ -2807,10 +3143,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                         if (getTurnoutState(turn) != now) {
                             log.debug("Turnout {} caused the signalmast to be set", turn.getDisplayName());
                             log.debug("From {} to {} Turnout {} caused the signalmast to be set to danger", getSourceMast().getDisplayName(), destinationSignalMast.getDisplayName(), turn.getDisplayName());
-                            if (active == true) {
-                                active = false;
-                                setSignalAppearance();
-                            }
+                            routeNoLongerSet();
                         } else {
                             log.debug("{} turnout {} triggers a calculation of change", destinationSignalMast.getDisplayName(), turn.getDisplayName());
                             checkState();
@@ -2819,10 +3152,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                         if (getAutoTurnoutState(turn) != now) {
                             log.debug("Turnout {} auto caused the signalmast to be set", turn.getDisplayName());
                             log.debug("From {} to {} Auto Turnout {} auto caused the signalmast to be set to danger", getSourceMast().getDisplayName(), destinationSignalMast.getDisplayName(), turn.getDisplayName());
-                            if (active == true) {
-                                active = false;
-                                setSignalAppearance();
-                            }
+                            routeNoLongerSet();
                         } else {
                             log.debug("From {} to {} turnout {} triggers a calculation of change", getSourceMast().getDisplayName(), destinationSignalMast.getDisplayName(), turn.getDisplayName());
                             checkState();
@@ -2836,12 +3166,39 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             }
         };
 
+        /**
+         * Check if a block on this route has become occupied while the route
+         * needs it to be unoccupied.
+         *
+         * @param block the block to check
+         * @return true if the block is occupied, not in permissive working,
+         *         and this logic needs it to be unoccupied
+         */
+        boolean isOccupiedAgainstRoute(Block block) {
+            if (block.getState() != Block.OCCUPIED || block.getPermissiveWorking()) {
+                return false;
+            }
+            int required;
+            if (isBlockIncluded(block)) {
+                required = getBlockState(block);
+            } else if (autoBlocks.containsKey(block)) {
+                required = getAutoBlockState(block);
+            } else {
+                return false;
+            }
+            return required != Block.OCCUPIED && required != 0x03;
+        }
+
         protected PropertyChangeListener propertyBlockListener = new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent e) {
                 Block block = (Block) e.getSource();
                 log.debug("{} destination block {} trigger {} {}", destinationSignalMast.getDisplayName(), block.getDisplayName(), e.getPropertyName(), e.getNewValue());
-                if ( Block.PROPERTY_STATE.equals(e.getPropertyName()) || Block.PROPERTY_ALLOCATED.equals(e.getPropertyName())) {
+                if ( Block.PROPERTY_STATE.equals(e.getPropertyName()) && isOccupiedAgainstRoute(block)) {
+                    // Going to danger is not delayed, only a change towards clear is.
+                    log.debug("Block {} occupied, caused the signalmast to be set to danger", block.getDisplayName());
+                    routeNoLongerSet();
+                } else if ( Block.PROPERTY_STATE.equals(e.getPropertyName()) || Block.PROPERTY_ALLOCATED.equals(e.getPropertyName())) {
                     // TODO: what is this?
                     log.debug("Included in user entered block {}", Boolean.toString(isBlockIncluded(block)));
                     log.debug("Included in AutoGenerated Block {}", Boolean.toString(autoBlocks.containsKey(block)));
@@ -2877,10 +3234,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                         if (!now.equals(getSignalMastState(mast))) {
                             log.debug("{} in mast list SignalMast {} caused the signalmast to be set", destinationSignalMast.getDisplayName(), mast.getDisplayName());
                             log.debug("SignalMast {} caused the signalmast to be set", mast.getDisplayName());
-                            if (active) {
-                                active = false;
-                                setSignalAppearance();
-                            }
+                            routeNoLongerSet();
                         } else {
                             log.debug("{} in mast list signalmast change", destinationSignalMast.getDisplayName());
                             checkState();
@@ -2889,10 +3243,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
                         if (!now.equals(getAutoSignalMastState(mast))) {
                             log.debug("SignalMast {} caused the signalmast to be set", mast.getDisplayName());
                             log.debug("{} in auto mast list SignalMast {} caused the signalmast to be set", destinationSignalMast.getDisplayName(), mast.getDisplayName());
-                            if (active) {
-                                active = false;
-                                setSignalAppearance();
-                            }
+                            routeNoLongerSet();
                         } else {
                             log.debug("{} in auto mast list signalmast change", destinationSignalMast.getDisplayName());
                             checkState();

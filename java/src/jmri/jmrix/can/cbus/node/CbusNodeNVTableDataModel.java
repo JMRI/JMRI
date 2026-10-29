@@ -25,15 +25,15 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
     private CbusNode nodeOfInterest;
 
     // column order needs to match list in column tooltips
-    static public final int NV_NUMBER_COLUMN = 0;
-    static public final int NV_NAME_COLUMN = 1;
-    static public final int NV_CURRENT_VAL_COLUMN = 2;
-    static public final int NV_CURRENT_HEX_COLUMN = 3;
-    static public final int NV_CURRENT_BIT_COLUMN = 4;
-    static public final int NV_SELECT_COLUMN = 5;
-    static public final int NV_SELECT_HEX_COLUMN = 6;
-    static public final int NV_SELECT_BIT_COLUMN = 7;
-    static public final int MAX_COLUMN = 8;
+    public static final int NV_NUMBER_COLUMN = 0;
+    public static final int NV_NAME_COLUMN = 1;
+    public static final int NV_CURRENT_VAL_COLUMN = 2;
+    public static final int NV_CURRENT_HEX_COLUMN = 3;
+    public static final int NV_CURRENT_BIT_COLUMN = 4;
+    public static final int NV_SELECT_COLUMN = 5;
+    public static final int NV_SELECT_HEX_COLUMN = 6;
+    public static final int NV_SELECT_BIT_COLUMN = 7;
+    public static final int MAX_COLUMN = 8;
 
     public CbusNodeNVTableDataModel(CanSystemConnectionMemo memo, int row, int column ) {
         log.debug("Starting MERG CBUS Node NV Table");
@@ -219,32 +219,37 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
     @Override
     public void setValueAt(Object value, int row, int col) {
         log.debug("set value {} row {} col {}",value,row,col);
-        if ( newNVs.length ==0) {
+        if ( newNVs.length ==0 || row < 0 || row + 1 >= newNVs.length ) {
             return;
         }
+        int newval;
         switch (col) {
             case NV_SELECT_COLUMN:
-                int newval = (int) value;
-                newNVs[(row+1)] = newval;
-                ThreadingUtil.runOnGUIEventually(() -> fireTableRowsUpdated(row,row));
+                newval = (int) value;
                 break;
             case NV_SELECT_HEX_COLUMN:
-                newNVs[(row+1)] = StringUtil.getByte(0, ((String) value).trim());
-                ThreadingUtil.runOnGUIEventually(() -> fireTableRowsUpdated(row,row));
+                newval = StringUtil.getByte(0, ((String) value).trim());
                 break;
             case NV_SELECT_BIT_COLUMN:
                 try {
-                    int newInt = Integer.parseInt(((String) value).replaceAll("\\s+",""), 2);
-                    if (newInt > -1 && newInt < 256) {
-                        newNVs[(row+1)] = newInt;
-                        ThreadingUtil.runOnGUIEventually(() -> fireTableRowsUpdated(row,row));
-                    }
+                    newval = Integer.parseInt(((String) value).replaceAll("\\s+",""), 2);
                 }
-                catch ( NumberFormatException e ){}
+                catch ( NumberFormatException e ){
+                    return;
+                }
+                if (newval < 0 || newval > 255) {
+                    return;
+                }
                 break;
             default:
-                break;
+                return;
         }
+        if ( newNVs[(row+1)] == newval ) {
+            // no change, do not trigger table updates
+            return;
+        }
+        newNVs[(row+1)] = newval;
+        ThreadingUtil.runOnGUIEventually(() -> fireTableRowsUpdated(row,row));
     }
 
     /**
@@ -375,5 +380,5 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusNodeNVTableDataModel.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusNodeNVTableDataModel.class);
 }

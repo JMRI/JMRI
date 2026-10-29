@@ -145,12 +145,12 @@ code {
 					A JSON array of valid types for your JMRI installation is available
 					by using the <em>type</em> "
 					<code>
-						<a href="http://localhost:12080/json/type">type</a>
+						<a href="/json/type">type</a>
 					</code>
 					" (with JMRI Web Server running). You can also see the list using
 					the Tables menu on the JMRI Web Server Home page. "
 					<code>
-						<a href="http://localhost:12080/tables/type">/tables/type</a>
+						<a href="/tables/type">/tables/type</a>
 					</code>
 					" See the <a
 						href="https://www.jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html">protocol
@@ -231,7 +231,7 @@ code {
 					code. This is <a href="../doc/Technical/Patterns.shtml#typescript">compiled
 						to the web/js directory</a> for actual execution.
 				<dt>
-					<a href="http://localhost:12080/web/power.html">Power
+					<a href="/web/power.html">Power
 						Demonstration</a> (with JMRI Web Server running).
 				</dt>
 				<dd>
@@ -275,9 +275,24 @@ code {
                     <td>creaate turnout IT98 using "put" method</td>
                 </tr>
 				<tr>
-					<td><code>{"type":"power"}</code></td>
-					<td><code>{"type":"power","data":{"name":"LocoNet","state":2,"default":true}}</code></td>
-					<td>get power state, "name" is optional, will return default if not passed</td>
+					<td><code>{"type":"power","method":"get"}</code></td>
+					<td><code>{"type":"power","data":{"name":"LocoNet","state":2,"default":true,"prefix":"L"}}</code></td>
+					<td>get power state of the default connection; state 2=ON, 4=OFF, 8=IDLE, 0=UNKNOWN</td>
+				</tr>
+				<tr>
+					<td><code>{"type":"power","method":"get","data":{"prefix":"L2"}}</code></td>
+					<td><code>{"type":"power","data":{"name":"LocoNet Prog","state":4,"default":false,"prefix":"L2"}}</code></td>
+					<td>get power state of a specific connection by system prefix</td>
+				</tr>
+				<tr>
+					<td><code>{"type":"power","method":"post","data":{"prefix":"L","state":2}}</code></td>
+					<td><code>{"type":"power","data":{"name":"LocoNet","state":2,"default":true,"prefix":"L"}}</code></td>
+					<td>set power state on a specific connection; use state 2 for ON, 4 for OFF; omit "prefix" to target the default connection</td>
+				</tr>
+				<tr>
+					<td><code>{"list":"power"}</code></td>
+					<td><code>[{"type":"power","data":{"name":"LocoNet","state":2,"default":true,"prefix":"L"}},{"type":"power","data":{"name":"LocoNet Prog","state":4,"default":false,"prefix":"L2"}}]</code></td>
+					<td>list all configured power connections, one entry per connection</td>
 				</tr>
 				<tr>
 					<td><code>{"type":"memory","data":{"name":"IMCURRENTTIME"}}</code></td>
@@ -306,7 +321,12 @@ code {
 							"F15":false,"F16":false,"F17":false,"F18":false,"F19":false,"F20":false,"F21":false,
 							"F22":false,"F23":false,"F24":false,"F25":false,"F26":false,"F27":false,"F28":false,
 							"throttle":"CSX754"}}</code></td>
-					<td>request throttle for address 754, refer to it as "CSX754"</td>
+					<td>request throttle for address 754 on the default connection, referred to as "CSX754"; add "prefix" to target a specific connection instead</td>
+				</tr>
+				<tr>
+					<td><code>{"type":"throttle","data":{"name":"CSX754","address":754,"prefix":"L"}}</code></td>
+					<td><code>{"type":"throttle","data":{"name":"CSX754","address":754,"prefix":"L","speed":0.0,"forward":true,"throttle":"CSX754"}}</code></td>
+					<td>request throttle for address 754 on a specific connection by system prefix &mdash; useful when multiple command stations are configured; subsequent speed/function commands use the name "CSX754" as normal</td>
 				</tr>
 				<tr>
 					<td><code>{"type":"throttle","data":{"name":"CSX754","speed":0.25}}</code></td>
@@ -319,10 +339,19 @@ code {
 					<td>release the throttle "CSX754"</td>
 				</tr>
 				<tr>
+					<td><code>{"type":"light","data":{"name":"IL1"}}</code></td>
+					<td><code>{"type":"light","data":{"name":"IL1","userName":"Yard Light","comment":null,"state":4,"properties":[]}}</code></td>
+					<td>get current state of light IL1; state 2=ON, 4=OFF, 0=UNKNOWN</td>
+				</tr>
+				<tr>
+					<td><code>{"type":"light","method":"post","data":{"name":"IL1","state":2}}</code></td>
+					<td><code>{"type":"light","data":{"name":"IL1","userName":"Yard Light","comment":null,"state":2,"properties":[]}}</code></td>
+					<td>turn light IL1 on (state 2); use state 4 to turn off</td>
+				</tr>
+				<tr>
 					<td><code>{"list":"lights"}</code></td>
-					<td><em>If list is empty:</em> <code>[]</code></td>
-					<td>Example showing list response if there are no objects of
-						that type.</td>
+					<td><code>[{"type":"light","data":{"name":"IL1","userName":"Yard Light","comment":null,"state":2,"properties":[]}},{"type":"light","data":{"name":"IL2","userName":null,"comment":null,"state":4,"properties":[]}}]</code></td>
+					<td>list all configured lights; returns an empty array <code>[]</code> if none are configured</td>
 				</tr>
 				<tr>
 					<td><code>{"type":"block","data":{"name":"IB1"}}</code></td>

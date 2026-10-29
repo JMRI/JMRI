@@ -22,7 +22,7 @@ import jmri.jmrit.operations.trains.*;
  */
 public class PrintSavedBuildReportAction extends AbstractAction implements java.beans.PropertyChangeListener {
 
-    private final static Logger log = LoggerFactory.getLogger(PrintSavedBuildReportAction.class);
+    private static final Logger log = LoggerFactory.getLogger(PrintSavedBuildReportAction.class);
 
     public PrintSavedBuildReportAction(boolean isPreview, Train train) {
         super(isPreview ? Bundle.getMessage("MenuItemPreviewSavedBuildReport")

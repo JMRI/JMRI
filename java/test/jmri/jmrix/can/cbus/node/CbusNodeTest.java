@@ -736,6 +736,6 @@ public class CbusNodeTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusNodeTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusNodeTest.class);
 
 }

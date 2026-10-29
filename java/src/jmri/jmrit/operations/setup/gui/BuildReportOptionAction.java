@@ -30,7 +30,7 @@ public class BuildReportOptionAction extends AbstractAction {
         f.setVisible(true); // this also brings the frame into focus
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(BuildReportOptionAction.class);
+//    private static final Logger log = LoggerFactory.getLogger(BuildReportOptionAction.class);
 }
 
 

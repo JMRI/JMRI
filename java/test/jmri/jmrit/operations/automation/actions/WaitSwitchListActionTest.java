@@ -107,6 +107,6 @@ public class WaitSwitchListActionTest extends OperationsTestCase {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(WaitSwitchListActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(WaitSwitchListActionTest.class);
 
 }

@@ -20,7 +20,7 @@ public class FacelessServer {
     private static MainServer server;
     private static Thread currentThread;
 
-    private final static Logger log = LoggerFactory.getLogger(FacelessServer.class);
+    private static final Logger log = LoggerFactory.getLogger(FacelessServer.class);
 
     private FacelessServer() {
         initServer();

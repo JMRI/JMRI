@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @DisabledIfSystemProperty(named ="java.awt.headless", matches ="true")
 public class PlaceWindowTest {
 
-    private final static int TOLERANCE = 5;
+    private static final int TOLERANCE = 5;
 
     @Test
     public void testCTor() {

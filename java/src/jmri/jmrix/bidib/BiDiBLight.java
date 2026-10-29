@@ -351,6 +351,6 @@ public class BiDiBLight extends AbstractVariableLight implements BiDiBNamedBeanI
         tc.addMessageListener(messageHandler);        
     }
 
-    private final static Logger log = LoggerFactory.getLogger(BiDiBLight.class);
+    private static final Logger log = LoggerFactory.getLogger(BiDiBLight.class);
 
 }

@@ -74,6 +74,6 @@ public class CbusNodeSetupPaneTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusNodeSetupPaneTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusNodeSetupPaneTest.class);
 
 }

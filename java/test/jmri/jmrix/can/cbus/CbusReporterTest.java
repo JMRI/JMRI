@@ -124,6 +124,116 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
         r5.dispose();
     }
 
+    // A Classic RFID reporter must report the 5 byte tag whatever the value of the
+    // first tag byte, the tag data must not be inspected as a self-describing DDES type,
+    // and the reporter type must not be changed by the manager on frame content.
+    @Test
+    public void testClassicRfidTagWithOddFirstByte(){
+
+        Reporter r4 = memo.get(ReporterManager.class).provideReporter("4");
+        assertEquals(CbusReporterManager.CBUS_REPORTER_TYPE_CLASSIC,
+            ((CbusReporter)r4).getCbusReporterType(), "default type Classic RFID");
+
+        CanReply m = new CanReply(tcis.getCanid());
+        m.setNumDataElements(8);
+        m.setElement(0, CbusConstants.CBUS_DDES);
+        m.setElement(1, 0x00); // ev hi
+        m.setElement(2, 0x04); // ev lo
+        m.setElement(3, 0x41); // tag1, least significant bit set
+        m.setElement(4, 0x39); // tag2
+        m.setElement(5, 0x31); // tag3
+        m.setElement(6, 0x30); // tag4
+        m.setElement(7, 0xAB); // tag5
+        tcis.sendToListeners(m); // via CbusReporterManager
+
+        assertEquals(IdTag.SEEN, r4.getState(), "r4 tag seen DDES");
+        Object report = r4.getCurrentReport();
+        assertNotNull(report, "r4 report set DDES");
+        assertTrue(report instanceof IdTag, "report is an IdTag");
+        assertFalse(report instanceof jmri.RailCom, "report is not a RailCom tag");
+        assertEquals("41393130AB", ((IdTag)report).getTagID(), "10 hex digit classic tag ID");
+        assertEquals(CbusReporterManager.CBUS_REPORTER_TYPE_CLASSIC,
+            ((CbusReporter)r4).getCbusReporterType(), "type not changed by frame content");
+
+        // same tag on ACDAT, reported by reporter 5
+        Reporter r5 = memo.get(ReporterManager.class).provideReporter("5");
+        m.setElement(0, CbusConstants.CBUS_ACDAT);
+        m.setElement(2, 0x05); // ev lo
+        tcis.sendToListeners(m);
+
+        assertEquals(IdTag.SEEN, r5.getState(), "r5 tag seen ACDAT");
+        report = r5.getCurrentReport();
+        assertNotNull(report, "r5 report set ACDAT");
+        assertTrue(report instanceof IdTag, "ACDAT report is an IdTag");
+        assertEquals("41393130AB", ((IdTag)report).getTagID(), "ACDAT 10 hex digit classic tag ID");
+        assertEquals(IdTag.UNSEEN, r4.getState(), "r4 tag gone");
+        assertEquals(CbusReporterManager.CBUS_REPORTER_TYPE_CLASSIC,
+            ((CbusReporter)r5).getCbusReporterType(), "r5 type not changed by frame content");
+
+        // a self-describing reporter still uses the DDES format bit, tag1 0x01 is RailCom
+        Reporter r6 = memo.get(ReporterManager.class).provideReporter("6");
+        r6.setProperty(CbusReporterManager.CBUS_REPORTER_DESCRIPTOR_KEY, CbusReporterManager.CBUS_REPORTER_TYPE_DDES_DESCRIBING);
+        m.setElement(0, CbusConstants.CBUS_DDES);
+        m.setElement(2, 0x06); // ev lo
+        m.setElement(3, 0x01); // railcom
+        m.setElement(4, 0xC0); // long address 1
+        m.setElement(5, 0x01);
+        m.setElement(6, 0x00);
+        m.setElement(7, 0x00);
+        tcis.sendToListeners(m);
+        assertEquals(IdTag.SEEN, r6.getState(), "r6 tag seen");
+        report = r6.getCurrentReport();
+        assertTrue(report instanceof jmri.RailCom, "self-describing reporter report is a RailCom tag");
+        assertEquals(new jmri.DccLocoAddress(1, true), ((jmri.RailCom)report).getDccAddress(), "RailCom loco 1");
+
+        r4.dispose();
+        r5.dispose();
+        r6.dispose();
+    }
+
+    // A Reporter created by a CANRCOM style DDES is set to the self-describing type,
+    // a Reporter created by a Classic RFID ACDAT is not, whatever the tag data.
+    @Test
+    public void testNewReporterTypeFromFirstFrame(){
+
+        CanReply m = new CanReply(tcis.getCanid());
+        m.setNumDataElements(8);
+        m.setElement(0, CbusConstants.CBUS_DDES);
+        m.setElement(1, 0x00); // dd hi
+        m.setElement(2, 0x07); // dd lo, reporter 7 does not exist yet
+        m.setElement(3, 0x01); // railcom
+        m.setElement(4, 0x00); // short address 3
+        m.setElement(5, 0x03);
+        m.setElement(6, 0x00);
+        m.setElement(7, 0x00);
+        tcis.sendToListeners(m);
+
+        CbusReporter r7 = (CbusReporter)memo.get(ReporterManager.class).getBySystemName("MR7");
+        assertNotNull(r7, "reporter 7 created");
+        assertEquals(CbusReporterManager.CBUS_REPORTER_TYPE_DDES_DESCRIBING, r7.getCbusReporterType(),
+            "new reporter from RailCom DDES is self-describing");
+        assertTrue(r7.getCurrentReport() instanceof jmri.RailCom, "RailCom report");
+
+        // user sets the type back to Classic, a later frame must not change it
+        r7.setProperty(CbusReporterManager.CBUS_REPORTER_DESCRIPTOR_KEY, CbusReporterManager.CBUS_REPORTER_TYPE_CLASSIC);
+        tcis.sendToListeners(m);
+        assertEquals(CbusReporterManager.CBUS_REPORTER_TYPE_CLASSIC, r7.getCbusReporterType(),
+            "existing reporter type not changed by frame content");
+
+        // new reporter from a Classic RFID ACDAT, tag first byte low nibble 1
+        m.setElement(0, CbusConstants.CBUS_ACDAT);
+        m.setElement(2, 0x08); // reporter 8 does not exist yet
+        m.setElement(3, 0x41);
+        tcis.sendToListeners(m);
+        CbusReporter r8 = (CbusReporter)memo.get(ReporterManager.class).getBySystemName("MR8");
+        assertNotNull(r8, "reporter 8 created");
+        assertEquals(CbusReporterManager.CBUS_REPORTER_TYPE_CLASSIC, r8.getCbusReporterType(),
+            "new reporter from ACDAT stays Classic");
+
+        r7.dispose();
+        r8.dispose();
+    }
+
     @Test
     public void testGetCbusReporterType(){
         assertEquals(CbusReporterManager.CBUS_DEFAULT_REPORTER_TYPE,((CbusReporter)r).getCbusReporterType(),
@@ -370,6 +480,7 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
     @Override
     public void tearDown() {
         jmri.InstanceManager.getDefault(jmri.IdTagManager.class).dispose();
+        jmri.InstanceManager.getDefault(jmri.RailComManager.class).dispose();
         if (r!=null) {
             r.dispose();
         }
@@ -384,6 +495,6 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
 
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusReporterTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusReporterTest.class);
 
 }

@@ -780,5 +780,5 @@ public class TrackSegment extends LayoutTrack {
         return Bundle.getMessage("TypeName_TrackSegment");
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackSegment.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackSegment.class);
 }

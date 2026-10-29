@@ -5,11 +5,12 @@ import java.beans.PropertyChangeEvent;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
 
+import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.setup.Control;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import jmri.jmrit.operations.locations.*;
-import jmri.jmrit.operations.setup.Control;
 
 /**
  * Table Model for edit of interchanges used by operations
@@ -34,9 +35,8 @@ public class InterchangeTableModel extends TrackTableModel {
         }
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(() -> {
-            tef = new InterchangeEditFrame();
             Track interchange = _tracksList.get(row);
-            tef.initComponents(interchange);
+            tef = new InterchangeEditFrame(interchange);
         });
     }
     
@@ -72,5 +72,5 @@ public class InterchangeTableModel extends TrackTableModel {
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(InterchangeTableModel.class);
+    private static final Logger log = LoggerFactory.getLogger(InterchangeTableModel.class);
 }

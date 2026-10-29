@@ -160,6 +160,6 @@ public class LoggingUtilTest {
         jmri.util.JUnitUtil.tearDown();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LoggingUtilTest.class);
+    private static final Logger log = LoggerFactory.getLogger(LoggingUtilTest.class);
 
 }

@@ -39,6 +39,6 @@ public class Dcc4PcNamedPaneActionTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Dcc4PcNamedPaneActionTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(Dcc4PcNamedPaneActionTest.class);
 
 }

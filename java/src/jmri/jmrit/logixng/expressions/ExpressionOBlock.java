@@ -26,7 +26,7 @@ public class ExpressionOBlock extends AbstractDigitalExpression
 
     private final LogixNG_SelectNamedBean<OBlock> _selectNamedBean =
             new LogixNG_SelectNamedBean<>(
-                    this, OBlock.class, InstanceManager.getDefault(OBlockManager.class), this);
+                    this, OBlock.class, InstanceManager.getDefault(OBlockManager.class));
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.Is;
     private NamedBeanAddressing _stateAddressing = NamedBeanAddressing.Direct;
     private OBlock.OBlockStatus _oblockState = OBlock.OBlockStatus.Unoccupied;
@@ -234,7 +234,6 @@ public class ExpressionOBlock extends AbstractDigitalExpression
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
             _selectNamedBean.addPropertyChangeListener("state", this);
-            _selectNamedBean.registerListeners();
             _listenersAreRegistered = true;
         }
     }
@@ -244,7 +243,6 @@ public class ExpressionOBlock extends AbstractDigitalExpression
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             _selectNamedBean.removePropertyChangeListener("state", this);
-            _selectNamedBean.unregisterListeners();
             _listenersAreRegistered = false;
         }
     }
@@ -267,6 +265,6 @@ public class ExpressionOBlock extends AbstractDigitalExpression
         _selectNamedBean.getUsageDetail(level, bean, report, cdl, this, LogixNG_SelectNamedBean.Type.Expression);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionOBlock.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionOBlock.class);
 
 }

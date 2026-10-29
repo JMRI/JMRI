@@ -12,7 +12,7 @@ import jmri.jmrix.ipocs.protocol.enums.RqDerailerCommand;
  */
 @org.openide.util.lookup.ServiceProvider(service = Packet.class)
 public class SetDerailerPacket extends Packet {
-  public final static byte IDENT = 4;
+  public static final byte IDENT = 4;
   private RqDerailerCommand command = null;
 
   @Override

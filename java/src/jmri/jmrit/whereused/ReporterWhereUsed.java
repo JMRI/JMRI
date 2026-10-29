@@ -17,7 +17,7 @@ public class ReporterWhereUsed {
      * @param reporter The reporter bean.
      * @return a populated textarea.
      */
-    static public JTextArea getWhereUsed(NamedBean reporter) {
+    public static JTextArea getWhereUsed(NamedBean reporter) {
         JTextArea textArea = new JTextArea();
         String label = Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameReporter"));  // NOI18N
         textArea.append(Bundle.getMessage("ReferenceTitle", label, reporter.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME)));  // NOI18N

@@ -35,7 +35,6 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnect
 
     public MarklinSystemConnectionMemo() {
         super("M", "Marklin-CS2");
-        register(); // registers general type
         InstanceManager.store(this, MarklinSystemConnectionMemo.class); // also register as specific type
         //Needs to be implemented
         InstanceManager.store(cf = new jmri.jmrix.marklin.swing.MarklinComponentFactory(this),
@@ -72,6 +71,10 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnect
         store(turnoutManager, TurnoutManager.class);
         jmri.InstanceManager.setTurnoutManager(turnoutManager);
 
+        LightManager lightManager = new MarklinLightManager(this);
+        store(lightManager, LightManager.class);
+        InstanceManager.setLightManager(lightManager);
+
         ThrottleManager throttleManager = new MarklinThrottleManager(this);
         store(throttleManager, ThrottleManager.class);
         jmri.InstanceManager.setThrottleManager(throttleManager);
@@ -79,6 +82,10 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnect
         SensorManager sensorManager = new jmri.jmrix.marklin.MarklinSensorManager(this);
         store(sensorManager, SensorManager.class);
         jmri.InstanceManager.setSensorManager(sensorManager);
+
+        McanDeviceManager mcanDeviceManager = new McanDeviceManager(this);
+        store(mcanDeviceManager, McanDeviceManager.class);
+        jmri.InstanceManager.store(mcanDeviceManager, McanDeviceManager.class);
 
         register();
     }
@@ -101,12 +108,20 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnect
         return (MarklinSensorManager)get(SensorManager.class);
     }
 
+    public MarklinLightManager getLightManager() {
+        return (MarklinLightManager)get(LightManager.class);
+    }
+
     public MarklinThrottleManager getThrottleManager() {
         return (MarklinThrottleManager)get(ThrottleManager.class);
     }
 
     public MarklinPowerManager getPowerManager() {
         return (MarklinPowerManager)get(PowerManager.class);
+    }
+
+    public McanDeviceManager getMcanDeviceManager() {
+        return get(McanDeviceManager.class);
     }
 
     @Override

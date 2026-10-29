@@ -58,8 +58,10 @@ which checks the dates of the control files to make sure they've been updated wh
 - from https://github.org/apiguardian-team/apiguardian
 
 #####  batik*
-    batik-js-1.8.jar is a "patched version of Rhino" needed for native-image closure with batik 1.4
-            https://mvnrepository.com/artifact/org.apache.xmlgraphics/batik-js/1.8
+- version 1.19
+- provides SVG vector image support
+- https://xmlgraphics.apache.org/batik/
+- https://xmlgraphics.apache.org/batik/javadoc/
 
 ##### jetty-*.jar
 - version 9.4.28.v20200408
@@ -124,13 +126,13 @@ which checks the dates of the control files to make sure they've been updated wh
 - version 2.03
 - from <http://java.sun.com/javase/technologies/desktop/javahelp/>
 
-##### log4j-api-2.25.3.jar, log4j-core-2.25.3.jar
-- version 2.25.3
-- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api/2.25.3
-- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core/2.25.3
+##### log4j-api-2.25.4.jar, log4j-core-2.25.4.jar
+- version 2.25.4
+- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-api/2.25.4
+- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core/2.25.4
 
-##### log4j-slf4j2-impl-2.25.3.jar
-- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j2-impl/2.25.3
+##### log4j-slf4j2-impl-2.25.4.jar
+- from https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j2-impl/2.25.4
 - slf4j bridge to log4j2
 
 ##### slf4j-api-2.0.17.jar
@@ -153,7 +155,7 @@ which checks the dates of the control files to make sure they've been updated wh
 
 ##### openlcb.jar
  - 0.8.6 from https://repo.maven.apache.org/maven2/org/openlcb/openlcb/0.8.6/openlcb-0.8.6.jar
- - with PRs through #300 pre-release https://github.com/openlcb/OpenLCB_Java/pull/300
+ - with PRs through #313 pre-release https://github.com/openlcb/OpenLCB_Java/pull/313
  
 ##### jlfgr-1_0.jar
 - icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
@@ -177,7 +179,9 @@ which checks the dates of the control files to make sure they've been updated wh
 - see <jdom.org>
 - from Maven Central https://mvnrepository.com/artifact/org.jdom/jdom2/2.0.6.1
 
-##### jackson-annotations-2.13.4.jar, jackson-core-2.13.4.jar, jackson-databind-2.13.4.2.jar
+##### jackson-annotations-2.22.jar, jackson-core-2.22.4.jar, jackson-databind-2.22.4.jar, jackson-datatype-jsr310-2.22.0.jar
+- from https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
+- from https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
 - JSON processing library com.fasterxml.jackson
 - see http://www.journaldev.com/2324/jackson-json-processing-api-in-java-example-tutorial
 
@@ -317,10 +321,20 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - from https://mvnrepository.com/artifact/net.java.dev.jna/jna-platform/5.13.0
 
 
-##### pi4j-core-1.2.jar, pi4j-device-1.2.jar, pi4j-gpio-extension-1.2.jar
-- Pi4j
+##### pi4j-core-2.8.0.jar, pi4j-library-gpiod-2.8.0.jar, pi4j-plugin-raspberrypi-2.8.0.jar, pi4j-plugin-linuxfs-2.8.0.jar, pi4j-plugin-gpiod-2.8.0.jar
+- Pi4J V2 (latest 2.x release, Java 11+ compatible)
 - from https://pi4j.com/
-- Used for supporting GPIO pins on a raspberry pi. pi4j-core is required at compile time.  pi4j-device and pi4j-gpio-extension may be used at runtime (by scripts) to control devices attached to the raspberry pi.
+- Used for supporting GPIO pins on a Raspberry Pi.
+  pi4j-core is required at compile time **and** at runtime (it must be on the application
+  classpath to avoid `NoClassDefFoundError`).
+- pi4j-library-gpiod is the JNI wrapper for the native libgpiod C library; transitive
+  runtime dependency of pi4j-plugin-gpiod. Requires `sudo apt install libgpiod2` on the Pi.
+- pi4j-plugin-gpiod uses the modern Linux GPIO character-device interface (`/dev/gpiochip*`)
+  and is preferred on kernel 5.10+; pi4j-plugin-linuxfs uses the legacy sysfs interface
+  (`/sys/class/gpio`).
+- All hardware plugins are loaded at runtime via Java ServiceLoader on Raspberry Pi hardware;
+  they are optional on non-Pi systems.
+- Pin addressing uses BCM (Broadcom) numbers; e.g. system name "PS4" → BCM GPIO 4.
 
 ##### thumbnailator-0.4.8.jar
 - Thumbnailator
@@ -396,8 +410,9 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 - version 3.1.0
 - Related to Jetty Web Server
 
-##### jsoup-1.15.3.jar
-- version 1.15.3
+##### jsoup-1.23.2.jar
+- from https://mvnrepository.com/artifact/org.jsoup/jsoup/1.23.2
+- version 1.23.2
 - used to test rebuild Help metadata
 - see jmri.util.GenerateSearchIndexTest
 

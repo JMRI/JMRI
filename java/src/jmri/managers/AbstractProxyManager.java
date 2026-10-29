@@ -38,16 +38,6 @@ import jmri.util.NamedBeanComparator;
  */
 abstract public class AbstractProxyManager<E extends NamedBean> extends VetoableChangeSupport implements ProxyManager<E>, PropertyChangeListener, Manager.ManagerDataListener<E> {
 
-    /**
-     * List of names of bound properties requested to be listened to by
-     * PropertyChangeListeners.
-     */
-    private final List<String> boundPropertyNames = new ArrayList<>();
-    /**
-     * List of names of bound properties requested to be listened to by
-     * VetoableChangeListeners.
-     */
-    private final List<String> vetoablePropertyNames = new ArrayList<>();
     protected final Map<String, Boolean> silencedProperties = new HashMap<>();
     protected final Set<String> silenceableProperties = new HashSet<>();
 
@@ -116,17 +106,10 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
             defaultManager = m;  // 1st one is default
         }
 
+        // these arrays include the listeners for named properties, wrapped
+        // in a proxy that adds them to the manager for that property name
         Arrays.stream(getPropertyChangeListeners()).forEach(l -> m.addPropertyChangeListener(l));
         Arrays.stream(getVetoableChangeListeners()).forEach(l -> m.addVetoableChangeListener(l));
-
-        for (String propertyName : new ArrayList<>(boundPropertyNames)) {
-            PropertyChangeListener[] pcls = getPropertyChangeListeners(propertyName);
-            Arrays.stream(pcls).forEach( l -> m.addPropertyChangeListener(propertyName, l));
-        }
-        for (String vetoablePropertyName : new ArrayList<>(vetoablePropertyNames)) {
-            VetoableChangeListener[] vcls = getVetoableChangeListeners(vetoablePropertyName);
-            Arrays.stream(vcls).forEach( l -> m.addVetoableChangeListener(vetoablePropertyName, l));
-        }
 
         m.addPropertyChangeListener("beans", this);
         m.addDataListener(this);
@@ -240,7 +223,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
     protected Manager<E> getManager(@Nonnull String systemName) {
         // make sure internal present
         initInternal();
-        for (Manager<E> m : getManagerList()) {
+        for (Manager<E> m : mgrs) {
             if (systemName.startsWith(m.getSystemNamePrefix())) {
                 return m;
             }
@@ -445,7 +428,6 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
     @OverridingMethodsMustInvokeSuper
     public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
         super.addPropertyChangeListener(propertyName, listener);
-        boundPropertyNames.add(propertyName);
         mgrs.forEach(m -> m.addPropertyChangeListener(propertyName, listener));
     }
 
@@ -478,7 +460,6 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
     @OverridingMethodsMustInvokeSuper
     public void addVetoableChangeListener(String propertyName, VetoableChangeListener listener) {
         super.addVetoableChangeListener(propertyName, listener);
-        vetoablePropertyNames.add(propertyName);
         mgrs.forEach(m -> m.addVetoableChangeListener(propertyName, listener));
     }
 
@@ -496,7 +477,15 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
     @Override
     public void propertyChange(PropertyChangeEvent event) {
         if (event.getPropertyName().equals("beans")) {
-            recomputeNamedBeanSet();
+            // A single added or removed bean has already been handled by
+            // intervalAdded or intervalRemoved; only an event without a bean
+            // needs the whole set rebuilt.
+            if (event.getOldValue() == null && event.getNewValue() == null) {
+                recomputeNamedBeanSet();
+            }
+            // Listeners added to this proxy are also added to each manager,
+            // so they have already received this event from the manager.
+            return;
         }
         event.setPropagationId(this);
         if (!silencedProperties.getOrDefault(event.getPropertyName(), false)) {
@@ -615,6 +604,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
      */
     @Override
     public void contentsChanged(Manager.ManagerDataEvent<E> e) {
+        recomputeNamedBeanSet();
     }
 
     /**
@@ -651,7 +641,12 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
      */
     @Override
     public void intervalRemoved(AbstractProxyManager.ManagerDataEvent<E> e) {
-        recomputeNamedBeanSet();
+        if (namedBeanSet != null && e.getIndex0() == e.getIndex1()) {
+            // just one element removed, and we have the object reference
+            namedBeanSet.remove(e.getChangedBean());
+        } else {
+            recomputeNamedBeanSet();
+        }
 
         if (muted) return;
 
@@ -679,6 +674,6 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
     }
 
     // initialize logging
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractProxyManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractProxyManager.class);
 
 }

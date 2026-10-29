@@ -26,6 +26,6 @@ public class SearchPathTableModelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SearchPathTableModelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SearchPathTableModelTest.class);
 
 }

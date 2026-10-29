@@ -66,7 +66,7 @@ public class AddNewHardwareDevicePanelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(AddNewHardwareDevicePanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(AddNewHardwareDevicePanelTest.class);
     /**
      * Test of setStatusBarText method, of class AddNewHardwareDevicePanel.
      */
@@ -99,7 +99,7 @@ public class AddNewHardwareDevicePanelTest {
         instance.setStatusBarText("<html>foo bar</html>");
         assertEquals("single line html", "<html>foo bar</html>", statusBar.getText());
         instance.setStatusBarText("<html>foo<br>bar</html>");
-        assertEquals("mutli line html", "<html>foo</html>", statusBar.getText());
+        assertEquals("multi line html", "<html>foo<br>bar</html>", statusBar.getText());
     }
 
 }

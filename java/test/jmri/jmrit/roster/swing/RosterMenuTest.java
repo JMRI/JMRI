@@ -32,6 +32,6 @@ public class RosterMenuTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(RosterMenuTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(RosterMenuTest.class);
 
 }

@@ -19,6 +19,6 @@ public class LnTcpPreferencesPanelTest extends PreferencesPanelTestBase<LnTcpPre
         prefsPanel = new LnTcpPreferencesPanel();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(LnTcpPreferencesPanelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(LnTcpPreferencesPanelTest.class);
 
 }

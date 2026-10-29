@@ -116,6 +116,6 @@ public class Pr3SelectPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Pr3SelectPane.class);
+    private static final Logger log = LoggerFactory.getLogger(Pr3SelectPane.class);
 
 }

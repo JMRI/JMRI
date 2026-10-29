@@ -62,7 +62,7 @@ public class MaskCompare extends SdfMacro {
         return "(skip = " + skip + ")"; // NOI18N
     }
 
-    static public SdfMacro match(SdfBuffer buff) {
+    public static SdfMacro match(SdfBuffer buff) {
         // course match
         if ((buff.getAtIndex() & 0xF8) != 0xF8) {
             return null;

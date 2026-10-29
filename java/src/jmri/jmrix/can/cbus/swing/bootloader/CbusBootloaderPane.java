@@ -418,9 +418,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             }
         };
         slowWrite.addActionListener(writeSpeedListener);
-        slowWrite.addActionListener(writeSpeedListener);
-
-        
+        fastWrite.addActionListener(writeSpeedListener);
 
         return menuList;
     }
@@ -490,19 +488,35 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         int retVal = hexFileChooser.showOpenDialog(this);
         // handle selection or cancel
         if (retVal == JFileChooser.APPROVE_OPTION) {
-            hexFile = new CbusPicHexFile(hexFileChooser.getSelectedFile().getPath());
-            log.debug("hex file chosen: {}", hexFile.getName());
-            addToLog(MessageFormat.format(Bundle.getMessage("BootFileChosen"), hexFile.getName()));
+            // Nothing can be programmed until the new file has been read and checked
+            programButton.setEnabled(false);
+            hexForBootloader = false;
+            fileParams = new CbusParameters();
+            // Release any previously loaded file
+            if (hexFile != null) {
+                hexFile.dispose();
+                hexFile = null;
+            }
+
+            CbusPicHexFile newHexFile = new CbusPicHexFile(hexFileChooser.getSelectedFile().getPath());
+            log.debug("hex file chosen: {}", newHexFile.getName());
+            addToLog(MessageFormat.format(Bundle.getMessage("BootFileChosen"), newHexFile.getName()));
             try {
-                hexFile.openRd();
-                hexFile.read();
+                newHexFile.openRd();
+                newHexFile.read();
             } catch (IOException ex) {
-                log.error("Error opening hex file");
+                log.error("Error opening hex file: {}", ex.getMessage());
                 addToLog(Bundle.getMessage("BootHexFileOpenFailed"));
                 return;
+            } finally {
+                // The whole file is held in memory so the file itself can be closed now
+                newHexFile.close();
             }
-            
+
+            // Only use the file once it has been read successfully
+            hexFile = newHexFile;
             fileParams = hexFile.getParams();
+            boolean hardwareParamsValid = (hardwareParams != null) && hardwareParams.areValid();
             if (!moduleCheckBox.isSelected()) {
                 if (fileParams.validate(fileParams, hardwareParams)) {
                     addToLog(MessageFormat.format(Bundle.getMessage("BootHexFileFoundParameters"), fileParams.toString()));
@@ -515,7 +529,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 addToLog(Bundle.getMessage("BootHexFileIgnoringParameters"));
                 programButton.setEnabled(true);
             }
-            if ((hardwareParams.areValid()) && (hardwareParams.getLoadAddress() == 0)) {
+            if (hardwareParamsValid && (hardwareParams.getLoadAddress() == 0)) {
                 // Special case of rewriting the bootloader for Pi-SPROG One
                 addToLog(Bundle.getMessage("BootBoot"));
                 hexForBootloader = true;
@@ -532,6 +546,12 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
      */
     private void programButtonActionPerformed(java.awt.event.ActionEvent e) {
         if (hasActiveTimers()){
+            return;
+        }
+        if (hexFile == null) {
+            log.error("No hex file loaded");
+            addToLog(Bundle.getMessage("BootHexFileOpenFailed"));
+            programButton.setEnabled(false);
             return;
         }
         openFileChooserButton.setEnabled(false);
@@ -635,10 +655,29 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
         }
 
         if ( opc == CbusConstants.CBUS_PARAN) { // response from node
+            if (hardwareParams == null) {
+                log.debug("Ignoring PARAN reply, no parameters being read");
+                return;
+            }
+            // Only interested in replies from the node being programmed
+            int nn = (r.getElement(1) * 256) + r.getElement(2);
+            if (nn != nodeNumber) {
+                log.debug("Ignoring PARAN reply from node {}, expecting node {}", nn, nodeNumber);
+                return;
+            }
+            int index = r.getElement(3);
+            if (!hardwareParams.isValidIndex(index)) {
+                log.warn("Ignoring PARAN reply from node {} with out of range parameter index {}", nn, index);
+                return;
+            }
+            if (index != nextParam) {
+                log.debug("Ignoring PARAN reply for parameter {}, expecting parameter {}", index, nextParam);
+                return;
+            }
             clearAllParamTimeout();
 
-            hardwareParams.setParam(r.getElement(3), r.getElement(4));
-            if (++nextParam < (hardwareParams.getParam(0) + 1)) {
+            hardwareParams.setParam(index, r.getElement(4));
+            if ((++nextParam < (hardwareParams.getParam(0) + 1)) && hardwareParams.isValidIndex(nextParam)) {
                 // Read next
                 requestParam(nextParam);
             } else {
@@ -776,14 +815,31 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
      * @param r device ID reply
      */
     void showDevId(CanReply r) {
+        long devId = getDevId(r);
         log.debug("Found device ID Manu: {} Dev: {} Device ID: {}",
                 r.getElement(1),
                 r.getElement(2),
-                (r.getElement(3)<<24) + (r.getElement(4)<<16) + (r.getElement(5)<<8) + r.getElement(4));
+                devId);
         addToLog(MessageFormat.format(Bundle.getMessage("DevIdCbus"),
                 r.getElement(1),
                 r.getElement(2),
-                (r.getElement(3)<<24) + (r.getElement(4)<<16) + (r.getElement(5)<<8) + r.getElement(4)));
+                devId));
+    }
+
+
+    /**
+     * Extract the 4-byte device ID from a device ID reply
+     * <p>
+     * Reply data is [CBUS_EXT_DEVID, manufacturer, device, ID3, ID2, ID1, ID0]
+     *
+     * @param r device ID reply
+     * @return the device ID, as an unsigned value
+     */
+    static long getDevId(CanReply r) {
+        return ((long)(r.getElement(3) & 0xFF) << 24)
+                + ((r.getElement(4) & 0xFF) << 16)
+                + ((r.getElement(5) & 0xFF) << 8)
+                + (r.getElement(6) & 0xFF);
     }
     
    
@@ -973,11 +1029,12 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
                 CanMessage m = CbusMessage.getBootNop(bootAddress, 0);
                 tc.sendCanMessage(m, null);
             }
-            if ((bootAddress < CONFIG_START) && (currentRecord.len%8 != 0)) {
+            if ((bootAddress < CONFIG_START) && (currentRecord.len%8 != 0)
+                    && ((currentRecord.len + (8 - currentRecord.len%8)) <= currentRecord.data.length)) {
                 // AN247 bootloader always writes 8 bytes to FLASH so we need to pad the packet and adjust the length
                 int pad = 8 - currentRecord.len%8;
                 for (int i = 0; i < pad; i++) {
-                    currentRecord.data[currentRecord.len + pad] = (byte)0xFF;
+                    currentRecord.data[currentRecord.len + i] = (byte)0xFF;
                 }
                 currentRecord.len += pad;
             }
@@ -1017,6 +1074,11 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             // Current record is exhausted, Get next ONE
             recordDone = false;
             recordIndex = 0;
+            if (hexFile == null) {
+                log.error("No hex file loaded");
+                endProgramming(BootStatus.ADDRESS_NOT_FOUND);
+                return;
+            }
             currentRecord = hexFile.getNextRecord();
             if (currentRecord.type == HexRecord.END) {
                 // No more data to send so send checksum
@@ -1047,24 +1109,31 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
      */
     private void initialise() {
         Optional<HexRecord> hexRecord;
-        
-        if (hardwareParams.areValid()) {
+
+        if (hexFile == null) {
+            log.error("No hex file loaded");
+            endProgramming(BootStatus.ADDRESS_NOT_FOUND);
+            return;
+        }
+
+        if ((hardwareParams != null) && hardwareParams.areValid()) {
             bootAddress = hardwareParams.getLoadAddress();
-        } else if (fileParams.areValid()) {
+        } else if ((fileParams != null) && fileParams.areValid()) {
             bootAddress = fileParams.getLoadAddress();
         } else {
             bootAddress = hexFile.getProgStart();
         }
-        
+
         recordDone = false;
         recordIndex = 0;
-        
+
         hexRecord = hexFile.getRecordForAddress(bootAddress);
         if (hexRecord.isPresent()) {
             currentRecord = hexRecord.get();
         } else {
             log.error("Did not find hex record for load address {}", "0x"+Integer.toHexString(bootAddress));
             endProgramming(BootStatus.ADDRESS_NOT_FOUND);
+            return;
         }
         checksum = 0;
         dataFramesSent = 0;
@@ -1193,6 +1262,26 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
     private TimerTask bootIdTask;
     private TimerTask checkTask;
 
+    // Set when the pane is disposed so that timer tasks that fire late, or
+    // are already running, do not act on the disposed pane
+    private volatile boolean disposed = false;
+
+
+    /**
+     * Cancel and forget all timers
+     */
+    private void cancelAllTimers() {
+        clearAllParamTimeout();
+        clearStartBootTimeout();
+        clearCheckBootTimeout();
+        clearDevIdTimeout();
+        clearBootIdTimeout();
+        clearPauseTimeout();
+        clearDataTimeout();
+        clearAckTimeout();
+        clearCheckTimeout();
+    }
+
 
     /**
      * Stop timer for a single parameter fetch
@@ -1207,7 +1296,7 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
 
     /**
      * Start timer for a Parameter request
-     * 
+     *
      * On timeout, attempt to find module already in boot mode.
      */
     private void setAllParamTimeout() {
@@ -1216,6 +1305,9 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             @Override
             public void run() {
                 allParamTask = null;
+                if (disposed) {
+                    return;
+                }
                 if (busyDialog != null) {
                     busyDialog.finish();
                     busyDialog = null;
@@ -1254,6 +1346,9 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             @Override
             public void run() {
                 startBootTask = null;
+                if (disposed) {
+                    return;
+                }
                 setCheckBootTimeout();
                 bootState = BootState.CHECK_BOOT_MODE;
                 CanMessage m = CbusMessage.getBootTest(0);
@@ -1284,6 +1379,9 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             @Override
             public void run() {
                 checkBootTask = null;
+                if (disposed) {
+                    return;
+                }
                 log.error("Timeout checking for boot mode");
                 endProgramming(BootStatus.BOOT_TIMEOUT);
             }
@@ -1314,6 +1412,9 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             @Override
             public void run() {
                 devIdTask = null;
+                if (disposed) {
+                    return;
+                }
                 bootProtocol = BootProtocol.AN247;
                 log.debug("Found AN247 bootloader");
                 addToLog(Bundle.getMessage("BootIdAn247"));
@@ -1345,6 +1446,9 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             @Override
             public void run() {
                 bootIdTask = null;
+                if (disposed) {
+                    return;
+                }
                 protocolError();
             }
         };
@@ -1377,6 +1481,9 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             @Override
             public void run() {
                 pauseTask = null;
+                if (disposed) {
+                    return;
+                }
                 hexForBootloader = false;
                 log.debug("Start writing at address {}", Integer.toHexString(bootAddress));
                 addToLog(MessageFormat.format(Bundle.getMessage("BootStartAddress"), Integer.toHexString(bootAddress)));
@@ -1412,6 +1519,9 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             @Override
             public void run() {
                 dataTask = null;
+                if (disposed) {
+                    return;
+                }
                 writeNextData();
             }
         };
@@ -1441,6 +1551,9 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             @Override
             public void run() {
                 ackTask = null;
+                if (disposed) {
+                    return;
+                }
                 endProgramming(BootStatus.ACK_TIMEOUT);
                 bootAddress -= 8;
                 log.error("Timeout waiting for data write ACK at address {}", Integer.toHexString(bootAddress));
@@ -1470,6 +1583,9 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
             @Override
             public void run() {
                 checkTask = null;
+                if (disposed) {
+                    return;
+                }
                 endProgramming(BootStatus.CHECKSUM_TIMEOUT);
                 log.error("Timeout verifying checksum");
             }
@@ -1495,20 +1611,27 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
      */
     @Override
     public void dispose() {
+        disposed = true;
+        // stop timers if running
+        cancelAllTimers();
+        if (busyDialog != null) {
+            busyDialog.finish();
+            busyDialog = null;
+        }
         if (hexFile != null) {
             hexFile.dispose();
         }
-        // stop timers if running
-
         bootConsole.dispose();
-        tc.removeCanListener(this);
+        if (tc != null) {
+            tc.removeCanListener(this);
+        }
     }
 
 
     /**
      * Nested class to create one of these using old-style defaults.
      */
-    static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
+    public static class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
 
         public Default() {
             super(Bundle.getMessage("MenuItemBootloader"),
@@ -1519,6 +1642,6 @@ public class CbusBootloaderPane extends jmri.jmrix.can.swing.CanPanel
     }
 
 
-    private final static Logger log = LoggerFactory.getLogger(CbusBootloaderPane.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusBootloaderPane.class);
 
 }

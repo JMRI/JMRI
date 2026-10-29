@@ -28,6 +28,6 @@ public class GlobalRosterEntryComboBoxTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(GlobalRosterEntryComboBoxTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(GlobalRosterEntryComboBoxTest.class);
 
 }

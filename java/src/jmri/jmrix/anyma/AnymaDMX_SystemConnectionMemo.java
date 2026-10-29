@@ -354,6 +354,6 @@ public class AnymaDMX_SystemConnectionMemo extends DefaultSystemConnectionMemo i
         super.dispose();
     }
 
-    private final static Logger log
+    private static final Logger log
             = LoggerFactory.getLogger(AnymaDMX_SystemConnectionMemo.class);
 }

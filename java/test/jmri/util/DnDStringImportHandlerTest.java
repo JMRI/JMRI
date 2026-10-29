@@ -24,6 +24,6 @@ public class DnDStringImportHandlerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(DnDStringImportHandlerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(DnDStringImportHandlerTest.class);
 
 }

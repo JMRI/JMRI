@@ -267,6 +267,6 @@ public class NceTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
         JUnitUtil.tearDown();
     }
 
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceTrafficControllerTest.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(NceTrafficControllerTest.class);
 
 }

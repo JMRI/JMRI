@@ -18,14 +18,18 @@ public class YardEditFrame extends TrackEditFrame {
         super(Bundle.getMessage("AddYard"));
     }
     
-    @Override
-    public void initComponents(Track track) {
-        setTitle(Bundle.getMessage("EditYard", track.getLocation().getName()));
+    public YardEditFrame(Location location) {
+        super(Bundle.getMessage("AddYard"));
+        initComponents(location, null);
+    }
+    
+    public YardEditFrame(Track track) {
+        super(Bundle.getMessage("EditYard", track.getLocation().getName()));
         initComponents(track.getLocation(), track);
     }
 
     @Override
-    public void initComponents(Location location, Track track) {
+    protected void initComponents(Location location, Track track) {
         _type = Track.YARD;
         super.initComponents(location, track);
 
@@ -47,5 +51,5 @@ public class YardEditFrame extends TrackEditFrame {
         setVisible(true);
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(YardEditFrame.class);
+//    private static final Logger log = LoggerFactory.getLogger(YardEditFrame.class);
 }

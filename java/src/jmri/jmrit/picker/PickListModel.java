@@ -65,7 +65,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
 
     static HashMap<String, Integer> _listMap = new HashMap<String, Integer>();
 
-    static public int getNumInstances(@Nonnull String type) {
+    public static int getNumInstances(@Nonnull String type) {
         Integer num = _listMap.get(type.toLowerCase());
         log.debug("getNumInstances of {} num={}", type, num);
         if (num != null) {
@@ -541,7 +541,7 @@ public abstract class PickListModel<E extends NamedBean> extends BeanTableDataMo
         return new AudioPickModel();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PickListModel.class);
+    private static final Logger log = LoggerFactory.getLogger(PickListModel.class);
 
     static class TurnoutPickModel extends PickListModel<Turnout> {
 

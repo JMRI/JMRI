@@ -16,6 +16,6 @@ public class StagingTableModelTest extends OperationsTestCase {
         Assert.assertNotNull("exists",t);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(StagingTableModelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(StagingTableModelTest.class);
 
 }

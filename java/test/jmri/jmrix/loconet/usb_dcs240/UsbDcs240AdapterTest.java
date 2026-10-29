@@ -27,6 +27,6 @@ public class UsbDcs240AdapterTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(UsbDcs240AdapterTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(UsbDcs240AdapterTest.class);
 
 }

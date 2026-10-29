@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.swing.*;
 
+import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.LocoIcon;
@@ -16,9 +17,9 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.trains.gui.TrainConductorAction;
 import jmri.jmrit.operations.trains.tools.ShowCarsInTrainAction;
 import jmri.jmrit.throttle.ThrottleFrameManager;
+import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
 import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseEvent;
-import jmri.jmrit.throttle.ThrottleControllerUI;
 
 /**
  * An icon that displays the position of a train icon on a panel.
@@ -103,9 +104,9 @@ public class TrainIcon extends LocoIcon {
     ThrottleControllerUI _tf = null;
 
     private void createThrottle() {
-        _tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleController();
+        _tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
         if (getConsistNumber() > 0) {
-            _tf.setAddress(getConsistNumber(), false); // use consist address
+            _tf.setAddress(new DccLocoAddress(getConsistNumber(), false)); // use consist address
             if (JmriJOptionPane.showConfirmDialog(null, Bundle.getMessage("SendFunctionCommands"), Bundle
                     .getMessage("ConsistThrottle"), JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
                 _tf.setRosterEntry(_entry); // use lead loco address

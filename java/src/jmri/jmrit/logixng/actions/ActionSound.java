@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.*;
 
 import javax.annotation.Nonnull;
@@ -21,11 +19,10 @@ import jmri.util.TypeConversionUtil;
  *
  * @author Daniel Bergqvist Copyright 2021
  */
-public class ActionSound extends AbstractDigitalAction
-        implements PropertyChangeListener {
+public class ActionSound extends AbstractDigitalAction {
 
     private final LogixNG_SelectEnum<Operation> _selectEnum =
-            new LogixNG_SelectEnum<>(this, Operation.values(), Operation.Play, this);
+            new LogixNG_SelectEnum<>(this, Operation.values(), Operation.Play);
 
     private NamedBeanAddressing _soundAddressing = NamedBeanAddressing.Direct;
     private String _sound = "";
@@ -234,24 +231,6 @@ public class ActionSound extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public void registerListenersForThisClass() {
-        if (!_listenersAreRegistered) {
-            _listenersAreRegistered = true;
-        }
-        _selectEnum.registerListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        if (_listenersAreRegistered) {
-            _listenersAreRegistered = false;
-        }
-        _selectEnum.unregisterListeners();
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void firePropertyChange(String p, Object old, Object n) {
         super.firePropertyChange(p, old, n);
     }
@@ -279,12 +258,6 @@ public class ActionSound extends AbstractDigitalAction
 
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
-    }
-
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionSound.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionSound.class);
 
 }

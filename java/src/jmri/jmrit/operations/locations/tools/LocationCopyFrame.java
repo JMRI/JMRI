@@ -44,8 +44,8 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
     JCheckBox deleteTrackCheckBox = new JCheckBox(Bundle.getMessage("DeleteCopiedTrack"));
 
     // remember state of checkboxes during a session
-    static boolean moveRollingStock = false;
-    static boolean deleteTrack = false;
+    private static boolean moveRollingStock = false;
+    private static boolean deleteTrack = false;
     
     Location _location;
     

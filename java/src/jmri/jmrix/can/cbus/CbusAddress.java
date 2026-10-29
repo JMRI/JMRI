@@ -1,5 +1,6 @@
 package jmri.jmrix.can.cbus;
 
+import java.util.Arrays;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -63,35 +64,22 @@ public class CbusAddress {
         match = hCode.reset(aString).matches();
         if (match) {
             if (hCode.group(1) != null) {
-                // hit on +/-ddd
-                aFrame = new int[5];
+                // hit on +/-ddd, sign is optional and an unsigned value is treated as +
+                String sign = hCode.group(2);
+                String digits = (sign == null) ? hCode.group(1) : hCode.group(1).substring(1);
 
-                int n = Integer.parseInt(aString.substring(1, aString.length()));  // skip +/-
-                int node = n / NODEFACTOR;
-                int event = n % NODEFACTOR;
+                // parse as long then range check to avoid int overflow for node >= 21475
+                long n = parseNonNegative(digits);
+                long node = n / NODEFACTOR;
+                long event = n % NODEFACTOR;
 
-                aFrame[4] = event & 0xff;
-                aFrame[3] = (event >> 8) & 0xff;
-                aFrame[2] = node & 0xff;
-                aFrame[1] = (node >> 8) & 0xff;
-
-                // add command
-                switch (aString.substring(0, 1)) {
-                    case "-":
-                        if (node > 0) {
-                            aFrame[0] = CbusConstants.CBUS_ACOF;
-                        } else {
-                            aFrame[0] = CbusConstants.CBUS_ASOF;
-                        }   
-                        break;
-                    case "+":
-                    default:
-                        if (node > 0) {
-                            aFrame[0] = CbusConstants.CBUS_ACON;
-                        } else {
-                            aFrame[0] = CbusConstants.CBUS_ASON;
-                        }
-                        break;
+                if (n < 0 || !setEventFrame(node, event)) {
+                    log.debug("CBUS address {} out of range, node and event must be 0-65535", s);
+                    match = false;
+                } else if ("-".equals(sign)) {
+                    aFrame[0] = (node > 0) ? CbusConstants.CBUS_ACOF : CbusConstants.CBUS_ASOF;
+                } else { // + or unsigned
+                    aFrame[0] = (node > 0) ? CbusConstants.CBUS_ACON : CbusConstants.CBUS_ASON;
                 }
             } else if (hCode.group(3) != null) {
                 // hit on hex form
@@ -105,23 +93,15 @@ public class CbusAddress {
                 }
             } else if (hCode.group(5) != null) {
                 // hit on EN form
-                aFrame = new int[5];
+                long node = parseNonNegative(hCode.group(8));
+                long event = parseNonNegative(hCode.group(9));
 
-                int node = Integer.parseInt(hCode.group(8));
-                int event = Integer.parseInt(hCode.group(9));
-
-                aFrame[4] = event & 0xff;
-                aFrame[3] = (event >> 8) & 0xff;
-                aFrame[2] = node & 0xff;
-                aFrame[1] = (node >> 8) & 0xff;
-
-                // add command
-                if ((hCode.group(6) != null) && (hCode.group(6).equals("+"))) {
-                    aFrame[0] = CbusConstants.CBUS_ACON;
-                } else if ((hCode.group(6) != null) && (hCode.group(6).equals("-"))) {
+                if (!setEventFrame(node, event)) {
+                    log.debug("CBUS address {} out of range, node and event must be 0-65535", s);
+                    match = false;
+                } else if ("-".equals(hCode.group(6))) {
                     aFrame[0] = CbusConstants.CBUS_ACOF;
-                } else // default
-                {
+                } else { // + or unsigned
                     aFrame[0] = CbusConstants.CBUS_ACON;
                 }
             }
@@ -131,7 +111,39 @@ public class CbusAddress {
     }
 
     /**
+     * Parse a String of decimal digits.
+     * @param digits the digits to parse
+     * @return the value, or -1 if the value can not be parsed ( eg. too large ).
+     */
+    private static long parseNonNegative(String digits) {
+        try {
+            return Long.parseLong(digits);
+        } catch (NumberFormatException ex) {
+            return -1;
+        }
+    }
+
+    /**
+     * Create the 5 element aFrame for a long or short event, element 0 is left as 0.
+     * @param node the node number
+     * @param event the event number
+     * @return true if node and event are within 0-65535 and aFrame was set, else false.
+     */
+    private boolean setEventFrame(long node, long event) {
+        if (node < 0 || node > 0xffff || event < 0 || event > 0xffff) {
+            return false;
+        }
+        aFrame = new int[5];
+        aFrame[4] = (int) (event & 0xff);
+        aFrame[3] = (int) ((event >> 8) & 0xff);
+        aFrame[2] = (int) (node & 0xff);
+        aFrame[1] = (int) ((node >> 8) & 0xff);
+        return true;
+    }
+
+    /**
      * Two addresses are equal if they result in the same numeric contents.
+     * Two invalid addresses ( which have no numeric contents ) are also equal.
      * @param r The other CbusAddress to compare
      */
     @Override
@@ -143,32 +155,24 @@ public class CbusAddress {
             return false;
         }
         CbusAddress opp = (CbusAddress) r;
-        if (opp.aFrame.length != this.aFrame.length) {
-            return false;
-        }
-        for (int i = 0; i < this.aFrame.length; i++) {
-            if (this.aFrame[i] != opp.aFrame[i]) {
-                return false;
-            }
-        }
-        return true;
+        return Arrays.equals(this.aFrame, opp.aFrame);
     }
 
     @Override
     public int hashCode() {
-        int ret = 0;
-        for (int i = 0; i < this.aFrame.length; i++) {
-            ret += this.aFrame[i];
-        }
-        return ret;
+        return Arrays.hashCode(aFrame); // 0 for an invalid address
     }
 
     public CanMessage makeMessage(int header) {
         return new CanMessage(aFrame, header);
     }
 
+    /**
+     * Check if the address String was successfully parsed into a Frame.
+     * @return true if valid, else false.
+     */
     public boolean check() {
-        return hCode.reset(aString).matches();
+        return match;
     }
 
     /**
@@ -260,6 +264,9 @@ public class CbusAddress {
                 return new CbusAddress[0];
             }
             retval[i] = new CbusAddress(pStrings[i]);
+            if (!retval[i].check()) { // matched the pattern but out of range
+                return new CbusAddress[0];
+            }
         }
         return retval;
     }
@@ -304,7 +311,7 @@ public class CbusAddress {
     }
 
     // not A-F, N or X
-    private final static String[] invalidChars = {
+    private static final String[] invalidChars = {
         "G","H","I","J","K","L","M","S","T","U","V","W","Y","Z",
         "?",":","++","--",",","*","NN","XX"};
     
@@ -354,9 +361,9 @@ public class CbusAddress {
                 if (address.startsWith("+") || address.startsWith("-")) {
                     break;
                 }
-                int unsigned;
+                long unsigned;
                 try {
-                    unsigned = Integer.parseInt(address); // accept unsigned integer
+                    unsigned = Long.parseLong(address); // accept unsigned integer
                     if (unsigned > 100000) {
                         break;
                     }
@@ -382,14 +389,17 @@ public class CbusAddress {
      * @return part of CBUS address including + or - (on off) sign
      */
     private static String checkPartOfName(String testpart, String plusOrMinus) {
-        int unsigned = 0;
+        long unsigned = 0;
         String part = testpart;
         try {
-            unsigned = Integer.parseInt(part);
+            unsigned = Long.parseLong(part); // long so node numbers >= 21475 do not overflow
             log.debug("part {} is integer {}", part, unsigned);
             if ((part.charAt(0) != '+') && (part.charAt(0) != '-')) {
                 if (unsigned > 0 && unsigned < 65536) {
                     part = plusOrMinus + part;
+                } else if (unsigned == 0) {
+                    // an unsigned 0 is not accepted, must be +0 or -0
+                    throw new IllegalArgumentException("Unsigned 0 event requires + or - : " + part);
                 }
             }
             if (unsigned > 65535 && unsigned < 100000) {
@@ -466,6 +476,6 @@ public class CbusAddress {
         return retval;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusAddress.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusAddress.class);
 
 }

@@ -17,26 +17,26 @@ public class ColorUtil {
     /*
      * Color lists for screen colors.
      */
-    public final static String ColorTrack = "track";
-    public final static String ColorBlack = "black";
-    public final static String ColorDarkGray = "darkGray";
-    public final static String ColorGray = "gray";
-    public final static String ColorLightGray = "lightGray";
-    public final static String ColorWhite = "white";
-    public final static String ColorRed = "red";
-    public final static String ColorPink = "pink";
-    public final static String ColorOrange = "orange";
-    public final static String ColorYellow = "yellow";
-    public final static String ColorGreen = "green";
-    public final static String ColorBlue = "blue";
-    public final static String ColorMagenta = "magenta";
-    public final static String ColorCyan = "cyan";
-    public final static String ColorClear = "clear";
-    public final static String ColorBrown = "brown";
+    public static final String ColorTrack = "track";
+    public static final String ColorBlack = "black";
+    public static final String ColorDarkGray = "darkGray";
+    public static final String ColorGray = "gray";
+    public static final String ColorLightGray = "lightGray";
+    public static final String ColorWhite = "white";
+    public static final String ColorRed = "red";
+    public static final String ColorPink = "pink";
+    public static final String ColorOrange = "orange";
+    public static final String ColorYellow = "yellow";
+    public static final String ColorGreen = "green";
+    public static final String ColorBlue = "blue";
+    public static final String ColorMagenta = "magenta";
+    public static final String ColorCyan = "cyan";
+    public static final String ColorClear = "clear";
+    public static final String ColorBrown = "brown";
 
-    public final static Color clear = setAlpha(Color.BLACK, 0);
-    public final static Color CLEAR = clear;
-    public final static Color BROWN = new Color(102, 51, 0);
+    public static final Color clear = setAlpha(Color.BLACK, 0);
+    public static final Color CLEAR = clear;
+    public static final Color BROWN = new Color(102, 51, 0);
 
     /**
      * Handles known colors plus special value for track.
@@ -309,6 +309,6 @@ public class ColorUtil {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(ColorUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(ColorUtil.class);
 
 }

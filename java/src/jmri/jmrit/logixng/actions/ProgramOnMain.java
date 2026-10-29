@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -18,7 +16,7 @@ import jmri.jmrit.logixng.util.LogixNG_SelectInteger;
  * @author Daniel Bergqvist Copyright 2024
  */
 public class ProgramOnMain extends AbstractDigitalAction
-        implements FemaleSocketListener, PropertyChangeListener {
+        implements FemaleSocketListener {
 
     private static final ResourceBundle rbx =
             ResourceBundle.getBundle("jmri.jmrit.logixng.implementation.ImplementationBundle");
@@ -30,10 +28,10 @@ public class ProgramOnMain extends AbstractDigitalAction
     private ThrottleManager _throttleManager;
     private final LogixNG_SelectComboBox _selectProgrammingMode;
     private final LogixNG_SelectEnum<LongOrShortAddress> _selectLongOrShortAddress =
-            new LogixNG_SelectEnum<>(this, LongOrShortAddress.values(), LongOrShortAddress.Auto, this);
-    private final LogixNG_SelectInteger _selectAddress = new LogixNG_SelectInteger(this, this);
-    private final LogixNG_SelectInteger _selectCV = new LogixNG_SelectInteger(this, this);
-    private final LogixNG_SelectInteger _selectValue = new LogixNG_SelectInteger(this, this);
+            new LogixNG_SelectEnum<>(this, LongOrShortAddress.values(), LongOrShortAddress.Auto);
+    private final LogixNG_SelectInteger _selectAddress = new LogixNG_SelectInteger(this);
+    private final LogixNG_SelectInteger _selectCV = new LogixNG_SelectInteger(this);
+    private final LogixNG_SelectInteger _selectValue = new LogixNG_SelectInteger(this);
     private String _localVariableForStatus = "";
     private boolean _wait = true;
     private final InternalFemaleSocket _internalSocket = new InternalFemaleSocket();
@@ -43,7 +41,7 @@ public class ProgramOnMain extends AbstractDigitalAction
 
         // The array is updated with correct values when setMemo() is called
         POMItem[] modes = {new POMItem("")};
-        _selectProgrammingMode = new LogixNG_SelectComboBox(this, modes, modes[0], this);
+        _selectProgrammingMode = new LogixNG_SelectComboBox(this, modes, modes[0]);
 
         // Set the _programmerManager and _throttleManager variables
         setMemo(null);
@@ -348,12 +346,6 @@ public class ProgramOnMain extends AbstractDigitalAction
         }
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
-    }
-
 
     private class InternalFemaleSocket extends jmri.jmrit.logixng.implementation.DefaultFemaleDigitalActionSocket {
 
@@ -442,6 +434,6 @@ public class ProgramOnMain extends AbstractDigitalAction
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProgramOnMain.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProgramOnMain.class);
 
 }

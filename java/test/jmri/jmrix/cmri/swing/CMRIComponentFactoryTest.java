@@ -39,6 +39,6 @@ public class CMRIComponentFactoryTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CMRIComponentFactoryTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CMRIComponentFactoryTest.class);
 
 }

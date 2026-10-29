@@ -1,6 +1,6 @@
 package jmri.jmrit.operations.locations.gui;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
 
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
@@ -12,19 +12,19 @@ import jmri.jmrit.operations.locations.tools.*;
  * @author Dan Boudreau Copyright (C) 2008, 2011, 2012, 2025
  */
 public class InterchangeEditFrame extends TrackEditFrame {
-
-    public InterchangeEditFrame() {
+    
+    public InterchangeEditFrame(Location location) {
         super(Bundle.getMessage("AddInterchange"));
+        initComponents(location, null);
     }
     
-    @Override
-    public void initComponents(Track track) {
-        setTitle(Bundle.getMessage("EditInterchange", track.getLocation().getName()));
+    public InterchangeEditFrame(Track track) {
+        super(Bundle.getMessage("EditInterchange", track.getLocation().getName()));
         initComponents(track.getLocation(), track);
     }
 
     @Override
-    public void initComponents(Location location, Track track) {
+    protected void initComponents(Location location, Track track) {
         _type = Track.INTERCHANGE;
 
         super.initComponents(location, track);
@@ -48,5 +48,5 @@ public class InterchangeEditFrame extends TrackEditFrame {
         setVisible(true);
     }
 
-//    private final static Logger log = LoggerFactory.getLogger(InterchangeEditFrame.class);
+//    private static final Logger log = LoggerFactory.getLogger(InterchangeEditFrame.class);
 }

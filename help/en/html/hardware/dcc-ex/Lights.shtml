@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>JMRI: EX-CommandStation (DCC-EX) Lights</title>
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
+  <meta name="keywords" content="DCC-EX lights"></head>
+<body>
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
+      <h1>EX-CommandStation (DCC-EX) Lights</h1>
+
+      <p>DCC-EX lights support two output modes, selectable per-light in the Light Table.
+      The Mode column only appears in the table when a DCC-EX connection is active.</p>
+
+      <h2>Output Modes</h2>
+
+      <h3>Accessory Decoder (default)</h3>
+
+      <p>The default mode. JMRI sends a DCC accessory decoder command (&lt;a dcc-address subaddress activate&gt;)
+      to turn the light on or off. Use this for any light or relay connected to a DCC
+      accessory decoder on the track.</p>
+
+      <p>The Hardware Address is the DCC accessory address.</p>
+
+      <h3>CS VPIN (DCC-EX v4.2.35+)</h3>
+
+      <p>CS VPIN mode drives a VPIN directly using the &lt;z vpin&gt; / &lt;z -vpin&gt; command -
+      no pre-configuration in the Base Station's output table is needed. The command station
+      resolves the VPIN via the EX-HAL layer at runtime, so it works with raw GPIO pins,
+      I2C expanders, and any other HAL device.</p>
+
+      <p>Set the Hardware Address to the VPIN number. ON sends &lt;z vpin&gt; (HIGH) and
+      OFF sends &lt;z -vpin&gt; (LOW). State updates optimistically on send with no reply
+      from the command station.</p>
+
+      <p>On ESP32-based hardware (EX-CSB1), VPINs 0-39 map directly to GPIO numbers with no
+      extra HAL configuration. For other devices use the VPIN assigned in your myHal.cpp.</p>
+
+      <h2>Adding a Light and Setting its Mode</h2>
+
+      <ol>
+        <li>Open the Light Table (Tools &gt; Tables &gt; Lights).</li>
+        <li>Click <strong>Add...</strong></li>
+        <li>Make sure "DCC-EX" is selected in the System Name chooser.</li>
+        <li>Enter the Hardware Address (DCC address, or VPIN number for CS VPIN mode).</li>
+        <li>Click <strong>OK</strong>.</li>
+        <li>In the new row, use the Mode dropdown to select "Accessory Decoder" or "CS VPIN".</li>
+      </ol>
+
+      <p>The mode is saved with your panel file and restored on the next load.</p>
+
+      <h2>General Notes</h2>
+
+      <p>CS VPIN mode requires EX-CommandStation firmware v4.2.35 or later. Earlier firmware
+      does not support the lowercase &lt;z&gt; command.</p>
+
+      <p>The &lt;z&gt; command is fire-and-forget - the command station does not send a reply.
+      For applications that need confirmed state, use Accessory Decoder mode with a feedback
+      sensor instead.</p>
+
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/help.js"></script>
+</body>
+</html>

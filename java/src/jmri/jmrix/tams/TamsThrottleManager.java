@@ -27,9 +27,9 @@ public class TamsThrottleManager extends AbstractThrottleManager implements Tams
         super(memo);
     }
 
-    static private TamsThrottleManager mInstance = null;
+    private static TamsThrottleManager mInstance = null;
 
-    static public TamsThrottleManager instance() {
+    public static TamsThrottleManager instance() {
         return mInstance;
     }
 
@@ -123,6 +123,6 @@ public class TamsThrottleManager extends AbstractThrottleManager implements Tams
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TamsThrottleManager.class);
+    private static final Logger log = LoggerFactory.getLogger(TamsThrottleManager.class);
 
 }

@@ -32,7 +32,6 @@ public class LogixNG_SelectDoubleSwing {
     private JPanel _panelTable;
     private JTextField _referenceTextField;
     private BeanSelectPanel<Memory> _memoryPanel;
-    private JCheckBox _listenToMemoryCheckBox;
     private JTextField _localVariableTextField;
     private JTextField _formulaTextField;
 
@@ -60,11 +59,9 @@ public class LogixNG_SelectDoubleSwing {
         _panelTable = _selectTableSwing.createPanel(selectDouble.getSelectTable());
 
         _memoryPanel = new BeanSelectPanel<>(InstanceManager.getDefault(MemoryManager.class), null);
-        _listenToMemoryCheckBox = new JCheckBox(Bundle.getMessage("ListenToMemory"));
 
         _panelMemory.setLayout(new BoxLayout(_panelMemory, BoxLayout.Y_AXIS));
         _panelMemory.add(_memoryPanel);
-        _panelMemory.add(_listenToMemoryCheckBox);
 
         _tabbedPane.addTab(NamedBeanAddressing.Direct.toString(), _panelDirect);
         _tabbedPane.addTab(NamedBeanAddressing.Reference.toString(), _panelReference);
@@ -103,7 +100,6 @@ public class LogixNG_SelectDoubleSwing {
         _valueTextField.setText(_formatterParserValidator.format(selectDouble.getValue()));
         _referenceTextField.setText(selectDouble.getReference());
         _memoryPanel.setDefaultNamedBean(selectDouble.getMemory());
-        _listenToMemoryCheckBox.setSelected(selectDouble.getListenToMemory());
         _localVariableTextField.setText(selectDouble.getLocalVariable());
         _formulaTextField.setText(selectDouble.getFormula());
 
@@ -173,7 +169,6 @@ public class LogixNG_SelectDoubleSwing {
             } else if (_tabbedPane.getSelectedComponent() == _panelMemory) {
                 selectDouble.setAddressing(NamedBeanAddressing.Memory);
                 selectDouble.setMemory(_memoryPanel.getNamedBean());
-                selectDouble.setListenToMemory(_listenToMemoryCheckBox.isSelected());
             } else if (_tabbedPane.getSelectedComponent() == _panelLocalVariable) {
                 selectDouble.setAddressing(NamedBeanAddressing.LocalVariable);
                 selectDouble.setLocalVariable(_localVariableTextField.getText());

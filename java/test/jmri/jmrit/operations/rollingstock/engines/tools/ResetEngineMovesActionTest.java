@@ -24,7 +24,7 @@ public class ResetEngineMovesActionTest extends OperationsTestCase {
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
 
-    // private final static Logger log =
+    // private static final Logger log =
     // LoggerFactory.getLogger(ResetEngineMovesActionTest.class);
 
 }

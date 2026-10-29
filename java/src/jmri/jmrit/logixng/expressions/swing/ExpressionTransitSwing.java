@@ -130,5 +130,5 @@ public class ExpressionTransitSwing extends AbstractDigitalExpressionSwing {
         _selectNamedBeanSwing.dispose();
     }
 
-//     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionTransitSwing.class);
+//     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionTransitSwing.class);
 }

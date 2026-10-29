@@ -3,11 +3,10 @@ package jmri.jmrit.operations.trains.tools;
 import java.awt.Color;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
@@ -18,8 +17,12 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.util.ColorUtil;
 import jmri.util.swing.JmriJOptionPane;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 
 /**
  * Provides an export to the Timetable feature.
@@ -215,9 +218,9 @@ public class ExportTimetable extends XmlFile {
      */
     private void loadSchedule(CSVPrinter fileOut) throws IOException {
         // create schedule name based on date and time
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd kk:mm");
-        String scheduleName = simpleDateFormat.format(Calendar.getInstance().getTime());
-
+        LocalDateTime date = LocalDateTime.now();
+        DateTimeFormatter simpleDateFormat = DateTimeFormatter.ofPattern("yyyy_MM_dd kk:mm"); // NOI18N
+        String scheduleName = date.format(simpleDateFormat);
         fileOut.printRecord("Schedule", scheduleName, "Today", "0", "24");
     }
 
@@ -246,7 +249,7 @@ public class ExportTimetable extends XmlFile {
                     defaultSpeed,
                     train.getDepartTimeMinutes(),
                     "0",
-                    train.getComment());
+                    train.getCommentCurrent());
 
             // reset train types
             if (type > 4) {
@@ -265,13 +268,15 @@ public class ExportTimetable extends XmlFile {
                     }
                 }
                 int duration = 0;
-                if ((rl != train.getTrainDepartsRouteLocation() && rl.getLocation() != null && !rl.getLocation().isStaging())) {
-                    if (train.isBuilt()) {
+                if ((rl != train.getTrainDepartsRouteLocation() &&
+                        rl.getLocation() != null &&
+                        !rl.getLocation().isStaging())) {
+                    // if there's a departure time, use that
+                    if (!rl.getDepartureTimeHourMinutes().isEmpty()) {
+                        duration = TrainCommon.convertStringTime(rl.getDepartureTime()) -
+                                train.getExpectedTravelTimeInMinutes(rl);
+                    } else if (train.isBuilt()) {
                         duration = train.getWorkTimeAtLocation(rl) + rl.getWait();
-                        if (!rl.getDepartureTimeHourMinutes().isEmpty() && !train.getExpectedArrivalTime(rl).equals(Train.ALREADY_SERVICED)) {
-                            duration = 60 * Integer.parseInt(rl.getDepartureTimeHour())
-                                    + Integer.parseInt(rl.getDepartureTimeMinute()) - train.getExpectedTravelTimeInMinutes(rl);
-                        }
                     } else {
                         duration = rl.getMaxCarMoves() * Setup.getSwitchTime() + rl.getWait();
                     }

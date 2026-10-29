@@ -1,12 +1,13 @@
 package jmri.jmrit.operations.rollingstock.engines.gui;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.GridBagLayout;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.*;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.*;
 import jmri.jmrit.operations.rollingstock.engines.*;
@@ -122,7 +123,7 @@ public class EngineEditFrame extends RollingStockEditFrame {
 
     public void load(Engine engine) {
         setTitle(Bundle.getMessage("TitleEngineEdit"));
-        
+
         if (!engineModels.containsName(engine.getModel())) {
             String msg = Bundle.getMessage("modelNameNotExist",
                     engine.getModel());
@@ -179,9 +180,11 @@ public class EngineEditFrame extends RollingStockEditFrame {
 
     @Override
     protected void save(boolean isSave) {
-        super.save(engineManager, isSave);
+        if (!super.save(engineManager, isSave)) {
+            return;
+        }
         Engine engine = (Engine) _rs;
-        
+
         checkAndSetLocationAndTrack(engine);
 
         engine.setBunit(bUnitCheckBox.isSelected());
@@ -191,7 +194,8 @@ public class EngineEditFrame extends RollingStockEditFrame {
                 engine.setConsist(null);
                 engine.setBlocking(Engine.DEFAULT_BLOCKING_ORDER);
             } else if (!engine.getConsistName().equals(groupComboBox.getSelectedItem())) {
-                engine.setConsist(InstanceManager.getDefault(ConsistManager.class).getConsistByName((String) groupComboBox.getSelectedItem()));
+                engine.setConsist(InstanceManager.getDefault(ConsistManager.class)
+                        .getConsistByName((String) groupComboBox.getSelectedItem()));
                 if (engine.getConsist() != null) {
                     engine.setBlocking(engine.getConsist().getSize());
                     blockingTextField.setText(Integer.toString(engine.getBlocking()));
@@ -211,7 +215,7 @@ public class EngineEditFrame extends RollingStockEditFrame {
                         Bundle.getMessage("engineCanNotHp"), JmriJOptionPane.ERROR_MESSAGE);
             }
         }
-        
+
         // is this engine part of a consist? Ask if all engines should have the same location and track
         if (engine.getConsist() != null) {
             List<Engine> engines = engine.getConsist().getEngines();
@@ -220,7 +224,7 @@ public class EngineEditFrame extends RollingStockEditFrame {
                     if (cEngine.getLocation() != engine.getLocation() || cEngine.getTrack() != engine.getTrack()) {
                         int results = JmriJOptionPane.showConfirmDialog(this, Bundle
                                 .getMessage("engineInConsistLocation",
-                                engine.toString(), engine.getLocationName(), engine.getTrackName()),
+                                        engine.toString(), engine.getLocationName(), engine.getTrackName()),
                                 Bundle.getMessage("enginePartConsist"),
                                 JmriJOptionPane.YES_NO_OPTION);
                         if (results == JmriJOptionPane.YES_OPTION) {
@@ -269,6 +273,10 @@ public class EngineEditFrame extends RollingStockEditFrame {
             engineAttributeEditFrame.initComponents(EngineAttributeEditFrame.TYPE,
                     (String) typeComboBox.getSelectedItem());
         }
+        if (ae.getSource() == editColorButton) {
+            engineAttributeEditFrame.initComponents(EngineAttributeEditFrame.COLOR,
+                    (String) colorComboBox.getSelectedItem());
+        }
         if (ae.getSource() == editLengthButton) {
             engineAttributeEditFrame.initComponents(EngineAttributeEditFrame.LENGTH,
                     (String) lengthComboBox.getSelectedItem());
@@ -284,8 +292,9 @@ public class EngineEditFrame extends RollingStockEditFrame {
     }
 
     /**
-     * Converts tractive effort to HP using the formula: HP = TE * MPH / 375. MPH
-     * set at 25, see SPEED. 60% conversion efficiency to produce reasonable HP values.
+     * Converts tractive effort to HP using the formula: HP = TE * MPH / 375.
+     * MPH set at 25, see SPEED. 60% conversion efficiency to produce reasonable
+     * HP values.
      */
     private void convertTractiveEffortToHp() {
         String TE = teTextField.getText().trim();

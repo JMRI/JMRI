@@ -134,7 +134,7 @@ public class SpeedoReply extends jmri.jmrix.AbstractMRReply {
         return rep.indexOf(s);
     }
 
-    static public final int maxSize = 32;
+    public static final int maxSize = 32;
 
     @Override
     public int maxSize() {
@@ -150,6 +150,6 @@ public class SpeedoReply extends jmri.jmrix.AbstractMRReply {
         return -1;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SpeedoReply.class);
+    private static final Logger log = LoggerFactory.getLogger(SpeedoReply.class);
 
 }

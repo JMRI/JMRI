@@ -30,9 +30,9 @@ import org.jdom2.*;
  */
 public class VSDecoderPreferences {
 
-    public final static String VSDPreferencesFileName = "VSDecoderPreferences.xml";
+    public static final String VSDPreferencesFileName = "VSDecoderPreferences.xml";
 
-    static public final int DefaultMasterVolume = 80;
+    public static final int DefaultMasterVolume = 80;
 
     // Private variables to hold preference values
     private boolean _autoStartEngine = false; // play engine sound w/o waiting for "Engine Start" button pressed.

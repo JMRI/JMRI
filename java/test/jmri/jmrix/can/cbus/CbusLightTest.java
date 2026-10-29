@@ -553,5 +553,5 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusLightTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusLightTest.class);
 }

@@ -17,6 +17,6 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertNotNull("exists", t);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(XmlTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(XmlTest.class);
 
 }

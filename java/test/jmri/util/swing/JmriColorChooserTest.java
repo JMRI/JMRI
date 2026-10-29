@@ -63,6 +63,6 @@ public class JmriColorChooserTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(JmriColorChooserTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(JmriColorChooserTest.class);
 
 }

@@ -139,6 +139,6 @@ public class SerialDriverAdapter extends IEEE802154PortController {
         return "";
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
+    private static final Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }

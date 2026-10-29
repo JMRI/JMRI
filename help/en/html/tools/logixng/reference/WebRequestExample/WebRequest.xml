@@ -12,8 +12,8 @@ This file is created by jmri.jmrit.logixng.actions.WebRequestTest
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-5-5-5.xsd">
   <jmriversion>
     <major>5</major>
-    <minor>13</minor>
-    <test>7</test>
+    <minor>17</minor>
+    <test>3</test>
     <modifier>plus</modifier>
   </jmriversion>
   <timeProviders class="jmri.jmrix.internal.configurexml.InternalTimeProviderManagerXml">

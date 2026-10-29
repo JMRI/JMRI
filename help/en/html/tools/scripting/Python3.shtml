@@ -35,6 +35,14 @@
 		        We'll update to use them and make Windows support available as soon as those
 		        components are updated.
 		    </p>
+		    <p>
+		        Scripts to help 
+		        <A href="https://groups.io/g/jmriusers/files/Contributed%20Add-Ons/GraalVM%20scripts/build_jmri_graalpy.py">install</a>and
+		        <a href="https://groups.io/g/jmriusers/files/Contributed%20Add-Ons/GraalVM%20scripts/remove_jmri_graalpy.py">uninstall</a>
+		        a JMRI installation using GraalVM are available via a
+		        <a href="https://groups.io/g/jmriusers/files/Contributed%20Add-Ons/GraalVM%20scripts">directory</a> on the
+		        <a href="https://jmriusers.groups.io">jmriusers group site</a>.
+		    </p>
 	    </div> <!-- closes #teaser-->
 
 	    <!-- -------- -->

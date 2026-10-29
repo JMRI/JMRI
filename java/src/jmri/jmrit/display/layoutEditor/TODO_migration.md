@@ -271,11 +271,11 @@ getId but setIdent?
 java/src/jmri/jmrit/display/layoutEditor//LayoutTrackDrawingOptions.java:    public String getName() {
 java/src/jmri/jmrit/display/layoutEditor//LayoutShape.java:    public String getName() {
 java/src/jmri/jmrit/display/layoutEditor//LayoutEditor.java:        public String getName() {
-java/src/jmri/jmrit/display/layoutEditor//LayoutTrack.java:    final public String getName() {
+java/src/jmri/jmrit/display/layoutEditor//LayoutTrack.java:    public final String getName() {
 
 % grep -r 'String getId\(\)' java/src/jmri/jmrit/display/layoutEditor/
 java/src/jmri/jmrit/display/layoutEditor//LayoutBlock.java:    public String getId() {
-java/src/jmri/jmrit/display/layoutEditor//LayoutTrack.java:    final public String getId() {
+java/src/jmri/jmrit/display/layoutEditor//LayoutTrack.java:    public final String getId() {
 ```
 
 ---
@@ -468,17 +468,17 @@ layoutEditor/blockRoutingTable/LayoutBlockRouteTableModel.java:    static final 
 Note bits:
 ```
 layoutEditor/LayoutBlock.java:    public static final int RESERVED = 0x08;
-layoutEditor/LayoutBlock.java:    final static int ADDITION = 0x00;
-layoutEditor/LayoutBlock.java:    final static int UPDATE = 0x02;
-layoutEditor/LayoutBlock.java:    final static int REMOVAL = 0x04;
+layoutEditor/LayoutBlock.java:    static final int ADDITION = 0x00;
+layoutEditor/LayoutBlock.java:    static final int UPDATE = 0x02;
+layoutEditor/LayoutBlock.java:    static final int REMOVAL = 0x04;
 ```
 
 Note bits, with an odd choice of NONE - confined to Layout Block, make private? 
 ```
-layoutEditor/LayoutBlock.java:    final static int RXTX = 0x00;
-layoutEditor/LayoutBlock.java:    final static int RXONLY = 0x02;
-layoutEditor/LayoutBlock.java:    final static int TXONLY = 0x04;
-layoutEditor/LayoutBlock.java:    final static int NONE = 0x08;
+layoutEditor/LayoutBlock.java:    static final int RXTX = 0x00;
+layoutEditor/LayoutBlock.java:    static final int RXONLY = 0x02;
+layoutEditor/LayoutBlock.java:    static final int TXONLY = 0x04;
+layoutEditor/LayoutBlock.java:    static final int NONE = 0x08;
 
 layoutEditor/ConnectivityUtil.java:    public static final int OVERALL = 0x00;  (Connected to Section.java)
 layoutEditor/ConnectivityUtil.java:    public static final int CONTINUING = 0x01;
@@ -487,13 +487,13 @@ layoutEditor/ConnectivityUtil.java:    public static final int DIVERGING = 0x02;
 
 Note the following values repeat. Two Enums? Try and see if compiles.
 ```
-layoutEditor/LayoutConnectivity.java:    final public static int NONE = 0;
-layoutEditor/LayoutConnectivity.java:    final public static int XOVER_BOUNDARY_AB = 1;  // continuing
-layoutEditor/LayoutConnectivity.java:    final public static int XOVER_BOUNDARY_CD = 2;  // continuing
-layoutEditor/LayoutConnectivity.java:    final public static int XOVER_BOUNDARY_AC = 3;  // xed over
-layoutEditor/LayoutConnectivity.java:    final public static int XOVER_BOUNDARY_BD = 4;  // xed over
-layoutEditor/LayoutConnectivity.java:    final public static int XOVER_BOUNDARY_AD = 1;  // continuing (slips)
-layoutEditor/LayoutConnectivity.java:    final public static int XOVER_BOUNDARY_BC = 2;  // continuing (slips)
+layoutEditor/LayoutConnectivity.java:    public static final int NONE = 0;
+layoutEditor/LayoutConnectivity.java:    public static final int XOVER_BOUNDARY_AB = 1;  // continuing
+layoutEditor/LayoutConnectivity.java:    public static final int XOVER_BOUNDARY_CD = 2;  // continuing
+layoutEditor/LayoutConnectivity.java:    public static final int XOVER_BOUNDARY_AC = 3;  // xed over
+layoutEditor/LayoutConnectivity.java:    public static final int XOVER_BOUNDARY_BD = 4;  // xed over
+layoutEditor/LayoutConnectivity.java:    public static final int XOVER_BOUNDARY_AD = 1;  // continuing (slips)
+layoutEditor/LayoutConnectivity.java:    public static final int XOVER_BOUNDARY_BC = 2;  // continuing (slips)
 ```
 
 The following are bits, but there's no indication they are ever or'd:

@@ -58,7 +58,7 @@ public class ZeroConfPreferences extends PreferencesBean {
      */
     public static final String USE_LINK_LOCAL = "useLinkLocal";
 
-    private final static Logger log = LoggerFactory.getLogger(ZeroConfPreferences.class);
+    private static final Logger log = LoggerFactory.getLogger(ZeroConfPreferences.class);
 
     public ZeroConfPreferences(Profile profile) {
         super(profile);

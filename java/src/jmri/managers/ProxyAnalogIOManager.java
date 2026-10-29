@@ -160,6 +160,6 @@ public class ProxyAnalogIOManager extends AbstractProxyManager<AnalogIO>
         registerBeans.remove(clazz);
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProxyAnalogIOManager.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProxyAnalogIOManager.class);
 
 }

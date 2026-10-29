@@ -86,6 +86,6 @@ public class PanedTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PanedTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PanedTest.class);
 
 }

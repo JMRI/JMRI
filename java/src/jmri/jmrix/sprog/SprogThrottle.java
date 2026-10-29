@@ -329,6 +329,6 @@ public class SprogThrottle extends AbstractThrottle {
     }
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(SprogThrottle.class);
+    private static final Logger log = LoggerFactory.getLogger(SprogThrottle.class);
 
 }

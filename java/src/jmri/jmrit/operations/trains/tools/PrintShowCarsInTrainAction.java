@@ -46,5 +46,5 @@ public class PrintShowCarsInTrainAction extends AbstractAction implements Proper
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintShowCarsInTrainAction.class);
+    private static final Logger log = LoggerFactory.getLogger(PrintShowCarsInTrainAction.class);
 }

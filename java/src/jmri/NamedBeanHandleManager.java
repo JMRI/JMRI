@@ -3,6 +3,8 @@ package jmri;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.util.ArrayList;
+import java.util.IdentityHashMap;
+import java.util.List;
 import java.util.Objects;
 
 import javax.annotation.CheckForNull;
@@ -64,14 +66,17 @@ public class NamedBeanHandleManager extends AbstractManager<NamedBean> implement
         if (name.isEmpty()) {
             throw new IllegalArgumentException("name cannot be empty in getNamedBeanHandle");
         }
-        NamedBeanHandle<T> temp = new NamedBeanHandle<>(name, bean);
-        for (NamedBeanHandle<T> h : namedBeanHandles) {
-            if (temp.equals(h)) {
-                return h;
+        synchronized (namedBeanHandles) {
+            List<NamedBeanHandle<?>> handles = namedBeanHandles.computeIfAbsent(bean, b -> new ArrayList<>(2));
+            for (NamedBeanHandle<?> h : handles) {
+                if (name.equals(h.getName())) {
+                    return (NamedBeanHandle<T>) h;
+                }
             }
+            NamedBeanHandle<T> temp = new NamedBeanHandle<>(name, bean);
+            handles.add(temp);
+            return temp;
         }
-        namedBeanHandles.add(temp);
-        return temp;
     }
 
     /**
@@ -94,10 +99,11 @@ public class NamedBeanHandleManager extends AbstractManager<NamedBean> implement
          it simply updates the name to the new one. So hence you can end up with
          multiple named bean entries for one name.
          */
-        NamedBeanHandle<T> oldBean = new NamedBeanHandle<>(oldName, bean);
-        for (NamedBeanHandle<T> h : namedBeanHandles) {
-            if (oldBean.equals(h)) {
-                h.setName(newName);
+        synchronized (namedBeanHandles) {
+            for (NamedBeanHandle<?> h : namedBeanHandles.getOrDefault(bean, List.of())) {
+                if (oldName.equals(h.getName())) {
+                    h.setName(newName);
+                }
             }
         }
         updateListenerRef(oldName, newName, bean);
@@ -124,10 +130,23 @@ public class NamedBeanHandleManager extends AbstractManager<NamedBean> implement
          multiple bean entries with the same name.
          */
 
-        NamedBeanHandle<T> oldNamedBean = new NamedBeanHandle<>(name, oldBean);
-        for (NamedBeanHandle<T> h : namedBeanHandles) {
-            if (oldNamedBean.equals(h)) {
-                h.setBean(newBean);
+        synchronized (namedBeanHandles) {
+            List<NamedBeanHandle<?>> oldHandles = namedBeanHandles.get(oldBean);
+            if (oldHandles != null && oldBean != newBean) {
+                List<NamedBeanHandle<?>> moved = new ArrayList<>();
+                for (NamedBeanHandle<?> h : oldHandles) {
+                    if (name.equals(h.getName())) {
+                        ((NamedBeanHandle<T>) h).setBean(newBean);
+                        moved.add(h);
+                    }
+                }
+                oldHandles.removeAll(moved);
+                if (oldHandles.isEmpty()) {
+                    namedBeanHandles.remove(oldBean);
+                }
+                if (!moved.isEmpty()) {
+                    namedBeanHandles.computeIfAbsent(newBean, b -> new ArrayList<>(2)).addAll(moved);
+                }
             }
         }
         moveListener(oldBean, newBean, name);
@@ -156,8 +175,22 @@ public class NamedBeanHandleManager extends AbstractManager<NamedBean> implement
 
     @CheckReturnValue
     public <T extends NamedBean> boolean inUse(@Nonnull String name, @Nonnull T bean) {
-        NamedBeanHandle<T> temp = new NamedBeanHandle<>(name, bean);
-        return namedBeanHandles.stream().anyMatch((h) -> (temp.equals(h)));
+        synchronized (namedBeanHandles) {
+            return namedBeanHandles.getOrDefault(bean, List.of()).stream()
+                    .anyMatch((h) -> (name.equals(h.getName())));
+        }
+    }
+
+    /**
+     * Forget all the handles for a bean that is being disposed of, so that
+     * the handles and the bean can be released.
+     *
+     * @param bean the bean being disposed of
+     */
+    public void removeNamedBeanHandles(@Nonnull NamedBean bean) {
+        synchronized (namedBeanHandles) {
+            namedBeanHandles.remove(bean);
+        }
     }
 
     @CheckForNull
@@ -194,8 +227,9 @@ public class NamedBeanHandleManager extends AbstractManager<NamedBean> implement
         super.dispose();
     }
 
-    @SuppressWarnings("rawtypes") // namedBeanHandles contains multiple types of NameBeanHandles<T>
-    ArrayList<NamedBeanHandle> namedBeanHandles = new ArrayList<>();
+    // the handles for each bean, found by the bean object itself;
+    // namedBeanHandles contains multiple types of NameBeanHandles<T>
+    final IdentityHashMap<NamedBean, List<NamedBeanHandle<?>>> namedBeanHandles = new IdentityHashMap<>();
 
     /**
      * Don't want to store this information
@@ -254,6 +288,6 @@ public class NamedBeanHandleManager extends AbstractManager<NamedBean> implement
         return NamedBean.class;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NamedBeanHandleManager.class);
+    private static final Logger log = LoggerFactory.getLogger(NamedBeanHandleManager.class);
 
 }

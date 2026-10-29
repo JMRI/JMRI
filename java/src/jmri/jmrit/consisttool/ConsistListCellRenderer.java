@@ -7,7 +7,6 @@ import javax.swing.*;
 
 import jmri.*;
 import jmri.jmrit.roster.*;
-import jmri.util.gui.GuiLafPreferencesManager;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,8 +51,7 @@ public class ConsistListCellRenderer extends JLabel implements ListCellRenderer<
         int iconHeight =  iconFact.getIconFactoryHeight();
         BufferedImage bi = new BufferedImage( 1, iconHeight, BufferedImage.TYPE_INT_ARGB);            
         Consist consist =  InstanceManager.getDefault(jmri.ConsistManager.class).getConsist(consistAddress);
-        Font f = new Font("Monospaced", Font.PLAIN, InstanceManager.getDefault(GuiLafPreferencesManager.class).getFontSize());
-
+        Font f = new JLabel().getFont(); // use default font
         for (DccLocoAddress loco : consist.getConsistList()) {
             log.debug("Loco : {} - Position : {}", loco, consist.getPosition(loco));
             String reName = consist.getRosterId(loco);
@@ -82,10 +80,11 @@ public class ConsistListCellRenderer extends JLabel implements ListCellRenderer<
             if (label != null) {
                 // write label for that locomotive in a buffered image                    
                 BufferedImage li =  new BufferedImage( label.length()*f.getSize(),   iconHeight, BufferedImage.TYPE_INT_ARGB);
-                Graphics gli = li.createGraphics();
-                gli.setFont(f);
-                //gli.setColor(this.getForeground());
-                gli.drawString(label, 0,  iconHeight/2 + gli.getFontMetrics().getMaxAscent()/2);                    
+                Graphics2D gli = li.createGraphics();
+                gli.setRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+                gli.setFont(f);               
+                gli.setColor(UIManager.getColor("Label.foreground") ); 
+                gli.drawString(label, 0,  (iconHeight + gli.getFontMetrics().getMaxAscent() - gli.getFontMetrics().getMaxDescent()) /2);                    
                 // expand existing buffered image
                 BufferedImage ti = new BufferedImage( gli.getFontMetrics().stringWidth(label) + bi.getWidth() +2, iconHeight, BufferedImage.TYPE_INT_ARGB);
                 Graphics gti = ti.createGraphics(); 

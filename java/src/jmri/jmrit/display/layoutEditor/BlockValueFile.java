@@ -41,7 +41,7 @@ public class BlockValueFile extends XmlFile {
 
     // operational variables
     private BlockManager blockManager = null;
-    private final static String defaultFileName = FileUtil.getUserFilesPath() + "blockvalues.xml";
+    private static final String defaultFileName = FileUtil.getUserFilesPath() + "blockvalues.xml";
     private Element root = null;
 
     /**
@@ -226,6 +226,6 @@ public class BlockValueFile extends XmlFile {
     }
 
     // initialize logging
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BlockValueFile.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BlockValueFile.class);
 
 }

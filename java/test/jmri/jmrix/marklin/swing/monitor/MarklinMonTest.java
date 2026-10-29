@@ -1,6 +1,7 @@
 package jmri.jmrix.marklin.swing.monitor;
 
 import jmri.jmrix.marklin.MarklinReply;
+import jmri.jmrix.marklin.mcan.cs2.Cs2SystemCommands;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -14,10 +15,12 @@ public class MarklinMonTest {
 
     @Test
     public void testDisplayReply() {
-        MarklinReply r = new MarklinReply();
-        Assertions.assertEquals(
-            "Priority 1, Stop/Go/Short Command: System Request Message Broadcast0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0"
-            , MarklinMon.displayReply(r));
+        int[] raw = Cs2SystemCommands.buildSystemStop();
+        MarklinReply r = new MarklinReply(raw);
+        String result = MarklinMon.displayReply(r);
+        Assertions.assertTrue(result.contains("System Stop"), "Expected 'System Stop' in: " + result);
+        Assertions.assertTrue(result.contains("Priority"), "Expected priority label in: " + result);
+        Assertions.assertTrue(result.contains("Broadcast"), "Expected 'Broadcast' in: " + result);
     }
 
     @BeforeEach
@@ -30,6 +33,6 @@ public class MarklinMonTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(MarklinMonTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(MarklinMonTest.class);
 
 }

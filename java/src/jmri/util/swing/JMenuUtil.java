@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  */
 public class JMenuUtil extends GuiUtilBase {
 
-    static public JMenu[] loadMenu(String path, WindowInterface wi, Object context) {
+    public static JMenu[] loadMenu(String path, WindowInterface wi, Object context) {
         Element root = rootFromName(path);
 
         int n = root.getChildren("node").size();
@@ -247,5 +247,5 @@ public class JMenuUtil extends GuiUtilBase {
         return result;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(JMenuUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(JMenuUtil.class);
 }   // class JMenuUtil

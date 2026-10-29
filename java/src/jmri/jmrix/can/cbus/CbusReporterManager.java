@@ -114,21 +114,21 @@ public class CbusReporterManager extends AbstractReporterManager implements CanL
         return validateSystemNameFormatOnlyNumeric(name,locale);
     }
 
-    protected final static String CBUS_REPORTER_DESCRIPTOR_KEY = "CBUS Reporter Type"; // NOI18N
+    protected static final String CBUS_REPORTER_DESCRIPTOR_KEY = "CBUS Reporter Type"; // NOI18N
 
-    protected final static String CBUS_REPORTER_TYPE_CLASSIC = "Classic RFID"; // NOI18N
+    protected static final String CBUS_REPORTER_TYPE_CLASSIC = "Classic RFID"; // NOI18N
 
-    protected final static String CBUS_REPORTER_TYPE_DDES_DESCRIBING = "CANRC522 / CANRCOM"; // NOI18N
+    protected static final String CBUS_REPORTER_TYPE_DDES_DESCRIBING = "CANRC522 / CANRCOM"; // NOI18N
 
-    final static String[] CBUS_REPORTER_TYPES = {
+    static final String[] CBUS_REPORTER_TYPES = {
         CBUS_REPORTER_TYPE_CLASSIC,CBUS_REPORTER_TYPE_DDES_DESCRIBING};
 
-    final static String[] CBUS_REPORTER_TYPE_TIPS = {
+    static final String[] CBUS_REPORTER_TYPE_TIPS = {
         "DDES / ACDAT 5 byte unique tag.","DDES self-describing ( Writeable CANRC522 / Railcom )"}; // NOI18N
 
-    protected final static String CBUS_DEFAULT_REPORTER_TYPE = CBUS_REPORTER_TYPES[0];
+    protected static final String CBUS_DEFAULT_REPORTER_TYPE = CBUS_REPORTER_TYPES[0];
 
-    protected final static String CBUS_MAINTAIN_SENSOR_DESCRIPTOR_KEY = "Maintain CBUS Sensor"; // NOI18N
+    protected static final String CBUS_MAINTAIN_SENSOR_DESCRIPTOR_KEY = "Maintain CBUS Sensor"; // NOI18N
 
     @Override
     @Nonnull
@@ -193,16 +193,24 @@ public class CbusReporterManager extends AbstractReporterManager implements CanL
         var device = (m.getElement(1) << 8) + m.getElement(2);
         var systemName = ""+device;
 
-        var reporter = provideReporter(systemName); // create if it doesn't exist
-           
-        // is this the right algorithm?
-        int least_significant_nibble = m.getElement(3) & 0x0F;
-        if ( least_significant_nibble == 0x01 && m.getElement(0) == CbusConstants.CBUS_DDES) {
-            // is a RailCom Reporter, set that as mode
+        // create if it doesn't exist.
+        boolean isNewReporter = ( getBySystemName(makeSystemName(systemName, false)) == null );
+        var reporter = provideReporter(systemName);
+
+        // The Reporter type ( Classic RFID or self-describing CANRC522 / CANRCOM )
+        // defaults to Classic RFID and can be set by the user in the Reporter Table.
+        // A Reporter created by a DDES which looks like a CANRCOM RailCom report
+        // is set to the self-describing type, so RailCom works without configuration.
+        // An existing Reporter is never switched on the content of a frame,
+        // as the data bytes of a Classic 5 byte RFID tag can take any value,
+        // which previously caused Classic RFID Reporters to be switched
+        // to the RailCom type, overriding the user setting.
+        if ( isNewReporter && m.getElement(0) == CbusConstants.CBUS_DDES
+            && ( m.getElement(3) & 0x0F ) == 0x01 ) {
             reporter.setProperty(CBUS_REPORTER_DESCRIPTOR_KEY,CBUS_REPORTER_TYPE_DDES_DESCRIBING);
         }
-        
-        return (CbusReporter)reporter;        
+
+        return (CbusReporter)reporter;
     }
     
     @Override

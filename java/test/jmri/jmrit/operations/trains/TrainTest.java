@@ -1,8 +1,5 @@
 package jmri.jmrit.operations.trains;
 
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.*;
@@ -12,6 +9,9 @@ import jmri.jmrit.operations.rollingstock.engines.*;
 import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the Operations Trains class Last manually cross-checked on 20090131
@@ -4433,7 +4433,7 @@ public class TrainTest extends OperationsTestCase {
         rte1.addLocation(loc5);
 
         // Create train
-        Train train1 = trainManager.newTrain("Harvard to Westford Aggressive");
+        Train train1 = trainManager.newTrain("Harvard to Westford Aggressive 1");
         train1.setRoute(rte1);
 
         // Place engines
@@ -4534,7 +4534,7 @@ public class TrainTest extends OperationsTestCase {
 
         // now try with a train returning to staging, test alternate track feature
         // Create train
-        Train train2 = trainManager.newTrain("Westford to Harvard Aggressive");
+        Train train2 = trainManager.newTrain("Westford to Harvard Aggressive 2");
         Route rte2 = routeManager.copyRoute(rte1, "Route 4 Harvard", true);
         train2.setRoute(rte2);
         train2.setRequirements(Train.CABOOSE);

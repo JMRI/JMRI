@@ -38,7 +38,7 @@ public class LncvProgTableModel extends AbstractTableModel implements PropertyCh
     public static final int DEVICENAME_COLUMN = 5;
     public static final int ROSTERENTRY_COLUMN = 6;
     public static final int OPENPRGMRBUTTON_COLUMN = 7;
-    static public final int NUMCOLUMNS = 8;
+    public static final int NUMCOLUMNS = 8;
     private final LncvProgPane parent;
     private final transient LocoNetSystemConnectionMemo memo;
     protected Roster _roster;

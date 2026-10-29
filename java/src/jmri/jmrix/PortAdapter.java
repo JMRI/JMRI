@@ -278,4 +278,16 @@ public interface PortAdapter {
      */
     int getReconnectMaxAttempts();
 
+    /**
+     * Get whether automatic connection recovery is enabled.
+     * @return true if recovery is enabled.
+     */
+    boolean getAllowConnectionRecovery();
+
+    /**
+     * Set whether automatic connection recovery is enabled.
+     * @param allow true to enable recovery.
+     */
+    void setAllowConnectionRecovery(boolean allow);
+
 }

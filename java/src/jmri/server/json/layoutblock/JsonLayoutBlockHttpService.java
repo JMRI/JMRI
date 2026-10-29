@@ -60,7 +60,7 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
     @Override
     protected ObjectNode doGet(LayoutBlock layoutBlock, String name, String type, JsonRequest request) throws JsonException {
         ObjectNode root = super.getNamedBean(layoutBlock, name, type, request); // throws JsonException if layoutBlock == null
-        ObjectNode data = root.with(DATA);
+        ObjectNode data = root.withObject(DATA);
         data.put(STATE, layoutBlock.getState());
         data.put(USE_EXTRA_COLOR, layoutBlock.getUseExtraColor());
         data.put(BLOCK_COLOR, ColorUtil.colorToColorName(layoutBlock.getBlockColor()));
@@ -162,7 +162,9 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
             throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(request.locale, "ErrorInternal", type), request.id);
         }
         layoutBlock.initializeLayoutBlock();
-        layoutBlock.initializeLayoutBlockRouting();
+        // routing tables are only changed on the layout thread
+        LayoutBlock created = layoutBlock;
+        jmri.util.ThreadingUtil.runOnLayout(created::initializeLayoutBlockRouting);
         return doPost(layoutBlock, data, name, type, request);
     }
 

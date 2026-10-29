@@ -155,5 +155,5 @@ public class SetTrainIconPositionFrameTest extends OperationsTestCase {
         Assert.assertNull("does not exist", frame);
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SetTrainIconPositionFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SetTrainIconPositionFrameTest.class);
 }

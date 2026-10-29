@@ -161,6 +161,30 @@
 
         <tr>
           <td>
+            <a target="_blank" href="https://locolink.io/jmri-withrottle-app">LocoLink</a>
+          </td>
+          <td>LocoLink is an independent WiThrottle client for Windows, Mac, iPhone, and iPad.
+            It connects to a running JMRI WiThrottle Server and supports track power, locomotive
+            speed and direction, functions, and turnout commands. Android and Linux versions are
+            not currently available.</td>
+          <td>
+            <a target="_blank" href="https://locolink.io/jmri-withrottle-app"><img
+                src="images/LocoLink_Apple.png" height="125" alt="LocoLink for Apple devices"
+                title="LocoLink for Apple devices"></a>
+          </td>
+          <td>
+          </td>
+          <td>
+            <a target="_blank" href="https://locolink.io/jmri-withrottle-app"><img
+                src="images/LocoLink_Windows.png" height="125" alt="LocoLink for Windows"
+                title="LocoLink for Windows"></a>
+          </td>
+          <td>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
             <a target="_blank" href="https://locontrol.flycricket.io/?t=1587818832">Locontrol</a>
           </td>
           <td>An elegant controller for iOS.</td>

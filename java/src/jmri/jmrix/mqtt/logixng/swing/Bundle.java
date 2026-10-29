@@ -80,7 +80,7 @@ public class Bundle extends jmri.jmrix.mqtt.logixng.Bundle {
         return getBundle().handleGetMessage(locale, key, subs);
     }
 
-    private final static Bundle b = new Bundle();
+    private static final Bundle b = new Bundle();
 
     @Override
     protected String bundleName() {

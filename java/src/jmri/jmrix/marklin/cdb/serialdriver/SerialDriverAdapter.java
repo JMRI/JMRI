@@ -37,7 +37,7 @@ public class SerialDriverAdapter extends CdBPortController {
         int baud = currentBaudNumber(mBaudRate);
         setBaudRate(currentSerialPort, baud);
         configureLeads(currentSerialPort, true, true);
-        setFlowControl(currentSerialPort, FlowControl.NONE);
+        setFlowControl(currentSerialPort, FlowControl.RTSCTS);
 
         // report status
         reportPortStatus(log, portName);
@@ -93,6 +93,6 @@ public class SerialDriverAdapter extends CdBPortController {
         return 0;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialDriverAdapter.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SerialDriverAdapter.class);
 
 }

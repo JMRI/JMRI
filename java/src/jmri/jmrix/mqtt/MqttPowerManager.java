@@ -97,7 +97,7 @@ public class MqttPowerManager extends AbstractPowerManager<MqttSystemConnectionM
     }
 
     // Initialize logging information
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MqttPowerManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MqttPowerManager.class);
 
 }
 

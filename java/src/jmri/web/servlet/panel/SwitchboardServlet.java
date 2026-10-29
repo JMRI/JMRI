@@ -121,6 +121,7 @@ public class SwitchboardServlet extends AbstractPanelServlet {
             }
         }
 
+        convertNamedColors(panel);
         Document doc = new Document(panel);
         XMLOutputter out = new XMLOutputter();
         out.setFormat(Format.getPrettyFormat()
@@ -136,6 +137,6 @@ public class SwitchboardServlet extends AbstractPanelServlet {
         return "ERROR JSON support not implemented";
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SwitchboardServlet.class);
+    private static final Logger log = LoggerFactory.getLogger(SwitchboardServlet.class);
 
 }

@@ -26,7 +26,7 @@ import org.jdom2.Element;
  */
 public class ScriptButtonModelXml extends AbstractXmlAdapter {
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ScriptButtonModelXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ScriptButtonModelXml.class);
 
     public ScriptButtonModelXml() {
     }

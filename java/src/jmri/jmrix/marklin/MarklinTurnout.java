@@ -2,41 +2,53 @@ package jmri.jmrix.marklin;
 
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
+import jmri.jmrix.marklin.mcan.classify.Cs2ClassifiedFrame;
+import jmri.jmrix.marklin.mcan.cs2.Cs2AccessoryCommands;
 
 /**
  * Implement a Turnout via Marklin communications.
  * <p>
- * This object doesn't listen to the Marklin communications. This is because it
- * should be the only object that is sending messages for this turnout; more
- * than one Turnout object pointing to a single device is not allowed.
+ * This object doesn't listen to the Marklin communications for protocol
+ * auto-detection; protocol is determined at construction from the system name
+ * prefix. More than one Turnout object pointing to a single device is not allowed.
+ * <p>
+ * The system name encodes protocol and address:
+ * <ul>
+ *   <li>{@code MTDCC45}: DCC accessory address 45, wire = {@code DCCACCSTART + 44}</li>
+ *   <li>{@code MTMM123}: MM/MM2 accessory address 123, wire = {@code MM1ACCSTART + 122}</li>
+ *   <li>{@code MTCAN200}: raw CAN wire address 200, used verbatim</li>
+ *   <li>{@code MT45}: legacy unprefixed, treated as DCC</li>
+ * </ul>
  * <p>
  * Based on work by Bob Jacobsen
+ * <p>
+ * Now leverages the mcan sub-package for message decoding.
  *
  * @author Kevin Dickerson Copyright (C) 2012
- *
+ * @author Ralf Lang
  */
 public class MarklinTurnout extends AbstractTurnout implements MarklinListener {
 
+    private final MarklinTrafficController tc;
+    private final int canAddress;
+
     /**
-     * Marklin turnouts use the NMRA number (0-2040) as their numerical
-     * identification in the system name.
+     * Create a MarklinTurnout from its full system name.
      *
-     * @param number address of the turnout
-     * @param prefix system prefix
-     * @param etc connection traffic controller
+     * @param systemName full system name, e.g. {@code MTDCC45} or {@code MT123}
+     * @param prefix     system prefix, e.g. {@code M}
+     * @param tc         traffic controller
      */
-    public MarklinTurnout(int number, String prefix, MarklinTrafficController etc) {
-        super(prefix + "T" + number);
-        _number = number;
-        tc = etc;
-        tc.addMarklinListener(MarklinTurnout.this);
+    public MarklinTurnout(String systemName, String prefix, MarklinTrafficController tc) {
+        super(systemName);
+        this.tc = tc;
+
+        canAddress = MarklinAccessoryAddress.toCANAddress(systemName.substring(prefix.length() + 1));
+
+        tc.addMarklinListener(this);
     }
 
-    private final MarklinTrafficController tc;
-
-    /**
-     * {@inheritDoc}
-     */
+    /** {@inheritDoc} */
     @Override
     protected void forwardCommandChangeToLayout(int newState) {
         // implementing classes will typically have a function/listener to get
@@ -62,8 +74,75 @@ public class MarklinTurnout extends AbstractTurnout implements MarklinListener {
         }
     }
 
-    // data members
-    private final int _number;   // turnout number
+    /**
+     * Return the wire address for the accessory command.
+     * <ul>
+     *   <li>DCC: {@code number + DCCACCSTART - 1}</li>
+     *   <li>MM:  {@code number + MM1ACCSTART - 1}</li>
+     *   <li>CAN: {@code number} verbatim (raw CAN address)</li>
+     * </ul>
+     */
+    int getCANAddress() {
+        return canAddress;
+    }
+
+    protected void sendMessage(final boolean newstate) {
+        MarklinMessage msg = MarklinMessage.getSetTurnout(getCANAddress(), (newstate ? 1 : 0), 0x01);
+        tc.sendMarklinMessage(msg, this);
+        jmri.util.TimerUtil.schedule(new java.util.TimerTask() {
+            private final boolean state = newstate;
+            @Override
+            public void run() {
+                try {
+                    sendOffMessage(state ? 1 : 0);
+                } catch (Exception e) {
+                    log.error("Exception sending delayed off to turnout", e);
+                }
+            }
+        }, METERINTERVAL);
+    }
+
+    protected void sendOffMessage(int state) {
+        MarklinMessage msg = MarklinMessage.getSetTurnout(getCANAddress(), state, 0x00);
+        tc.sendMarklinMessage(msg, this);
+    }
+
+    @Override
+    public void reply(MarklinReply m) {
+        Cs2ClassifiedFrame frame = MarklinCanBridge.parse(m);
+        if (!(frame instanceof Cs2AccessoryCommands.AccessoryReplyFrame)) {
+            return;
+        }
+        Cs2AccessoryCommands.AccessoryReplyFrame reply = (Cs2AccessoryCommands.AccessoryReplyFrame) frame;
+        if (reply.address() == getCANAddress()) {
+            switch (reply.aspect()) {
+                case 0x00:
+                    setKnownStateFromCS(Turnout.THROWN);
+                    break;
+                case 0x01:
+                    setKnownStateFromCS(Turnout.CLOSED);
+                    break;
+                default:
+                    log.warn("Unknown state command {}", reply.aspect());
+            }
+        }
+    }
+
+    @Override
+    public void message(MarklinMessage m) {
+    }
+
+    @Override
+    public void turnoutPushbuttonLockout(boolean b) {
+    }
+
+    /**
+     * Marklin turnouts can be inverted.
+     */
+    @Override
+    public boolean canInvert() {
+        return true;
+    }
 
     /**
      * Set the turnout known state to reflect what's been observed from the
@@ -76,10 +155,7 @@ public class MarklinTurnout extends AbstractTurnout implements MarklinListener {
      * @param state Observed state, updated state from command station
      */
     synchronized void setCommandedStateFromCS(int state) {
-        if ((getFeedbackMode() != DIRECT)) {
-            return;
-        }
-
+        if (getFeedbackMode() != DIRECT) return;
         newCommandedState(state);
     }
 
@@ -94,103 +170,8 @@ public class MarklinTurnout extends AbstractTurnout implements MarklinListener {
      */
     synchronized void setKnownStateFromCS(int state) {
         newCommandedState(state);
-        if (getFeedbackMode() == DIRECT) {
-            newKnownState(state);
-        }
+        if (getFeedbackMode() == DIRECT) newKnownState(state);
     }
-
-    @Override
-    public void turnoutPushbuttonLockout(boolean b) {
-    }
-
-    /**
-     * Marklin turnouts can be inverted
-     */
-    @Override
-    public boolean canInvert() {
-        return true;
-    }
-
-    static final int PROTOCOL_UNKNOWN = MarklinConstants.PROTOCOL_UNKNOWN;
-    static final int DCC = MarklinConstants.PROTOCOL_DCC;
-    static final int MM2 = MarklinConstants.PROTOCOL_MM2;
-    static final int SFX = MarklinConstants.PROTOCOL_SX;
-
-    private int protocol = PROTOCOL_UNKNOWN;
-
-    /**
-     * Tell the layout to go to new state.
-     *
-     * @param newstate State of the turnout to be sent to the command station
-     */
-    protected void sendMessage(final boolean newstate) {
-        MarklinMessage m = MarklinMessage.getSetTurnout(getCANAddress(), (newstate ? 1 : 0), 0x01);
-        tc.sendMarklinMessage(m, this);
-
-        jmri.util.TimerUtil.schedule(new java.util.TimerTask() {
-            private final boolean state = newstate;
-
-            @Override
-            public void run() {
-                try {
-                    sendOffMessage((state ? 1 : 0));
-                } catch (Exception e) {
-                    log.error("Exception occurred while sending delayed off to turnout", e);
-                }
-            }
-        }, METERINTERVAL);
-    }
-
-    int getCANAddress() {
-        switch (protocol) {
-            case DCC:
-                return _number + MarklinConstants.DCCACCSTART - 1;
-            default:
-                return _number + MarklinConstants.MM1ACCSTART - 1;
-        }
-    }
-
-    // to listen for status changes from Marklin system
-    @Override
-    public void reply(MarklinReply m) {
-        if (m.getPriority() == MarklinConstants.PRIO_1 && m.getCommand() >= MarklinConstants.ACCCOMMANDSTART
-            && m.getCommand() <= MarklinConstants.ACCCOMMANDEND) {
-            if (protocol == PROTOCOL_UNKNOWN) {
-                if (m.getAddress() == _number + MarklinConstants.MM1ACCSTART - 1) {
-                    protocol = MM2;
-                } else if (m.getAddress() == _number + MarklinConstants.DCCACCSTART - 1) {
-                    protocol = DCC;
-                } else {
-                    //Message is not for us.
-                    return;
-                }
-            }
-            if (m.getAddress() == getCANAddress()) {
-                switch (m.getElement(9)) {
-                    case 0x00:
-                        setKnownStateFromCS(Turnout.THROWN);
-                        break;
-                    case 0x01:
-                        setKnownStateFromCS(Turnout.CLOSED);
-                        break;
-                    default:
-                        log.warn("Unknown state command {}", m.getElement(9));
-                }
-            }
-        }
-    }
-
-    @Override
-    public void message(MarklinMessage m) {
-        // messages are ignored
-    }
-
-    protected void sendOffMessage(int state) {
-        MarklinMessage m = MarklinMessage.getSetTurnout(getCANAddress(), state, 0x00);
-        tc.sendMarklinMessage(m, this);
-    }
-
-    static final int METERINTERVAL = 100;  // msec wait before closed
 
     @Override
     public void dispose() {
@@ -198,6 +179,8 @@ public class MarklinTurnout extends AbstractTurnout implements MarklinListener {
         super.dispose();
     }
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MarklinTurnout.class);
 
+    static final int METERINTERVAL = 100; // ms between on and off pulse
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MarklinTurnout.class);
 }

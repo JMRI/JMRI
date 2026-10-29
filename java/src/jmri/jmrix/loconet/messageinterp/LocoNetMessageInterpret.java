@@ -4524,7 +4524,7 @@ public class LocoNetMessageInterpret {
      * @param a2 Byte containing the lower bits.
      * @return a locomotive address in the range of 0-16383
      */
-    static private int LOCO_ADR(int a1, int a2) {
+    private static int LOCO_ADR(int a1, int a2) {
         return (((a1 & 0x7f) * 128) + (a2 & 0x7f));
     }
 
@@ -4536,7 +4536,7 @@ public class LocoNetMessageInterpret {
      * @param a2 Byte containing the lower bits
      * @return 1-4096 address
      */
-    static private int SENSOR_ADR(int a1, int a2) {
+    private static int SENSOR_ADR(int a1, int a2) {
         return (((a2 & 0x0f) * 128) + (a1 & 0x7f)) + 1;
     }
 
@@ -5254,5 +5254,5 @@ public class LocoNetMessageInterpret {
     private static final String[] ds64sensors = {"A1", "S1", "A2", "S2", "A3", "S3", "A4", "S4"};                    // NOI18N
     private static final String[] se8csensors = {"DS01", "DS02", "DS03", "DS04", "DS05", "DS06", "DS07", "DS08"};    // NOI18N
 
-    private final static Logger log = LoggerFactory.getLogger(LocoNetMessageInterpret.class);
+    private static final Logger log = LoggerFactory.getLogger(LocoNetMessageInterpret.class);
 }

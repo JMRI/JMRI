@@ -27,7 +27,7 @@ import org.junit.jupiter.api.Test;
  */
 public class ExpressionNodeMethodPrimTest {
 
-    private final static TestClass tc = new TestClass();
+    private static final TestClass tc = new TestClass();
 
     public void testCall(Object object, String method, Object expectedResult, Object[] params)
             throws FunctionNotExistsException, JmriException {

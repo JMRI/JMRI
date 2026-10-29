@@ -2,15 +2,14 @@ package jmri.jmrit.operations.locations.tools;
 
 import java.awt.GraphicsEnvironment;
 
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.jupiter.api.Test;
-
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.locations.gui.YardEditFrame;
 import jmri.util.JUnitOperationsUtil;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -32,13 +31,11 @@ public class PoolTrackFrameTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Location loc = JUnitOperationsUtil.createOneNormalLocation("Test Location");
         Track t = loc.addTrack("Test Close", Track.YARD);
-        YardEditFrame tf = new YardEditFrame();
-        tf.initComponents(loc, t);
         PoolTrackFrame f = new PoolTrackFrame(t);
         f.initComponents();
         JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(PoolTrackFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(PoolTrackFrameTest.class);
 
 }

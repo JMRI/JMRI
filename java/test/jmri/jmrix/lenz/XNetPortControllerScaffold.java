@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  */
 public class XNetPortControllerScaffold extends XNetSimulatorPortController {
 
-    private final static Logger log = LoggerFactory.getLogger(XNetPortControllerScaffold.class);
+    private static final Logger log = LoggerFactory.getLogger(XNetPortControllerScaffold.class);
 
     /*@Override
     public java.util.Vector<String> getPortNames() {

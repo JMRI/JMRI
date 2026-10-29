@@ -6,13 +6,13 @@ import jmri.RailCom;
 /**
  * Extend AbstractReporter for RailCom reporters
  * <p>
- * This file is based on @{link jmri.jmrix.rfid.RfidReporter}
+ * This class is based on {@link jmri.jmrix.rfid.RfidReporter}
  *
  * @author Matthew Harris Copyright (c) 2011
  * @author Paul Bender Copyright (c) 2016,2019
  * @since 4.5.4
  */
-public class AbstractRailComReporter extends AbstractIdTagReporter {
+public abstract class AbstractRailComReporter extends AbstractIdTagReporter {
 
     public AbstractRailComReporter(String systemName) {
         super(systemName);
@@ -21,6 +21,12 @@ public class AbstractRailComReporter extends AbstractIdTagReporter {
     public AbstractRailComReporter(String systemName, String userName) {
         super(systemName, userName);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public abstract boolean hasExitReports();
 
     // Methods to support PhysicalLocationReporter interface
     
@@ -33,11 +39,12 @@ public class AbstractRailComReporter extends AbstractIdTagReporter {
      */
     @Override
     public LocoAddress getLocoAddress(String rep) {
-        // For now, we assume the current report.
-        // IdTags passed by RailCom reporters are actually jmri.RailCom objects
-        // so we use properties of the RailCom object here.
-        RailCom cr = (RailCom) this.getCurrentReport();
-        return cr.getLocoAddress();
+        Object cr = this.getCurrentReport();
+        if (cr instanceof RailCom) {
+            return ((RailCom) cr).getLocoAddress();
+        }
+        // not a RailCom report, for example an RFID tag on a CBUS Reporter, or no report
+        return super.getLocoAddress(rep);
     }
 
 }

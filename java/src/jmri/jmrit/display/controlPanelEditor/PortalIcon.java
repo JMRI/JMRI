@@ -49,7 +49,7 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
         setPortal(portal);
     }
 
-    static public HashMap<String, NamedIcon> getPaletteMap() {
+    public static HashMap<String, NamedIcon> getPaletteMap() {
         HashMap<String, HashMap<String, NamedIcon>> families = ItemPalette.getFamilyMaps("Portal");
         if (families.keySet().isEmpty()) {
             log.debug("Adding missing PortalIconMap");
@@ -146,6 +146,11 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
 
     public Portal getPortal() {
         return _portal;
+    }
+
+    @Override
+    public jmri.NamedBean getNamedBean() {
+        return null;
     }
 
     @SuppressFBWarnings(value="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification="Portals always have userNames")
@@ -316,6 +321,6 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
         return false;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PortalIcon.class);
+    private static final Logger log = LoggerFactory.getLogger(PortalIcon.class);
 
 }

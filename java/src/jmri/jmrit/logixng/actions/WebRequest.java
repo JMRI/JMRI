@@ -27,7 +27,7 @@ import jmri.util.ThreadingUtil;
  * @author Daniel Bergqvist Copyright 2023
  */
 public class WebRequest extends AbstractDigitalAction
-        implements FemaleSocketListener, PropertyChangeListener, VetoableChangeListener {
+        implements FemaleSocketListener, VetoableChangeListener {
 
     private static final ResourceBundle rbx =
             ResourceBundle.getBundle("jmri.jmrit.logixng.implementation.ImplementationBundle");
@@ -37,23 +37,21 @@ public class WebRequest extends AbstractDigitalAction
 
     // Note that it's valid if the url has parameters as well, like https://www.mysite.org/somepage.php?name=Jim&city=Boston
     // The parameters are the string after the question mark.
-    private final LogixNG_SelectString _selectUrl =
-            new LogixNG_SelectString(this, this);
+    private final LogixNG_SelectString _selectUrl = new LogixNG_SelectString(this);
 
-    private final LogixNG_SelectCharset _selectCharset =
-            new LogixNG_SelectCharset(this, this);
+    private final LogixNG_SelectCharset _selectCharset = new LogixNG_SelectCharset(this);
 
     private final LogixNG_SelectEnum<RequestMethodType> _selectRequestMethod =
-            new LogixNG_SelectEnum<>(this, RequestMethodType.values(), RequestMethodType.Get, this);
+            new LogixNG_SelectEnum<>(this, RequestMethodType.values(), RequestMethodType.Get);
 
     private final LogixNG_SelectString _selectUserAgent =
-            new LogixNG_SelectString(this, DEFAULT_USER_AGENT, this);
+            new LogixNG_SelectString(this, DEFAULT_USER_AGENT);
 
     private final LogixNG_SelectEnum<ReplyType> _selectReplyType =
-            new LogixNG_SelectEnum<>(this, ReplyType.values(), ReplyType.String, this);
+            new LogixNG_SelectEnum<>(this, ReplyType.values(), ReplyType.String);
 
     private final LogixNG_SelectEnum<LineEnding> _selectLineEnding =
-            new LogixNG_SelectEnum<>(this, LineEnding.values(), LineEnding.System, this);
+            new LogixNG_SelectEnum<>(this, LineEnding.values(), LineEnding.System);
 
     private final List<Parameter> _parameters = new ArrayList<>();
 
@@ -523,24 +521,6 @@ public class WebRequest extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public void registerListenersForThisClass() {
-        // Do nothing
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-        // Do nothing
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void disposeMe() {
     }
 
@@ -687,7 +667,7 @@ public class WebRequest extends AbstractDigitalAction
     }
 
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WebRequest.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WebRequest.class);
 
 
 

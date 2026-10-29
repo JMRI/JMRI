@@ -1,17 +1,11 @@
 package jmri.web.servlet.operations;
 
-import java.io.IOException;
-import java.text.ParseException;
-import java.util.*;
-import java.util.Map.Entry;
-
-import org.apache.commons.text.StringEscapeUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.StdDateFormat;
+
+import java.io.IOException;
+import java.util.*;
+import java.util.Map.Entry;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -23,6 +17,10 @@ import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.server.json.JSON;
 import jmri.server.json.operations.JsonOperations;
 
+import org.apache.commons.text.StringEscapeUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  *
  * @author Randall Wood
@@ -31,7 +29,7 @@ public class HtmlManifest extends HtmlTrainCommon {
 
     protected ObjectMapper mapper;
     private JsonNode jsonManifest = null;
-    private final static Logger log = LoggerFactory.getLogger(HtmlManifest.class);
+    private static final Logger log = LoggerFactory.getLogger(HtmlManifest.class);
 
     public HtmlManifest(Locale locale, Train train) throws IOException {
         super(locale, train);
@@ -80,7 +78,7 @@ public class HtmlManifest extends HtmlTrainCommon {
                 }
                 // add route comment
                 if (!location.path(JSON.COMMENT).textValue().isBlank()) {
-                    builder.append(String.format(locale, strings.getProperty("RouteLocationComment"), 
+                    builder.append(String.format(locale, strings.getProperty("RouteLocationComment"),
                             location.path(JSON.COMMENT).textValue()));
                 }
 
@@ -207,7 +205,7 @@ public class HtmlManifest extends HtmlTrainCommon {
                                             .getProperty("NoScheduledWorkAtWithDepartureTime"), routeLocationName, // NOI18N
                                             train.getExpectedDepartureTime(routeLocation)));
                                 }
-                            }                           
+                            }
                         }
                         // add location comment
                         if (Setup.isPrintLocationCommentsEnabled()
@@ -231,7 +229,7 @@ public class HtmlManifest extends HtmlTrainCommon {
         //copy the adds into a sortable arraylist
         ArrayList<JsonNode> adds = new ArrayList<JsonNode>();
         cars.path(JSON.ADD).forEach(adds::add);
-            
+
         //sort if requested
         if (adds.size() > 0 && Setup.isSortByTrackNameEnabled()) {
             adds.sort(Comparator.comparing(o -> o.path("location").path("track").path("userName").asText()));
@@ -302,12 +300,12 @@ public class HtmlManifest extends HtmlTrainCommon {
 
     protected List<Car> getCarList(ArrayList<JsonNode> jnCars) {
         List<Car> cars = new ArrayList<>();
-        for (JsonNode kar : jnCars) { 
+        for (JsonNode kar : jnCars) {
             cars.add(getCar(kar));
         }
         return cars;
     }
-    
+
     protected Car getCar(JsonNode jnCar) {
         String id = jnCar.path(JSON.NAME).asText();
         Car car = InstanceManager.getDefault(CarManager.class).getById(id);
@@ -494,7 +492,12 @@ public class HtmlManifest extends HtmlTrainCommon {
             return TrainManifestHeaderText.getStringHeader_Last_Train() +
                     SPACE +
                     getFormattedAttribute(attribute, rollingStock.path(attribute).asText());
+        } else if (attribute.equals(JsonOperations.LAST_LOCATION)) {
+            return TrainManifestHeaderText.getStringHeader_Last_Location() +
+                    SPACE +
+                    getFormattedAttribute(attribute, rollingStock.path(attribute).asText());
         }
+
         return this.getFormattedAttribute(attribute, rollingStock.path(attribute).asText());
     }
 
@@ -526,9 +529,8 @@ public class HtmlManifest extends HtmlTrainCommon {
     private String getTrackComments(JsonNode tracks, JsonNode cars) {
         StringBuilder builder = new StringBuilder();
         if (tracks.size() > 0) {
-            Iterator<Entry<String, JsonNode>> iterator = tracks.fields();
-            while (iterator.hasNext()) {
-                Entry<String, JsonNode> track = iterator.next();
+            Set<Entry<String, JsonNode>> properties = tracks.properties();
+            for (var track : properties) {
                 boolean pickup = false;
                 boolean setout = false;
                 if (cars.path(JSON.ADD).size() > 0) {
@@ -565,7 +567,7 @@ public class HtmlManifest extends HtmlTrainCommon {
     }
 
     protected boolean isLocalMove(JsonNode car) {
-        return car.path(JsonOperations.IS_LOCAL).booleanValue();        
+        return car.path(JsonOperations.IS_LOCAL).booleanValue();
     }
 
     protected boolean isUtilityCar(JsonNode car) {
@@ -588,17 +590,17 @@ public class HtmlManifest extends HtmlTrainCommon {
         try {
             if (Setup.isPrintTrainScheduleNameEnabled()) {
                 return String.format(locale, strings.getProperty(this.resourcePrefix + "ValidityWithSchedule"),
-                        getDate((new StdDateFormat()).parse(this.getJsonManifest().path(JsonOperations.DATE).textValue())),
+                        this.getJsonManifest().path(JsonOperations.DATE).textValue(),
                         InstanceManager.getDefault(TrainScheduleManager.class).getActiveSchedule().getName());
             } else {
                 return String.format(locale, strings.getProperty(this.resourcePrefix + "Validity"),
-                        getDate((new StdDateFormat()).parse(this.getJsonManifest().path(JsonOperations.DATE).textValue())));
+                        this.getJsonManifest().path(JsonOperations.DATE).textValue());
             }
         } catch (NullPointerException ex) {
             log.warn("Manifest for train {} (id {}) does not have any validity.", this.train.getIconName(), this.train
                     .getId());
-        } catch (ParseException ex) {
-            log.error("Date of JSON manifest could not be parsed as a Date.");
+//        } catch (DateTimeParseException ex) {
+//            log.error("Date of JSON manifest could not be parsed as a LocalDateTime.");
         } catch (IOException ex) {
             log.error("JSON manifest could not be read.");
         }

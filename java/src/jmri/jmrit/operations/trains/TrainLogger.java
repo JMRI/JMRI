@@ -6,12 +6,9 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
-
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
@@ -19,6 +16,11 @@ import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.setup.*;
 import jmri.jmrit.operations.setup.backup.AutoBackup;
 import jmri.jmrit.operations.setup.backup.DefaultBackup;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Logs train movements and status to a file.
@@ -254,9 +256,9 @@ public class TrainLogger extends XmlFile implements InstanceManagerAutoDefault, 
     }
 
     private String getDate() {
-        Date date = Calendar.getInstance().getTime();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd"); // NOI18N
-        return simpleDateFormat.format(date);
+        LocalDateTime date = LocalDateTime.now();
+        DateTimeFormatter simpleDateFormat = DateTimeFormatter.ofPattern("yyyy_MM_dd"); // NOI18N
+        return date.format(simpleDateFormat);
     }
 
     /**
@@ -274,5 +276,5 @@ public class TrainLogger extends XmlFile implements InstanceManagerAutoDefault, 
         }
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainLogger.class);
+    private static final Logger log = LoggerFactory.getLogger(TrainLogger.class);
 }

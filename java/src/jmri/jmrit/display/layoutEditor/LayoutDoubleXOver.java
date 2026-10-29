@@ -117,5 +117,5 @@ public class LayoutDoubleXOver extends LayoutXOver {
         super(id, TurnoutType.DOUBLE_XOVER, layoutEditor, v);
     }
     
-    // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutDoubleXOver.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutDoubleXOver.class);
 }

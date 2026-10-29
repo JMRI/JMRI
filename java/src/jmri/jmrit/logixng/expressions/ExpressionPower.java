@@ -177,7 +177,7 @@ public class ExpressionPower extends AbstractDigitalExpression
             this._text = text;
         }
 
-        static public PowerState get(int id) {
+        public static PowerState get(int id) {
             switch (id) {
                 case PowerManager.OFF:
                     return Off;
@@ -207,6 +207,6 @@ public class ExpressionPower extends AbstractDigitalExpression
 
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionPower.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionPower.class);
 
 }

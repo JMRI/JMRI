@@ -81,6 +81,6 @@ public class Lnsv1MessageContentsTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(Lnsv1MessageContentsTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(Lnsv1MessageContentsTest.class);
 
 }

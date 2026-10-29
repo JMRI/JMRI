@@ -83,7 +83,7 @@ abstract public class AbstractCanTrafficController
         } else {
             hm = encodeForHardware((CanMessage) m);
         }
-        log.debug("Encoded for hardware: [{}]", hm.toString());
+        log.debug("Encoded for hardware: [{}]", hm); // no eager toString(), called for every frame
 
         // stream to port in single write, as that's needed by serial
         byte msg[] = new byte[lengthOfByteStream(hm)];
@@ -215,6 +215,9 @@ abstract public class AbstractCanTrafficController
 
         // message exists, now fill it
         loadChars(hmsg, istream);
+        if (threadStopRequest) {
+            return; // connection closing, do not dispatch a partial or replayed frame
+        }
 
         // Decode the message from the hardware into a CanReply
         msg = decodeFromHardware(hmsg);
@@ -228,8 +231,13 @@ abstract public class AbstractCanTrafficController
             log.debug("dispatch reply of length {} contains {} state {}", msg.getNumDataElements(), msg.toString(), mCurrentState);
         }
 
-        // actually distribute the reply
-        distributeOneReply(msg, mLastSender);
+        // Actually distribute the reply, to the registered listeners only.
+        // A CAN bus has no request / reply pairing, so the frame is not
+        // addressed to whichever listener happened to send last. Passing
+        // mLastSender here also delivered every frame to that listener after
+        // it had been removed, eg. a closed tool window that sent the last
+        // frame kept receiving all traffic.
+        distributeOneReply(msg, null);
 
         if (!msg.isUnsolicited()) {
             log.debug("switch on state {}", mCurrentState);
@@ -308,6 +316,6 @@ abstract public class AbstractCanTrafficController
         distributeReply(r);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractCanTrafficController.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractCanTrafficController.class);
 
 }

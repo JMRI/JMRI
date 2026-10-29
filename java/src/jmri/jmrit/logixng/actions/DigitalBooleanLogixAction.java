@@ -209,6 +209,6 @@ public class DigitalBooleanLogixAction extends AbstractDigitalBooleanAction
     public void disposeMe() {
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DigitalBooleanLogixAction.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DigitalBooleanLogixAction.class);
 
 }

@@ -39,7 +39,7 @@ import jmri.jmrix.ieee802154.xbee.XBeeNode;
 public class StreamConfigPane extends JmrixConfigPane {
 
     // initialize logging
-    private final static Logger log = LoggerFactory.getLogger(StreamConfigPane.class);
+    private static final Logger log = LoggerFactory.getLogger(StreamConfigPane.class);
 
     private XBeeNode confNode = null;
 

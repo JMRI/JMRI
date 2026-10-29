@@ -23,10 +23,10 @@ public class ConstrainedArbitraryBeanTest {
     private VetoableChangeListener vetoer;
     private boolean changed;
     private boolean veto;
-    private final static String AP = "arbitraryProperty";
-    private final static String DP = "definedProperty";
-    private final static String AIP = "arbitraryIndexedProperty";
-    private final static String DIP = "definedIndexedProperty";
+    private static final String AP = "arbitraryProperty";
+    private static final String DP = "definedProperty";
+    private static final String AIP = "arbitraryIndexedProperty";
+    private static final String DIP = "definedIndexedProperty";
 
     @BeforeEach
     public void setUp() {

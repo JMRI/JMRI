@@ -95,6 +95,6 @@ public class CbusNodeEventVarPane extends CbusNodeConfigTab {
         button.addActionListener(newEvButtonClicked);
     }
     
-    // private final static Logger log = LoggerFactory.getLogger(CbusNodeEventVarPane.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusNodeEventVarPane.class);
     
 }

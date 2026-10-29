@@ -56,5 +56,5 @@ public class ExpressionLinuxLinePowerXml extends jmri.managers.configurexml.Abst
         return true;
     }
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionLinuxLinePowerXml.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ExpressionLinuxLinePowerXml.class);
 }

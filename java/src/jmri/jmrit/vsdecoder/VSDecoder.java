@@ -899,6 +899,8 @@ public class VSDecoder implements PropertyChangeListener {
                 result = navigation.navigateLevelXing();
             } else if (this.getLayoutTrack() instanceof LayoutTurntable) {
                 result = navigation.navigateLayoutTurntable();
+            } else if (this.getLayoutTrack() instanceof LayoutTraverser) {
+                result = navigation.navigateLayoutTraverser();
             } else {
                 log.warn("Track type not supported");
                 setReturnDistance(0);

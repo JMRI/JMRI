@@ -4,6 +4,8 @@ import java.io.DataInputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Calendar;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -55,6 +57,10 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
         this.removeListener(l);
     }
 
+    /** Why this class locks the base class's xmtRunnable, which SpotBugs flags as visible outside the class. */
+    private static final String XMT_LOCK = "The base class waits and notifies on xmtRunnable, so the receive"
+            + " and transmit threads must synchronise on that same object to wake each other";
+
     public static final int RETRIEVINGDATA = 100;
 
     /**
@@ -99,10 +105,271 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
         return Dcc4PcMessage.getProgMode();
     }
 
-    //Dcc4Pc doesn't support this function!
+    // DCC4PC has no programming mode, so there's nothing to send. The old
+    // one-byte 0x00 message was the interface's own Get Info, and at shutdown
+    // terminate() sent it with 100 retries, flooding the log.
     @Override
     protected AbstractMRMessage enterNormalMode() {
-        return Dcc4PcMessage.getExitProgMode();
+        return null;
+    }
+
+    /**
+     * At shutdown, put every board and the interface back to 8 kbps so other
+     * programs can talk to them. The next JMRI start resets the speed anyway.
+     */
+    @Override
+    protected void terminate() {
+        log.debug("Cleanup Starts");
+        stopJamWatchdog();
+        if (ostream == null || port == null) {
+            return;    // no connection established
+        }
+        // let a reply that is still being fetched finish first
+        long end = System.currentTimeMillis() + 1000;
+        while (sequenceInProgress && System.currentTimeMillis() < end) {
+            try {
+                Thread.sleep(5);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                break;
+            }
+        }
+        Dcc4PcMessage m = Dcc4PcMessage.busResetSpeeds();
+        m.setRetries(0);
+        // Don't wait on a write that will never finish: with the USB link jammed,
+        // waiting here would stop JMRI quitting.
+        boolean locked = false;
+        try {
+            locked = !xmtException && portLock.tryLock(1, java.util.concurrent.TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        if (!locked) {
+            log.warn("DCC4PC interface not responding; bus speeds not reset at quit");
+            return;
+        }
+        try {
+            forwardToPort(m, null);
+        } finally {
+            portLock.unlock();
+        }
+    }
+
+    /**
+     * Held while writing to the port, by the transmit thread and by the
+     * receive thread (which sends Get Response itself), so the two never
+     * write at once. It's a separate lock, not this object's monitor, because
+     * a write can block for a long time when the interface's USB link jams;
+     * the GUI takes the monitor (to notify listeners and queue messages), and
+     * holding it during the write froze the whole window.
+     */
+    private final java.util.concurrent.locks.ReentrantLock portLock = new java.util.concurrent.locks.ReentrantLock();
+
+    /** When the current write started, or 0 if no write is in progress. */
+    private volatile long writeStartedAt = 0;
+
+    /** A write that hasn't finished after this long means the USB link has jammed. */
+    static final long STUCK_WRITE_MILLIS = 3000;
+
+    private volatile boolean jamReported = false;
+    private java.util.TimerTask jamWatchdog;
+
+    /**
+     * Watch for a write that never finishes. jSerialComm's write timeout
+     * doesn't always fire: on 2026-10-12 a write stayed blocked for over 10
+     * minutes, until the interface was unplugged. Call with portLock held.
+     */
+    private void startJamWatchdog() {
+        if (jamWatchdog != null) {
+            return;
+        }
+        jamWatchdog = new java.util.TimerTask() {
+            @Override
+            public void run() {
+                long started = writeStartedAt;
+                if (started != 0 && System.currentTimeMillis() - started > STUCK_WRITE_MILLIS) {
+                    reportJam("a write to the port has not finished after " + STUCK_WRITE_MILLIS / 1000 + " s");
+                }
+            }
+        };
+        jmri.util.TimerUtil.schedule(jamWatchdog, 1000, 1000);
+    }
+
+    private void stopJamWatchdog() {
+        java.util.TimerTask t = jamWatchdog;
+        if (t != null) {
+            t.cancel();
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void terminateThreads() {
+        stopJamWatchdog();
+        Thread t = recoveryThread;
+        if (t != null) {
+            t.interrupt();
+        }
+        super.terminateThreads();
+    }
+
+    /**
+     * Tell the user, once per failure, that the interface has stopped
+     * responding and how to recover. Killing JMRI while a write is stuck in
+     * the USB driver has crashed Windows (bugcheck 0x1A), so the advice is to
+     * unplug first.
+     */
+    private void reportJam(String why) {
+        if (jamReported) {
+            return;
+        }
+        jamReported = true;
+        String text = "The DCC4PC interface has stopped responding (" + why + ").\n"
+                + "Unplug its USB cable and plug it back in: JMRI will reconnect by itself.\n"
+                + "Don't end JMRI from Task Manager while the interface is still plugged in.";
+        log.error("The DCC4PC interface has stopped responding ({}). Unplug its USB cable and plug it back in:"
+                + " JMRI will reconnect by itself. Don't end JMRI from Task Manager while the interface is still plugged in.", why);
+        if (!java.awt.GraphicsEnvironment.isHeadless()) {
+            jmri.util.swing.JmriJOptionPane.showMessageDialogNonModal(null, text,
+                    "DCC4PC interface not responding", jmri.util.swing.JmriJOptionPane.ERROR_MESSAGE, null);
+        }
+    }
+
+    /**
+     * Run on the layout thread once the port has been reopened after a
+     * failure. The interface restarts at 8 kbps when it is plugged back in, so
+     * the managers must set the bus up again as they do at startup.
+     */
+    private volatile Runnable reconnectHandler;
+
+    public void setReconnectHandler(Runnable handler) {
+        reconnectHandler = handler;
+    }
+
+    /** True from a port failure until the port has been reopened. */
+    volatile boolean recovering = false;
+    private volatile Thread recoveryThread;
+    private final Object recoveryLock = new Object();
+
+    /** How often to check whether the port is back. */
+    long recoveryPollMillis = 1000;
+
+    /** Longest wait between attempts to reopen a port that is listed but won't open. */
+    static final long MAX_REOPEN_DELAY = 30000;
+
+    /**
+     * Reading or writing the port has failed, usually because the interface's
+     * USB link jammed and was then unplugged. Stop sending, tell the user, and
+     * reopen the port once it is back (issue 26).
+     */
+    private void portFailed(String why) {
+        xmtException = true;
+        reportJam(why);
+        if (!(controller instanceof SerialDriverAdapter)) {
+            return;
+        }
+        synchronized (recoveryLock) {
+            if (recovering || threadStopRequest) {
+                return;
+            }
+            recovering = true;
+            Thread t = new Thread(() -> recoverPort((SerialDriverAdapter) controller), "DCC4PC port recovery");
+            t.setDaemon(true);
+            recoveryThread = t;
+            t.start();
+        }
+    }
+
+    /**
+     * Close the failed port, wait until the operating system lists it again
+     * (it disappears while the interface is unplugged), then reopen it.
+     * Runs on its own thread.
+     */
+    private void recoverPort(SerialDriverAdapter adapter) {
+        String portName = adapter.getCurrentPortName();
+        jmri.jmrix.ConnectionStatus.instance().setConnectionState(adapter.getSystemConnectionMemo(),
+                jmri.jmrix.ConnectionStatus.CONNECTION_DOWN);
+        log.info("Closing {}; it will be reopened when the interface is back", portName);
+        try {
+            closePort(adapter, portName);
+            boolean wasGone = false;
+            long delay = recoveryPollMillis;
+            while (!threadStopRequest) {
+                Thread.sleep(delay);
+                if (!adapter.isPortPresent()) {
+                    if (!wasGone) {
+                        log.info("{} has gone; waiting for the interface to be plugged back in", portName);
+                        wasGone = true;
+                    }
+                    delay = recoveryPollMillis;
+                    continue;
+                }
+                if (wasGone) {
+                    // just plugged back in: give the system a moment to finish setting it up
+                    Thread.sleep(2 * recoveryPollMillis);
+                    wasGone = false;
+                }
+                String error = adapter.openPort(portName, "JMRI");
+                if (error == null) {
+                    reattach(adapter, portName);
+                    return;
+                }
+                delay = Math.min(Math.max(delay, recoveryPollMillis) * 2, MAX_REOPEN_DELAY);
+                log.warn("Could not reopen {} ({}); trying again in {} s", portName, error, delay / 1000);
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            log.debug("Port recovery stopped");
+        }
+    }
+
+    /**
+     * Close the port on a separate thread, in case the driver blocks: a write
+     * stuck in a jammed USB driver has held on to the port before.
+     */
+    private void closePort(SerialDriverAdapter adapter, String portName) throws InterruptedException {
+        Thread closer = new Thread(adapter::closeSerialPort, "DCC4PC port close");
+        closer.setDaemon(true);
+        closer.start();
+        closer.join(2000);
+        if (closer.isAlive()) {
+            log.warn("{} did not close within 2 s; trying to reopen it anyway", portName);
+        }
+    }
+
+    /** Switch to the reopened port's streams, and start sending again. */
+    private void reattach(SerialDriverAdapter adapter, String portName) throws InterruptedException {
+        portLock.lockInterruptibly(); // a write may still be finishing on the old port
+        try {
+            istream = adapter.getInputStream();
+            ostream = adapter.getOutputStream();
+            port = adapter.getSerialPort();
+            lastIncomplete = null;
+            waitingForMore = false;
+            sequenceInProgress = false;
+            mLastMessage = null;
+            mLastSentMessage = null;
+            rcvException = false;
+            xmtException = false;
+            jamReported = false;
+        } finally {
+            portLock.unlock();
+        }
+        // whatever was queued during the outage is stale; the managers start again from scratch
+        synchronized (this) {
+            msgQueue.clear();
+            listenerQueue.clear();
+        }
+        recovering = false;
+        jmri.jmrix.ConnectionStatus.instance().setConnectionState(adapter.getSystemConnectionMemo(),
+                jmri.jmrix.ConnectionStatus.CONNECTION_UP);
+        log.info("Reopened {}; setting up the DCC4PC bus again", portName);
+        Runnable handler = reconnectHandler;
+        if (handler != null) {
+            jmri.util.ThreadingUtil.runOnLayoutEventually(handler::run);
+        }
     }
 
     @Override
@@ -112,32 +379,54 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
     Dcc4PcMessage mLastMessage;  //Last message requested with a reply listener ie from external methods
     Dcc4PcMessage mLastSentMessage; //Last message actually sent from within the code, ie getResponse.
 
+    // Not synchronized on this object: see portLock.
     @Override
-    synchronized protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
+    protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         if (log.isDebugEnabled()) {
             log.debug("forwardToPort message: [{}]", m);
         }
         if (port == null) {
             return;
         }
-        // remember who sent this
-        mLastSender = reply;
-        mLastMessage = (Dcc4PcMessage) m;
+        portLock.lock();
+        try {
+            // remember who sent this
+            mLastSender = reply;
+            mLastMessage = (Dcc4PcMessage) m;
 
-        // forward the message to the registered recipients,
-        // which includes the communications monitor, except the sender.
-        // Schedule notification via the Swing event queue to ensure order
-        if (!mLastMessage.isGetResponse()) {
-            //Do not forward on the get response packets, saves filling up the monitors with chaff
-            Runnable r = new XmtNotifier(m, mLastSender, this);
-            javax.swing.SwingUtilities.invokeLater(r);
+            // forward the message to the registered recipients,
+            // which includes the communications monitor, except the sender.
+            // Schedule notification via the Swing event queue to ensure order
+            if (!mLastMessage.isGetResponse()) {
+                //Do not forward on the get response packets, saves filling up the monitors with chaff
+                Runnable r = new XmtNotifier(m, mLastSender, this);
+                javax.swing.SwingUtilities.invokeLater(r);
+            }
+            forwardToPort(m);
+        } finally {
+            portLock.unlock();
         }
-        forwardToPort(m);
-
     }
 
     //this forward to port is also used internally for repeating commands.
     private void forwardToPort(AbstractMRMessage m) {
+        portLock.lock();
+        try {
+            writeToPort(m);
+        } finally {
+            portLock.unlock();
+        }
+    }
+
+    // Call with portLock held.
+    @SuppressFBWarnings(value = "USO_UNSAFE_OBJECT_SYNCHRONIZATION", justification = XMT_LOCK)
+    private void writeToPort(AbstractMRMessage m) {
+        if (xmtException) {
+            // A write has failed and the port is being reopened, so the retry
+            // loop below would only wait out each message's timeouts.
+            return;
+        }
+        startJamWatchdog();
         mLastSentMessage = (Dcc4PcMessage) m;
         // stream to port in single write, as that's needed by serial
         byte msg[] = new byte[lengthOfByteStream(m)];
@@ -160,8 +449,17 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                 }
                 while (m.getRetries() >= 0) {
                     if (portReadyToSend(controller)) {
+                        // DSR high means the interface is still answering the last command.
+                        // (It also reads high just after the port opens, so don't wait long.)
+                        waitForDsrLow(200, false);
+                        waitForGap();
                         port.setDTR(true);
-                        ostream.write(msg);
+                        writeStartedAt = System.currentTimeMillis();
+                        try {
+                            ostream.write(msg);
+                        } finally {
+                            writeStartedAt = 0;
+                        }
                         try {
                             Thread.sleep(20);
                         } catch (InterruptedException ex) {
@@ -171,6 +469,10 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                         }
                         ostream.flush();
                         port.setDTR(false);
+                        if (((Dcc4PcMessage) m).isNoDataReply()) {
+                            waitForDsrLow(m.getTimeout(), true);
+                            lastTransactionEnd = System.currentTimeMillis();
+                        }
                         break;
                     } else if (m.getRetries() >= 0) {
                         log.debug("Retry message: {} attempts remaining: {}", m, m.getRetries());
@@ -193,13 +495,60 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                 connectionWarn();
             }
         } catch (java.io.IOException | RuntimeException e) {
-            // TODO Currently there's no port recovery if an exception occurs
-            // must restart JMRI to clear xmtException.
-            xmtException = true;
             portWarn(e);
+            portFailed("a write to the port failed: " + e.getMessage());
         }
     }
-    jmri.jmrix.purejavacomm.SerialPort port;
+    /**
+     * Wait for the interface to finish a command that it answers with no data:
+     * DSR falls when it is done, usually within 2 ms of DTR going low.
+     *
+     * @param timeout longest wait, in milliseconds
+     * @param warn    log a warning if DSR is still high at the end
+     */
+    private void waitForDsrLow(int timeout, boolean warn) {
+        long end = System.currentTimeMillis() + timeout;
+        while (port.isDSR()) {
+            if (System.currentTimeMillis() > end) {
+                if (warn) {
+                    log.warn("Interface still busy (DSR high) {} ms after {}", timeout, mLastSentMessage);
+                } else {
+                    log.debug("DSR still high after {} ms, sending anyway", timeout);
+                }
+                return;
+            }
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+                return;
+            }
+        }
+    }
+
+    /**
+     * Quiet time between the end of one transaction and the start of the
+     * next. Sending each Get Response straight after the last reply ended
+     * jammed the interface's USB link after a few minutes of polling with two
+     * locos; our standalone tools always leave about this long, and ran for
+     * minutes without a jam.
+     */
+    static final int MIN_GAP_MS = 20;
+
+    volatile long lastTransactionEnd = 0;
+
+    private void waitForGap() {
+        long wait = lastTransactionEnd + MIN_GAP_MS - System.currentTimeMillis();
+        if (wait > 0) {
+            try {
+                Thread.sleep(wait);
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+        }
+    }
+
+    volatile jmri.jmrix.purejavacomm.SerialPort port;
 
     @Override
     public void connectPort(jmri.jmrix.AbstractPortController p) {
@@ -207,6 +556,45 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
         super.connectPort(p);
         port = ((SerialDriverAdapter) controller).getSerialPort();
 
+    }
+
+    /**
+     * Like the base class's loop, but a failed port doesn't end it: the port
+     * is reopened (see {@link #portFailed}) and reading carries on.
+     */
+    @Override
+    public void receiveLoop() {
+        log.debug("receiveLoop starts in {}", this);
+        int errorCount = 0;
+        while (!threadStopRequest) {
+            if (recovering) {
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) {
+                    break;
+                }
+                continue;
+            }
+            try {
+                handleOneIncomingReply();
+                errorCount = 0;
+            } catch (java.io.InterruptedIOException e) {
+                if (!recovering) {
+                    break; // asked to stop
+                }
+            } catch (java.io.IOException e) {
+                if (!threadStopRequest) {
+                    portFailed("reading from the port failed: " + e.getMessage());
+                }
+            } catch (RuntimeException e) {
+                log.error("Exception in receive loop: {}", e.toString(), e);
+                if (++errorCount >= maxRcvExceptionCount) {
+                    errorCount = 0;
+                    portFailed("too many errors reading from the port");
+                }
+            }
+        }
+        log.debug("receiveLoop ends");
     }
 
     @Override
@@ -257,6 +645,13 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
     boolean waitingForMore = false;
     boolean loading = false;
 
+    // True while the receive thread is fetching a reply with Get Response; the
+    // transmit thread must not send another command until it has finished.
+    volatile boolean sequenceInProgress = false;
+
+    /** Longest a single reply sequence may hold up the transmit thread. */
+    static final int MAX_SEQUENCE_TIME = 10000;
+
     final int GETMOREDATA = 0x01;
 
     /**
@@ -266,6 +661,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
      *
      */
     @Override
+    @SuppressFBWarnings(value = "USO_UNSAFE_OBJECT_SYNCHRONIZATION", justification = XMT_LOCK)
     public void handleOneIncomingReply() throws java.io.IOException {
         // we sit in this until the message is complete, relying on
         // threading to let other stuff happen
@@ -293,6 +689,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                     }
                     //log.debug("We do not forward the response to the listener as it has not been formed");
                     lastIncomplete = null;
+                    sequenceInProgress = true;
                     forwardToPort(Dcc4PcMessage.getResponse());
 
                     return;
@@ -349,10 +746,11 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                             }
                         }
 
-                    } else if (msg.getNumDataElements() > 1) {
+                    } else if (msg.getNumDataElements() > 0) { // a first chunk of one byte is data too
                         lastIncomplete = (Dcc4PcReply) msg;
                     }
                     //We do not forward the response to the listener as it has not been formed
+                    sequenceInProgress = true;
                     forwardToPort(Dcc4PcMessage.getResponse());
 
                     return;
@@ -362,6 +760,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                     ((Dcc4PcReply) msg).setError(true);
                     mLastMessage.setRetries(mLastMessage.getRetries() - 1);
                     if (mLastMessage.getRetries() >= 0) {
+                        sequenceInProgress = false;
                         synchronized (xmtRunnable) {
                             mCurrentState = AUTORETRYSTATE;
                             replyInDispatch = false;
@@ -376,6 +775,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
         }
 
         // message is complete, dispatch it !!
+        sequenceInProgress = false;
         replyInDispatch = true;
         if (log.isDebugEnabled()) {
             log.debug("dispatch reply of length {} contains {} state {}", msg.getNumDataElements(), msg.toString(), mCurrentState);
@@ -481,6 +881,10 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
             for (i = 0; i < msg.maxSize(); i++) {
                 boolean waiting = true;
                 while (waiting) {
+                    if (recovering) {
+                        // the port is closed or about to be; the receive loop waits for it to reopen
+                        throw new java.io.InterruptedIOException("port being reopened");
+                    }
                     if (controller.getInputStream().available() > 0) {
                         readingData = true;
                         byte char1 = readByteProtected(istream);
@@ -491,6 +895,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                         if (flushReceiveChars) {
                             lastIncomplete = null;
                             waitingForMore = false;
+                            sequenceInProgress = false;
                             mLastMessage = null;
                             mLastSentMessage = null;
                             readingData = false;
@@ -522,6 +927,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                     } else if (!port.isDSR()) {
                         if (i == 0) {
                             waiting = true;
+                            idleWait();
                         } else {
                             log.debug("We have data so will break");
                             waiting = false;
@@ -530,20 +936,53 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                     } else {
                         //As we have no data to process we will set the readingData flag false;
                         readingData = false;
+                        // Only pause before the reply starts. Once its bytes are arriving, read
+                        // each one as soon as it's there: pausing mid-reply read the bytes late,
+                        // and was the likely cause of replies cut short (issue 29).
+                        if (i == 0) {
+                            idleWait();
+                        }
                     }
                 }
             }
+        }
+        lastTransactionEnd = System.currentTimeMillis();
+    }
+
+    /**
+     * Pause briefly while loadChars is waiting for a reply to start. Without
+     * it the receive thread polled available() and DSR non-stop, using a whole
+     * CPU core whenever JMRI was idle (issue 29). It isn't used once a reply's
+     * bytes are arriving: on Windows a 1 ms sleep can last up to ~15 ms, and
+     * with it the Raw stream misaligned (7 times in one 5-minute run, against
+     * none without it).
+     *
+     * @throws java.io.InterruptedIOException if the thread is interrupted or
+     *                                        asked to stop, which ends the
+     *                                        receive loop
+     */
+    private void idleWait() throws java.io.InterruptedIOException {
+        if (threadStopRequest) {
+            throw new java.io.InterruptedIOException("receive thread stopping");
+        }
+        try {
+            Thread.sleep(1);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+            throw new java.io.InterruptedIOException("receive thread interrupted");
         }
     }
 
     boolean readingData = false;
 
     @Override
+    @SuppressFBWarnings(value = "USO_UNSAFE_OBJECT_SYNCHRONIZATION", justification = XMT_LOCK)
     protected void transmitWait(int waitTime, int state, String InterruptMessage) {
         // wait() can have spurious wakeup!
         // so we protect by making sure the entire timeout time is used
         long currentTime = Calendar.getInstance().getTimeInMillis();
         long endTime = currentTime + waitTime;
+        long hardEnd = currentTime + Math.max(waitTime, MAX_SEQUENCE_TIME);
         while (endTime > (currentTime = Calendar.getInstance().getTimeInMillis())) {
             long wait = endTime - currentTime;
             try {
@@ -566,7 +1005,12 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                         //if we are in the process of retrieving data, then we shall increase the endTime by 200ms.
                         endTime = endTime + 200;
                     }
-
+                    // Timing out part way through a Get Response sequence would let the next
+                    // command interrupt it, which can jam the interface's USB link.
+                    long now = Calendar.getInstance().getTimeInMillis();
+                    if (sequenceInProgress && endTime <= now + 50 && now < hardEnd) {
+                        endTime = now + 50;
+                    }
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // retain if needed later
@@ -576,5 +1020,5 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
         log.debug("TIMEOUT in transmitWait, mCurrentState:{} {} port dsr {} wait time {}", mCurrentState, state, port.isDSR(), waitTime);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Dcc4PcTrafficController.class);
+    private static final Logger log = LoggerFactory.getLogger(Dcc4PcTrafficController.class);
 }

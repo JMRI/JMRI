@@ -163,8 +163,10 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
                                 Bundle.getMessage("ErrorTitle"),
                                 JmriJOptionPane.ERROR_MESSAGE);
                     } else {
+                        automationBox.removeActionListener(automationSelectionListener);
                         automationBox.addItem(newName);
                         automationBox.setSelectedItem(newName);
+                        automationBox.addActionListener(automationSelectionListener);
                     }
                     bean.setTurnoutOperation(null);
                     bean.setTurnoutOperation(currentOperation);
@@ -183,8 +185,14 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
                         bean.setInhibitOperation(false);
                         String autoMode = (String) automationBox.getSelectedItem();
                         if (autoMode != null) {
-                            bean.setTurnoutOperation(InstanceManager.getDefault(TurnoutOperationManager.class).
-                                    getOperation((autoMode)));
+                            TurnoutOperation selectedOp = InstanceManager.getDefault(TurnoutOperationManager.class).
+                                    getOperation((autoMode));
+                            if (currentOperation != null && currentOperation.isNonce() && !currentOperation.equivalentTo(selectedOp)) {
+                                // attach the private copy holding the edited values
+                                bean.setTurnoutOperation(currentOperation);
+                            } else {
+                                bean.setTurnoutOperation(selectedOp);
+                            }
                         }
                         break;
                 }
@@ -263,7 +271,11 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
 
         if (currentOperation != null) {
             turnoutOperation.remove(config);
-            if (!currentOperation.isNonce()) {
+            TurnoutOperation existing = bean.getTurnoutOperation();
+            if (existing != null && existing.isNonce() && currentOperation.equals(existing.getDefinitive())) {
+                // keep editing the turnout's own copy so its saved values show
+                currentOperation = existing;
+            } else if (!currentOperation.isNonce()) {
                 currentOperation = currentOperation.makeNonce(bean);
             }
             config = TurnoutOperationConfig.getConfigPanel(currentOperation);
@@ -289,10 +301,10 @@ public class TurnoutEditAction extends BeanEditAction<Turnout> {
         super.cancelButtonAction(e);
     }
 
-    private final static String bothText = "Both"; // TODO I18N using bundle. Note: check how this property is stored/loaded
-    private final static String cabOnlyText = "Cab only";
-    private final static String pushbutText = "Pushbutton only";
-    private final static String noneText = "None";
+    private static final String bothText = "Both"; // TODO I18N using bundle. Note: check how this property is stored/loaded
+    private static final String cabOnlyText = "Cab only";
+    private static final String pushbutText = "Pushbutton only";
+    private static final String noneText = "None";
 
     private JComboBox<String> lockBox;
     protected BeanItemPanel lock() {

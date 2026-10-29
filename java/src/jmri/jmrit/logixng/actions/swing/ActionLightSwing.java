@@ -275,6 +275,6 @@ public class ActionLightSwing extends AbstractDigitalActionSwing {
     }
 
 
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLightSwing.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionLightSwing.class);
 
 }

@@ -412,6 +412,6 @@ public class CbusNodeBackupManagerTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusNodeXmlTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusNodeXmlTest.class);
 
 }

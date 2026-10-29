@@ -9,7 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.jmrit.operations.OperationsFrame;
-import jmri.jmrit.operations.OperationsPanel;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.setup.Control;
@@ -22,21 +21,26 @@ public class TrackEditCommentsFrame extends OperationsFrame {
     JTextArea commentBothTextArea = new JTextArea(5, 100);
     JTextArea commentPickupTextArea = new JTextArea(5, 100);
     JTextArea commentSetoutTextArea = new JTextArea(5, 100);
-    
+
     // scrollers
     JScrollPane commentBothScroller = new JScrollPane(commentBothTextArea);
     JScrollPane commentPickupScroller = new JScrollPane(commentPickupTextArea);
     JScrollPane commentSetoutScroller = new JScrollPane(commentSetoutTextArea);
-    
+
     // text color choosers
     JColorChooser commentColorChooserBoth = new JColorChooser();
     JColorChooser commentColorChooserPickup = new JColorChooser();
     JColorChooser commentColorChooserSetout = new JColorChooser();
 
-    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
-    
+    // text bold
+    JCheckBox boldTextBoth = new JCheckBox();
+    JCheckBox boldTextPickup = new JCheckBox();
+    JCheckBox boldTextSetout = new JCheckBox();
+
     JCheckBox printManifest = new JCheckBox(Bundle.getMessage("PrintManifest"));
     JCheckBox printSwitchList = new JCheckBox(Bundle.getMessage("PrintSwitchList"));
+
+    JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
 
     Track _track;
 
@@ -51,54 +55,64 @@ public class TrackEditCommentsFrame extends OperationsFrame {
             return;
         }
         _track = track;
-        
+
         // Layout the panel by rows
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-        
+
         JPanel panelComments = new JPanel();
         JScrollPane panelPane = new JScrollPane(panelComments);
         panelComments.setLayout(new BoxLayout(panelComments, BoxLayout.Y_AXIS));
-        
+
         panelPane.setBorder(BorderFactory.createTitledBorder(""));
 
         JPanel pCb = new JPanel();
         pCb.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("CommentBoth")));
         pCb.setLayout(new GridBagLayout());
         addItem(pCb, commentBothScroller, 1, 0);
-        
-        addItem(pCb, OperationsPanel.getColorChooserPanel(track.getCommentBothWithColor(), commentColorChooserBoth), 2, 0);
+
+        addItem(pCb, getColorChooserPanel(track.getCommentBothWithColor(), commentColorChooserBoth, boldTextBoth), 2,
+                0);
 
         JPanel pCp = new JPanel();
         pCp.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("CommentPickup")));
         pCp.setLayout(new GridBagLayout());
         addItem(pCp, commentPickupScroller, 1, 0);
-        
-        addItem(pCp, OperationsPanel.getColorChooserPanel(track.getCommentPickupWithColor(), commentColorChooserPickup), 2, 0);
+
+        addItem(pCp, getColorChooserPanel(track.getCommentPickupWithColor(), commentColorChooserPickup, boldTextPickup),
+                2, 0);
 
         JPanel pCs = new JPanel();
         pCs.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("CommentSetout")));
         pCs.setLayout(new GridBagLayout());
         addItem(pCs, commentSetoutScroller, 1, 0);
-        
-        addItem(pCs, OperationsPanel.getColorChooserPanel(track.getCommentSetoutWithColor(), commentColorChooserSetout), 2, 0);
 
-        commentBothTextArea.setText(TrainCommon.getTextColorString(track.getCommentBothWithColor()));
-        commentPickupTextArea.setText(TrainCommon.getTextColorString(track.getCommentPickupWithColor()));
-        commentSetoutTextArea.setText(TrainCommon.getTextColorString(track.getCommentSetoutWithColor()));
+        addItem(pCs, getColorChooserPanel(track.getCommentSetoutWithColor(), commentColorChooserSetout, boldTextSetout),
+                2, 0);
+
+        commentBothTextArea.setText(TrainCommon.isTextUserModified(track.getCommentBothWithColor())
+                ? track.getCommentBothWithColor() : track.getCommentBoth());
+        commentPickupTextArea.setText(TrainCommon.isTextUserModified(track.getCommentPickupWithColor())
+                ? track.getCommentPickupWithColor() : track.getCommentPickup());
+        commentSetoutTextArea.setText(TrainCommon.isTextUserModified(track.getCommentSetoutWithColor())
+                ? track.getCommentSetoutWithColor() : track.getCommentSetout());
+
+        boldTextBoth.setSelected(TrainCommon.isTextBold(track.getCommentBothWithColor()));
+        boldTextPickup.setSelected(TrainCommon.isTextBold(track.getCommentPickupWithColor()));
+        boldTextSetout.setSelected(TrainCommon.isTextBold(track.getCommentSetoutWithColor()));
 
         JPanel pB = new JPanel();
         pB.setLayout(new GridBagLayout());
         addItem(pB, printManifest, 0, 0);
         addItem(pB, printSwitchList, 1, 0);
         addItem(pB, saveButton, 2, 0);
-        
+
         printManifest.setSelected(track.isPrintManifestCommentEnabled());
         printSwitchList.setSelected(track.isPrintSwitchListCommentEnabled());
 
         panelComments.add(pCb);
         panelComments.add(pCp);
         panelComments.add(pCs);
-        
+
         add(panelPane);
         add(pB);
 
@@ -112,9 +126,12 @@ public class TrackEditCommentsFrame extends OperationsFrame {
     @Override
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == saveButton) {
-            _track.setCommentBoth(TrainCommon.formatColorString(commentBothTextArea.getText(), commentColorChooserBoth.getColor()));
-            _track.setCommentPickup(TrainCommon.formatColorString(commentPickupTextArea.getText(), commentColorChooserPickup.getColor()));
-            _track.setCommentSetout(TrainCommon.formatColorString(commentSetoutTextArea.getText(), commentColorChooserSetout.getColor()));
+            _track.setCommentBoth(TrainCommon.formatColorString(commentBothTextArea.getText(),
+                    commentColorChooserBoth.getColor(), boldTextBoth.isSelected()));
+            _track.setCommentPickup(TrainCommon.formatColorString(commentPickupTextArea.getText(),
+                    commentColorChooserPickup.getColor(), boldTextPickup.isSelected()));
+            _track.setCommentSetout(TrainCommon.formatColorString(commentSetoutTextArea.getText(),
+                    commentColorChooserSetout.getColor(), boldTextSetout.isSelected()));
             _track.setPrintManifestCommentEnabled(printManifest.isSelected());
             _track.setPrintSwitchListCommentEnabled(printSwitchList.isSelected());
             // save location file
@@ -124,7 +141,7 @@ public class TrackEditCommentsFrame extends OperationsFrame {
             }
         }
     }
-    
-    private final static Logger log = LoggerFactory.getLogger(TrackEditCommentsFrame.class
+
+    private static final Logger log = LoggerFactory.getLogger(TrackEditCommentsFrame.class
             .getName());
 }

@@ -183,7 +183,7 @@ public class MultiSensorItemPanel extends TableItemPanel<Sensor> {
     static final String[] POSITION = {"first", "second", "third", "fourth", "fifth",
         "sixth", "seventh", "eighth", "nineth", "tenth", "eleventh", "twelfth"};
 
-    static public String getPositionName(int index) {
+    public static String getPositionName(int index) {
         return POSITION[index];
     }
 

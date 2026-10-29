@@ -38,9 +38,9 @@ public class BiDiBOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
     protected jmri.ProgListener progListener = null;
   
     // possible states.
-    static protected final int NOTPROGRAMMING = 0; // is notProgramming
-    static protected final int READREQUEST = 1; // read command sent, waiting for ack and reply
-    static protected final int WRITEREQUEST = 2; // read command sent, waiting for ack
+    protected static final int NOTPROGRAMMING = 0; // is notProgramming
+    protected static final int READREQUEST = 1; // read command sent, waiting for ack and reply
+    protected static final int WRITEREQUEST = 2; // read command sent, waiting for ack
 
     protected BiDiBTrafficController tc = null;
     MessageListener messageListener = null;
@@ -397,6 +397,6 @@ public class BiDiBOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
 
 
     // initialize logging
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BiDiBOpsModeProgrammer.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BiDiBOpsModeProgrammer.class);
 
 }

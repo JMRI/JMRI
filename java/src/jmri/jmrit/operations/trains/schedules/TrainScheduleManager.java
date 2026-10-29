@@ -107,10 +107,9 @@ public class TrainScheduleManager extends PropertyChangeSupport implements Insta
         if (schedule == null) {
             _id++;
             schedule = new TrainSchedule(Integer.toString(_id), name);
-            Integer oldSize = Integer.valueOf(_scheduleHashTable.size());
+            int oldSize = _scheduleHashTable.size();
             _scheduleHashTable.put(schedule.getId(), schedule);
-            setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize,
-                    Integer.valueOf(_scheduleHashTable.size()));
+            setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _scheduleHashTable.size());
         }
         return schedule;
     }
@@ -121,14 +120,14 @@ public class TrainScheduleManager extends PropertyChangeSupport implements Insta
      * @param schedule The TrainSchedule to add.
      */
     public void register(TrainSchedule schedule) {
-        Integer oldSize = Integer.valueOf(_scheduleHashTable.size());
+        int oldSize = _scheduleHashTable.size();
         _scheduleHashTable.put(schedule.getId(), schedule);
         // find last id created
         int id = Integer.parseInt(schedule.getId());
         if (id > _id) {
             _id = id;
         }
-        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_scheduleHashTable.size()));
+        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _scheduleHashTable.size());
     }
 
     /**
@@ -140,9 +139,9 @@ public class TrainScheduleManager extends PropertyChangeSupport implements Insta
         if (schedule == null) {
             return;
         }
-        Integer oldSize = Integer.valueOf(_scheduleHashTable.size());
+        int oldSize = _scheduleHashTable.size();
         _scheduleHashTable.remove(schedule.getId());
-        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_scheduleHashTable.size()));
+        setDirtyAndFirePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, _scheduleHashTable.size());
     }
 
     /**
@@ -209,7 +208,7 @@ public class TrainScheduleManager extends PropertyChangeSupport implements Insta
     }
 
     /**
-     * Gets a JComboBox loaded with schedules starting with null.
+     * Gets a JComboBox loaded with schedules.
      *
      * @return JComboBox with a list of schedules.
      */
@@ -334,7 +333,7 @@ public class TrainScheduleManager extends PropertyChangeSupport implements Insta
         firePropertyChange(p, old, n);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(TrainScheduleManager.class);
+    private static final Logger log = LoggerFactory.getLogger(TrainScheduleManager.class);
 
     @Override
     public void initialize() {

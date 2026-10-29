@@ -27,7 +27,7 @@ import jmri.util.TypeConversionUtil;
  * @author Daniel Bergqvist Copyright 2024
  */
 public class WindowManagement extends AbstractDigitalAction
-        implements PropertyChangeListener, VetoableChangeListener {
+        implements VetoableChangeListener {
 
     private String _jmriJFrameTitle;
     private JmriJFrame _jmriJFrame;
@@ -40,13 +40,13 @@ public class WindowManagement extends AbstractDigitalAction
     private boolean _ignoreWindowNotFound = false;
 
     private final LogixNG_SelectEnum<HideOrShow> _selectEnumHideOrShow =
-            new LogixNG_SelectEnum<>(this, HideOrShow.values(), HideOrShow.DoNothing, this);
+            new LogixNG_SelectEnum<>(this, HideOrShow.values(), HideOrShow.DoNothing);
 
     private final LogixNG_SelectEnum<MaximizeMinimizeNormalize> _selectEnumMaximizeMinimizeNormalize =
-            new LogixNG_SelectEnum<>(this, MaximizeMinimizeNormalize.values(), MaximizeMinimizeNormalize.DoNothing, this);
+            new LogixNG_SelectEnum<>(this, MaximizeMinimizeNormalize.values(), MaximizeMinimizeNormalize.DoNothing);
 
     private final LogixNG_SelectEnum<BringToFrontOrBack> _selectEnumBringToFrontOrBack =
-            new LogixNG_SelectEnum<>(this, BringToFrontOrBack.values(), BringToFrontOrBack.DoNothing, this);
+            new LogixNG_SelectEnum<>(this, BringToFrontOrBack.values(), BringToFrontOrBack.DoNothing);
 
 
     public WindowManagement(String sys, String user)
@@ -358,22 +358,6 @@ public class WindowManagement extends AbstractDigitalAction
 
     /** {@inheritDoc} */
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void registerListenersForThisClass() {
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public void unregisterListenersForThisClass() {
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public void disposeMe() {
     }
 
@@ -454,6 +438,6 @@ public class WindowManagement extends AbstractDigitalAction
 
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WindowManagement.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(WindowManagement.class);
 
 }

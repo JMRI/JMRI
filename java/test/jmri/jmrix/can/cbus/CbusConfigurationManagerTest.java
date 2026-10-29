@@ -279,6 +279,6 @@ public class CbusConfigurationManagerTest {
 
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusConfigurationManagerTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusConfigurationManagerTest.class);
 
 }

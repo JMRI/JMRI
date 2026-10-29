@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.awt.*;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -45,6 +46,7 @@ import jmri.managers.*;
 import jmri.profile.*;
 import jmri.progdebugger.DebugProgrammerManager;
 import jmri.util.gui.GuiLafPreferencesManager;
+import jmri.util.junit.ThreadSafeTimeouts;
 import jmri.util.managers.*;
 import jmri.util.prefs.*;
 import jmri.util.zeroconf.MockZeroConfServiceManager;
@@ -100,12 +102,12 @@ public class JUnitUtil {
      * <p>
      * Public in case modification is needed from a test or script.
      */
-    static final public int WAITFOR_DEFAULT_DELAY = 50;
+    public static final int WAITFOR_DEFAULT_DELAY = 50;
 
     /**
      * Default standard time step (in mSec) when looping in a waitFor operation.
      */
-    static final protected int DEFAULT_WAITFOR_DELAY_STEP = 5;
+    protected static final int DEFAULT_WAITFOR_DELAY_STEP = 5;
 
     /**
      * Standard time step (in mSec) when looping in a waitFor operation.
@@ -116,7 +118,7 @@ public class JUnitUtil {
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "MS_CANNOT_BE_FINAL",
         justification = "value reset during setUp() ")
-    static public int WAITFOR_DELAY_STEP = DEFAULT_WAITFOR_DELAY_STEP;
+    public static int WAITFOR_DELAY_STEP = DEFAULT_WAITFOR_DELAY_STEP;
 
     /**
      * Default maximum time to wait before failing a waitFor operation.
@@ -126,7 +128,7 @@ public class JUnitUtil {
      * are slow. But too long will cause CI jobs to time out before this logs
      * the error....
      */
-    static final protected int DEFAULT_WAITFOR_MAX_DELAY = 10000;
+    protected static final int DEFAULT_WAITFOR_MAX_DELAY = 10000;
 
     /**
      * Maximum time to wait before failing a waitFor operation.
@@ -136,7 +138,7 @@ public class JUnitUtil {
      */
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value = "MS_CANNOT_BE_FINAL",
         justification = "value reset during setUp() ")
-    static public int WAITFOR_MAX_DELAY = DEFAULT_WAITFOR_MAX_DELAY;
+    public static int WAITFOR_MAX_DELAY = DEFAULT_WAITFOR_MAX_DELAY;
 
     /**
      * When true, prints each setUp method to help identify which tests include a failure.
@@ -163,7 +165,7 @@ public class JUnitUtil {
     static boolean checkSequenceDumpsStack =    Boolean.getBoolean("jmri.util.JUnitUtil.checkSequenceDumpsStack"); // false unless set true
 
     /**
-     * If true, will cause the checkSetUpTearDownSequence check to 
+     * If true, will cause the checkSetUpTearDownSequence check to
      * fail the test in addition to logging.
      * <p>
      * Set from the jmri.util.JUnitUtil.checkSequenceFailsTest environment variable.
@@ -203,18 +205,18 @@ public class JUnitUtil {
 
     static long    checkTestDurationStartTime = 0;  // working value
 
-    static private boolean didSetUp = false;    // If true, last saw setUp, waiting tearDown normally
-    static private boolean didTearDown = true;  // If true, last saw tearDown, waiting setUp normally
+    private static boolean didSetUp = false;    // If true, last saw setUp, waiting tearDown normally
+    private static boolean didTearDown = true;  // If true, last saw tearDown, waiting setUp normally
 
-    static private String lastSetUpClassName = "<unknown>";
-    static private String lastSetUpThreadName = "<unknown>";
-    static private StackTraceElement[] lastSetUpStackTrace = new StackTraceElement[0];
-    static private String lastTearDownClassName = "<unknown>";
-    static private String lastTearDownThreadName = "<unknown>";
-    static private StackTraceElement[] lastTearDownStackTrace = new StackTraceElement[0];
+    private static String lastSetUpClassName = "<unknown>";
+    private static String lastSetUpThreadName = "<unknown>";
+    private static StackTraceElement[] lastSetUpStackTrace = new StackTraceElement[0];
+    private static String lastTearDownClassName = "<unknown>";
+    private static String lastTearDownThreadName = "<unknown>";
+    private static StackTraceElement[] lastTearDownStackTrace = new StackTraceElement[0];
 
-    static private boolean isLoggingInitialized = false;
-    static private String initPrefsDir = null;
+    private static boolean isLoggingInitialized = false;
+    private static String initPrefsDir = null;
 
     /**
      * JMRI standard setUp for tests that mock the InstanceManager.
@@ -266,6 +268,10 @@ public class JUnitUtil {
 
         // silence the Jemmy GUI unit testing framework
         JUnitUtil.silenceGUITestOutput();
+        // let the Jemmy timeouts be shared with the threads that close dialogs
+        if (!(JemmyProperties.getCurrentTimeouts() instanceof ThreadSafeTimeouts)) {
+            JemmyProperties.setCurrentTimeouts(new ThreadSafeTimeouts());
+        }
 
         // ideally this would be resetWindows(false, true) to force an error if an earlier
         // test left a window open, but different platforms seem to have just
@@ -339,7 +345,7 @@ public class JUnitUtil {
      * A bit expensive, so only used when needed.
      */
     public static void clearTurnoutThreads(){
-        removeMatchingThreads("setCommandedStateAtInterval"); // must stay consistent with AbstractTurnout
+        removeMatchingThreads("setCommandedStateAtInterval"); // AbstractTurnout no longer starts these
     }
 
     /**
@@ -453,7 +459,7 @@ public class JUnitUtil {
 
         // Check final status of logging in the test just completed
         JUnitAppender.end();
-        Level severity = Level.ERROR; // level at or above which we'll complain
+        Level severity = Level.WARN; // level at or above which we'll complain
         boolean unexpectedMessageSeen = JUnitAppender.unexpectedMessageSeen(severity);
         String unexpectedMessageContent = JUnitAppender.unexpectedMessageContent(severity);
         JUnitAppender.verifyNoBacklog();
@@ -557,7 +563,7 @@ public class JUnitUtil {
      *         otherwise
      */
     @CheckReturnValue
-    static public boolean waitFor(ReleaseUntil condition) {
+    public static boolean waitFor(ReleaseUntil condition) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
             log.error("Cannot use waitFor on Swing thread", new Exception());
             return false;
@@ -595,7 +601,7 @@ public class JUnitUtil {
      *
      * @param msec Delay in milliseconds
      */
-    static public void waitFor(int msec) {
+    public static void waitFor(int msec) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
             log.error("Cannot use waitFor on Swing thread", new Exception());
             return;
@@ -633,7 +639,7 @@ public class JUnitUtil {
      *                  Assertions.fail if condition not true fast enough
      */
     @SuppressFBWarnings("REC_CATCH_EXCEPTION")
-    static public void fasterWaitFor(ReleaseUntil condition, String name) {
+    public static void fasterWaitFor(ReleaseUntil condition, String name) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
             log.error("Cannot use waitFor on Swing thread", new Exception());
             return;
@@ -679,7 +685,7 @@ public class JUnitUtil {
      *         otherwise
      */
     @CheckReturnValue
-    static public boolean fasterWaitFor(ReleaseUntil condition) {
+    public static boolean fasterWaitFor(ReleaseUntil condition) {
         if (javax.swing.SwingUtilities.isEventDispatchThread()) {
             log.error("Cannot use waitFor on Swing thread", new Exception());
             return false;
@@ -720,7 +726,7 @@ public class JUnitUtil {
             ProfileManager.getDefault().getActiveProfile(), FileUtil.getPreferencesPath());
     }
 
-    static public interface ReleaseUntil {
+    public static interface ReleaseUntil {
 
         public boolean ready() throws Exception;
     }
@@ -736,7 +742,7 @@ public class JUnitUtil {
      * @param bean  the bean
      * @param state the desired state
      */
-    static public void setBeanState(NamedBean bean, int state) {
+    public static void setBeanState(NamedBean bean, int state) {
         try {
             javax.swing.SwingUtilities.invokeAndWait(
                     () -> {
@@ -765,7 +771,7 @@ public class JUnitUtil {
      * @param bean  the bean
      * @param state the desired state
      */
-    static public void setBeanStateAndWait(NamedBean bean, int state) {
+    public static void setBeanStateAndWait(NamedBean bean, int state) {
         setBeanState(bean, state);
         JUnitUtil.waitFor(() -> {
             return state == bean.getState();
@@ -1315,6 +1321,21 @@ public class JUnitUtil {
     }
 
     /**
+     * Use when an isolated per-test profile directory is available (e.g. from
+     * {@literal @TempDir}). Guarantees a clean profile regardless of the host
+     * machine's JMRI settings directory.
+     *
+     * @param tempDir a writable directory for the profile, typically from {@literal @TempDir}
+     */
+    public static void resetProfileManager(File tempDir) {
+        try {
+            resetProfileManager(new NullProfile(tempDir));
+        } catch (IOException ex) {
+            log.error("Unable to create profile in {}", tempDir, ex);
+        }
+    }
+
+    /**
      * Use if the profile needs to be written to or cleared as part of the test.
      * A temporary folder is suggested for the profile, see
      * https://www.jmri.org/help/en/html/doc/Technical/JUnit.shtml#tempFileCreation
@@ -1760,18 +1781,18 @@ public class JUnitUtil {
         return button;
     }
 
-    final private static Random random = new Random();
+    private static final Random random = new Random();
 
     public static Random getRandom(){
         return random;
     }
 
-    final private static Random randomConstantSeed = new Random(0);
+    private static final Random randomConstantSeed = new Random(0);
 
     public static Random getRandomConstantSeed(){
         return randomConstantSeed;
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JUnitUtil.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JUnitUtil.class);
 
 }

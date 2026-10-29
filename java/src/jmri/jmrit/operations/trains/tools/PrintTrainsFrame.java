@@ -37,8 +37,8 @@ import jmri.util.davidflanagan.CompatibleHardcopyWriter;
  */
 public class PrintTrainsFrame extends OperationsFrame {
 
-    static final String TAB = "\t"; // NOI18N
-    static final char FORM_FEED = '\f'; // NOI18N
+    protected static final String TAB = "\t"; // NOI18N
+    protected static final char FORM_FEED = '\f'; // NOI18N
 
     public static final int MAX_NAME_LENGTH = Control.max_len_string_train_name - 10;
 
@@ -288,5 +288,5 @@ public class PrintTrainsFrame extends OperationsFrame {
         return count;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(PrintTrainsFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(PrintTrainsFrame.class);
 }

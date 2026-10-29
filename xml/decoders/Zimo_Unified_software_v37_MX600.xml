@@ -26,7 +26,7 @@
   <!-- variables on the proper pane of the Comprehensive programmer.                         -->
   <!-- V 1 new file -->
   <!-- v1.1,  change to refer to PaneAltFunctionMap4.xml and highVersionID changed to 41. Mark Waters 27 july 2016 -->
-  <version author="Ronald Kuhn   ronald@wirkuhns.de" version="1.2" lastUpdated="20200502"/>
+  <version author="Ronald Kuhn" version="1.2" lastUpdated="20200502"/>
   <!-- v1.2,  german translation. Ronald Kuhn 18 September 2017                                -->
   <!-- v1.3,  include CV's for v37. Ronald Kuhn 25 April 2019, tested with MX600R with FW 37.8 -->
   <!-- v1.4,  added replacementModel for v39,  Ronald Kuhn, 02 May 2020                        -->

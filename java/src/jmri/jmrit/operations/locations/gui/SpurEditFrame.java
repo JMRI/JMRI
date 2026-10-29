@@ -5,9 +5,6 @@ import java.awt.GridBagLayout;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
@@ -16,6 +13,9 @@ import jmri.jmrit.operations.locations.tools.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.swing.JmriJOptionPane;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user edit of a spur.
@@ -38,14 +38,18 @@ public class SpurEditFrame extends TrackEditFrame {
         super(Bundle.getMessage("AddSpur"));
     }
     
-    @Override
-    public void initComponents(Track track) {
-        setTitle(Bundle.getMessage("EditSpur", track.getLocation().getName()));
+    public SpurEditFrame(Location location) {
+        super(Bundle.getMessage("AddSpur"));
+        initComponents(location, null);
+    }
+    
+    public SpurEditFrame(Track track) {
+        super(Bundle.getMessage("EditSpur", track.getLocation().getName()));
         initComponents(track.getLocation(), track);
     }
 
     @Override
-    public void initComponents(Location location, Track track) {
+    protected void initComponents(Location location, Track track) {
         _type = Track.SPUR;
 
         // setup the optional panel with schedule stuff
@@ -215,11 +219,14 @@ public class SpurEditFrame extends TrackEditFrame {
                 || e.getPropertyName().equals(Track.SCHEDULE_ID_CHANGED_PROPERTY)) {
             updateScheduleComboBox();
         }
-        if (e.getSource().getClass().equals(Schedule.class) && _track != null) {
+        if (e.getSource().getClass().equals(Schedule.class) && _track != null  ||
+                e.getPropertyName().equals(Track.LOADS_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Track.ROADS_CHANGED_PROPERTY) ||
+                e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY)) {
             textSchError.setText(_track.checkScheduleValid());
         }
         super.propertyChange(e);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(SpurEditFrame.class);
+    private static final Logger log = LoggerFactory.getLogger(SpurEditFrame.class);
 }

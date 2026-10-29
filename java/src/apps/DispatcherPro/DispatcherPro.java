@@ -122,7 +122,7 @@ public class DispatcherPro extends Apps {
 
         Apps.setStartupInfo("DispatcherPro");
 
-        setConfigFilename("DispatcherProConfig2.xml", args);
+        setConfigFilename("DispatcherProConfig2.properties", args);
         DispatcherPro dp = new DispatcherPro();
         JmriJFrame f = new JmriJFrame(jmri.Application.getApplicationName());
         createFrame(dp, f);
@@ -131,6 +131,6 @@ public class DispatcherPro extends Apps {
         splash(false);
     }
 */
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DispatcherPro.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DispatcherPro.class);
 
 }

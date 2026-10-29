@@ -3,6 +3,7 @@ package jmri.implementation;
 import java.awt.GraphicsEnvironment;
 import java.beans.PropertyChangeEvent;
 import java.text.MessageFormat;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
@@ -161,6 +162,13 @@ public class DefaultConditional extends AbstractNamedBean
      */
     @Override
     public void setAction(@Nonnull List<ConditionalAction> arrayList) {
+        // stop the delay timers of actions that are being replaced,
+        // as they can no longer be found to be reset or cancelled
+        for (ConditionalAction action : _actionList) {
+            if (arrayList.stream().noneMatch(a -> a == action)) {
+                action.stopTimer();
+            }
+        }
         _actionList = arrayList;
     }
 
@@ -204,6 +212,105 @@ public class DefaultConditional extends AbstractNamedBean
      */
     @Override
     public int calculate(final boolean enable, PropertyChangeEvent evt) {
+        CalculateChain chain = CALCULATE_CHAIN.get();
+        int entries = chain.entries.getOrDefault(this, 0);
+        if (entries >= MAX_REENTRIES) {
+            // This Conditional has triggered itself, directly or through
+            // other Conditionals, over and over on this thread: a loop
+            if (!chain.reported) {
+                chain.reported = true;
+                log.error("Logix loop stopped when {} re-triggered itself {} times inside its own calculation: {}",
+                    getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME), MAX_REENTRIES, loopNames(chain));  // NOI18N
+            }
+            return _currentState;
+        }
+        boolean outermost = chain.conditionals.isEmpty();
+        chain.conditionals.push(this);
+        chain.entries.put(this, entries + 1);
+        try {
+            return calculateNested(enable, evt);
+        } catch (StackOverflowError e) {
+            if (outermost) {
+                // A loop through more Conditionals than MAX_REENTRIES can catch
+                // before the stack is used up, or a very long chain. A stack
+                // overflow is fatal, so it is not handled here: it is only
+                // logged, where the stack has unwound enough to do that, and
+                // then passed on.
+                log.error("Logix calculations started by {} ran out of stack; this is probably a loop of many Logixes",
+                    getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME));  // NOI18N
+            }
+            throw e;
+        } finally {
+            chain.conditionals.pop();
+            if (entries == 0) {
+                chain.entries.remove(this);
+            } else {
+                chain.entries.put(this, entries);
+            }
+            if (chain.conditionals.isEmpty()) {
+                chain.reported = false;
+            }
+        }
+    }
+
+    /**
+     * Maximum number of calculations of one Conditional that may be running
+     * on one thread at the same time, that is the outermost calculation and
+     * the calculations nested inside it when its actions re-trigger it,
+     * directly or through other Logixes. The next one is not run. Chains of
+     * Conditionals that are not loops are not stopped by this; when a loop or
+     * chain is so long that it uses up the stack first, the StackOverflowError
+     * is logged in the outermost calculation and passed on.
+     */
+    static final int MAX_REENTRIES = 10;
+
+    /**
+     * Maximum number of distinct Conditionals named when a loop is reported.
+     */
+    static final int MAX_REPORTED_LOOP_NAMES = 10;
+
+    /**
+     * Name the distinct Conditionals in a loop, in calling order, ending with
+     * this one. Only the Conditionals calculated since the previous
+     * calculation of this one are in the loop, and only the last
+     * {@link #MAX_REPORTED_LOOP_NAMES} of them are named.
+     */
+    private String loopNames(CalculateChain chain) {
+        List<String> names = new ArrayList<>();
+        java.util.Set<Conditional> seen = new java.util.HashSet<>();
+        seen.add(this);
+        names.add(getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME));
+        boolean more = false;
+        for (Conditional c : chain.conditionals) {  // most recent first
+            if (c == this) {
+                break;
+            }
+            if (seen.add(c)) {
+                if (names.size() >= MAX_REPORTED_LOOP_NAMES) {
+                    more = true;
+                    break;
+                }
+                names.add(c.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME));
+            }
+        }
+        java.util.Collections.reverse(names);
+        return (more ? "... -> " : "") + String.join(" -> ", names);
+    }
+
+    private static class CalculateChain {
+        final ArrayDeque<Conditional> conditionals = new ArrayDeque<>();
+        final java.util.IdentityHashMap<Conditional, Integer> entries = new java.util.IdentityHashMap<>();
+        boolean reported = false;
+    }
+
+    private static final ThreadLocal<CalculateChain> CALCULATE_CHAIN = new ThreadLocal<CalculateChain>() {
+        @Override
+        protected CalculateChain initialValue() {
+            return new CalculateChain();
+        }
+    };
+
+    private int calculateNested(final boolean enable, PropertyChangeEvent evt) {
         log.trace("calculate starts for {}", getSystemName());  // NOI18N
 
         // check if  there are no state variables
@@ -367,6 +474,33 @@ public class DefaultConditional extends AbstractNamedBean
     }
 
     /**
+     * Check whether the two characters after the 'R' at index {@code i} of
+     * {@code s} are read as the variable number, that is whether
+     * {@code Integer.parseInt(s.substring(i + 1, i + 3))} succeeds. If not, the
+     * single character after the 'R' is the variable number.
+     * <p>
+     * This used to be found by trying to parse the two characters and catching
+     * the exception, which for every single digit variable cost far more than
+     * the rest of the calculation.
+     *
+     * @param s the antecedent, from the 'R' onwards at index {@code i}
+     * @param i the index of the 'R'
+     * @return true if the two characters after the 'R' form a number
+     */
+    private static boolean isTwoCharacterIndex(String s, int i) {
+        if (i + 3 > s.length()) {
+            return false;
+        }
+        char first = s.charAt(i + 1);
+        char second = s.charAt(i + 2);
+        // the same characters Integer.parseInt accepts in a two character string:
+        // a digit or a sign, followed by a digit
+        boolean firstIsDigitOrSign = (Character.digit(first, 10) >= 0) || (first == '+') || (first == '-');
+        boolean secondIsDigit = Character.digit(second, 10) >= 0;
+        return firstIsDigitOrSign && secondIsDigit;
+    }
+
+    /**
      * Parses and computes one parenthesis level of a boolean statement.
      * <p>
      * Recursively calls inner parentheses levels. Note that all logic operators
@@ -402,10 +536,10 @@ public class DefaultConditional extends AbstractNamedBean
         } else // cannot be '('.  must be either leftArg or notleftArg
         {
             if (s.charAt(i) == 'R') {  // NOI18N
-                try {
-                    k = Integer.parseInt(String.valueOf(s.substring(i + 1, i + 3)));
+                if (isTwoCharacterIndex(s, i)) {
+                    k = Integer.parseInt(s.substring(i + 1, i + 3));
                     i += 2;
-                } catch (NumberFormatException | IndexOutOfBoundsException nfe) {
+                } else {
                     k = Integer.parseInt(String.valueOf(s.charAt(++i)));
                 }
                 leftArg = variableList.get(k - 1).evaluate();
@@ -424,10 +558,10 @@ public class DefaultConditional extends AbstractNamedBean
                     i += dp.indexCount;
                     argsUsed.or(dp.argsUsed);
                 } else if (s.charAt(i) == 'R') {  // NOI18N
-                    try {
-                        k = Integer.parseInt(String.valueOf(s.substring(i + 1, i + 3)));
+                    if (isTwoCharacterIndex(s, i)) {
+                        k = Integer.parseInt(s.substring(i + 1, i + 3));
                         i += 2;
-                    } catch (NumberFormatException | IndexOutOfBoundsException nfe) {
+                    } else {
                         k = Integer.parseInt(String.valueOf(s.charAt(++i)));
                     }
                     leftArg = variableList.get(k - 1).evaluate();
@@ -467,10 +601,10 @@ public class DefaultConditional extends AbstractNamedBean
                 } else // cannot be '('.  must be either rightArg or notRightArg
                 {
                     if (s.charAt(i) == 'R') {  // NOI18N
-                        try {
-                            k = Integer.parseInt(String.valueOf(s.substring(i + 1, i + 3)));
+                        if (isTwoCharacterIndex(s, i)) {
+                            k = Integer.parseInt(s.substring(i + 1, i + 3));
                             i += 2;
-                        } catch (NumberFormatException | IndexOutOfBoundsException nfe) {
+                        } else {
                             k = Integer.parseInt(String.valueOf(s.charAt(++i)));
                         }
                         rightArg = variableList.get(k - 1).evaluate();
@@ -488,10 +622,10 @@ public class DefaultConditional extends AbstractNamedBean
                             i += dp.indexCount;
                             argsUsed.or(dp.argsUsed);
                         } else if (s.charAt(i) == 'R') {  // NOI18N
-                            try {
-                                k = Integer.parseInt(String.valueOf(s.substring(i + 1, i + 3)));
+                            if (isTwoCharacterIndex(s, i)) {
+                                k = Integer.parseInt(s.substring(i + 1, i + 3));
                                 i += 2;
-                            } catch (NumberFormatException | IndexOutOfBoundsException nfe) {
+                            } else {
                                 k = Integer.parseInt(String.valueOf(s.charAt(++i)));
                             }
                             rightArg = variableList.get(k - 1).evaluate();
@@ -573,10 +707,10 @@ public class DefaultConditional extends AbstractNamedBean
                         conditionalExecute.setTurnout(action, (Turnout) nb, actionCount, errorList);
                         break;
                     case RESET_DELAYED_TURNOUT:
-                        conditionalExecute.delayedTurnout(action, actionCount, new TimeTurnout(i), true, devName);
+                        conditionalExecute.delayedTurnout(action, actionCount, new TimeTurnout(action), true, devName);
                         break;
                     case DELAYED_TURNOUT:
-                        conditionalExecute.delayedTurnout(action, actionCount, new TimeTurnout(i), false, devName);
+                        conditionalExecute.delayedTurnout(action, actionCount, new TimeTurnout(action), false, devName);
                         break;
                     case CANCEL_TURNOUT_TIMERS:
                         conditionalExecute.cancelTurnoutTimers(action, actionCount, errorList, devName);
@@ -607,11 +741,11 @@ public class DefaultConditional extends AbstractNamedBean
                         break;
                     case RESET_DELAYED_SENSOR:
                         conditionalExecute.delayedSensor(action, actionCount,
-                            new TimeSensor(i), getMillisecondValue(action), true, devName);
+                            new TimeSensor(action), getMillisecondValue(action), true, devName);
                         break;
                     case DELAYED_SENSOR:
                         conditionalExecute.delayedSensor(action, actionCount,
-                            new TimeSensor(i), getMillisecondValue(action), false, devName);
+                            new TimeSensor(action), getMillisecondValue(action), false, devName);
                         break;
                     case CANCEL_SENSOR_TIMERS:
                         conditionalExecute.cancelSensorTimers(action, actionCount, errorList, devName);
@@ -1051,16 +1185,16 @@ public class DefaultConditional extends AbstractNamedBean
      */
     class TimeSensor implements java.awt.event.ActionListener {
 
-        TimeSensor(int index) {
-            mIndex = index;
+        TimeSensor(ConditionalAction action) {
+            mAction = action;
         }
 
-        private int mIndex = 0;
+        private final ConditionalAction mAction;
 
         @Override
         public void actionPerformed(java.awt.event.ActionEvent event) {
             // set sensor state
-            ConditionalAction action = _actionList.get(mIndex);
+            ConditionalAction action = mAction;
             if (action.getNamedBean() == null) {
                 log.error("{} Invalid delayed sensor name - {}", getDisplayName(), action.getDeviceName());
             } else {
@@ -1098,16 +1232,16 @@ public class DefaultConditional extends AbstractNamedBean
      */
     class TimeTurnout implements java.awt.event.ActionListener {
 
-        TimeTurnout(int index) {
-            mIndex = index;
+        TimeTurnout(ConditionalAction action) {
+            mAction = action;
         }
 
-        private int mIndex = 0;
+        private final ConditionalAction mAction;
 
         @Override
         public void actionPerformed(java.awt.event.ActionEvent event) {
             // set turnout state
-            ConditionalAction action = _actionList.get(mIndex);
+            ConditionalAction action = mAction;
             var beanHandle = action.getNamedBean();
             if (beanHandle == null) {
                 log.error("{} Invalid delayed turnout name - {}", getDisplayName(), action.getDeviceName());

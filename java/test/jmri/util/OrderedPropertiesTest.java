@@ -9,8 +9,9 @@ import org.junit.jupiter.api.*;
 public class OrderedPropertiesTest {
 
     @Test
+    @SuppressWarnings("deprecation") // class is marked for removal, so this doesn't work
     public void testCTor() {
-        OrderedProperties t = new OrderedProperties();
+        var t = new OrderedProperties();
         Assertions.assertNotNull( t, "exists");
     }
 
@@ -24,6 +25,6 @@ public class OrderedPropertiesTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(OrderedPropertiesTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(OrderedPropertiesTest.class);
 
 }

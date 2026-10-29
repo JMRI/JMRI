@@ -17,6 +17,10 @@ import org.slf4j.LoggerFactory;
  */
 public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController implements Z21Interface {
 
+    // Z21 LAN Protocol Specification v1.13 section 1.3 allows combined datasets
+    // up to the Ethernet MTU payload: 1472 = 1500-byte MTU - IPv4 - UDP headers.
+    private static final int MAX_UDP_PAYLOAD = 1472;
+
     private java.net.InetAddress host;
     private int port;
 
@@ -200,19 +204,11 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
             host = java.net.InetAddress.getByName(((Z21Adapter) controller).getHostName());
             port = ((Z21Adapter) controller).getPort();
             ConnectionStatus.instance().setConnectionState(
-                    p.getSystemConnectionMemo().getUserName(),
-                    ((Z21Adapter) p).getHostName() + ":" + ((Z21Adapter) p).getPort(), ConnectionStatus.CONNECTION_UP);
+                    p.getSystemConnectionMemo(), ConnectionStatus.CONNECTION_UP);
         } catch (java.net.UnknownHostException uhe) {
             log.error("Unknown Host: {} ", ((Z21Adapter) controller).getHostName());
-            if (((Z21Adapter) p).getPort() != 0) {
-                ConnectionStatus.instance().setConnectionState(
-                        p.getSystemConnectionMemo().getUserName(),
-                        ((Z21Adapter) controller).getHostName() + ":" + ((Z21Adapter) p).getPort(), ConnectionStatus.CONNECTION_DOWN);
-            } else {
-                ConnectionStatus.instance().setConnectionState(
-                        p.getSystemConnectionMemo().getUserName(),
-                        ((Z21Adapter) controller).getHostName(), ConnectionStatus.CONNECTION_DOWN);
-            }
+            ConnectionStatus.instance().setConnectionState(
+                    p.getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
         }
         // and start threads
         xmtThread = new Thread(xmtRunnable = () -> {
@@ -270,12 +266,10 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
         // threading to let other stuff happen
 
         // create a buffer to hold the incoming data.
-        byte[] buffer = new byte[100];  // the size here just needs to be longer
-        // than the longest protocol message.
-        // Otherwise, the receive will truncate.
+        byte[] buffer = new byte[MAX_UDP_PAYLOAD];
 
         // create the packet.
-        DatagramPacket receivePacket = new DatagramPacket(buffer, 100, host, port);
+        DatagramPacket receivePacket = new DatagramPacket(buffer, MAX_UDP_PAYLOAD, host, port);
 
         // and wait to receive data in the packet.
         try {
@@ -488,5 +482,5 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
         sendMessage(m, reply);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21TrafficController.class);
+    private static final Logger log = LoggerFactory.getLogger(Z21TrafficController.class);
 }

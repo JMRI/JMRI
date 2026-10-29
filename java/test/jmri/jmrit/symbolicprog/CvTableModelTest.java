@@ -26,6 +26,6 @@ public class CvTableModelTest {
         JUnitUtil.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CvTableModelTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(CvTableModelTest.class);
 
 }

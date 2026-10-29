@@ -58,6 +58,6 @@ public class NceNamedPaneAction extends SystemConnectionNamedPaneAction<NceSyste
         return new HashSet<>(Arrays.asList(NceSystemConnectionMemo.class));
     }
 
-    private final static Logger log = LoggerFactory.getLogger(NceNamedPaneAction.class);
+    private static final Logger log = LoggerFactory.getLogger(NceNamedPaneAction.class);
 
 }

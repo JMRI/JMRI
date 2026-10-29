@@ -38,6 +38,6 @@ public class SerialPacketGenFrameTest extends jmri.util.JmriJFrameTestBase {
         super.tearDown();
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(SerialPacketGenFrameTest.class);
+    // private static final Logger log = LoggerFactory.getLogger(SerialPacketGenFrameTest.class);
 
 }

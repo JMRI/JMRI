@@ -98,7 +98,7 @@ public class VSDControl extends JPanel {
         initComponents(address);
     }
 
-    static public JPanel generateBlank() {
+    public static JPanel generateBlank() {
         VSDControl temp = new VSDControl("");
         JLabel jl = new JLabel(Bundle.getMessage("BlankVSDControlLabel"));
         jl.setMinimumSize(temp.getPreferredSize());

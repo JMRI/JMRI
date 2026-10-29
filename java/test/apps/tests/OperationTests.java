@@ -6,10 +6,7 @@ import static org.junit.platform.engine.discovery.DiscoverySelectors.selectPacka
 
 import java.io.PrintWriter;
 
-import org.junit.platform.launcher.Launcher;
-import org.junit.platform.launcher.LauncherDiscoveryRequest;
-import org.junit.platform.launcher.TestExecutionListener;
-import org.junit.platform.launcher.TestPlan;
+import org.junit.platform.launcher.*;
 import org.junit.platform.launcher.core.LauncherDiscoveryRequestBuilder;
 import org.junit.platform.launcher.core.LauncherFactory;
 import org.junit.platform.launcher.listeners.SummaryGeneratingListener;
@@ -35,7 +32,7 @@ import org.junit.platform.suite.api.SuiteDisplayName;
 @SuiteDisplayName("OperationTests")
 public class OperationTests {
 
-    static public void main(String[] args) {
+    public static void main(String[] args) {
         run();
         System.exit(0);
     }
@@ -65,6 +62,9 @@ public class OperationTests {
     public static void run(TestExecutionListener listener, String[] includePatterns, String[] excludePatterns) {
         LauncherDiscoveryRequest request = LauncherDiscoveryRequestBuilder.request()
                 .selectors(selectPackage("jmri.jmrit.operations"))
+                .selectors(selectPackage("jmri.server.json.operations"))
+                .selectors(selectPackage("jmri.web.servlet.operations"))
+                .selectors(selectPackage("jmri.jmris.simpleserver"))
                 .filters(includeClassNamePatterns(includePatterns))
                 .filters(excludeClassNamePatterns(excludePatterns))
                 .build();

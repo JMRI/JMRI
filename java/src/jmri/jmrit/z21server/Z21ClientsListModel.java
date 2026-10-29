@@ -86,5 +86,5 @@ public class Z21ClientsListModel extends AbstractTableModel {
         this.fireTableDataChanged();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21ClientsListModel.class);
+    private static final Logger log = LoggerFactory.getLogger(Z21ClientsListModel.class);
 }
