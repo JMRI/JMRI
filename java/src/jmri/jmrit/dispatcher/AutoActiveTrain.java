@@ -1813,7 +1813,9 @@ public class AutoActiveTrain implements ThrottleListener {
                 : section.getReverseStoppingSensor();
         // the override may have changed while running
         _useStopSensor = _activeTrain.getUseStopSensor();
-        boolean toSensor = _useStopSensor && (stopSensor != null);
+        if (!_useStopSensor) {
+            stopSensor = null;
+        }
 
         float distanceMm = _stopByDistanceMm + (_stopByDistanceRefTail ? getMaxTrainLengthMM() : 0.0f);
         float sectionLength = _currentAllocatedSection.getActualLength();
@@ -1827,12 +1829,11 @@ public class AutoActiveTrain implements ThrottleListener {
         float covered = (_currentBlock == null) ? 0.0f
                 : Math.max(0.0f, sectionLength - _currentAllocatedSection.getLengthRemaining(_currentBlock));
         float remainingMm = Math.max(0.0f, distanceMm - covered);
-        log.debug("{}: stop by distance {}mm, {}mm still to go, {}", _activeTrain.getTrainName(),
-                distanceMm, remainingMm, toSensor ? "then stop at sensor " + stopSensor.getDisplayName(USERSYS)
-                        : "to a stop");
+        log.debug("{}: stop by distance {}mm, {}mm still to go, then {}", _activeTrain.getTrainName(),
+                distanceMm, remainingMm, stopSensor == null ? "stop" : "stop at sensor " + stopSensor.getDisplayName(USERSYS));
 
         cancelStopInCurrentSection();
-        if (toSensor) {
+        if (stopSensor != null) {
             _stoppingUsingSpeedProfile = true;
             _autoEngineer.slowOverDistance(remainingMm, true);
             armStopSensor(stopSensor, true);
