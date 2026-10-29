@@ -69,13 +69,17 @@
           Input icon edits the value, so it shows only the value. JSON clients get the allocated
           value as the block's <code>allocatedValue</code>.</p>
 
-          <p>Before 5.17.5 Dispatcher wrote the train's name into the value of every allocated
-          Block, so a Logix, LogixNG or script reading the value of an empty allocated Block got the
-          train's name. It now gets nothing there. To find the train a Block is allocated to, read
-          its allocated value instead, for example in Jython
-          <code>blocks.getBlock("B1").getAllocatedValue()</code>. To find the train in a Block or,
-          failing that, the one it is allocated to, as a panel shows it, use
-          <code>getDisplayValue()</code>. The Section and Layout Block methods that kept the name on
+          <p>With the option off, the default, nothing here changes. Before 5.17.5, with it on,
+          Dispatcher wrote the train's name into the value of every allocated Block, so a Logix,
+          LogixNG or script reading the value of an allocated Block got the train's name even where
+          Block tracking had placed no train there. It now gets only the train Block tracking has
+          placed there: nothing where the Block is empty, or where Block tracking could not tell
+          which train entered. To get what the value gave before, the train in a Block or, failing
+          that, the one it is allocated to, as a panel shows it, use <code>getDisplayValue()</code>,
+          for example in Jython <code>blocks.getBlock("B1").getDisplayValue()</code>. To find only
+          the train a Block is allocated to, use <code>getAllocatedValue()</code>. A script that
+          listens for changes to a Block's value to notice allocations should also listen for
+          changes to its allocated value (the <code>allocatedValue</code> property). The Section and Layout Block methods that kept the name on
           the panel (<code>Section.setNameFromActiveBlock</code>,
           <code>Section.suppressNameUpdate</code> and <code>LayoutBlock.setSuppressNameUpdate</code>)
           are no longer needed; they still work, but write a warning to the log the first time they

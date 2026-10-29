@@ -638,18 +638,21 @@
                  now acted on, including a detector that bounces, so use the
                  sensor debounce settings for such detectors.</li>
              <li>"Place train name in allocated Blocks" no longer changes the
-                 value of Blocks. The train a Block is allocated to is now
+                 value of Blocks. With the option off, the default, nothing
+                 changes. The train a Block is allocated to is now
                  kept as the Block's allocated value, and Block Contents icons
                  and Layout Block memories show it wherever the Block does not
                  already show a train, so panels, including web panels, look
                  as before. A Block Contents Input icon edits the Block's
                  value, so it shows only the value, and is empty in an empty
-                 allocated Block. A Logix,
-                 LogixNG or script that reads the value of an empty allocated
-                 Block now gets nothing; see the
+                 allocated Block. A Logix, LogixNG or script that reads the
+                 value of an allocated Block now gets only the train Block
+                 tracking has placed there: nothing where the Block is empty,
+                 or where Block tracking could not tell which train entered.
+                 <code>getDisplayValue()</code> gives what the value gave
+                 before; see the
                  <a href="https://www.jmri.org/help/en/package/jmri/jmrit/beantable/BlockTable.shtml#allocatedValue">Block
-                 Table help</a> for how to read the train a Block is allocated
-                 to. <code>Section.setNameFromActiveBlock</code>,
+                 Table help</a>. <code>Section.setNameFromActiveBlock</code>,
                  <code>Section.suppressNameUpdate</code> and
                  <code>LayoutBlock.setSuppressNameUpdate</code> are deprecated
                  and will be removed.</li>
