@@ -1,5 +1,8 @@
 package jmri.implementation;
 
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 
@@ -205,18 +208,36 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     private static final String PROPERTY_RAW_STATE = "RawState";
 
     /**
-     * Set our internal state information, and notify bean listeners.
+     * Set our internal state information, and notify bean listeners. The
+     * change is taken to have happened now.
      *
      * @param s the new state
      */
     public void setOwnState(int s) {
+        setOwnState(s, System.nanoTime());
+    }
+
+    /**
+     * Set our internal state information, and notify bean listeners, giving
+     * when the change was received. For a connection that records when it
+     * read each message from the layout, so that {@link jmri.Sensor.RawStateListener}s
+     * are given that time rather than the later time the message reached
+     * this Sensor.
+     *
+     * @param s         the new state
+     * @param timeNanos when the change was received, on the
+     *                  {@link System#nanoTime()} scale
+     * @since 5.17.5
+     */
+    public void setOwnState(int s, long timeNanos) {
         if (_rawState != s) {
+            int oldRawState = _rawState;
             if (((s == ACTIVE) && (sensorDebounceGoingActive > 0))
                     || ((s == INACTIVE) && (sensorDebounceGoingInActive > 0))) {
 
-                int oldRawState = _rawState;
                 _rawState = s;
                 cancelDebounce();
+                fireRawStateChanged(oldRawState, s, timeNanos);
 
                 if ((restartcount != 0) && (restartcount % 10 == 0)) {
                     log.warn("Sensor \"{}\" state keeps flapping: {}", getDisplayName(), restartcount);
@@ -229,6 +250,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
                 // might start the timer, while the other may not.
                 cancelDebounce();
                 _rawState = s;
+                fireRawStateChanged(oldRawState, s, timeNanos);
             }
         }
         if (_knownState != s) {
@@ -241,6 +263,38 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     @Override
     public int getRawState() {
         return _rawState;
+    }
+
+    private final List<RawStateListener> rawStateListeners = new CopyOnWriteArrayList<>();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addRawStateListener(@Nonnull RawStateListener listener) {
+        rawStateListeners.add(listener);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void removeRawStateListener(@Nonnull RawStateListener listener) {
+        rawStateListeners.remove(listener);
+    }
+
+    /**
+     * Tell the raw state listeners of a change. One that throws is logged and
+     * does not stop the others, or the Sensor's own update.
+     */
+    private void fireRawStateChanged(int oldState, int newState, long timeNanos) {
+        for (RawStateListener l : rawStateListeners) {
+            try {
+                l.rawStateChanged(this, oldState, newState, timeNanos);
+            } catch (RuntimeException e) {
+                log.error("Raw state listener of Sensor \"{}\" failed", getDisplayName(), e);
+            }
+        }
     }
 
     /**
@@ -355,6 +409,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     public void dispose() {
         super.dispose();
         cancelDebounce(); // stop the debounce timer
+        rawStateListeners.clear();
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractSensor.class);

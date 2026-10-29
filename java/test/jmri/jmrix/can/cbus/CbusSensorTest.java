@@ -67,6 +67,30 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
     }
 
     @Test
+    public void testIncomingReplyGivesItsReceivedTime() {
+        java.util.List<Long> times = new java.util.ArrayList<>();
+        java.util.List<Integer> states = new java.util.ArrayList<>();
+        t.addRawStateListener((sensor, oldState, newState, timeNanos) -> {
+            states.add(newState);
+            times.add(timeNanos);
+        });
+
+        CanReply rActive = new CanReply(new int[]{CbusConstants.CBUS_ASON, 0x00, 0x00, 0x00, 0x01}, 0x12);
+        rActive.setReceivedTime(1234L);
+        ((CbusSensor)t).reply(rActive);
+        assertEquals(Sensor.ACTIVE, t.getKnownState());
+
+        long before = System.nanoTime();
+        CanReply rInactive = new CanReply(new int[]{CbusConstants.CBUS_ASOF, 0x00, 0x00, 0x00, 0x01}, 0x12);
+        ((CbusSensor)t).reply(rInactive); // not stamped, as from a simulation
+        long after = System.nanoTime();
+
+        assertEquals(java.util.List.of(Sensor.ACTIVE, Sensor.INACTIVE), states);
+        assertEquals(1234L, times.get(0), "the time the reply was received");
+        assertTrue(times.get(1) >= before && times.get(1) <= after, "not stamped: dated when set");
+    }
+
+    @Test
     public void testLocalChange1() throws jmri.JmriException {
         tcis.outbound.clear();
         t.setKnownState(Sensor.ACTIVE);

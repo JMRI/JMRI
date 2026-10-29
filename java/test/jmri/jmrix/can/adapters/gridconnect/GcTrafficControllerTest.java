@@ -71,6 +71,57 @@ public class GcTrafficControllerTest extends jmri.jmrix.can.TrafficControllerTes
         pcs.dispose();
     }
 
+    // A frame is stamped when the receive thread has read it, not when it
+    // reaches listeners on the layout thread, which may be busy.
+    @Timeout(10)
+    @Test
+    public void testIncomingFrameStampedWhenRead() throws Exception {
+
+        DummyCanListener listener = new DummyCanListener((GcTrafficController)tc);
+        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
+        AbstractPortControllerScaffold pcs = new AbstractPortControllerScaffold(memo);
+        tc.connectPort(pcs);
+
+        java.util.concurrent.CountDownLatch busy = new java.util.concurrent.CountDownLatch(1);
+        java.util.concurrent.CountDownLatch release = new java.util.concurrent.CountDownLatch(1);
+        javax.swing.SwingUtilities.invokeLater(() -> {
+            busy.countDown();
+            try {
+                release.await();
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+        });
+        long released;
+        long before;
+        try {
+            Assertions.assertTrue(busy.await(5, java.util.concurrent.TimeUnit.SECONDS), "layout thread busy");
+            before = System.nanoTime();
+            pcs.getRedirectedToInputStream().writeBytes(":SB020N9000020002;"); // ACON N2 E2
+            pcs.getRedirectedToInputStream().flush(); // wake the receive thread, as a real port would
+            Thread.sleep(500); // the receive thread reads it meanwhile
+            Assertions.assertTrue(listener.getReplies().isEmpty(), "not passed on while the layout thread is busy");
+            released = System.nanoTime();
+        } finally {
+            release.countDown();
+        }
+
+        JUnitUtil.waitFor(() -> {
+            return !listener.getReplies().isEmpty();
+        },"reply did not happen");
+
+        CanReply reply = listener.getReplies().get(0);
+        Assertions.assertTrue(reply.hasReceivedTime(), "received time recorded");
+        Assertions.assertTrue(reply.getReceivedTime() >= before, "stamped after it was sent");
+        Assertions.assertTrue(reply.getReceivedTime() < released,
+                "stamped by the receive thread, before the layout thread was free");
+        Assertions.assertEquals(reply.getReceivedTime(), new CanReply(reply).getReceivedTime(), "kept by a copy");
+
+        listener.dispose();
+        tc.disconnectPort(pcs);
+        pcs.dispose();
+    }
+
     @Override
     @BeforeEach
     public void setUp() {
