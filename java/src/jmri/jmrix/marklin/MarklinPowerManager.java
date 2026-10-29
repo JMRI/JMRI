@@ -1,6 +1,8 @@
 package jmri.jmrix.marklin;
 
 import jmri.JmriException;
+import jmri.jmrix.marklin.mcan.classify.Cs2ClassifiedFrame;
+import jmri.jmrix.marklin.mcan.cs2.Cs2SystemCommands;
 import jmri.managers.AbstractPowerManager;
 
 /**
@@ -54,20 +56,19 @@ public class MarklinPowerManager extends AbstractPowerManager<MarklinSystemConne
     @Override
     public void reply(MarklinReply m) {
         int old = power;
-        // power message?
-        if (m.getPriority() == MarklinConstants.PRIO_1
-            && m.getCommand() == MarklinConstants.SYSCOMMANDSTART && m.getAddress() == 0x0000) {
-            switch (m.getElement(9)) {
-                case MarklinConstants.CMDGOSYS:
-                    power = ON;
-                    break;
-                case MarklinConstants.CMDSTOPSYS:
-                case MarklinConstants.CMDHALTSYS:
-                    power = OFF;
-                    break;
-                default:
-                    log.warn("Unknown sub command {}", m.getElement(9));
-            }
+        Cs2ClassifiedFrame frame = MarklinCanBridge.parse(m);
+        if (frame == null) {
+            return;
+        }
+        if (frame instanceof Cs2SystemCommands.SystemGoRequestFrame
+                || frame instanceof Cs2SystemCommands.SystemGoReplyFrame) {
+            power = ON;
+            firePowerPropertyChange(old, power);
+        } else if (frame instanceof Cs2SystemCommands.SystemStopRequestFrame
+                || frame instanceof Cs2SystemCommands.SystemStopReplyFrame
+                || frame instanceof Cs2SystemCommands.SystemHaltRequestFrame
+                || frame instanceof Cs2SystemCommands.SystemHaltReplyFrame) {
+            power = OFF;
             firePowerPropertyChange(old, power);
         }
     }
@@ -77,6 +78,6 @@ public class MarklinPowerManager extends AbstractPowerManager<MarklinSystemConne
         // messages are ignored
     }
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MarklinPowerManager.class);
+    // private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(MarklinPowerManager.class);
 
 }

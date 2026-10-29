@@ -4,6 +4,9 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
+import jmri.jmrix.marklin.mcan.address.AddressSpace;
+import jmri.jmrix.marklin.mcan.classify.Cs2ClassifiedFrame;
+import jmri.jmrix.marklin.mcan.cs2.Cs2DecoderCommands;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +14,8 @@ import org.slf4j.LoggerFactory;
  * An implementation of DccThrottle with code specific to an TAMS connection.
  * <p>
  * Based on Glen Oberhauser's original LnThrottle implementation
+ * <p>
+ * Now leverages the mcan sub-package for message decoding.
  *
  * @author Kevin Dickerson Copyright (C) 2012
  */
@@ -208,76 +213,82 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
 
     @Override
     public void reply(MarklinReply m) {
-        if (m.getPriority() == MarklinConstants.PRIO_1 && m.getCommand() >= MarklinConstants.MANCOMMANDSTART && m.getCommand() <= MarklinConstants.MANCOMMANDEND) {
-            if (m.getAddress() != getCANAddress()) {
+        Cs2ClassifiedFrame frame = MarklinCanBridge.parse(m);
+        if (frame == null) {
+            return;
+        }
+
+        if (frame instanceof Cs2DecoderCommands.LocoDirectionReplyFrame) {
+            Cs2DecoderCommands.LocoDirectionReplyFrame f = (Cs2DecoderCommands.LocoDirectionReplyFrame) frame;
+            if (f.locoAddress() != getCANAddress()) {
                 if (log.isDebugEnabled()) {
-                    log.debug("Addressed packet is not for us {} {}", m.getAddress(), getCANAddress());
+                    log.debug("Addressed packet is not for us {} {}", f.locoAddress(), getCANAddress());
                 }
                 return;
             }
-            if (m.getCommand() == MarklinConstants.LOCODIRECTION) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Loco Direction {}", m.getElement(9));
-                }
-                //The CS2 sets the speed of the loco to Zero when changing direction, however it doesn't appear to broadcast it out.
-                synchronized(this) {
-                    switch (m.getElement(9)) {
-                        case 0x00:
-                            return; //No change
-                        case 0x01:
-                            if (!isForward) {
-                                speedSetting = 0.0f;
-                                super.setSpeedSetting(speedSetting);
-                                isForward = true;
-                                firePropertyChange(ISFORWARD, false, isForward);
-                            }
-                            return;
-                        case 0x02:
-                            if (isForward) {
-                                speedSetting = 0.0f;
-                                super.setSpeedSetting(speedSetting);
-                                isForward = false;
-                                firePropertyChange(ISFORWARD, true, isForward);
-                            }
-                            return;
-                        case 0x03:
+            log.debug("Loco Direction {}", f.direction());
+            synchronized(this) {
+                switch (f.direction()) {
+                    case 0x00:
+                        return;
+                    case 0x01:
+                        if (!isForward) {
                             speedSetting = 0.0f;
                             super.setSpeedSetting(speedSetting);
-                            isForward = !isForward;
-                            firePropertyChange(ISFORWARD, !isForward, isForward);
-                            return;
-                        default:
-                            log.error("No Match Found for loco direction {}", m.getElement(9));
-                            return;
-                    }
+                            isForward = true;
+                            firePropertyChange(ISFORWARD, false, isForward);
+                        }
+                        return;
+                    case 0x02:
+                        if (isForward) {
+                            speedSetting = 0.0f;
+                            super.setSpeedSetting(speedSetting);
+                            isForward = false;
+                            firePropertyChange(ISFORWARD, true, isForward);
+                        }
+                        return;
+                    case 0x03:
+                        speedSetting = 0.0f;
+                        super.setSpeedSetting(speedSetting);
+                        isForward = !isForward;
+                        firePropertyChange(ISFORWARD, !isForward, isForward);
+                        return;
+                    default:
+                        log.error("No Match Found for loco direction {}", f.direction());
+                        return;
                 }
             }
-            if (m.getCommand() == MarklinConstants.LOCOSPEED) {
-                int speed = m.getElement(9);
-                speed = (speed << 8) + (m.getElement(10));
-                float newSpeed = floatSpeed(speed);
-                log.debug("Speed raw {} float {}", speed, newSpeed);
-                super.setSpeedSetting(newSpeed);
+        }
+
+        if (frame instanceof Cs2DecoderCommands.LocoSpeedReplyFrame) {
+            Cs2DecoderCommands.LocoSpeedReplyFrame f = (Cs2DecoderCommands.LocoSpeedReplyFrame) frame;
+            if (f.locoAddress() != getCANAddress()) {
+                return;
             }
-            if (m.getCommand() == MarklinConstants.LOCOFUNCTION) {
-                updateFunction(m.getElement(9),!(m.getElement(10)==0));
+            float newSpeed = floatSpeed(f.speed());
+            log.debug("Speed raw {} float {}", f.speed(), newSpeed);
+            super.setSpeedSetting(newSpeed);
+        }
+
+        if (frame instanceof Cs2DecoderCommands.LocoFunctionReplyFrame) {
+            Cs2DecoderCommands.LocoFunctionReplyFrame f = (Cs2DecoderCommands.LocoFunctionReplyFrame) frame;
+            if (f.locoAddress() != getCANAddress()) {
+                return;
             }
+            updateFunction(f.function(), f.active());
         }
     }
 
     int getCANAddress() {
+        AddressSpace space;
         switch (address.getProtocol()) {
-            case DCC:
-                return MarklinConstants.DCCSTART + address.getNumber();
-            case MOTOROLA:
-                return address.getNumber();
-            case SELECTRIX:
-                return MarklinConstants.SX2START + address.getNumber();
-            case MFX:
-                return MarklinConstants.MFXSTART + address.getNumber();
-            default:
-                return MarklinConstants.DCCSTART + address.getNumber();
+            case DCC:       space = AddressSpace.DCC_LOCO;  break;
+            case SELECTRIX: space = AddressSpace.SX2_LOCO;  break;
+            case MFX:       space = AddressSpace.MFX_LOCO;  break;
+            case MOTOROLA:  space = AddressSpace.MM_LOCO;   break;
+            default:        space = AddressSpace.DCC_LOCO;  break;
         }
+        return space.toCanOffset(address.getNumber());
     }
 
     // initialize logging

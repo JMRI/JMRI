@@ -1,8 +1,10 @@
 package jmri.jmrix.marklin.configurexml;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import jmri.InstanceManager;
 import jmri.Light;
+import jmri.Timebase;
 import jmri.implementation.DefaultLightControl;
 import jmri.jmrix.marklin.MarklinLightManager;
 import jmri.jmrix.marklin.MarklinSystemConnectionMemo;
@@ -41,6 +43,12 @@ public class MarklinLightManagerXmlTest {
             manager.deregister(light);
             light.dispose();
         }
+        // Fix the fast clock at noon so the 8:15-22:30 ON window is active regardless of when CI runs.
+        Timebase timebase = InstanceManager.getDefault(Timebase.class);
+        timebase.setRun(false);
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.set(2020, 0, 1, 12, 0, 0);
+        timebase.setTime(cal.getTime());
         assertTrue(xml.load(stored, null));
         for (String name : names) {
             Light light = manager.getBySystemName(name);
