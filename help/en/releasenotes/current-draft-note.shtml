@@ -107,6 +107,11 @@
                 <li>CBUS Reporters with erase-on-timeout: reading the same
                     tag again restarts the timeout, so a tag still being read is
                     no longer cleared early.</li>
+                <li>CBUS node number requests: closing the connection, or
+                    turning off listening for node number requests, now stops a
+                    request that has just arrived from opening the node number
+                    dialogue. The "no confirmation from node" warning no longer
+                    holds up other timed tasks in JMRI while it is open.</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -222,7 +227,9 @@
 
         <h4>MRC</h4>
             <ul>
-                <li></li>
+                <li>Closing an MRC connection while a programming operation
+                    is waiting for a reply no longer causes an error when that
+                    operation times out.</li>
             </ul>
 
         <h4>NCE</h4>
@@ -625,6 +632,34 @@
              <li>Automatic release of Sections is faster when many Sections
                  are allocated, as each check now goes through the allocated
                  Sections once. Which Sections are released is unchanged.</li>
+             <li>Automatic allocation now plans meets in passing loops for
+                 opposing trains on single track, including trains running their
+                 Transit in reverse; before, meet planning never took effect. A
+                 plan is dropped when one of its trains is terminated, finishes
+                 or is reset, so the other train is not held. Working out
+                 another train's position no longer halts that train, and a
+                 dispatched train no longer stops allocation for other
+                 trains.</li>
+             <li>Automatic allocation does less work on each scan, and a
+                 scan or automatic release check is no longer queued again while
+                 the same check is already waiting, which reduces delays with
+                 many automatic trains on large panels.</li>
+             <li>When a train is terminated while an automatic release is
+                 waiting, a Section it held is no longer released twice. Before,
+                 an error was logged and the Section could be set free while it
+                 was allocated to another train.</li>
+             <li>With "Use roster entry" and "Place train name in allocated
+                 Blocks", the roster entry now goes into the Blocks ahead of a
+                 train in a Section used in reverse, not the Blocks behind it.
+                 The alternate color for allocated Blocks is put ahead of the
+                 train in the same way.</li>
+             <li>With "Place train name in allocated Blocks", a Block that
+                 is in two allocated Sections keeps showing the train name until
+                 both are released.</li>
+             <li>A train that is reset at the end of its Transit and
+                 restarts after a delay now starts to stop when its head enters
+                 the last Section, even when its tail is still in the Section
+                 before.</li>
              <li>When an automatic train's stop is cancelled, for example
                  because the signal clears or an allocation arrives, its end,
                  reversal or reset action is now dropped too. Before, it could
@@ -684,6 +719,15 @@
                 dead-end or occupied sub-branches. Before, NX, Dispatcher ad-hoc
                 routes and Signal Mast Logic could report "no route" in these
                 cases.</li>
+            <li>Layout Editor block routing: route costs and hop counts now
+                reach every block when a block's metric changes, and the routing
+                tables are correct straight after loading, so routes no longer
+                prefer a siding. Updates are no longer dropped after long
+                running, so Dispatcher, Entry/Exit and Signal Mast Logic choose
+                routes from correct costs.</li>
+            <li>Layout Editor block routing no longer overflows the stack
+                when a block changes while a routing update is on its way round
+                a loop of blocks.</li>
             <li>An allocated block, that is one set to use its extra color,
                 for example by the LogixNG Block action "Alternate Color On"
                 or by a script, now keeps its extra color until it is turned
@@ -713,6 +757,10 @@
                     the first pair unless that pair used full interlocking, and
                     the remaining pairs were then set by the next, unrelated
                     request.</li>
+                <li>NX routes now set their turnouts one at a time without
+                    freezing the panel, including with "Revert to the old GUI
+                    behavior", where a double click on a destination still
+                    starts the next route.</li>
             </ul>
 
     <h3>LccPro</h3>
@@ -737,6 +785,23 @@
               and other listeners on the sensor or turnout that started it
               were skipped. A loop through so many Logixes that the stack
               still overflows first now logs where it started.</li>
+          <li>Logix: a Conditional that tests the same item (for example a
+              sensor, turnout, memory or signal head) in more than one state
+              variable is now calculated once per change instead of once per
+              state variable, so with "Execute Actions whenever triggered" its
+              actions run once per change and a toggle action no longer cancels
+              itself.</li>
+          <li>Logix: Conditionals with a mixed antecedent are calculated
+              many times faster, with the same results.</li>
+          <li>Logix: finding the Logix that a Conditional belongs to is
+              faster, which helps large Logix setups that use cancel-timer
+              actions or Conditional lookups by system name.</li>
+          <li>Logix: a delayed set sensor or set turnout action now always
+              acts on its own sensor or turnout, even if the Conditional's
+              actions were reordered or edited while the delay was running, and
+              no longer keeps repeating after such an edit. When a Conditional's
+              actions are replaced, the delays of actions no longer used are
+              stopped.</li>
         </ul>
 
     <h3>LogixNG</h3>
@@ -765,6 +830,20 @@
               rest. Use <code>myArray.add("Hello") &amp;&amp; myArray.add(" ")
               &amp;&amp; myArray.add("World!")</code> instead, which carries on
               while each call returns true.</li>
+          <li>LogixNG: local variables are kept correctly in Execute
+              delayed, Timeout, For each with delay and similar actions. Before,
+              they could have wrong values or cause errors when an action or
+              expression inside them had its own local variables.</li>
+          <li>LogixNG: an item with local variables no longer leaves them on
+              the ConditionalNG's internal stack when Return, Exit, Break,
+              Continue or an aborting error passes through it, so the stack no
+              longer grows on every run.</li>
+          <li>LogixNG: when the LogixNG thread is held up, for example by an
+              error dialog or the debugger, events waiting for it are no longer
+              refused after 1024, with errors in the code that changed the
+              sensor or other item; a warning is logged instead when more than
+              1000 are waiting. An unexpected error in queued code no longer
+              stops the LogixNG thread.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -878,6 +957,21 @@
                     setting its held aspect fails. Before, it stopped changing
                     until JMRI was restarted. If the held aspect is disabled for
                     the mast, the danger aspect is used instead.</li>
+                <li>Signal Mast Logic no longer misses a change, such as a
+                    mast being released or a route sensor, turnout or block
+                    changing, that happens just as it is working out a mast's
+                    aspect. Before, the mast could keep the old aspect until
+                    something else changed, and in rare cases could show a
+                    proceed aspect with part of the route against it.</li>
+                <li>With Dispatcher's "Use alternate color for allocated
+                    Blocks", Signal Mast Logic now gives danger for a block
+                    shown in the alternate color only when it is held by a
+                    train other than the one approaching the mast, or by no
+                    Dispatcher train. Before, it guessed from the direction of
+                    its own Section, so a mast whose Section was not part of the
+                    train's Transit held that train at danger, and the blocks
+                    listed in the logic by the user were never checked. Each
+                    Section now records the train holding it.</li>
                 <li>When Signal Mast Logic starts, it now uses the same route
                     checks as when a block, turnout or mast changes. Before, a
                     user-set mast overriding an automatic one was tested the
@@ -897,7 +991,9 @@
 
         <h4>Cab Signals</h4>
             <ul>
-                <li></li>
+                <li>Cab signals no longer add another listener to every
+                    Block each time a Block is added or removed, and remove
+                    their listeners when the connection is closed.</li>
             </ul>
 
         <h4>Simple Signal Logic</h4>
@@ -958,6 +1054,29 @@
                 turnout commands spaced by the connection's output interval
                 (Routes, Dispatcher, matrix signal masts) are always sent in the
                 order requested.</li>
+            <li>Sensors with a debounce time no longer let a pulse shorter
+                than the debounce time through when the screen is busy,
+                listeners always see the change to ACTIVE before the change back
+                to INACTIVE, and debounced sensors no longer start a thread for
+                every change.</li>
+            <li>Blocks: an empty Block is no longer given the train value of
+                a neighbouring Block, which the next train to enter it could
+                then inherit.</li>
+            <li>Blocks: when a Block can't tell which of its neighbours'
+                trains entered it, the result no longer depends on the order its
+                paths were defined in, and a train seen to leave a neighbour the
+                other way, such as one backing away after two trains meet, is no
+                longer put in the Block.</li>
+            <li>Blocks: the train value is restored after a brief UNKNOWN or
+                INCONSISTENT sensor state, for example while a connection
+                restarts, as it already was after a brief INACTIVE.</li>
+            <li>Reporters: asking a CBUS or other RailCom Reporter for the
+                loco address of an RFID tag, or of no report, no longer throws
+                an exception, for example in Virtual Sound Decoder location
+                following.</li>
+            <li>The Block help now explains when to use the Reporter's
+                current report, and when its last report, for tracking
+                trains.</li>
             <li>Editing a turnout's automation settings from the "Edit Auto" button
                 in the Turnout Table or the Feedback tab of the Edit Turnout window
                 now actually saves the change.
@@ -1055,5 +1174,15 @@
         <ul>
             <li>Looking up and renaming items is faster on large layouts,
                 and the memory used by deleted items is now released.</li>
+            <li>Adding or removing sensors, turnouts and other items no
+                longer slows down while tables or drop-down lists are open on
+                large layouts (for example CBUS sensors created automatically
+                from bus events), and listeners for the list of items are called
+                once per change instead of twice.</li>
+            <li>Loading panel files with many thousands of sensors, turnouts
+                or other items in one connection is faster.</li>
+            <li>Items whose user names differ only by leading zeros, such as
+                "Siding 7" and "Siding 07", now both appear in drop-down lists
+                and other sorted lists; before, one of them was hidden.</li>
         </ul>
 
