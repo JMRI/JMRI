@@ -219,7 +219,7 @@ public class HtmlManifest extends HtmlTrainCommon {
     }
     
     private void addTrainDepartureComments(StringBuilder builder, RouteLocation routeLocation) {
-        String routeLocationName = routeLocation.getName();
+        String routeLocationName = routeLocation.getSplitName();
         if (!train.isShowArrivalAndDepartureTimesEnabled()) {
             builder.append(
                     String.format(locale, strings.getProperty("ScheduledWorkAt"), routeLocationName)); // NOI18N
