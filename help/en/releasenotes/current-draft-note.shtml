@@ -660,6 +660,10 @@
                  restarts after a delay now starts to stop when its head enters
                  the last Section, even when its tail is still in the Section
                  before.</li>
+             <li>A Section released just as its train starts back, to reverse
+                 or to run its Transit again, is no longer left allocated to
+                 nobody but not free. Before, it could never be allocated again,
+                 and a train needing it waited for ever at a signal.</li>
              <li>When an automatic train's stop is cancelled, for example
                  because the signal clears or an allocation arrives, its end,
                  reversal or reset action is now dropped too. Before, it could
@@ -830,20 +834,19 @@
               rest. Use <code>myArray.add("Hello") &amp;&amp; myArray.add(" ")
               &amp;&amp; myArray.add("World!")</code> instead, which carries on
               while each call returns true.</li>
-          <li>LogixNG: local variables are kept correctly in Execute
-              delayed, Timeout, For each with delay and similar actions. Before,
+          <li>LogixNG: local variables are kept correctly in
+              <strong>Execute delayed</strong>, <strong>Timeout</strong>,
+              <strong>For each with delay</strong> and similar actions. Before,
               they could have wrong values or cause errors when an action or
               expression inside them had its own local variables.</li>
-          <li>LogixNG: an item with local variables no longer leaves them on
-              the ConditionalNG's internal stack when Return, Exit, Break,
-              Continue or an aborting error passes through it, so the stack no
-              longer grows on every run.</li>
-          <li>LogixNG: when the LogixNG thread is held up, for example by an
-              error dialog or the debugger, events waiting for it are no longer
-              refused after 1024, with errors in the code that changed the
-              sensor or other item; a warning is logged instead when more than
-              1000 are waiting. An unexpected error in queued code no longer
-              stops the LogixNG thread.</li>
+          <li>LogixNG: local variables are now cleared away after
+              <strong>Return</strong>, <strong>Exit</strong>,
+              <strong>Break</strong>, <strong>Continue</strong> or an error.
+              Before, a ConditionalNG used more memory every time it ran.</li>
+          <li>LogixNG: events are no longer lost, and LogixNG no longer stops
+              running, when it falls behind, for example while an error dialog
+              is open, or after an unexpected error. A warning is logged if it
+              falls a long way behind.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
