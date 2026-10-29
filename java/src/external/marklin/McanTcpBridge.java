@@ -1,5 +1,6 @@
 package external.marklin;
 
+import external.ExternalDirectJSerialPort;
 import jmri.jmrix.marklin.MarklinMessageFormatter;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.LoggerContext;

@@ -23,6 +23,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  * Within-package imports ({@code jmri.jmrix.marklin.mcan.*}) are the only
  * cross-file references permitted inside the library.
  *
+ * For now this is only intended as machine-assisted enforcement of an architecture goal
+ * but longer term this library could stand on its own as a separately distributable artifact
+ * to encourage reuse outside of the main JMRI application.
+ *
  * @author Ralf Lang (ralf.lang@ralf-lang.de)
  */
 public class McanSubpackageIsolationTest {

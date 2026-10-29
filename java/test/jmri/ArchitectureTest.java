@@ -325,7 +325,7 @@ public class ArchitectureTest {
         .doNotHaveFullyQualifiedName("jmri.jmrix.jserialcomm.JSerialPortEvent").and()
 
         // single wrapper confining direct jSerialComm use for the standalone CLI tools
-        .doNotHaveFullyQualifiedName("external.marklin.ExternalDirectJSerialPort")
+        .doNotHaveFullyQualifiedName("external.ExternalDirectJSerialPort")
 
         .should().accessClassesThat().resideInAPackage("com.fazecast.jSerialComm..");
 
