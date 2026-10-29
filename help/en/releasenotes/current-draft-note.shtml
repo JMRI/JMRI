@@ -641,7 +641,10 @@
                  value of Blocks. The train a Block is allocated to is now
                  kept as the Block's allocated value, and Block Contents icons
                  and Layout Block memories show it wherever the Block does not
-                 already show a train, so panels look as before. A Logix,
+                 already show a train, so panels, including web panels, look
+                 as before. A Block Contents Input icon edits the Block's
+                 value, so it shows only the value, and is empty in an empty
+                 allocated Block. A Logix,
                  LogixNG or script that reads the value of an empty allocated
                  Block now gets nothing; see the
                  <a href="https://www.jmri.org/help/en/package/jmri/jmrit/beantable/BlockTable.shtml#allocatedValue">Block
@@ -1020,6 +1023,12 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
+            <li>The JSON block object adds <code>allocatedValue</code>, the
+                train the Block is allocated to, kept apart from
+                <code>value</code>, the train in the Block. A web panel's
+                Block Contents icon shows the value or, when there is none,
+                the allocated value, as a JMRI panel does. The JSON protocol
+                version is now 5.5.0.</li>
             <ii>Previously, you had to reload a panel window to pick up
                 any changes to icon graphics settings: background color, font, 
                 border color, etc.  The server and panel code has been updated to automatically

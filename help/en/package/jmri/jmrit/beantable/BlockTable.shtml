@@ -64,8 +64,10 @@
           Block. When Dispatcher's <a href="../dispatcher/Options.shtml">Place train name in
           allocated Blocks</a> option is on, the train a Block is allocated to is kept separately,
           as the Block's <em>allocated value</em>. Block Contents icons and Layout Block memories
-          show the value, or the allocated value when the Block has no value, so panels show the
-          train's name in its allocated Blocks as before.</p>
+          show the value, or the allocated value when the Block has no value, so panels, including
+          web panels, show the train's name in its allocated Blocks as before. A Block Contents
+          Input icon edits the value, so it shows only the value. JSON clients get the allocated
+          value as the block's <code>allocatedValue</code>.</p>
 
           <p>Before 5.17.5 Dispatcher wrote the train's name into the value of every allocated
           Block, so a Logix, LogixNG or script reading the value of an empty allocated Block got the
