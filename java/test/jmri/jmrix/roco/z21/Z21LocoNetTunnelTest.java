@@ -28,6 +28,7 @@ public class Z21LocoNetTunnelTest {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
+        JUnitUtil.initTimeProviderManager();
 
         memo = new Z21SystemConnectionMemo();
         tc = new Z21InterfaceScaffold() {

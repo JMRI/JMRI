@@ -34,5 +34,7 @@
         affected: they clear their own blocks. See the Layout Editor section
         of the release notes.
     </li>
-    <li>
+    <li>The fast clock implementation has been reworked and therefore
+        tables and panel files stored with this JMRI release will not
+        load with earlier JMRI releases.</li>
     </li>

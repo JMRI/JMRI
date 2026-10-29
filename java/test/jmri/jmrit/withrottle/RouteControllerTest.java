@@ -61,10 +61,11 @@ public class RouteControllerTest {
     public void setUp() {
         JUnitUtil.setUp();
         InstanceManager.setDefault(NamedBeanHandleManager.class, new NamedBeanHandleManager());
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initRouteManager();
     }
-    
+
     @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();

@@ -55,6 +55,7 @@ signals - obsolete, EMPTY, never used
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/lights-4-19-2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/reporters-2-9-6.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/memories-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/time-providers/timeproviders.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/blocks-2-9-6.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/oblocks-2-9-6.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/sections-2-9-6.xsd"/>
@@ -313,6 +314,7 @@ signals - obsolete, EMPTY, never used
         <xs:element name="reporters"    type="ReporterManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="memories"     type="MemoryManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="memorys"      type="MemoryManagerType" minOccurs="0" maxOccurs="unbounded" /> <!-- deprecated older spelling -->
+        <xs:element name="timeProviders" type="TimeProvidersType" minOccurs="0" maxOccurs="unbounded" />
 
         <xs:element name="blocks"       type="BlockManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="oblocks"      type="OBlockManagerType" minOccurs="0" maxOccurs="unbounded" />

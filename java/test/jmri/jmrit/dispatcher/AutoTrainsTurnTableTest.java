@@ -561,6 +561,7 @@ public class AutoTrainsTurnTableTest {
 
         JUnitUtil.resetProfileManager();
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initRosterConfigManager();
         JUnitUtil.initDebugThrottleManager();
     }

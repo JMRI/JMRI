@@ -130,6 +130,7 @@ public class SchemaTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initTimeProviderManager();
         this.validate = XmlFile.getDefaultValidate();
     }
 

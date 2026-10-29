@@ -200,6 +200,7 @@ public class CbusEventTableActionTest {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir));
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.initTimeProviderManager();
         tcis = new TrafficControllerScaffold();
         memo = new CanSystemConnectionMemo();
         memo.setTrafficController(tcis);

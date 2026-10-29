@@ -18,9 +18,20 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <jmriversion>
     <major>5</major>
     <minor>13</minor>
-    <test>6</test>
+    <test>7</test>
     <modifier>plus</modifier>
   </jmriversion>
+  <timeProviders class="jmri.jmrix.internal.configurexml.InternalTimeProviderManagerXml">
+    <InternalDateTime class="jmri.time.implementation.configurexml.InternalDateTimeXml">
+      <systemName>IUInternalTimeProvider</systemName>
+      <isRunning>no</isRunning>
+      <rate>1.0</rate>
+      <localDateTime>2025-12-14T03:09:09.668</localDateTime>
+    </InternalDateTime>
+    <InternalDateTime class="jmri.time.implementation.configurexml.SystemDateTimeXml">
+      <systemName>IUSystemClock</systemName>
+    </InternalDateTime>
+  </timeProviders>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
     <sensor inverted="false">
@@ -87,7 +98,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <memory>
       <systemName>IM3</systemName>
     </memory>
-    <memory value="4:42 pm">
+    <memory value="--">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -148,8 +159,8 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
     <transit systemName="IZ:AUTO:0001" userName="Transit_1">
       <systemName>IZ:AUTO:0001</systemName>
       <userName>Transit_1</userName>
-      <transitsection sectionname="IY:AUTO:0001" sequence="1" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="0.0" revstoppercent="0.0" />
-      <transitsection sectionname="IY:AUTO:0002" sequence="2" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="0.0" revstoppercent="0.0" />
+      <transitsection sectionname="IY:AUTO:0001" sequence="1" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0002" sequence="2" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
     </transit>
   </transits>
   <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml">
@@ -194,7 +205,6 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <userName>First conditional</userName>
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Thu Nov 27 16:42:27 CET 2025" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <LogixNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <Thread>
       <id>0</id>
@@ -64006,9 +64016,9 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
   <filehistory>
     <operation>
       <type>Store</type>
-      <date>Thu Nov 27 16:42:31 CET 2025</date>
+      <date>Sun Dec 14 03:09:13 CET 2025</date>
       <filename>/home/daniel/Dokument/GitHub/JMRI/temp/temp/LogixNG_temp.xml</filename>
     </operation>
   </filehistory>
-  <!--Written by JMRI version 5.13.6plus+daniel+2025-11-27T15:42:23Z+R0d1f575 on Thu Nov 27 16:42:31 CET 2025-->
+  <!--Written by JMRI version 5.13.7plus+daniel+2025-12-14T02:09:05Z+Re5f3600 on Sun Dec 14 03:09:13 CET 2025-->
 </layout-config>

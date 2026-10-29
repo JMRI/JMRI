@@ -21,7 +21,8 @@ abstract public class LnSystemConnectionMemoTestBase<M extends DefaultSystemConn
     @OverridingMethodsMustInvokeSuper  // invoke first
     @Override
     public void setUp() {
-       JUnitUtil.setUp();
+        JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
     }
 
     @AfterEach

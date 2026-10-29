@@ -404,7 +404,8 @@ public final class TimerUtil {
         }
     }
 
-    static final Timer commonTimer = new Timer("JMRI Common Timer", true);
+
+    private static final Timer commonTimer = new Timer("JMRI Common Timer", true);
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimerUtil.class);
 }

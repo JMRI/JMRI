@@ -7,6 +7,17 @@
     <test>4</test>
     <modifier>ish</modifier>
   </jmriversion>
+  <timeProviders class="jmri.jmrix.internal.configurexml.InternalTimeProviderManagerXml">
+    <InternalDateTime class="jmri.time.implementation.configurexml.InternalDateTimeXml">
+      <systemName>IUInternalTimeProvider</systemName>
+      <isRunning>yes</isRunning>
+      <rate>1.0</rate>
+      <localDateTime>2021-12-02T00:00</localDateTime>
+    </InternalDateTime>
+    <InternalDateTime class="jmri.time.implementation.configurexml.SystemDateTimeXml">
+      <systemName>IUSystemClock</systemName>
+    </InternalDateTime>
+  </timeProviders>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
     <sensor inverted="false">
@@ -73,7 +84,6 @@
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Wed Nov 14 18:36:01 CET 2018" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <filehistory>
     <operation>
       <type>app</type>
