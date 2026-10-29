@@ -822,6 +822,10 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
+            <li>Speed Profiling can measure the lowest speed steps again at the end of a
+                profile, when the loco is warm, as many times as asked. The profile is given
+                the mean of the repeats, and a new Repeats table shows each step's first run,
+                its repeats, their spread and the change from the first run.</li>
             <li>Protect against an error that can occur while loading
                 the roster if an entry has an unexpectedly missing sound label.</li>
         </ul>
