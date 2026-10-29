@@ -1147,6 +1147,114 @@ public class AutoTrainsMultiBlockStopTest {
 
     }
 
+    /**
+     * As testRoundAndRound80, but the train is longer: its head enters Block 1,
+     * at the end of the Transit, while its tail is still in Block 4. Section B4
+     * is then both the Section behind the train, not yet released, and the next
+     * Section of the new lap. The train must still start to stop in Section B1-3.
+     */
+    @Test
+    public void testRoundAndRound80TailStillInBlock4() {
+        jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
+        };
+
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+
+        // load layout file
+        File f = new File("java/test/jmri/jmrit/dispatcher/MultiBlockStopRoundAndRound.xml");
+        boolean loaded = Assertions.assertDoesNotThrow(() ->
+            cm.load(f));
+        Assertions.assertTrue(loaded);
+
+        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+
+        // load dispatcher, with all the correct options
+        OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/MultiBlockStopdispatcheroptions.xml");
+        DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
+        JFrameOperator dw = new JFrameOperator(Bundle.getMessage("TitleDispatcher"));
+        // running with no signals
+        checkAndSetSpeedsSML();
+        SensorManager sm = InstanceManager.getDefault(SensorManager.class);
+
+        Sensor sensorBlock1 = sm.getSensor("Block 1");
+        Sensor sensorBlock2 = sm.getSensor("Block 2");
+        Sensor sensorBlock3 = sm.getSensor("Block 3");
+        Sensor sensorBlock4 = sm.getSensor("Block 4");
+        Sensor sensorBlock4_1 = sm.getSensor("Block 4-1");
+        Sensor sensorTrainRestart = sm.getSensor("TrainRestart");
+
+        assertNotNull(sensorBlock1);
+        assertNotNull(sensorBlock2);
+        assertNotNull(sensorBlock3);
+        assertNotNull(sensorBlock4);
+        assertNotNull(sensorBlock4_1);
+        assertNotNull(sensorTrainRestart);
+
+        // trains fills one block
+        JUnitUtil.setBeanStateAndWait( sensorBlock3, Sensor.ACTIVE);
+
+        // *******************************************************************************
+        //  Here start Round And Round train starts block 3 stops at block 3 and goes again.
+        //  Train fits in 2 blocks stops on block 1 going inactive.
+        // *******************************************************************************
+        d.loadTrainFromTrainInfo("RNDRND3BLK80.xml");
+
+        assertThat(d.getActiveTrainsList().size()).withFailMessage("Train Loaded").isEqualTo(1);
+
+        ActiveTrain at = d.getActiveTrainsList().get(0);
+        aat = at.getAutoActiveTrain();
+
+        // trains loads and runs, 3 as we are allocating as far as we can
+        JUnitUtil.waitFor(() -> {
+            return(d.getAllocatedSectionsList().size()==3);
+        },"Allocated sections should be 3");
+
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedNormal ) < TOLERANCE );
+            }, "Failed To Start - Stop / Resume");
+        JUnitUtil.setBeanStateAndWait( sensorBlock4, Sensor.ACTIVE);
+        JUnitUtil.setBeanStateAndWait( sensorBlock3, Sensor.INACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedNormal ) < TOLERANCE );
+            }, "1 section clear speed normal "+ speedNormal  + " but was " + aat.getThrottle().getSpeedSetting());
+        JUnitUtil.setBeanStateAndWait( sensorBlock4_1, Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedMedium ) < TOLERANCE );
+            }, "1 section clear speed normal "+ speedMedium + " but was " + aat.getThrottle().getSpeedSetting());
+        // the train is longer: its head enters Block 1 while its tail is still in Block 4
+        JUnitUtil.setBeanStateAndWait( sensorBlock1, Sensor.ACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
+            }, "Slowing in Block 1 with the tail in Block 4");
+        JUnitUtil.setBeanStateAndWait( sensorBlock4, Sensor.INACTIVE);
+        JUnitUtil.waitFor(waitInterval);
+        JUnitUtil.waitFor(() -> {
+            return (Math.abs(aat.getThrottle().getSpeedSetting() - speedStopping ) < TOLERANCE );
+            }, "Still slowing in Block 1 after the tail has left Block 4");
+
+        JButtonOperator bo = new JButtonOperator(dw, Bundle.getMessage("TerminateTrain"));
+        // wait for cleanup to finish
+        JUnitUtil.waitFor(waitInterval/2);
+        bo.push();
+        
+        // wait for cleanup to finish
+        JUnitUtil.waitFor(waitInterval);
+
+        assertThat((d.getActiveTrainsList().isEmpty())).withFailMessage("All trains terminated").isTrue();
+
+        JFrameOperator aw = new JFrameOperator("AutoTrains");
+        aw.requestClose();
+        dw.requestClose();
+
+        // cleanup window
+        JUnitUtil.dispose(d);
+        InstanceManager.getDefault(jmri.SignalMastManager.class).dispose();
+        InstanceManager.getDefault(jmri.SignalMastLogicManager.class).dispose();
+    }
+
     @Test
     public void testRoundAndRound80() {
          jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {

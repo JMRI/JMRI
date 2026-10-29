@@ -865,8 +865,8 @@ public class AutoActiveTrain implements ThrottleListener {
                         // If we stop in Block 1 of a 3 block section, and enter this code
                         // when starting off again, so its just an advance of the _nextBlock.
                         // we can tell which situation it is by looking
-                        // whether the _nextSection is not null and allocated to us.
-                        if ( _nextSection == null || !_activeTrain.isInAllocatedList(_nextSection)) {
+                        // whether the _nextSection is allocated to us ahead of the train.
+                        if (!isNextSectionAllocatedAhead()) {
                             removeCurrentSignal();
                             stopInCurrentSection(BEGINNING_RESET, StopContext.DESTINATION);
                         }
@@ -1264,6 +1264,29 @@ public class AutoActiveTrain implements ThrottleListener {
         } else {
             setSpeedBySignal();
         }
+    }
+
+    /**
+     * Check whether the next Section is allocated to this train ahead of it.
+     * <p>
+     * A train that runs round and round can have the Section it has just left
+     * as its next Section for the new lap. That Section stays allocated
+     * behind the train, entered, until its tail has left it and it has been
+     * released, so it does not count.
+     *
+     * @return true if an allocation of the next Section has not yet been
+     *         entered by the train
+     */
+    private boolean isNextSectionAllocatedAhead() {
+        if (_nextSection == null) {
+            return false;
+        }
+        for (AllocatedSection a : _activeTrain.getAllocatedSectionList()) {
+            if (a.getSection() == _nextSection && !a.getEntered()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @CheckForNull
