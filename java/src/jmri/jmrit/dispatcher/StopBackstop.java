@@ -157,7 +157,7 @@ final class StopBackstop {
     void reckon() {
         String reason = null;
         synchronized (this) {
-            if (finished) {
+            if (finished || speedMmPerSecond == null) {
                 return;
             }
             long now = System.nanoTime();
