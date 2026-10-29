@@ -98,7 +98,6 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
     boolean allocateToDispatcher = false;
     boolean absSignalMode = false;
     boolean quietFail = false;      // Suppress the dialog when a route allocation fails.
-    boolean skipGuiFix = false;     // Hold back NX button clicks while a route is set.  This keeps double-click chaining.
 
     public static final int PROMPTUSER = 0x00;
     public static final int AUTOCLEAR = 0x01;
@@ -170,14 +169,6 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
 
     public boolean isQuietFail() {
         return quietFail;
-    }
-
-    public void setSkipGuiFix(boolean skip) {
-        skipGuiFix = skip;
-    }
-
-    public boolean isSkipGuiFix() {
-        return skipGuiFix;
     }
 
     /**
@@ -759,19 +750,14 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
     }
 
     /**
-     * With the old GUI behavior, hold back a click on an NX button while a
-     * route is being set. The panel used to wait until the turnouts of a route
-     * were set, so a second click on the destination button was handled after
-     * the route had been set and started the next route instead of cancelling
-     * this one. The turnouts are now set without making the panel wait, so the
-     * click is held back until the route has been set. Held clicks are handled
-     * in the order they happened.
-     *
+     * To support double clicking to manually create a multiple segment route,
+     * hold back the second click on a NX button while the first segment is being set.
+     * Held clicks are handled in the order they happened.
      * @param click the handling of the click, run later if it is held back
      * @return true if the click has been held back
      */
     synchronized boolean holdButtonClick(Runnable click) {
-        if (!skipGuiFix || routesBeingSet == 0) {
+        if (routesBeingSet == 0) {
             return false;
         }
         heldButtonClicks.add(click);

@@ -239,15 +239,15 @@
             <ul>
                 <li>Added a dialog to draw attention to the error
                     if a firmware update fails.</li>
-                <li>OpenLCB/LCC Signal Masts can no longer 
+                <li>OpenLCB/LCC Signal Masts can no longer
                     be defined to use the event ID's that start with 00
                     as these values are reserved and not to be used.
-                    The value 00.00.00.00.00.00.00.00 was previously the default 
+                    The value 00.00.00.00.00.00.00.00 was previously the default
                     for "this event ID hasn't been configured".
                     The default is now a blank entry field that doesn't
-                    produce or consume an event.  If you have 
+                    produce or consume an event.  If you have
                     defined any of the signal mast entries to start with 00,
-                    they will be migrated to be empty fields that no longer 
+                    they will be migrated to be empty fields that no longer
                     produce or consume an event.</li>
                 <li>Change the default events for the STL Editor IQYZ tables from all zeros to
                     unique zero based events.</li>
@@ -565,7 +565,7 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>Fixed an intermittent exception that occurred when 
+            <li>Fixed an intermittent exception that occurred when
                 detaching one of the programming panes.</li>
         </ul>
 
@@ -713,6 +713,9 @@
                     the first pair unless that pair used full interlocking, and
                     the remaining pairs were then set by the next, unrelated
                     request.</li>
+                <li>The <strong>Revert to the old GUI behavior</strong>option has been removed.
+                Double clicking on the destination sensor will complete the NX pair and start the
+                process for the next NX pair to extend the route.</li>
             </ul>
 
     <h3>LccPro</h3>
@@ -1014,7 +1017,7 @@
         <a id="server" name="server"></a>
         <ul>
             <ii>Previously, you had to reload a panel window to pick up
-                any changes to icon graphics settings: background color, font, 
+                any changes to icon graphics settings: background color, font,
                 border color, etc.  The server and panel code has been updated to automatically
                 do that update when any of those parameters change.
             <li>Previously, some colors would display differently on web clients
@@ -1022,7 +1025,7 @@
                 noticeable with green, light and dark grey, and orange.  JMRI
                 now sends the exact RGB codes to the web client to ensure colors match.</li>
             <li>If two icons of different type, e.g. a block and a memory, displayed
-                objects with the same user name, the web display could show the 
+                objects with the same user name, the web display could show the
                 wrong object in one of the icons.  This is now fixed.<li>
         </ul>
 

@@ -91,10 +91,6 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
             element.addContent(new Element("quietfail").addContent("yes"));  // NOI18N
         }
 
-        if (p.isSkipGuiFix()) {
-            element.addContent(new Element("skipguifix").addContent("yes"));  // NOI18N
-        }
-
         for (int k = 0; k < editors.size(); k++) {
             LayoutEditor panel = editors.get(k);
             List<Object> nxpair = p.getSourceList(panel);
@@ -250,10 +246,6 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
 
         if (shared.getChild("quietfail") != null && shared.getChild("quietfail").getText().equals("yes")) {  // NOI18N
             eep.setQuietFail(true);
-        }
-
-        if (shared.getChild("skipguifix") != null && shared.getChild("skipguifix").getText().equals("yes")) {  // NOI18N
-            eep.setSkipGuiFix(true);
         }
 
         List<Element> panelList = shared.getChildren("layoutPanel");  // NOI18N

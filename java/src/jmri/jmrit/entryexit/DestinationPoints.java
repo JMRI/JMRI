@@ -460,11 +460,6 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                     //Force a redraw, to reflect color change
                     src.getPoint().getPanel().redrawPanel();
                 }
-                if (!manager.isSkipGuiFix()) {
-                    // With the old GUI behavior clicks are held back instead, so that a second
-                    // click on the destination can start the next route
-                    src.getPoint().getPanel().getGlassPane().setVisible(true);
-                }
 
                 ConnectivityUtil connection = new ConnectivityUtil(point.getPanel());
 
