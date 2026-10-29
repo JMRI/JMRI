@@ -2,8 +2,15 @@
 # Create virtual serial port that connects to MCAN TCP Bridge server
 #
 # This helper script creates a virtual serial port for use with the MCAN Protocol
-# Serial To TCP Multiplexer Bridge, allowing serial-only software (e.g., programmer
+# Serial To TCP Multiplexer Bridge, allowing serial-only software (e.g. programmer
 # tools) to work alongside JMRI by sharing the same CC-Schnitte adapter.
+#
+# In this use case the bridge claims the real serial port and then connects the
+# virtual serial port to a second bridge process
+# which can be hooked into the first process as a client.
+#
+# The virtual port created by this script is not reboot-safe and the script must be re-run after a reboot.
+# For a permanent setup consider a systemd unit running this script at boot or configure a target port via udev rules.
 #
 # Author: Ralf Lang (ralf.lang@ralf-lang.de)
 # Copyright: (C) 2026 JMRI Community
