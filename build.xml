@@ -1401,6 +1401,14 @@
         </antcall>
     </target>
 
+    <target name="mcan-poke"
+            depends="debug"
+            description="build and run marklin-poke CAN bus probe tool">
+        <antcall target="-run-jmri-application">
+            <param name="application.classname" value="external.marklin.MarklinPoke"/>
+        </antcall>
+    </target>
+
     <!-- end of application startup targets -->
 
     <!-- ============================================================================= -->
