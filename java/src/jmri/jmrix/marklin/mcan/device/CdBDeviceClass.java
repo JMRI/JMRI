@@ -48,8 +48,8 @@ public enum CdBDeviceClass {
      * <p>
      * The CdB bus provides no generation field in the ping reply  -  devices of the same
      * class look identical regardless of their hardware revision. When a class is
-     * {@link #SINGLE_GEN} the marklin layer can proceed immediately after discovery.
-     * When a class is {@link #AMBIGUOUS} the marklin layer must issue a post-discovery
+     * {@link #SINGLE_GEN} the caller can proceed immediately after discovery.
+     * When a class is {@link #AMBIGUOUS} the caller must issue a post-discovery
      * probe (e.g. read firmware version register) before selecting the correct command set.
      */
     public enum HardwareCapability {
@@ -64,13 +64,11 @@ public enum CdBDeviceClass {
          * Two or more hardware generations share this class ID and produce identical
          * ping replies, so they cannot be distinguished at discovery time.
          * <p>
-         * The marklin layer MUST issue a post-discovery probe (e.g. read firmware
-         * version at slot=0, reg=1) before selecting which command set to use.
+         * The marklin layer must establish capabilities before selecting a
+         * command profile. Firmware alone is not a proven discriminator.
          * <p>
          * Currently only {@link CdBDeviceClass#WEICHEN_CHEF_MAGNET} (0x22) is
-         * {@code AMBIGUOUS}: gen-001 supports 4 coil-fire channels and uses coil-fire
-         * header bytes {@code [0xFF, 0x3C]}, while gen-002+ supports 8 channels and
-         * uses header bytes {@code [0x03, 0x00]}.
+         * {@code AMBIGUOUS}: Both profiles have four turnouts. Each turnout can have a single address for both directions or separate addresses for each direction. In separate addresses mode, old generation hardware shares the primary timing slots with both addresses. The newer hardware can use independent timing slots for each individual address.
          */
         AMBIGUOUS
     }

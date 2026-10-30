@@ -252,4 +252,12 @@ public class McanDevice extends AbstractNamedBean {
         }
         ThreadingUtil.runOnGUI(() -> firePropertyChange(PROPERTY_DEVICE_SERVICE, old, service));
     }
+
+    /**
+     * Notify views that the attached service's state changed without implying
+     * that a frame was received from the physical device.
+     */
+    public void notifyDeviceServiceChanged() {
+        ThreadingUtil.runOnGUI(() -> firePropertyChange(PROPERTY_DEVICE_SERVICE, null, getDeviceService()));
+    }
 }

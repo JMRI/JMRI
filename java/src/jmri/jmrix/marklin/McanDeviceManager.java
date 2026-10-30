@@ -270,15 +270,14 @@ public class McanDeviceManager extends AbstractManager<McanDevice> implements Ma
                 device.setFactoryChallengeBytes(cb[0], cb[1]));
         }
 
-        // WeichenChef Magnet (0x22) is AMBIGUOUS: two hardware generations share the same
-        // class ID and produce identical ping replies.  Attach a WeichenChefMagnetService
-        // and stay INITIALIZING until the firmware probe reply arrives; the service then
-        // calls setDeviceState(ONLINE) itself.  All other classes go ONLINE immediately.
-        if (canClass == WeichenChefMagnetService.CDB_CLASS_ID && pingReply.isOperational()) {
+        // Both Magnet tools advertise four addresses in DLC=8 scan replies.
+        // Presence is independent of whether capability detection is conclusive.
+        if (canClass == WeichenChefMagnetService.CDB_CLASS_ID
+                && (pingReply.isOperational() || pingReply.hasAddressPayload())) {
             if (device.getDeviceService() == null) {
                 WeichenChefMagnetService svc = new WeichenChefMagnetService(device, buildSender());
                 device.setDeviceService(svc);
-                device.setDeviceState(McanDeviceState.INITIALIZING);
+                device.setDeviceState(McanDeviceState.ONLINE);
                 svc.sendGenerationProbe();
             }
             // If service already attached (re-discovery ping): just touch, leave state as-is
@@ -345,7 +344,20 @@ public class McanDeviceManager extends AbstractManager<McanDevice> implements Ma
     }
 
     @Override
+    public void deregister(McanDevice device) {
+        if (device.getDeviceService() instanceof WeichenChefMagnetService) {
+            ((WeichenChefMagnetService) device.getDeviceService()).dispose();
+        }
+        super.deregister(device);
+    }
+
+    @Override
     public void dispose() {
+        getNamedBeanSet().forEach(device -> {
+            if (device.getDeviceService() instanceof WeichenChefMagnetService) {
+                ((WeichenChefMagnetService) device.getDeviceService()).dispose();
+            }
+        });
         if (memo.getTrafficController() != null) {
             memo.getTrafficController().removeMarklinListener(this);
             memo.getTrafficController().getCdBFilter().removeCdBConfigListener(this);
