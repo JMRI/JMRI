@@ -1,6 +1,6 @@
 package jmri.time;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 import jmri.NamedBean;
 
@@ -35,7 +35,7 @@ public interface TimeProvider extends NamedBean {
 
     /**
      * Property Change sent when the minute value changes.
-     * The values are {@link LocalDateTime}.
+     * The values are {@link ZonedDateTime}.
      */
     String PROPERTY_CHANGE_DATETIME = "datetime";
 
@@ -45,7 +45,7 @@ public interface TimeProvider extends NamedBean {
      * of date.
      * @return the time and possibly date.
      */
-    LocalDateTime getTime();
+    ZonedDateTime getTime();
 
     /**
      * Get the rate object of this time provider.

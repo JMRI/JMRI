@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 public class InternalDateTimeTest {
 
     InternalDateTime idt;
-    LocalDateTime time;
+    ZonedDateTime time;
 
     @Test
     public void testCheckStartValues(){

@@ -23,16 +23,13 @@ public abstract class AbstractTimebase extends AbstractNamedBean implements Time
         super(sysName);
     }
 
-    private LocalDateTime convertToLocalDateTime(Date dateToConvert) {
+    private ZonedDateTime convertToZonedDateTime(Date dateToConvert) {
         return Instant.ofEpochMilli(dateToConvert.getTime())
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime();
+                .atZone(ZoneId.systemDefault());
     }
 
-    private Date convertToDate(LocalDateTime dateToConvert) {
-        return java.util.Date
-                .from(dateToConvert.atZone(ZoneId.systemDefault())
-                        .toInstant());
+    private Date convertToDate(ZonedDateTime dateToConvert) {
+        return java.util.Date.from(dateToConvert.toInstant());
     }
 
     protected void setTimeIfPossible(Date d) {
@@ -49,7 +46,7 @@ public abstract class AbstractTimebase extends AbstractNamedBean implements Time
                 .getCurrentTimeProvider();
         if (tp instanceof TimeSetter) {
             TimeSetter ts = (TimeSetter)tp;
-            ts.setDateTime(convertToLocalDateTime(d));
+            ts.setDateTime(convertToZonedDateTime(d));
         } else {
             throw new UnsupportedOperationException("The current TimeProvider is not a TimeSetter: "
                     + (tp != null ? tp.getClass().getName() : null));

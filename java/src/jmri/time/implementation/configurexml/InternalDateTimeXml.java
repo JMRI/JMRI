@@ -6,7 +6,7 @@ import jmri.InstanceManager;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.time.TimeProvider;
 import jmri.time.TimeProviderManager;
-import jmri.time.configurexml.LocalDateTimeXml;
+import jmri.time.configurexml.ZonedDateTimeXml;
 import jmri.time.implementation.InternalDateTime;
 import jmri.time.rate.configurexml.ChangeableDoubleRateXml;
 
@@ -31,7 +31,7 @@ public class InternalDateTimeXml extends jmri.managers.configurexml.AbstractName
 
         element.addContent(new Element("isRunning").addContent(p.isRunning() ? "yes" : "no"));
         ChangeableDoubleRateXml.store(p.getRate(), element);
-        LocalDateTimeXml.store(p.getTime(), element);
+        ZonedDateTimeXml.store(p.getTime(), element);
 
         return element;
     }
@@ -77,7 +77,7 @@ public class InternalDateTimeXml extends jmri.managers.configurexml.AbstractName
                 }
             }
 
-            if (! LocalDateTimeXml.load(shared, idt)) {
+            if (! ZonedDateTimeXml.load(shared, idt)) {
                 return false;
             }
 

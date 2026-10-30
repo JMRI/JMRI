@@ -1,6 +1,6 @@
 package jmri.jmrit.beantable;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 import jmri.*;
 
@@ -44,7 +44,7 @@ public class TimeProviderTableDataModel extends BeanTableDataModel<TimeProvider>
         if (clock == null) {
             return "?";
         }
-        LocalDateTime time = clock.getTime();
+        ZonedDateTime time = clock.getTime();
         if (time != null) {
             return time.toString();
         } else {
@@ -142,9 +142,9 @@ public class TimeProviderTableDataModel extends BeanTableDataModel<TimeProvider>
         switch (col) {
             case VALUECOL:
 //                Clock m = getBySystemName(sysNameList.get(row));
-//                LocalDateTime time = m.getTime();
+//                ZonedDateTime time = m.getTime();
 //                return (time == null ? null : time.getClass().getName());
-                return LocalDateTime.class.getName();
+                return ZonedDateTime.class.getName();
             default:
                 return super.getCellToolTip(table, row, col);
         }
