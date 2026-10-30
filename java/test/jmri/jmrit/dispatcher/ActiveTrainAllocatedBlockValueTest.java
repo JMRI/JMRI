@@ -21,7 +21,13 @@ import jmri.implementation.DefaultTransit;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.util.JUnitAppender;
+import jmri.util.JUnitLoggingUtil;
 import jmri.util.JUnitUtil;
+
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.core.config.Configurator;
 
 import org.junit.jupiter.api.*;
 
@@ -53,7 +59,11 @@ public class ActiveTrainAllocatedBlockValueTest {
     }
 
     private ActiveTrain train() {
-        ActiveTrain at = new ActiveTrain(transit, "Train", ActiveTrain.USER);
+        return train("Train");
+    }
+
+    private ActiveTrain train(String name) {
+        ActiveTrain at = new ActiveTrain(transit, name, ActiveTrain.USER);
         at.setDispatcher(df);
         return at;
     }
@@ -105,6 +115,25 @@ public class ActiveTrainAllocatedBlockValueTest {
         assertNull(memories[2].getValue(), "Block 2 shows nothing");
     }
 
+    @Test
+    public void testNoteLoggedOnceForAllocatedValue() {
+        allocate(train(), section1, 1);
+        allocate(train("Train 2"), section1, 1);
+
+        JUnitAppender.assertMessage(ActiveTrain.ALLOCATED_VALUE_NOTE, org.slf4j.event.Level.INFO);
+        assertNull(JUnitAppender.checkForMessage(ActiveTrain.ALLOCATED_VALUE_NOTE), "logged only once");
+    }
+
+    @Test
+    public void testNoNoteWithOptionOff() {
+        when(df.getNameInAllocatedBlock()).thenReturn(false);
+        allocate(train(), section1, 1);
+        assertNull(JUnitAppender.checkForMessage(ActiveTrain.ALLOCATED_VALUE_NOTE),
+                "nothing changes for a script without the option, so no note");
+    }
+
+    private Level activeTrainLogLevel;
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
@@ -135,10 +164,16 @@ public class ActiveTrainAllocatedBlockValueTest {
         when(df.requestAllocation(any(), any(), anyInt(), anyInt(), anyBoolean(), any(), anyBoolean()))
                 .thenReturn(true);
         when(df.getNameInAllocatedBlock()).thenReturn(true);
+
+        // the note is INFO, logged once per session: let it through, and start the session afresh
+        activeTrainLogLevel = LogManager.getLogger(ActiveTrain.class).getLevel();
+        Configurator.setLevel(ActiveTrain.class.getName(), Level.INFO);
+        JUnitLoggingUtil.restartInfoOnce();
     }
 
     @AfterEach
     public void tearDown() {
+        Configurator.setLevel(ActiveTrain.class.getName(), activeTrainLogLevel);
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }

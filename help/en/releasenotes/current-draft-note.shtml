@@ -637,25 +637,35 @@
                  train could be stopped with "No next Block". Every change is
                  now acted on, including a detector that bounces, so use the
                  sensor debounce settings for such detectors.</li>
-             <li>"Place train name in allocated Blocks" no longer changes the
-                 value of Blocks. With the option off, the default, nothing
-                 changes. The train a Block is allocated to is now
-                 kept as the Block's allocated value, and Block Contents icons
-                 and Layout Block memories show it wherever the Block does not
-                 already show a train, so panels, including web panels, look
-                 as before. A Block Contents Input icon edits the Block's
-                 value, so it shows only the value, and is empty in an empty
-                 allocated Block. A Logix, LogixNG or script that reads the
-                 value of an allocated Block now gets only the train Block
-                 tracking has placed there: nothing where the Block is empty,
-                 or where Block tracking could not tell which train entered.
+             <li>"Place train name in allocated Blocks" no longer writes the
+                 train's name into the value of the Blocks Dispatcher
+                 allocates, so the train name shown in allocated Blocks is no
+                 longer overwritten or lost as trains move. With the option
+                 off, the default, nothing changes. With it on, the train a
+                 Block is allocated to is kept as the Block's new allocated
+                 value, and Block Contents icons and Layout Block memories show
+                 it wherever the Block does not already show a train, so
+                 panels, including web panels, look as before. A Block Contents
+                 Input icon edits the Block's value, so it shows only the
+                 value, and is empty in an empty allocated Block.
+                 <strong>A Logix, LogixNG or script that reads the value of an
+                 allocated Block now gets only the train Block tracking has
+                 placed there:</strong> nothing where the Block is empty, or
+                 where Block tracking could not tell which train entered.
                  <code>getDisplayValue()</code> gives what the value gave
-                 before; see the
+                 before, and <code>getAllocatedValue()</code> gives only the
+                 train the Block is allocated to; a script that listens for
+                 changes to a Block's value to notice allocations should also
+                 listen for its <code>allocatedValue</code> property. See the
                  <a href="https://www.jmri.org/help/en/package/jmri/jmrit/beantable/BlockTable.shtml#allocatedValue">Block
-                 Table help</a>. <code>Section.setNameFromActiveBlock</code>,
+                 Table help</a>. So that anyone whose own script or Logix
+                 behaves differently can find out why, Dispatcher logs a note
+                 saying this the first time it allocates a Block in a session
+                 with the option on. <code>Section.setNameFromActiveBlock</code>,
                  <code>Section.suppressNameUpdate</code> and
-                 <code>LayoutBlock.setSuppressNameUpdate</code> are deprecated
-                 and will be removed.</li>
+                 <code>LayoutBlock.setSuppressNameUpdate</code> are no longer
+                 needed; they still work, but log a warning the first time
+                 they are used, and will be removed.</li>
         </ul>
 
     <h3>Dispatcher System</h3>

@@ -22,6 +22,7 @@ import jmri.Section.SectionType;
 import jmri.beans.PropertyChangeProvider;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
+import jmri.util.LoggingUtil;
 
 /**
  * This class holds information and options for an ActiveTrain, that is a train
@@ -935,6 +936,7 @@ public class ActiveTrain implements PropertyChangeProvider {
                 mSecondAllocatedSection = as.getSection();
             }
             if (mDispatcher.getNameInAllocatedBlock()) {
+                LoggingUtil.infoOnce(log, ALLOCATED_VALUE_NOTE);
                 Object allocatedValue = getAllocatedBlockValue();
                 for (Block b : as.getSection().getBlockList()) {
                     b.setAllocatedValue(allocatedValue);
@@ -1543,6 +1545,16 @@ public class ActiveTrain implements PropertyChangeProvider {
     public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
         pcs.removePropertyChangeListener(propertyName, listener);
     }
+
+    /**
+     * Logged once per session, the first time a Block is given an allocated
+     * value, for anyone whose own script, Logix or LogixNG used to find the
+     * train in an allocated Block's value.
+     */
+    static final String ALLOCATED_VALUE_NOTE = "Dispatcher's \"Place train name in allocated Blocks\" no longer"
+            + " puts the train's name in the value of an allocated Block; it is kept as the Block's allocated value."
+            + " A script, Logix or LogixNG that reads an allocated Block's value to find its train should use"
+            + " getDisplayValue() or getAllocatedValue() instead (see the Block Table help).";
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActiveTrain.class);
 
