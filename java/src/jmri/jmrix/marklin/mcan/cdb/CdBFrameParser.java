@@ -98,11 +98,15 @@ public final class CdBFrameParser {
     /**
      * A ping reply from a CdB module.
      * <p>
-     * Two shapes:
+     * Three shapes:
      * <ul>
      *   <li>Operational (moduleId &gt; 0, DLC=3): module is commissioned.</li>
      *   <li>Factory-fresh (moduleId=0, DLC=6): module needs commissioning;
      *       challenge bytes are at data positions 1 and 2.</li>
+     *   <li>Address carrying scan reply (moduleId &gt; 0, DLC=8): the module embeds its
+     *       four configured accessory addresses in data bytes 0–7 as four big-endian
+     *       16-bit raw CdB address values. Observed on WeichenChef deLuxe (class 0x2A)
+     *       in response to a broadcast discovery ping.</li>
      * </ul>
      */
     public static final class PingReplyFrame extends CdBFrame {
@@ -121,6 +125,18 @@ public final class CdBFrameParser {
         }
 
         /**
+         * True when the reply carries a 4-address payload (moduleId &gt; 0, DLC=8).
+         * <p>
+         * This variant is produced by WeichenChef deLuxe (class 0x2A) in response
+         * to a broadcast discovery ping.
+         * Each of the four channel addresses occupies two big endian data bytes starting at frame byte[5].
+         * Decode with {@link #addressPayload()}.
+         */
+        public boolean hasAddressPayload() {
+            return moduleId() > 0 && parent().raw().dlc() == 8;
+        }
+
+        /**
          * Challenge bytes from a factory-fresh reply (data positions 1 and 2,
          * frame bytes[6] and [7]). Must be echoed in {@link CdBConfigCommands#buildFactorySelect}.
          *
@@ -130,6 +146,26 @@ public final class CdBFrameParser {
             if (!isFactoryFresh()) return Optional.empty();
             int[] raw = raw();
             return Optional.of(new int[]{raw[6] & 0xFF, raw[7] & 0xFF});
+        }
+
+        /**
+         * Four raw 16 bit accessory addresses from a scan reply with DLC=8
+         * <p>
+         * Frame bytes 5-12 carry four big-endian 16-bit values. Each value is a raw
+         * CdB address which can be decoded by {@link jmri.jmrix.marklin.mcan.address.CdBAddressCodec#decodeType2(int)}.
+         * The module number is {@link #moduleId()}.
+         *
+         * @return four element array of raw 16 bit addresses or empty if {@link #hasAddressPayload()} is false
+         */
+        public Optional<int[]> addressPayload() {
+            if (!hasAddressPayload()) return Optional.empty();
+            int[] raw = raw();
+            return Optional.of(new int[]{
+                ((raw[5] & 0xFF) << 8) | (raw[6]  & 0xFF),
+                ((raw[7] & 0xFF) << 8) | (raw[8]  & 0xFF),
+                ((raw[9] & 0xFF) << 8) | (raw[10] & 0xFF),
+                ((raw[11] & 0xFF) << 8) | (raw[12] & 0xFF)
+            });
         }
     }
 
