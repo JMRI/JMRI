@@ -433,21 +433,25 @@ public class SpeedUtil {
             }
             if (elem != null) {
                 List<Element> list = elem.getChildren("CVvalue");
+                int cv3 = 0;
+                int cv4 = 0;
+                int cv23 = 0;
+                int cv24 = 0;
                 int count = 0;
                 for (Element cv : list) {
                     Attribute attr = cv.getAttribute("name");
                     if (attr != null) {
                         if (attr.getValue().equals("3")) {
-                            _ma += getMomentumFactor(cv);
-                           count++;
+                            cv3 = getCvValue(cv);
+                            count++;
                         } else if (attr.getValue().equals("4")) {
-                            _md += getMomentumFactor(cv);
+                            cv4 = getCvValue(cv);
                             count++;
                         } else if (attr.getValue().equals("23")) {
-                            _ma += getMomentumAdustment(cv);
+                            cv23 = getCvValue(cv);
                             count++;
                         } else if (attr.getValue().equals("24")) {
-                            _md += getMomentumAdustment(cv);
+                            cv24 = getCvValue(cv);
                             count++;
                         }
                     }
@@ -455,6 +459,9 @@ public class SpeedUtil {
                         break;
                     }
                 }
+                float stepIncrement = getThrottleSpeedStepIncrement();
+                _ma = getMomentumTimePerStep(cv3, cv23, stepIncrement);
+                _md = getMomentumTimePerStep(cv4, cv24, stepIncrement);
             }
         }
         if (log.isDebugEnabled()) {
@@ -463,64 +470,52 @@ public class SpeedUtil {
         }
     }
 
-    // return milliseconds per one speed step
-    private int getMomentumFactor(Element cv) {
+    // return the value of a CVvalue element, or 0 if it has none
+    private int getCvValue(Element cv) {
         Attribute attr = cv.getAttribute("value");
         int num = 0;
         if (attr != null) {
             try {
-                 /*  .896sec per (throttle Speed Step Increment) is NMRA spec for each CV value
-                 CV#3
-                 Determines the decoder's acceleration rate. The formula for the acceleration rate shall be equal to (the contents 
-                 of CV#3*.896)/(number of speed steps in use). For example, if the contents of CV#3 =2, then the acceleration 
-                 is 0.064 sec/step for a decoder currently using 28 speed steps. If the content of this parameter equals "0" then 
-                 there is no programmed momentum during acceleration.
-                 Same for CV#24
-                 */
-                num = Integer.parseInt( attr.getValue());
-                // reciprocal of getThrottleSpeedStepIncrement() is number of steps in use
-                num = Math.round(num * 896 * getThrottleSpeedStepIncrement());     // milliseconds per step
+                num = Integer.parseInt(attr.getValue());
             } catch (NumberFormatException nfe) {
                 num = 0;
             }
         }
-        if ( log.isTraceEnabled() ) {
-            log.trace("getMomentumFactor for cv {} {}, num= {}",
-                cv.getAttribute("name"), attr, num);
+        if (log.isTraceEnabled()) {
+            log.trace("getCvValue for cv {} {}, num= {}", cv.getAttribute("name"), attr, num);
         }
         return num;
     }
 
-    // return milliseconds per one speed step
-    private int getMomentumAdustment(Element cv) {
-        /*  .896sec per  is NMRA spec for each CV value
-        CV#23
-        This Configuration Variable contains additional acceleration rate information that is to be added to or 
-        subtracted from the base value contained in Configuration Variable #3 using the formula (the contents of 
-        CV#23*.896)/(number of speed steps in use). This is a 7 bit value (bits 0-6) with bit 7 being reserved for a 
-        sign bit (0-add, 1-subtract). In case of overflow the maximum acceleration rate shall be used. In case of 
-        160 underflow no acceleration shall be used. The expected use is for changing momentum to simulate differing 
-        train lengths/loads, most often when operating in a consist.
-        Same for CV#24
-        */
-        Attribute attr = cv.getAttribute("value");
-        int num = 0;
-        if (attr != null) {
-            try {
-                int val = Integer.parseInt(attr.getValue());
-                num = val & 0x3F;  //value is 6 bits
-                if ((val & 0x40) != 0) {    // 7th bit sign
-                    num = -num;
-                }
-            } catch (NumberFormatException nfe) {
-                num = 0;
-            }
+    /**
+     * Milliseconds the decoder takes to change speed by one speed step, from
+     * its momentum CVs.
+     * <p>
+     * NMRA S-9.2.2: CV#3 (CV#4 for deceleration) sets the rate as
+     * (CV#3 * 0.896 s) / (number of speed steps in use). CV#23 (CV#24) "contains
+     * additional acceleration rate information that is to be added to or
+     * subtracted from the base value contained in Configuration Variable #3
+     * using the formula (the contents of CV#23*.896)/(number of speed steps in
+     * use). This is a 7 bit value (bits 0-6) with bit 7 being reserved for a
+     * sign bit (0-add, 1-subtract). In case of overflow the maximum acceleration
+     * rate shall be used. In case of underflow no acceleration shall be used."
+     * <p>
+     * So the adjustment is added to the base CV value before the formula is
+     * applied, and the result is kept between 0 and 255.
+     *
+     * @param base          value of CV#3 or CV#4
+     * @param adjustment    value of CV#23 or CV#24
+     * @param stepIncrement throttle speed step increment; its reciprocal is
+     *                      the number of speed steps in use
+     * @return milliseconds per speed step
+     */
+    static int getMomentumTimePerStep(int base, int adjustment, float stepIncrement) {
+        int adjust = adjustment & 0x7F;     // value is bits 0-6
+        if ((adjustment & 0x80) != 0) {     // bit 7 is the sign
+            adjust = -adjust;
         }
-        if ( log.isTraceEnabled()) {
-            log.trace("getMomentumAdustment for cv {} {},  num= {}",
-                cv.getAttribute("name"), attr, num);
-        }
-        return num;
+        int value = Math.max(0, Math.min(255, base + adjust));
+        return Math.round(value * 896 * stepIncrement);
     }
 
     protected boolean profileHasSpeedInfo() {
