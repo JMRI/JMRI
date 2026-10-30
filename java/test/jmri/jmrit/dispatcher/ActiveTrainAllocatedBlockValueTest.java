@@ -25,10 +25,6 @@ import jmri.util.JUnitAppender;
 import jmri.util.JUnitLoggingUtil;
 import jmri.util.JUnitUtil;
 
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.core.config.Configurator;
-
 import org.junit.jupiter.api.*;
 
 /**
@@ -132,8 +128,6 @@ public class ActiveTrainAllocatedBlockValueTest {
                 "nothing changes for a script without the option, so no note");
     }
 
-    private Level activeTrainLogLevel;
-
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
@@ -165,15 +159,13 @@ public class ActiveTrainAllocatedBlockValueTest {
                 .thenReturn(true);
         when(df.getNameInAllocatedBlock()).thenReturn(true);
 
-        // the note is INFO, logged once per session: let it through, and start the session afresh
-        activeTrainLogLevel = LogManager.getLogger(ActiveTrain.class).getLevel();
-        Configurator.setLevel(ActiveTrain.class.getName(), Level.INFO);
+        // the note is INFO (let through for ActiveTrain in tests_lcf.xml),
+        // logged once per session: start the session afresh
         JUnitLoggingUtil.restartInfoOnce();
     }
 
     @AfterEach
     public void tearDown() {
-        Configurator.setLevel(ActiveTrain.class.getName(), activeTrainLogLevel);
         JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
