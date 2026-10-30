@@ -1,6 +1,10 @@
 package jmri.jmrix.lenz;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
@@ -66,6 +70,28 @@ public class XNetSensorTest extends jmri.implementation.AbstractSensorTestBase {
 
         assertEquals( Sensor.INACTIVE, t.getKnownState(), "Known state after inactivate ");
 
+    }
+
+    @Test
+    public void testIncomingReplyGivesItsReceivedTime() {
+        List<Long> times = new ArrayList<>();
+        List<Integer> states = new ArrayList<>();
+        t.addRawStateListener((sensor, oldState, newState, timeNanos) -> {
+            states.add(newState);
+            times.add(timeNanos);
+        });
+
+        XNetReply rActive = new XNetReply("42 05 42 05"); // feedback module 5, input 2 on
+        rActive.setReceivedTime(1234L);
+        ((XNetSensor) t).message(rActive);
+
+        long before = System.nanoTime();
+        ((XNetSensor) t).message(new XNetReply("42 05 40 07")); // input 2 off; not stamped, no time recorded
+        long after = System.nanoTime();
+
+        assertEquals(List.of(Sensor.ACTIVE, Sensor.INACTIVE), states);
+        assertEquals(1234L, times.get(0), "the time the reply was received");
+        assertTrue(times.get(1) >= before && times.get(1) <= after, "not stamped: dated when set");
     }
 
     // XNetSensor test for setting state

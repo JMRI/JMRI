@@ -83,7 +83,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
                         if (start > 0 && end > 0) {
                             String val = lines[i].substring(start, end);
                             int intState = Integer.parseInt(val, 16);
-                            decodeSensorState(ecosObjectId, intState);
+                            decodeSensorState(ecosObjectId, intState, m.getReceivedTime());
                         }
                     }
                     if (lines[i].contains("railcom")) {
@@ -190,7 +190,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
         // messages are ignored
     }
 
-    private void decodeSensorState(int object, int intState) {
+    private void decodeSensorState(int object, int intState, long timeNanos) {
         EcosSensor es;
         int k = 1;
         int result;
@@ -207,9 +207,9 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
             sb.append(port);
             es = (EcosSensor) provideSensor(sb.toString());
             if (result == 0) {
-                es.setOwnState(Sensor.INACTIVE);
+                es.setOwnState(Sensor.INACTIVE, timeNanos);
             } else {
-                es.setOwnState(Sensor.ACTIVE);
+                es.setOwnState(Sensor.ACTIVE, timeNanos);
             }
             k = k * 2;
         }
