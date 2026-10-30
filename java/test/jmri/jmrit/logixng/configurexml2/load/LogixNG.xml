@@ -26,7 +26,7 @@ to the folder java/test/jmri/jmrit/logixng/configurexml/load
       <systemName>IUInternalTimeProvider</systemName>
       <isRunning>no</isRunning>
       <rate>1.0</rate>
-      <localDateTime>2025-12-14T03:09:09.668</localDateTime>
+      <zonedDateTime>2025-12-14T03:09:09.668</zonedDateTime>
     </InternalDateTime>
     <InternalDateTime class="jmri.time.implementation.configurexml.SystemDateTimeXml">
       <systemName>IUSystemClock</systemName>
