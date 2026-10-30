@@ -36,6 +36,18 @@ class McanDevicePanelTest {
 
     @Test
     @jmri.util.junit.annotations.DisabledIfHeadless
+    void testMagnetConfigureAndRetestEnabled() {
+        McanDevicePanel panel = new McanDevicePanel();
+        panel.initComponents(memo);
+        McanDevice device = memo.getMcanDeviceManager().provideDevice(McanDeviceIdentity.forCdB(0x22, 3));
+        device.setDeviceState(McanDeviceState.ONLINE);
+        panel.getDeviceTable().setRowSelectionInterval(0, 0);
+        assertTrue(panel.getConfigureButton().isEnabled());
+        panel.dispose();
+    }
+
+    @Test
+    @jmri.util.junit.annotations.DisabledIfHeadless
     void testPanelInitialization() {
         McanDevicePanel panel = new McanDevicePanel();
         panel.initComponents(memo);

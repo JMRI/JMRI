@@ -81,6 +81,28 @@ public class McanDeviceManagerTest {
     }
 
     @Test
+    public void testMagnetAddressPayloadDiscoveryAndCapabilityRouting() {
+        MarklinReply scan = frameFromCanId(cdBPingId(0x22) + 0x10000 + 3, 8,
+                0x38, 0x01, 0x38, 0x02, 0x38, 0x03, 0x38, 0x04);
+        assertTrue(tc.getCdBFilter().offer(scan));
+        McanDevice device = manager.getDevice(McanDeviceIdentity.forCdB(0x22, 3));
+        assertNotNull(device);
+        assertEquals(McanDeviceState.ONLINE, device.getDeviceState());
+        assertInstanceOf(WeichenChefMagnetService.class, device.getDeviceService());
+        WeichenChefMagnetService service = (WeichenChefMagnetService) device.getDeviceService();
+        assertEquals(WeichenChefMagnetGeneration.UNKNOWN, service.getGeneration());
+        for (int reg : new int[]{2, 16, 17}) {
+            for (int slot = 5; slot <= 8; slot++) {
+                MarklinReply reply = new MarklinReply(
+                        jmri.jmrix.marklin.mcan.cdb.CdBConfigCommands.buildReadReply(0x22, 3, slot, reg, 100));
+                assertTrue(tc.getCdBFilter().offer(reply));
+            }
+        }
+        assertEquals(WeichenChefMagnetGeneration.GEN_002_PLUS, service.getDetectedGeneration());
+        assertSame(service, device.getDeviceService());
+    }
+
+    @Test
     public void testProvideAndGetDevice() {
         assertNotNull(manager);
         McanDeviceIdentity.Native nativeIdentity = McanDeviceIdentity.forNative(0x00112233L, NativeDeviceInfo.TYPE_MS2);
