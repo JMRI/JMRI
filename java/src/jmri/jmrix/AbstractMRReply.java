@@ -38,7 +38,46 @@ abstract public class AbstractMRReply extends AbstractMessage {
             _nDataChars = m._nDataChars;
             if (_nDataChars >= 0)
                 System.arraycopy(m._dataChars, 0, _dataChars, 0, _nDataChars);
+            receivedTime = m.receivedTime;
+            hasReceivedTime = m.hasReceivedTime;
         }
+    }
+
+    private long receivedTime = 0L;
+    private boolean hasReceivedTime = false;
+
+    /**
+     * Record when this reply was read in full from the connection, on the
+     * {@link System#nanoTime()} scale. Set by the traffic controller's
+     * receive thread, before the reply is passed on to the layout thread, so
+     * that the time does not include waiting there.
+     *
+     * @param timeNanos the time
+     * @since 5.17.5
+     */
+    public void setReceivedTime(long timeNanos) {
+        receivedTime = timeNanos;
+        hasReceivedTime = true;
+    }
+
+    /**
+     * @return true if the time this reply was received has been recorded
+     * @since 5.17.5
+     */
+    public boolean hasReceivedTime() {
+        return hasReceivedTime;
+    }
+
+    /**
+     * Get when this reply was read in full from the connection, on the
+     * {@link System#nanoTime()} scale; only differences between such times
+     * have a meaning.
+     *
+     * @return the time, or the time now if it was not recorded
+     * @since 5.17.5
+     */
+    public long getReceivedTime() {
+        return hasReceivedTime ? receivedTime : System.nanoTime();
     }
 
     /**

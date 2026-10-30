@@ -952,6 +952,14 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
+            <li>Code and scripts can now be told of every change of a sensor's
+                raw state, before any debounce, with the time it was received
+                (<code>Sensor.addRawStateListener</code>). Nothing that listens
+                to a sensor's properties sees anything new. For CBUS, and other
+                connections that read replies in a receive thread, the time is
+                taken as soon as the message is read, before it waits for the
+                layout thread, so time between sensor events is measured more
+                accurately.</li>
             <li>Turnouts with DELAYED feedback no longer flip back to an
                 earlier position when two commands are given within the feedback
                 delay, including CBUS turnouts changed by events on the bus, and

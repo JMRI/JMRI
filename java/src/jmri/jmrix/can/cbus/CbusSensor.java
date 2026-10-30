@@ -196,9 +196,9 @@ public class CbusSensor extends AbstractSensor implements CanListener, CbusEvent
         // convert response events to normal
         CanReply opcf = CbusMessage.opcRangeToStl(f);
         if (addrActive.match(opcf)) {
-            setOwnState(!getInverted() ? Sensor.ACTIVE : Sensor.INACTIVE);
+            setOwnState(!getInverted() ? Sensor.ACTIVE : Sensor.INACTIVE, f.getReceivedTime());
         } else if (addrInactive.match(opcf)) {
-            setOwnState(!getInverted() ? Sensor.INACTIVE : Sensor.ACTIVE);
+            setOwnState(!getInverted() ? Sensor.INACTIVE : Sensor.ACTIVE, f.getReceivedTime());
         }
     }
     
