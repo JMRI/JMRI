@@ -782,7 +782,8 @@
             <li>Conductor and Yardmaster now have "Show Cars" in their tool menu.</li>
             <li>Conductor tool menu now has the YardmasterByTrack tool.</li>
             <li>Additional help for the new "On Time" mode of operations.</li>
-            <li>You can now specify the loco color on Manifests and switch lists</li>
+            <li>You can now specify the loco color on Manifests and switch lists.</li>
+            <li>Added termination comment for trains which will show up on Manifests.</li>
         </ul>
 
    <h3>Panel Editor</h3>

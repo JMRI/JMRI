@@ -4,11 +4,6 @@ import java.util.*;
 
 import javax.swing.JComboBox;
 
-import org.jdom2.Attribute;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.Location;
@@ -17,6 +12,11 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
+
+import org.jdom2.Attribute;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Represents a route on the layout
@@ -230,6 +230,14 @@ public class Route extends PropertyChangeSupport implements java.beans.PropertyC
         List<RouteLocation> list = getLocationsBySequenceList();
         if (list.size() > 0) {
             return list.get(list.size() - 1);
+        }
+        return null;
+    }
+    
+    public RouteLocation get2ndToLastRouteLocation() {
+        List<RouteLocation> list = getLocationsBySequenceList();
+        if (list.size() > 1) {
+            return list.get(list.size() - 2);
         }
         return null;
     }

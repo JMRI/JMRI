@@ -169,7 +169,9 @@ public class OperationsServlet extends HttpServlet {
                     HtmlTrainCommon.convertToHTMLColor(StringEscapeUtils
                             .escapeHtml4(TrainCommon.getTextSizeString(train.getCommentCurrentWithColor()))),
                     Setup.isPrintRouteCommentsEnabled() ? train.getRoute().getComment() : "",
-                    HtmlTrainCommon.convertToHTMLColor(manifest.getLocations())));
+                    HtmlTrainCommon.convertToHTMLColor(manifest.getLocations()),
+                    HtmlTrainCommon.convertToHTMLColor(StringEscapeUtils
+                            .escapeHtml4(TrainCommon.getTextSizeString(train.getCommentTerminationCurrentWithColor())))));
         } else if (JSON.JSON.equals(request.getParameter("format"))) {
             log.debug("Getting manifest JSON code for train {}", id);
             JsonNode manifest = this.mapper.readTree(new JsonManifest(train).getFile());
