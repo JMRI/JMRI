@@ -243,16 +243,23 @@
 
       <p>Whenever an entry NX Sensor has been selected, it will flash until a valid exit sensor has
       been selected. If no valid exit sensor has been selected it will automatically be cancelled
-      after 30 seconds.</p>
+      after 60 seconds.</p>
 
       <h3>Extended Route Setting</h3>
 
-      <p>Normally with the NX interlock, a route will be up by selecting the Entry/Exit sensors
+      <p>Normally with the NX interlock option, a route will be set up by selecting the Entry/Exit sensors
       along a path, so for example to get from location A to D, A-B would be selected, then B-C and
       finally C-D. However the system will allow the full route to be set up by selecting A and D.
       The system will then go through and find the best valid path and set up each individual
-      interlock along the path.<br>
-      <strong>Note:</strong> If an extended route is cleared or cancelled, each segment will need
+      interlock segment along the path.</p>
+
+      <p><span class="since">since 5.17.5</span>An alternate process to manually set a multiple
+      segment route is to use a <strong>double click</strong> on the destination sensors.  The NX
+      segment will be created and the process for the next segment will be started.  This feature is
+      enabled by setting the <strong>Enable double click sensor selection</strong> option in the
+      <a href="../../package/jmri/jmrit/entryexit/EntryExitFrame.shtml#options">NX Options</a> dialog.</p>
+
+      <p><strong>Note:</strong> If an extended route is cleared or cancelled, each segment might need
       to be cancelled or cleared by responding to the prompt.</p>
 
       <h3>Route Stacking &mdash; Following</h3>

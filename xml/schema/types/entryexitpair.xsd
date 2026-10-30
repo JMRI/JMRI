@@ -41,6 +41,9 @@
         <xs:element name="settingTimer" type="xs:string" minOccurs="0" maxOccurs="1"/>
         <xs:element name="abssignalmode" type="xs:string" minOccurs="0" maxOccurs="1"/>
         <xs:element name="quietfail" type="xs:string" minOccurs="0" maxOccurs="1"/>
+        <xs:element name="enabledoubleclick" type="xs:string" minOccurs="0" maxOccurs="1"/>
+
+        <!-- next element not appearing in EntryExitPairsXml#store or #load code JMRI 5.17.5 -->
         <xs:element name="skipguifix" type="xs:string" minOccurs="0" maxOccurs="1"/>
 
         <!-- next element not appearing in EntryExitPairsXml#store or #load code JMRI 4.7.1 -->
