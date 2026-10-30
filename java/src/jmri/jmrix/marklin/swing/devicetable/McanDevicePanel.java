@@ -27,6 +27,7 @@ import jmri.jmrix.marklin.mcan.device.CdBDeviceClass;
 import jmri.jmrix.marklin.swing.MarklinPanel;
 import jmri.jmrix.marklin.swing.configure.ReporterConfigPanel;
 import jmri.jmrix.marklin.swing.configure.WeichenChefKombiConfigPanel;
+import jmri.jmrix.marklin.swing.configure.WeichenChefMagnetConfigPanel;
 import jmri.util.JmriJFrame;
 
 /**
@@ -37,7 +38,7 @@ import jmri.util.JmriJFrame;
 public class McanDevicePanel extends MarklinPanel {
 
     /** CdB class IDs for which a config panel is available. */
-    private static final Set<Integer> CONFIGURABLE_CLASSES = Set.of(0x0B, 0x0D, 0x27);
+    private static final Set<Integer> CONFIGURABLE_CLASSES = Set.of(0x0B, 0x0D, 0x22, 0x27);
 
     private JButton discoverMarklinButton;
     private JButton discoverCdbButton;
@@ -84,8 +85,8 @@ public class McanDevicePanel extends MarklinPanel {
         forgetButton.addActionListener(this::forgetActionPerformed);
         buttonRow.add(forgetButton);
 
-        probeButton = new JButton("Probe");
-        probeButton.setToolTipText("Send firmware probe to determine WeichenChef Magnet generation");
+        probeButton = new JButton(Bundle.getMessage("WcMagnetRetest"));
+        probeButton.setToolTipText(Bundle.getMessage("WcMagnetCapabilityHelp"));
         probeButton.setEnabled(false);
         probeButton.addActionListener(this::probeActionPerformed);
         buttonRow.add(probeButton);
@@ -217,6 +218,9 @@ public class McanDevicePanel extends MarklinPanel {
         if (canClass == 0x27) {
             configPanel = new WeichenChefKombiConfigPanel(device, memo);
             title = "WeichenChef Kombi – " + device.getSystemName();
+        } else if (canClass == WeichenChefMagnetService.CDB_CLASS_ID) {
+            configPanel = new WeichenChefMagnetConfigPanel(device, memo);
+            title = configPanel.getTitle() + " - " + device.getSystemName();
         } else {
             configPanel = new ReporterConfigPanel(device, memo);
             title = "Reporter – " + device.getSystemName();
@@ -230,6 +234,10 @@ public class McanDevicePanel extends MarklinPanel {
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
+                panelRef.dispose();
+            }
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent e) {
                 panelRef.dispose();
             }
         });
