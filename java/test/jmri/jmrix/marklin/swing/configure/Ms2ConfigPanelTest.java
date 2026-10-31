@@ -111,6 +111,38 @@ class Ms2ConfigPanelTest {
         });
     }
 
+    @Test
+    void importsSelectedMotorolaLocoIntoRoster(@org.junit.jupiter.api.io.TempDir java.io.File folder)
+            throws java.io.IOException {
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
+        JUnitUtil.initRosterConfigManager();
+        ThreadingUtil.runOnGUI(() -> {
+            assertFalse(panel.getImportButton().isEnabled());
+            panel.getGetLocosButton().doClick();
+        });
+        JUnitUtil.waitFor(() -> traffic.getSentMessages().size() == 1, "list request");
+        stream("[lokliste]\n .dv=1004\n .idx=0\n .name=THOMAS\n .uid=0x4e\n .mfxuid=0xffffffff\n");
+        JUnitUtil.waitFor(() -> traffic.getSentMessages().size() == 4, "name request");
+        stream("[lokomotive]\nlok\n .uid=0x4e\n .name=THOMAS\n .adresse=0x4e\n .typ=mm2_prg\n"
+                + " .mfxuid=0xffffffff\n");
+        JUnitUtil.waitFor(() -> !memo.getMs2LocoInfoService().isBusy(), "details received");
+        ThreadingUtil.runOnGUI(() -> {
+            panel.getLocoTable().setRowSelectionInterval(0, 0);
+            assertTrue(panel.getImportButton().isEnabled());
+            panel.getImportButton().doClick();
+        });
+        jmri.jmrit.roster.RosterEntry entry = jmri.jmrit.roster.Roster.getDefault().getEntryForId("THOMAS");
+        assertNotNull(entry);
+        assertEquals("78", entry.getDccAddress());
+        assertEquals(jmri.LocoAddress.Protocol.MOTOROLA, entry.getProtocol());
+        assertEquals("0x4D5552E2", entry.getAttribute(jmri.jmrix.marklin.Ms2RosterImporter.ATTRIBUTE_MS2_UID));
+        assertEquals(memo.getSystemPrefix(),
+                entry.getAttribute(jmri.jmrix.marklin.Ms2RosterImporter.ATTRIBUTE_CONNECTION));
+        ThreadingUtil.runOnGUI(() -> {
+            assertTrue(panel.getStatusLabel().getText().contains("THOMAS"), panel.getStatusLabel().getText());
+        });
+    }
+
     private void stream(String text) {
         byte[] data = text.getBytes(java.nio.charset.StandardCharsets.UTF_8);
         int[] header = Cs2GuiCommands.buildConfigDataStreamHeader(data.length, Ms2LocoInfoSession.crc16(data));

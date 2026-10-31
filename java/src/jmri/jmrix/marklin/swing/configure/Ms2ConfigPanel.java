@@ -15,15 +15,18 @@ import javax.swing.JTextArea;
 import javax.swing.ListSelectionModel;
 import javax.swing.Timer;
 import javax.swing.table.AbstractTableModel;
+import jmri.jmrit.roster.Roster;
 import jmri.jmrix.marklin.McanDevice;
+import jmri.jmrix.marklin.McanDeviceIdentity;
 import jmri.jmrix.marklin.MarklinSystemConnectionMemo;
 import jmri.jmrix.marklin.Ms2LocoInfoService;
 import jmri.jmrix.marklin.Ms2LocoRecord;
+import jmri.jmrix.marklin.Ms2RosterImporter;
 import jmri.jmrix.marklin.SeniorThrottleService;
 import jmri.jmrix.marklin.NativeDeviceService;
 import jmri.jmrix.marklin.swing.MarklinPanel;
 
-/** MS2 role and read-only connection-local locomotive inspection. */
+/** MS2 role and read-only connection local locomotive inspection. */
 public class Ms2ConfigPanel extends MarklinPanel {
     private final McanDevice device;
     private final SeniorThrottleService senior;
@@ -31,11 +34,14 @@ public class Ms2ConfigPanel extends MarklinPanel {
     private final JLabel role = new JLabel();
     private final JLabel status = new JLabel();
     private final JButton getLocos = new JButton(Bundle.getMessage("Ms2GetLocos"));
+    private final JButton importLoco = new JButton(Bundle.getMessage("Ms2Import"));
     private final LocoTableModel model = new LocoTableModel();
     private final JTable table = new JTable(model);
     private final JTextArea rawText = new JTextArea(15, 70);
     private final PropertyChangeListener listener = e -> refresh();
     private final Timer timer;
+    private final String systemPrefix;
+    private String importMessage;
     private boolean disposed;
     private List<Ms2LocoRecord> shown = List.of();
 
@@ -50,6 +56,7 @@ public class Ms2ConfigPanel extends MarklinPanel {
         header.add(new JLabel(Bundle.getMessage("Ms2RoleHelp")));
         JPanel actions = new JPanel(new FlowLayout(FlowLayout.LEFT));
         actions.add(getLocos);
+        actions.add(importLoco);
         actions.add(status);
         header.add(actions);
         header.add(new JLabel(Bundle.getMessage("Ms2FieldsHelp")));
@@ -57,7 +64,11 @@ public class Ms2ConfigPanel extends MarklinPanel {
         table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.setAutoCreateRowSorter(true);
-        table.getSelectionModel().addListSelectionListener(e -> showRaw());
+        table.getSelectionModel().addListSelectionListener(e -> {
+            importMessage = null;
+            showRaw();
+            updateImport();
+        });
         rawText.setEditable(false);
         JSplitPane split = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
                 new JScrollPane(table), new JScrollPane(rawText));
@@ -65,11 +76,15 @@ public class Ms2ConfigPanel extends MarklinPanel {
         split.setPreferredSize(new Dimension(950, 550));
         add(split, BorderLayout.CENTER);
         getLocos.addActionListener(e -> {
+            importMessage = null;
             refresh();
             if (getLocos.isEnabled()) {
                 locos.requestLocos(device);
             }
         });
+        systemPrefix = memo.getSystemPrefix();
+        importLoco.setToolTipText(Bundle.getMessage("Ms2ImportTip"));
+        importLoco.addActionListener(e -> importSelected());
         senior.addPropertyChangeListener(listener);
         locos.addPropertyChangeListener(listener);
         // Expiry also changes the selected device to unknown when another master remains.
@@ -95,7 +110,10 @@ public class Ms2ConfigPanel extends MarklinPanel {
         getLocos.setEnabled(mode == SeniorThrottleService.Role.MASTER && !locos.isBusy()
                 && NativeDeviceService.get(device).map(nativeState ->
                         nativeState.getObservedHash().isPresent()).orElse(false));
-        if (locos.getTarget() == device) {
+        if (importMessage != null) {
+            status.setText(importMessage);
+            status.setToolTipText(importMessage);
+        } else if (locos.getTarget() == device) {
             status.setText(Bundle.getMessage("Ms2State" + locos.getState().name())
                     + (locos.getDetail().isEmpty() ? "" : " - " + locos.getDetail()));
             status.setToolTipText(locos.getDetail());
@@ -114,6 +132,37 @@ public class Ms2ConfigPanel extends MarklinPanel {
         if (records.isEmpty()) {
             rawText.setText(locos.getListText(device));
         }
+        updateImport();
+    }
+
+    private Ms2LocoRecord selectedRecord() {
+        int row = table.getSelectedRow();
+        if (row < 0 || row >= table.getRowCount()) {
+            return null;
+        }
+        return model.records.get(table.convertRowIndexToModel(row));
+    }
+
+    private void updateImport() {
+        Ms2LocoRecord record = selectedRecord();
+        importLoco.setEnabled(record != null && Ms2RosterImporter.isImportable(record));
+    }
+
+    private void importSelected() {
+        Ms2LocoRecord record = selectedRecord();
+        if (record == null || !(device.getIdentity() instanceof McanDeviceIdentity.Native)) {
+            return;
+        }
+        String ms2Uid = ((McanDeviceIdentity.Native) device.getIdentity()).getUid().toHexString();
+        try {
+            Ms2RosterImporter.Result result = new Ms2RosterImporter(Roster.getDefault())
+                    .importLoco(record, ms2Uid, systemPrefix);
+            importMessage = Bundle.getMessage(result.getOutcome() == Ms2RosterImporter.Outcome.CREATED
+                    ? "Ms2ImportCreated" : "Ms2ImportUpdated", result.getEntry().getId());
+        } catch (Ms2RosterImporter.ImportException ex) {
+            importMessage = ex.getMessage();
+        }
+        refresh();
     }
 
     private void showRaw() {
@@ -144,6 +193,8 @@ public class Ms2ConfigPanel extends MarklinPanel {
 
     public JLabel getRoleLabel() { return role; }
     public JButton getGetLocosButton() { return getLocos; }
+    public JButton getImportButton() { return importLoco; }
+    public JLabel getStatusLabel() { return status; }
     public JTable getLocoTable() { return table; }
     public JTextArea getRawText() { return rawText; }
 
