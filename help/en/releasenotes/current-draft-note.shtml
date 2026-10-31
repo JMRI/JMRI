@@ -715,7 +715,8 @@
                     request.</li>
                 <li>In the NX Options dialog, the scope of <strong>Revert to the old GUI behavior</strong>
                 has been reduced.  <strong>Enable double click sensor selection</strong> describes
-                the remaining capability.  The NX code has been changed to use new names.</li>
+                the remaining capability.  A previous selection is migrated.  New selections
+                are not backward compatible.</li>
             </ul>
 
     <h3>LccPro</h3>
