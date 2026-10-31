@@ -358,7 +358,7 @@ public class MarklinMessageFormatter {
             sb.append(String.format("Config Data Stream %d bytes CRC=0x%04X", f.fileLength(), f.crc()));
         } else if (frame instanceof Cs2GuiCommands.ConfigDataStreamPacketFrame) {
             Cs2GuiCommands.ConfigDataStreamPacketFrame f = (Cs2GuiCommands.ConfigDataStreamPacketFrame) frame;
-            sb.append("Config Data Stream packet=").append(f.packetNumber());
+            sb.append(String.format("Config Data Stream hash=0x%04X", f.transactionHash()));
 
         // Automation commands (0x30)
         } else if (frame instanceof Cs2AutomationCommands.AutomationStatusFrame) {
