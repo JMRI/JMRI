@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TimerTask;
 import jmri.implementation.AbstractLight;
+import jmri.jmrix.marklin.mcan.McanFrame;
+import jmri.jmrix.marklin.mcan.cs2.Cs2AccessoryCommands;
+import jmri.jmrix.marklin.mcan.cs2.Cs2Frame;
 
 /**
  * Binary light controlled by a Marklin accessory decoder.
@@ -43,20 +46,31 @@ public class MarklinLight extends AbstractLight implements MarklinListener {
     /** {@inheritDoc} */
     @Override
     public void reply(MarklinReply reply) {
-        if (reply.getPriority() == MarklinConstants.PRIO_1
-                && reply.getCommand() == MarklinConstants.ACCCOMMANDSTART
-                && reply.getAddress() == canAddress) {
-            switch (reply.getElement(9)) {
-                case 0:
-                    notifyStateChange(mState, OFF);
-                    break;
-                case 1:
-                    notifyStateChange(mState, ON);
-                    break;
-                default:
-                    log.warn("Unknown state command {} for light {}", reply.getElement(9), getSystemName());
-                    break;
-            }
+        McanFrame frame = reply.getFrame();
+        long address;
+        int aspect;
+        if (frame instanceof Cs2AccessoryCommands.AccessoryFrame) {
+            address = ((Cs2AccessoryCommands.AccessoryFrame) frame).address();
+            aspect = ((Cs2AccessoryCommands.AccessoryFrame) frame).aspect();
+        } else if (frame instanceof Cs2AccessoryCommands.AccessoryReplyFrame) {
+            address = ((Cs2AccessoryCommands.AccessoryReplyFrame) frame).address();
+            aspect = ((Cs2AccessoryCommands.AccessoryReplyFrame) frame).aspect();
+        } else {
+            return;
+        }
+        if (((Cs2Frame) frame).header().priority() != MarklinConstants.PRIO_1 || address != canAddress) {
+            return;
+        }
+        switch (aspect) {
+            case 0:
+                notifyStateChange(mState, OFF);
+                break;
+            case 1:
+                notifyStateChange(mState, ON);
+                break;
+            default:
+                log.warn("Unknown state command {} for light {}", aspect, getSystemName());
+                break;
         }
     }
 

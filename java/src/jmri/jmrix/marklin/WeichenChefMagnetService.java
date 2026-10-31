@@ -11,6 +11,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import jmri.jmrix.marklin.mcan.cdb.CdBConfigCommands;
 import jmri.jmrix.marklin.mcan.cdb.CdBFrameParser;
 import jmri.jmrix.marklin.mcan.cdb.CdBWeichenChefCommands;
+import jmri.jmrix.marklin.mcan.cs2.Cs2AccessoryCommands;
 import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -493,13 +494,17 @@ public class WeichenChefMagnetService implements McanDeviceService {
     }
 
     public void handleStatusFrame(MarklinReply raw) {
-        if (raw.getElement(0) != 0 || raw.getElement(1) != 0x17 || raw.getElement(4) < 5
-                || raw.getElement(4) > 8) {
+        if (!(raw.getFrame() instanceof Cs2AccessoryCommands.AccessoryReplyFrame)) {
             return;
         }
-        int source = raw.getElement(3);
-        int address = (raw.getElement(7) << 8) | raw.getElement(8);
-        int status = raw.getElement(9);
+        Cs2AccessoryCommands.AccessoryReplyFrame reply = (Cs2AccessoryCommands.AccessoryReplyFrame) raw.getFrame();
+        if (reply.header().priority() != 0 || reply.header().dlc() < 5) {
+            return;
+        }
+        // The reference tools match the module in the hash low byte and the low 16 address bits.
+        int source = reply.header().hash() & 0xFF;
+        int address = (int) (reply.address() & 0xFFFF);
+        int status = reply.aspect();
         ThreadingUtil.runOnGUI(() -> {
             if (!configurationOpen || profile == WeichenChefMagnetGeneration.UNKNOWN
                     || (source != getModuleId()

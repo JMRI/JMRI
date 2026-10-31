@@ -275,6 +275,10 @@ public class ReporterParameterService {
     public void handleStatusFrame(MarklinReply raw) {
         if (raw.getElement(0) != 0 || raw.getElement(1) != 35) return;
         int hash16 = ((raw.getElement(2) & 0xFF) << 8) | (raw.getElement(3) & 0xFF);
+        // TODO: uncertain, verify with a live module.
+        // Compares the module
+        // number, expecting 0x0A80 + module
+        // This check lacks the fingerprint and classifies as CdB.
         // Check module matches: (hash16 - 2816) == adresseRaw - 128
         int check = hash16 - 2816;
         if (check != currentRawId - 128) return;
@@ -282,13 +286,13 @@ public class ReporterParameterService {
         int absRmk = ((raw.getElement(7) & 0xFF) << 8) + (raw.getElement(8) & 0xFF);
         int status = raw.getElement(9) & 0xFF;
 
-        // Störung check
+        // Störung (fault) check
         if (rmkStoerungValue == absRmk) {
             boolean ok = (status == 1);
             ThreadingUtil.runOnGUI(() -> listeners.forEach(l -> l.stoerungStatusReceived(ok)));
         }
 
-        // Freez check
+        // Freeze check
         if (freezAdresse == absRmk) {
             boolean boosterOn = (status == 0);
             ThreadingUtil.runOnGUI(() -> listeners.forEach(l -> l.freezStatusReceived(boosterOn)));
@@ -454,12 +458,12 @@ public class ReporterParameterService {
 
     // ---- static helpers ----
 
-    /** Clamp Einschaltzeit to valid range 1-6000; default 30 if out of range. */
+    /** Clamp Einschaltzeit to valid range 1-6000. Default 30 if out of range. */
     public static int clampEinschaltzeit(int v) {
         return (v >= 1 && v <= 6000) ? v : 30;
     }
 
-    /** Clamp Ausschaltzeit to valid range 1-6000; default 120 if out of range. */
+    /** Clamp Ausschaltzeit to valid range 1-6000. Default 120 if out of range. */
     public static int clampAusschaltzeit(int v) {
         return (v >= 1 && v <= 6000) ? v : 120;
     }

@@ -10,6 +10,9 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.zip.DataFormatException;
 import java.util.zip.Inflater;
+import jmri.jmrix.marklin.mcan.McanFrame;
+import jmri.jmrix.marklin.mcan.cs2.Cs2Data;
+import jmri.jmrix.marklin.mcan.cs2.Cs2Frame;
 import jmri.jmrix.marklin.mcan.cs2.Cs2Header;
 import jmri.jmrix.marklin.mcan.cs2.Cs2GuiCommands;
 
@@ -100,16 +103,12 @@ public final class Ms2LocoInfoSession {
         return frame;
     }
 
-    public void accept(int[] raw, long now) {
-        if (finished || now >= SESSION_MS || raw.length != 13) {
+    public void accept(McanFrame frame, long now) {
+        if (finished || now >= SESSION_MS || !(frame instanceof Cs2Frame) || frame.raw().byteAt(4) > 8) {
             return;
         }
-        Cs2Header header = Cs2Header.tryParse(raw);
-        if (header == null || raw[4] > 8) {
-            return;
-        }
-        if (header.commandCode() == Cs2GuiCommands.COMMAND_REQUEST_CONFIG_DATA
-                && !header.response() && header.hash() != requesterHash) {
+        Cs2Header header = ((Cs2Frame) frame).header();
+        if (frame instanceof Cs2GuiCommands.RequestConfigDataRequestFrame && header.hash() != requesterHash) {
             if (attempts > 0) {
                 failed("Competing configuration request; cannot safely correlate " + description(), now);
             } else {
@@ -121,9 +120,9 @@ public final class Ms2LocoInfoSession {
                 || (header.hash() != requesterHash && header.hash() != providerHash)) {
             return;
         }
-        if (header.dlc() == 6 || header.dlc() == 7) {
-            long length = ((long) raw[5] << 24) | ((long) raw[6] << 16)
-                    | ((long) raw[7] << 8) | raw[8];
+        if (frame instanceof Cs2GuiCommands.ConfigDataStreamHeaderFrame) {
+            Cs2GuiCommands.ConfigDataStreamHeaderFrame streamHeader = (Cs2GuiCommands.ConfigDataStreamHeaderFrame) frame;
+            long length = streamHeader.fileLength();
             if (length == 0 || length > MAX_BYTES || stream != null) {
                 failed("Invalid or overlapping stream header for " + description(), now);
                 return;
@@ -131,16 +130,17 @@ public final class Ms2LocoInfoSession {
             stream = new byte[(int) length];
             streamHash = header.hash();
             streamIndex = 0;
-            streamCrc = (raw[9] << 8) | raw[10];
+            streamCrc = streamHeader.crc();
             replyDeadline = now + REPLY_MS;
         } else if (stream != null && header.hash() == streamHash) {
-            if (header.dlc() != 8) {
+            if (!(frame instanceof Cs2GuiCommands.ConfigDataStreamPacketFrame)) {
                 failed("Invalid stream data DLC for " + description(), now);
                 return;
             }
+            Cs2Data data = ((Cs2Frame) frame).data();
             int count = Math.min(8, stream.length - streamIndex);
             for (int i = 0; i < count; i++) {
-                stream[streamIndex++] = (byte) raw[5 + i];
+                stream[streamIndex++] = (byte) data.byteAt(i);
             }
             replyDeadline = now + REPLY_MS;
             if (streamIndex == stream.length) {

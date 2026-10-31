@@ -11,7 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.swing.Timer;
-import jmri.jmrix.marklin.mcan.cs2.Cs2Header;
+import jmri.jmrix.marklin.mcan.McanFrame;
+import jmri.jmrix.marklin.mcan.cs2.Cs2Frame;
 import jmri.jmrix.marklin.mcan.cs2.Cs2GuiCommands;
 import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;
@@ -136,14 +137,7 @@ public final class Ms2LocoInfoService implements MarklinListener {
 
     @Override
     public void message(MarklinMessage message) {
-        if (message.getNumDataElements() != 13) {
-            return;
-        }
-        int[] raw = new int[13];
-        for (int i = 0; i < raw.length; i++) {
-            raw[i] = message.getElement(i);
-        }
-        receive(raw);
+        receive(message.getFrame());
     }
 
     @Override
@@ -151,14 +145,10 @@ public final class Ms2LocoInfoService implements MarklinListener {
         if (reply.getNumDataElements() != 13) {
             return;
         }
-        int[] raw = new int[13];
-        for (int i = 0; i < raw.length; i++) {
-            raw[i] = reply.getElement(i);
-        }
-        receive(raw);
+        receive(reply.getFrame());
     }
 
-    private void receive(int[] raw) {
+    private void receive(McanFrame frame) {
         // Snapshot the acquisition before dispatch: Queued frames from an earlier
         // acquisition must not be delivered to a newly started local session.
         Ms2LocoInfoSession receivedFor = session;
@@ -166,17 +156,17 @@ public final class Ms2LocoInfoService implements MarklinListener {
             if (disposed) {
                 return;
             }
-            Cs2Header header = Cs2Header.tryParse(raw);
-            if (header != null && !(header.hash() == requesterHash && !header.response()
-                    && header.commandCode() == Cs2GuiCommands.COMMAND_REQUEST_CONFIG_DATA)) {
-                observedHashes.add(header.hash());
+            if (frame instanceof Cs2Frame
+                    && !(frame instanceof Cs2GuiCommands.RequestConfigDataRequestFrame
+                    && ((Cs2Frame) frame).header().hash() == requesterHash)) {
+                observedHashes.add(((Cs2Frame) frame).header().hash());
             }
             if (isBusy() && session == receivedFor) {
                 if (senior.getRole(target) != SeniorThrottleService.Role.MASTER
                         || observedHash(target) != providerHash) {
                     cancel("MS2 master is no longer current or its sender hash changed");
                 } else {
-                    session.accept(raw, elapsed());
+                    session.accept(frame, elapsed());
                 }
             }
         });

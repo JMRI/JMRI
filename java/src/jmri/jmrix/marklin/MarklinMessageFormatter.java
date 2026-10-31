@@ -51,9 +51,20 @@ public class MarklinMessageFormatter {
      * @return formatted message string
      */
     public static String formatRaw(int[] rawData, I18nProvider i18n, boolean includeDeviceInfo) {
-        StringBuilder sb = new StringBuilder();
+        return format(ProtocolClassifier.classify(rawData), i18n, includeDeviceInfo);
+    }
 
-        McanFrame cf = ProtocolClassifier.classify(rawData);
+    /**
+     * Format an already classified MCAN frame in MarklinMon style.
+     *
+     * @param cf classified frame, e.g. from {@link MarklinReply#getFrame()}
+     * @param i18n optional i18n provider (null for English-only)
+     * @param includeDeviceInfo if true, prepend device identification from PING reply hash
+     * @return formatted message string
+     */
+    public static String format(McanFrame cf, I18nProvider i18n, boolean includeDeviceInfo) {
+        StringBuilder sb = new StringBuilder();
+        int[] rawData = cf.raw().toArray();
 
         if (includeDeviceInfo && cf instanceof Cs2Frame) {
             appendDeviceInfo((Cs2Frame) cf, sb);

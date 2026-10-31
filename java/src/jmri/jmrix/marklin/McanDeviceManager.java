@@ -10,7 +10,6 @@ import jmri.jmrix.marklin.mcan.cdb.CdBFrameParser;
 import jmri.jmrix.marklin.mcan.cdb.CdBLampenChefCommands;
 import jmri.jmrix.marklin.mcan.cdb.CdBFrameType;
 import jmri.jmrix.marklin.mcan.McanFrame;
-import jmri.jmrix.marklin.mcan.classify.ProtocolClassifier;
 import jmri.jmrix.marklin.mcan.cs2.Cs2ConfigCommands;
 import jmri.jmrix.marklin.mcan.cdb.CdBDeviceClass;
 import jmri.util.ThreadingUtil;
@@ -184,28 +183,15 @@ public class McanDeviceManager extends AbstractManager<McanDevice>
 
     @Override
     public void message(MarklinMessage m) {
-        processRawMessage(extractBytes(m));
+        processFrame(m.getFrame());
     }
 
     @Override
     public void reply(MarklinReply r) {
-        processRawMessage(extractBytes(r));
+        processFrame(r.getFrame());
     }
 
-    private static int[] extractBytes(MarklinMessage m) {
-        int[] raw = new int[13];
-        for (int i = 0; i < 13; i++) raw[i] = m.getElement(i);
-        return raw;
-    }
-
-    private static int[] extractBytes(MarklinReply r) {
-        int[] raw = new int[13];
-        for (int i = 0; i < 13; i++) raw[i] = r.getElement(i);
-        return raw;
-    }
-
-    private void processRawMessage(int[] raw) {
-        McanFrame classified = ProtocolClassifier.classify(raw);
+    private void processFrame(McanFrame classified) {
         // A lone MS2 sends periodic requests but need not answer its own ping.
         // Only refresh a uniquely known sender. Hashes alone never create identities.
         Cs2Header header = classified instanceof Cs2Frame ? ((Cs2Frame) classified).header() : null;
@@ -271,7 +257,7 @@ public class McanDeviceManager extends AbstractManager<McanDevice>
         // A genuine discovery ping reply always carries payload (DLC > 0).
         // Post-deselect status broadcasts use DLC=0 and are classified as PING_REPLY
         // due to their CAN ID structure, but they are not device advertisements.
-        if ((rawReply.getElement(4) & 0xFF) == 0) {
+        if (frame.raw().dlc() == 0) {
             log.debug("Ignoring DLC=0 PING_REPLY for canClass=0x{} module={} (post-deselect broadcast)",
                     Integer.toHexString(canClass), module);
             return;
@@ -316,10 +302,10 @@ public class McanDeviceManager extends AbstractManager<McanDevice>
         // Migration scan only runs when the device is brand-new this session (fingerprint == -1)
         // to avoid spurious cross-contamination on subsequent discoveries.
         if (canClass == 0x27 && pingReply.isOperational()) {
-            int b9  = rawReply.getElement(9)  & 0xFF;
-            int b10 = rawReply.getElement(10) & 0xFF;
-            int b11 = rawReply.getElement(11) & 0xFF;
-            int b12 = rawReply.getElement(12) & 0xFF;
+            int b9  = pingReply.dataByte(4);
+            int b10 = pingReply.dataByte(5);
+            int b11 = pingReply.dataByte(6);
+            int b12 = pingReply.dataByte(7);
             {
                 long fp = ((long) b9 << 24) | ((long) b10 << 16) | ((long) b11 << 8) | b12;
                 long existingFp = device.getHwFingerprint();
