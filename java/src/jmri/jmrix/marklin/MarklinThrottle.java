@@ -5,7 +5,7 @@ import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
 import jmri.jmrix.marklin.mcan.address.AddressSpace;
-import jmri.jmrix.marklin.mcan.classify.Cs2ClassifiedFrame;
+import jmri.jmrix.marklin.mcan.cs2.Cs2Frame;
 import jmri.jmrix.marklin.mcan.cs2.Cs2DecoderCommands;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -213,7 +213,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
 
     @Override
     public void reply(MarklinReply m) {
-        Cs2ClassifiedFrame frame = MarklinCanBridge.parse(m);
+        Cs2Frame frame = MarklinCanBridge.parse(m);
         if (frame == null) {
             return;
         }

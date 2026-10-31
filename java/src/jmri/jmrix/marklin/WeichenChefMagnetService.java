@@ -433,6 +433,9 @@ public class WeichenChefMagnetService implements McanDeviceService {
         int token = operation;
         sendSequence(frames, token, () -> {
             if (scope != SaveScope.PROPERTIES) {
+                // Save epilogue must follow the end-save frame on this sender.
+                // McanDeviceManager handles the reply like any other class ping reply
+                // use McanDeviceManager.discoverCdBDevice for user-triggered scans.
                 sender.sendFrame(CdBConfigCommands.buildPing(CDB_CLASS_ID));
             }
             load(false);

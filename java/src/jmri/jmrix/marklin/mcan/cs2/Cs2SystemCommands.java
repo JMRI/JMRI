@@ -1,10 +1,7 @@
 package jmri.jmrix.marklin.mcan.cs2;
 
+import jmri.jmrix.marklin.mcan.RawFrame;
 import jmri.jmrix.marklin.mcan.McanUid;
-import jmri.jmrix.marklin.mcan.classify.Cs2ClassifiedFrame;
-import jmri.jmrix.marklin.mcan.classify.Cs2Data;
-import jmri.jmrix.marklin.mcan.classify.Cs2Header;
-import jmri.jmrix.marklin.mcan.classify.ClassifiedFrame;
 
 /**
  * Encoder, parser and typed result classes for CS2 system commands (command code 0x00).
@@ -395,148 +392,148 @@ public final class Cs2SystemCommands {
      * Parses a system command frame into a typed result.
      * Called by {@link Cs2FrameParser} after command resolution.
      */
-    static Cs2ClassifiedFrame parse(Cs2Header header, Cs2Data data, ClassifiedFrame parent) {
+    static Cs2Frame parse(Cs2Header header, Cs2Data data, RawFrame raw) {
         boolean rep = header.response();
         int sub = data.byteAt(4);
         switch (sub) {
             case SUB_STOP:
-                return rep ? new SystemStopReplyFrame(header, data, parent)
-                           : new SystemStopRequestFrame(header, data, parent);
+                return rep ? new SystemStopReplyFrame(header, data, raw)
+                           : new SystemStopRequestFrame(header, data, raw);
             case SUB_GO:
-                return rep ? new SystemGoReplyFrame(header, data, parent)
-                           : new SystemGoRequestFrame(header, data, parent);
+                return rep ? new SystemGoReplyFrame(header, data, raw)
+                           : new SystemGoRequestFrame(header, data, raw);
             case SUB_HALT:
-                return rep ? new SystemHaltReplyFrame(header, data, parent)
-                           : new SystemHaltRequestFrame(header, data, parent);
+                return rep ? new SystemHaltReplyFrame(header, data, raw)
+                           : new SystemHaltRequestFrame(header, data, raw);
             case SUB_LOCO_EMERGENCY_STOP:
-                return rep ? new LocoEmergencyStopReplyFrame(header, data, parent)
-                           : new LocoEmergencyStopRequestFrame(header, data, parent);
+                return rep ? new LocoEmergencyStopReplyFrame(header, data, raw)
+                           : new LocoEmergencyStopRequestFrame(header, data, raw);
             case SUB_LOCO_CYCLE_STOP:
-                return rep ? new LocoCycleStopReplyFrame(header, data, parent)
-                           : new LocoCycleStopRequestFrame(header, data, parent);
+                return rep ? new LocoCycleStopReplyFrame(header, data, raw)
+                           : new LocoCycleStopRequestFrame(header, data, raw);
             case SUB_LOCO_DATA_PROTOCOL:
-                return rep ? new LocoDataProtocolReplyFrame(header, data, parent)
-                           : new LocoDataProtocolRequestFrame(header, data, parent);
+                return rep ? new LocoDataProtocolReplyFrame(header, data, raw)
+                           : new LocoDataProtocolRequestFrame(header, data, raw);
             case SUB_ACCESSORY_SWITCH_TIME:
-                return rep ? new AccessorySwitchTimeReplyFrame(header, data, parent)
-                           : new AccessorySwitchTimeRequestFrame(header, data, parent);
+                return rep ? new AccessorySwitchTimeReplyFrame(header, data, raw)
+                           : new AccessorySwitchTimeRequestFrame(header, data, raw);
             case SUB_FAST_READ_MFX:
-                return rep ? new FastReadMfxReplyFrame(header, data, parent)
-                           : new FastReadMfxRequestFrame(header, data, parent);
+                return rep ? new FastReadMfxReplyFrame(header, data, raw)
+                           : new FastReadMfxRequestFrame(header, data, raw);
             case SUB_ENABLE_TRACK_PROTOCOL:
-                return rep ? new EnableTrackProtocolReplyFrame(header, data, parent)
-                           : new EnableTrackProtocolRequestFrame(header, data, parent);
+                return rep ? new EnableTrackProtocolReplyFrame(header, data, raw)
+                           : new EnableTrackProtocolRequestFrame(header, data, raw);
             case SUB_MFX_REREGISTRATION:
-                return rep ? new MfxReregistrationReplyFrame(header, data, parent)
-                           : new MfxReregistrationRequestFrame(header, data, parent);
+                return rep ? new MfxReregistrationReplyFrame(header, data, raw)
+                           : new MfxReregistrationRequestFrame(header, data, raw);
             case SUB_SYSTEM_OVERLOAD:
-                return new SystemOverloadFrame(header, data, parent);
+                return new SystemOverloadFrame(header, data, raw);
             case SUB_SYSTEM_STATUS:
-                return rep ? new SystemStatusReplyFrame(header, data, parent)
-                           : new SystemStatusRequestFrame(header, data, parent);
+                return rep ? new SystemStatusReplyFrame(header, data, raw)
+                           : new SystemStatusRequestFrame(header, data, raw);
             case SUB_DEVICE_IDENTIFIER:
-                return rep ? new DeviceIdentifierReplyFrame(header, data, parent)
-                           : new DeviceIdentifierRequestFrame(header, data, parent);
+                return rep ? new DeviceIdentifierReplyFrame(header, data, raw)
+                           : new DeviceIdentifierRequestFrame(header, data, raw);
             case SUB_MFX_SEEK:
-                return rep ? new MfxSeekReplyFrame(header, data, parent)
-                           : new MfxSeekRequestFrame(header, data, parent);
+                return rep ? new MfxSeekReplyFrame(header, data, raw)
+                           : new MfxSeekRequestFrame(header, data, raw);
             case SUB_SYSTEM_RESET:
-                return rep ? new SystemResetReplyFrame(header, data, parent)
-                           : new SystemResetRequestFrame(header, data, parent);
+                return rep ? new SystemResetReplyFrame(header, data, raw)
+                           : new SystemResetRequestFrame(header, data, raw);
             default:
-                return new Cs2ClassifiedFrame(header, data, parent);
+                return new Cs2Frame(header, data, raw);
         }
     }
 
     // --- typed result classes ---
 
     /** System Stop request (track power off). */
-    public static final class SystemStopRequestFrame extends Cs2ClassifiedFrame {
-        SystemStopRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class SystemStopRequestFrame extends Cs2Frame {
+        SystemStopRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
     }
 
     /** System Stop reply. */
-    public static final class SystemStopReplyFrame extends Cs2ClassifiedFrame {
-        SystemStopReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class SystemStopReplyFrame extends Cs2Frame {
+        SystemStopReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
     }
 
     /** System Go request (track power on). */
-    public static final class SystemGoRequestFrame extends Cs2ClassifiedFrame {
-        SystemGoRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class SystemGoRequestFrame extends Cs2Frame {
+        SystemGoRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
     }
 
     /** System Go reply. */
-    public static final class SystemGoReplyFrame extends Cs2ClassifiedFrame {
-        SystemGoReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class SystemGoReplyFrame extends Cs2Frame {
+        SystemGoReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
     }
 
     /** System Halt request (all locos to speed 0). */
-    public static final class SystemHaltRequestFrame extends Cs2ClassifiedFrame {
-        SystemHaltRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class SystemHaltRequestFrame extends Cs2Frame {
+        SystemHaltRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
     }
 
     /** System Halt reply. */
-    public static final class SystemHaltReplyFrame extends Cs2ClassifiedFrame {
-        SystemHaltReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class SystemHaltReplyFrame extends Cs2Frame {
+        SystemHaltReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
     }
 
     /** Loco Emergency Stop request (immediate protocol-specific stop). */
-    public static final class LocoEmergencyStopRequestFrame extends Cs2ClassifiedFrame {
-        LocoEmergencyStopRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class LocoEmergencyStopRequestFrame extends Cs2Frame {
+        LocoEmergencyStopRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** The 32-bit Loc-ID of the target loco. */
         public long locId() { return data().int32At(0); }
     }
 
     /** Loco Emergency Stop reply. */
-    public static final class LocoEmergencyStopReplyFrame extends Cs2ClassifiedFrame {
-        LocoEmergencyStopReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class LocoEmergencyStopReplyFrame extends Cs2Frame {
+        LocoEmergencyStopReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** The 32-bit Loc-ID of the target loco. */
         public long locId() { return data().int32At(0); }
     }
 
     /** Loco Cycle Stop request (removes loco from GFP refresh cycle). */
-    public static final class LocoCycleStopRequestFrame extends Cs2ClassifiedFrame {
-        LocoCycleStopRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class LocoCycleStopRequestFrame extends Cs2Frame {
+        LocoCycleStopRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** The 32-bit Loc-ID (or 0 for all). */
         public long locId() { return data().int32At(0); }
     }
 
     /** Loco Cycle Stop reply. */
-    public static final class LocoCycleStopReplyFrame extends Cs2ClassifiedFrame {
-        LocoCycleStopReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class LocoCycleStopReplyFrame extends Cs2Frame {
+        LocoCycleStopReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** The 32-bit Loc-ID (or 0 for all). */
         public long locId() { return data().int32At(0); }
     }
 
     /** Loco Data Protocol request (selects sub-protocol without changing the base protocol). */
-    public static final class LocoDataProtocolRequestFrame extends Cs2ClassifiedFrame {
-        LocoDataProtocolRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class LocoDataProtocolRequestFrame extends Cs2Frame {
+        LocoDataProtocolRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** The 32-bit Loc-ID. */
         public long locId() { return data().int32At(0); }
 
         /** Sub-protocol value (see PROTOCOL_* constants). */
-        public int protocol() { return data().byteAt(5); }
+        public int locoProtocol() { return data().byteAt(5); }
     }
 
     /** Loco Data Protocol reply. */
-    public static final class LocoDataProtocolReplyFrame extends Cs2ClassifiedFrame {
-        LocoDataProtocolReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class LocoDataProtocolReplyFrame extends Cs2Frame {
+        LocoDataProtocolReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** The 32-bit Loc-ID. */
         public long locId() { return data().int32At(0); }
 
         /** Sub-protocol value (see PROTOCOL_* constants). */
-        public int protocol() { return data().byteAt(5); }
+        public int locoProtocol() { return data().byteAt(5); }
     }
 
     /** Accessory Switch Time request (sets the default accessory switching duration). */
-    public static final class AccessorySwitchTimeRequestFrame extends Cs2ClassifiedFrame {
-        AccessorySwitchTimeRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class AccessorySwitchTimeRequestFrame extends Cs2Frame {
+        AccessorySwitchTimeRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** Target device UID. */
         public McanUid targetUid() { return data().uidAt(0); }
@@ -546,8 +543,8 @@ public final class Cs2SystemCommands {
     }
 
     /** Accessory Switch Time reply. */
-    public static final class AccessorySwitchTimeReplyFrame extends Cs2ClassifiedFrame {
-        AccessorySwitchTimeReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class AccessorySwitchTimeReplyFrame extends Cs2Frame {
+        AccessorySwitchTimeReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** Target device UID. */
         public McanUid targetUid() { return data().uidAt(0); }
@@ -557,8 +554,8 @@ public final class Cs2SystemCommands {
     }
 
     /** Fast Read MFX request (suppresses inter-read wait for the addressed SID). */
-    public static final class FastReadMfxRequestFrame extends Cs2ClassifiedFrame {
-        FastReadMfxRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class FastReadMfxRequestFrame extends Cs2Frame {
+        FastReadMfxRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** Sender device UID. */
         public McanUid senderUid() { return data().uidAt(0); }
@@ -568,8 +565,8 @@ public final class Cs2SystemCommands {
     }
 
     /** Fast Read MFX reply. */
-    public static final class FastReadMfxReplyFrame extends Cs2ClassifiedFrame {
-        FastReadMfxReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class FastReadMfxReplyFrame extends Cs2Frame {
+        FastReadMfxReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** Sender device UID. */
         public McanUid senderUid() { return data().uidAt(0); }
@@ -579,8 +576,8 @@ public final class Cs2SystemCommands {
     }
 
     /** Enable Track Protocol request (selects which protocols the GFP transmits). */
-    public static final class EnableTrackProtocolRequestFrame extends Cs2ClassifiedFrame {
-        EnableTrackProtocolRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class EnableTrackProtocolRequestFrame extends Cs2Frame {
+        EnableTrackProtocolRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** Target device UID. */
         public McanUid targetUid() { return data().uidAt(0); }
@@ -590,8 +587,8 @@ public final class Cs2SystemCommands {
     }
 
     /** Enable Track Protocol reply. */
-    public static final class EnableTrackProtocolReplyFrame extends Cs2ClassifiedFrame {
-        EnableTrackProtocolReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class EnableTrackProtocolReplyFrame extends Cs2Frame {
+        EnableTrackProtocolReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** Target device UID. */
         public McanUid targetUid() { return data().uidAt(0); }
@@ -601,8 +598,8 @@ public final class Cs2SystemCommands {
     }
 
     /** MFX Re-registration counter request. */
-    public static final class MfxReregistrationRequestFrame extends Cs2ClassifiedFrame {
-        MfxReregistrationRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class MfxReregistrationRequestFrame extends Cs2Frame {
+        MfxReregistrationRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** Target device UID. */
         public McanUid targetUid() { return data().uidAt(0); }
@@ -612,8 +609,8 @@ public final class Cs2SystemCommands {
     }
 
     /** MFX Re-registration counter reply. */
-    public static final class MfxReregistrationReplyFrame extends Cs2ClassifiedFrame {
-        MfxReregistrationReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class MfxReregistrationReplyFrame extends Cs2Frame {
+        MfxReregistrationReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** Target device UID. */
         public McanUid targetUid() { return data().uidAt(0); }
@@ -623,8 +620,8 @@ public final class Cs2SystemCommands {
     }
 
     /** System Overload notification (channel exceeded operating limit). Reply-only by spec. */
-    public static final class SystemOverloadFrame extends Cs2ClassifiedFrame {
-        SystemOverloadFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class SystemOverloadFrame extends Cs2Frame {
+        SystemOverloadFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** Reporting device UID. */
         public McanUid senderUid() { return data().uidAt(0); }
@@ -634,8 +631,8 @@ public final class Cs2SystemCommands {
     }
 
     /** System Status query (DLC=6): requests measurement value for a channel. */
-    public static final class SystemStatusRequestFrame extends Cs2ClassifiedFrame {
-        SystemStatusRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class SystemStatusRequestFrame extends Cs2Frame {
+        SystemStatusRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** Target device UID. */
         public McanUid deviceUid() { return data().uidAt(0); }
@@ -645,8 +642,8 @@ public final class Cs2SystemCommands {
     }
 
     /** System Status reply (DLC=8): carries the measured value for the queried channel. */
-    public static final class SystemStatusReplyFrame extends Cs2ClassifiedFrame {
-        SystemStatusReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class SystemStatusReplyFrame extends Cs2Frame {
+        SystemStatusReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** Sender device UID. */
         public McanUid deviceUid() { return data().uidAt(0); }
@@ -659,16 +656,16 @@ public final class Cs2SystemCommands {
     }
 
     /** Device Identifier query (DLC=5): asks the device to report its 16-bit identifier. */
-    public static final class DeviceIdentifierRequestFrame extends Cs2ClassifiedFrame {
-        DeviceIdentifierRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class DeviceIdentifierRequestFrame extends Cs2Frame {
+        DeviceIdentifierRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** Target device UID. */
         public McanUid targetUid() { return data().uidAt(0); }
     }
 
     /** Device Identifier set/reply (DLC=7): carries or assigns the 16-bit device identifier. */
-    public static final class DeviceIdentifierReplyFrame extends Cs2ClassifiedFrame {
-        DeviceIdentifierReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class DeviceIdentifierReplyFrame extends Cs2Frame {
+        DeviceIdentifierReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** Target device UID. */
         public McanUid targetUid() { return data().uidAt(0); }
@@ -681,8 +678,8 @@ public final class Cs2SystemCommands {
      * MFX Seek request (sub-cmd 0x30, DLC=6): seek with UID + range.
      * Higher DLC variants carry intermediate recognition results.
      */
-    public static final class MfxSeekRequestFrame extends Cs2ClassifiedFrame {
-        MfxSeekRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class MfxSeekRequestFrame extends Cs2Frame {
+        MfxSeekRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** Sender device UID. */
         public McanUid senderUid() { return data().uidAt(0); }
@@ -692,8 +689,8 @@ public final class Cs2SystemCommands {
     }
 
     /** MFX Seek reply. */
-    public static final class MfxSeekReplyFrame extends Cs2ClassifiedFrame {
-        MfxSeekReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class MfxSeekReplyFrame extends Cs2Frame {
+        MfxSeekReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** Sender device UID. */
         public McanUid senderUid() { return data().uidAt(0); }
@@ -703,8 +700,8 @@ public final class Cs2SystemCommands {
     }
 
     /** System Reset request. */
-    public static final class SystemResetRequestFrame extends Cs2ClassifiedFrame {
-        SystemResetRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class SystemResetRequestFrame extends Cs2Frame {
+        SystemResetRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** Target device UID. */
         public McanUid targetUid() { return data().uidAt(0); }
@@ -714,8 +711,8 @@ public final class Cs2SystemCommands {
     }
 
     /** System Reset reply. */
-    public static final class SystemResetReplyFrame extends Cs2ClassifiedFrame {
-        SystemResetReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class SystemResetReplyFrame extends Cs2Frame {
+        SystemResetReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** Target device UID. */
         public McanUid targetUid() { return data().uidAt(0); }

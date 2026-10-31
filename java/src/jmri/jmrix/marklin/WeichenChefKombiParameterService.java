@@ -9,7 +9,7 @@ import jmri.jmrix.marklin.mcan.address.CdBAddressCodec;
 import jmri.jmrix.marklin.mcan.cdb.CdBConfigCommands;
 import jmri.jmrix.marklin.mcan.cdb.CdBFrameParser;
 import jmri.jmrix.marklin.mcan.cdb.CdBWeichenChefCommands;
-import jmri.jmrix.marklin.mcan.classify.CdBFrameType;
+import jmri.jmrix.marklin.mcan.cdb.CdBFrameType;
 import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

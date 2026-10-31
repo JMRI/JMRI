@@ -1,4 +1,4 @@
-package jmri.jmrix.marklin.mcan.classify;
+package jmri.jmrix.marklin.mcan.cs2;
 
 /**
  * Parsed CS2 29-bit CAN header.

@@ -31,6 +31,24 @@ import jmri.jmrix.marklin.mcan.cs2.Cs2SystemCommands;
  */
 public class MarklinMessage extends jmri.jmrix.AbstractMRMessage {
 
+    private final McanFrameCache frameCache = new McanFrameCache();
+
+    /**
+     * Classified view of this message. The result is cached and reused until the
+     * message's bytes change.
+     *
+     * @return a {@link jmri.jmrix.marklin.mcan.cs2.Cs2Frame},
+     *         {@link jmri.jmrix.marklin.mcan.cdb.CdBFrameParser.CdBFrame} or
+     *         {@link jmri.jmrix.marklin.mcan.UnknownFrame}
+     */
+    public jmri.jmrix.marklin.mcan.McanFrame getFrame() {
+        int[] bytes = new int[13];
+        for (int i = 0; i < bytes.length; i++) {
+            bytes[i] = getElement(i);
+        }
+        return frameCache.get(bytes);
+    }
+
     static int MY_UID = 0x12345678;
 
     private boolean replyExpected = true;

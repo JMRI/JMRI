@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.swing.Timer;
-import jmri.jmrix.marklin.mcan.classify.Cs2Header;
+import jmri.jmrix.marklin.mcan.cs2.Cs2Header;
 import jmri.jmrix.marklin.mcan.cs2.Cs2GuiCommands;
 import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;

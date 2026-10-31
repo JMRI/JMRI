@@ -10,7 +10,7 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.zip.DataFormatException;
 import java.util.zip.Inflater;
-import jmri.jmrix.marklin.mcan.classify.Cs2Header;
+import jmri.jmrix.marklin.mcan.cs2.Cs2Header;
 import jmri.jmrix.marklin.mcan.cs2.Cs2GuiCommands;
 
 /**

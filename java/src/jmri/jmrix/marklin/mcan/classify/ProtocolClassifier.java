@@ -1,66 +1,61 @@
 package jmri.jmrix.marklin.mcan.classify;
 
+import jmri.jmrix.marklin.mcan.McanFrame;
+import jmri.jmrix.marklin.mcan.RawFrame;
+import jmri.jmrix.marklin.mcan.UnknownFrame;
+import jmri.jmrix.marklin.mcan.cdb.CdBFrameParser;
+import jmri.jmrix.marklin.mcan.cs2.Cs2FrameParser;
+import jmri.jmrix.marklin.mcan.cs2.Cs2Header;
+
 /**
- * Protocol classifier for 13-byte Märklin CAN frames.
+ * Protocol classifier for 13-byte M&auml;rklin CAN frames.
  * <p>
- * Determines the protocol family ({@link FrameProtocol}) and delegates full decoding to
- * {@link jmri.jmrix.marklin.mcan.cdb.CdBFrameParser#parse} for CDB_CONFIG frames or
- * {@link jmri.jmrix.marklin.mcan.cs2.Cs2FrameParser} for CS2_NATIVE frames.
+ * Determines the protocol family and returns the fully parsed, typed frame:
+ * a {@link jmri.jmrix.marklin.mcan.cs2.Cs2Frame} subtype, a
+ * {@link CdBFrameParser.CdBFrame} subtype or an {@link UnknownFrame}.
  * <p>
- * Contract: {@link #classify(int[])} never throws and never returns null.
- * {@link FrameProtocol#UNKNOWN} is a valid, expected result for any frame
- * the library has not yet modelled (MS2 config streams, new module types, etc.).
+ * This package sits above {@code cs2} and {@code cdb}; neither may depend on it.
  */
 public final class ProtocolClassifier {
 
     private ProtocolClassifier() {}
 
     /**
-     * Classify a raw 13-byte CAN frame.
+     * Classify and parse a raw 13-byte CAN frame.
      *
      * <ol>
-     *   <li>If the CS2 fingerprint is present → {@link FrameProtocol#CS2_NATIVE}</li>
-     *   <li>Else if the CdB hash pattern is present → {@link FrameProtocol#CDB_CONFIG}</li>
-     *   <li>Else → {@link FrameProtocol#UNKNOWN}</li>
+     *   <li>If the CS2 fingerprint is present: CS2 native frame</li>
+     *   <li>Else if the CdB hash pattern is present: CdB configuration frame</li>
+     *   <li>Else: {@link UnknownFrame}</li>
      * </ol>
+     * TODO: Add CS1 / MS1 / ECoS protocol support.
      *
-     * @param raw13 13-byte CAN frame. null or wrong length is classified as {@link FrameProtocol#UNKNOWN}
-     * @return classification result, never null
+     * @param raw13 13-byte CAN frame
+     * @return typed frame, never null
+     * @throws IllegalArgumentException if {@code raw13} is null or not 13 bytes long
      */
-    public static ClassifiedFrame classify(int[] raw13) {
-        if (raw13 == null || raw13.length != 13) {
-            return unknown(new RawFrame(new int[13]));
-        }
+    public static McanFrame classify(int[] raw13) {
         RawFrame frame = new RawFrame(raw13);
-
-        // CS2 native frames have a hash fingerprint and a valid DLC.
         Cs2Header cs2 = Cs2Header.tryParse(raw13);
         if (cs2 != null) {
-            return new ClassifiedFrame(FrameProtocol.CS2_NATIVE, frame, cs2);
+            return Cs2FrameParser.parse(frame, cs2);
         }
-
-        // CdB config frames use the hash pattern (hash16 & 0x0F80) == 0x0A80.
         if (isCdBConfigPattern(raw13)) {
-            return new ClassifiedFrame(FrameProtocol.CDB_CONFIG, frame, null);
+            return CdBFrameParser.parse(frame);
         }
-        /**
-         * TODO: Add CS1 / MS1 / Ecos protocol support.
-         */
-
-        return unknown(frame);
+        return new UnknownFrame(frame);
     }
 
     /**
      * True when bytes 2–3 of the frame carry the CdB config area hash pattern.
      * The pattern {@code 0x0A80} occupies bits 11–7 of the 16-bit hash field,
      * which is mutually exclusive with the CS2 fingerprint.
+     *
+     * @param raw13 13-byte CAN frame
+     * @return true for a CdB configuration frame
      */
-    static boolean isCdBConfigPattern(int[] raw13) {
+    public static boolean isCdBConfigPattern(int[] raw13) {
         int hash16 = ((raw13[2] & 0xFF) << 8) | (raw13[3] & 0xFF);
         return (hash16 & 0x0F80) == 0x0A80;
-    }
-
-    private static ClassifiedFrame unknown(RawFrame frame) {
-        return new ClassifiedFrame(FrameProtocol.UNKNOWN, frame, null);
     }
 }

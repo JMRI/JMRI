@@ -1,7 +1,7 @@
-package jmri.jmrix.marklin.mcan.classify;
+package jmri.jmrix.marklin.mcan;
 
 /**
- * Top-level protocol family of a CAN frame as determined by {@link ProtocolClassifier}.
+ * Top-level protocol family of a CAN frame as determined by {@link jmri.jmrix.marklin.mcan.classify.ProtocolClassifier}.
  */
 public enum FrameProtocol {
 

@@ -1,10 +1,7 @@
 package jmri.jmrix.marklin.mcan.cs2;
 
+import jmri.jmrix.marklin.mcan.RawFrame;
 import jmri.jmrix.marklin.mcan.McanUid;
-import jmri.jmrix.marklin.mcan.classify.ClassifiedFrame;
-import jmri.jmrix.marklin.mcan.classify.Cs2ClassifiedFrame;
-import jmri.jmrix.marklin.mcan.classify.Cs2Data;
-import jmri.jmrix.marklin.mcan.classify.Cs2Header;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -182,31 +179,31 @@ public final class Cs2GuiCommands {
 
     // --- parser ---
 
-    static Cs2ClassifiedFrame parse(Cs2Header header, Cs2Data data, ClassifiedFrame parent) {
+    static Cs2Frame parse(Cs2Header header, Cs2Data data, RawFrame raw) {
         switch (header.resolvedCommand()) {
             case STATUS_DATA_CONFIG:
-                return new StatusDataConfigRequestFrame(header, data, parent);
+                return new StatusDataConfigRequestFrame(header, data, raw);
             case STATUS_DATA_CONFIG_REPLY:
-                return new StatusDataConfigReplyFrame(header, data, parent);
+                return new StatusDataConfigReplyFrame(header, data, raw);
             case REQUEST_CONFIG_DATA:
-                return new RequestConfigDataRequestFrame(header, data, parent);
+                return new RequestConfigDataRequestFrame(header, data, raw);
             case REQUEST_CONFIG_DATA_REPLY:
-                return new RequestConfigDataReplyFrame(header, data, parent);
+                return new RequestConfigDataReplyFrame(header, data, raw);
             case CONFIG_DATA_STREAM:
             case CONFIG_DATA_STREAM_REPLY:
-                return parseConfigDataStream(header, data, parent);
+                return parseConfigDataStream(header, data, raw);
             default:
-                return new Cs2ClassifiedFrame(header, data, parent);
+                return new Cs2Frame(header, data, raw);
         }
     }
 
-    private static Cs2ClassifiedFrame parseConfigDataStream(
-            Cs2Header header, Cs2Data data, ClassifiedFrame parent) {
+    private static Cs2Frame parseConfigDataStream(
+            Cs2Header header, Cs2Data data, RawFrame raw) {
         switch (header.dlc()) {
             case 6:
-            case 7: return new ConfigDataStreamHeaderFrame(header, data, parent);
-            case 8: return new ConfigDataStreamPacketFrame(header, data, parent);
-            default: return new Cs2ClassifiedFrame(header, data, parent);
+            case 7: return new ConfigDataStreamHeaderFrame(header, data, raw);
+            case 8: return new ConfigDataStreamPacketFrame(header, data, raw);
+            default: return new Cs2Frame(header, data, raw);
         }
     }
 
@@ -217,8 +214,8 @@ public final class Cs2GuiCommands {
      * Queries the measurement/configuration channel description at {@code index}
      * from the device identified by {@code deviceUid}.
      */
-    public static final class StatusDataConfigRequestFrame extends Cs2ClassifiedFrame {
-        StatusDataConfigRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class StatusDataConfigRequestFrame extends Cs2Frame {
+        StatusDataConfigRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** 32-bit target device UID. */
         public McanUid deviceUid() { return data().uidAt(0); }
@@ -231,8 +228,8 @@ public final class Cs2GuiCommands {
      * A Request Config Data request (0x20, DLC=8).
      * Requests the named configuration file from the CS2 / CdB.
      */
-    public static final class RequestConfigDataRequestFrame extends Cs2ClassifiedFrame {
-        RequestConfigDataRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class RequestConfigDataRequestFrame extends Cs2Frame {
+        RequestConfigDataRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** The 8-byte ASCII filename. */
         public String filename() {
@@ -253,8 +250,8 @@ public final class Cs2GuiCommands {
      * It arrives as a data stream. This frame is
      * the final acknowledgement carrying the device UID, index and packet count.
      */
-    public static final class StatusDataConfigReplyFrame extends Cs2ClassifiedFrame {
-        StatusDataConfigReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class StatusDataConfigReplyFrame extends Cs2Frame {
+        StatusDataConfigReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** 32-bit target device UID. */
         public McanUid deviceUid() { return data().uidAt(0); }
@@ -269,8 +266,8 @@ public final class Cs2GuiCommands {
     /**
      * A Request Config Data acknowledgement reply (echoes the request with Response=1).
      */
-    public static final class RequestConfigDataReplyFrame extends Cs2ClassifiedFrame {
-        RequestConfigDataReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class RequestConfigDataReplyFrame extends Cs2Frame {
+        RequestConfigDataReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** The 8-byte filename from the acknowledged request. */
         public String filename() {
@@ -289,8 +286,8 @@ public final class Cs2GuiCommands {
     /**
      * The header packet of a Config Data Stream (DLC=6): Carries total file length and CRC.
      */
-    public static final class ConfigDataStreamHeaderFrame extends Cs2ClassifiedFrame {
-        ConfigDataStreamHeaderFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class ConfigDataStreamHeaderFrame extends Cs2Frame {
+        ConfigDataStreamHeaderFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** Total byte count of the config data stream. */
         public long fileLength() { return data().int32At(0); }
@@ -303,8 +300,8 @@ public final class Cs2GuiCommands {
      * A data packet in a Config Data Stream (DLC=8): Carries 8 payload bytes.
      * The hash identifies the transaction rather than a packet sequence number.
      */
-    public static final class ConfigDataStreamPacketFrame extends Cs2ClassifiedFrame {
-        ConfigDataStreamPacketFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class ConfigDataStreamPacketFrame extends Cs2Frame {
+        ConfigDataStreamPacketFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** The receiver or sender hash retained throughout the stream. */
         public int transactionHash() { return header().hash(); }

@@ -1,4 +1,4 @@
-package jmri.jmrix.marklin.mcan.classify;
+package jmri.jmrix.marklin.mcan.cdb;
 
 /** Discriminant for CdB configuration-bus frame direction and kind. */
 public enum CdBFrameType {

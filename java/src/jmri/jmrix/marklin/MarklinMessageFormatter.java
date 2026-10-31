@@ -4,16 +4,14 @@ import java.util.Optional;
 import jmri.jmrix.marklin.mcan.address.AddressSpace;
 import jmri.jmrix.marklin.mcan.cdb.CdBFrameParser;
 import jmri.jmrix.marklin.mcan.cdb.CdBDeviceClass;
-import jmri.jmrix.marklin.mcan.classify.ClassifiedFrame;
-import jmri.jmrix.marklin.mcan.classify.Cs2ClassifiedFrame;
-import jmri.jmrix.marklin.mcan.classify.FrameProtocol;
+import jmri.jmrix.marklin.mcan.McanFrame;
+import jmri.jmrix.marklin.mcan.cs2.Cs2Frame;
 import jmri.jmrix.marklin.mcan.classify.ProtocolClassifier;
 import jmri.jmrix.marklin.mcan.cs2.Cs2AccessoryCommands;
 import jmri.jmrix.marklin.mcan.cs2.Cs2AutomationCommands;
 import jmri.jmrix.marklin.mcan.cs2.Cs2ConfigCommands;
 import jmri.jmrix.marklin.mcan.cs2.Cs2DecoderCommands;
 import jmri.jmrix.marklin.mcan.cs2.Cs2FeedbackCommands;
-import jmri.jmrix.marklin.mcan.cs2.Cs2FrameParser;
 import jmri.jmrix.marklin.mcan.cs2.Cs2GuiCommands;
 import jmri.jmrix.marklin.mcan.cs2.Cs2SystemCommands;
 
@@ -55,10 +53,10 @@ public class MarklinMessageFormatter {
     public static String formatRaw(int[] rawData, I18nProvider i18n, boolean includeDeviceInfo) {
         StringBuilder sb = new StringBuilder();
 
-        ClassifiedFrame cf = ProtocolClassifier.classify(rawData);
+        McanFrame cf = ProtocolClassifier.classify(rawData);
 
-        if (includeDeviceInfo && cf.protocol() == FrameProtocol.CS2_NATIVE) {
-            appendDeviceInfo(cf, sb);
+        if (includeDeviceInfo && cf instanceof Cs2Frame) {
+            appendDeviceInfo((Cs2Frame) cf, sb);
         }
 
         appendPriority(cf, sb);
@@ -85,29 +83,26 @@ public class MarklinMessageFormatter {
     // Private helpers
     // ---------------------------------------------------------------------------
 
-    private static void appendDeviceInfo(ClassifiedFrame cf, StringBuilder sb) {
-        // Only attempt device info for CS2 native frames
-        if (cf.protocol() != FrameProtocol.CS2_NATIVE) return;
-        Cs2ClassifiedFrame typed = Cs2FrameParser.parse(cf);
+    private static void appendDeviceInfo(Cs2Frame typed, StringBuilder sb) {
         if (typed instanceof Cs2ConfigCommands.PingReplyFrame) {
             Cs2ConfigCommands.PingReplyFrame ping = (Cs2ConfigCommands.PingReplyFrame) typed;
             sb.append(String.format("[0x%08X type=0x%04X] ", ping.uid().toLong(), ping.deviceType()));
         } else {
-            int hash = cf.cs2Header().hash();
+            int hash = typed.header().hash();
             sb.append(String.format("[Hash:0x%04X] ", hash));
         }
     }
 
-    private static void appendPriority(ClassifiedFrame cf, StringBuilder sb) {
-        if (cf.protocol() == FrameProtocol.UNKNOWN) {
-            sb.append("Unknown Priority");
-            return;
-        }
-        if (cf.protocol() == FrameProtocol.CDB_CONFIG) {
+    private static void appendPriority(McanFrame cf, StringBuilder sb) {
+        if (cf instanceof CdBFrameParser.CdBFrame) {
             sb.append("CdB Config");
             return;
         }
-        switch (cf.cs2Header().busPriority()) {
+        if (!(cf instanceof Cs2Frame)) {
+            sb.append("Unknown Priority");
+            return;
+        }
+        switch (((Cs2Frame) cf).header().busPriority()) {
             case 0:  sb.append("Priority 1: Stop/Go/Short"); break;
             case 1:  sb.append("Priority 2: Feedback"); break;
             case 2:  sb.append("Priority 3: Engine Stop"); break;
@@ -116,26 +111,19 @@ public class MarklinMessageFormatter {
         }
     }
 
-    private static void appendCommand(ClassifiedFrame cf, int[] rawData, StringBuilder sb, I18nProvider i18n) {
+    private static void appendCommand(McanFrame cf, int[] rawData, StringBuilder sb, I18nProvider i18n) {
         sb.append(" Command: ");
 
-        if (cf.protocol() == FrameProtocol.UNKNOWN) {
+        if (cf instanceof CdBFrameParser.CdBFrame) {
+            formatCdBCommand((CdBFrameParser.CdBFrame) cf, sb);
+        } else if (cf instanceof Cs2Frame) {
+            appendCs2Command((Cs2Frame) cf, sb, i18n);
+        } else {
             sb.append("Raw MCAN frame");
-            return;
         }
-
-        if (cf.protocol() == FrameProtocol.CDB_CONFIG) {
-            CdBFrameParser.CdBFrame cdb = CdBFrameParser.parse(cf);
-            formatCdBCommand(cdb, sb);
-            return;
-        }
-
-        // CS2_NATIVE  -  parse to typed frame and dispatch
-        Cs2ClassifiedFrame frame = Cs2FrameParser.parse(cf);
-        appendCs2Command(frame, sb, i18n);
     }
 
-    private static void appendCs2Command(Cs2ClassifiedFrame frame, StringBuilder sb, I18nProvider i18n) {
+    private static void appendCs2Command(Cs2Frame frame, StringBuilder sb, I18nProvider i18n) {
         // System commands (0x00)
         if (frame instanceof Cs2SystemCommands.SystemStopRequestFrame) {
             sb.append("System Stop");
@@ -163,10 +151,10 @@ public class MarklinMessageFormatter {
             sb.append("System Cycle Stop Reply ").append(f.locId());
         } else if (frame instanceof Cs2SystemCommands.LocoDataProtocolRequestFrame) {
             Cs2SystemCommands.LocoDataProtocolRequestFrame f = (Cs2SystemCommands.LocoDataProtocolRequestFrame) frame;
-            sb.append("System Loco Data Protocol ").append(f.locId()).append(" prot=").append(f.protocol());
+            sb.append("System Loco Data Protocol ").append(f.locId()).append(" prot=").append(f.locoProtocol());
         } else if (frame instanceof Cs2SystemCommands.LocoDataProtocolReplyFrame) {
             Cs2SystemCommands.LocoDataProtocolReplyFrame f = (Cs2SystemCommands.LocoDataProtocolReplyFrame) frame;
-            sb.append("System Loco Data Protocol Reply ").append(f.locId()).append(" prot=").append(f.protocol());
+            sb.append("System Loco Data Protocol Reply ").append(f.locId()).append(" prot=").append(f.locoProtocol());
         } else if (frame instanceof Cs2SystemCommands.AccessorySwitchTimeRequestFrame) {
             Cs2SystemCommands.AccessorySwitchTimeRequestFrame f = (Cs2SystemCommands.AccessorySwitchTimeRequestFrame) frame;
             sb.append("System Accessory Switch Time ").append(f.targetUid().toLong()).append(" t=").append(f.time10ms()).append("0ms");
@@ -372,11 +360,11 @@ public class MarklinMessageFormatter {
         }
     }
 
-    private static void appendResponse(ClassifiedFrame cf, int[] rawData, StringBuilder sb, I18nProvider i18n) {
+    private static void appendResponse(McanFrame cf, int[] rawData, StringBuilder sb, I18nProvider i18n) {
         sb.append(" ");
         boolean isReply;
-        if (cf.protocol() == FrameProtocol.CS2_NATIVE) {
-            isReply = cf.cs2Header().response();
+        if (cf instanceof Cs2Frame) {
+            isReply = ((Cs2Frame) cf).header().response();
         } else {
             // CdB and UNKNOWN: fall back to raw bit 16 of the 29-bit CAN ID (byte[1] bit 0)
             isReply = (rawData[1] & 0x01) != 0;

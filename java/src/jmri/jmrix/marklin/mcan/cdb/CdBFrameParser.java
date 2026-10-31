@@ -1,15 +1,14 @@
 package jmri.jmrix.marklin.mcan.cdb;
 
-import jmri.jmrix.marklin.mcan.classify.CdBFrameType;
-import jmri.jmrix.marklin.mcan.classify.ClassifiedFrame;
-import jmri.jmrix.marklin.mcan.classify.FrameProtocol;
+import jmri.jmrix.marklin.mcan.McanFrame;
+import jmri.jmrix.marklin.mcan.RawFrame;
+import jmri.jmrix.marklin.mcan.FrameProtocol;
 
 import java.util.Optional;
 
 /**
- * Second-pass parser for CdB configuration-bus frames.
+ * Parser for CdB configuration-bus frames.
  * <p>
- * Input must be a {@link ClassifiedFrame} with {@link FrameProtocol#CDB_CONFIG}.
  * Returns a typed subclass of {@link CdBFrame} that callers can dispatch on via
  * {@code instanceof} or by switching on {@link CdBFrame#frameType()}.
  */
@@ -18,19 +17,14 @@ public final class CdBFrameParser {
     private CdBFrameParser() {}
 
     /**
-     * Parses a first-pass classified frame into a typed CdB result.
+     * Parses a frame that carries the CdB configuration hash pattern.
      *
-     * @param frame first-pass result; protocol must be CDB_CONFIG
+     * @param frame the 13-byte frame
      * @return typed frame; {@link CdBFrame#frameType()} is {@link CdBFrameType#UNKNOWN}
      *         for unrecognised CAN ID offsets
-     * @throws IllegalArgumentException if the frame is not CDB_CONFIG
      */
-    public static CdBFrame parse(ClassifiedFrame frame) {
-        if (frame.protocol() != FrameProtocol.CDB_CONFIG) {
-            throw new IllegalArgumentException(
-                "CdBFrameParser.parse() requires CDB_CONFIG, got " + frame.protocol());
-        }
-        int[] raw = frame.raw().toArray();
+    public static CdBFrame parse(RawFrame frame) {
+        int[] raw = frame.toArray();
 
         int canId    = ((raw[0] & 0x1F) << 24) | ((raw[1] & 0xFF) << 16)
                      | ((raw[2] & 0xFF) <<  8)  |  (raw[3] & 0xFF);
@@ -60,18 +54,17 @@ public final class CdBFrameParser {
     /**
      * Base class for all typed CdB frame results.
      */
-    public static class CdBFrame {
+    public static class CdBFrame extends McanFrame {
 
         private final CdBFrameType frameType;
         private final int classId;
         private final int moduleId;
-        private final ClassifiedFrame parent;
 
-        CdBFrame(CdBFrameType frameType, int classId, int moduleId, ClassifiedFrame parent) {
+        CdBFrame(CdBFrameType frameType, int classId, int moduleId, RawFrame raw) {
+            super(FrameProtocol.CDB_CONFIG, raw);
             this.frameType = frameType;
             this.classId   = classId;
             this.moduleId  = moduleId;
-            this.parent    = parent;
         }
 
         public CdBFrameType frameType() { return frameType; }
@@ -82,16 +75,29 @@ public final class CdBFrameParser {
         /** Module slot (0 = broadcast ping, 1–127 = addressed). */
         public int moduleId() { return moduleId; }
 
-        /** The raw first-pass classified frame. */
-        public ClassifiedFrame parent() { return parent; }
+        /**
+         * Payload byte by zero-based data index (frame byte {@code 5 + index}).
+         * Bytes beyond the DLC are returned as transmitted.
+         * Replies can carry meaningful bytes there.
+         *
+         * @param index data index 0–7
+         * @return byte value 0x00–0xFF
+         */
+        public int dataByte(int index) {
+            if (index < 0 || index > 7) {
+                throw new IndexOutOfBoundsException("CdB data index " + index);
+            }
+            return raw().byteAt(5 + index);
+        }
 
-        protected int[] raw() { return parent.raw().toArray(); }
+        /** @return copy of the 13 frame bytes */
+        protected int[] bytes() { return raw().toArray(); }
     }
 
     /** A NEW-protocol broadcast ping (DLC=0). */
     public static final class PingFrame extends CdBFrame {
-        PingFrame(int classId, int moduleId, ClassifiedFrame parent) {
-            super(CdBFrameType.PING, classId, moduleId, parent);
+        PingFrame(int classId, int moduleId, RawFrame raw) {
+            super(CdBFrameType.PING, classId, moduleId, raw);
         }
     }
 
@@ -100,28 +106,28 @@ public final class CdBFrameParser {
      * <p>
      * Three shapes:
      * <ul>
-     *   <li>Operational (moduleId &gt; 0, DLC=3): module is commissioned.</li>
-     *   <li>Factory-fresh (moduleId=0, DLC=6): module needs commissioning;
-     *       challenge bytes are at data positions 1 and 2.</li>
-     *   <li>Address carrying scan reply (moduleId &gt; 0, DLC=8): the module embeds its
+     *   <li>Operational (moduleId &gt; 0, DLC=3): Module is commissioned.</li>
+     *   <li>Factory-fresh (moduleId=0, DLC=6): Module needs commissioning first.
+     *       Challenge bytes are at data positions 1 and 2.</li>
+     *   <li>Address carrying scan reply (moduleId &gt; 0, DLC=8): The module embeds its
      *       four configured accessory addresses in data bytes 0–7 as four big-endian
      *       16-bit raw CdB address values. Observed on WeichenChef deLuxe (class 0x2A)
      *       in response to a broadcast discovery ping.</li>
      * </ul>
      */
     public static final class PingReplyFrame extends CdBFrame {
-        PingReplyFrame(int classId, int moduleId, ClassifiedFrame parent) {
-            super(CdBFrameType.PING_REPLY, classId, moduleId, parent);
+        PingReplyFrame(int classId, int moduleId, RawFrame raw) {
+            super(CdBFrameType.PING_REPLY, classId, moduleId, raw);
         }
 
         /** True when the module is factory-fresh (moduleId=0, DLC=6). */
         public boolean isFactoryFresh() {
-            return moduleId() == 0 && parent().raw().dlc() == 6;
+            return moduleId() == 0 && raw().dlc() == 6;
         }
 
         /** True when the module is commissioned (moduleId &gt; 0, DLC=3). */
         public boolean isOperational() {
-            return moduleId() > 0 && parent().raw().dlc() == 3;
+            return moduleId() > 0 && raw().dlc() == 3;
         }
 
         /**
@@ -133,7 +139,7 @@ public final class CdBFrameParser {
          * Decode with {@link #addressPayload()}.
          */
         public boolean hasAddressPayload() {
-            return moduleId() > 0 && parent().raw().dlc() == 8;
+            return moduleId() > 0 && raw().dlc() == 8;
         }
 
         /**
@@ -144,7 +150,7 @@ public final class CdBFrameParser {
          */
         public Optional<int[]> challengeBytes() {
             if (!isFactoryFresh()) return Optional.empty();
-            int[] raw = raw();
+            int[] raw = bytes();
             return Optional.of(new int[]{raw[6] & 0xFF, raw[7] & 0xFF});
         }
 
@@ -159,7 +165,7 @@ public final class CdBFrameParser {
          */
         public Optional<int[]> addressPayload() {
             if (!hasAddressPayload()) return Optional.empty();
-            int[] raw = raw();
+            int[] raw = bytes();
             return Optional.of(new int[]{
                 ((raw[5] & 0xFF) << 8) | (raw[6]  & 0xFF),
                 ((raw[7] & 0xFF) << 8) | (raw[8]  & 0xFF),
@@ -171,46 +177,46 @@ public final class CdBFrameParser {
 
     /** A register read request (DLC=2): slot + register. */
     public static final class ReadFrame extends CdBFrame {
-        ReadFrame(int classId, int moduleId, ClassifiedFrame parent) {
-            super(CdBFrameType.READ, classId, moduleId, parent);
+        ReadFrame(int classId, int moduleId, RawFrame raw) {
+            super(CdBFrameType.READ, classId, moduleId, raw);
         }
 
         /** Sub-register slot (data byte 0, frame byte[5]). */
-        public int slot() { return raw()[5] & 0xFF; }
+        public int slot() { return bytes()[5] & 0xFF; }
 
         /** Register number (data byte 1, frame byte[6]). */
-        public int reg()  { return raw()[6] & 0xFF; }
+        public int reg()  { return bytes()[6] & 0xFF; }
     }
 
     /** A register read reply (DLC=4): slot + register + 16-bit value. */
     public static final class ReadReplyFrame extends CdBFrame {
-        ReadReplyFrame(int classId, int moduleId, ClassifiedFrame parent) {
-            super(CdBFrameType.READ_REPLY, classId, moduleId, parent);
+        ReadReplyFrame(int classId, int moduleId, RawFrame raw) {
+            super(CdBFrameType.READ_REPLY, classId, moduleId, raw);
         }
 
         /** Sub-register slot echoed from the request (frame byte[5]). */
-        public int slot()  { return raw()[5] & 0xFF; }
+        public int slot()  { return bytes()[5] & 0xFF; }
 
         /** Register number echoed from the request (frame byte[6]). */
-        public int reg()   { return raw()[6] & 0xFF; }
+        public int reg()   { return bytes()[6] & 0xFF; }
 
         /** 16-bit register value (frame bytes[7..8], big-endian). */
-        public int value() { return ((raw()[7] & 0xFF) << 8) | (raw()[8] & 0xFF); }
+        public int value() { return ((bytes()[7] & 0xFF) << 8) | (bytes()[8] & 0xFF); }
     }
 
     /** A register write command (DLC=4): slot + register + 16-bit value. */
     public static final class WriteFrame extends CdBFrame {
-        WriteFrame(int classId, int moduleId, ClassifiedFrame parent) {
-            super(CdBFrameType.WRITE, classId, moduleId, parent);
+        WriteFrame(int classId, int moduleId, RawFrame raw) {
+            super(CdBFrameType.WRITE, classId, moduleId, raw);
         }
 
         /** Sub-register slot (frame byte[5]). */
-        public int slot()  { return raw()[5] & 0xFF; }
+        public int slot()  { return bytes()[5] & 0xFF; }
 
         /** Register number (frame byte[6]). */
-        public int reg()   { return raw()[6] & 0xFF; }
+        public int reg()   { return bytes()[6] & 0xFF; }
 
         /** 16-bit value to write (frame bytes[7..8], big-endian). */
-        public int value() { return ((raw()[7] & 0xFF) << 8) | (raw()[8] & 0xFF); }
+        public int value() { return ((bytes()[7] & 0xFF) << 8) | (bytes()[8] & 0xFF); }
     }
 }

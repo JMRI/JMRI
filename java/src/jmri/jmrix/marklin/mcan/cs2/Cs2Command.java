@@ -1,4 +1,4 @@
-package jmri.jmrix.marklin.mcan.classify;
+package jmri.jmrix.marklin.mcan.cs2;
 
 /**
  * Known CS2 native protocol commands, identified by command code and response flag.

@@ -1,5 +1,6 @@
-package jmri.jmrix.marklin.mcan.classify;
+package jmri.jmrix.marklin.mcan.cs2;
 
+import jmri.jmrix.marklin.mcan.RawFrame;
 import jmri.jmrix.marklin.mcan.McanUid;
 
 /**

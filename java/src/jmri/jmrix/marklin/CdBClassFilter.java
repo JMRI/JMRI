@@ -3,29 +3,24 @@ package jmri.jmrix.marklin;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArraySet;
 import jmri.jmrix.marklin.mcan.cdb.CdBFrameParser;
-import jmri.jmrix.marklin.mcan.classify.ClassifiedFrame;
-import jmri.jmrix.marklin.mcan.classify.FrameProtocol;
+import jmri.jmrix.marklin.mcan.McanFrame;
 import jmri.jmrix.marklin.mcan.classify.ProtocolClassifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Intercepts OEM CAN-digital-Bahn (CdB) device configuration frames before they
- * reach the standard Marklin CAN (MCAN) listener chain.
+ * Dispatches OEM CAN-digital-Bahn (CdB) device configuration frames to typed
+ * {@link CdBConfigListener}s.
  * <p>
  * CdB config frames share command code space with MCAN but are distinguished by
  * the hash field (bytes 2–3) matching pattern {@code 0x0A80} (mask {@code 0x0F80}).
  * Operational CdB frames (turnout, sensor, occupancy) use standard MCAN encoding
  * and pass through unfiltered.
  * <p>
- * Call {@link #offer(MarklinReply)} from the traffic controller before forwarding
- * to the standard listener chain.
+ * The traffic controller calls {@link #offer(MarklinReply)} once per received
+ * frame. The frame still reaches the standard listener chain afterwards.
  */
 public class CdBClassFilter {
-
-    /** Mask and value identifying a CdB config frame in bytes 2–3. */
-    static final int CDB_HASH_MASK  = 0x0F80;
-    static final int CDB_HASH_VALUE = 0x0A80;
 
     // ---- listener registry ----------------------------------------------
 
@@ -43,43 +38,37 @@ public class CdBClassFilter {
 
     /**
      * Returns {@code true} if bytes 2–3 match the CdB hash pattern.
-     * Cheap enough to call on every incoming frame.
+     *
+     * @param r incoming 13-byte frame
+     * @return true for a CdB configuration frame
+     * @deprecated since 5.17.5; use {@link ProtocolClassifier#classify(int[])} and test for
+     *             {@link CdBFrameParser.CdBFrame}, or {@link #offer(MarklinReply)}.
      */
+    @Deprecated(since = "5.17.5", forRemoval = true)
     public static boolean isCdBConfigFrame(MarklinReply r) {
-        int hash16 = ((r.getElement(2) & 0xFF) << 8) | (r.getElement(3) & 0xFF);
-        return (hash16 & CDB_HASH_MASK) == CDB_HASH_VALUE;
+        return ProtocolClassifier.isCdBConfigPattern(r.toIntArray());
     }
 
     // ---- dispatch entry point ------------------------------------------
 
     /**
-     * Offers a frame to the CdB pre-filter.
-     * Call this before the standard Märklin listener chain.
+     * Offers a frame to the CdB dispatcher.
      *
      * @param r incoming 13-byte frame
-     * @return {@code true} if the frame is CdB config traffic (notified to
-     *         {@link CdBConfigListener}s  -  must not be forwarded further);
-     *         {@code false} if it is normal MCAN traffic
+     * @return {@code true} if the frame is CdB config traffic and was notified to
+     *         {@link CdBConfigListener}s; {@code false} otherwise
      */
     public boolean offer(MarklinReply r) {
-        int[] raw13 = new int[13];
-        for (int i = 0; i < 13; i++) raw13[i] = r.getElement(i) & 0xFF;
-
-        ClassifiedFrame cf = ProtocolClassifier.classify(raw13);
-        if (cf.protocol() != FrameProtocol.CDB_CONFIG) {
+        McanFrame cf = r.getFrame();
+        if (!(cf instanceof CdBFrameParser.CdBFrame)) {
             return false;
         }
 
-        CdBFrameParser.CdBFrame frame = CdBFrameParser.parse(cf);
+        CdBFrameParser.CdBFrame frame = (CdBFrameParser.CdBFrame) cf;
 
-        if (log.isInfoEnabled()) {
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < 13; i++) {
-                if (i > 0) sb.append(' ');
-                sb.append(String.format("%02X", raw13[i]));
-            }
-            log.info("CdB frame intercepted: frameType={} canClass=0x{} module={} raw=[{}]",
-                    frame.frameType(), Integer.toHexString(frame.classId()), frame.moduleId(), sb);
+        if (log.isDebugEnabled()) {
+            log.debug("CdB config frame: frameType={} canClass=0x{} module={} raw=[{}]",
+                    frame.frameType(), Integer.toHexString(frame.classId()), frame.moduleId(), frame.raw());
         }
 
         for (CdBConfigListener l : listeners) {

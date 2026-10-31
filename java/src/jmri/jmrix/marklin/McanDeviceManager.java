@@ -1,13 +1,15 @@
 package jmri.jmrix.marklin;
 
+import jmri.jmrix.marklin.mcan.cs2.Cs2Header;
+import jmri.jmrix.marklin.mcan.cs2.Cs2Frame;
 import java.util.Objects;
 import jmri.Manager;
 import jmri.managers.AbstractManager;
 import jmri.jmrix.marklin.mcan.cdb.CdBConfigCommands;
 import jmri.jmrix.marklin.mcan.cdb.CdBFrameParser;
 import jmri.jmrix.marklin.mcan.cdb.CdBLampenChefCommands;
-import jmri.jmrix.marklin.mcan.classify.CdBFrameType;
-import jmri.jmrix.marklin.mcan.classify.ClassifiedFrame;
+import jmri.jmrix.marklin.mcan.cdb.CdBFrameType;
+import jmri.jmrix.marklin.mcan.McanFrame;
 import jmri.jmrix.marklin.mcan.classify.ProtocolClassifier;
 import jmri.jmrix.marklin.mcan.cs2.Cs2ConfigCommands;
 import jmri.jmrix.marklin.mcan.cdb.CdBDeviceClass;
@@ -101,7 +103,7 @@ public class McanDeviceManager extends AbstractManager<McanDevice>
         }
         if (deviceClass.getProtocolGeneration() == CdBDeviceClass.ProtocolGeneration.OLD) {
             // TODO: OLD-protocol ping replies use a different frame format ({0x01,0x40,class,addr+0x80,...})
-            // which is NOT matched by CdBClassFilter.isCdBConfigFrame() (requires 0x0A80 hash pattern).
+            // which ProtocolClassifier does not recognise as CdB config traffic (requires the 0x0A80 hash pattern).
             // Until an OLD-protocol reply parser is implemented, discovery pings are sent but replies
             // will never land in the device table.
             for (int addr = 0; addr < 128; addr++) {
@@ -203,11 +205,10 @@ public class McanDeviceManager extends AbstractManager<McanDevice>
     }
 
     private void processRawMessage(int[] raw) {
-        ClassifiedFrame classified = ProtocolClassifier.classify(raw);
+        McanFrame classified = ProtocolClassifier.classify(raw);
         // A lone MS2 sends periodic requests but need not answer its own ping.
         // Only refresh a uniquely known sender. Hashes alone never create identities.
-        jmri.jmrix.marklin.mcan.classify.Cs2Header header =
-                jmri.jmrix.marklin.mcan.classify.Cs2Header.tryParse(raw);
+        Cs2Header header = classified instanceof Cs2Frame ? ((Cs2Frame) classified).header() : null;
         if (header != null && header.commandCode() == Cs2ConfigCommands.COMMAND_PING
                 && !header.response() && header.dlc() == 0) {
             java.util.List<McanDevice> matches = new java.util.ArrayList<>();

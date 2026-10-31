@@ -1,8 +1,8 @@
-package jmri.jmrix.marklin.mcan.classify;
+package jmri.jmrix.marklin.mcan;
 
 /**
  * Immutable value object wrapping a 13-byte CAN frame.
- * Carries no interpretation. Classification is applied by {@link ProtocolClassifier}.
+ * Carries no interpretation. Classification is applied by {@link jmri.jmrix.marklin.mcan.classify.ProtocolClassifier}.
  */
 public final class RawFrame {
 
@@ -28,5 +28,16 @@ public final class RawFrame {
     /** Defensive copy of the raw 13-byte array. */
     public int[] toArray() {
         return bytes.clone();
+    }
+
+    /** Space-separated upper-case hex bytes, e.g. {@code "00 31 0A 80 ..."}. */
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder(13 * 3);
+        for (int i = 0; i < bytes.length; i++) {
+            if (i > 0) sb.append(' ');
+            sb.append(String.format("%02X", bytes[i] & 0xFF));
+        }
+        return sb.toString();
     }
 }
