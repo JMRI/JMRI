@@ -64,13 +64,13 @@ public enum Cs2Command {
     BOOT_REQUEST              (0x1C, false),
     BOOT_REQUEST_REPLY        (0x1C, true),
 
-    // GUI information transfer (0x20–0x22)
-    STATUS_DATA_CONFIG        (0x20, false),
-    STATUS_DATA_CONFIG_REPLY  (0x20, true),
-    REQUEST_CONFIG_DATA       (0x21, false),
-    REQUEST_CONFIG_DATA_REPLY (0x21, true),
-    CONFIG_DATA_STREAM        (0x22, false),
-    CONFIG_DATA_STREAM_REPLY  (0x22, true),
+    // GUI information transfer (0x1D, 0x20–0x21)
+    STATUS_DATA_CONFIG        (0x1D, false),
+    STATUS_DATA_CONFIG_REPLY  (0x1D, true),
+    REQUEST_CONFIG_DATA       (0x20, false),
+    REQUEST_CONFIG_DATA_REPLY (0x20, true),
+    CONFIG_DATA_STREAM        (0x21, false),
+    CONFIG_DATA_STREAM_REPLY  (0x21, true),
 
     // Distributed automation (0x30+)
     AUTOMATION_TRIGGER        (0x30, false),
