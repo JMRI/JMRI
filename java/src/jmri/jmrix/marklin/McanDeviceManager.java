@@ -23,7 +23,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Ralf Lang (ralf.lang@ralf-lang.de)
  */
-public class McanDeviceManager extends AbstractManager<McanDevice> implements MarklinListener, CdBConfigListener {
+public class McanDeviceManager extends AbstractManager<McanDevice>
+        implements MarklinListener, CdBConfigListener, jmri.Disposable {
 
     private final MarklinSystemConnectionMemo memo;
 
@@ -48,6 +49,9 @@ public class McanDeviceManager extends AbstractManager<McanDevice> implements Ma
         McanDevice device = getBySystemName(sysName);
         if (device == null) {
             device = new McanDevice(getSystemPrefix(), identity);
+            if (identity instanceof McanDeviceIdentity.Native) {
+                device.setDeviceService(new NativeDeviceService(device));
+            }
             register(device);
         }
         return device;
@@ -200,10 +204,29 @@ public class McanDeviceManager extends AbstractManager<McanDevice> implements Ma
 
     private void processRawMessage(int[] raw) {
         ClassifiedFrame classified = ProtocolClassifier.classify(raw);
+        // A lone MS2 sends periodic requests but need not answer its own ping.
+        // Only refresh a uniquely known sender. Hashes alone never create identities.
+        jmri.jmrix.marklin.mcan.classify.Cs2Header header =
+                jmri.jmrix.marklin.mcan.classify.Cs2Header.tryParse(raw);
+        if (header != null && header.commandCode() == Cs2ConfigCommands.COMMAND_PING
+                && !header.response() && header.dlc() == 0) {
+            java.util.List<McanDevice> matches = new java.util.ArrayList<>();
+            for (McanDevice device : getNamedBeanSet()) {
+                if (NativeDeviceService.get(device).map(state ->
+                        state.getObservedHash().orElse(-1) == header.hash()).orElse(false)) {
+                    matches.add(device);
+                }
+            }
+            if (matches.size() == 1) {
+                matches.get(0).touch();
+                matches.get(0).setDeviceState(McanDeviceState.ONLINE);
+            }
+        }
         Cs2ConfigCommands.parsePingReply(classified).ifPresent(info -> {
             McanDeviceIdentity.Native identity = McanDeviceIdentity.forNative(info.uid(), info.deviceType());
             McanDevice device = provideDevice(identity);
             device.touch();
+            NativeDeviceService.get(device).orElseThrow().setObservedHash(info.hash());
             device.setSoftwareVersion(info.softwareVersion());
             device.setDeviceState(McanDeviceState.ONLINE);
         });
@@ -227,7 +250,7 @@ public class McanDeviceManager extends AbstractManager<McanDevice> implements Ma
 
         // Route READ_REPLY frames for AMBIGUOUS classes to their attached service.
         // These frames carry probe responses needed to finish classification after
-        // discovery; they must NOT create new device entries.
+        // discovery. They must NOT create new device entries.
         if (frame.frameType() == CdBFrameType.READ_REPLY
                 && canClass == WeichenChefMagnetService.CDB_CLASS_ID) {
             McanDevice existing = getDevice(McanDeviceIdentity.forCdB(canClass, module));
@@ -257,8 +280,8 @@ public class McanDeviceManager extends AbstractManager<McanDevice> implements Ma
         McanDevice device = provideDevice(identity);
         device.touch();
 
-        // frameType() == PING_REPLY was verified above; this guard makes the
-        // concrete subtype explicit (and keeps SpotBugs happy about the cast).
+        // frameType() == PING_REPLY was verified above. This guard makes the
+        // concrete subtype explicit and keeps SpotBugs happy about the cast.
         if (!(frame instanceof CdBFrameParser.PingReplyFrame)) {
             return;
         }

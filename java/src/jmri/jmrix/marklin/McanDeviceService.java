@@ -19,8 +19,8 @@ package jmri.jmrix.marklin;
  * types can be stored in the same typed slot without imposing a lowest-common-denominator
  * API. Callers cast to the concrete type after checking with {@code instanceof}.
  * <p>
- * If CS2-native device support is added in the future (e.g. {@code Cs2DeviceService}),
- * those types would also implement this interface and be stored in the same slot.
+ * {@link NativeDeviceService} supplies the common native-device observations.
+ * Future model-specific native services may extend it and use the same slot.
  *
  * @author Ralf Lang (ralf.lang@ralf-lang.de)
  */

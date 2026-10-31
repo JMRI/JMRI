@@ -6,7 +6,7 @@ import jmri.implementation.AbstractNamedBean;
 import jmri.util.ThreadingUtil;
 
 /**
- * Represents an MCAN device (Native CS2/MS2 or CdB module) as a JMRI NamedBean entity.
+ * Represents an MCAN device (Native CS2/CS3/MS2, Booster, Gleisbox or CdB module) as a JMRI NamedBean entity.
  * <p>
  * Property changes (such as state updates or firmware version changes) are dispatched
  * on the Swing EDT via {@link ThreadingUtil#runOnGUI(ThreadingUtil.ThreadAction)} for thread safety.
