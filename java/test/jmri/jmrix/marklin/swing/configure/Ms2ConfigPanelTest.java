@@ -1,5 +1,7 @@
 package jmri.jmrix.marklin.swing.configure;
 
+import jmri.jmrix.marklin.mcan.McanUid;
+
 import javax.swing.JTable;
 import jmri.jmrix.marklin.MarklinReply;
 import jmri.jmrix.marklin.MarklinSystemConnectionMemo;
@@ -46,11 +48,11 @@ class Ms2ConfigPanelTest {
     }
 
     private McanDevice discover(long uid, int hash) {
-        int[] frame = Cs2ConfigCommands.buildPingReply(uid, 0x040F, 0x0033);
+        int[] frame = Cs2ConfigCommands.buildPingReply(McanUid.of(uid), 0x040F, 0x0033);
         frame[2] = hash >> 8;
         frame[3] = hash & 0xFF;
         memo.getMcanDeviceManager().reply(new MarklinReply(frame));
-        return memo.getMcanDeviceManager().getDevice(McanDeviceIdentity.forNative(uid, 0x0033));
+        return memo.getMcanDeviceManager().getDevice(McanDeviceIdentity.forNative(McanUid.of(uid), 0x0033));
     }
 
     @Test

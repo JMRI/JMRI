@@ -1,6 +1,8 @@
 package jmri.jmrix.marklin;
 
-import jmri.jmrix.marklin.mcan.protocol.NativeDeviceInfo;
+import jmri.jmrix.marklin.mcan.McanUid;
+
+import jmri.jmrix.marklin.mcan.cs2.NativeDeviceInfo;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.*;
 import java.beans.PropertyChangeEvent;
@@ -27,7 +29,7 @@ public class McanDeviceTest {
 
     @Test
     public void testDeviceInitialization() {
-        McanDeviceIdentity identity = McanDeviceIdentity.forNative(0x00112233L, NativeDeviceInfo.TYPE_MS2);
+        McanDeviceIdentity identity = McanDeviceIdentity.forNative(McanUid.of(0x00112233L), NativeDeviceInfo.TYPE_MS2);
         McanDevice device = new McanDevice("M", identity);
 
         assertEquals("M:dev:uid-00112233", device.getSystemName());
@@ -40,7 +42,7 @@ public class McanDeviceTest {
 
     @Test
     public void testNativeRuntimeStateSeparatesDefaultAndObservedHash() throws Exception {
-        McanDeviceIdentity.Native identity = McanDeviceIdentity.forNative(0x4D5552E2, 0x0033);
+        McanDeviceIdentity.Native identity = McanDeviceIdentity.forNative(McanUid.of(0x4D5552E2), 0x0033);
         McanDevice device = new McanDevice("M", identity);
         assertNull(device.getDeviceService());
         NativeDeviceService state = new NativeDeviceService(device);
@@ -89,7 +91,7 @@ public class McanDeviceTest {
 
     @Test
     public void testVersionAndTouch() {
-        McanDeviceIdentity identity = McanDeviceIdentity.forNative(0x12345678L, 0x0010);
+        McanDeviceIdentity identity = McanDeviceIdentity.forNative(McanUid.of(0x12345678L), 0x0010);
         McanDevice device = new McanDevice("M", identity);
 
         device.setSoftwareVersion(0x0102);

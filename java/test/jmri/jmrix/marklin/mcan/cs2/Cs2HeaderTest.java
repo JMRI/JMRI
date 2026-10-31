@@ -1,4 +1,4 @@
-package jmri.jmrix.marklin.mcan.classify;
+package jmri.jmrix.marklin.mcan.cs2;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

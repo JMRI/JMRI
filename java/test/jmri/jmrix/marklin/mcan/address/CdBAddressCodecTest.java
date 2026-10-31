@@ -8,10 +8,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests for {@link CdBAddressCodec} and {@link AddressEncoding}.
- * <p>
- * Expected raw values are cross-checked against the constants in
- * {@code CdBMessage.encodeAddress} / {@code decodeAddress} to verify the port
- * is faithful.
  *
  * @author Ralf Lang (ralf.lang@ralf-lang.de)
  */

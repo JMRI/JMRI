@@ -1,5 +1,7 @@
 package jmri.jmrix.marklin;
 
+import jmri.jmrix.marklin.mcan.McanUid;
+
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
@@ -36,8 +38,8 @@ class SeniorThrottleServiceTest {
     }
 
     private McanDevice discover(long uid, int type) {
-        memo.getMcanDeviceManager().reply(new MarklinReply(Cs2ConfigCommands.buildPingReply(uid, 0x040F, type)));
-        return memo.getMcanDeviceManager().getDevice(McanDeviceIdentity.forNative(uid, type));
+        memo.getMcanDeviceManager().reply(new MarklinReply(Cs2ConfigCommands.buildPingReply(McanUid.of(uid), 0x040F, type)));
+        return memo.getMcanDeviceManager().getDevice(McanDeviceIdentity.forNative(McanUid.of(uid), type));
     }
 
     @Test
@@ -69,11 +71,11 @@ class SeniorThrottleServiceTest {
 
     @Test
     void knownMasterPingRequestRefreshesPresenceWithoutCreatingDevices() {
-        int[] ping = Cs2ConfigCommands.buildPingReply(0x4D5552E2, 0x040F, 0x0033);
+        int[] ping = Cs2ConfigCommands.buildPingReply(McanUid.of(0x4D5552E2), 0x040F, 0x0033);
         ping[2] = 0xFF;
         ping[3] = 0x37;
         memo.getMcanDeviceManager().reply(new MarklinReply(ping));
-        McanDevice device = memo.getMcanDeviceManager().getDevice(McanDeviceIdentity.forNative(0x4D5552E2, 0x0033));
+        McanDevice device = memo.getMcanDeviceManager().getDevice(McanDeviceIdentity.forNative(McanUid.of(0x4D5552E2), 0x0033));
         Instant before = device.getLastSeen();
         memo.getMcanDeviceManager().reply(new MarklinReply(Cs2ConfigCommands.buildPing(0xFF37)));
         assertFalse(device.getLastSeen().isBefore(before));
@@ -109,7 +111,7 @@ class SeniorThrottleServiceTest {
     @Test
     void predictedAndAmbiguousHashesDoNotRefreshPresence() {
         McanDeviceManager manager = memo.getMcanDeviceManager();
-        McanDevice first = manager.provideDevice(McanDeviceIdentity.forNative(0x4D5552E2, 0x0033));
+        McanDevice first = manager.provideDevice(McanDeviceIdentity.forNative(McanUid.of(0x4D5552E2), 0x0033));
         NativeDeviceService firstState = NativeDeviceService.get(first).orElseThrow();
         Instant before = first.getLastSeen();
         manager.reply(new MarklinReply(Cs2ConfigCommands.buildPing(firstState.getDefaultHash())));
@@ -117,14 +119,14 @@ class SeniorThrottleServiceTest {
         assertTrue(firstState.getObservedHash().isEmpty());
 
         firstState.setObservedHash(0xFF37);
-        McanDevice second = manager.provideDevice(McanDeviceIdentity.forNative(0x4D533272, 0x0032));
+        McanDevice second = manager.provideDevice(McanDeviceIdentity.forNative(McanUid.of(0x4D533272), 0x0032));
         NativeDeviceService.get(second).orElseThrow().setObservedHash(0xFF37);
         Instant secondBefore = second.getLastSeen();
         manager.reply(new MarklinReply(Cs2ConfigCommands.buildPing(0xFF37)));
         assertEquals(before, first.getLastSeen());
         assertEquals(secondBefore, second.getLastSeen());
 
-        int[] reply = Cs2ConfigCommands.buildPingReply(0x4D5552E2, 0x040F, 0x0033);
+        int[] reply = Cs2ConfigCommands.buildPingReply(McanUid.of(0x4D5552E2), 0x040F, 0x0033);
         reply[2] = 0xFB;
         reply[3] = 0x21;
         manager.reply(new MarklinReply(reply));

@@ -1,9 +1,11 @@
 package jmri.jmrix.marklin.swing.devicetable;
 
+import jmri.jmrix.marklin.mcan.McanUid;
+
 import java.util.List;
 import jmri.jmrix.marklin.*;
 import jmri.jmrix.marklin.mcan.cs2.Cs2ConfigCommands;
-import jmri.jmrix.marklin.mcan.device.CdBDeviceClass;
+import jmri.jmrix.marklin.mcan.cdb.CdBDeviceClass;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.*;
 
@@ -52,7 +54,7 @@ class McanDevicePanelTest {
         McanDevicePanel panel = new McanDevicePanel();
         panel.initComponents(memo);
         McanDevice device = memo.getMcanDeviceManager().provideDevice(
-                McanDeviceIdentity.forNative(0x4D5552E2, 0x0033));
+                McanDeviceIdentity.forNative(McanUid.of(0x4D5552E2), 0x0033));
         device.setDeviceState(McanDeviceState.ONLINE);
         panel.getDeviceTable().setRowSelectionInterval(0, 0);
         assertTrue(panel.getConfigureButton().isEnabled());
@@ -68,7 +70,7 @@ class McanDevicePanelTest {
             frame.dispose();
         });
         memo.getMcanDeviceManager().deregister(device);
-        memo.getMcanDeviceManager().provideDevice(McanDeviceIdentity.forNative(0x47460304, 0x0010));
+        memo.getMcanDeviceManager().provideDevice(McanDeviceIdentity.forNative(McanUid.of(0x47460304), 0x0010));
         panel.getDeviceTable().setRowSelectionInterval(0, 0);
         assertFalse(panel.getConfigureButton().isEnabled());
         panel.dispose();

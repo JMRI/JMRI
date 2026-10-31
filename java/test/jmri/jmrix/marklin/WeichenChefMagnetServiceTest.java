@@ -70,7 +70,7 @@ class WeichenChefMagnetServiceTest {
                 ? ((value & 0xFF) << 8) | (value >> 8) : value;
         int[] raw = CdBConfigCommands.buildReadReply(0x22, module, slot, reg, wireValue);
         raw[4] = dlc;
-        service.handleCdBReply(CdBFrameParser.parse(ProtocolClassifier.classify(raw)), new MarklinReply(raw));
+        service.handleCdBReply((CdBFrameParser.CdBFrame) (ProtocolClassifier.classify(raw)), new MarklinReply(raw));
     }
 
     private void runNext() {

@@ -1,4 +1,4 @@
-package jmri.jmrix.marklin.mcan.device;
+package jmri.jmrix.marklin.mcan.cdb;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,4 +1,7 @@
 package jmri.jmrix.marklin.mcan.cs2;
+
+import jmri.jmrix.marklin.mcan.FrameProtocol;
+import jmri.jmrix.marklin.mcan.McanUid;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,36 +25,36 @@ public class Cs2GuiCommandsTest {
         JUnitUtil.tearDown();
     }
 
-    private static Cs2ClassifiedFrame roundtrip(int[] frame) {
-        ClassifiedFrame cf = ProtocolClassifier.classify(frame);
+    private static Cs2Frame roundtrip(int[] frame) {
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(frame);
         assertEquals(FrameProtocol.CS2_NATIVE, cf.protocol(),
                 "Encoded frame must classify as CS2_NATIVE");
-        return Cs2FrameParser.parse(cf);
+        return cf;
     }
 
     // --- buildStatusDataConfig ---
 
     @Test
     public void testBuildStatusDataConfigProduces13Bytes() {
-        assertEquals(13, Cs2GuiCommands.buildStatusDataConfig(0x11223344L, 0).length);
+        assertEquals(13, Cs2GuiCommands.buildStatusDataConfig(McanUid.of(0x11223344L), 0).length);
     }
 
     @Test
     public void testBuildStatusDataConfigHasCommandCode0x1D() {
-        ClassifiedFrame cf = ProtocolClassifier.classify(
-                Cs2GuiCommands.buildStatusDataConfig(0x11223344L, 0));
-        assertEquals(0x1D, cf.cs2Header().commandCode());
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(
+                Cs2GuiCommands.buildStatusDataConfig(McanUid.of(0x11223344L), 0));
+        assertEquals(0x1D, cf.header().commandCode());
     }
 
     @Test
     public void testBuildStatusDataConfigHasDlc5() {
-        int[] frame = Cs2GuiCommands.buildStatusDataConfig(0x11223344L, 2);
+        int[] frame = Cs2GuiCommands.buildStatusDataConfig(McanUid.of(0x11223344L), 2);
         assertEquals(5, frame[4]);
     }
 
     @Test
     public void testBuildStatusDataConfigEncodesUidAndIndex() {
-        int[] frame = Cs2GuiCommands.buildStatusDataConfig(0x11223344L, 7);
+        int[] frame = Cs2GuiCommands.buildStatusDataConfig(McanUid.of(0x11223344L), 7);
         assertEquals(0x11, frame[5]);
         assertEquals(0x22, frame[6]);
         assertEquals(0x33, frame[7]);
@@ -61,9 +64,9 @@ public class Cs2GuiCommandsTest {
 
     @Test
     public void testBuildStatusDataConfigIsNotResponse() {
-        ClassifiedFrame cf = ProtocolClassifier.classify(
-                Cs2GuiCommands.buildStatusDataConfig(0x11223344L, 0));
-        assertFalse(cf.cs2Header().response());
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(
+                Cs2GuiCommands.buildStatusDataConfig(McanUid.of(0x11223344L), 0));
+        assertFalse(cf.header().response());
     }
 
     // --- buildRequestConfigData ---
@@ -75,9 +78,9 @@ public class Cs2GuiCommandsTest {
 
     @Test
     public void testBuildRequestConfigDataHasCommandCode0x20() {
-        ClassifiedFrame cf = ProtocolClassifier.classify(
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(
                 Cs2GuiCommands.buildRequestConfigData("loks"));
-        assertEquals(0x20, cf.cs2Header().commandCode());
+        assertEquals(0x20, cf.header().commandCode());
     }
 
     @Test
@@ -111,9 +114,9 @@ public class Cs2GuiCommandsTest {
 
     @Test
     public void testBuildConfigDataStreamHeaderHasCommandCode0x21() {
-        ClassifiedFrame cf = ProtocolClassifier.classify(
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(
                 Cs2GuiCommands.buildConfigDataStreamHeader(1024L, 0xABCD));
-        assertEquals(0x21, cf.cs2Header().commandCode());
+        assertEquals(0x21, cf.header().commandCode());
     }
 
     @Test
@@ -135,14 +138,14 @@ public class Cs2GuiCommandsTest {
 
     @Test
     public void testBuildConfigDataStreamHeaderRoundtripsToHeaderFrame() {
-        Cs2ClassifiedFrame parsed = roundtrip(
+        Cs2Frame parsed = roundtrip(
                 Cs2GuiCommands.buildConfigDataStreamHeader(4096L, 0x1234));
         assertInstanceOf(Cs2GuiCommands.ConfigDataStreamHeaderFrame.class, parsed);
     }
 
     @Test
     public void testConfigDataStreamHeaderFrameFileLength() {
-        Cs2ClassifiedFrame parsed = roundtrip(
+        Cs2Frame parsed = roundtrip(
                 Cs2GuiCommands.buildConfigDataStreamHeader(4096L, 0x1234));
         assertEquals(4096L,
                 ((Cs2GuiCommands.ConfigDataStreamHeaderFrame) parsed).fileLength());
@@ -150,7 +153,7 @@ public class Cs2GuiCommandsTest {
 
     @Test
     public void testConfigDataStreamHeaderFrameCrc() {
-        Cs2ClassifiedFrame parsed = roundtrip(
+        Cs2Frame parsed = roundtrip(
                 Cs2GuiCommands.buildConfigDataStreamHeader(4096L, 0x5678));
         assertEquals(0x5678,
                 ((Cs2GuiCommands.ConfigDataStreamHeaderFrame) parsed).crc());
@@ -198,7 +201,7 @@ public class Cs2GuiCommandsTest {
     @Test
     public void testBuildConfigDataStreamPacketRoundtripsToPacketFrame() {
         int[] data = new int[]{0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
-        Cs2ClassifiedFrame parsed = roundtrip(
+        Cs2Frame parsed = roundtrip(
                 Cs2GuiCommands.buildConfigDataStreamPacket(0xFB21, data));
         assertInstanceOf(Cs2GuiCommands.ConfigDataStreamPacketFrame.class, parsed);
     }
@@ -206,7 +209,7 @@ public class Cs2GuiCommandsTest {
     @Test
     public void testConfigDataStreamPacketFrameTransactionHash() {
         int[] data = new int[8];
-        Cs2ClassifiedFrame parsed = roundtrip(
+        Cs2Frame parsed = roundtrip(
                 Cs2GuiCommands.buildConfigDataStreamPacket(0xFB21, data));
         assertEquals(0xFB21,
                 ((Cs2GuiCommands.ConfigDataStreamPacketFrame) parsed).transactionHash());
@@ -216,20 +219,20 @@ public class Cs2GuiCommandsTest {
 
     @Test
     public void testBuildStatusDataConfigRoundtripsToRequestFrame() {
-        Cs2ClassifiedFrame parsed = roundtrip(Cs2GuiCommands.buildStatusDataConfig(0x11223344L, 2));
+        Cs2Frame parsed = roundtrip(Cs2GuiCommands.buildStatusDataConfig(McanUid.of(0x11223344L), 2));
         assertInstanceOf(Cs2GuiCommands.StatusDataConfigRequestFrame.class, parsed);
     }
 
     @Test
     public void testStatusDataConfigRequestFrameDeviceUid() {
-        Cs2ClassifiedFrame parsed = roundtrip(Cs2GuiCommands.buildStatusDataConfig(0xAABBCCDDL, 0));
-        assertEquals(0xAABBCCDDL,
+        Cs2Frame parsed = roundtrip(Cs2GuiCommands.buildStatusDataConfig(McanUid.of(0xAABBCCDDL), 0));
+        assertEquals(McanUid.of(0xAABBCCDDL),
                 ((Cs2GuiCommands.StatusDataConfigRequestFrame) parsed).deviceUid());
     }
 
     @Test
     public void testStatusDataConfigRequestFrameIndex() {
-        Cs2ClassifiedFrame parsed = roundtrip(Cs2GuiCommands.buildStatusDataConfig(0x11223344L, 5));
+        Cs2Frame parsed = roundtrip(Cs2GuiCommands.buildStatusDataConfig(McanUid.of(0x11223344L), 5));
         assertEquals(5,
                 ((Cs2GuiCommands.StatusDataConfigRequestFrame) parsed).index());
     }
@@ -238,13 +241,13 @@ public class Cs2GuiCommandsTest {
 
     @Test
     public void testBuildRequestConfigDataRoundtripsToRequestFrame() {
-        Cs2ClassifiedFrame parsed = roundtrip(Cs2GuiCommands.buildRequestConfigData("loks"));
+        Cs2Frame parsed = roundtrip(Cs2GuiCommands.buildRequestConfigData("loks"));
         assertInstanceOf(Cs2GuiCommands.RequestConfigDataRequestFrame.class, parsed);
     }
 
     @Test
     public void testRequestConfigDataRequestFrameFilename() {
-        Cs2ClassifiedFrame parsed = roundtrip(Cs2GuiCommands.buildRequestConfigData("lokinfo"));
+        Cs2Frame parsed = roundtrip(Cs2GuiCommands.buildRequestConfigData("lokinfo"));
         assertEquals("lokinfo",
                 ((Cs2GuiCommands.RequestConfigDataRequestFrame) parsed).filename());
     }

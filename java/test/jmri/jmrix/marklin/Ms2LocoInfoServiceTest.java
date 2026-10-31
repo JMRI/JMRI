@@ -1,5 +1,7 @@
 package jmri.jmrix.marklin;
 
+import jmri.jmrix.marklin.mcan.McanUid;
+
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
@@ -45,11 +47,11 @@ class Ms2LocoInfoServiceTest {
     }
 
     private McanDevice discover(long uid, int hash) {
-        int[] frame = Cs2ConfigCommands.buildPingReply(uid, 0x040F, 0x0033);
+        int[] frame = Cs2ConfigCommands.buildPingReply(McanUid.of(uid), 0x040F, 0x0033);
         frame[2] = hash >> 8;
         frame[3] = hash & 0xFF;
         memo.getMcanDeviceManager().reply(new MarklinReply(frame));
-        return memo.getMcanDeviceManager().getDevice(McanDeviceIdentity.forNative(uid, 0x0033));
+        return memo.getMcanDeviceManager().getDevice(McanDeviceIdentity.forNative(McanUid.of(uid), 0x0033));
     }
 
     private void awaitSent(int count) {
@@ -99,7 +101,7 @@ class Ms2LocoInfoServiceTest {
         assertEquals("15", record.getFields().get("list:.llindex[1]"));
         assertTrue(callbacksOnEdt.get());
         assertSame(service, memo.getMs2LocoInfoService());
-        assertEquals(List.of(), service.getLocos(new McanDevice("M", McanDeviceIdentity.forNative(0x1234, 0x0033))));
+        assertEquals(List.of(), service.getLocos(new McanDevice("M", McanDeviceIdentity.forNative(McanUid.of(0x1234), 0x0033))));
     }
 
     @Test
