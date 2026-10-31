@@ -433,10 +433,12 @@ public class SpeedUtil {
             }
             if (elem != null) {
                 List<Element> list = elem.getChildren("CVvalue");
+                // CV23 and CV24 are not read. They adjust momentum for a
+                // decoder in a consist (CV19 set), and many decoders apply
+                // them only then. A warrant drives the locomotive on its own
+                // address, which a decoder in a consist does not obey.
                 int cv3 = 0;
                 int cv4 = 0;
-                int cv23 = 0;
-                int cv24 = 0;
                 int count = 0;
                 for (Element cv : list) {
                     Attribute attr = cv.getAttribute("name");
@@ -447,21 +449,15 @@ public class SpeedUtil {
                         } else if (attr.getValue().equals("4")) {
                             cv4 = getCvValue(cv);
                             count++;
-                        } else if (attr.getValue().equals("23")) {
-                            cv23 = getCvValue(cv);
-                            count++;
-                        } else if (attr.getValue().equals("24")) {
-                            cv24 = getCvValue(cv);
-                            count++;
                         }
                     }
-                    if (count > 3) {
+                    if (count > 1) {
                         break;
                     }
                 }
                 float stepIncrement = getThrottleSpeedStepIncrement();
-                _ma = getMomentumTimePerStep(cv3, cv23, stepIncrement);
-                _md = getMomentumTimePerStep(cv4, cv24, stepIncrement);
+                _ma = getMomentumTimePerStep(cv3, stepIncrement);
+                _md = getMomentumTimePerStep(cv4, stepIncrement);
             }
         }
         if (log.isDebugEnabled()) {
@@ -492,29 +488,17 @@ public class SpeedUtil {
      * its momentum CVs.
      * <p>
      * NMRA S-9.2.2: CV#3 (CV#4 for deceleration) sets the rate as
-     * (CV#3 * 0.896 s) / (number of speed steps in use). CV#23 (CV#24) "contains
-     * additional acceleration rate information that is to be added to or
-     * subtracted from the base value contained in Configuration Variable #3
-     * using the formula (the contents of CV#23*.896)/(number of speed steps in
-     * use). This is a 7 bit value (bits 0-6) with bit 7 being reserved for a
-     * sign bit (0-add, 1-subtract). In case of overflow the maximum acceleration
-     * rate shall be used. In case of underflow no acceleration shall be used."
-     * <p>
-     * So the adjustment is added to the base CV value before the formula is
-     * applied, and the result is kept between 0 and 255.
+     * (CV#3 * 0.896 s) / (number of speed steps in use). For example, CV#3 = 2
+     * is 0.064 s per step for a decoder using 28 speed steps, and 0 is no
+     * momentum.
      *
-     * @param base          value of CV#3 or CV#4
-     * @param adjustment    value of CV#23 or CV#24
+     * @param cv            value of CV#3 or CV#4, 0 to 255
      * @param stepIncrement throttle speed step increment; its reciprocal is
      *                      the number of speed steps in use
      * @return milliseconds per speed step
      */
-    static int getMomentumTimePerStep(int base, int adjustment, float stepIncrement) {
-        int adjust = adjustment & 0x7F;     // value is bits 0-6
-        if ((adjustment & 0x80) != 0) {     // bit 7 is the sign
-            adjust = -adjust;
-        }
-        int value = Math.max(0, Math.min(255, base + adjust));
+    static int getMomentumTimePerStep(int cv, float stepIncrement) {
+        int value = Math.max(0, Math.min(255, cv));
         return Math.round(value * 896 * stepIncrement);
     }
 
