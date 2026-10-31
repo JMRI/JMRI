@@ -434,9 +434,12 @@ public class SpeedUtil {
             if (elem != null) {
                 List<Element> list = elem.getChildren("CVvalue");
                 // CV23 and CV24 are not read. They adjust momentum for a
-                // decoder in a consist (CV19 set), and many decoders apply
-                // them only then. A warrant drives the locomotive on its own
-                // address, which a decoder in a consist does not obey.
+                // decoder in a consist (CV19 set). A warrant can't tell
+                // whether the address it drives is a consist address, and
+                // these CVs come from one roster entry, not from each
+                // locomotive in a consist, so it can't know what adjustment
+                // the decoders apply. The Warrants help advises leaving them
+                // at 0.
                 int cv3 = 0;
                 int cv4 = 0;
                 int count = 0;

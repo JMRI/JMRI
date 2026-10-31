@@ -57,7 +57,7 @@ public class SpeedUtilTest {
     @Test
     public void testMomentumFromRosterCVs() throws IOException {
         // CV23 and CV24 adjust momentum for a decoder in a consist; a warrant
-        // drives the locomotive on its own address, so they are not used
+        // can't tell whether it drives a consist address, so they are not used
         RosterEntry re = makeRosterEntry("momentumTest",
                 "<CVvalue name=\"3\" value=\"20\"/>"
                 + "<CVvalue name=\"4\" value=\"40\"/>"
