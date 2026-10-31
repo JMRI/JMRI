@@ -161,15 +161,15 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
                 ms = (MarklinSensor) provideSensor(sb.toString());
             }
             if (event.newState() == 0x01) {
-                ms.setOwnState(Sensor.ACTIVE);
+                ms.setOwnState(Sensor.ACTIVE, r.getReceivedTime());
             } else {
-                ms.setOwnState(Sensor.INACTIVE);
+                ms.setOwnState(Sensor.INACTIVE, r.getReceivedTime());
             }
         } else if (frame instanceof Cs2FeedbackCommands.S88PollReplyFrame) {
             Cs2FeedbackCommands.S88PollReplyFrame pollReply = (Cs2FeedbackCommands.S88PollReplyFrame) frame;
             int s88Module = pollReply.module();
             if (_tmarklin.containsKey(s88Module)) {
-                decodeSensorState(s88Module, pollReply.state());
+                decodeSensorState(s88Module, pollReply.state(), r.getReceivedTime());
             } else {
                 log.debug("State s88Module not registered {}", s88Module);
             }
@@ -181,7 +181,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
         // messages are ignored
     }
 
-    private void decodeSensorState(int board, int intState) {
+    private void decodeSensorState(int board, int intState, long timeNanos) {
         MarklinSensor ms;
         int k = 1;
         int result;
@@ -199,9 +199,9 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
                 ms = (MarklinSensor) provideSensor(sb.toString());
             }
             if (result == 0) {
-                ms.setOwnState(Sensor.INACTIVE);
+                ms.setOwnState(Sensor.INACTIVE, timeNanos);
             } else {
-                ms.setOwnState(Sensor.ACTIVE);
+                ms.setOwnState(Sensor.ACTIVE, timeNanos);
             }
             k *= 2;
         }

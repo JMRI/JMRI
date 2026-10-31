@@ -78,6 +78,28 @@ public class DCCppSensorTest extends jmri.implementation.AbstractSensorTestBase 
 
     }
 
+    @Test
+    public void testIncomingReplyGivesItsReceivedTime() {
+        java.util.List<Long> times = new java.util.ArrayList<>();
+        java.util.List<Integer> states = new java.util.ArrayList<>();
+        t.addRawStateListener((sensor, oldState, newState, timeNanos) -> {
+            states.add(newState);
+            times.add(timeNanos);
+        });
+
+        DCCppReply rActive = DCCppReply.parseDCCppReply("Q 4");
+        rActive.setReceivedTime(1234L);
+        ((DCCppSensor) t).message(rActive);
+
+        long before = System.nanoTime();
+        ((DCCppSensor) t).message(DCCppReply.parseDCCppReply("q 4")); // not stamped, no time recorded
+        long after = System.nanoTime();
+
+        Assert.assertEquals(java.util.List.of(jmri.Sensor.ACTIVE, jmri.Sensor.INACTIVE), states);
+        Assert.assertEquals("the time the reply was received", 1234L, (long) times.get(0));
+        Assert.assertTrue("not stamped: dated when set", times.get(1) >= before && times.get(1) <= after);
+    }
+
     @Override
     @BeforeEach
     public void setUp() {
