@@ -111,6 +111,30 @@ public class CbusTableEvent extends CbusEvent {
     }
 
     /**
+     * Remove a Sensor, Turnout or Light from the beans associated with the
+     * event.
+     * @param nb the bean
+     * @return true if the bean was associated with the event
+     */
+    protected boolean removeBean(NamedBean nb){
+        boolean onA = _nbOnActiveA.remove(nb);
+        boolean onB = _nbOnActiveB.remove(nb);
+        boolean offA = _nbOffActiveA.remove(nb);
+        boolean offB = _nbOffActiveB.remove(nb);
+        return onA || onB || offA || offB;
+    }
+
+    /**
+     * Check whether a Sensor, Turnout or Light is associated with the event.
+     * @param nb the bean
+     * @return true if it is
+     */
+    protected boolean hasBean(NamedBean nb){
+        return _nbOnActiveA.contains(nb) || _nbOnActiveB.contains(nb)
+            || _nbOffActiveA.contains(nb) || _nbOffActiveB.contains(nb);
+    }
+
+    /**
      * Get the CAN ID to last send the event
      * @return CAN ID
      */
