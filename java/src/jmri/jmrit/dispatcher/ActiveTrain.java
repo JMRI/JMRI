@@ -22,6 +22,7 @@ import jmri.Section.SectionType;
 import jmri.beans.PropertyChangeProvider;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
+import jmri.util.LoggingUtil;
 
 /**
  * This class holds information and options for an ActiveTrain, that is a train
@@ -935,12 +936,11 @@ public class ActiveTrain implements PropertyChangeProvider {
                 mSecondAllocatedSection = as.getSection();
             }
             if (mDispatcher.getNameInAllocatedBlock()) {
-                if (mDispatcher.getRosterEntryInBlock() && getRosterEntry() != null) {
-                    as.getSection().setNameFromActiveBlock(getRosterEntry());
-                } else {
-                    as.getSection().setNameInBlocks(mTrainName);
+                LoggingUtil.infoOnce(log, ALLOCATED_VALUE_NOTE);
+                Object allocatedValue = getAllocatedBlockValue();
+                for (Block b : as.getSection().getBlockList()) {
+                    b.setAllocatedValue(allocatedValue);
                 }
-                as.getSection().suppressNameUpdate(true);
             }
             if (mDispatcher.getExtraColorForAllocated()) {
                 as.getSection().setAlternateColorFromActiveBlock(true);
@@ -1034,24 +1034,31 @@ public class ActiveTrain implements PropertyChangeProvider {
     }
 
     /**
+     * Get the value that identifies this train in the Blocks allocated to it:
+     * its roster entry if "Use roster entry" is selected and it has one,
+     * otherwise its name.
+     *
+     * @return the value given to the Blocks allocated to this train
+     */
+    private Object getAllocatedBlockValue() {
+        if (mDispatcher.getRosterEntryInBlock() && getRosterEntry() != null) {
+            return getRosterEntry();
+        }
+        return mTrainName;
+    }
+
+    /**
      * Remove what was shown for this train on a Block that is no longer
-     * allocated: the train name in an unoccupied Block, and the extra colour.
-     * The memory of the Layout Block follows the Block again.
+     * allocated: its allocated value and the extra colour.
      *
      * @param b the Block that is no longer allocated
      */
     private void releaseBlockDisplay(Block b) {
-        boolean nameInBlock = mDispatcher.getNameInAllocatedBlock();
-        if (nameInBlock && b.getState() == Block.UNOCCUPIED) {
-            b.setValue(null);
-        }
+        b.setAllocatedValue(null);
         String userName = b.getUserName();
         if (userName != null) {
             LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(userName);
             if (lb != null) {
-                if (nameInBlock) {
-                    lb.setSuppressNameUpdate(false);
-                }
                 lb.setUseExtraColor(false);
             }
         }
@@ -1607,6 +1614,16 @@ public class ActiveTrain implements PropertyChangeProvider {
     public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
         pcs.removePropertyChangeListener(propertyName, listener);
     }
+
+    /**
+     * Logged once per session, the first time a Block is given an allocated
+     * value, for anyone whose own script, Logix or LogixNG used to find the
+     * train in an allocated Block's value.
+     */
+    static final String ALLOCATED_VALUE_NOTE = "Dispatcher's \"Place train name in allocated Blocks\" no longer"
+            + " puts the train's name in the value of an allocated Block; it is kept as the Block's allocated value."
+            + " A script, Logix or LogixNG that reads an allocated Block's value to find its train should use"
+            + " getDisplayValue() or getAllocatedValue() instead (see the Block Table help).";
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActiveTrain.class);
 

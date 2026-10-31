@@ -2653,7 +2653,9 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      * @param value the value to set
      */
     @Override
+    @Deprecated(since="5.17.5", forRemoval=true)
     public void setNameFromActiveBlock(Object value) {
+        jmri.util.LoggingUtil.deprecationWarning(log, "Section.setNameFromActiveBlock");
         boolean beenSet = false;
         if (value == null || getState() == FREE || getState() == UNKNOWN) {
             setNameInBlocks(value);
@@ -2702,7 +2704,9 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      * @param set true to suppress the update; false otherwise
      */
     @Override
+    @Deprecated(since="5.17.5", forRemoval=true)
     public void suppressNameUpdate(boolean set) {
+        jmri.util.LoggingUtil.deprecationWarning(log, "Section.suppressNameUpdate");
         for (Block b : mBlockEntries) {
             String userName = b.getUserName();
             if (userName != null) {

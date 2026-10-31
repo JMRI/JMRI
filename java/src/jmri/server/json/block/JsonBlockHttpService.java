@@ -59,24 +59,9 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
             default:
                 data.put(JSON.STATE, block.getState());
         }
-        // set block value based on type stored there
-        Object bv = block.getValue();
-        if (bv == null) {
-            data.putNull(VALUE);
-        } else if (bv instanceof jmri.IdTag) {
-            ObjectNode idTagValue = idTagService.doGet((jmri.IdTag) bv, name, IDTAG, request);
-            data.set(VALUE, idTagValue);
-        } else if (bv instanceof jmri.Reporter) {
-            ObjectNode reporterValue = reporterService.doGet((jmri.Reporter) bv, name, REPORTER, request);
-            data.set(VALUE, reporterValue);
-        } else if (bv instanceof jmri.BasicRosterEntry) {
-            ObjectNode rosterValue = (ObjectNode) rosterService.getRosterEntry(
-                request.locale, ((BasicRosterEntry) bv).getId(), request.id);
-            data.set(VALUE, rosterValue);
-        } else {
-            // send string for types not explicitly handled
-            data.put(VALUE, bv.toString());
-        }
+        // the train in the block, and the train it is allocated to
+        data.set(VALUE, valueNode(block.getValue(), name, request));
+        data.set(JsonBlock.ALLOCATED_VALUE, valueNode(block.getAllocatedValue(), name, request));
         var sens = block.getSensor();
         data.put(JsonSensor.SENSOR, sens != null ? sens.getSystemName() : null);
         var rep = block.getReporter();
@@ -90,6 +75,30 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
         ArrayNode array = data.putArray(JsonBlock.DENIED);
         block.getDeniedBlocks().forEach(array::add);
         return root;
+    }
+
+    /**
+     * Encode a value held by a block: an idTag, reporter or roster entry as
+     * its JSON object, anything else as its string form.
+     *
+     * @param bv      the value, or null
+     * @param name    the name of the block
+     * @param request the request being answered
+     * @return the encoded value
+     * @throws JsonException if the value can't be encoded
+     */
+    private JsonNode valueNode(Object bv, String name, JsonRequest request) throws JsonException {
+        if (bv == null) {
+            return mapper.nullNode();
+        } else if (bv instanceof jmri.IdTag) {
+            return idTagService.doGet((jmri.IdTag) bv, name, IDTAG, request);
+        } else if (bv instanceof jmri.Reporter) {
+            return reporterService.doGet((jmri.Reporter) bv, name, REPORTER, request);
+        } else if (bv instanceof jmri.BasicRosterEntry) {
+            return rosterService.getRosterEntry(request.locale, ((BasicRosterEntry) bv).getId(), request.id);
+        }
+        // send string for types not explicitly handled
+        return mapper.getNodeFactory().textNode(bv.toString());
     }
 
     @Override

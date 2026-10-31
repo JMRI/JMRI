@@ -150,11 +150,19 @@
         </li>
 
         <li>
-          <p>Check <strong>Place train name in allocated Blocks</strong> to place the name of the
-          Active Train to which a Section is allocated as the value of Blocks of the Allocated
-          Section. This feature, coupled with the above alternate color option, makes it easy for
-          the dispatcher to see which Allocated Section is allocated to which Active Train when
-          viewing a Layout Editor panel.</p>
+          <p>Check <strong>Place train name in allocated Blocks</strong> to show the name of the
+          Active Train to which a Section is allocated in the Blocks of the Allocated Section. It
+          is shown by Block Contents icons and Layout Block memories wherever the Block does not
+          already show the train in it. If <strong>Place Roster Entry in starting Block</strong> is
+          also checked, the roster entry is shown instead. This feature, coupled with the above
+          alternate color option, makes it easy for the dispatcher to see which Allocated Section
+          is allocated to which Active Train when viewing a Layout Editor panel.</p>
+
+          <p>The name is kept separately from the Block's value, which shows the train actually in
+          the Block and is passed from Block to Block as the train moves. Logix, LogixNG and scripts
+          that read a Block's value therefore see the train in it, not the train it is allocated
+          to; see <a href="../beantable/BlockTable.shtml#allocatedValue">the Block Table help</a>
+          for how they can read the train a Block is allocated to.</p>
         </li>
 
         <li>

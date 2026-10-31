@@ -91,6 +91,9 @@ the data is actually logged.
         <Logger name="jmri.util.LoggingUtilTest" level="INFO"/>
         <Logger name="LoggingUtilTest-extra-logger" level="INFO"/>
 
+        <!-- Needed for jmri.jmrit.dispatcher.ActiveTrainAllocatedBlockValueTest -->
+        <Logger name="jmri.jmrit.dispatcher.ActiveTrain" level="INFO"/>
+
         <!-- INFO is part of application tests -->
         <Logger name="apps.Apps" level="INFO"/>
         <Logger name="apps.AppsBase" level="INFO"/>

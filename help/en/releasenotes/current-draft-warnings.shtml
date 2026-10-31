@@ -9,6 +9,19 @@
         differently. See the LogixNG section of the release notes for an
         example and how to change it.
     </li>
+    <li>
+        <strong>Dispatcher: with "Place train name in allocated Blocks" on,
+        the value of an allocated Block no longer holds the train it is
+        allocated to.</strong>
+        A Logix, LogixNG or script that reads the value of an allocated Block
+        now gets only the train Block tracking has placed there: nothing
+        where the Block is empty, or where Block tracking could not tell
+        which train entered. To get what the value gave before, use
+        <code>getDisplayValue()</code>; for only the train the Block is
+        allocated to, <code>getAllocatedValue()</code>. Dispatcher logs a
+        note the first time this applies in a session. With the option off,
+        nothing changes. See the Dispatcher section of the release notes.
+    </li>
     <li>If you use OpenLCB/LCC native signal masts:  These can no longer 
         be defined to use the event ID's that start with 00.  
         The value 00.00.00.00.00.00.00.00 was previously the default 
