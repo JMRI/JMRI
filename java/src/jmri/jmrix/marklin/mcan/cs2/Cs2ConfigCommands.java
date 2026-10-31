@@ -35,8 +35,17 @@ public final class Cs2ConfigCommands {
      * @return 13-byte CAN frame
      */
     public static int[] buildPing() {
+        return buildPing(BROADCAST_HASH);
+    }
+
+    /**
+     * Builds a broadcast ping with the caller's sender hash.
+     * @param hash 16-bit sender hash
+     * @return 13-byte CAN frame
+     */
+    public static int[] buildPing(int hash) {
         return Cs2FrameBuilder.buildFrame(DEFAULT_PRIORITY, COMMAND_PING,
-                false, BROADCAST_HASH, 0, new int[0]);
+                false, hash, 0, new int[0]);
     }
 
     /**
