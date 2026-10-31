@@ -212,6 +212,41 @@ public class CbusSendTest {
     }
 
     @Test
+    public void testSendWithDelaySameDelayArrivesInOrderSent() {
+        int count = 50;
+        for (int i = 0; i < count; i++) {
+            send.sendWithDelay(new CanReply(new int[]{CbusConstants.CBUS_ACON, 0x00, 0x01, 0x00, i}), true, false, 5);
+        }
+        JUnitUtil.waitFor(() -> tcis.inbound.size() == count, "all frames delivered");
+        for (int i = 0; i < count; i++) {
+            assertEquals(i, tcis.inbound.elementAt(i).getElement(4), "frame " + i + " in the order sent");
+        }
+        assertReceivedTimesInOrder();
+    }
+
+    @Test
+    public void testSendWithDelayArrivesInOrderDue() {
+        // sent in the order 20, 10, 10, 0 ms: due 0, then the two 10s in the order sent, then 20
+        send.sendWithDelay(new CanReply(new int[]{CbusConstants.CBUS_ACON, 0x00, 0x01, 0x00, 20}), true, false, 20);
+        send.sendWithDelay(new CanReply(new int[]{CbusConstants.CBUS_ACON, 0x00, 0x01, 0x00, 10}), true, false, 10);
+        send.sendWithDelay(new CanReply(new int[]{CbusConstants.CBUS_ACON, 0x00, 0x01, 0x00, 11}), true, false, 10);
+        send.sendWithDelay(new CanReply(new int[]{CbusConstants.CBUS_ACON, 0x00, 0x01, 0x00, 0}), true, false, 0);
+        JUnitUtil.waitFor(() -> tcis.inbound.size() == 4, "all frames delivered");
+        int[] expected = {0, 10, 11, 20};
+        for (int i = 0; i < expected.length; i++) {
+            assertEquals(expected[i], tcis.inbound.elementAt(i).getElement(4), "position " + i);
+        }
+        assertReceivedTimesInOrder();
+    }
+
+    private void assertReceivedTimesInOrder() {
+        for (int i = 1; i < tcis.inbound.size(); i++) {
+            assertTrue(tcis.inbound.elementAt(i).getReceivedTime() - tcis.inbound.elementAt(i - 1).getReceivedTime() >= 0,
+                "received times in delivery order, at " + i);
+        }
+    }
+
+    @Test
     public void testSendWithDelayOutgoingOnlyIsNotStamped() {
         CanReply r = new CanReply(new int[]{CbusConstants.CBUS_ACOF, 0x00, 0x01, 0x00, 0x02});
         send.sendWithDelay(r, false, true, 5);

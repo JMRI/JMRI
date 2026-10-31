@@ -27,6 +27,10 @@
         <h4>CBUS</h4>
             <ul>
                 <li></li>
+                <li>The CBUS simulator delivers its frames in the order a bus
+                    would: frames due at the same moment now arrive in the
+                    order they were sent, where before they could arrive in
+                    either order.</li>
             </ul>
 
         <h4>C/MRI</h4>
