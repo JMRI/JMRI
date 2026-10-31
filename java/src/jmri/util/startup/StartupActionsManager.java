@@ -113,15 +113,26 @@ public class StartupActionsManager extends AbstractPreferencesManager {
                 log.debug("No element to read");
             }
             if (perform) {
+                List<String> performed = new ArrayList<>();
+                List<Long> nanos = new ArrayList<>();
                 this.actions.stream().filter(action -> action.isValid()).forEachOrdered(action -> {
                     try {
                         if (action.isEnabled()) {
-                            action.performAction();
+                            long start = System.nanoTime();
+                            try {
+                                action.performAction();
+                            } finally {
+                                performed.add(describe(action));
+                                nanos.add(System.nanoTime() - start);
+                            }
                         }
                     } catch (JmriException ex) {
                         this.addInitializationException(profile, ex);
                     }
                 });
+                if (!performed.isEmpty()) {
+                    log.info("{}", summary(performed, nanos));
+                }
                 ServiceLoader.load(StartupRunnable.class).forEach(Runnable::run);
             }
             this.isDirty = false;
@@ -189,6 +200,43 @@ public class StartupActionsManager extends AbstractPreferencesManager {
             }
         }
         return false;
+    }
+
+    /**
+     * Describe a start up action as the Start Up preferences list it: the type
+     * of action, then its name in quotes.
+     *
+     * @param action the action
+     * @return the description
+     */
+    private String describe(StartupModel action) {
+        StartupModelFactory factory = this.factories.get(action.getClass());
+        String type = (factory != null) ? factory.getDescription() : action.getClass().getSimpleName();
+        return type + " \"" + action + "\"";
+    }
+
+    /**
+     * One line saying how long the start up actions took in all, and each of
+     * them, in the order they were performed, so that a slow start up can be
+     * traced to its cause.
+     *
+     * @param performed the actions performed, as described by
+     *                  {@link #describe(StartupModel)}
+     * @param nanos     the time each took, in nanoseconds
+     * @return the line
+     */
+    static String summary(List<String> performed, List<Long> nanos) {
+        long total = 0;
+        StringBuilder each = new StringBuilder();
+        for (int i = 0; i < performed.size(); i++) {
+            total += nanos.get(i);
+            each.append(i == 0 ? "" : "; ").append(performed.get(i)).append(' ').append(seconds(nanos.get(i)));
+        }
+        return "Start up actions took " + seconds(total) + ": " + each;
+    }
+
+    private static String seconds(long nanos) {
+        return String.format(Locale.ROOT, "%.1f s", nanos / 1e9);
     }
 
     public StartupModel[] getActions() {

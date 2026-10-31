@@ -894,6 +894,10 @@
                 Removing one of several connections of the same type (for
                 example two CBUS connections) no longer hides the Start Up
                 actions of the others.</li>
+            <li>The session log now records how long the Start Up actions took,
+                in one line giving each action and its time in the order they
+                were performed, so that a slow start can be traced to its
+                cause.</li>
         </ul>
 
     <h3>Resources</h3>
