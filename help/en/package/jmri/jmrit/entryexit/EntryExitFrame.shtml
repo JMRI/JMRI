@@ -89,7 +89,7 @@
         create a route will result in a error dialog.</li>
       </ul>
 
-      <h2>NX Options</h2>
+      <h2 id="options">NX Options</h2>
 
       <p><img src="images/NxOptionsPane.png" alt="NX Options Window" class="floatRight">While the
       Entry/Exit (NX) Tools is displayed, its Options menu allows you to set shared settings for the
@@ -152,13 +152,10 @@
       is to fail quietly.  This typically applies to scripts creating a multi-point route and doing
       their own checks for success or failure.</p>
 
-      <p><span class="since">since 5.13.7</span><strong>Revert to the old GUI behavior</strong>
-      &mdash; The GUI enhancement was added in the JMRI 5.11.4 release.  The change was to run the
-      route setting code in a separate thread.  This allows the destination sensor to flash which
-      provides feedback that the destination button click was actually accepted.  The side effect was
-      that a double click no longer completed a request followed by a new request for the next route.
-      The double click became a route completion request followed by a cancel request for the route
-      that was just created.</p>
+      <p><span class="since">since 5.17.5</span><strong>Enable double click sensor selection</strong>
+      &mdash; When enabled, a double click on a destination sensor will complete the current NX
+      segment and start the process for the next NX segment.  Note: This option replaces the
+      <strong>Revert to the old GUI behavior</strong> option.</p>
 
       <p><strong>Integrate with Dispatcher</strong> &mdash; Select this option if the NX route is to
       extend the path of an <strong>Active Train</strong> in the <a href=

@@ -98,7 +98,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
     boolean allocateToDispatcher = false;
     boolean absSignalMode = false;
     boolean quietFail = false;      // Suppress the dialog when a route allocation fails.
-    boolean skipGuiFix = false;     // Hold back NX button clicks while a route is set.  This keeps double-click chaining.
+    boolean enableDoubleClick = false;  // Hold back NX button clicks while a route is set.  This keeps double-click chaining.
 
     public static final int PROMPTUSER = 0x00;
     public static final int AUTOCLEAR = 0x01;
@@ -172,12 +172,12 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
         return quietFail;
     }
 
-    public void setSkipGuiFix(boolean skip) {
-        skipGuiFix = skip;
+    public void setEnableDoubleClick(boolean enable) {
+        enableDoubleClick = enable;
     }
 
-    public boolean isSkipGuiFix() {
-        return skipGuiFix;
+    public boolean isDoubleClickEnabled() {
+        return enableDoubleClick;
     }
 
     /**
@@ -759,7 +759,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
     }
 
     /**
-     * With the old GUI behavior, hold back a click on an NX button while a
+     * With the old GUI behavior (now called enableDoubleClick), hold back a click on an NX button while a
      * route is being set. The panel used to wait until the turnouts of a route
      * were set, so a second click on the destination button was handled after
      * the route had been set and started the next route instead of cancelling
@@ -771,7 +771,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
      * @return true if the click has been held back
      */
     synchronized boolean holdButtonClick(Runnable click) {
-        if (!skipGuiFix || routesBeingSet == 0) {
+        if (!enableDoubleClick || routesBeingSet == 0) {
             return false;
         }
         heldButtonClicks.add(click);
