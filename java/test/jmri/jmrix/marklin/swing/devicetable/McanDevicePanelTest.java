@@ -48,6 +48,95 @@ class McanDevicePanelTest {
 
     @Test
     @jmri.util.junit.annotations.DisabledIfHeadless
+    void testMs2ConfigureEnabledButNotGleisbox() {
+        McanDevicePanel panel = new McanDevicePanel();
+        panel.initComponents(memo);
+        McanDevice device = memo.getMcanDeviceManager().provideDevice(
+                McanDeviceIdentity.forNative(0x4D5552E2, 0x0033));
+        device.setDeviceState(McanDeviceState.ONLINE);
+        panel.getDeviceTable().setRowSelectionInterval(0, 0);
+        assertTrue(panel.getConfigureButton().isEnabled());
+        assertFalse(panel.getProbeButton().isEnabled());
+        jmri.util.ThreadingUtil.runOnGUI(() -> {
+            panel.getConfigureButton().doClick();
+            jmri.util.JmriJFrame frame = jmri.util.JmriJFrame.getFrame(
+                    "Mobile Station 2 - " + device.getSystemName());
+            assertNotNull(frame);
+            assertInstanceOf(jmri.jmrix.marklin.swing.configure.Ms2ConfigPanel.class,
+                    frame.getContentPane().getComponent(0));
+            frame.dispatchEvent(new java.awt.event.WindowEvent(frame, java.awt.event.WindowEvent.WINDOW_CLOSING));
+            frame.dispose();
+        });
+        memo.getMcanDeviceManager().deregister(device);
+        memo.getMcanDeviceManager().provideDevice(McanDeviceIdentity.forNative(0x47460304, 0x0010));
+        panel.getDeviceTable().setRowSelectionInterval(0, 0);
+        assertFalse(panel.getConfigureButton().isEnabled());
+        panel.dispose();
+    }
+
+    @Test
+    @jmri.util.junit.annotations.DisabledIfHeadless
+    void testPingClassCheckboxesWrapWhenWindowNarrows() throws Exception {
+        McanDevicePanel panel = new McanDevicePanel();
+        javax.swing.JFrame frame = new javax.swing.JFrame();
+        int[] dimensions = new int[3];
+        try {
+            javax.swing.SwingUtilities.invokeAndWait(() -> {
+                panel.initComponents(memo);
+                frame.setContentPane(panel);
+                frame.pack();
+                frame.setVisible(true);
+                java.awt.Container checkboxRow = panel.getCdbClassCheckBoxes().values()
+                        .iterator().next().getParent();
+                dimensions[0] = frame.getWidth();
+                dimensions[1] = checkboxRow.getHeight();
+                dimensions[2] = checkboxRow.getComponent(0).getY();
+                for (java.awt.Component checkbox : checkboxRow.getComponents()) {
+                    assertEquals(dimensions[2], checkbox.getY());
+                }
+
+                frame.setSize(dimensions[0] / 2, frame.getHeight());
+                frame.validate();
+            });
+            javax.swing.SwingUtilities.invokeAndWait(() -> { });
+            javax.swing.SwingUtilities.invokeAndWait(() -> {
+                frame.validate();
+                java.awt.Container checkboxRow = panel.getCdbClassCheckBoxes().values()
+                        .iterator().next().getParent();
+                assertTrue(checkboxRow.getHeight() > dimensions[1],
+                        "Checkbox area must grow to accommodate wrapped rows");
+                assertTrue(java.util.Arrays.stream(checkboxRow.getComponents())
+                        .anyMatch(checkbox -> checkbox.getY() > dimensions[2]));
+                for (java.awt.Component checkbox : checkboxRow.getComponents()) {
+                    assertTrue(checkbox.getX() >= 0);
+                    assertTrue(checkbox.getX() + checkbox.getWidth() <= checkboxRow.getWidth());
+                    assertTrue(checkbox.getY() + checkbox.getHeight() <= checkboxRow.getHeight(),
+                            "Wrapped checkboxes must not be clipped");
+                }
+
+                frame.setSize(dimensions[0], frame.getHeight());
+                frame.validate();
+            });
+            javax.swing.SwingUtilities.invokeAndWait(() -> { });
+            javax.swing.SwingUtilities.invokeAndWait(() -> {
+                frame.validate();
+                java.awt.Container checkboxRow = panel.getCdbClassCheckBoxes().values()
+                        .iterator().next().getParent();
+                assertEquals(dimensions[1], checkboxRow.getHeight());
+                for (java.awt.Component checkbox : checkboxRow.getComponents()) {
+                    assertEquals(dimensions[2], checkbox.getY());
+                }
+            });
+        } finally {
+            javax.swing.SwingUtilities.invokeAndWait(() -> {
+                frame.dispose();
+                panel.dispose();
+            });
+        }
+    }
+
+    @Test
+    @jmri.util.junit.annotations.DisabledIfHeadless
     void testPanelInitialization() {
         McanDevicePanel panel = new McanDevicePanel();
         panel.initComponents(memo);

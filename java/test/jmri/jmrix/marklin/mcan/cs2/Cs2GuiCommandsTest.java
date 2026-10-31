@@ -37,10 +37,10 @@ public class Cs2GuiCommandsTest {
     }
 
     @Test
-    public void testBuildStatusDataConfigHasCommandCode0x20() {
+    public void testBuildStatusDataConfigHasCommandCode0x1D() {
         ClassifiedFrame cf = ProtocolClassifier.classify(
                 Cs2GuiCommands.buildStatusDataConfig(0x11223344L, 0));
-        assertEquals(0x20, cf.cs2Header().commandCode());
+        assertEquals(0x1D, cf.cs2Header().commandCode());
     }
 
     @Test
@@ -74,10 +74,10 @@ public class Cs2GuiCommandsTest {
     }
 
     @Test
-    public void testBuildRequestConfigDataHasCommandCode0x21() {
+    public void testBuildRequestConfigDataHasCommandCode0x20() {
         ClassifiedFrame cf = ProtocolClassifier.classify(
                 Cs2GuiCommands.buildRequestConfigData("loks"));
-        assertEquals(0x21, cf.cs2Header().commandCode());
+        assertEquals(0x20, cf.cs2Header().commandCode());
     }
 
     @Test
@@ -110,10 +110,10 @@ public class Cs2GuiCommandsTest {
     }
 
     @Test
-    public void testBuildConfigDataStreamHeaderHasCommandCode0x22() {
+    public void testBuildConfigDataStreamHeaderHasCommandCode0x21() {
         ClassifiedFrame cf = ProtocolClassifier.classify(
                 Cs2GuiCommands.buildConfigDataStreamHeader(1024L, 0xABCD));
-        assertEquals(0x22, cf.cs2Header().commandCode());
+        assertEquals(0x21, cf.cs2Header().commandCode());
     }
 
     @Test
@@ -181,13 +181,12 @@ public class Cs2GuiCommandsTest {
     }
 
     @Test
-    public void testBuildConfigDataStreamPacketMasksHashBits() {
+    public void testBuildConfigDataStreamPacketPreservesTransactionHash() {
         int[] data = new int[8];
-        // Packet number with bits 7-9 set; they should be cleared in hash
-        int packetNumber = 0x1FFF;
-        int[] frame = Cs2GuiCommands.buildConfigDataStreamPacket(packetNumber, data);
+        int transactionHash = 0xFB21;
+        int[] frame = Cs2GuiCommands.buildConfigDataStreamPacket(transactionHash, data);
         int hash = ((frame[2] & 0xFF) << 8) | (frame[3] & 0xFF);
-        assertEquals(packetNumber & 0x1F8F, hash & 0x1F8F);
+        assertEquals(transactionHash, hash);
     }
 
     @Test
@@ -200,17 +199,17 @@ public class Cs2GuiCommandsTest {
     public void testBuildConfigDataStreamPacketRoundtripsToPacketFrame() {
         int[] data = new int[]{0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
         Cs2ClassifiedFrame parsed = roundtrip(
-                Cs2GuiCommands.buildConfigDataStreamPacket(3, data));
+                Cs2GuiCommands.buildConfigDataStreamPacket(0xFB21, data));
         assertInstanceOf(Cs2GuiCommands.ConfigDataStreamPacketFrame.class, parsed);
     }
 
     @Test
-    public void testConfigDataStreamPacketFramePacketNumber() {
+    public void testConfigDataStreamPacketFrameTransactionHash() {
         int[] data = new int[8];
         Cs2ClassifiedFrame parsed = roundtrip(
-                Cs2GuiCommands.buildConfigDataStreamPacket(42, data));
-        assertEquals(42 & 0x1F8F,
-                ((Cs2GuiCommands.ConfigDataStreamPacketFrame) parsed).packetNumber());
+                Cs2GuiCommands.buildConfigDataStreamPacket(0xFB21, data));
+        assertEquals(0xFB21,
+                ((Cs2GuiCommands.ConfigDataStreamPacketFrame) parsed).transactionHash());
     }
 
     // --- StatusDataConfigRequestFrame ---
@@ -248,5 +247,48 @@ public class Cs2GuiCommandsTest {
         Cs2ClassifiedFrame parsed = roundtrip(Cs2GuiCommands.buildRequestConfigData("lokinfo"));
         assertEquals("lokinfo",
                 ((Cs2GuiCommands.RequestConfigDataRequestFrame) parsed).filename());
+    }
+
+    @Test
+    public void testMs2RequestsMatchWireFrames() {
+        assertArrayEquals(new int[]{0, 0x40, 0x47, 0x12, 8,
+            0x6C, 0x6F, 0x6B, 0x6C, 0x69, 0x73, 0x74, 0x65},
+                Cs2GuiCommands.buildRequestConfigData("lokliste", 0x4712));
+        java.util.List<int[]> frames = Cs2GuiCommands.buildRequestLocoInfo("K\u00d6F II EMMA", 0x4712);
+        assertEquals(3, frames.size());
+        assertArrayEquals(new int[]{0, 0x40, 0x47, 0x12, 8,
+            0x6C, 0x6F, 0x6B, 0x69, 0x6E, 0x66, 0x6F, 0}, frames.get(0));
+        assertArrayEquals(new int[]{0, 0x40, 0x47, 0x12, 8,
+            0x4B, 0xC3, 0x96, 0x46, 0x20, 0x49, 0x49, 0x20}, frames.get(1));
+        assertArrayEquals(new int[]{0, 0x40, 0x47, 0x12, 8,
+            0x45, 0x4D, 0x4D, 0x41, 0, 0, 0, 0}, frames.get(2));
+        frames = Cs2GuiCommands.buildRequestLocoInfo("1234567\u00d6", 0x4712);
+        assertEquals(0xC3, frames.get(1)[12]);
+        assertEquals(0x96, frames.get(2)[5]);
+    }
+
+    @Test
+    public void testLocoInfoPaddingAndNameLimits() {
+        java.util.List<int[]> frames = Cs2GuiCommands.buildRequestLocoInfo("1234567890123456", 0x4712);
+        assertEquals('6', frames.get(2)[12]);
+        frames = Cs2GuiCommands.buildRequestLocoInfo("BR 89", 0x4712);
+        assertEquals(0, frames.get(1)[10]);
+        assertArrayEquals(new int[]{0, 0x40, 0x47, 0x12, 8, 0, 0, 0, 0, 0, 0, 0, 0}, frames.get(2));
+        assertThrows(IllegalArgumentException.class,
+                () -> Cs2GuiCommands.buildRequestLocoInfo("\u00d6".repeat(9), 0x4712));
+        assertThrows(IllegalArgumentException.class,
+                () -> Cs2GuiCommands.buildRequestLocoInfo("A\0B", 0x4712));
+        assertThrows(IllegalArgumentException.class,
+                () -> Cs2GuiCommands.buildRequestConfigData("l\u00f6ks", 0x4712));
+    }
+
+    @Test
+    public void testCapturedBroadcastHeaderParses() {
+        int[] header = {0, 0x42, 0xFB, 0x21, 7, 0, 0, 0, 32, 0xCE, 0x2C, 0, 0};
+        Cs2GuiCommands.ConfigDataStreamHeaderFrame parsed =
+                (Cs2GuiCommands.ConfigDataStreamHeaderFrame) roundtrip(header);
+        assertEquals(32, parsed.fileLength());
+        assertEquals(0xCE2C, parsed.crc());
+        assertEquals(Cs2Command.CONFIG_DATA_STREAM, parsed.command());
     }
 }

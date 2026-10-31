@@ -39,6 +39,37 @@ public class McanDeviceTest {
     }
 
     @Test
+    public void testNativeRuntimeStateSeparatesDefaultAndObservedHash() throws Exception {
+        McanDeviceIdentity.Native identity = McanDeviceIdentity.forNative(0x4D5552E2, 0x0033);
+        McanDevice device = new McanDevice("M", identity);
+        assertNull(device.getDeviceService());
+        NativeDeviceService state = new NativeDeviceService(device);
+        device.setDeviceService(state);
+        assertSame(state, NativeDeviceService.get(device).orElseThrow());
+        assertEquals(0x1F37, state.getDefaultHash());
+        assertTrue(state.getObservedHash().isEmpty());
+        assertTrue(NativeDeviceService.get(new McanDevice("M", McanDeviceIdentity.forCdB(0x22, 1))).isEmpty());
+        assertThrows(IllegalArgumentException.class, () -> new NativeDeviceService(
+                new McanDevice("M", McanDeviceIdentity.forCdB(0x22, 1))));
+
+        AtomicReference<PropertyChangeEvent> eventRef = new AtomicReference<>();
+        state.addPropertyChangeListener(eventRef::set);
+        javax.swing.SwingUtilities.invokeAndWait(() -> state.setObservedHash(0xFF37));
+        assertEquals(0xFF37, state.getObservedHash().orElseThrow());
+        assertEquals(0x1F37, state.getDefaultHash());
+        assertEquals(identity, device.getIdentity());
+        assertSame(state, eventRef.get().getSource());
+        assertEquals(-1, eventRef.get().getOldValue());
+        assertEquals(0xFF37, eventRef.get().getNewValue());
+        javax.swing.SwingUtilities.invokeAndWait(() -> state.setObservedHash(0xFB21));
+        assertEquals(0xFF37, eventRef.get().getOldValue());
+        assertEquals(0xFB21, state.getObservedHash().orElseThrow());
+        assertThrows(IllegalArgumentException.class, () -> state.setObservedHash(0x10000));
+        assertThrows(IllegalArgumentException.class, () -> state.setObservedHash(0x0380));
+        assertEquals(0xFB21, state.getObservedHash().orElseThrow());
+    }
+
+    @Test
     public void testStateChangeFiresPropertyChangeEvent() {
         McanDeviceIdentity identity = McanDeviceIdentity.forCdB(0x22, 0x01);
         McanDevice device = new McanDevice("M", identity);
