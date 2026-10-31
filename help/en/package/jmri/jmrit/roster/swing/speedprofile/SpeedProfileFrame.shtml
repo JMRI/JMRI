@@ -81,6 +81,9 @@
         <li><strong>View Current</strong> - Opens a table of the speed profile currently saved in
         the roster entry.</li>
 
+        <li><strong>View Repeats</strong> - Opens a table of the speed steps repeated at the end of
+        the last profile (see <a href="#repeats">Repeating the lowest steps</a>).</li>
+
         <li><strong>Profile Start Step</strong> - The first speed step to profile.</li>
 
         <li><strong>Profile End Step</strong> - The last speed step to profile.</li>
@@ -92,6 +95,13 @@
         <li>The speed step values must be greater than zero and must not exceed the Maximum number
         of speed steps for the throttle.  If values are not entered they start at 1 and finish at
         Max Speed Steps, incrementing by 1.</li>
+
+        <li><strong>Repeat Lowest Steps at End</strong> - How many of the lowest steps profiled to
+        measure again at the end of the profile (see <a href="#repeats">Repeating the lowest
+        steps</a>). Leave it empty to measure each step once.</li>
+
+        <li><strong>Repeats of Each</strong> - How many times to measure each of those steps again.
+        If not entered, each is measured 3 times more.</li>
       </ul>
 
       <h3>Profiling</h3>
@@ -115,6 +125,31 @@
       how many steps to increment/decrement to the next sampling step. When a starting step is larger than 4
       be sure to place the loco in a position that will allow it to achieve full speed before
       reaching the block sensor.</p>
+
+      <h3 id="repeats">Repeating the lowest steps</h3>
+
+      <p>The lowest steps decide how accurately a loco stops, and a loco often runs a little
+      faster or slower at them once it has warmed up. Profiled from step 1 upwards, they are
+      measured first, while the loco is cold. Enter a number in <strong>Repeat Lowest Steps at
+      End</strong> to measure that many of the lowest steps profiled again once the profile is
+      done. Each is measured again <strong>Repeats of Each</strong> times, in both directions,
+      taking the steps in turn and then starting again, so the repeats of each step are spread
+      over the time they take. The status message shows the repeat being made: <em>Repeating
+      Step (Forward) 2, run 3 of 9</em>.</p>
+
+      <p>For each repeated step, the <strong>New</strong> profile table is given the mean of its
+      repeats. <strong>View Repeats</strong> shows, for each repeated step and direction:</p>
+      <ul>
+        <li><strong>First Run</strong> - the speed measured in the profile itself;</li>
+        <li><strong>Mean</strong>, <strong>Min</strong> and <strong>Max</strong> - of the
+        repeats;</li>
+        <li><strong>Spread (&plusmn;%)</strong> - half the range of the repeats, as a percentage
+        of their mean: how repeatable the loco is at that step. The smaller it is, the more
+        accurately the loco can be stopped;</li>
+        <li><strong>Change (%)</strong> - the mean of the repeats against the first run: how much
+        the loco's speed changed as it warmed up. A large change suggests running the loco for a
+        while before automatic running.</li>
+      </ul>
 
       <p>The first four buttons at the bottom are used to manage the speed profile within a roster
       entry.</p>
