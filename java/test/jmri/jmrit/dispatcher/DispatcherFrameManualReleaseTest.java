@@ -147,10 +147,10 @@ public class DispatcherFrameManualReleaseTest {
 
         d.releaseAllocatedSectionFromTable(d.getAllocatedSectionsList().indexOf(furthest));
 
-        verify(train, timeout(5000)).removeAllocatedSection(furthest);
+        verify(train, timeout(5000)).releaseAllocatedSection(furthest);
         InOrder order = inOrder(train);
         order.verify(train).holdAllocation(true);
-        order.verify(train).removeAllocatedSection(furthest);
+        order.verify(train).releaseAllocatedSection(furthest);
         assertFalse(d.getAllocatedSectionsList().contains(furthest), "released");
     }
 
@@ -164,7 +164,7 @@ public class DispatcherFrameManualReleaseTest {
 
         d.releaseAllocatedSectionFromTable(d.getAllocatedSectionsList().indexOf(furthest));
 
-        verify(train).removeAllocatedSection(furthest);
+        verify(train).releaseAllocatedSection(furthest);
         verify(train, never()).holdAllocation(true);
     }
 
@@ -181,7 +181,7 @@ public class DispatcherFrameManualReleaseTest {
         d.releaseAllocatedSectionFromTable(d.getAllocatedSectionsList().indexOf(next));
         JUnitUtil.waitFor(() -> !answer.isAlive(), "terminate question answered");
 
-        verify(train).removeAllocatedSection(next);
+        verify(train).releaseAllocatedSection(next);
         verify(train, never()).terminate();
     }
 
@@ -197,7 +197,7 @@ public class DispatcherFrameManualReleaseTest {
         d.releaseAllocatedSectionFromTable(d.getAllocatedSectionsList().indexOf(next));
         JUnitUtil.waitFor(() -> !answer.isAlive(), "terminate question answered");
 
-        verify(train).removeAllocatedSection(next);
+        verify(train).releaseAllocatedSection(next);
         verify(train).terminate();
     }
 
@@ -212,7 +212,7 @@ public class DispatcherFrameManualReleaseTest {
 
         d.releaseAllocatedSectionFromTable(d.getAllocatedSectionsList().indexOf(furthest));
 
-        verify(train).removeAllocatedSection(furthest);
+        verify(train).releaseAllocatedSection(furthest);
         verify(train, never()).terminate();
     }
 
