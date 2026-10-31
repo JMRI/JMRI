@@ -26,7 +26,7 @@ import jmri.jmrix.marklin.MarklinSystemConnectionMemo;
 import jmri.jmrix.marklin.McanDeviceManager;
 import jmri.jmrix.marklin.WeichenChefMagnetService;
 import jmri.jmrix.marklin.SeniorThrottleService;
-import jmri.jmrix.marklin.mcan.device.CdBDeviceClass;
+import jmri.jmrix.marklin.mcan.cdb.CdBDeviceClass;
 import jmri.jmrix.marklin.swing.MarklinPanel;
 import jmri.jmrix.marklin.swing.configure.ReporterConfigPanel;
 import jmri.jmrix.marklin.swing.configure.WeichenChefKombiConfigPanel;

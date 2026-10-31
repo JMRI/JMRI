@@ -1,11 +1,11 @@
 package jmri.jmrix.marklin.mcan.cs2;
 
+import jmri.jmrix.marklin.mcan.McanUid;
 import jmri.jmrix.marklin.mcan.classify.ClassifiedFrame;
 import jmri.jmrix.marklin.mcan.classify.Cs2ClassifiedFrame;
 import jmri.jmrix.marklin.mcan.classify.Cs2Data;
 import jmri.jmrix.marklin.mcan.classify.Cs2Header;
 import jmri.jmrix.marklin.mcan.classify.FrameProtocol;
-import jmri.jmrix.marklin.mcan.protocol.NativeDeviceInfo;
 import java.util.Optional;
 
 /**
@@ -80,12 +80,12 @@ public final class Cs2ConfigCommands {
      * @param version 16-bit firmware version
      * @return 13-byte CAN frame
      */
-    public static int[] buildUpdateOffer(long uid, int version) {
+    public static int[] buildUpdateOffer(McanUid uid, int version) {
         int[] data = new int[]{
-            (int)((uid >> 24) & 0xFF),
-            (int)((uid >> 16) & 0xFF),
-            (int)((uid >>  8) & 0xFF),
-            (int)( uid        & 0xFF),
+            (int)((uid.toLong() >> 24) & 0xFF),
+            (int)((uid.toLong() >> 16) & 0xFF),
+            (int)((uid.toLong() >>  8) & 0xFF),
+            (int)( uid.toLong() & 0xFF),
             (version >> 8) & 0xFF,
             version & 0xFF
         };
@@ -101,12 +101,12 @@ public final class Cs2ConfigCommands {
      * @param deviceType      16-bit device type code
      * @return 13-byte CAN frame
      */
-    public static int[] buildPingReply(long uid, int softwareVersion, int deviceType) {
+    public static int[] buildPingReply(McanUid uid, int softwareVersion, int deviceType) {
         int[] data = new int[]{
-            (int)((uid >> 24) & 0xFF),
-            (int)((uid >> 16) & 0xFF),
-            (int)((uid >>  8) & 0xFF),
-            (int)( uid        & 0xFF),
+            (int)((uid.toLong() >> 24) & 0xFF),
+            (int)((uid.toLong() >> 16) & 0xFF),
+            (int)((uid.toLong() >>  8) & 0xFF),
+            (int)( uid.toLong() & 0xFF),
             (softwareVersion >> 8) & 0xFF,
             softwareVersion & 0xFF,
             (deviceType >> 8) & 0xFF,
@@ -134,12 +134,12 @@ public final class Cs2ConfigCommands {
      * @param deviceType 16-bit device type code
      * @return 13-byte CAN frame
      */
-    public static int[] buildUpdateOfferReply(long uid, int version, int deviceType) {
+    public static int[] buildUpdateOfferReply(McanUid uid, int version, int deviceType) {
         int[] data = new int[]{
-            (int)((uid >> 24) & 0xFF),
-            (int)((uid >> 16) & 0xFF),
-            (int)((uid >>  8) & 0xFF),
-            (int)( uid        & 0xFF),
+            (int)((uid.toLong() >> 24) & 0xFF),
+            (int)((uid.toLong() >> 16) & 0xFF),
+            (int)((uid.toLong() >>  8) & 0xFF),
+            (int)( uid.toLong() & 0xFF),
             (version >> 8) & 0xFF,
             version & 0xFF,
             (deviceType >> 8) & 0xFF,
@@ -158,12 +158,12 @@ public final class Cs2ConfigCommands {
      * @param packetCount  number of data packets that will follow
      * @return 13-byte CAN frame
      */
-    public static int[] buildReadConfigDataReply(long uid, int channelIndex, int subIndex, int packetCount) {
+    public static int[] buildReadConfigDataReply(McanUid uid, int channelIndex, int subIndex, int packetCount) {
         int[] data = new int[]{
-            (int)((uid >> 24) & 0xFF),
-            (int)((uid >> 16) & 0xFF),
-            (int)((uid >>  8) & 0xFF),
-            (int)( uid        & 0xFF),
+            (int)((uid.toLong() >> 24) & 0xFF),
+            (int)((uid.toLong() >> 16) & 0xFF),
+            (int)((uid.toLong() >>  8) & 0xFF),
+            (int)( uid.toLong() & 0xFF),
             channelIndex & 0xFF,
             subIndex & 0xFF,
             packetCount & 0xFF,
@@ -179,12 +179,12 @@ public final class Cs2ConfigCommands {
      * @param uid 32-bit target device UID
      * @return 13-byte CAN frame
      */
-    public static int[] buildBootRequestReply(long uid) {
+    public static int[] buildBootRequestReply(McanUid uid) {
         int[] data = new int[]{
-            (int)((uid >> 24) & 0xFF),
-            (int)((uid >> 16) & 0xFF),
-            (int)((uid >>  8) & 0xFF),
-            (int)( uid        & 0xFF)
+            (int)((uid.toLong() >> 24) & 0xFF),
+            (int)((uid.toLong() >> 16) & 0xFF),
+            (int)((uid.toLong() >>  8) & 0xFF),
+            (int)( uid.toLong() & 0xFF)
         };
         return Cs2FrameBuilder.buildFrame(DEFAULT_PRIORITY, COMMAND_BOOT_REQUEST,
                 true, BROADCAST_HASH, 4, data);
@@ -226,7 +226,7 @@ public final class Cs2ConfigCommands {
         UpdateOfferRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
 
         /** 32-bit target device UID. */
-        public long uid() { return data().int32At(0); }
+        public McanUid uid() { return data().uidAt(0); }
 
         /** 16-bit firmware version being offered. */
         public int version() { return data().int16At(4); }
@@ -241,7 +241,7 @@ public final class Cs2ConfigCommands {
         ReadConfigDataRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
 
         /** 32-bit target device UID. */
-        public long uid() { return data().int32At(0); }
+        public McanUid uid() { return data().uidAt(0); }
 
         /** Channel index to read. */
         public int channelIndex() { return data().byteAt(4); }
@@ -260,8 +260,8 @@ public final class Cs2ConfigCommands {
         }
 
         /** 32-bit device UID. */
-        public long uid() {
-            return data().int32At(0);
+        public McanUid uid() {
+            return data().uidAt(0);
         }
 
         /** 16-bit software version. */
@@ -288,7 +288,7 @@ public final class Cs2ConfigCommands {
         UpdateOfferReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
 
         /** 32-bit device UID. */
-        public long uid() { return data().int32At(0); }
+        public McanUid uid() { return data().uidAt(0); }
 
         /** 16-bit firmware version offered. */
         public int version() { return data().int16At(4); }
@@ -308,7 +308,7 @@ public final class Cs2ConfigCommands {
         ReadConfigDataReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
 
         /** 32-bit target device UID. */
-        public long uid() { return data().int32At(0); }
+        public McanUid uid() { return data().uidAt(0); }
 
         /** Channel index being read. */
         public int channelIndex() { return data().byteAt(4); }
@@ -330,7 +330,7 @@ public final class Cs2ConfigCommands {
         BootRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
 
         /** 32-bit target device UID. */
-        public long uid() { return data().int32At(0); }
+        public McanUid uid() { return data().uidAt(0); }
     }
 
     /**
@@ -347,11 +347,11 @@ public final class Cs2ConfigCommands {
         if (frame.cs2Header().dlc() != 8)                  return Optional.empty();
 
         int[] raw = frame.raw().toArray();
-        long uid = ((long)(raw[5] & 0xFF) << 24)
+        McanUid uid = McanUid.of(((long)(raw[5] & 0xFF) << 24)
                  | ((long)(raw[6] & 0xFF) << 16)
                  | ((long)(raw[7] & 0xFF) <<  8)
-                 | (raw[8] & 0xFF);
-        if (uid == NativeDeviceInfo.UID_BROADCAST || uid == NativeDeviceInfo.UID_UNINITIALIZED) {
+                 | (raw[8] & 0xFF));
+        if (uid.isBroadcast() || uid.isUninitialized()) {
             return Optional.empty();
         }
         int softwareVersion = ((raw[9]  & 0xFF) << 8) | (raw[10] & 0xFF);
@@ -390,8 +390,8 @@ public final class Cs2ConfigCommands {
         if (header.dlc() != 8) {
             return new Cs2ClassifiedFrame(header, data, parent);
         }
-        long uid = data.int32At(0);
-        if (uid == 0x00000000L || uid == 0xFFFFFFFFL) {
+        McanUid uid = data.uidAt(0);
+        if (uid.isBroadcast() || uid.isUninitialized()) {
             return new Cs2ClassifiedFrame(header, data, parent);
         }
         return new PingReplyFrame(header, data, parent);

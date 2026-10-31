@@ -83,7 +83,7 @@ public final class CdBWeichenChefCommands {
      *   <li>gen-002+: {@code [0x03, 0x00]}  -  8 pulse channels</li>
      * </ul>
      * The caller must already know the generation (e.g. from a firmware-version probe)
-     * before invoking this builder. See {@link jmri.jmrix.marklin.mcan.device.CdBDeviceClass.HardwareCapability}.
+     * before invoking this builder. See {@link jmri.jmrix.marklin.mcan.cdb.CdBDeviceClass.HardwareCapability}.
      *
      * @param classId   8-bit CdB device class (0x22 for WeichenChef Magnet)
      * @param moduleId  module slot

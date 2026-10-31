@@ -1,5 +1,7 @@
 package jmri.jmrix.marklin.mcan.classify;
 
+import jmri.jmrix.marklin.mcan.McanUid;
+
 /**
  * Immutable value object wrapping the 8 data bytes (frame bytes 5–12) of a
  * CS2 native CAN frame.
@@ -50,6 +52,16 @@ public final class Cs2Data {
              | ((long)(data[index + 1] & 0xFF) << 16)
              | ((long)(data[index + 2] & 0xFF) <<  8)
              | (data[index + 3] & 0xFF);
+    }
+
+    /**
+     * Returns the big-endian device UID stored in data[index..index+3].
+     *
+     * @param index first data byte
+     * @return typed UID
+     */
+    public McanUid uidAt(int index) {
+        return McanUid.of(int32At(index));
     }
 
     /** Returns a defensive copy of all 8 data bytes. */

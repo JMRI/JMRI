@@ -28,7 +28,7 @@ public final class Cs2FeedbackCommands {
     static final int BROADCAST_HASH   = 0x0300;
 
     /** UID used as the sender identification in S88 poll requests. */
-    public static final long MY_UID = 0x12345678L;
+    public static final McanUid MY_UID = McanUid.of(0x12345678L);
 
     private Cs2FeedbackCommands() {}
 
@@ -42,7 +42,7 @@ public final class Cs2FeedbackCommands {
      * @return 13-byte CAN frame
      */
     public static int[] buildS88Poll(int moduleNumber) {
-        return buildS88Poll(moduleNumber, McanUid.of(MY_UID));
+        return buildS88Poll(moduleNumber, MY_UID);
     }
 
     /**
@@ -175,7 +175,7 @@ public final class Cs2FeedbackCommands {
         S88PollFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
 
         /** The 32-bit UID of the requester (data bytes 0–3). */
-        public long requesterUid() { return data().int32At(0); }
+        public McanUid requesterUid() { return data().uidAt(0); }
 
         /** The S88 module index to poll (data byte 4). */
         public int module() { return data().byteAt(4); }

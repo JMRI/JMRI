@@ -8,6 +8,7 @@ import java.time.Instant;
 import java.util.Objects;
 import java.util.Optional;
 import javax.swing.Timer;
+import jmri.jmrix.marklin.mcan.McanUid;
 import jmri.util.ThreadingUtil;
 
 /**
@@ -71,7 +72,7 @@ public final class SeniorThrottleService {
         }
         McanDevice candidate = null;
         for (McanDevice device : manager.getNamedBeanSet()) {
-            if (isFresh(device) && (candidate == null || uid(device) < uid(candidate))) {
+            if (isFresh(device) && (candidate == null || uid(device).compareTo(uid(candidate)) < 0)) {
                 candidate = device;
             }
         }
@@ -100,7 +101,7 @@ public final class SeniorThrottleService {
         return device == master ? Role.MASTER : Role.JUNIOR;
     }
 
-    private static long uid(McanDevice device) {
+    private static McanUid uid(McanDevice device) {
         return ((McanDeviceIdentity.Native) device.getIdentity()).getUid();
     }
 

@@ -1,5 +1,6 @@
 package jmri.jmrix.marklin.mcan.cs2;
 
+import jmri.jmrix.marklin.mcan.McanUid;
 import jmri.jmrix.marklin.mcan.classify.ClassifiedFrame;
 import jmri.jmrix.marklin.mcan.classify.Cs2ClassifiedFrame;
 import jmri.jmrix.marklin.mcan.classify.Cs2Data;
@@ -51,12 +52,12 @@ public final class Cs2GuiCommands {
      * @param index     channel index to query (0 = device description)
      * @return 13-byte CAN frame
      */
-    public static int[] buildStatusDataConfig(long deviceUid, int index) {
+    public static int[] buildStatusDataConfig(McanUid deviceUid, int index) {
         int[] data = new int[]{
-            (int)((deviceUid >> 24) & 0xFF),
-            (int)((deviceUid >> 16) & 0xFF),
-            (int)((deviceUid >>  8) & 0xFF),
-            (int)( deviceUid        & 0xFF),
+            (int)((deviceUid.toLong() >> 24) & 0xFF),
+            (int)((deviceUid.toLong() >> 16) & 0xFF),
+            (int)((deviceUid.toLong() >>  8) & 0xFF),
+            (int)( deviceUid.toLong() & 0xFF),
             index & 0xFF
         };
         return Cs2FrameBuilder.buildFrame(DEFAULT_PRIORITY, COMMAND_STATUS_DATA_CONFIG,
@@ -220,7 +221,7 @@ public final class Cs2GuiCommands {
         StatusDataConfigRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
 
         /** 32-bit target device UID. */
-        public long deviceUid() { return data().int32At(0); }
+        public McanUid deviceUid() { return data().uidAt(0); }
 
         /** Channel index to query (0 = device description). */
         public int index() { return data().byteAt(4); }
@@ -256,7 +257,7 @@ public final class Cs2GuiCommands {
         StatusDataConfigReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
 
         /** 32-bit target device UID. */
-        public long deviceUid() { return data().int32At(0); }
+        public McanUid deviceUid() { return data().uidAt(0); }
 
         /** Channel index this reply relates to. */
         public int index() { return data().byteAt(4); }

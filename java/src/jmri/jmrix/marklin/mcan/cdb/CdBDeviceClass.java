@@ -1,4 +1,4 @@
-package jmri.jmrix.marklin.mcan.device;
+package jmri.jmrix.marklin.mcan.cdb;
 
 import java.util.Optional;
 

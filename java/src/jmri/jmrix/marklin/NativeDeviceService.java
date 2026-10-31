@@ -4,7 +4,6 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.OptionalInt;
 import java.util.Optional;
-import jmri.jmrix.marklin.mcan.protocol.NativeDeviceInfo;
 import jmri.util.ThreadingUtil;
 
 /**
@@ -25,7 +24,7 @@ public class NativeDeviceService implements McanDeviceService {
         }
         this.device = device;
         McanDeviceIdentity.Native identity = (McanDeviceIdentity.Native) device.getIdentity();
-        defaultHash = (NativeDeviceInfo.calculateHash(identity.getUid()) & 0xFC7F) | 0x0300;
+        defaultHash = (identity.getUid().calculateHash() & 0xFC7F) | 0x0300;
     }
 
     /** Find the native base service, including future model-specific subclasses. */

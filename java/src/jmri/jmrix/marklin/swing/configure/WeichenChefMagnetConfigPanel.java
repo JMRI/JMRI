@@ -34,7 +34,7 @@ import jmri.jmrix.marklin.WeichenChefMagnetService.SaveScope;
 import jmri.jmrix.marklin.WeichenChefMagnetService.State;
 import jmri.jmrix.marklin.mcan.address.AddressEncoding;
 import jmri.jmrix.marklin.mcan.address.CdBAddressCodec;
-import jmri.jmrix.marklin.mcan.device.CdBDeviceClass;
+import jmri.jmrix.marklin.mcan.cdb.CdBDeviceClass;
 import jmri.jmrix.marklin.swing.MarklinPanel;
 
 /**

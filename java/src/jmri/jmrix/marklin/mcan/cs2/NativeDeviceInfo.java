@@ -1,4 +1,6 @@
-package jmri.jmrix.marklin.mcan.protocol;
+package jmri.jmrix.marklin.mcan.cs2;
+
+import jmri.jmrix.marklin.mcan.McanUid;
 
 import java.util.Objects;
 
@@ -17,8 +19,6 @@ import java.util.Objects;
 public final class NativeDeviceInfo {
 
     /** Device UIDs with reserved meanings. */
-    public static final long UID_BROADCAST    = 0x00000000L;
-    public static final long UID_UNINITIALIZED = 0xFFFFFFFFL;
 
     // Known device type codes (CS2 CAN protocol 2.0)
     public static final int TYPE_GFP          = 0x0000; // A Track Format processor (either a booster or a CS2/3 station's builtin but not a TrackBox / GleisBox)
@@ -30,47 +30,38 @@ public final class NativeDeviceInfo {
     public static final int TYPE_WIRELESS     = 0xFFE0; // MobileStation Wireless
     public static final int TYPE_CS2_GUI      = 0xFFFF; // CS2 GUI (Master)
 
-    private final long uid;
+    private final McanUid uid;
     private final int  deviceType;
     private final int  softwareVersion;
     private final int  hash;
 
-    public NativeDeviceInfo(long uid, int deviceType, int softwareVersion, int hash) {
-        this.uid             = uid;
+    public NativeDeviceInfo(McanUid uid, int deviceType, int softwareVersion, int hash) {
+        this.uid             = Objects.requireNonNull(uid, "uid");
         this.deviceType      = deviceType;
         this.softwareVersion = softwareVersion;
         this.hash            = hash;
     }
 
-    public long uid()             { return uid; }
+    public McanUid uid()          { return uid; }
     public int  deviceType()      { return deviceType; }
     public int  softwareVersion() { return softwareVersion; }
     public int  hash()            { return hash; }
 
     /** True when UID is the broadcast address (0x00000000). */
-    public boolean isBroadcast()    { return uid == UID_BROADCAST; }
+    public boolean isBroadcast()    { return uid.isBroadcast(); }
 
     /** True when UID is the uninitialized sentinel (0xFFFFFFFF). */
-    public boolean isUninitialized() { return uid == UID_UNINITIALIZED; }
+    public boolean isUninitialized() { return uid.isUninitialized(); }
 
     /**
      * True when the hash in this reply matches the hash derivable from the UID.
      * A mismatch indicates either a hash collision or a non-standard device.
      */
     public boolean isHashValid() {
-        int expected = calculateHash(uid);
+        int expected = uid.calculateHash();
         // The stored hash has the CS2 fingerprint bits set; mask them out before comparing
         // (bits 9:7 of the hash are always 0b110 in a valid CS2 frame)
         return (hash & ~0x0380) == (expected & ~0x0380);
-    }
-
-    /**
-     * Computes the hash from a UID per the CS2 spec:
-     * {@code hash = (uid >> 16) ^ (uid & 0xFFFF)}.
-     * The caller must OR in the CS2 fingerprint bits (0x0300) before use on the bus.
-     */
-    public static int calculateHash(long uid) {
-        return (int)((uid >> 16) & 0xFFFF) ^ (int)(uid & 0xFFFF);
     }
 
     /**
@@ -102,7 +93,7 @@ public final class NativeDeviceInfo {
         if (this == o) return true;
         if (!(o instanceof NativeDeviceInfo)) return false;
         NativeDeviceInfo that = (NativeDeviceInfo) o;
-        return uid == that.uid && deviceType == that.deviceType
+        return uid.equals(that.uid) && deviceType == that.deviceType
             && softwareVersion == that.softwareVersion && hash == that.hash;
     }
 
@@ -112,6 +103,6 @@ public final class NativeDeviceInfo {
 
     @Override public String toString() {
         return String.format("NativeDeviceInfo{uid=0x%08X, type=%s, sw=0x%04X, hash=0x%04X}",
-                uid, deviceTypeName(deviceType), softwareVersion, hash);
+                uid.toLong(), deviceTypeName(deviceType), softwareVersion, hash);
     }
 }
