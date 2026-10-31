@@ -107,6 +107,9 @@
                 <li>CBUS Reporters with erase-on-timeout: reading the same
                     tag again restarts the timeout, so a tag still being read is
                     no longer cleared early.</li>
+                <li>CBUS and LCC network connections using GridConnect: frames
+                    are sent at once, instead of TCP holding a frame back while
+                    an earlier one is unacknowledged (TCP_NODELAY).</li>
                 <li>CBUS node number requests: closing the connection, or
                     turning off listening for node number requests, now stops a
                     request that has just arrived from opening the node number
