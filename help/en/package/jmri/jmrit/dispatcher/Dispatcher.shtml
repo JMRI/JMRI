@@ -972,6 +972,15 @@
       Stopping using a Stop Sensor is the most precise way to stop an Auto Active Train at a
       specific location. Stop Sensors need not be in place for all Sections, but their use for
       automatic station stops and passing tracks is strongly recommended.<br>
+      <span class="since">since 5.17.5</span>If a Stop Sensor fails, the train must not run on
+      out of its Section. While it waits for the Stop Sensor, it is stopped at once if it enters a
+      Block just beyond the Section that was unoccupied and not allocated to another train. A
+      train using <strong>Stop by distance into destination section</strong> is also stopped,
+      using its speed profile, when by reckoning it reaches the end of the Section, so that it
+      cannot run into a train standing just beyond it. Each such stop is written to the JMRI
+      System Console as a warning naming the Stop Sensor, which should then be checked. Where a
+      Stop Sensor is the detection sensor of the Block beyond the Section, the train is meant to
+      enter that Block, and neither check is made.<br>
       For the second stopping method to work, train length must be entered, lengths of all Blocks
       in the Transit must be present in the Block Table, and the train must be fully detectable
       (this usually means all cars must have resistance wheels on one or more trucks). Block

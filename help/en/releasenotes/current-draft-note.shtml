@@ -579,6 +579,14 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
+             <li>An automatic train waiting for a stop sensor that never goes
+                 active no longer runs on out of its Section at its stopping
+                 speed. It is stopped as soon as it enters a free Block beyond
+                 the Section, and a train stopping by distance into its
+                 destination Section is also stopped when, by reckoning from
+                 its speed profile, it reaches the end of the Section. A
+                 warning naming the stop sensor is written to the System
+                 Console.</li>
              <li>An automatic "Head and Tail" train with no stopping sensor
                  and no speed profile stopping can now draw fully into a
                  Section before stopping, by watching the Block holding its
