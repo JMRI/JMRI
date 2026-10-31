@@ -13,7 +13,7 @@ import org.junit.jupiter.api.*;
  * @author Paul Bender Copyright (C) 2017
  */
 public class AutoTrainsFrameTest extends jmri.util.JmriJFrameTestBase {
-        
+
     DispatcherFrame d = null;
 
     @BeforeEach
@@ -21,6 +21,7 @@ public class AutoTrainsFrameTest extends jmri.util.JmriJFrameTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initTimeProviderManager();
         OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/dispatcheroptions.xml");  // exist?
         JUnitUtil.initDebugThrottleManager();
         if (!GraphicsEnvironment.isHeadless()) {

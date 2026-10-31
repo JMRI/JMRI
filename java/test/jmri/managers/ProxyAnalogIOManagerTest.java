@@ -81,6 +81,7 @@ public class ProxyAnalogIOManagerTest extends AbstractProxyManagerTestBase<Proxy
     @Test
     public void testInstanceManagerIntegration() {
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.initTimeProviderManager();
         assertNotNull(InstanceManager.getDefault(AnalogIOManager.class));
 
         assertInstanceOf( ProxyAnalogIOManager.class,
@@ -221,6 +222,7 @@ public class ProxyAnalogIOManagerTest extends AbstractProxyManagerTestBase<Proxy
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
         // create and register the manager object
         AnalogIOManager aiom = new InternalAnalogIOManager(new InternalSystemConnectionMemo("J", "Juliet"));
 

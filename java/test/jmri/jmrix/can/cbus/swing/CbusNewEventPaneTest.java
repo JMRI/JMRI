@@ -83,6 +83,7 @@ public class CbusNewEventPaneTest  {
         } catch ( java.io.IOException e) {
             fail("Exception creating temp. user folder");
         }
+        JUnitUtil.initTimeProviderManager();
 
         memo = new CanSystemConnectionMemo();
         tc = new TrafficControllerScaffold();

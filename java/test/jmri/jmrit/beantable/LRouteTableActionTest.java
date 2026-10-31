@@ -165,6 +165,7 @@ public class LRouteTableActionTest extends AbstractTableActionBase<jmri.Logix> {
 
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();

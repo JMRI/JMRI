@@ -25,4 +25,4 @@ jobs:
     - name: Run HeadLessTest with Maven
       run: |
         # run tests using maven with graphics suppressed; the runner has no sound hardware, so use the null audio system
-        mvn test "-Djmri.skipTestsRequiringSeparateRunning=true"  "-Djava.awt.headless=true" "-Djmri.jmrit.audio.DefaultAudioManager.implementation=jmri.jmrit.audio.NullAudioFactory" "-Dsurefire.printSummary=false"
+        mvn test "-Djmri.skipTestsRequiringSeparateRunning=true"  "-Djava.awt.headless=true" "-Djmri.jmrit.audio.DefaultAudioManager.implementation=jmri.jmrit.audio.NullAudioFactory" "-Dsurefire.printSummary=true"

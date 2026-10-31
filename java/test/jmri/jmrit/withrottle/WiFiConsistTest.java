@@ -18,6 +18,7 @@ public class WiFiConsistTest extends jmri.implementation.AbstractConsistTestBase
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initRosterConfigManager();
         InstanceManager.setDefault(ConsistPreferencesManager.class,new ConsistPreferencesManager());
         jmri.util.JUnitUtil.initDebugCommandStation();

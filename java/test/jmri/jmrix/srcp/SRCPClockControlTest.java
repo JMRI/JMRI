@@ -41,7 +41,7 @@ public class SRCPClockControlTest {
 
         tb.setInternalMaster(true, false);
         tb.setSynchronize(true, true);
-        
+
         LocalDateTime specificDate = LocalDateTime.of(2020, 04, 24, 17, 57, 41);
         tb.setTime(Date.from( specificDate.atZone( ZoneId.systemDefault()).toInstant())); // a Friday
         Assertions.assertEquals( 2, tc.getSentMessages().size() );
@@ -72,6 +72,7 @@ public class SRCPClockControlTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
         tc = new SRCPTrafficControllerImpl();
         sm = new SRCPBusConnectionMemo( tc , "A", 1);
         t = new SRCPClockControl(sm);
