@@ -49,6 +49,11 @@
                     dispatched to sensors, turnouts and lights with much less
                     work and no per-frame garbage, and the Event Table and
                     Console do far less work for each frame.</li>
+                <li>CBUS sensors, turnouts and lights: each frame sent or
+                    received is now passed only to the sensors, turnouts and
+                    lights that use its event, instead of to every one on the
+                    connection, so the time taken for each frame no longer grows
+                    with the size of the layout.</li>
                 <li>CBUS Node Manager: teaching events now completes on modules
                     which only accept changes in learn mode (eg. CANSERVO8C,
                     CANMIO-SVO); an EVLRNI reply no longer throws an exception;
