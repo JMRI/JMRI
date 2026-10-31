@@ -3,10 +3,6 @@ package jmri.jmrit.operations.trains;
 import java.io.File;
 import java.io.IOException;
 
-import org.jdom2.JDOMException;
-import org.junit.Assert;
-import org.junit.jupiter.api.*;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.OperationsXml;
@@ -15,6 +11,10 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.Setup;
+
+import org.jdom2.JDOMException;
+import org.junit.Assert;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the Xml class Last manually cross-checked on 20090131
@@ -199,6 +199,7 @@ public class XmlTest extends OperationsTestCase {
         t1.setBuiltStartYear("1932");
         t1.setCabooseRoad("t1 caboose road");
         t1.setComment("t1 comment");
+        t1.setCommentTermination("t1 comment 2");
         t1.setCurrentLocation(startC);
         t1.setDepartureTime("16", "1", "35");
         t1.setDescription("t1 description");
@@ -311,6 +312,7 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("t1 built start year", "1932", t1.getBuiltStartYear());
         Assert.assertEquals("t1 caboose roadr", "t1 caboose road", t1.getCabooseRoad());
         Assert.assertEquals("t1 comment", "t1 comment", t1.getCommentWithColor());
+        Assert.assertEquals("t1 comment termination", "t1 comment 2", t1.getCommentTerminationWithColor());
         Assert.assertEquals("t1 current location name", "Bedford", t1.getCurrentLocationName());
         Assert.assertEquals("t1 departure day", "16", t1.getDepartureTimeDay());
         Assert.assertEquals("t1 departure hour", "01", t1.getDepartureTimeHour());

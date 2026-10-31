@@ -1141,6 +1141,7 @@ public abstract class AbstractMRTrafficController {
 
         // message exists, now fill it
         loadChars(msg, istream);
+        msg.setReceivedTime(System.nanoTime());
 
         if (threadStopRequest) return;
 

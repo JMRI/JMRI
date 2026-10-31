@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -122,6 +123,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         if (fastClock == null) {
             log.error("Failed to instantiate a fast clock when constructing Dispatcher");
         } else {
+            lastFastClockTime = fastClock.getTime();
             minuteChangeListener = new java.beans.PropertyChangeListener() {
                 @Override
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -595,6 +597,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     private final Timebase fastClock = InstanceManager.getNullableDefault(jmri.Timebase.class);
     private final Sensor fastClockSensor = InstanceManager.sensorManagerInstance().provideSensor("ISCLOCKRUNNING");
     private transient java.beans.PropertyChangeListener minuteChangeListener = null;
+    private java.util.Date lastFastClockTime = null;  // fast clock time at the last minute change
 
     // dispatcher window variables
     protected JmriJFrame dispatcherFrame = null;
@@ -2989,20 +2992,23 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * Handle activity that is triggered by the fast clock
      */
     protected void newFastClockMinute() {
+        java.util.Date previousTime = lastFastClockTime;
+        java.util.Date now = fastClock.getTime();
+        lastFastClockTime = now;
         for (int i = delayedTrains.size() - 1; i >= 0; i--) {
             ActiveTrain at = delayedTrains.get(i);
             // check if this Active Train is waiting to start
             if ((!at.getStarted()) && at.getDelayedStart() != ActiveTrain.NODELAY) {
                 // is it time to start?
                 if (at.getDelayedStart() == ActiveTrain.TIMEDDELAY) {
-                    if (isFastClockTimeGE(at.getDepartureTimeHr(), at.getDepartureTimeMin())) {
+                    if (isFastClockTimeReached(at.getDepartureTimeHr(), at.getDepartureTimeMin(), previousTime, now)) {
                         // allow this train to start
                         at.setStarted();
                         delayedTrains.remove(i);
                     }
                 }
             } else if (at.getStarted() && at.getStatus() == ActiveTrain.READY && at.reachedRestartPoint()) {
-                if (isFastClockTimeGE(at.getRestartDepartHr(), at.getRestartDepartMin())) {
+                if (isFastClockTimeReached(at.getRestartDepartHr(), at.getRestartDepartMin(), previousTime, now)) {
                     at.restart();
                     delayedTrains.remove(i);
                 }
@@ -3026,6 +3032,48 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         int nowHours = now.get(Calendar.HOUR_OF_DAY);
         int nowMinutes = now.get(Calendar.MINUTE);
         return ((nowHours * 60) + nowMinutes) == ((hr * 60) + min);
+    }
+
+    /**
+     * Check whether the fast clock has reached a time of day since the
+     * previous minute change. The clock can move on by more than one minute
+     * at a time, for example when it is set forward, runs at a high rate or
+     * the minute change is handled late, so a time that was passed over still
+     * counts as reached. If the clock has been set back, or the previous time
+     * is not known, only the exact minute counts.
+     * <p>
+     * Departure and restart times are kept as an hour and minute with no
+     * date, so the time is taken as its latest occurrence not after now: on
+     * the fast clock's current day, or the day before if that is later than
+     * now.
+     *
+     * @param hr       the hour to test against (0-23)
+     * @param min      the minute to test against (0-59)
+     * @param previous the fast clock time at the previous minute change, or
+     *                 null if not known
+     * @param now      the fast clock time now
+     * @return true if the time is in the current minute, or is after
+     *         previous and not after now
+     */
+    static boolean isFastClockTimeReached(int hr, int min, @CheckForNull java.util.Date previous,
+            @Nonnull java.util.Date now) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(now);
+        cal.set(Calendar.HOUR_OF_DAY, hr);
+        cal.set(Calendar.MINUTE, min);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        if (cal.getTime().after(now)) {
+            cal.add(Calendar.DAY_OF_MONTH, -1);
+        }
+        java.util.Date time = cal.getTime();
+        if (now.getTime() - time.getTime() < 60000L) {
+            return true;  // the exact minute
+        }
+        if (previous == null || !previous.before(now)) {
+            return false;
+        }
+        return time.after(previous);
     }
 
     // option access methods

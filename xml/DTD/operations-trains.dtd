@@ -149,6 +149,7 @@
 <!ATTLIST train leg2End				CDATA #IMPLIED>
 <!ATTLIST train leg3End				CDATA #IMPLIED>
 <!ATTLIST train comment				CDATA #IMPLIED>
+<!ATTLIST train commentTermination	CDATA #IMPLIED>
 <!ATTLIST train serviceAll			CDATA #IMPLIED>
 <!ATTLIST train sendCustomStaging	CDATA #IMPLIED>
 <!ATTLIST train buildConsist		CDATA #IMPLIED>
