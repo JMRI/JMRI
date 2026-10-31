@@ -18,8 +18,10 @@ public class StartupActionsManagerTest {
 
     @Test
     public void testSummary() {
-        Assertions.assertEquals("Start up actions took 11.5 s: Load table content and panels \"Layout.xml\" 1.5 s;"
-                + " Pause \"Pause for 10 seconds\" 10.0 s",
+        Assertions.assertEquals(java.util.List.of(
+                "Start up actions took 11.5 s in all:",
+                "    1.5 s  Load table content and panels \"Layout.xml\"",
+                "   10.0 s  Pause \"Pause for 10 seconds\""),
             StartupActionsManager.summary(java.util.List.of("Load table content and panels \"Layout.xml\"",
                     "Pause \"Pause for 10 seconds\""),
                 java.util.List.of(1_500_000_000L, 10_000_000_000L)));
@@ -56,7 +58,13 @@ public class StartupActionsManagerTest {
         Assertions.assertEquals(java.util.List.of("first", "second"), performed, "in order, enabled only");
         // INFO from StartupActionsManager is kept for this test by tests_lcf.xml
         Assertions.assertNotNull(jmri.util.JUnitAppender.checkForMessageStartingWith("Start up actions took"),
-            "summary logged");
+            "total logged");
+        // then each action performed, on a line of its own, in order
+        for (String name : java.util.List.of("first", "second")) {
+            org.apache.logging.log4j.core.LogEvent line = jmri.util.JUnitAppender.checkForMessageStartingWith("");
+            String text = (line == null) ? "(nothing logged)" : line.getMessage().getFormattedMessage();
+            Assertions.assertTrue(text.endsWith("\"" + name + "\""), name + " on a line of its own, not " + text);
+        }
     }
 
     @BeforeEach

@@ -131,7 +131,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
                     }
                 });
                 if (!performed.isEmpty()) {
-                    log.info("{}", summary(performed, nanos));
+                    summary(performed, nanos).forEach(line -> log.info("{}", line));
                 }
                 ServiceLoader.load(StartupRunnable.class).forEach(Runnable::run);
             }
@@ -216,27 +216,31 @@ public class StartupActionsManager extends AbstractPreferencesManager {
     }
 
     /**
-     * One line saying how long the start up actions took in all, and each of
-     * them, in the order they were performed, so that a slow start up can be
-     * traced to its cause.
+     * Lines saying how long the start up actions took in all, then one line
+     * for each of them, in the order they were performed, so that a slow
+     * start up can be traced to its cause.
      *
      * @param performed the actions performed, as described by
      *                  {@link #describe(StartupModel)}
      * @param nanos     the time each took, in nanoseconds
-     * @return the line
+     * @return the lines
      */
-    static String summary(List<String> performed, List<Long> nanos) {
+    static List<String> summary(List<String> performed, List<Long> nanos) {
         long total = 0;
-        StringBuilder each = new StringBuilder();
-        for (int i = 0; i < performed.size(); i++) {
-            total += nanos.get(i);
-            each.append(i == 0 ? "" : "; ").append(performed.get(i)).append(' ').append(seconds(nanos.get(i)));
+        for (long n : nanos) {
+            total += n;
         }
-        return "Start up actions took " + seconds(total) + ": " + each;
+        List<String> lines = new ArrayList<>();
+        lines.add("Start up actions took " + seconds("%.1f s", total) + " in all:");
+        for (int i = 0; i < performed.size(); i++) {
+            // times right-aligned, so that the long ones stand out
+            lines.add("  " + seconds("%5.1f s", nanos.get(i)) + "  " + performed.get(i));
+        }
+        return lines;
     }
 
-    private static String seconds(long nanos) {
-        return String.format(Locale.ROOT, "%.1f s", nanos / 1e9);
+    private static String seconds(String format, long nanos) {
+        return String.format(Locale.ROOT, format, nanos / 1e9);
     }
 
     public StartupModel[] getActions() {
