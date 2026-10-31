@@ -1,10 +1,7 @@
 package jmri.jmrix.marklin.mcan.cs2;
 
+import jmri.jmrix.marklin.mcan.RawFrame;
 import jmri.jmrix.marklin.mcan.McanUid;
-import jmri.jmrix.marklin.mcan.classify.ClassifiedFrame;
-import jmri.jmrix.marklin.mcan.classify.Cs2ClassifiedFrame;
-import jmri.jmrix.marklin.mcan.classify.Cs2Data;
-import jmri.jmrix.marklin.mcan.classify.Cs2Header;
 
 /**
  * Encoder, parser and typed result classes for CS2 feedback commands (codes 0x10–0x12).
@@ -28,7 +25,7 @@ public final class Cs2FeedbackCommands {
     static final int BROADCAST_HASH   = 0x0300;
 
     /** UID used as the sender identification in S88 poll requests. */
-    public static final long MY_UID = 0x12345678L;
+    public static final McanUid MY_UID = McanUid.of(0x12345678L);
 
     private Cs2FeedbackCommands() {}
 
@@ -42,7 +39,7 @@ public final class Cs2FeedbackCommands {
      * @return 13-byte CAN frame
      */
     public static int[] buildS88Poll(int moduleNumber) {
-        return buildS88Poll(moduleNumber, McanUid.of(MY_UID));
+        return buildS88Poll(moduleNumber, MY_UID);
     }
 
     /**
@@ -152,38 +149,38 @@ public final class Cs2FeedbackCommands {
 
     // --- parser ---
 
-    static Cs2ClassifiedFrame parse(Cs2Header header, Cs2Data data, ClassifiedFrame parent) {
+    static Cs2Frame parse(Cs2Header header, Cs2Data data, RawFrame raw) {
         switch (header.resolvedCommand()) {
             case S88_POLL:
-                return new S88PollFrame(header, data, parent);
+                return new S88PollFrame(header, data, raw);
             case S88_POLL_REPLY:
-                return new S88PollReplyFrame(header, data, parent);
+                return new S88PollReplyFrame(header, data, raw);
             case S88_EVENT:
             case S88_EVENT_REPLY:
-                return new S88EventFrame(header, data, parent);
+                return new S88EventFrame(header, data, raw);
             case FEEDBACK_BROADCAST:
-                return new FeedbackBroadcastFrame(header, data, parent);
+                return new FeedbackBroadcastFrame(header, data, raw);
             default:
-                return new Cs2ClassifiedFrame(header, data, parent);
+                return new Cs2Frame(header, data, raw);
         }
     }
 
     // --- typed result classes ---
 
     /** An S88 poll request (0x10, DLC=5): UID of requester + module number. */
-    public static final class S88PollFrame extends Cs2ClassifiedFrame {
-        S88PollFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class S88PollFrame extends Cs2Frame {
+        S88PollFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** The 32-bit UID of the requester (data bytes 0–3). */
-        public long requesterUid() { return data().int32At(0); }
+        public McanUid requesterUid() { return data().uidAt(0); }
 
         /** The S88 module index to poll (data byte 4). */
         public int module() { return data().byteAt(4); }
     }
 
     /** An S88 poll reply carrying module number and 16-bit contact state bitfield. */
-    public static final class S88PollReplyFrame extends Cs2ClassifiedFrame {
-        S88PollReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class S88PollReplyFrame extends Cs2Frame {
+        S88PollReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** The S88 module index (from data byte 4). */
         public int module() { return data().byteAt(4); }
@@ -197,8 +194,8 @@ public final class Cs2FeedbackCommands {
     }
 
     /** An S88 contact event carrying contact address, state transition and timestamp. */
-    public static final class S88EventFrame extends Cs2ClassifiedFrame {
-        S88EventFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class S88EventFrame extends Cs2Frame {
+        S88EventFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** The 16-bit contact address. */
         public int contactId() { return data().int16At(0); }
@@ -218,8 +215,8 @@ public final class Cs2FeedbackCommands {
      * Carries a block of S88 state for a range of contacts.
      * Layout: data[0]=module index (1-based), data[1..2]=16-bit contact state bitfield.
      */
-    public static final class FeedbackBroadcastFrame extends Cs2ClassifiedFrame {
-        FeedbackBroadcastFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class FeedbackBroadcastFrame extends Cs2Frame {
+        FeedbackBroadcastFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** The 1-based S88 module index. */
         public int moduleIndex() { return data().byteAt(0); }

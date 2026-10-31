@@ -1,9 +1,6 @@
 package jmri.jmrix.marklin.mcan.cs2;
 
-import jmri.jmrix.marklin.mcan.classify.ClassifiedFrame;
-import jmri.jmrix.marklin.mcan.classify.Cs2ClassifiedFrame;
-import jmri.jmrix.marklin.mcan.classify.Cs2Data;
-import jmri.jmrix.marklin.mcan.classify.Cs2Header;
+import jmri.jmrix.marklin.mcan.RawFrame;
 
 /**
  * Encoder/decoder for CS2 accessory/switch commands (codes 0x0B–0x0D).
@@ -156,9 +153,9 @@ public final class Cs2AccessoryCommands {
      * An accessory request frame (0x0B).
      * DLC=6: set (address + aspect + power). DLC=8: set with explicit time. DLC=4: query.
      */
-    public static final class AccessoryFrame extends Cs2ClassifiedFrame {
-        AccessoryFrame(Cs2Header header, Cs2Data data, ClassifiedFrame parent) {
-            super(header, data, parent);
+    public static final class AccessoryFrame extends Cs2Frame {
+        AccessoryFrame(Cs2Header header, Cs2Data data, RawFrame raw) {
+            super(header, data, raw);
         }
 
         /** 32-bit accessory address from data bytes 0–3. */
@@ -180,9 +177,9 @@ public final class Cs2AccessoryCommands {
     /**
      * Typed result for a parsed accessory reply frame.
      */
-    public static final class AccessoryReplyFrame extends Cs2ClassifiedFrame {
-        AccessoryReplyFrame(Cs2Header header, Cs2Data data, ClassifiedFrame parent) {
-            super(header, data, parent);
+    public static final class AccessoryReplyFrame extends Cs2Frame {
+        AccessoryReplyFrame(Cs2Header header, Cs2Data data, RawFrame raw) {
+            super(header, data, raw);
         }
 
         /** 32-bit accessory address from data bytes 0–3. */
@@ -213,8 +210,8 @@ public final class Cs2AccessoryCommands {
      * An extended MFX bind reply (0x0C, DLC=6): echoes the MFX-UID and assigned SID.
      * Same payload layout as {@link jmri.jmrix.marklin.mcan.cs2.Cs2DecoderCommands.MfxBindReplyFrame}.
      */
-    public static final class MfxBindExReplyFrame extends Cs2ClassifiedFrame {
-        MfxBindExReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class MfxBindExReplyFrame extends Cs2Frame {
+        MfxBindExReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** 32-bit MFX UID. */
         public long mfxUid() { return data().int32At(0); }
@@ -223,18 +220,18 @@ public final class Cs2AccessoryCommands {
         public int mfxSid() { return data().int16At(4); }
     }
 
-    static Cs2ClassifiedFrame parse(Cs2Header header, Cs2Data data, ClassifiedFrame parent) {
+    static Cs2Frame parse(Cs2Header header, Cs2Data data, RawFrame raw) {
         switch (header.resolvedCommand()) {
             case ACCESSORY:
-                return new AccessoryFrame(header, data, parent);
+                return new AccessoryFrame(header, data, raw);
             case ACCESSORY_REPLY:
-                return new AccessoryReplyFrame(header, data, parent);
+                return new AccessoryReplyFrame(header, data, raw);
             case MFX_BIND_EX:
                 // request has same layout as reply for MFX bind-ex
             case MFX_BIND_EX_REPLY:
-                return new MfxBindExReplyFrame(header, data, parent);
+                return new MfxBindExReplyFrame(header, data, raw);
             default:
-                return new Cs2ClassifiedFrame(header, data, parent);
+                return new Cs2Frame(header, data, raw);
         }
     }
 }

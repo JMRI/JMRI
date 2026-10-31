@@ -3,8 +3,6 @@ import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
-import jmri.jmrix.marklin.mcan.classify.CdBFrameType;
-import jmri.jmrix.marklin.mcan.protocol.CdBDiscoveryPlan;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -337,18 +335,6 @@ public class CdBCommandsTest {
         assertEquals(0,    frame[4] & 0x0F, "DLC must be 0");
     }
 
-    @Test
-    public void testFrameEncoderOldProtocolPingLayout() {
-        CdBDiscoveryPlan plan = CdBDiscoveryPlan.forClass(jmri.jmrix.marklin.mcan.device.CdBDeviceClass.LAMPEN_CHEF);
-        int[] frame = plan.steps().get(5).frame();  // addr=5
-        assertEquals(0x00, frame[0] & 0xFF, "byte[0] must be 0x00");
-        assertEquals(0x40, frame[1] & 0xFF, "byte[1] must be 0x40");
-        assertEquals(jmri.jmrix.marklin.mcan.device.CdBDeviceClass.LAMPEN_CHEF.getClassId(),
-                frame[2] & 0xFF, "byte[2] must be classId");
-        assertEquals(0x80 | 5, frame[3] & 0xFF, "byte[3] must be 0x80|addr");
-        assertEquals(0, frame[4] & 0x0F, "DLC must be 0");
-    }
-
     // =================================================================
     // CdBFrameParser
     // =================================================================
@@ -356,9 +342,9 @@ public class CdBCommandsTest {
     @Test
     public void testParserRoundTripPing() {
         int[] raw = CdBConfigCommands.buildPing(0x27);
-        jmri.jmrix.marklin.mcan.classify.ClassifiedFrame cf =
+        jmri.jmrix.marklin.mcan.McanFrame cf =
             jmri.jmrix.marklin.mcan.classify.ProtocolClassifier.classify(raw);
-        CdBFrameParser.CdBFrame frame = CdBFrameParser.parse(cf);
+        CdBFrameParser.CdBFrame frame = (CdBFrameParser.CdBFrame) cf;
         assertEquals(CdBFrameType.PING, frame.frameType());
         assertEquals(0x27, frame.classId());
         assertEquals(0, frame.moduleId());
@@ -367,9 +353,9 @@ public class CdBCommandsTest {
     @Test
     public void testParserRoundTripReadReply() {
         int[] raw = CdBConfigCommands.buildReadReply(0x0D, 3, 1, 4, 1000);
-        jmri.jmrix.marklin.mcan.classify.ClassifiedFrame cf =
+        jmri.jmrix.marklin.mcan.McanFrame cf =
             jmri.jmrix.marklin.mcan.classify.ProtocolClassifier.classify(raw);
-        CdBFrameParser.CdBFrame frame = CdBFrameParser.parse(cf);
+        CdBFrameParser.CdBFrame frame = (CdBFrameParser.CdBFrame) cf;
         assertEquals(CdBFrameType.READ_REPLY, frame.frameType());
         CdBFrameParser.ReadReplyFrame rrf = (CdBFrameParser.ReadReplyFrame) frame;
         assertEquals(1, rrf.slot());

@@ -9,6 +9,8 @@ package jmri.jmrix.marklin;
  */
 public class MarklinReply extends jmri.jmrix.AbstractMRReply {
 
+    private final McanFrameCache frameCache = new McanFrameCache();
+
     // create a new one
     public MarklinReply() {
         super();
@@ -80,7 +82,7 @@ public class MarklinReply extends jmri.jmrix.AbstractMRReply {
      */
     @Override
     public String toMonitorString(){
-        // eventually, the MarklinMon class should probably be integrated here.
+        // eventually the MarklinMon class should probably be integrated here.
         return jmri.jmrix.marklin.swing.monitor.MarklinMon.displayReply(this);
     }
 
@@ -166,6 +168,18 @@ public class MarklinReply extends jmri.jmrix.AbstractMRReply {
         arr[0] = getElement(2);
         arr[1] = getElement(3);
         return arr;
+    }
+
+    /**
+     * Classified view of this reply. The result is cached and reused until the
+     * reply's bytes change.
+     *
+     * @return a {@link jmri.jmrix.marklin.mcan.cs2.Cs2Frame},
+     *         {@link jmri.jmrix.marklin.mcan.cdb.CdBFrameParser.CdBFrame} or
+     *         {@link jmri.jmrix.marklin.mcan.UnknownFrame}
+     */
+    public jmri.jmrix.marklin.mcan.McanFrame getFrame() {
+        return frameCache.get(toIntArray());
     }
 
     /** Returns the raw 13-byte frame as an int array for mcan parsing. */

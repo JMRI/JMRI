@@ -1,9 +1,6 @@
 package jmri.jmrix.marklin.mcan.cs2;
 
-import jmri.jmrix.marklin.mcan.classify.ClassifiedFrame;
-import jmri.jmrix.marklin.mcan.classify.Cs2ClassifiedFrame;
-import jmri.jmrix.marklin.mcan.classify.Cs2Data;
-import jmri.jmrix.marklin.mcan.classify.Cs2Header;
+import jmri.jmrix.marklin.mcan.RawFrame;
 
 /**
  * Encoder/decoder for CS2 management/decoder control commands (codes 0x03–0x0A).
@@ -325,70 +322,70 @@ public final class Cs2DecoderCommands {
      * Parses a decoder command frame into a typed result.
      * Called by {@link Cs2FrameParser} after command resolution.
      */
-    static Cs2ClassifiedFrame parse(Cs2Header header, Cs2Data data, ClassifiedFrame parent) {
+    static Cs2Frame parse(Cs2Header header, Cs2Data data, RawFrame raw) {
         switch (header.resolvedCommand()) {
             case LOCO_EMERGENCY_STOP:
             case LOCO_EMERGENCY_STOP_REPLY:
-                return new LocoEmergencyStopFrame(header, data, parent);
+                return new LocoEmergencyStopFrame(header, data, raw);
             case LOCO_SPEED:
-                return new LocoSpeedFrame(header, data, parent);
+                return new LocoSpeedFrame(header, data, raw);
             case LOCO_SPEED_REPLY:
-                return new LocoSpeedReplyFrame(header, data, parent);
+                return new LocoSpeedReplyFrame(header, data, raw);
             case LOCO_DIRECTION:
-                return new LocoDirectionFrame(header, data, parent);
+                return new LocoDirectionFrame(header, data, raw);
             case LOCO_DIRECTION_REPLY:
-                return new LocoDirectionReplyFrame(header, data, parent);
+                return new LocoDirectionReplyFrame(header, data, raw);
             case LOCO_FUNCTION:
-                return new LocoFunctionFrame(header, data, parent);
+                return new LocoFunctionFrame(header, data, raw);
             case LOCO_FUNCTION_REPLY:
-                return new LocoFunctionReplyFrame(header, data, parent);
+                return new LocoFunctionReplyFrame(header, data, raw);
             case READ_CONFIG:
-                return new ReadConfigFrame(header, data, parent);
+                return new ReadConfigFrame(header, data, raw);
             case READ_CONFIG_REPLY:
-                return parseReadConfigReply(header, data, parent);
+                return parseReadConfigReply(header, data, raw);
             case WRITE_CONFIG:
-                return new WriteConfigFrame(header, data, parent);
+                return new WriteConfigFrame(header, data, raw);
             case WRITE_CONFIG_REPLY:
-                return new WriteConfigReplyFrame(header, data, parent);
+                return new WriteConfigReplyFrame(header, data, raw);
             case MFX_BIND:
-                return new MfxBindFrame(header, data, parent);
+                return new MfxBindFrame(header, data, raw);
             case MFX_BIND_REPLY:
-                return new MfxBindReplyFrame(header, data, parent);
+                return new MfxBindReplyFrame(header, data, raw);
             case MFX_VERIFY:
-                return new MfxVerifyFrame(header, data, parent);
+                return new MfxVerifyFrame(header, data, raw);
             case MFX_VERIFY_REPLY:
-                return parseMfxVerifyReply(header, data, parent);
+                return parseMfxVerifyReply(header, data, raw);
             default:
-                return new Cs2ClassifiedFrame(header, data, parent);
+                return new Cs2Frame(header, data, raw);
         }
     }
 
-    private static Cs2ClassifiedFrame parseReadConfigReply(
-            Cs2Header header, Cs2Data data, ClassifiedFrame parent) {
+    private static Cs2Frame parseReadConfigReply(
+            Cs2Header header, Cs2Data data, RawFrame raw) {
         // DLC=7: success (carries value byte); DLC=6: failure (no value)
-        if (header.dlc() == 7) return new ReadConfigReplyFrame(header, data, parent);
-        return new Cs2ClassifiedFrame(header, data, parent);
+        if (header.dlc() == 7) return new ReadConfigReplyFrame(header, data, raw);
+        return new Cs2Frame(header, data, raw);
     }
 
-    private static Cs2ClassifiedFrame parseMfxVerifyReply(
-            Cs2Header header, Cs2Data data, ClassifiedFrame parent) {
+    private static Cs2Frame parseMfxVerifyReply(
+            Cs2Header header, Cs2Data data, RawFrame raw) {
         // DLC=7: positive reply (carries ASK byte); DLC=6: negative (SID=0)
-        return new MfxVerifyReplyFrame(header, data, parent);
+        return new MfxVerifyReplyFrame(header, data, raw);
     }
 
     // --- typed result classes ---
 
     /** A loco emergency stop frame (request or reply). */
-    public static final class LocoEmergencyStopFrame extends Cs2ClassifiedFrame {
-        LocoEmergencyStopFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class LocoEmergencyStopFrame extends Cs2Frame {
+        LocoEmergencyStopFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** The 32-bit Loc-ID of the target loco. */
         public long locoAddress() { return data().int32At(0); }
     }
 
     /** A loco speed request (DLC=6: address + speed; DLC=4: query with speed omitted). */
-    public static final class LocoSpeedFrame extends Cs2ClassifiedFrame {
-        LocoSpeedFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class LocoSpeedFrame extends Cs2Frame {
+        LocoSpeedFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** The 32-bit loco address. */
         public long locoAddress() { return data().int32At(0); }
@@ -398,8 +395,8 @@ public final class Cs2DecoderCommands {
     }
 
     /** A loco speed reply carrying the loco address and current speed. */
-    public static final class LocoSpeedReplyFrame extends Cs2ClassifiedFrame {
-        LocoSpeedReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class LocoSpeedReplyFrame extends Cs2Frame {
+        LocoSpeedReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** The 32-bit loco address. */
         public long locoAddress() { return data().int32At(0); }
@@ -409,8 +406,8 @@ public final class Cs2DecoderCommands {
     }
 
     /** A loco direction reply carrying the loco address and current direction. */
-    public static final class LocoDirectionReplyFrame extends Cs2ClassifiedFrame {
-        LocoDirectionReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class LocoDirectionReplyFrame extends Cs2Frame {
+        LocoDirectionReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** The 32-bit loco address. */
         public long locoAddress() { return data().int32At(0); }
@@ -420,8 +417,8 @@ public final class Cs2DecoderCommands {
     }
 
     /** A loco direction request (DLC=5: address + direction; DLC=4: query). */
-    public static final class LocoDirectionFrame extends Cs2ClassifiedFrame {
-        LocoDirectionFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class LocoDirectionFrame extends Cs2Frame {
+        LocoDirectionFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** The 32-bit loco address. */
         public long locoAddress() { return data().int32At(0); }
@@ -431,8 +428,8 @@ public final class Cs2DecoderCommands {
     }
 
     /** A loco function reply carrying the loco address, function number and state. */
-    public static final class LocoFunctionReplyFrame extends Cs2ClassifiedFrame {
-        LocoFunctionReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class LocoFunctionReplyFrame extends Cs2Frame {
+        LocoFunctionReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** The 32-bit loco address. */
         public long locoAddress() { return data().int32At(0); }
@@ -445,8 +442,8 @@ public final class Cs2DecoderCommands {
     }
 
     /** A loco function request (DLC=6: set; DLC=5: query with state omitted). */
-    public static final class LocoFunctionFrame extends Cs2ClassifiedFrame {
-        LocoFunctionFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class LocoFunctionFrame extends Cs2Frame {
+        LocoFunctionFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** The 32-bit loco address. */
         public long locoAddress() { return data().int32At(0); }
@@ -464,8 +461,8 @@ public final class Cs2DecoderCommands {
      * CV-Index occupies the upper 6 bits of byte 4; CV-Num the lower 2 bits of byte 4
      * plus all 8 bits of byte 5 (total 10 bits).
      */
-    public static final class ReadConfigReplyFrame extends Cs2ClassifiedFrame {
-        ReadConfigReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class ReadConfigReplyFrame extends Cs2Frame {
+        ReadConfigReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** The 32-bit loco/decoder address. */
         public long locoAddress() { return data().int32At(0); }
@@ -483,8 +480,8 @@ public final class Cs2DecoderCommands {
     /**
      * A CV read request (0x07, DLC=7): address + CV index/number + count.
      */
-    public static final class ReadConfigFrame extends Cs2ClassifiedFrame {
-        ReadConfigFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class ReadConfigFrame extends Cs2Frame {
+        ReadConfigFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** The 32-bit loco/decoder address. */
         public long locoAddress() { return data().int32At(0); }
@@ -502,8 +499,8 @@ public final class Cs2DecoderCommands {
     /**
      * A CV write reply (DLC=8).
      */
-    public static final class WriteConfigReplyFrame extends Cs2ClassifiedFrame {
-        WriteConfigReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class WriteConfigReplyFrame extends Cs2Frame {
+        WriteConfigReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** The 32-bit loco/decoder address. */
         public long locoAddress() { return data().int32At(0); }
@@ -527,8 +524,8 @@ public final class Cs2DecoderCommands {
     /**
      * A CV write request (0x08, DLC=8): address + CV index/number + value + byte-index.
      */
-    public static final class WriteConfigFrame extends Cs2ClassifiedFrame {
-        WriteConfigFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class WriteConfigFrame extends Cs2Frame {
+        WriteConfigFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** The 32-bit loco/decoder address. */
         public long locoAddress() { return data().int32At(0); }
@@ -549,8 +546,8 @@ public final class Cs2DecoderCommands {
     /**
      * An MFX bind reply (DLC=6): echoes the MFX-UID and assigned SID.
      */
-    public static final class MfxBindReplyFrame extends Cs2ClassifiedFrame {
-        MfxBindReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class MfxBindReplyFrame extends Cs2Frame {
+        MfxBindReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** 32-bit MFX UID. */
         public long mfxUid() { return data().int32At(0); }
@@ -564,8 +561,8 @@ public final class Cs2DecoderCommands {
      * DLC=7 (positive): UID matched  -  carries UID, SID and ASK quality ratio.
      * DLC=6 (negative): UID not found  -  SID is 0x0000.
      */
-    public static final class MfxVerifyReplyFrame extends Cs2ClassifiedFrame {
-        MfxVerifyReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class MfxVerifyReplyFrame extends Cs2Frame {
+        MfxVerifyReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** 32-bit MFX UID from the request. */
         public long mfxUid() { return data().int32At(0); }
@@ -585,8 +582,8 @@ public final class Cs2DecoderCommands {
     }
 
     /** An MFX bind request (0x09, DLC=6): UID + SID to assign. */
-    public static final class MfxBindFrame extends Cs2ClassifiedFrame {
-        MfxBindFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class MfxBindFrame extends Cs2Frame {
+        MfxBindFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** 32-bit MFX UID. */
         public long mfxUid() { return data().int32At(0); }
@@ -596,8 +593,8 @@ public final class Cs2DecoderCommands {
     }
 
     /** An MFX verify request (0x0A, DLC=6 or 8): UID + SID + optional ASK ratio. */
-    public static final class MfxVerifyFrame extends Cs2ClassifiedFrame {
-        MfxVerifyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class MfxVerifyFrame extends Cs2Frame {
+        MfxVerifyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** 32-bit MFX UID to look up. */
         public long mfxUid() { return data().int32At(0); }

@@ -1,7 +1,7 @@
 package jmri.jmrix.marklin;
 
 import jmri.JmriException;
-import jmri.jmrix.marklin.mcan.classify.Cs2ClassifiedFrame;
+import jmri.jmrix.marklin.mcan.cs2.Cs2Frame;
 import jmri.jmrix.marklin.mcan.cs2.Cs2SystemCommands;
 import jmri.managers.AbstractPowerManager;
 
@@ -56,7 +56,7 @@ public class MarklinPowerManager extends AbstractPowerManager<MarklinSystemConne
     @Override
     public void reply(MarklinReply m) {
         int old = power;
-        Cs2ClassifiedFrame frame = MarklinCanBridge.parse(m);
+        Cs2Frame frame = MarklinCanBridge.parse(m);
         if (frame == null) {
             return;
         }

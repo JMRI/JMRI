@@ -1,11 +1,8 @@
 package jmri.jmrix.marklin.mcan.cs2;
 
-import jmri.jmrix.marklin.mcan.classify.ClassifiedFrame;
-import jmri.jmrix.marklin.mcan.classify.Cs2ClassifiedFrame;
-import jmri.jmrix.marklin.mcan.classify.Cs2Data;
-import jmri.jmrix.marklin.mcan.classify.Cs2Header;
-import jmri.jmrix.marklin.mcan.classify.FrameProtocol;
-import jmri.jmrix.marklin.mcan.protocol.NativeDeviceInfo;
+import jmri.jmrix.marklin.mcan.RawFrame;
+import jmri.jmrix.marklin.mcan.McanUid;
+import jmri.jmrix.marklin.mcan.McanFrame;
 import java.util.Optional;
 
 /**
@@ -35,8 +32,17 @@ public final class Cs2ConfigCommands {
      * @return 13-byte CAN frame
      */
     public static int[] buildPing() {
+        return buildPing(BROADCAST_HASH);
+    }
+
+    /**
+     * Builds a broadcast ping with the caller's sender hash.
+     * @param hash 16-bit sender hash
+     * @return 13-byte CAN frame
+     */
+    public static int[] buildPing(int hash) {
         return Cs2FrameBuilder.buildFrame(DEFAULT_PRIORITY, COMMAND_PING,
-                false, BROADCAST_HASH, 0, new int[0]);
+                false, hash, 0, new int[0]);
     }
 
     /**
@@ -71,12 +77,12 @@ public final class Cs2ConfigCommands {
      * @param version 16-bit firmware version
      * @return 13-byte CAN frame
      */
-    public static int[] buildUpdateOffer(long uid, int version) {
+    public static int[] buildUpdateOffer(McanUid uid, int version) {
         int[] data = new int[]{
-            (int)((uid >> 24) & 0xFF),
-            (int)((uid >> 16) & 0xFF),
-            (int)((uid >>  8) & 0xFF),
-            (int)( uid        & 0xFF),
+            (int)((uid.toLong() >> 24) & 0xFF),
+            (int)((uid.toLong() >> 16) & 0xFF),
+            (int)((uid.toLong() >>  8) & 0xFF),
+            (int)( uid.toLong() & 0xFF),
             (version >> 8) & 0xFF,
             version & 0xFF
         };
@@ -92,12 +98,12 @@ public final class Cs2ConfigCommands {
      * @param deviceType      16-bit device type code
      * @return 13-byte CAN frame
      */
-    public static int[] buildPingReply(long uid, int softwareVersion, int deviceType) {
+    public static int[] buildPingReply(McanUid uid, int softwareVersion, int deviceType) {
         int[] data = new int[]{
-            (int)((uid >> 24) & 0xFF),
-            (int)((uid >> 16) & 0xFF),
-            (int)((uid >>  8) & 0xFF),
-            (int)( uid        & 0xFF),
+            (int)((uid.toLong() >> 24) & 0xFF),
+            (int)((uid.toLong() >> 16) & 0xFF),
+            (int)((uid.toLong() >>  8) & 0xFF),
+            (int)( uid.toLong() & 0xFF),
             (softwareVersion >> 8) & 0xFF,
             softwareVersion & 0xFF,
             (deviceType >> 8) & 0xFF,
@@ -125,12 +131,12 @@ public final class Cs2ConfigCommands {
      * @param deviceType 16-bit device type code
      * @return 13-byte CAN frame
      */
-    public static int[] buildUpdateOfferReply(long uid, int version, int deviceType) {
+    public static int[] buildUpdateOfferReply(McanUid uid, int version, int deviceType) {
         int[] data = new int[]{
-            (int)((uid >> 24) & 0xFF),
-            (int)((uid >> 16) & 0xFF),
-            (int)((uid >>  8) & 0xFF),
-            (int)( uid        & 0xFF),
+            (int)((uid.toLong() >> 24) & 0xFF),
+            (int)((uid.toLong() >> 16) & 0xFF),
+            (int)((uid.toLong() >>  8) & 0xFF),
+            (int)( uid.toLong() & 0xFF),
             (version >> 8) & 0xFF,
             version & 0xFF,
             (deviceType >> 8) & 0xFF,
@@ -149,12 +155,12 @@ public final class Cs2ConfigCommands {
      * @param packetCount  number of data packets that will follow
      * @return 13-byte CAN frame
      */
-    public static int[] buildReadConfigDataReply(long uid, int channelIndex, int subIndex, int packetCount) {
+    public static int[] buildReadConfigDataReply(McanUid uid, int channelIndex, int subIndex, int packetCount) {
         int[] data = new int[]{
-            (int)((uid >> 24) & 0xFF),
-            (int)((uid >> 16) & 0xFF),
-            (int)((uid >>  8) & 0xFF),
-            (int)( uid        & 0xFF),
+            (int)((uid.toLong() >> 24) & 0xFF),
+            (int)((uid.toLong() >> 16) & 0xFF),
+            (int)((uid.toLong() >>  8) & 0xFF),
+            (int)( uid.toLong() & 0xFF),
             channelIndex & 0xFF,
             subIndex & 0xFF,
             packetCount & 0xFF,
@@ -170,12 +176,12 @@ public final class Cs2ConfigCommands {
      * @param uid 32-bit target device UID
      * @return 13-byte CAN frame
      */
-    public static int[] buildBootRequestReply(long uid) {
+    public static int[] buildBootRequestReply(McanUid uid) {
         int[] data = new int[]{
-            (int)((uid >> 24) & 0xFF),
-            (int)((uid >> 16) & 0xFF),
-            (int)((uid >>  8) & 0xFF),
-            (int)( uid        & 0xFF)
+            (int)((uid.toLong() >> 24) & 0xFF),
+            (int)((uid.toLong() >> 16) & 0xFF),
+            (int)((uid.toLong() >>  8) & 0xFF),
+            (int)( uid.toLong() & 0xFF)
         };
         return Cs2FrameBuilder.buildFrame(DEFAULT_PRIORITY, COMMAND_BOOT_REQUEST,
                 true, BROADCAST_HASH, 4, data);
@@ -187,9 +193,9 @@ public final class Cs2ConfigCommands {
      * Typed result for a parsed ping request frame (DLC=0, broadcast).
      * Sent periodically by CS2-capable devices to announce their presence.
      */
-    public static final class PingRequestFrame extends Cs2ClassifiedFrame {
-        PingRequestFrame(Cs2Header header, Cs2Data data, ClassifiedFrame parent) {
-            super(header, data, parent);
+    public static final class PingRequestFrame extends Cs2Frame {
+        PingRequestFrame(Cs2Header header, Cs2Data data, RawFrame raw) {
+            super(header, data, raw);
         }
     }
 
@@ -200,8 +206,8 @@ public final class Cs2ConfigCommands {
      *   <li>DLC=5: normal Gleisbox activation (data byte 4 = 0x11 magic).</li>
      * </ul>
      */
-    public static final class BootCanRequestFrame extends Cs2ClassifiedFrame {
-        BootCanRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class BootCanRequestFrame extends Cs2Frame {
+        BootCanRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** Returns true when this is a normal Gleisbox activation (DLC=5, magic byte present). */
         public boolean isGleisboxActivation() {
@@ -213,11 +219,11 @@ public final class Cs2ConfigCommands {
      * A firmware Update Offer request (0x19, DLC=6): UID + 2-byte version.
      * Sent to a device to announce that a firmware update is available.
      */
-    public static final class UpdateOfferRequestFrame extends Cs2ClassifiedFrame {
-        UpdateOfferRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class UpdateOfferRequestFrame extends Cs2Frame {
+        UpdateOfferRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** 32-bit target device UID. */
-        public long uid() { return data().int32At(0); }
+        public McanUid uid() { return data().uidAt(0); }
 
         /** 16-bit firmware version being offered. */
         public int version() { return data().int16At(4); }
@@ -228,11 +234,11 @@ public final class Cs2ConfigCommands {
      * Requests the device identified by {@code uid()} to stream its configuration data
      * for the given channel and sub-index.
      */
-    public static final class ReadConfigDataRequestFrame extends Cs2ClassifiedFrame {
-        ReadConfigDataRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class ReadConfigDataRequestFrame extends Cs2Frame {
+        ReadConfigDataRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** 32-bit target device UID. */
-        public long uid() { return data().int32At(0); }
+        public McanUid uid() { return data().uidAt(0); }
 
         /** Channel index to read. */
         public int channelIndex() { return data().byteAt(4); }
@@ -245,14 +251,14 @@ public final class Cs2ConfigCommands {
      * Typed result for a parsed ping reply frame.
      * Data layout: UID (4 bytes) + software version (2 bytes) + device type (2 bytes).
      */
-    public static final class PingReplyFrame extends Cs2ClassifiedFrame {
-        PingReplyFrame(Cs2Header header, Cs2Data data, ClassifiedFrame parent) {
-            super(header, data, parent);
+    public static final class PingReplyFrame extends Cs2Frame {
+        PingReplyFrame(Cs2Header header, Cs2Data data, RawFrame raw) {
+            super(header, data, raw);
         }
 
         /** 32-bit device UID. */
-        public long uid() {
-            return data().int32At(0);
+        public McanUid uid() {
+            return data().uidAt(0);
         }
 
         /** 16-bit software version. */
@@ -267,19 +273,19 @@ public final class Cs2ConfigCommands {
     }
 
     /** A CAN boot reply frame. */
-    public static final class CanBootReplyFrame extends Cs2ClassifiedFrame {
-        CanBootReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class CanBootReplyFrame extends Cs2Frame {
+        CanBootReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
     }
 
     /**
      * An Update Offer reply (0x19, DLC=8): echoes the Update Offer request.
      * Layout: Device-UID (4 bytes) + firmware version (2 bytes) + device type (2 bytes).
      */
-    public static final class UpdateOfferReplyFrame extends Cs2ClassifiedFrame {
-        UpdateOfferReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class UpdateOfferReplyFrame extends Cs2Frame {
+        UpdateOfferReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** 32-bit device UID. */
-        public long uid() { return data().int32At(0); }
+        public McanUid uid() { return data().uidAt(0); }
 
         /** 16-bit firmware version offered. */
         public int version() { return data().int16At(4); }
@@ -295,11 +301,11 @@ public final class Cs2ConfigCommands {
      * Corresponds to a device's internal configuration data stream; the actual data
      * arrives as subsequent DLC=8 packets via the config data stream mechanism.
      */
-    public static final class ReadConfigDataReplyFrame extends Cs2ClassifiedFrame {
-        ReadConfigDataReplyFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class ReadConfigDataReplyFrame extends Cs2Frame {
+        ReadConfigDataReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** 32-bit target device UID. */
-        public long uid() { return data().int32At(0); }
+        public McanUid uid() { return data().uidAt(0); }
 
         /** Channel index being read. */
         public int channelIndex() { return data().byteAt(4); }
@@ -317,74 +323,64 @@ public final class Cs2ConfigCommands {
      * Reply (DLC=4): echoes the target UID as confirmation.
      * Higher DLC variants carry device-specific bootloader exchange data.
      */
-    public static final class BootRequestFrame extends Cs2ClassifiedFrame {
-        BootRequestFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class BootRequestFrame extends Cs2Frame {
+        BootRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** 32-bit target device UID. */
-        public long uid() { return data().int32At(0); }
+        public McanUid uid() { return data().uidAt(0); }
     }
 
     /**
-     * Parses a first-pass classified frame as a ping reply, returning a {@link NativeDeviceInfo}
-     * if the frame is a valid CS2 native ping reply with a non-reserved UID.
+     * Extracts device information from a CS2 native ping reply.
      *
-     * @param frame first-pass classified frame
-     * @return device info or empty if the frame is not a valid ping reply
+     * @param frame classified frame
+     * @return device info or empty unless {@code frame} is a {@link PingReplyFrame}
+     *         (DLC 8, UID neither broadcast nor uninitialized)
      */
-    public static Optional<NativeDeviceInfo> parsePingReply(ClassifiedFrame frame) {
-        if (frame.protocol() != FrameProtocol.CS2_NATIVE) return Optional.empty();
-        if (!frame.cs2Header().response())                 return Optional.empty();
-        if (frame.cs2Header().commandCode() != COMMAND_PING) return Optional.empty();
-        if (frame.cs2Header().dlc() != 8)                  return Optional.empty();
-
-        int[] raw = frame.raw().toArray();
-        long uid = ((long)(raw[5] & 0xFF) << 24)
-                 | ((long)(raw[6] & 0xFF) << 16)
-                 | ((long)(raw[7] & 0xFF) <<  8)
-                 | (raw[8] & 0xFF);
-        if (uid == NativeDeviceInfo.UID_BROADCAST || uid == NativeDeviceInfo.UID_UNINITIALIZED) {
+    public static Optional<NativeDeviceInfo> parsePingReply(McanFrame frame) {
+        if (!(frame instanceof PingReplyFrame)) {
             return Optional.empty();
         }
-        int softwareVersion = ((raw[9]  & 0xFF) << 8) | (raw[10] & 0xFF);
-        int deviceType      = ((raw[11] & 0xFF) << 8) | (raw[12] & 0xFF);
-        return Optional.of(new NativeDeviceInfo(uid, deviceType, softwareVersion, frame.cs2Header().hash()));
+        PingReplyFrame ping = (PingReplyFrame) frame;
+        return Optional.of(new NativeDeviceInfo(ping.uid(), ping.deviceType(),
+                ping.softwareVersion(), ping.header().hash()));
     }
 
-    static Cs2ClassifiedFrame parse(Cs2Header header, Cs2Data data, ClassifiedFrame parent) {
+    static Cs2Frame parse(Cs2Header header, Cs2Data data, RawFrame raw) {
         switch (header.resolvedCommand()) {
             case PING:
-                return new PingRequestFrame(header, data, parent);
+                return new PingRequestFrame(header, data, raw);
             case PING_REPLY:
-                return parsePingReply(header, data, parent);
+                return parsePingReply(header, data, raw);
             case BOOT_CAN:
-                return new BootCanRequestFrame(header, data, parent);
+                return new BootCanRequestFrame(header, data, raw);
             case BOOT_CAN_REPLY:
-                return new CanBootReplyFrame(header, data, parent);
+                return new CanBootReplyFrame(header, data, raw);
             case UPDATE_OFFER:
-                return new UpdateOfferRequestFrame(header, data, parent);
+                return new UpdateOfferRequestFrame(header, data, raw);
             case UPDATE_OFFER_REPLY:
-                return new UpdateOfferReplyFrame(header, data, parent);
+                return new UpdateOfferReplyFrame(header, data, raw);
             case READ_CONFIG_DATA:
-                return new ReadConfigDataRequestFrame(header, data, parent);
+                return new ReadConfigDataRequestFrame(header, data, raw);
             case READ_CONFIG_DATA_REPLY:
-                return header.dlc() == 8 ? new ReadConfigDataReplyFrame(header, data, parent)
-                        : new Cs2ClassifiedFrame(header, data, parent);
+                return header.dlc() == 8 ? new ReadConfigDataReplyFrame(header, data, raw)
+                        : new Cs2Frame(header, data, raw);
             case BOOT_REQUEST:
             case BOOT_REQUEST_REPLY:
-                return new BootRequestFrame(header, data, parent);
+                return new BootRequestFrame(header, data, raw);
             default:
-                return new Cs2ClassifiedFrame(header, data, parent);
+                return new Cs2Frame(header, data, raw);
         }
     }
 
-    private static Cs2ClassifiedFrame parsePingReply(Cs2Header header, Cs2Data data, ClassifiedFrame parent) {
+    private static Cs2Frame parsePingReply(Cs2Header header, Cs2Data data, RawFrame raw) {
         if (header.dlc() != 8) {
-            return new Cs2ClassifiedFrame(header, data, parent);
+            return new Cs2Frame(header, data, raw);
         }
-        long uid = data.int32At(0);
-        if (uid == 0x00000000L || uid == 0xFFFFFFFFL) {
-            return new Cs2ClassifiedFrame(header, data, parent);
+        McanUid uid = data.uidAt(0);
+        if (uid.isBroadcast() || uid.isUninitialized()) {
+            return new Cs2Frame(header, data, raw);
         }
-        return new PingReplyFrame(header, data, parent);
+        return new PingReplyFrame(header, data, raw);
     }
 }

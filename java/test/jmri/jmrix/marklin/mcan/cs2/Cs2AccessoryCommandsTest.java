@@ -1,4 +1,5 @@
 package jmri.jmrix.marklin.mcan.cs2;
+import jmri.jmrix.marklin.mcan.FrameProtocol;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,11 +23,11 @@ public class Cs2AccessoryCommandsTest {
         JUnitUtil.tearDown();
     }
 
-    private static Cs2ClassifiedFrame roundtrip(int[] frame) {
-        ClassifiedFrame cf = ProtocolClassifier.classify(frame);
+    private static Cs2Frame roundtrip(int[] frame) {
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(frame);
         assertEquals(FrameProtocol.CS2_NATIVE, cf.protocol(),
                 "Encoded frame must classify as CS2_NATIVE");
-        return Cs2FrameParser.parse(cf);
+        return cf;
     }
 
     // --- buildSetAccessory ---
@@ -38,23 +39,23 @@ public class Cs2AccessoryCommandsTest {
 
     @Test
     public void testBuildSetAccessoryClassifiesAsCs2Native() {
-        ClassifiedFrame cf = ProtocolClassifier.classify(
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(
                 Cs2AccessoryCommands.buildSetAccessory(0x3000L, 0, true));
         assertEquals(FrameProtocol.CS2_NATIVE, cf.protocol());
     }
 
     @Test
     public void testBuildSetAccessoryHasCommandCode0x0B() {
-        ClassifiedFrame cf = ProtocolClassifier.classify(
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(
                 Cs2AccessoryCommands.buildSetAccessory(0x3000L, 0, true));
-        assertEquals(0x0B, cf.cs2Header().commandCode());
+        assertEquals(0x0B, cf.header().commandCode());
     }
 
     @Test
     public void testBuildSetAccessoryIsNotResponse() {
-        ClassifiedFrame cf = ProtocolClassifier.classify(
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(
                 Cs2AccessoryCommands.buildSetAccessory(0x3000L, 0, true));
-        assertFalse(cf.cs2Header().response());
+        assertFalse(cf.header().response());
     }
 
     @Test
@@ -101,9 +102,9 @@ public class Cs2AccessoryCommandsTest {
 
     @Test
     public void testBuildQueryAccessoryHasCommandCode0x0B() {
-        ClassifiedFrame cf = ProtocolClassifier.classify(
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(
                 Cs2AccessoryCommands.buildQueryAccessory(0x3000L));
-        assertEquals(0x0B, cf.cs2Header().commandCode());
+        assertEquals(0x0B, cf.header().commandCode());
     }
 
     // --- reply parsing (AccessoryReplyFrame) ---
@@ -122,13 +123,13 @@ public class Cs2AccessoryCommandsTest {
 
     @Test
     public void testAccessoryReplyRoundtripsToAccessoryReplyFrame() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildReplyFrame(0x3000L, 1, true));
+        Cs2Frame parsed = roundtrip(buildReplyFrame(0x3000L, 1, true));
         assertInstanceOf(Cs2AccessoryCommands.AccessoryReplyFrame.class, parsed);
     }
 
     @Test
     public void testAccessoryReplyFrameAddress() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildReplyFrame(0x3800L, 0, false));
+        Cs2Frame parsed = roundtrip(buildReplyFrame(0x3800L, 0, false));
         Cs2AccessoryCommands.AccessoryReplyFrame reply =
                 (Cs2AccessoryCommands.AccessoryReplyFrame) parsed;
         assertEquals(0x3800L, reply.address());
@@ -136,7 +137,7 @@ public class Cs2AccessoryCommandsTest {
 
     @Test
     public void testAccessoryReplyFrameAspect() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildReplyFrame(0x3000L, 2, false));
+        Cs2Frame parsed = roundtrip(buildReplyFrame(0x3000L, 2, false));
         Cs2AccessoryCommands.AccessoryReplyFrame reply =
                 (Cs2AccessoryCommands.AccessoryReplyFrame) parsed;
         assertEquals(2, reply.aspect());
@@ -144,7 +145,7 @@ public class Cs2AccessoryCommandsTest {
 
     @Test
     public void testAccessoryReplyFramePowerTrue() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildReplyFrame(0x3000L, 0, true));
+        Cs2Frame parsed = roundtrip(buildReplyFrame(0x3000L, 0, true));
         Cs2AccessoryCommands.AccessoryReplyFrame reply =
                 (Cs2AccessoryCommands.AccessoryReplyFrame) parsed;
         assertTrue(reply.power());
@@ -152,7 +153,7 @@ public class Cs2AccessoryCommandsTest {
 
     @Test
     public void testAccessoryReplyFramePowerFalse() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildReplyFrame(0x3000L, 0, false));
+        Cs2Frame parsed = roundtrip(buildReplyFrame(0x3000L, 0, false));
         Cs2AccessoryCommands.AccessoryReplyFrame reply =
                 (Cs2AccessoryCommands.AccessoryReplyFrame) parsed;
         assertFalse(reply.power());
@@ -160,7 +161,7 @@ public class Cs2AccessoryCommandsTest {
 
     @Test
     public void testAccessoryReplyIsResponse() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildReplyFrame(0x3000L, 0, true));
+        Cs2Frame parsed = roundtrip(buildReplyFrame(0x3000L, 0, true));
         assertTrue(parsed.header().response());
     }
 
@@ -174,9 +175,9 @@ public class Cs2AccessoryCommandsTest {
 
     @Test
     public void testBuildSetAccessoryTimedHasCommandCode0x0B() {
-        ClassifiedFrame cf = ProtocolClassifier.classify(
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(
                 Cs2AccessoryCommands.buildSetAccessoryTimed(0x3000L, 1, true, 50));
-        assertEquals(0x0B, cf.cs2Header().commandCode());
+        assertEquals(0x0B, cf.header().commandCode());
     }
 
     @Test
@@ -211,20 +212,20 @@ public class Cs2AccessoryCommandsTest {
 
     @Test
     public void testAccessoryTimedReplyRoundtripsToAccessoryReplyFrame() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildTimedReplyFrame(0x3000L, 1, true, 50));
+        Cs2Frame parsed = roundtrip(buildTimedReplyFrame(0x3000L, 1, true, 50));
         assertInstanceOf(Cs2AccessoryCommands.AccessoryReplyFrame.class, parsed);
     }
 
     @Test
     public void testAccessoryReplyFrameTime10ms() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildTimedReplyFrame(0x3000L, 0, true, 0x0190));
+        Cs2Frame parsed = roundtrip(buildTimedReplyFrame(0x3000L, 0, true, 0x0190));
         assertEquals(0x0190,
                 ((Cs2AccessoryCommands.AccessoryReplyFrame) parsed).time10ms());
     }
 
     @Test
     public void testAccessoryReplyFrameTime10msZeroForDlc6() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildReplyFrame(0x3000L, 0, true));
+        Cs2Frame parsed = roundtrip(buildReplyFrame(0x3000L, 0, true));
         assertEquals(0, ((Cs2AccessoryCommands.AccessoryReplyFrame) parsed).time10ms());
     }
 
@@ -232,15 +233,15 @@ public class Cs2AccessoryCommandsTest {
 
     @Test
     public void testBuildSetAccessoryResolvesToAccessoryEnum() {
-        ClassifiedFrame cf = ProtocolClassifier.classify(
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(
                 Cs2AccessoryCommands.buildSetAccessory(0x3000L, 0, true));
-        assertEquals(Cs2Command.ACCESSORY, cf.cs2Header().resolvedCommand());
+        assertEquals(Cs2Command.ACCESSORY, cf.header().resolvedCommand());
     }
 
     @Test
     public void testAccessoryReplyResolvesToAccessoryReplyEnum() {
-        ClassifiedFrame cf = ProtocolClassifier.classify(buildReplyFrame(0x3000L, 0, true));
-        assertEquals(Cs2Command.ACCESSORY_REPLY, cf.cs2Header().resolvedCommand());
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(buildReplyFrame(0x3000L, 0, true));
+        assertEquals(Cs2Command.ACCESSORY_REPLY, cf.header().resolvedCommand());
     }
 
     // --- MfxBindExReplyFrame ---
@@ -257,19 +258,19 @@ public class Cs2AccessoryCommandsTest {
 
     @Test
     public void testMfxBindExReplyRoundtripsToMfxBindExReplyFrame() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildMfxBindExReply(0x11223344L, 0x0007));
+        Cs2Frame parsed = roundtrip(buildMfxBindExReply(0x11223344L, 0x0007));
         assertInstanceOf(Cs2AccessoryCommands.MfxBindExReplyFrame.class, parsed);
     }
 
     @Test
     public void testMfxBindExReplyFrameUid() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildMfxBindExReply(0x11223344L, 0x0007));
+        Cs2Frame parsed = roundtrip(buildMfxBindExReply(0x11223344L, 0x0007));
         assertEquals(0x11223344L, ((Cs2AccessoryCommands.MfxBindExReplyFrame) parsed).mfxUid());
     }
 
     @Test
     public void testMfxBindExReplyFrameSid() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildMfxBindExReply(0x11223344L, 0x0042));
+        Cs2Frame parsed = roundtrip(buildMfxBindExReply(0x11223344L, 0x0042));
         assertEquals(0x0042, ((Cs2AccessoryCommands.MfxBindExReplyFrame) parsed).mfxSid());
     }
 }

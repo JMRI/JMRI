@@ -1,12 +1,14 @@
 package jmri.jmrix.marklin;
 
+import jmri.jmrix.marklin.mcan.McanUid;
+
 import jmri.jmrix.marklin.mcan.cdb.CdBFrameParser;
-import jmri.jmrix.marklin.mcan.classify.ClassifiedFrame;
-import jmri.jmrix.marklin.mcan.classify.FrameProtocol;
+import jmri.jmrix.marklin.mcan.McanFrame;
+import jmri.jmrix.marklin.mcan.FrameProtocol;
 import jmri.jmrix.marklin.mcan.classify.ProtocolClassifier;
 import jmri.jmrix.marklin.mcan.cs2.Cs2ConfigCommands;
-import jmri.jmrix.marklin.mcan.device.CdBDeviceClass;
-import jmri.jmrix.marklin.mcan.protocol.NativeDeviceInfo;
+import jmri.jmrix.marklin.mcan.cdb.CdBDeviceClass;
+import jmri.jmrix.marklin.mcan.cs2.NativeDeviceInfo;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.*;
 
@@ -81,9 +83,31 @@ public class McanDeviceManagerTest {
     }
 
     @Test
+    public void testMagnetAddressPayloadDiscoveryAndCapabilityRouting() {
+        MarklinReply scan = frameFromCanId(cdBPingId(0x22) + 0x10000 + 3, 8,
+                0x38, 0x01, 0x38, 0x02, 0x38, 0x03, 0x38, 0x04);
+        assertTrue(tc.getCdBFilter().offer(scan));
+        McanDevice device = manager.getDevice(McanDeviceIdentity.forCdB(0x22, 3));
+        assertNotNull(device);
+        assertEquals(McanDeviceState.ONLINE, device.getDeviceState());
+        assertInstanceOf(WeichenChefMagnetService.class, device.getDeviceService());
+        WeichenChefMagnetService service = (WeichenChefMagnetService) device.getDeviceService();
+        assertEquals(WeichenChefMagnetGeneration.UNKNOWN, service.getGeneration());
+        for (int reg : new int[]{2, 16, 17}) {
+            for (int slot = 5; slot <= 8; slot++) {
+                MarklinReply reply = new MarklinReply(
+                        jmri.jmrix.marklin.mcan.cdb.CdBConfigCommands.buildReadReply(0x22, 3, slot, reg, 100));
+                assertTrue(tc.getCdBFilter().offer(reply));
+            }
+        }
+        assertEquals(WeichenChefMagnetGeneration.GEN_002_PLUS, service.getDetectedGeneration());
+        assertSame(service, device.getDeviceService());
+    }
+
+    @Test
     public void testProvideAndGetDevice() {
         assertNotNull(manager);
-        McanDeviceIdentity.Native nativeIdentity = McanDeviceIdentity.forNative(0x00112233L, NativeDeviceInfo.TYPE_MS2);
+        McanDeviceIdentity.Native nativeIdentity = McanDeviceIdentity.forNative(McanUid.of(0x00112233L), NativeDeviceInfo.TYPE_MS2);
 
         McanDevice device = manager.provideDevice(nativeIdentity);
         assertNotNull(device);
@@ -95,7 +119,7 @@ public class McanDeviceManagerTest {
 
     @Test
     public void testPingResponseDiscovery() {
-        McanDeviceIdentity.Native nativeIdentity = McanDeviceIdentity.forNative(0x00112233L, NativeDeviceInfo.TYPE_MS2);
+        McanDeviceIdentity.Native nativeIdentity = McanDeviceIdentity.forNative(McanUid.of(0x00112233L), NativeDeviceInfo.TYPE_MS2);
         assertNull(manager.getDevice(nativeIdentity));
 
         MarklinReply pingReply = cs2PingReply(0x00112233L, 0x0102, NativeDeviceInfo.TYPE_MS2);
@@ -120,9 +144,9 @@ public class McanDeviceManagerTest {
         // Classify and parse via mcan layer, then call manager directly
         int[] raw13 = new int[13];
         for (int i = 0; i < 13; i++) raw13[i] = reply.getElement(i) & 0xFF;
-        ClassifiedFrame cf = ProtocolClassifier.classify(raw13);
+        McanFrame cf = ProtocolClassifier.classify(raw13);
         assertEquals(FrameProtocol.CDB_CONFIG, cf.protocol());
-        CdBFrameParser.CdBFrame frame = CdBFrameParser.parse(cf);
+        CdBFrameParser.CdBFrame frame = (CdBFrameParser.CdBFrame) cf;
 
         manager.cdBConfigReply(frame, reply);
 

@@ -1,4 +1,5 @@
 package jmri.jmrix.marklin.mcan.cs2;
+import jmri.jmrix.marklin.mcan.FrameProtocol;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,11 +23,11 @@ public class Cs2DecoderCommandsTest {
         JUnitUtil.tearDown();
     }
 
-    private static Cs2ClassifiedFrame roundtrip(int[] frame) {
-        ClassifiedFrame cf = ProtocolClassifier.classify(frame);
+    private static Cs2Frame roundtrip(int[] frame) {
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(frame);
         assertEquals(FrameProtocol.CS2_NATIVE, cf.protocol(),
                 "Encoded frame must classify as CS2_NATIVE");
-        return Cs2FrameParser.parse(cf);
+        return cf;
     }
 
     // --- emergency stop ---
@@ -38,17 +39,17 @@ public class Cs2DecoderCommandsTest {
 
     @Test
     public void testBuildLocoEmergencyStopHasCommandCode() {
-        ClassifiedFrame cf = ProtocolClassifier.classify(
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(
                 Cs2DecoderCommands.buildLocoEmergencyStop(0x4000L));
         assertEquals(Cs2DecoderCommands.COMMAND_LOCO_EMERGENCY_STOP,
-                cf.cs2Header().commandCode());
+                cf.header().commandCode());
     }
 
     @Test
     public void testBuildLocoEmergencyStopIsNotResponse() {
-        ClassifiedFrame cf = ProtocolClassifier.classify(
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(
                 Cs2DecoderCommands.buildLocoEmergencyStop(0x4000L));
-        assertFalse(cf.cs2Header().response());
+        assertFalse(cf.header().response());
     }
 
     @Test
@@ -71,9 +72,9 @@ public class Cs2DecoderCommandsTest {
 
     @Test
     public void testBuildLocoSpeedHasCommandCode() {
-        ClassifiedFrame cf = ProtocolClassifier.classify(
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(
                 Cs2DecoderCommands.buildLocoSpeed(0x4000L, 100));
-        assertEquals(Cs2DecoderCommands.COMMAND_LOCO_SPEED, cf.cs2Header().commandCode());
+        assertEquals(Cs2DecoderCommands.COMMAND_LOCO_SPEED, cf.header().commandCode());
     }
 
     @Test
@@ -99,9 +100,9 @@ public class Cs2DecoderCommandsTest {
 
     @Test
     public void testBuildLocoDirectionHasCommandCode() {
-        ClassifiedFrame cf = ProtocolClassifier.classify(
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(
                 Cs2DecoderCommands.buildLocoDirection(0x4000L, 1));
-        assertEquals(Cs2DecoderCommands.COMMAND_LOCO_DIRECTION, cf.cs2Header().commandCode());
+        assertEquals(Cs2DecoderCommands.COMMAND_LOCO_DIRECTION, cf.header().commandCode());
     }
 
     @Test
@@ -120,9 +121,9 @@ public class Cs2DecoderCommandsTest {
 
     @Test
     public void testBuildLocoFunctionHasCommandCode() {
-        ClassifiedFrame cf = ProtocolClassifier.classify(
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(
                 Cs2DecoderCommands.buildLocoFunction(0x4000L, 0, true));
-        assertEquals(Cs2DecoderCommands.COMMAND_LOCO_FUNCTION, cf.cs2Header().commandCode());
+        assertEquals(Cs2DecoderCommands.COMMAND_LOCO_FUNCTION, cf.header().commandCode());
     }
 
     @Test
@@ -149,9 +150,9 @@ public class Cs2DecoderCommandsTest {
 
     @Test
     public void testBuildMfxBindHasCommandCode() {
-        ClassifiedFrame cf = ProtocolClassifier.classify(
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(
                 Cs2DecoderCommands.buildMfxBind(0x12345678L, 0x0001));
-        assertEquals(Cs2DecoderCommands.COMMAND_MFX_BIND, cf.cs2Header().commandCode());
+        assertEquals(Cs2DecoderCommands.COMMAND_MFX_BIND, cf.header().commandCode());
     }
 
     @Test
@@ -164,14 +165,14 @@ public class Cs2DecoderCommandsTest {
 
     @Test
     public void testBuildLocoEmergencyStopClassifiesAsCs2Native() {
-        ClassifiedFrame cf = ProtocolClassifier.classify(
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(
                 Cs2DecoderCommands.buildLocoEmergencyStop(0x4000L));
         assertEquals(FrameProtocol.CS2_NATIVE, cf.protocol());
     }
 
     @Test
     public void testBuildLocoSpeedClassifiesAsCs2Native() {
-        ClassifiedFrame cf = ProtocolClassifier.classify(
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(
                 Cs2DecoderCommands.buildLocoSpeed(0x4000L, 500));
         assertEquals(FrameProtocol.CS2_NATIVE, cf.protocol());
     }
@@ -180,13 +181,13 @@ public class Cs2DecoderCommandsTest {
 
     @Test
     public void testLocoEmergencyStopRoundtripsToLocoEmergencyStopFrame() {
-        Cs2ClassifiedFrame parsed = roundtrip(Cs2DecoderCommands.buildLocoEmergencyStop(0x4000L));
+        Cs2Frame parsed = roundtrip(Cs2DecoderCommands.buildLocoEmergencyStop(0x4000L));
         assertInstanceOf(Cs2DecoderCommands.LocoEmergencyStopFrame.class, parsed);
     }
 
     @Test
     public void testLocoEmergencyStopFrameAddress() {
-        Cs2ClassifiedFrame parsed = roundtrip(Cs2DecoderCommands.buildLocoEmergencyStop(0x12345678L));
+        Cs2Frame parsed = roundtrip(Cs2DecoderCommands.buildLocoEmergencyStop(0x12345678L));
         assertEquals(0x12345678L, ((Cs2DecoderCommands.LocoEmergencyStopFrame) parsed).locoAddress());
     }
 
@@ -207,25 +208,25 @@ public class Cs2DecoderCommandsTest {
 
     @Test
     public void testReadConfigReplyRoundtripsToReadConfigReplyFrame() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildReadConfigReply(0x4000L, 0, 1, 42));
+        Cs2Frame parsed = roundtrip(buildReadConfigReply(0x4000L, 0, 1, 42));
         assertInstanceOf(Cs2DecoderCommands.ReadConfigReplyFrame.class, parsed);
     }
 
     @Test
     public void testReadConfigReplyFrameLocoAddress() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildReadConfigReply(0xC001L, 0, 1, 99));
+        Cs2Frame parsed = roundtrip(buildReadConfigReply(0xC001L, 0, 1, 99));
         assertEquals(0xC001L, ((Cs2DecoderCommands.ReadConfigReplyFrame) parsed).locoAddress());
     }
 
     @Test
     public void testReadConfigReplyFrameCvNumber() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildReadConfigReply(0x4000L, 0, 29, 3));
+        Cs2Frame parsed = roundtrip(buildReadConfigReply(0x4000L, 0, 29, 3));
         assertEquals(29, ((Cs2DecoderCommands.ReadConfigReplyFrame) parsed).cvNumber());
     }
 
     @Test
     public void testReadConfigReplyFrameValue() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildReadConfigReply(0x4000L, 0, 1, 0x7F));
+        Cs2Frame parsed = roundtrip(buildReadConfigReply(0x4000L, 0, 1, 0x7F));
         assertEquals(0x7F, ((Cs2DecoderCommands.ReadConfigReplyFrame) parsed).value());
     }
 
@@ -235,7 +236,7 @@ public class Cs2DecoderCommandsTest {
         int[] data = new int[]{0, 0, 0x40, 0, 0, 0};
         int[] frame = Cs2FrameBuilder.buildFrame(0, Cs2DecoderCommands.COMMAND_READ_CONFIG,
                 true, Cs2DecoderCommands.BROADCAST_HASH, 6, data);
-        Cs2ClassifiedFrame parsed = roundtrip(frame);
+        Cs2Frame parsed = roundtrip(frame);
         assertFalse(parsed instanceof Cs2DecoderCommands.ReadConfigReplyFrame,
                 "DLC=6 failure reply must not be typed as ReadConfigReplyFrame");
     }
@@ -255,25 +256,25 @@ public class Cs2DecoderCommandsTest {
 
     @Test
     public void testWriteConfigReplyRoundtripsToWriteConfigReplyFrame() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildWriteConfigReply(0x4000L, 1, 3, 0xC0));
+        Cs2Frame parsed = roundtrip(buildWriteConfigReply(0x4000L, 1, 3, 0xC0));
         assertInstanceOf(Cs2DecoderCommands.WriteConfigReplyFrame.class, parsed);
     }
 
     @Test
     public void testWriteConfigReplyFrameWriteAcknowledged() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildWriteConfigReply(0x4000L, 1, 3, 0x80));
+        Cs2Frame parsed = roundtrip(buildWriteConfigReply(0x4000L, 1, 3, 0x80));
         assertTrue(((Cs2DecoderCommands.WriteConfigReplyFrame) parsed).writeAcknowledged());
     }
 
     @Test
     public void testWriteConfigReplyFrameVerifySucceeded() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildWriteConfigReply(0x4000L, 1, 3, 0x40));
+        Cs2Frame parsed = roundtrip(buildWriteConfigReply(0x4000L, 1, 3, 0x40));
         assertTrue(((Cs2DecoderCommands.WriteConfigReplyFrame) parsed).verifySucceeded());
     }
 
     @Test
     public void testWriteConfigReplyFrameNoAck() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildWriteConfigReply(0x4000L, 1, 3, 0x00));
+        Cs2Frame parsed = roundtrip(buildWriteConfigReply(0x4000L, 1, 3, 0x00));
         assertFalse(((Cs2DecoderCommands.WriteConfigReplyFrame) parsed).writeAcknowledged());
         assertFalse(((Cs2DecoderCommands.WriteConfigReplyFrame) parsed).verifySucceeded());
     }
@@ -292,19 +293,19 @@ public class Cs2DecoderCommandsTest {
 
     @Test
     public void testMfxBindReplyRoundtripsToMfxBindReplyFrame() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildMfxBindReply(0xDEADBEEFL, 0x0001));
+        Cs2Frame parsed = roundtrip(buildMfxBindReply(0xDEADBEEFL, 0x0001));
         assertInstanceOf(Cs2DecoderCommands.MfxBindReplyFrame.class, parsed);
     }
 
     @Test
     public void testMfxBindReplyFrameUid() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildMfxBindReply(0x12345678L, 0x00FF));
+        Cs2Frame parsed = roundtrip(buildMfxBindReply(0x12345678L, 0x00FF));
         assertEquals(0x12345678L, ((Cs2DecoderCommands.MfxBindReplyFrame) parsed).mfxUid());
     }
 
     @Test
     public void testMfxBindReplyFrameSid() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildMfxBindReply(0x12345678L, 0x0042));
+        Cs2Frame parsed = roundtrip(buildMfxBindReply(0x12345678L, 0x0042));
         assertEquals(0x0042, ((Cs2DecoderCommands.MfxBindReplyFrame) parsed).mfxSid());
     }
 
@@ -332,31 +333,31 @@ public class Cs2DecoderCommandsTest {
 
     @Test
     public void testMfxVerifyPositiveRoundtripsToMfxVerifyReplyFrame() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildMfxVerifyPositiveReply(0xAABBCCDDL, 5, 200));
+        Cs2Frame parsed = roundtrip(buildMfxVerifyPositiveReply(0xAABBCCDDL, 5, 200));
         assertInstanceOf(Cs2DecoderCommands.MfxVerifyReplyFrame.class, parsed);
     }
 
     @Test
     public void testMfxVerifyPositiveFrameIsPositive() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildMfxVerifyPositiveReply(0xAABBCCDDL, 5, 200));
+        Cs2Frame parsed = roundtrip(buildMfxVerifyPositiveReply(0xAABBCCDDL, 5, 200));
         assertTrue(((Cs2DecoderCommands.MfxVerifyReplyFrame) parsed).positive());
     }
 
     @Test
     public void testMfxVerifyPositiveFrameAskRatio() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildMfxVerifyPositiveReply(0xAABBCCDDL, 5, 200));
+        Cs2Frame parsed = roundtrip(buildMfxVerifyPositiveReply(0xAABBCCDDL, 5, 200));
         assertEquals(200, ((Cs2DecoderCommands.MfxVerifyReplyFrame) parsed).askRatio());
     }
 
     @Test
     public void testMfxVerifyNegativeFrameIsNotPositive() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildMfxVerifyNegativeReply(0xAABBCCDDL));
+        Cs2Frame parsed = roundtrip(buildMfxVerifyNegativeReply(0xAABBCCDDL));
         assertFalse(((Cs2DecoderCommands.MfxVerifyReplyFrame) parsed).positive());
     }
 
     @Test
     public void testMfxVerifyNegativeFrameAskRatioIsZero() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildMfxVerifyNegativeReply(0xAABBCCDDL));
+        Cs2Frame parsed = roundtrip(buildMfxVerifyNegativeReply(0xAABBCCDDL));
         assertEquals(0, ((Cs2DecoderCommands.MfxVerifyReplyFrame) parsed).askRatio());
     }
 }
