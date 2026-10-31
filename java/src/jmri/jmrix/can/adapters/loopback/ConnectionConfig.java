@@ -47,6 +47,16 @@ public class ConnectionConfig extends jmri.jmrix.can.adapters.ConnectionConfig {
         outputIntervalReset.setVisible(true);   // show Interval Reset button
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * The CAN Simulation connection drives no real hardware.
+     */
+    @Override
+    public boolean isSimulator() {
+        return true;
+    }
+
     @Override
     public String name() {
         return Bundle.getMessage("CanSimulationName");

@@ -78,6 +78,18 @@ public interface ConnectionConfig {
     boolean isRestartRequired();
 
     /**
+     * Say whether this connection is a simulator, with no real layout
+     * hardware behind it. A profile whose connections are all simulators
+     * can have simulated trains placed on it.
+     *
+     * @return true for a simulator connection; false by default
+     * @since 5.19.1
+     */
+    default boolean isSimulator() {
+        return false;
+    }
+
+    /**
      * Get the configuration for the ConnectionConfig.
      *
      * @return the configuration or null if not supported
