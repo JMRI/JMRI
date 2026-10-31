@@ -9893,6 +9893,48 @@ public final class LayoutEditorTools {
             log.debug("East set is {}", isEast);
             setIconOnPanel(ts, icon, isEast, p, endPoint, isRightSide, fromPoint);
         }
+        if (obj instanceof Integer) {
+            log.debug("Setting buffer mast");
+            int VerticalOrientation = (int) obj;
+            int offsetx;
+            int offsety;
+            int rotation;
+            boolean isEast = false;
+
+            Point loc;
+            if (VerticalOrientation == LayoutTraverser.HORIZONTAL) {
+                //In a vertical Straight Line
+                if (isEast) {
+                    log.debug("In a vertical straightline facing South");
+                    loc = northToSouth(p, icon, isRightSide, fromPoint);
+                } else {
+                    log.debug("In a vertical straightline facing North");
+                    loc = southToNorth(p, icon, isRightSide, fromPoint);
+                }
+            } else {
+                //In a Horizontal Straight Line
+                if (isEast) {
+                    log.debug("In a Horizontal striaghtline facing east");
+                    loc = westToEast(p, icon, isRightSide, fromPoint);
+                } else {
+                    log.debug("In a Horizontal striaghtline facing west");
+                    loc = eastToWest(p, icon, isRightSide, fromPoint);
+                }
+            }
+            if (VerticalOrientation == LayoutTraverser.HORIZONTAL) {
+                offsetx = 0;
+                offsety = -30;
+                rotation = 0;
+            } else {
+                offsetx = -30;
+                offsety = 0;
+                rotation = 270;
+            }
+
+            int cpx = (int) loc.getX();
+            int cpy = (int) loc.getY();
+            setIconOnPanel(icon, rotation, cpx + offsetx, cpy + offsety);
+        }
     }
 
     private void setSignalMastsCancelPressed(ActionEvent a) {

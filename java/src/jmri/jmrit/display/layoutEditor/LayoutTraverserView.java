@@ -25,7 +25,6 @@ import jmri.util.swing.JmriMouseEvent;
  */
 public class LayoutTraverserView extends LayoutTrackView {
 
-    // defined constants
     // operational instance variables (not saved between sessions)
     private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTraverserEditor editor;
 
@@ -121,7 +120,7 @@ public class LayoutTraverserView extends LayoutTrackView {
      * Get the center of the control point, which is on an edge of the traverser.
      * @return The center point for the control circles.
      */
-    private Point2D getControlPointCenter() {
+    public Point2D getControlPointCenter() {
         Point2D center = getCoordsCenter();
         Rectangle2D bounds = getBounds();
         if (getOrientation() == LayoutTraverser.HORIZONTAL) {
@@ -651,7 +650,7 @@ public class LayoutTraverserView extends LayoutTrackView {
             }
         }
 
-        // Draw the sliding bridge
+        // Draw the sliding bridge`
         int currentPositionConnectionIndex = getPosition();
         int orderedIndex = -1;
         if (currentPositionConnectionIndex != -1) {
@@ -684,23 +683,14 @@ public class LayoutTraverserView extends LayoutTrackView {
             Point2D center = getCoordsCenter();
             Rectangle2D pit = getBounds();
             double offset = getSlotOffsetValue(orderedIndex);
-            double gap = traverser.getDeckWidth() * 0.2;
-            boolean sideA = (orderedIndex % 2 == 0);
+            double gap = traverser.getDeckWidth() * 0.1;
 
             if (getOrientation() == LayoutTraverser.HORIZONTAL) {
                 double y = center.getY() + offset;
-                if (sideA) {
-                    g2.draw(new Line2D.Double(pit.getMinX(), y, pit.getMaxX() - gap, y));
-                } else {
-                    g2.draw(new Line2D.Double(pit.getMinX() + gap, y, pit.getMaxX(), y));
-                }
+                g2.draw(new Line2D.Double(pit.getMinX() + gap, y, pit.getMaxX() - gap, y));
             } else { // VERTICAL
                 double x = center.getX() + offset;
-                if (sideA) {
-                    g2.draw(new Line2D.Double(x, pit.getMinY(), x, pit.getMaxY() - gap));
-                } else {
-                    g2.draw(new Line2D.Double(x, pit.getMinY() + gap, x, pit.getMaxY()));
-                }
+                g2.draw(new Line2D.Double(x, pit.getMinY() + gap, x, pit.getMaxY() - gap));
             }
         }
         if (!layoutEditor.isEditable()) {

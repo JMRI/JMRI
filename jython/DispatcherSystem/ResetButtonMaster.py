@@ -1849,7 +1849,7 @@ class MonitorTrackMaster(jmri.jmrit.automat.AbstractAutomaton):
         #   set th end block memname to the train_name
         if trains != {}:
             if self.logLevel > 0: print "trains", trains
-            for train_name in trains:      #defaults tothe key which is the train name
+            for train_name in trains:      #defaults to the key which is the train name
                 # if self.logLevel > 0: print "train" , train
                 # train_name = str(train[0])
                 # train_list = train[1]
@@ -1900,8 +1900,7 @@ class MonitorTrackMaster(jmri.jmrit.automat.AbstractAutomaton):
                                 if self.logLevel > 0: print "current_block", current_block,"block_occupancy", block_occupancy,
                                 self.set_mem_variable(current_block,train_name,block_occupancy)
                     else:
-                        #trai
-                        # n is moving under dispatch
+                        #train is moving under dispatch
                         #we note this
                         self.moved_under_dispatch[train_name] = True
 
@@ -2061,5 +2060,5 @@ class MonitorTrackMaster(jmri.jmrit.automat.AbstractAutomaton):
         return currentState
 
 
-    # NewTrainMaster checksfor the new train in siding. Needs to inform what station we are in
-    #DispatchMaster checks all button sensors
+    # NewTrainMaster checks for the new train in siding. Needs to inform what station we are in
+    # DispatchMaster checks all button sensors
