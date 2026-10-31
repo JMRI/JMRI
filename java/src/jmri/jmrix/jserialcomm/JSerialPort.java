@@ -231,8 +231,23 @@ public class JSerialPort implements SerialPort {
     }
 
     @Override
+    public boolean isOpen() {
+        return this.serialPort.isOpen();
+    }
+
+    @Override
     public String getDescriptivePortName() {
         return this.serialPort.getDescriptivePortName();
+    }
+
+    @Override
+    public String getPortDescription() {
+        return this.serialPort.getPortDescription();
+    }
+
+    @Override
+    public String getPortLocation() {
+        return this.serialPort.getPortLocation();
     }
 
     @Override
@@ -357,6 +372,20 @@ public class JSerialPort implements SerialPort {
             }
         }
         return portNameVector;
+    }
+
+    /**
+     * Get an unopened port wrapper for metadata queries.
+     * This allows access to port description and location without opening the port.
+     * The port must be opened separately with activatePort() before performing I/O.
+     *
+     * @param portName the system port name (e.g., "COM3", "/dev/ttyUSB0")
+     * @return unopened JSerialPort wrapper for metadata access
+     */
+    public static JSerialPort getPort(String portName) {
+        com.fazecast.jSerialComm.SerialPort serialPort =
+            com.fazecast.jSerialComm.SerialPort.getCommPort(portName);
+        return new JSerialPort(serialPort);
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JSerialPort.class);

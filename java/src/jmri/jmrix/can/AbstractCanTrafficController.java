@@ -215,6 +215,7 @@ abstract public class AbstractCanTrafficController
 
         // message exists, now fill it
         loadChars(hmsg, istream);
+        long receivedTime = System.nanoTime();
         if (threadStopRequest) {
             return; // connection closing, do not dispatch a partial or replayed frame
         }
@@ -224,6 +225,7 @@ abstract public class AbstractCanTrafficController
         if (msg == null) {
             return;  // some replies don't get forwarded
         }
+        msg.setReceivedTime(receivedTime);
         // message is complete, dispatch it !!
         replyInDispatch = true;
 

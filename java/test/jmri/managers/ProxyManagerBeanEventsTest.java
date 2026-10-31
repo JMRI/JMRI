@@ -79,28 +79,35 @@ public class ProxyManagerBeanEventsTest {
 
     @Test
     public void testNamedBeanSetUpdatedWithoutRebuilding() {
-        Sensor s1 = internal.provideSensor("IS1");
+        // The beans are found from what provideSensor returns, not by name: the
+        // memo is given another prefix if an earlier test left an "I" memo registered.
+        Sensor s1 = internal.provideSensor("1");
         assertEquals(1, proxy.getNamedBeanSet().size());
 
         recomputes = 0;
+        Sensor s5 = null;
+        Sensor s20 = null;
         for (int i = 2; i <= 20; i++) {
-            internal.provideSensor("IS" + i);
+            Sensor s = internal.provideSensor(Integer.toString(i));
+            if (i == 5) {
+                s5 = s;
+            }
+            s20 = s;
         }
-        Sensor s5 = internal.getBySystemName("IS5");
         internal.deregister(s5);
         assertEquals(0, recomputes, "whole set rebuilt for single changes");
 
         assertEquals(19, proxy.getNamedBeanSet().size());
         assertEquals(s1, proxy.getNamedBeanSet().first());
-        assertEquals("IS20", proxy.getNamedBeanSet().last().getSystemName());
+        assertEquals(s20, proxy.getNamedBeanSet().last());
         assertFalse(proxy.getNamedBeanSet().contains(s5), "removed bean still in set");
 
         // silenced and then released, as when loading a file
         internal.setPropertyChangesSilenced("beans", true);
-        internal.provideSensor("IS30");
+        Sensor s30 = internal.provideSensor("30");
         internal.setPropertyChangesSilenced("beans", false);
         assertEquals(20, proxy.getNamedBeanSet().size());
-        assertEquals("IS30", proxy.getNamedBeanSet().last().getSystemName());
+        assertEquals(s30, proxy.getNamedBeanSet().last());
     }
 
     @BeforeEach

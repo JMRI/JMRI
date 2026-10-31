@@ -8,7 +8,7 @@ import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
 
 /**
- * Converts Stream-based I/O to/from Marklin CS2 messages. The
+ * Converts Stream-based I/O to/from Marklin CS2 / CS3 / CC-Schnittstelle messages. The
  * "MarklinInterface" side sends/receives message objects.
  * <p>
  * The connection to a MarklinPortController is via a pair of UDP Streams, which
@@ -41,6 +41,21 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
 
     MarklinSystemConnectionMemo adaptermemo;
     protected String defaultUserName = "Marklin-CS2";
+
+    private final CdBClassFilter cdBFilter = new CdBClassFilter();
+
+    /**
+     * Provide access to the CdB config frame prefilter.
+     * <p>
+     * CdB device-management code registers a {@link CdBConfigListener} here
+     * to receive ping, indexed-read, indexed-write and read-reply frames
+     * that would otherwise be mis-interpreted as standard MCAN traffic.
+     *
+     * @return the shared CdB pre-filter for this traffic controller
+     */
+    public CdBClassFilter getCdBFilter() {
+        return cdBFilter;
+    }
 
     // The methods to implement the MarklinInterface
     @Override
@@ -79,10 +94,22 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
 
     /**
      * Forward a MarklinReply to all registered MarklinInterface listeners.
+     * <p>
+     * CdB device configuration frames are offered to the {@link CdBClassFilter}
+     * first.  If the filter claims the frame it is dispatched to
+     * {@link CdBConfigListener} instances and <em>not</em> forwarded to the
+     * standard Märklin listener chain, preventing mis-interpretation of
+     * overlapping command codes.
      * {@inheritDoc }
      */
     @Override
     protected void forwardReply(AbstractMRListener client, AbstractMRReply r) {
+        if (r instanceof MarklinReply) {
+            MarklinReply mr = (MarklinReply) r;
+            if (cdBFilter.offer(mr)) {
+                return;
+            }
+        }
         ((MarklinListener) client).reply((MarklinReply) r);
     }
 
@@ -124,7 +151,7 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
         return true;
     }
 
-    //In theory the replies should only be 13bytes long, so the EOM is completed when the reply can take no more data
+    // In theory the replies should only be 13 bytes long so the EOM is completed when the reply can take no more data
     @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
         return false;

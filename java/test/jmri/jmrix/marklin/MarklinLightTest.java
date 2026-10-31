@@ -22,13 +22,13 @@ public class MarklinLightTest extends jmri.implementation.AbstractLightTestBase 
 
     @Override
     public void checkOnMsgSent() {
-        assertEquals("00 16 47 11 06 00 00 38 00 01 01 00 00",
+        assertEquals("00 16 03 00 06 00 00 38 00 01 01 00 00",
                 tc.getSentMessages().get(0).toString());
     }
 
     @Override
     public void checkOffMsgSent() {
-        assertEquals("00 16 47 11 06 00 00 38 00 00 01 00 00",
+        assertEquals("00 16 03 00 06 00 00 38 00 00 01 00 00",
                 tc.getSentMessages().get(0).toString());
     }
 
@@ -96,7 +96,7 @@ public class MarklinLightTest extends jmri.implementation.AbstractLightTestBase 
     public void testDisposeReleasesOutput() {
         t.setState(Light.ON);
         t.dispose();
-        assertEquals("00 16 47 11 06 00 00 38 00 01 00 00 00", tc.getLastMessageSent().toString());
+        assertEquals("00 16 03 00 06 00 00 38 00 01 00 00 00", tc.getLastMessageSent().toString());
         assertEquals(0, numListeners());
     }
 

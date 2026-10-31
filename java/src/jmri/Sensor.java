@@ -1,6 +1,7 @@
 package jmri;
 
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 
 /**
  * General input device representation. Often subclassed for specific types of
@@ -126,6 +127,56 @@ public interface Sensor extends DigitalIO {
      * @return raw state value
      */
     int getRawState();
+
+    /**
+     * Told of every change of a Sensor's raw state, before any debounce, and
+     * when it happened.
+     * <p>
+     * A raw state change is what the layout reported, after any inversion.
+     * With a debounce, the known state follows it only if it lasts; without
+     * one, the known state changes at once, just after this listener is
+     * told. Unlike a property change listener, this is told nothing else, so
+     * nothing that listens to a Sensor's properties is affected by it.
+     *
+     * @since 5.17.5
+     */
+    @FunctionalInterface
+    interface RawStateListener {
+
+        /**
+         * The raw state of a Sensor has changed. Called on the thread that
+         * set the state, usually the layout thread; keep it short.
+         *
+         * @param sensor    the Sensor
+         * @param oldState  the raw state before
+         * @param newState  the raw state now
+         * @param timeNanos when the change was received, on the
+         *                  {@link System#nanoTime()} scale: as soon as the
+         *                  connection read it where the connection records
+         *                  that, otherwise when the Sensor was set. Only
+         *                  differences between such times have a meaning.
+         */
+        void rawStateChanged(@Nonnull Sensor sensor, int oldState, int newState, long timeNanos);
+    }
+
+    /**
+     * Ask to be told of every raw state change of this Sensor, with when it
+     * happened. Does nothing for a Sensor that doesn't keep a raw state.
+     *
+     * @param listener the listener
+     * @since 5.17.5
+     */
+    default void addRawStateListener(@Nonnull RawStateListener listener) {
+    }
+
+    /**
+     * Stop telling a listener of raw state changes.
+     *
+     * @param listener the listener
+     * @since 5.17.5
+     */
+    default void removeRawStateListener(@Nonnull RawStateListener listener) {
+    }
 
     /**
      * Set the active debounce delay.

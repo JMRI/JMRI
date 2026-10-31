@@ -35,7 +35,6 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnect
 
     public MarklinSystemConnectionMemo() {
         super("M", "Marklin-CS2");
-        register(); // registers general type
         InstanceManager.store(this, MarklinSystemConnectionMemo.class); // also register as specific type
         //Needs to be implemented
         InstanceManager.store(cf = new jmri.jmrix.marklin.swing.MarklinComponentFactory(this),
@@ -84,6 +83,10 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnect
         store(sensorManager, SensorManager.class);
         jmri.InstanceManager.setSensorManager(sensorManager);
 
+        McanDeviceManager mcanDeviceManager = new McanDeviceManager(this);
+        store(mcanDeviceManager, McanDeviceManager.class);
+        jmri.InstanceManager.store(mcanDeviceManager, McanDeviceManager.class);
+
         register();
     }
 
@@ -115,6 +118,10 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnect
 
     public MarklinPowerManager getPowerManager() {
         return (MarklinPowerManager)get(PowerManager.class);
+    }
+
+    public McanDeviceManager getMcanDeviceManager() {
+        return get(McanDeviceManager.class);
     }
 
     @Override
