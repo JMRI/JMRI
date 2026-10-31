@@ -1101,6 +1101,11 @@
                 turned on after the panel file is reloaded. Previously it came back
                 with automation off, and saving again replaced the custom settings
                 with "Off".</li>
+            <li>Sensor, Turnout, Light, Memory, Block and other tables show a new
+                or deleted item by adding or removing its row, instead of
+                rebuilding the whole table. Loading a panel file while one of
+                these tables is open no longer slows down with the square of the
+                number of items.</li>
         </ul>
 
    <h3>Warrants</h3>
