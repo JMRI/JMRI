@@ -594,6 +594,17 @@
                  a speed profile, or when the profile does not cover the
                  direction of travel; a warning is written to the system
                  console in that case.</li>
+             <li>Dispatcher: the Release button in the Allocated Sections
+                 table now releases only a train's oldest Section once the
+                 train has left it, or its furthest allocated Section before
+                 the train reaches it, so that a train's route is never left
+                 with a gap. The Section directly ahead of a train can only be
+                 released while the train is stopped, and you are then asked
+                 whether to terminate the train. With Auto Allocate on, the
+                 train's allocation is held after such a release. After the
+                 furthest allocated Section is released, the train is
+                 allocated that Section again when it carries on, instead of
+                 silently getting no further allocations.</li>
              <li>The scale speed conversions for the maximum speed and the
                  scale speed shown for the minimum throttle now follow the
                  "Run in reverse" setting, and the scale km/h entry is no

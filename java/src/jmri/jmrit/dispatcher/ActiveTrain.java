@@ -1026,9 +1026,33 @@ public class ActiveTrain implements PropertyChangeProvider {
             mLastAllocatedSection = null;
             mLastAllocOverrideSafe = null;
             if (!mAllocatedSections.isEmpty()) {
-                mLastAllocatedSection = mAllocatedSections.get(
-                        mAllocatedSections.size() - 1).getSection();
-                mLastAllocatedSectionSeqNumber = mAllocatedSections.size() - 1;
+                // the most recent allocation along the Transit, ignoring extra Sections
+                AllocatedSection lastAs = mAllocatedSections.get(mAllocatedSections.size() - 1);
+                for (AllocatedSection a : mAllocatedSections) {
+                    if (a.getAllocationNumber() > lastAs.getAllocationNumber()) {
+                        lastAs = a;
+                    }
+                }
+                int releasedSeq = mLastAllocatedSectionSeqNumber;
+                mLastAllocatedSection = lastAs.getSection();
+                mLastAllocatedSectionSeqNumber = lastAs.getSequence();
+                if (!as.getEntered() && (as.getSequence() == releasedSeq)
+                        && (as.getNextSection() == mNextSectionToAllocate)
+                        && (as.getNextSectionSequence() == mNextSectionSeqNumber)
+                        && (mTransit.getTransitSectionFromSectionAndSeq(as.getSection(), as.getSequence()) != null)) {
+                    // a Section ahead of the train was released: it is now the
+                    // next one to allocate, so that no Section beyond it is
+                    // allocated while it is free
+                    AllocationRequest oldNext = mDispatcher.findAllocationRequestInQueue(mNextSectionToAllocate,
+                            mNextSectionSeqNumber, mNextSectionDirection, this);
+                    if (oldNext != null) {
+                        mDispatcher.cancelAllocationRequest(oldNext);
+                    }
+                    mNextSectionToAllocate = as.getSection();
+                    mNextSectionSeqNumber = as.getSequence();
+                    mNextSectionDirection = getAllocationDirectionFromSectionAndSeq(
+                            mNextSectionToAllocate, mNextSectionSeqNumber);
+                }
             }
         }
     }
