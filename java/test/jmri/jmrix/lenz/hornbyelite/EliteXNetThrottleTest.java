@@ -15,6 +15,7 @@ import org.mockito.Mockito;
  *
  * @author Paul Bender
  */
+@SuppressWarnings("deprecation")
 public class EliteXNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     private EliteXNetSystemConnectionMemo memo;

@@ -19,6 +19,7 @@ import org.junit.jupiter.api.*;
  * @author Egbert Broerse 2021
  * @author Dean Cording 2023
  */
+@SuppressWarnings("deprecation")
 public class MqttThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     @Test
@@ -63,8 +64,8 @@ public class MqttThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test sending speed and directions for expected message formats, 
-     *   various command station versions, fkeys, states. 
+     * Test sending speed and directions for expected message formats,
+     *   various command station versions, fkeys, states.
      */
     @Test
     public void testSpeedSettingAndDirection(){
@@ -142,8 +143,8 @@ public class MqttThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     /**
      * Test sending FKeys for expected message formats, various commandstation
-     *   versions, fkeys, states. 
-     */    
+     *   versions, fkeys, states.
+     */
     @Test
     public void testFunctionFormats(){
         instance.setFunction(0, true);
