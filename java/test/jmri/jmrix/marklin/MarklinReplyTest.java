@@ -15,6 +15,35 @@ public class MarklinReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     private MarklinReply mr;
 
     @Test
+    public void testFrameIsCachedUntilBytesChange() {
+        mr = new MarklinReply(jmri.jmrix.marklin.mcan.cs2.Cs2ConfigCommands.buildPingReply(
+                jmri.jmrix.marklin.mcan.McanUid.of(0x4D5552E2L), 0x040F, 0x0033));
+        jmri.jmrix.marklin.mcan.McanFrame first = mr.getFrame();
+        assertInstanceOf(jmri.jmrix.marklin.mcan.cs2.Cs2Frame.class, first);
+        assertSame(first, mr.getFrame());
+        assertSame(first, MarklinCanBridge.parse(mr));
+
+        assertNotSame(first, new MarklinReply(mr).getFrame(), "copies carry their own cache");
+
+        mr.setElement(2, 0x00); // hash loses the CS2 fingerprint (bits 7-9)
+        jmri.jmrix.marklin.mcan.McanFrame changed = mr.getFrame();
+        assertInstanceOf(jmri.jmrix.marklin.mcan.UnknownFrame.class, changed);
+        assertSame(changed, mr.getFrame());
+    }
+
+    @Test
+    public void testMessageFrameIsCachedUntilBytesChange() {
+        MarklinMessage m = new MarklinMessage(
+                jmri.jmrix.marklin.mcan.cdb.CdBConfigCommands.buildRead(0x22, 3, 1, 2));
+        jmri.jmrix.marklin.mcan.McanFrame first = m.getFrame();
+        assertInstanceOf(jmri.jmrix.marklin.mcan.cdb.CdBFrameParser.ReadFrame.class, first);
+        assertSame(first, m.getFrame());
+        m.setElement(6, 3);
+        assertNotSame(first, m.getFrame());
+        assertEquals(3, ((jmri.jmrix.marklin.mcan.cdb.CdBFrameParser.ReadFrame) m.getFrame()).reg());
+    }
+
+    @Test
     public void testDefaultMarklinReply() {
         Assertions.assertEquals(MarklinConstants.PRIO_1, mr.getPriority());
         Assertions.assertEquals(0, mr.getCommand());

@@ -1,4 +1,10 @@
 package jmri.jmrix.marklin.mcan.classify;
+import jmri.jmrix.marklin.mcan.cs2.Cs2Frame;
+import jmri.jmrix.marklin.mcan.UnknownFrame;
+import jmri.jmrix.marklin.mcan.cdb.CdBFrameParser;
+import jmri.jmrix.marklin.mcan.cs2.Cs2Header;
+import jmri.jmrix.marklin.mcan.FrameProtocol;
+import jmri.jmrix.marklin.mcan.McanFrame;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -63,18 +69,17 @@ public class ProtocolClassifierTest {
     @Test
     public void testClassifiesCs2NativeFromFingerprintInHash() {
         int[] frame = frameWith(cs2CanId(0, 0x05, false), 3);
-        ClassifiedFrame result = ProtocolClassifier.classify(frame);
+        McanFrame result = ProtocolClassifier.classify(frame);
         assertEquals(FrameProtocol.CS2_NATIVE, result.protocol());
     }
 
     @Test
     public void testCs2NativeResultHasCs2Header() {
         int[] frame = frameWith(cs2CanId(2, 0x30, true), 5);
-        ClassifiedFrame result = ProtocolClassifier.classify(frame);
-        assertNotNull(result.cs2Header());
-        assertEquals(2,     result.cs2Header().priority());
-        assertEquals(0x30,  result.cs2Header().commandCode());
-        assertTrue(result.cs2Header().response());
+        Cs2Frame result = assertInstanceOf(Cs2Frame.class, ProtocolClassifier.classify(frame));
+        assertEquals(2,     result.header().priority());
+        assertEquals(0x30,  result.header().commandCode());
+        assertTrue(result.header().response());
     }
 
     @Test
@@ -88,7 +93,7 @@ public class ProtocolClassifierTest {
     @Test
     public void testClassifiesCdBConfigFromHashPattern() {
         int[] frame = frameWith(cdbCanId(), 0);
-        ClassifiedFrame result = ProtocolClassifier.classify(frame);
+        McanFrame result = ProtocolClassifier.classify(frame);
         assertEquals(FrameProtocol.CDB_CONFIG, result.protocol());
     }
 
@@ -99,10 +104,9 @@ public class ProtocolClassifierTest {
     }
 
     @Test
-    public void testCdBConfigCs2HeaderThrows() {
+    public void testCdBConfigIsTypedCdBFrame() {
         int[] frame = frameWith(cdbCanId(), 0);
-        ClassifiedFrame result = ProtocolClassifier.classify(frame);
-        assertThrows(IllegalStateException.class, result::cs2Header);
+        assertInstanceOf(CdBFrameParser.CdBFrame.class, ProtocolClassifier.classify(frame));
     }
 
     // --- UNKNOWN ---
@@ -111,23 +115,17 @@ public class ProtocolClassifierTest {
     public void testClassifiesUnknownForUnrecognisedFrame() {
         // Hash 0x0000 has no CS2 fingerprint and no CdB pattern
         int[] frame = frameWith(0x0000_0000L, 0);
-        ClassifiedFrame result = ProtocolClassifier.classify(frame);
+        McanFrame result = ProtocolClassifier.classify(frame);
+        assertInstanceOf(UnknownFrame.class, result);
         assertEquals(FrameProtocol.UNKNOWN, result.protocol());
+        assertArrayEquals(frame, result.raw().toArray());
     }
 
     @Test
-    public void testClassifyNullReturnsUnknownWithoutThrowing() {
-        ClassifiedFrame result = ProtocolClassifier.classify(null);
-        assertNotNull(result);
-        assertEquals(FrameProtocol.UNKNOWN, result.protocol());
-    }
-
-    @Test
-    public void testClassifyWrongLengthReturnsUnknownWithoutThrowing() {
-        ClassifiedFrame result12 = ProtocolClassifier.classify(new int[12]);
-        ClassifiedFrame result14 = ProtocolClassifier.classify(new int[14]);
-        assertEquals(FrameProtocol.UNKNOWN, result12.protocol());
-        assertEquals(FrameProtocol.UNKNOWN, result14.protocol());
+    public void testClassifyRejectsMalformedInput() {
+        assertThrows(IllegalArgumentException.class, () -> ProtocolClassifier.classify(null));
+        assertThrows(IllegalArgumentException.class, () -> ProtocolClassifier.classify(new int[12]));
+        assertThrows(IllegalArgumentException.class, () -> ProtocolClassifier.classify(new int[14]));
     }
 
     @Test

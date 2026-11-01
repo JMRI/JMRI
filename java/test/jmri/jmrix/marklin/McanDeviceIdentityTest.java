@@ -1,9 +1,11 @@
 package jmri.jmrix.marklin;
+
+import jmri.jmrix.marklin.mcan.McanUid;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 
-import jmri.jmrix.marklin.mcan.protocol.NativeDeviceInfo;
+import jmri.jmrix.marklin.mcan.cs2.NativeDeviceInfo;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -26,11 +28,11 @@ public class McanDeviceIdentityTest {
 
     @Test
     public void testNativeIdentityCreationAndProperties() {
-        McanDeviceIdentity.Native nativeDev = McanDeviceIdentity.forNative(0x00112233L, NativeDeviceInfo.TYPE_MS2);
+        McanDeviceIdentity.Native nativeDev = McanDeviceIdentity.forNative(McanUid.of(0x00112233L), NativeDeviceInfo.TYPE_MS2);
 
         assertTrue(nativeDev.isNative());
         assertFalse(nativeDev.isCdB());
-        assertEquals(0x00112233L, nativeDev.getUid());
+        assertEquals(McanUid.of(0x00112233L), nativeDev.getUid());
         assertEquals(NativeDeviceInfo.TYPE_MS2, nativeDev.getDeviceType());
         assertEquals("uid-00112233", nativeDev.getSystemIdFragment());
         assertEquals("M:dev:uid-00112233", nativeDev.getSystemName("M"));
@@ -55,9 +57,9 @@ public class McanDeviceIdentityTest {
 
     @Test
     public void testEqualityAndHashCode() {
-        McanDeviceIdentity.Native native1 = McanDeviceIdentity.forNative(0x12345678L, 0x0010);
-        McanDeviceIdentity.Native native2 = McanDeviceIdentity.forNative(0x12345678L, 0x0010);
-        McanDeviceIdentity.Native native3 = McanDeviceIdentity.forNative(0x87654321L, 0x0010);
+        McanDeviceIdentity.Native native1 = McanDeviceIdentity.forNative(McanUid.of(0x12345678L), 0x0010);
+        McanDeviceIdentity.Native native2 = McanDeviceIdentity.forNative(McanUid.of(0x12345678L), 0x0010);
+        McanDeviceIdentity.Native native3 = McanDeviceIdentity.forNative(McanUid.of(0x87654321L), 0x0010);
 
         assertEquals(native1, native2);
         assertEquals(native1.hashCode(), native2.hashCode());

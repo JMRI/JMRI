@@ -1,4 +1,5 @@
 package jmri.jmrix.marklin.mcan.cs2;
+import jmri.jmrix.marklin.mcan.FrameProtocol;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,11 +23,11 @@ public class Cs2AutomationCommandsTest {
         JUnitUtil.tearDown();
     }
 
-    private static Cs2ClassifiedFrame roundtrip(int[] frame) {
-        ClassifiedFrame cf = ProtocolClassifier.classify(frame);
+    private static Cs2Frame roundtrip(int[] frame) {
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(frame);
         assertEquals(FrameProtocol.CS2_NATIVE, cf.protocol(),
                 "Encoded frame must classify as CS2_NATIVE");
-        return Cs2FrameParser.parse(cf);
+        return cf;
     }
 
     // --- buildAutomationTrigger ---
@@ -38,9 +39,9 @@ public class Cs2AutomationCommandsTest {
 
     @Test
     public void testBuildAutomationTriggerHasCommandCode0x30() {
-        ClassifiedFrame cf = ProtocolClassifier.classify(
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(
                 Cs2AutomationCommands.buildAutomationTrigger(1, 0x4101, true));
-        assertEquals(0x30, cf.cs2Header().commandCode());
+        assertEquals(0x30, cf.header().commandCode());
     }
 
     @Test
@@ -83,14 +84,14 @@ public class Cs2AutomationCommandsTest {
 
     @Test
     public void testBuildAutomationTriggerIsNotResponse() {
-        ClassifiedFrame cf = ProtocolClassifier.classify(
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(
                 Cs2AutomationCommands.buildAutomationTrigger(1, 0x4101, true));
-        assertFalse(cf.cs2Header().response());
+        assertFalse(cf.header().response());
     }
 
     @Test
     public void testBuildAutomationTriggerClassifiesAsCs2Native() {
-        ClassifiedFrame cf = ProtocolClassifier.classify(
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(
                 Cs2AutomationCommands.buildAutomationTrigger(1, 0x4101, true));
         assertEquals(FrameProtocol.CS2_NATIVE, cf.protocol());
     }
@@ -110,25 +111,25 @@ public class Cs2AutomationCommandsTest {
 
     @Test
     public void testAutomationStatusReplyRoundtripsToAutomationStatusFrame() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildAutomationStatusReply(1, 0x4101, 1));
+        Cs2Frame parsed = roundtrip(buildAutomationStatusReply(1, 0x4101, 1));
         assertInstanceOf(Cs2AutomationCommands.AutomationStatusFrame.class, parsed);
     }
 
     @Test
     public void testAutomationStatusFrameDeviceId() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildAutomationStatusReply(0x0042, 0x4101, 1));
+        Cs2Frame parsed = roundtrip(buildAutomationStatusReply(0x0042, 0x4101, 1));
         assertEquals(0x0042, ((Cs2AutomationCommands.AutomationStatusFrame) parsed).deviceId());
     }
 
     @Test
     public void testAutomationStatusFrameFunction() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildAutomationStatusReply(1, 0x4108, 2));
+        Cs2Frame parsed = roundtrip(buildAutomationStatusReply(1, 0x4108, 2));
         assertEquals(0x4108, ((Cs2AutomationCommands.AutomationStatusFrame) parsed).function());
     }
 
     @Test
     public void testAutomationStatusFrameStatusRunning() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildAutomationStatusReply(1, 0x4101,
+        Cs2Frame parsed = roundtrip(buildAutomationStatusReply(1, 0x4101,
                 Cs2AutomationCommands.STATUS_RUNNING));
         assertEquals(Cs2AutomationCommands.STATUS_RUNNING,
                 ((Cs2AutomationCommands.AutomationStatusFrame) parsed).status());
@@ -136,7 +137,7 @@ public class Cs2AutomationCommandsTest {
 
     @Test
     public void testAutomationStatusFrameStatusError() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildAutomationStatusReply(1, 0x4101,
+        Cs2Frame parsed = roundtrip(buildAutomationStatusReply(1, 0x4101,
                 Cs2AutomationCommands.STATUS_ERROR));
         assertEquals(Cs2AutomationCommands.STATUS_ERROR,
                 ((Cs2AutomationCommands.AutomationStatusFrame) parsed).status());
@@ -144,7 +145,7 @@ public class Cs2AutomationCommandsTest {
 
     @Test
     public void testAutomationStatusFrameIsResponse() {
-        Cs2ClassifiedFrame parsed = roundtrip(buildAutomationStatusReply(1, 0x4101, 1));
+        Cs2Frame parsed = roundtrip(buildAutomationStatusReply(1, 0x4101, 1));
         assertTrue(parsed.header().response());
     }
 }

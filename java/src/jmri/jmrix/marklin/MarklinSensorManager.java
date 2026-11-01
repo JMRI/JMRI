@@ -4,7 +4,7 @@ import java.util.Hashtable;
 import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.Sensor;
-import jmri.jmrix.marklin.mcan.classify.Cs2ClassifiedFrame;
+import jmri.jmrix.marklin.mcan.cs2.Cs2Frame;
 import jmri.jmrix.marklin.mcan.cs2.Cs2FeedbackCommands;
 
 /**
@@ -133,7 +133,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
     // to listen for status changes from Marklin system
     @Override
     public void reply(MarklinReply r) {
-        Cs2ClassifiedFrame frame = MarklinCanBridge.parse(r);
+        Cs2Frame frame = MarklinCanBridge.parse(r);
         if (frame == null) {
             return;
         }

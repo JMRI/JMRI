@@ -1,7 +1,11 @@
 package jmri.jmrix.marklin.mcan.cdb;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Builders for WeichenChef device register operations (CdB classes 0x22, 0x23, 0x26, 0x27, 0x2A).
+ * Builders for WeichenChef device register operations.
+ * CdB classes 0x22, 0x23, 0x26, 0x27, 0x2A
  */
 public final class CdBWeichenChefCommands {
 
@@ -79,7 +83,7 @@ public final class CdBWeichenChefCommands {
      *   <li>gen-002+: {@code [0x03, 0x00]}  -  8 pulse channels</li>
      * </ul>
      * The caller must already know the generation (e.g. from a firmware-version probe)
-     * before invoking this builder. See {@link jmri.jmrix.marklin.mcan.device.CdBDeviceClass.HardwareCapability}.
+     * before invoking this builder. See {@link jmri.jmrix.marklin.mcan.cdb.CdBDeviceClass.HardwareCapability}.
      *
      * @param classId   8-bit CdB device class (0x22 for WeichenChef Magnet)
      * @param moduleId  module slot
@@ -126,5 +130,69 @@ public final class CdBWeichenChefCommands {
         for (int ch = 1; ch <= 4; ch++) frames[idx++] = CdBConfigCommands.buildRead(classId, moduleId, ch, 3);
         for (int ch = 1; ch <= 4; ch++) frames[idx++] = CdBConfigCommands.buildRead(classId, moduleId, ch, 6);
         return frames;
+    }
+
+    /**
+     * Magnet query plan. Optionally includes extended timing slots of newer generation hardware.
+     * Addresses use reg=6 and automation feedback uses reg=7.
+     * @param moduleId target module
+     * @param extended include timing slots 5-8
+     * @return ordered read frames
+     */
+    public static List<int[]> buildMagnetReads(int moduleId, boolean extended) {
+        List<int[]> frames = new ArrayList<>();
+        frames.add(CdBConfigCommands.buildRead(0x22, moduleId, 0, 1));
+        int[] registers = {7, 2, 3, 4, 5, 6, 224, 18, 16, 17, 9, 8};
+        for (int reg : registers) {
+            int count = reg == 224 ? 0 : reg == 7 ? 8 : reg == 6 ? 5
+                    : extended && isMagnetTimingRegister(reg) ? 8 : 4;
+            if (count == 0) {
+                frames.add(CdBConfigCommands.buildRead(0x22, moduleId, 0, reg));
+            } else {
+                for (int slot = 1; slot <= count; slot++) {
+                    frames.add(CdBConfigCommands.buildRead(0x22, moduleId, slot, reg));
+                }
+            }
+        }
+        return frames;
+    }
+
+    /**
+     * Whether a Magnet register has direction-specific timing slots.
+     *
+     * The older generation doesn't have this feature.
+     *
+     * @param reg register
+     * @return true for timeout, period and pulse width
+     */
+    public static boolean isMagnetTimingRegister(int reg) {
+        return reg == 2 || reg == 16 || reg == 17;
+    }
+
+    /**
+     * Magnet accessory test. Byte 5 deliberately reproduces the
+     * low byte of the first turnout's address, not the tested channel number.
+     *
+     * @param firstAddress stored raw address of turnout 1
+     * @param address stored raw address of the tested turnout
+     * @param green true for green, false for red
+     * @param active true to activate, false to deactivate
+     * @param older true for the 001 tool's sender hash
+     * @return reference-compatible frame
+     */
+    public static int[] buildMagnetCoilTest(int firstAddress, int address,
+            boolean green, boolean active, boolean older) {
+        return buildCoilFireTest(0x22, 0, firstAddress & 0xFF,
+                address, green ? 1 : 0, active ? 1 : 0, older);
+    }
+
+    /**
+     * End an address or feedback save exactly as in the Magnet reference tools.
+     *
+     * @param moduleId target module
+     * @return DLC=2, slot=0, register=254 frame (no value payload)
+     */
+    public static int[] buildMagnetEndSave(int moduleId) {
+        return CdBConfigCommands.buildDeselect(0x22, moduleId);
     }
 }

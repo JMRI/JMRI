@@ -1,9 +1,6 @@
 package jmri.jmrix.marklin.mcan.cs2;
 
-import jmri.jmrix.marklin.mcan.classify.ClassifiedFrame;
-import jmri.jmrix.marklin.mcan.classify.Cs2ClassifiedFrame;
-import jmri.jmrix.marklin.mcan.classify.Cs2Data;
-import jmri.jmrix.marklin.mcan.classify.Cs2Header;
+import jmri.jmrix.marklin.mcan.RawFrame;
 
 /**
  * Encoder, parser and typed result classes for CS2 automation commands (code 0x30).
@@ -104,12 +101,12 @@ public final class Cs2AutomationCommands {
 
     // --- parser ---
 
-    static Cs2ClassifiedFrame parse(Cs2Header header, Cs2Data data, ClassifiedFrame parent) {
+    static Cs2Frame parse(Cs2Header header, Cs2Data data, RawFrame raw) {
         switch (header.resolvedCommand()) {
             case AUTOMATION_TRIGGER_REPLY:
-                return new AutomationStatusFrame(header, data, parent);
+                return new AutomationStatusFrame(header, data, raw);
             default:
-                return new Cs2ClassifiedFrame(header, data, parent);
+                return new Cs2Frame(header, data, raw);
         }
     }
 
@@ -118,8 +115,8 @@ public final class Cs2AutomationCommands {
     /**
      * An automation status reply carrying the current activation state of a function.
      */
-    public static final class AutomationStatusFrame extends Cs2ClassifiedFrame {
-        AutomationStatusFrame(Cs2Header h, Cs2Data d, ClassifiedFrame p) { super(h, d, p); }
+    public static final class AutomationStatusFrame extends Cs2Frame {
+        AutomationStatusFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
         /** 16-bit device identifier. */
         public int deviceId() { return data().int16At(0); }
