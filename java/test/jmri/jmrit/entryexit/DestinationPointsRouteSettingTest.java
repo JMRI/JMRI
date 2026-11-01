@@ -93,8 +93,8 @@ public class DestinationPointsRouteSettingTest {
     }
 
     @Test
-    public void testTurnoutsSetOnLayoutThreadWithOldGuiBehavior() {
-        eep.setSkipGuiFix(true);
+    public void testTurnoutsSetOnLayoutThreadWithDoubleClick() {
+        eep.setEnableDoubleClick(true);
         eep.turnoutSetDelay = 300;
         requestRoute();
         JUnitUtil.waitFor(commanded::get, "turnout commanded");
@@ -115,7 +115,7 @@ public class DestinationPointsRouteSettingTest {
 
     @Test
     public void testTurnoutsSetOnLayoutThread() {
-        eep.setSkipGuiFix(false);
+        eep.setEnableDoubleClick(false);
         requestRoute();
         JUnitUtil.waitFor(commanded::get, "turnout commanded");
         JUnitUtil.waitFor(this::isRouteSet, "route set");
@@ -127,10 +127,10 @@ public class DestinationPointsRouteSettingTest {
     }
 
     @Test
-    public void testTurnoutListenerOccupiesRouteBlockWithOldGuiBehavior() {
+    public void testTurnoutListenerOccupiesRouteBlockWithDoubleClick() {
         // Something listening to the turnout, for example a Logix, reports the train in the
         // first block of the route as soon as the turnout is commanded
-        eep.setSkipGuiFix(true);
+        eep.setEnableDoubleClick(true);
         Sensor firstBlockSensor = sm.provideSensor("S-Left-TO");
         PropertyChangeListener trainMoves = e -> {
             if (Turnout.PROPERTY_COMMANDED_STATE.equals(e.getPropertyName())) {
@@ -150,7 +150,7 @@ public class DestinationPointsRouteSettingTest {
 
     @Test
     public void testClearDownWhileTurnoutsAreSet() {
-        eep.setSkipGuiFix(false);
+        eep.setEnableDoubleClick(false);
         eep.turnoutSetDelay = 500;
         PropertyChangeListener cancel = e -> {
             if (Turnout.PROPERTY_COMMANDED_STATE.equals(e.getPropertyName())) {
@@ -207,10 +207,10 @@ public class DestinationPointsRouteSettingTest {
     }
 
     @Test
-    public void testDoubleClickWithOldGuiBehavior() {
+    public void testDoubleClickWithDoubleClick() {
         // A second click on the destination is handled after the route has been set, so it does
         // not cancel the route
-        eep.setSkipGuiFix(true);
+        eep.setEnableDoubleClick(true);
         eep.setClearDownOption(EntryExitPairs.AUTOCANCEL);
         eep.turnoutSetDelay = 300;
         ThreadingUtil.runOnLayout(() -> {
@@ -228,10 +228,10 @@ public class DestinationPointsRouteSettingTest {
     }
 
     @Test
-    public void testHeldClickWritesSensorOnceWithOldGuiBehavior() throws JmriException {
+    public void testHeldClickWritesSensorOnceWithDoubleClick() throws JmriException {
         // A click on another NX button while a route is set is held back and handled when the
         // route is complete, without the sensor of that button being written again
-        eep.setSkipGuiFix(true);
+        eep.setEnableDoubleClick(true);
         eep.turnoutSetDelay = 300;
         Sensor other = sm.provideSensor("NX-Left-EB");
         other.setState(Sensor.INACTIVE);
@@ -260,10 +260,10 @@ public class DestinationPointsRouteSettingTest {
     }
 
     @Test
-    public void testErrorWhileCompletingRouteWithOldGuiBehavior() throws JmriException {
+    public void testErrorWhileCompletingRouteWithDoubleClick() throws JmriException {
         // Something listening to the NX buttons fails when the route updates them, both when
         // the route is completed and again when the failure is handled
-        eep.setSkipGuiFix(true);
+        eep.setEnableDoubleClick(true);
         eep.turnoutSetDelay = 300;
         AtomicBoolean armed = new AtomicBoolean(false);
         AtomicInteger failures = new AtomicInteger();
@@ -304,7 +304,7 @@ public class DestinationPointsRouteSettingTest {
     public void testDoubleClickCancelsRoute() {
         // Without the old GUI behavior a second click on the destination while the route is set
         // cancels the route
-        eep.setSkipGuiFix(false);
+        eep.setEnableDoubleClick(false);
         eep.setClearDownOption(EntryExitPairs.AUTOCANCEL);
         eep.turnoutSetDelay = 300;
         ThreadingUtil.runOnLayout(() -> {
