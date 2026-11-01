@@ -440,6 +440,12 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
+             <li>A Block change that an automatic train handles just after
+                 one of its Sections is released, or as the train is
+                 terminated, no longer gives warnings such as "No next Block"
+                 or that the train has disappeared. The train now uses the
+                 direction the Section was allocated in, and ignores Block
+                 changes once it is being terminated.</li>
              <li></li>
         </ul>
 

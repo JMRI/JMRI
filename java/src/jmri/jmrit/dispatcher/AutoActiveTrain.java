@@ -1307,7 +1307,8 @@ public class AutoActiveTrain implements ThrottleListener {
         if (ix < 0) {
             return null;
         }
-        ix = (as.getSection().getState() == Section.REVERSE) ? ix - 1 : ix + 1;
+        // the direction it is allocated in: the Section may have been released since the Block changed
+        ix = (as.getDirection() == Section.REVERSE) ? ix - 1 : ix + 1;
         return (ix >= 0 && ix < blocks.size()) ? blocks.get(ix) : null;
     }
 

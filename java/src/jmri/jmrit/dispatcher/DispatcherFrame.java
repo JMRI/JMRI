@@ -1860,6 +1860,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             log.error("Null ActiveTrain pointer when attempting to terminate an ActiveTrain");
             return;
         }
+        if (terminateNow) {
+            // before its Sections are released: a Block change still waiting to be
+            // handled would otherwise find the train with no Sections
+            at.setTerminating();
+        }
         // terminate the train - remove any allocation requests
         for (int k = allocationRequests.size(); k > 0; k--) {
             if (at == allocationRequests.get(k - 1).getActiveTrain()) {
