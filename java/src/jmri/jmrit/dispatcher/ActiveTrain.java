@@ -5,6 +5,7 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.annotation.Nonnull;
@@ -244,7 +245,9 @@ public class ActiveTrain implements PropertyChangeProvider {
     private boolean mTransitReversed = false;  // true if Transit is running in reverse
     private boolean mAllocationReversed = false;  // true if allocating Sections in reverse
     private AutoActiveTrain mAutoActiveTrain = null;
-    private final List<AllocatedSection> mAllocatedSections = new ArrayList<>();
+    // Changed as Sections are allocated and released, and read by the train's
+    // Block change handling on another thread: each read sees one whole list
+    private final List<AllocatedSection> mAllocatedSections = new CopyOnWriteArrayList<>();
     private Section mLastAllocatedSection = null;
     private Section mLastAllocOverrideSafe = null;
     private int mLastAllocatedSectionSeqNumber = 0;
@@ -1116,11 +1119,7 @@ public class ActiveTrain implements PropertyChangeProvider {
     }
 
     public List<AllocatedSection> getAllocatedSectionList() {
-        List<AllocatedSection> list = new ArrayList<>();
-        for (int i = 0; i < mAllocatedSections.size(); i++) {
-            list.add(mAllocatedSections.get(i));
-        }
-        return list;
+        return new ArrayList<>(mAllocatedSections);
     }
 
     /**
@@ -1135,17 +1134,19 @@ public class ActiveTrain implements PropertyChangeProvider {
      */
     public List<Block> getBlockList() {
         List<Block> list = new ArrayList<>();
-        for (int i = 0; i < mAllocatedSections.size(); i++) { // loop thru allocated sections, then all blocks for each section
-            Section s = mAllocatedSections.get(i).getSection();
+        // the Sections as they are now: one may be released while this runs
+        List<AllocatedSection> sections = getAllocatedSectionList();
+        for (int i = 0; i < sections.size(); i++) { // loop thru allocated sections, then all blocks for each section
+            Section s = sections.get(i).getSection();
             List<Block> bl = s.getBlockList();
             if (bl.size() > 1) { //sections with multiple blocks need extra logic
 
                 boolean blocksConnected = true;
                 //determine if blocks should be added in forward or reverse order based on connectivity
                 if (i == 0) { //for first section, compare last block to first of next section
-                    if (mAllocatedSections.size() > 1
+                    if (sections.size() > 1
                             && //only one section, assume forward
-                            !connected(bl.get(bl.size() - 1), mAllocatedSections.get(i + 1).getSection().getBlockList().get(0))) {
+                            !connected(bl.get(bl.size() - 1), sections.get(i + 1).getSection().getBlockList().get(0))) {
                         blocksConnected = false;
                     }
                 } else { //not first section, check for connectivity between last block in list, and first block in this section
@@ -1377,7 +1378,8 @@ public class ActiveTrain implements PropertyChangeProvider {
     }
 
     protected boolean addEndSection(Section s, int seq) {
-        AllocatedSection as = mAllocatedSections.get(mAllocatedSections.size() - 1);
+        List<AllocatedSection> sections = getAllocatedSectionList();
+        AllocatedSection as = sections.get(sections.size() - 1);
         if (!as.setNextSection(s, seq)) {
             return false;
         }
@@ -1393,7 +1395,8 @@ public class ActiveTrain implements PropertyChangeProvider {
     /*This is for use where the transit has been extended, then the last section has been cancelled no
      checks are performed, these should be done by a higher level code*/
     protected void removeLastAllocatedSection() {
-        AllocatedSection as = mAllocatedSections.get(mAllocatedSections.size() - 1);
+        List<AllocatedSection> sections = getAllocatedSectionList();
+        AllocatedSection as = sections.get(sections.size() - 1);
         //Set the end block using the AllocatedSections exit block before clearing the next section in the allocatedsection
         setEndBlock(as.getExitBlock());
 
@@ -1489,17 +1492,12 @@ public class ActiveTrain implements PropertyChangeProvider {
     }
 
     protected boolean isInAllocatedList(AllocatedSection as) {
-        for (int i = 0; i < mAllocatedSections.size(); i++) {
-            if (mAllocatedSections.get(i) == as) {
-                return true;
-            }
-        }
-        return false;
+        return mAllocatedSections.contains(as);
     }
 
     protected boolean isInAllocatedList(Section s) {
-        for (int i = 0; i < mAllocatedSections.size(); i++) {
-            if ((mAllocatedSections.get(i)).getSection() == s) {
+        for (AllocatedSection as : mAllocatedSections) {
+            if (as.getSection() == s) {
                 return true;
             }
         }

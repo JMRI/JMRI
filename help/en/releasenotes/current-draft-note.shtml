@@ -632,6 +632,11 @@
              <li>Automatic release of Sections is faster when many Sections
                  are allocated, as each check now goes through the allocated
                  Sections once. Which Sections are released is unchanged.</li>
+             <li>An automatic train no longer sometimes takes its next Block
+                 to belong to another train when one of its Sections is
+                 released at the same moment. Before, a warning was written
+                 that the new current signal mast is null, and the train's
+                 speed was set from its allocations instead.</li>
              <li>Automatic allocation now plans meets in passing loops for
                  opposing trains on single track, including trains running their
                  Transit in reverse; before, meet planning never took effect. A
