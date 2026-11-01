@@ -50,7 +50,7 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
 
         ostream.flush();
         JUnitUtil.waitFor(() -> tostream.available() == 4, "total length");
-        
+
         // test the result of sending
         Assert.assertEquals("total length ", 4, tostream.available());
         Assert.assertEquals("Char 0", (byte)'0', tostream.readByte());
@@ -111,12 +111,12 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         t.start();
         ThreadMXBean mx = ManagementFactory.getThreadMXBean();
         Thread.sleep(100); // DSR high, no data
-        long cpu0 = mx.getThreadCpuTime(t.getId());
+        long cpu0 = mx.getThreadCpuTime(t.threadId());
         long wall0 = System.nanoTime();
         Thread.sleep(400);
         dsr.set(false); // DSR low, still no data
         Thread.sleep(400);
-        long cpu = mx.getThreadCpuTime(t.getId()) - cpu0;
+        long cpu = mx.getThreadCpuTime(t.threadId()) - cpu0;
         long wall = System.nanoTime() - wall0;
         log.info("idle loadChars used {} ms CPU in {} ms", cpu / 1000000, wall / 1000000);
         t.interrupt();
@@ -330,18 +330,18 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
 
     @Test
     public void testListenerScaffold() {
-        
+
         Dcc4PcListenerScaffold l = new Dcc4PcListenerScaffold();
         Dcc4PcMessage m = Dcc4PcMessage.getInfo();
         l.message(m);
         Assertions.assertTrue( m == rcvdMsg );
-        
+
         Dcc4PcReply reply = new Dcc4PcReply(new byte[]{0x01,0x02,0x03});
         l.reply(reply);
         Assertions.assertEquals(reply, rcvdReply);
 
     }
-    
+
     // internal class to simulate a Dcc4PcListener
     private class Dcc4PcListenerScaffold implements Dcc4PcListener {
 
@@ -365,7 +365,7 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         }
 
     }
-    
+
     Dcc4PcReply rcvdReply;
     Dcc4PcMessage rcvdMsg;
 
