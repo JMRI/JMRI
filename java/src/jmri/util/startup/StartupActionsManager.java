@@ -20,9 +20,12 @@ import jmri.configurexml.XmlAdapter;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
 import jmri.spi.PreferencesManager;
+import jmri.util.StringUtil;
 import jmri.util.jdom.JDOMUtil;
 import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -131,7 +134,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
                     }
                 });
                 if (!performed.isEmpty()) {
-                    summary(performed, nanos).forEach(line -> log.info("{}", line));
+                    logSummary(summary(performed, nanos));
                 }
                 ServiceLoader.load(StartupRunnable.class).forEach(Runnable::run);
             }
@@ -203,6 +206,17 @@ public class StartupActionsManager extends AbstractPreferencesManager {
     }
 
     /**
+     * Log the time taken by the Start Up actions, one line at a time.
+     *
+     * @param lines the lines made by {@link #summary(List, List)}
+     */
+    @SuppressFBWarnings(value = "SLF4J_SIGN_ONLY_FORMAT",
+            justification = "each line is made in full by summary(), which names what it is")
+    private static void logSummary(List<String> lines) {
+        lines.forEach(line -> log.info("{}", line));
+    }
+
+    /**
      * Describe a start up action as the Start Up preferences list it: the type
      * of action, then its name in quotes.
      *
@@ -212,7 +226,22 @@ public class StartupActionsManager extends AbstractPreferencesManager {
     private String describe(StartupModel action) {
         StartupModelFactory factory = this.factories.get(action.getClass());
         String type = (factory != null) ? factory.getDescription() : action.getClass().getSimpleName();
-        return type + " \"" + action + "\"";
+        return type + " \"" + plainText(action.toString()) + "\"";
+    }
+
+    /**
+     * Give an action's name as plain text for the log. Some actions name
+     * themselves in HTML for the Start Up preferences table, for example a
+     * script button as its name and script on two lines.
+     *
+     * @param name the name, plain text or HTML
+     * @return the name as plain text, with HTML line breaks as ", "
+     */
+    static String plainText(String name) {
+        if (!name.regionMatches(true, 0, StringUtil.HTML_OPEN_TAG, 0, StringUtil.HTML_OPEN_TAG.length())) {
+            return name;
+        }
+        return StringUtil.stripHtmlTags(name.replaceAll("(?i)<br\\s*/?>", ", ")).trim();
     }
 
     /**
@@ -221,7 +250,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
      * start up can be traced to its cause.
      *
      * @param performed the actions performed, as described by
-     *                  {@link #describe(StartupModel)}
+     *                  {@code describe(StartupModel)}
      * @param nanos     the time each took, in nanoseconds
      * @return the lines
      */

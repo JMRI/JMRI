@@ -67,6 +67,37 @@ public class StartupActionsManagerTest {
         }
     }
 
+    @Test
+    public void testPlainText() {
+        Assertions.assertEquals("AD, /Users/me/JMRI/AutoActiveTrains_Simulator.py",
+            StartupActionsManager.plainText("<html>AD<br>/Users/me/JMRI/AutoActiveTrains_Simulator.py</html>"),
+            "a script button's name and script, as the Start Up table shows them on two lines");
+        Assertions.assertEquals("Pause for 10 seconds", StartupActionsManager.plainText("Pause for 10 seconds"),
+            "plain text unchanged");
+        Assertions.assertEquals("a <b> c", StartupActionsManager.plainText("a <b> c"), "not HTML, so left as it is");
+    }
+
+    @Test
+    public void testHtmlNameLoggedAsPlainText() throws jmri.util.prefs.InitializationException {
+        JUnitUtil.resetProfileManager();
+        jmri.profile.Profile profile = jmri.profile.ProfileManager.getDefault().getActiveProfile();
+        Assertions.assertNotNull(profile);
+        java.util.List<String> performed = new java.util.ArrayList<>();
+        StartupActionsManager t = new StartupActionsManager();
+        t.addAction(new Recorded("AD", performed) {
+            @Override
+            public String toString() {
+                return "<html>AD<br>/Users/me/script.py</html>";
+            }
+        });
+        t.initialize(profile);
+        Assertions.assertNotNull(jmri.util.JUnitAppender.checkForMessageStartingWith("Start up actions took"),
+            "total logged");
+        org.apache.logging.log4j.core.LogEvent line = jmri.util.JUnitAppender.checkForMessageStartingWith("");
+        String text = (line == null) ? "(nothing logged)" : line.getMessage().getFormattedMessage();
+        Assertions.assertTrue(text.endsWith("\"AD, /Users/me/script.py\""), "no HTML in " + text);
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
