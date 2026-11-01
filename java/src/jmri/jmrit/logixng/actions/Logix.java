@@ -71,6 +71,8 @@ public class Logix extends AbstractDigitalAction
     public void execute() throws JmriException {
         boolean result = _expressionSocket.evaluate();
 
+        // result is either true or false
+        // _lastExpressionResult is true, false or null
         if ((_executeType == ExecuteType.ExecuteAlways) || !Boolean.valueOf(result).equals(_lastExpressionResult)) {
             _actionSocket.execute(result);
         }
