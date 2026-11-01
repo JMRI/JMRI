@@ -864,6 +864,12 @@
               running, when it falls behind, for example while an error dialog
               is open, or after an unexpected error. A warning is logged if it
               falls a long way behind.</li>
+          <li>The LogixNG <strong>Logix</strong> action, which Logixes
+              imported into LogixNG use, now treats its first result as a
+              change whether it is true or false, as a Logix conditional does.
+              Before, a first result of false counted as no change, so actions
+              set to run on a change to false did not run until the result
+              had first been true.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
