@@ -94,6 +94,7 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
 
     // Issue 29: waiting for a reply with nothing arriving must not use a whole CPU core.
     @Test
+    @SuppressWarnings("deprecation")
     public void testLoadCharsIdleDoesNotSpin() throws Exception {
         AtomicBoolean dsr = new AtomicBoolean(true);
         Dcc4PcTrafficController c = loadCharsController(dsr);
@@ -111,12 +112,12 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         t.start();
         ThreadMXBean mx = ManagementFactory.getThreadMXBean();
         Thread.sleep(100); // DSR high, no data
-        long cpu0 = mx.getThreadCpuTime(t.threadId());
+        long cpu0 = mx.getThreadCpuTime(t.getId());
         long wall0 = System.nanoTime();
         Thread.sleep(400);
         dsr.set(false); // DSR low, still no data
         Thread.sleep(400);
-        long cpu = mx.getThreadCpuTime(t.threadId()) - cpu0;
+        long cpu = mx.getThreadCpuTime(t.getId()) - cpu0;
         long wall = System.nanoTime() - wall0;
         log.info("idle loadChars used {} ms CPU in {} ms", cpu / 1000000, wall / 1000000);
         t.interrupt();
