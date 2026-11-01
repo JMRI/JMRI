@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.beans.PropertyChangeListener;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -79,8 +80,7 @@ public class DestinationPointsRouteSettingTest {
      * @param name the name of the sensor
      */
     private void click(String name) {
-        Sensor sensor = sm.getSensor(name);
-        assertNotNull(sensor, name);
+        Sensor sensor = Objects.requireNonNull(sm.getSensor(name), name);
         sensor.setCommandedState(sensor.getKnownState() == Sensor.ACTIVE ? Sensor.INACTIVE : Sensor.ACTIVE);
     }
 
@@ -88,8 +88,8 @@ public class DestinationPointsRouteSettingTest {
      * Make sure no NX button of the route is selected before the clicks of a test.
      */
     private void releaseButtons() {
-        sm.getSensor("NX-Left-TO-A").setCommandedState(Sensor.INACTIVE);
-        sm.getSensor("NX-Right-TO-B").setCommandedState(Sensor.INACTIVE);
+        Objects.requireNonNull(sm.getSensor("NX-Left-TO-A"), "NX-Left-TO-A").setCommandedState(Sensor.INACTIVE);
+        Objects.requireNonNull(sm.getSensor("NX-Right-TO-B"), "NX-Right-TO-B").setCommandedState(Sensor.INACTIVE);
     }
 
     @Test
@@ -224,7 +224,9 @@ public class DestinationPointsRouteSettingTest {
         ThreadingUtil.runOnLayout(() -> { });
         ThreadingUtil.runOnLayout(() -> { });
         assertTrue(dp.isActive(), "route not cancelled by the second click");
-        assertEquals(Sensor.ACTIVE, sm.getSensor("NX-Right-TO-B").getKnownState(), "second click handled");
+        assertEquals(Sensor.ACTIVE,
+                Objects.requireNonNull(sm.getSensor("NX-Right-TO-B"), "NX-Right-TO-B").getKnownState(),
+                "second click handled");
     }
 
     @Test
@@ -274,8 +276,8 @@ public class DestinationPointsRouteSettingTest {
                 throw new IllegalStateException("listener failed");
             }
         };
-        Sensor srcSensor = sm.getSensor("NX-Left-TO-A");
-        Sensor destSensor = sm.getSensor("NX-Right-TO-B");
+        Sensor srcSensor = Objects.requireNonNull(sm.getSensor("NX-Left-TO-A"), "NX-Left-TO-A");
+        Sensor destSensor = Objects.requireNonNull(sm.getSensor("NX-Right-TO-B"), "NX-Right-TO-B");
         Sensor other = sm.provideSensor("NX-Left-EB");
         other.setState(Sensor.INACTIVE);
         PointDetails otherPd = eep.getPointDetails(other, panel);
@@ -347,8 +349,8 @@ public class DestinationPointsRouteSettingTest {
         assertNotNull(destMast);
 
         // Use a temporary signal mast logic, as created by NX when no stored logic exists
-        SignalMastLogic stored = smlm.getSignalMastLogic(sourceMast);
-        assertNotNull(stored);
+        SignalMastLogic stored = Objects.requireNonNull(smlm.getSignalMastLogic(sourceMast),
+                "stored signal mast logic of Left-TO-A");
         ThreadingUtil.runOnGUI(() -> smlm.removeSignalMastLogic(stored));
         assertNull(smlm.getSignalMastLogic(sourceMast));
 

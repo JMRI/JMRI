@@ -150,8 +150,7 @@ public class LayoutBlockThroughPathStateTest {
         // cut a block with three or more neighbours away from one neighbour
         LayoutBlock target = findBlockWithNeighbours(3);
         assertNotNull(target, "block with three neighbours");
-        LayoutBlock neighbour = lbm.getLayoutBlock(target.getNeighbourAtIndex(0));
-        assertNotNull(neighbour, "neighbour");
+        LayoutBlock neighbour = Objects.requireNonNull(lbm.getLayoutBlock(target.getNeighbourAtIndex(0)), "neighbour");
         int pathsBefore = target.getNumberOfThroughPaths();
         int turnoutListenersBefore = throughPathListenersOnTurnouts();
 

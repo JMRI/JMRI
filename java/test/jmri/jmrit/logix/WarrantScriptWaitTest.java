@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import jmri.InstanceManager;
 import jmri.Sensor;
@@ -114,12 +115,9 @@ public class WarrantScriptWaitTest {
         JUnitUtil.initRosterConfigManager();
 
         OBlockManager blockMgr = InstanceManager.getDefault(OBlockManager.class);
-        OBlock bA = blockMgr.createNewOBlock("OB1", "A");
-        OBlock bB = blockMgr.createNewOBlock("OB2", "B");
-        OBlock bC = blockMgr.createNewOBlock("OB3", "C");
-        assertNotNull(bA);
-        assertNotNull(bB);
-        assertNotNull(bC);
+        OBlock bA = Objects.requireNonNull(blockMgr.createNewOBlock("OB1", "A"), "OBlock A");
+        OBlock bB = Objects.requireNonNull(blockMgr.createNewOBlock("OB2", "B"), "OBlock B");
+        OBlock bC = Objects.requireNonNull(blockMgr.createNewOBlock("OB3", "C"), "OBlock C");
 
         PortalManager portalMgr = InstanceManager.getDefault(PortalManager.class);
         Portal pAB = portalMgr.createNewPortal("AB");
