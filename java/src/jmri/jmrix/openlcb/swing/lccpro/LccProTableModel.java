@@ -2,6 +2,8 @@ package jmri.jmrix.openlcb.swing.lccpro;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -36,6 +38,7 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
 
     CanSystemConnectionMemo memo;
     MimicNodeStore nodestore;
+    private final Set<MimicNodeStore.NodeMemo> listenedNodeMemos = new HashSet<>();
     
     public LccProTableModel(CanSystemConnectionMemo memo) {
         this.memo = memo;
@@ -48,15 +51,38 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
 
     @Override
     public void propertyChange(PropertyChangeEvent e) {
-        // set this up to fireTableDataChanged() when a new node appears
         log.trace("received {}", e);
-        // SNIP might take a bit, so fire slightly later
-        jmri.util.ThreadingUtil.runOnGUIDelayed( ()->{ 
-            fireTableDataChanged(); 
-        }, 250);
-        jmri.util.ThreadingUtil.runOnGUIDelayed( ()->{ 
-            fireTableDataChanged(); 
-        }, 1000);
+        if (e.getSource() == nodestore) {
+            if (MimicNodeStore.CLEAR_ALL_NODES.equals(e.getPropertyName())) {
+                clearNodeMemoListeners();
+                jmri.util.ThreadingUtil.runOnGUI(this::fireTableDataChanged);
+            } else if (MimicNodeStore.ADD_PROP_NODE.equals(e.getPropertyName())
+                    && e.getNewValue() instanceof MimicNodeStore.NodeMemo) {
+                MimicNodeStore.NodeMemo nodeMemo = (MimicNodeStore.NodeMemo) e.getNewValue();
+                synchronized (listenedNodeMemos) {
+                    if (listenedNodeMemos.add(nodeMemo)) {
+                        nodeMemo.addPropertyChangeListener(this);
+                    }
+                }
+                jmri.util.ThreadingUtil.runOnGUI(this::fireTableDataChanged);
+            }
+            return;
+        }
+
+        if (e.getSource() instanceof MimicNodeStore.NodeMemo) {
+            // The node collection can change while the event is queued on the EDT,
+            // so a row-specific update may no longer refer to a valid sorter row.
+            jmri.util.ThreadingUtil.runOnGUI(this::fireTableDataChanged);
+        }
+    }
+
+    private void clearNodeMemoListeners() {
+        synchronized (listenedNodeMemos) {
+            for (MimicNodeStore.NodeMemo nodeMemo : listenedNodeMemos) {
+                nodeMemo.removePropertyChangeListener(this);
+            }
+            listenedNodeMemos.clear();
+        }
     }
 
     @Override
@@ -262,6 +288,7 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
     // drop listeners
     public void dispose() {
         nodestore.removePropertyChangeListener(this);
+        clearNodeMemoListeners();
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LccProTableModel.class);
