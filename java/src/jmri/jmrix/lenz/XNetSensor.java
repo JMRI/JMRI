@@ -119,9 +119,9 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
                         log.debug("Message for sensor {} (Address {} position {})", systemName, baseaddress, address - (baseaddress * 8));
             }
             if (opt ^ _inverted) {
-                setOwnState(Sensor.ACTIVE);
+                setOwnState(Sensor.ACTIVE, l.getReceivedTime());
             } else {
-                setOwnState(Sensor.INACTIVE);
+                setOwnState(Sensor.INACTIVE, l.getReceivedTime());
             }
         }
     }

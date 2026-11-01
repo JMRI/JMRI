@@ -1060,6 +1060,9 @@
                 taken as soon as the message is read, before it waits for the
                 layout thread, so time between sensor events is measured more
                 accurately.</li>
+            <li>DCC++ (other than DCC++ over TCP), XpressNet, ECoS, Marklin and
+                JMRIClient sensors now also give that time to raw state
+                listeners.</li>
             <li>Turnouts with DELAYED feedback no longer flip back to an
                 earlier position when two commands are given within the feedback
                 delay, including CBUS turnouts changed by events on the bus, and
