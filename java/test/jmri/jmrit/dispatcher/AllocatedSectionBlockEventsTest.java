@@ -185,6 +185,26 @@ public class AllocatedSectionBlockEventsTest {
     }
 
     /**
+     * Termination releases the train's Sections before it marks the train
+     * terminated; a change still waiting to be handled must not be handled in
+     * between, when the train has no Sections left.
+     */
+    @Test
+    public void testChangesDroppedOnceTerminationBegins() {
+        RecordingTrain aat = new RecordingTrain(at);
+        Block b1 = block("B1");
+        allocate("TS1", 1, b1);
+
+        b1.setState(Block.OCCUPIED);
+        JUnitUtil.waitFor(() -> aat.handled.size() == 1, "change handled while the train runs");
+        at.setTerminating();
+        b1.setState(Block.UNOCCUPIED);
+        waitForQueue();
+        assertEquals(Collections.singletonList("B1 occupied"), aat.handled,
+                "a train being terminated ignores changes");
+    }
+
+    /**
      * With strict train tracking, the head entering the next Block and then
      * the one after it within a millisecond must be followed, not taken as a
      * Block ahead entered illegally.

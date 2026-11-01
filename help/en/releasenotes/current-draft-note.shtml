@@ -625,6 +625,12 @@
                  in its Section. Before, block or signal changes at the same
                  moment could give it the wrong Block or none. Reversing or
                  resetting a train that fills its Section no longer fails.</li>
+             <li>A Block change that an automatic train handles just after
+                 one of its Sections is released, or as the train is
+                 terminated, no longer gives warnings such as "No next Block"
+                 or that the train has disappeared. The train now uses the
+                 direction the Section was allocated in, and ignores Block
+                 changes once it is being terminated.</li>
              <li>Restarting a train no longer starts allocating before the
                  release of its old Sections has finished, and no longer
                  freezes the screen while it waits. A second Restart of a
