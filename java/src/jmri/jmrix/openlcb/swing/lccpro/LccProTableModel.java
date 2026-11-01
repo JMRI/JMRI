@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -39,6 +40,7 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
     CanSystemConnectionMemo memo;
     MimicNodeStore nodestore;
     private final Set<MimicNodeStore.NodeMemo> listenedNodeMemos = new HashSet<>();
+    private final AtomicBoolean tableUpdatePending = new AtomicBoolean(false);
     
     public LccProTableModel(CanSystemConnectionMemo memo) {
         this.memo = memo;
@@ -55,7 +57,7 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
         if (e.getSource() == nodestore) {
             if (MimicNodeStore.CLEAR_ALL_NODES.equals(e.getPropertyName())) {
                 clearNodeMemoListeners();
-                jmri.util.ThreadingUtil.runOnGUI(this::fireTableDataChanged);
+                requestTableUpdate();
             } else if (MimicNodeStore.ADD_PROP_NODE.equals(e.getPropertyName())
                     && e.getNewValue() instanceof MimicNodeStore.NodeMemo) {
                 MimicNodeStore.NodeMemo nodeMemo = (MimicNodeStore.NodeMemo) e.getNewValue();
@@ -64,7 +66,7 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
                         nodeMemo.addPropertyChangeListener(this);
                     }
                 }
-                jmri.util.ThreadingUtil.runOnGUI(this::fireTableDataChanged);
+                requestTableUpdate();
             }
             return;
         }
@@ -72,7 +74,26 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
         if (e.getSource() instanceof MimicNodeStore.NodeMemo) {
             // The node collection can change while the event is queued on the EDT,
             // so a row-specific update may no longer refer to a valid sorter row.
-            jmri.util.ThreadingUtil.runOnGUI(this::fireTableDataChanged);
+            requestTableUpdate();
+        }
+    }
+
+    /**
+     * Ask for the whole table to be redrawn on the GUI (Swing) thread.
+     * <p>
+     * The events come from the thread handling OpenLCB messages, which must
+     * not wait for Swing, so the update is queued rather than run and waited
+     * for. While one update is queued, further requests are covered by it: a
+     * burst of node replies, as at start-up, gives one redraw, not one each.
+     */
+    private void requestTableUpdate() {
+        if (tableUpdatePending.compareAndSet(false, true)) {
+            jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
+                // cleared before the redraw, so a change arriving during it
+                // queues another update rather than being lost
+                tableUpdatePending.set(false);
+                fireTableDataChanged();
+            });
         }
     }
 
