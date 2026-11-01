@@ -1157,6 +1157,9 @@
                 listener to that block every few seconds.</li>
             <li>A speed measured during a warrant run is now merged once into the speed profile. The
                 first measurement for a direction is no longer halved.</li>
+            <li>Warrants now plan a decoder's momentum from CV3 and CV4 only. CV23 and CV24, the consist
+                momentum adjustments, are not used, since a warrant can't tell what adjustment the
+                decoders in a consist apply; leave them at 0. They were also being added wrongly.</li>
         </ul>
 
    <h3>Web Access</h3>
