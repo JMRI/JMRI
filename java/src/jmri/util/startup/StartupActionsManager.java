@@ -213,7 +213,11 @@ public class StartupActionsManager extends AbstractPreferencesManager {
     @SuppressFBWarnings(value = "SLF4J_SIGN_ONLY_FORMAT",
             justification = "each line is made in full by summary(), which names what it is")
     private static void logSummary(List<String> lines) {
-        lines.forEach(line -> log.info("{}", line));
+        // a loop, not a lambda: the warning is suppressed for this method only,
+        // and a lambda's body is compiled to a method of its own
+        for (String line : lines) {
+            log.info("{}", line);
+        }
     }
 
     /**
