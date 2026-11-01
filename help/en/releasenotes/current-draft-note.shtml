@@ -100,6 +100,11 @@
                     the next frame is now received instead of both being merged
                     into one corrupt frame; and corrupt frames are dropped
                     instead of being passed on as events.</li>
+                <li>On a CAN Simulation connection, frames from the CBUS
+                    simulated command station, event responder and nodes now
+                    carry the time they were received, as frames from a real
+                    connection do, so raw state listeners are given when a
+                    simulated sensor event arrived.</li>
                 <li>CAN connections: a frame received from the layout is no
                     longer also delivered to whichever tool sent the last frame,
                     so a tool window which has been closed stops receiving
