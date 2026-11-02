@@ -796,9 +796,7 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 
         if (testNodeType == SerialNode.CPNODE)
          begOutByte = (testNode.getOutputCardIndex(outCardNum+2)) * portsPerCard;
-        else if (testNodeType == SerialNode.ESP32NODE)
-         begOutByte = (testNode.getOutputCardIndex(outCardNum)) * portsPerCard;
-        else
+        else  // USIC/SUSIC, SMINI and ESP32CPNode (0-based cards)
          begOutByte = (testNode.getOutputCardIndex(outCardNum)) * portsPerCard;
 
         endOutByte = begOutByte + portsPerCard - 1;
