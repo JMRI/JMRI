@@ -44,6 +44,7 @@ public class ConsistControllerTest {
         JUnitUtil.setUp();
 
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initRosterConfigManager();
         JUnitUtil.initDebugCommandStation();
         InstanceManager.setDefault(ConsistManager.class, new TestConsistManager());

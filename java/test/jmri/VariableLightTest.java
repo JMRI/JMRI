@@ -49,6 +49,7 @@ public class VariableLightTest {
     @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
+        jmri.util.JUnitUtil.initTimeProviderManager();
 
         clock = jmri.InstanceManager.getDefault(jmri.Timebase.class);
         clock.setRun(false);

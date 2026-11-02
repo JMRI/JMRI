@@ -12,7 +12,7 @@ public class WiThrottlesListModelTest {
 
     @Test
     public void testCtor() {
-        java.util.ArrayList<DeviceServer> al = new java.util.ArrayList<DeviceServer>(); 
+        java.util.ArrayList<DeviceServer> al = new java.util.ArrayList<DeviceServer>();
         WiThrottlesListModel panel = new WiThrottlesListModel(al);
         Assert.assertNotNull("exists", panel );
     }
@@ -20,8 +20,9 @@ public class WiThrottlesListModelTest {
     @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
+        jmri.util.JUnitUtil.initTimeProviderManager();
     }
-    
+
     @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();

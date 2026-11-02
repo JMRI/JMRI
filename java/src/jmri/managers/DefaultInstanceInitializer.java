@@ -8,11 +8,12 @@ import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.DefaultClockControl;
 import jmri.jmrit.audio.DefaultAudioManager;
 import jmri.jmrit.audio.DefaultAudioSourceManager;
-import jmri.jmrit.simpleclock.SimpleTimebase;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 import org.openide.util.lookup.ServiceProvider;
+
+import jmri.time.TimeProviderManager;
 
 /**
  * Provide the usual default implementations for the
@@ -59,6 +60,10 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
 
         if (type == ClockControl.class) {
             return new DefaultClockControl();
+        }
+
+        if (type == TimeProviderManager.class) {
+            return new ProxyTimeProviderManager();
         }
 
         if (type == ConditionalManager.class) {
@@ -134,8 +139,9 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
         }
 
         if (type == Timebase.class) {
-            Timebase timebase = new SimpleTimebase(memo);
-            InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent(cm -> cm.registerConfig(timebase, Manager.TIMEBASE));
+            Timebase timebase = new jmri.time.implementation.DefaultTimebase(memo);
+//            Timebase timebase = new SimpleTimebase(memo);
+//            InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent(cm -> cm.registerConfig(timebase, Manager.TIMEBASE));
             return timebase;
         }
 
@@ -161,11 +167,11 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
     @Override
     public Set<Class<?>> getInitalizes() {
         Set<Class<?>> set = super.getInitalizes();
-        set.addAll(Arrays.asList(
-                AnalogIOManager.class,
+        set.addAll(Arrays.asList(AnalogIOManager.class,
                 AudioManager.class,
                 AudioSourceManager.class,
                 ClockControl.class,
+                TimeProviderManager.class,
                 ConditionalManager.class,
                 IdTagManager.class,
                 LightManager.class,

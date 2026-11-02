@@ -47,6 +47,7 @@ public class NceSystemConnectionMemoTest extends SystemConnectionMemoTestBase<Nc
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
 
         scm = new NceSystemConnectionMemo();
         scm.setNceTrafficController(new NceTrafficController() {
@@ -58,7 +59,7 @@ public class NceSystemConnectionMemoTest extends SystemConnectionMemoTestBase<Nc
             public void receiveLoop() {
             }
         });
-        
+
         NceCmdStationMemory t = new NceCmdStationMemory();
         Assert.assertNotNull("exists",t);
         scm.getNceTrafficController().csm = t;

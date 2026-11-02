@@ -27,6 +27,7 @@ public class FacelessServerTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
         server = new FacelessServer(){
             @Override
             public void listen(){

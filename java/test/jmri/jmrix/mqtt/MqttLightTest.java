@@ -23,6 +23,7 @@ public class MqttLightTest extends AbstractLightTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initTimeProviderManager();
         // prepare an interface
         a = new MqttAdapterScaffold(true);
         t = new MqttLight(a, "ML2", "", "track/light/2", "track/light/2/foo");

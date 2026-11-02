@@ -42,7 +42,9 @@ public class OptionsMenuTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initTimeProviderManager();
     }
 
     @AfterEach

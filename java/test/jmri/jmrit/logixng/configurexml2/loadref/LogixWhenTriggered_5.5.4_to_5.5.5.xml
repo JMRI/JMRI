@@ -3,10 +3,21 @@
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-5-5-5.xsd">
   <jmriversion>
     <major>5</major>
-    <minor>5</minor>
-    <test>4</test>
+    <minor>13</minor>
+    <test>7</test>
     <modifier>plus</modifier>
   </jmriversion>
+  <timeProviders class="jmri.jmrix.internal.configurexml.InternalTimeProviderManagerXml">
+    <InternalDateTime class="jmri.time.implementation.configurexml.InternalDateTimeXml">
+      <systemName>IUInternalTimeProvider</systemName>
+      <isRunning>yes</isRunning>
+      <rate>1.0</rate>
+      <localDateTime>2021-12-02T00:00</localDateTime>
+    </InternalDateTime>
+    <InternalDateTime class="jmri.time.implementation.configurexml.SystemDateTimeXml">
+      <systemName>IUSystemClock</systemName>
+    </InternalDateTime>
+  </timeProviders>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
     <sensor inverted="false">
@@ -64,7 +75,6 @@
       <systemName>MVCBUSVoltageMeter</systemName>
     </meter>
   </meters>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Wed Oct 04 02:34:26 CEST 2023" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <LogixNGs class="jmri.jmrit.logixng.implementation.configurexml.DefaultLogixNGManagerXml">
     <Thread>
       <id>0</id>
@@ -333,105 +343,15 @@
   </LogixNGDigitalBooleanActions>
   <filehistory>
     <operation>
-      <type>app</type>
-      <date>Fri Oct 06 06:00:26 CEST 2023</date>
-      <filename>JMRI program</filename>
-    </operation>
-    <operation>
       <type>Load OK</type>
-      <date>Fri Oct 06 06:00:30 CEST 2023</date>
-      <filename>/C:/Users/daniel/JMRI/PositionablesWithClasses.jmri/LogixWhenTriggered.xml</filename>
-      <filehistory>
-        <operation>
-          <type>app</type>
-          <date>Fri Oct 06 04:14:01 CEST 2023</date>
-          <filename>JMRI program</filename>
-        </operation>
-        <operation>
-          <type>Load OK</type>
-          <date>Fri Oct 06 04:14:05 CEST 2023</date>
-          <filename>/C:/Users/daniel/JMRI/PositionablesWithClasses.jmri/LogixWhenTriggered.xml</filename>
-          <filehistory>
-            <operation>
-              <type>app</type>
-              <date>Fri Oct 06 03:32:29 CEST 2023</date>
-              <filename>JMRI program</filename>
-            </operation>
-            <operation>
-              <type>Load OK</type>
-              <date>Fri Oct 06 03:32:33 CEST 2023</date>
-              <filename>/C:/Users/daniel/JMRI/PositionablesWithClasses.jmri/LogixWhenTriggered.xml</filename>
-              <filehistory>
-                <operation>
-                  <type>app</type>
-                  <date>Fri Oct 06 03:30:39 CEST 2023</date>
-                  <filename>JMRI program</filename>
-                </operation>
-                <operation>
-                  <type>Load OK</type>
-                  <date>Fri Oct 06 03:30:44 CEST 2023</date>
-                  <filename>/C:/Users/daniel/JMRI/PositionablesWithClasses.jmri/LogixWhenTriggered.xml</filename>
-                  <filehistory>
-                    <operation>
-                      <type>app</type>
-                      <date>Fri Oct 06 03:23:49 CEST 2023</date>
-                      <filename>JMRI program</filename>
-                    </operation>
-                    <operation>
-                      <type>Load OK</type>
-                      <date>Fri Oct 06 03:23:55 CEST 2023</date>
-                      <filename>/C:/Users/daniel/JMRI/PositionablesWithClasses.jmri/LogixWhenTriggered.xml</filename>
-                      <filehistory>
-                        <operation>
-                          <type>app</type>
-                          <date>Thu Oct 05 05:46:29 CEST 2023</date>
-                          <filename>JMRI program</filename>
-                        </operation>
-                        <operation>
-                          <type>Load OK</type>
-                          <date>Thu Oct 05 05:46:33 CEST 2023</date>
-                          <filename>/C:/Users/daniel/JMRI/PositionablesWithClasses.jmri/LogixWhenTriggered.xml</filename>
-                        </operation>
-                        <operation>
-                          <type>Store</type>
-                          <date>Thu Oct 05 05:47:22 CEST 2023</date>
-                          <filename />
-                        </operation>
-                      </filehistory>
-                    </operation>
-                    <operation>
-                      <type>Store</type>
-                      <date>Fri Oct 06 03:26:30 CEST 2023</date>
-                      <filename />
-                    </operation>
-                  </filehistory>
-                </operation>
-                <operation>
-                  <type>Store</type>
-                  <date>Fri Oct 06 03:32:05 CEST 2023</date>
-                  <filename />
-                </operation>
-              </filehistory>
-            </operation>
-            <operation>
-              <type>Store</type>
-              <date>Fri Oct 06 03:37:06 CEST 2023</date>
-              <filename />
-            </operation>
-          </filehistory>
-        </operation>
-        <operation>
-          <type>Store</type>
-          <date>Fri Oct 06 04:14:19 CEST 2023</date>
-          <filename />
-        </operation>
-      </filehistory>
+      <date>Sun Dec 14 03:05:02 CET 2025</date>
+      <filename>/home/daniel/Dokument/GitHub/JMRI/java/test/jmri/jmrit/logixng/configurexml2/load/LogixWhenTriggered_5.5.4_to_5.5.5.xml</filename>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Fri Oct 06 06:03:41 CEST 2023</date>
-      <filename />
+      <date>Sun Dec 14 03:05:02 CET 2025</date>
+      <filename>/home/daniel/Dokument/GitHub/JMRI/temp/temp/LogixWhenTriggered_5.5.4_to_5.5.5.xml</filename>
     </operation>
   </filehistory>
-  <!--Written by JMRI version 5.5.4plus+daniel+2023-10-06T04:00:09Z+Rf69956e on Fri Oct 06 06:03:41 CEST 2023-->
+  <!--Written by JMRI version 5.13.7plus+daniel+2025-12-14T02:04:38Z+Rc848db3 on Sun Dec 14 03:05:02 CET 2025-->
 </layout-config>

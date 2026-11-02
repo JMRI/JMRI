@@ -41,6 +41,7 @@
             <li><a href="AppPreferences.shtml">Application Preferences</a></li>
             <li><a href="ProfileFileStructure.shtml">Profile Files</a></li>
             <li><a href="Threads.shtml">Threading</a></li>
+            <li><a href="TimeProviders.shtml">Time providers</a></li>
             <li><a href="XmlUsage.shtml">Use of XML</a>
                 <ul class="navigation">
                 <li><a href="XmlSchema.shtml">XML Schema</a></li>

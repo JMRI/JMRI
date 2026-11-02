@@ -153,6 +153,7 @@ public class Z21SimulatorAdapterTest {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         JUnitUtil.initConfigureManager();
+        JUnitUtil.initTimeProviderManager();
 
         host = assertDoesNotThrow( () ->
             java.net.InetAddress.getLocalHost(), "Unable to create host localhost");

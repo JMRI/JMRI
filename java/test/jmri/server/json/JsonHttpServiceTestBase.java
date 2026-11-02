@@ -37,6 +37,7 @@ public abstract class JsonHttpServiceTestBase<I extends JsonHttpService> {
     @OverridingMethodsMustInvokeSuper
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
         mapper = new ObjectMapper();
         // require valid inputs and outputs for tests by default
         InstanceManager.getDefault(JsonServerPreferences.class).setValidateClientMessages(true);
@@ -65,10 +66,10 @@ public abstract class JsonHttpServiceTestBase<I extends JsonHttpService> {
         assertEquals( "Deleting foo is not allowed.", ex.getMessage(), "Message");
         assertEquals( 42, ex.getId(), "ID is 42");
     }
-    
+
     /**
      * Validate a JSON schema request exists and is schema valid for the type.
-     * 
+     *
      * @param type the JSON object type
      * @throws JsonException if an error occurs
      */
@@ -100,7 +101,7 @@ public abstract class JsonHttpServiceTestBase<I extends JsonHttpService> {
     /**
      * Validate a JSON schema request exists and is schema valid for the types.
      * Further verify that the schema is the same for both types.
-     * 
+     *
      * @param type1 the first JSON object type
      * @param type2 the second JSON object type
      * @throws JsonException if an error occurs

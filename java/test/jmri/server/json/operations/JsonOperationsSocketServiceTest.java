@@ -538,6 +538,7 @@ public class JsonOperationsSocketServiceTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initIdTagManager();
         JUnitOperationsUtil.setupOperationsTests();
         JUnitOperationsUtil.initOperationsData();

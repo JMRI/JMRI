@@ -134,7 +134,7 @@ public class JsonTimeSocketServiceTest {
 
     /**
      * Test that listener handles error states correctly.
-     * 
+     *
      * @throws JsonException if unexpected exception occurs
      * @throws JmriException if unexpected exception occurs
      * @throws IOException   if unexpected exception occurs
@@ -162,13 +162,14 @@ public class JsonTimeSocketServiceTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
     }
 
     @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-    
+
     private static class TimebaseTimeListener implements PropertyChangeListener {
 
         private Date time = new Date();
@@ -183,7 +184,7 @@ public class JsonTimeSocketServiceTest {
                 this.time = (Date) evt.getNewValue();
             }
         }
-        
+
         public Date getTime() {
             return new Date(this.time.getTime());
         }
