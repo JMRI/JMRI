@@ -82,106 +82,201 @@ public final class Cs2SystemCommands {
 
     // --- encoders: power control ---
 
-    /** Builds a broadcast system-stop (track power off) command frame. */
+    /**
+     * Builds a broadcast system-stop (track power off) command frame.
+     *
+     * @return the command frame
+     */
     public static int[] buildSystemStop() {
         return buildSystemCommand(McanUid.BROADCAST.toLong(), SUB_STOP, false, 5);
     }
 
-    /** Builds a broadcast system-go (track power on) command frame. */
+    /**
+     * Builds a broadcast system-go (track power on) command frame.
+     *
+     * @return the command frame
+     */
     public static int[] buildSystemGo() {
         return buildSystemCommand(McanUid.BROADCAST.toLong(), SUB_GO, false, 5);
     }
 
-    /** Builds a broadcast system-halt (all locos to speed 0) command frame. */
+    /**
+     * Builds a broadcast system-halt (all locos to speed 0) command frame.
+     *
+     * @return the command frame
+     */
     public static int[] buildSystemHalt() {
         return buildSystemCommand(McanUid.BROADCAST.toLong(), SUB_HALT, false, 5);
     }
 
-    /** Builds a system-stop reply frame. */
+    /**
+     * Builds a system-stop reply frame.
+     *
+     * @return the command frame
+     */
     public static int[] buildSystemStopReply() {
         return buildSystemCommand(McanUid.BROADCAST.toLong(), SUB_STOP, true, 5);
     }
 
-    /** Builds a system-go reply frame. */
+    /**
+     * Builds a system-go reply frame.
+     *
+     * @return the command frame
+     */
     public static int[] buildSystemGoReply() {
         return buildSystemCommand(McanUid.BROADCAST.toLong(), SUB_GO, true, 5);
     }
 
-    /** Builds a system-halt reply frame. */
+    /**
+     * Builds a system-halt reply frame.
+     *
+     * @return the command frame
+     */
     public static int[] buildSystemHaltReply() {
         return buildSystemCommand(McanUid.BROADCAST.toLong(), SUB_HALT, true, 5);
     }
 
-    /** Builds a loco emergency stop reply (sub-cmd 0x03, DLC=5). */
+    /**
+     * Builds a loco emergency stop reply (sub-cmd 0x03, DLC=5).
+     *
+     * @param locId 32-bit Loc-ID of the target loco
+     * @return the command frame
+     */
     public static int[] buildLocoEmergencyStopReply(long locId) {
         return buildSystemCommand(locId, SUB_LOCO_EMERGENCY_STOP, true, 5);
     }
 
-    /** Builds a loco cycle stop reply (sub-cmd 0x04, DLC=5). */
+    /**
+     * Builds a loco cycle stop reply (sub-cmd 0x04, DLC=5).
+     *
+     * @param locId 32-bit Loc-ID (or 0 for all)
+     * @return the command frame
+     */
     public static int[] buildLocoCycleStopReply(long locId) {
         return buildSystemCommand(locId, SUB_LOCO_CYCLE_STOP, true, 5);
     }
 
-    /** Builds a loco data protocol reply (sub-cmd 0x05, DLC=6). */
+    /**
+     * Builds a loco data protocol reply (sub-cmd 0x05, DLC=6).
+     *
+     * @param locId    32-bit Loc-ID of the target loco
+     * @param protocol sub-protocol value (see PROTOCOL_* constants)
+     * @return the command frame
+     */
     public static int[] buildLocoDataProtocolReply(long locId, int protocol) {
         int[] data = uidAndBytes(locId, SUB_LOCO_DATA_PROTOCOL, protocol & 0xFF);
         return Cs2FrameBuilder.buildFrame(DEFAULT_PRIORITY, COMMAND_CODE, true, BROADCAST_HASH, 6, data);
     }
 
-    /** Builds an accessory switch time reply (sub-cmd 0x06, DLC=7). */
+    /**
+     * Builds an accessory switch time reply (sub-cmd 0x06, DLC=7).
+     *
+     * @param targetUid 32-bit target device UID
+     * @param time10ms  switch time in 10 ms steps (0 = reset to default)
+     * @return the command frame
+     */
     public static int[] buildAccessorySwitchTimeReply(McanUid targetUid, int time10ms) {
         int[] data = uidAndBytes(targetUid.toLong(), SUB_ACCESSORY_SWITCH_TIME,
                 (time10ms >> 8) & 0xFF, time10ms & 0xFF);
         return Cs2FrameBuilder.buildFrame(DEFAULT_PRIORITY, COMMAND_CODE, true, BROADCAST_HASH, 7, data);
     }
 
-    /** Builds a Fast Read MFX reply (sub-cmd 0x07, DLC=7). */
+    /**
+     * Builds a Fast Read MFX reply (sub-cmd 0x07, DLC=7).
+     *
+     * @param senderUid 32-bit UID of the sending device
+     * @param mfxSid    16-bit MFX track address (SID)
+     * @return the command frame
+     */
     public static int[] buildFastReadMfxReply(McanUid senderUid, int mfxSid) {
         int[] data = uidAndBytes(senderUid.toLong(), SUB_FAST_READ_MFX,
                 (mfxSid >> 8) & 0xFF, mfxSid & 0xFF);
         return Cs2FrameBuilder.buildFrame(DEFAULT_PRIORITY, COMMAND_CODE, true, BROADCAST_HASH, 7, data);
     }
 
-    /** Builds an MFX re-registration counter reply (sub-cmd 0x09, DLC=7). */
+    /**
+     * Builds an MFX re-registration counter reply (sub-cmd 0x09, DLC=7).
+     *
+     * @param targetUid 32-bit target device UID
+     * @param counter   16-bit re-registration counter value
+     * @return the command frame
+     */
     public static int[] buildMfxReregistrationCounterReply(McanUid targetUid, int counter) {
         int[] data = uidAndBytes(targetUid.toLong(), SUB_MFX_REREGISTRATION,
                 (counter >> 8) & 0xFF, counter & 0xFF);
         return Cs2FrameBuilder.buildFrame(DEFAULT_PRIORITY, COMMAND_CODE, true, BROADCAST_HASH, 7, data);
     }
 
-    /** Builds an Enable Track Protocol reply (sub-cmd 0x0A, DLC=6). */
+    /**
+     * Builds an Enable Track Protocol reply (sub-cmd 0x0A, DLC=6).
+     *
+     * @param targetUid    32-bit target device UID
+     * @param protocolMask bitmask of enabled protocols (see TRACK_PROTOCOL_* constants)
+     * @return the command frame
+     */
     public static int[] buildEnableTrackProtocolReply(McanUid targetUid, int protocolMask) {
         int[] data = uidAndBytes(targetUid.toLong(), SUB_ENABLE_TRACK_PROTOCOL, protocolMask & 0xFF);
         return Cs2FrameBuilder.buildFrame(DEFAULT_PRIORITY, COMMAND_CODE, true, BROADCAST_HASH, 6, data);
     }
 
-    /** Builds a System Overload reply (sub-cmd 0x0B, DLC=6). */
+    /**
+     * Builds a System Overload reply (sub-cmd 0x0B, DLC=6).
+     *
+     * @param senderUid 32-bit UID of the reporting device
+     * @param channel   channel number that caused the overload
+     * @return the command frame
+     */
     public static int[] buildSystemOverloadReply(McanUid senderUid, int channel) {
         int[] data = uidAndBytes(senderUid.toLong(), SUB_SYSTEM_OVERLOAD, channel & 0xFF);
         return Cs2FrameBuilder.buildFrame(DEFAULT_PRIORITY, COMMAND_CODE, true, BROADCAST_HASH, 6, data);
     }
 
-    /** Builds a System Status reply (sub-cmd 0x0C, DLC=8) carrying a measured value. */
+    /**
+     * Builds a System Status reply (sub-cmd 0x0C, DLC=8) carrying a measured value.
+     *
+     * @param deviceUid     32-bit UID of the reporting device
+     * @param channel       channel number the measurement applies to
+     * @param measuredValue 16-bit measured value for the channel
+     * @return the command frame
+     */
     public static int[] buildSystemStatusReply(McanUid deviceUid, int channel, int measuredValue) {
         int[] data = uidAndBytes(deviceUid.toLong(), SUB_SYSTEM_STATUS, channel & 0xFF,
                 (measuredValue >> 8) & 0xFF, measuredValue & 0xFF);
         return Cs2FrameBuilder.buildFrame(DEFAULT_PRIORITY, COMMAND_CODE, true, BROADCAST_HASH, 8, data);
     }
 
-    /** Builds a Device Identifier reply (sub-cmd 0x0C, DLC=7). */
+    /**
+     * Builds a Device Identifier reply (sub-cmd 0x0C, DLC=7).
+     *
+     * @param targetUid  32-bit target device UID
+     * @param identifier 16-bit device identifier
+     * @return the command frame
+     */
     public static int[] buildDeviceIdentifierReply(McanUid targetUid, int identifier) {
         int[] data = uidAndBytes(targetUid.toLong(), SUB_DEVICE_IDENTIFIER,
                 (identifier >> 8) & 0xFF, identifier & 0xFF);
         return Cs2FrameBuilder.buildFrame(DEFAULT_PRIORITY, COMMAND_CODE, true, BROADCAST_HASH, 7, data);
     }
 
-    /** Builds an MFX Seek reply (sub-cmd 0x30, DLC=6). */
+    /**
+     * Builds an MFX Seek reply (sub-cmd 0x30, DLC=6).
+     *
+     * @param senderUid 32-bit UID of the requesting device
+     * @param range     6-bit MFX range value (0 = force re-registration)
+     * @return the command frame
+     */
     public static int[] buildMfxSeekReply(McanUid senderUid, int range) {
         int[] data = uidAndBytes(senderUid.toLong(), SUB_MFX_SEEK, range & 0xFF);
         return Cs2FrameBuilder.buildFrame(DEFAULT_PRIORITY, COMMAND_CODE, true, BROADCAST_HASH, 6, data);
     }
 
-    /** Builds a System Reset reply (sub-cmd 0x80, DLC=6). */
+    /**
+     * Builds a System Reset reply (sub-cmd 0x80, DLC=6).
+     *
+     * @param targetUid   32-bit target device UID
+     * @param resetTarget reset target parameter (device-specific)
+     * @return the command frame
+     */
     public static int[] buildSystemResetReply(McanUid targetUid, int resetTarget) {
         int[] data = uidAndBytes(targetUid.toLong(), SUB_SYSTEM_RESET, resetTarget & 0xFF);
         return Cs2FrameBuilder.buildFrame(DEFAULT_PRIORITY, COMMAND_CODE, true, BROADCAST_HASH, 6, data);
@@ -391,6 +486,12 @@ public final class Cs2SystemCommands {
     /**
      * Parses a system command frame into a typed result.
      * Called by {@link Cs2FrameParser} after command resolution.
+     *
+     * @param header the parsed CS2 frame header
+     * @param data   the frame payload bytes
+     * @param raw    the originating raw CAN frame
+     * @return the typed system-command frame for the sub-command or a generic
+     *         {@link Cs2Frame} for an unrecognised sub-command
      */
     static Cs2Frame parse(Cs2Header header, Cs2Data data, RawFrame raw) {
         boolean rep = header.response();
@@ -481,7 +582,11 @@ public final class Cs2SystemCommands {
     public static final class LocoEmergencyStopRequestFrame extends Cs2Frame {
         LocoEmergencyStopRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** The 32-bit Loc-ID of the target loco. */
+        /**
+         * Returns the addressed locomotive ID.
+         *
+         * @return the 32-bit Loc-ID of the target loco
+         */
         public long locId() { return data().int32At(0); }
     }
 
@@ -489,7 +594,11 @@ public final class Cs2SystemCommands {
     public static final class LocoEmergencyStopReplyFrame extends Cs2Frame {
         LocoEmergencyStopReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** The 32-bit Loc-ID of the target loco. */
+        /**
+         * Returns the addressed locomotive ID.
+         *
+         * @return the 32-bit Loc-ID of the target loco
+         */
         public long locId() { return data().int32At(0); }
     }
 
@@ -497,7 +606,11 @@ public final class Cs2SystemCommands {
     public static final class LocoCycleStopRequestFrame extends Cs2Frame {
         LocoCycleStopRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** The 32-bit Loc-ID (or 0 for all). */
+        /**
+         * Returns the addressed locomotive ID.
+         *
+         * @return the 32-bit Loc-ID (or 0 for all)
+         */
         public long locId() { return data().int32At(0); }
     }
 
@@ -505,7 +618,11 @@ public final class Cs2SystemCommands {
     public static final class LocoCycleStopReplyFrame extends Cs2Frame {
         LocoCycleStopReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** The 32-bit Loc-ID (or 0 for all). */
+        /**
+         * Returns the addressed locomotive ID.
+         *
+         * @return the 32-bit Loc-ID (or 0 for all)
+         */
         public long locId() { return data().int32At(0); }
     }
 
@@ -513,10 +630,18 @@ public final class Cs2SystemCommands {
     public static final class LocoDataProtocolRequestFrame extends Cs2Frame {
         LocoDataProtocolRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** The 32-bit Loc-ID. */
+        /**
+         * Returns the addressed locomotive ID.
+         *
+         * @return the 32-bit Loc-ID
+         */
         public long locId() { return data().int32At(0); }
 
-        /** Sub-protocol value (see PROTOCOL_* constants). */
+        /**
+         * Returns the selected sub-protocol.
+         *
+         * @return the sub-protocol value (see PROTOCOL_* constants)
+         */
         public int locoProtocol() { return data().byteAt(5); }
     }
 
@@ -524,10 +649,18 @@ public final class Cs2SystemCommands {
     public static final class LocoDataProtocolReplyFrame extends Cs2Frame {
         LocoDataProtocolReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** The 32-bit Loc-ID. */
+        /**
+         * Returns the addressed locomotive ID.
+         *
+         * @return the 32-bit Loc-ID
+         */
         public long locId() { return data().int32At(0); }
 
-        /** Sub-protocol value (see PROTOCOL_* constants). */
+        /**
+         * Returns the selected sub-protocol.
+         *
+         * @return the sub-protocol value (see PROTOCOL_* constants)
+         */
         public int locoProtocol() { return data().byteAt(5); }
     }
 
@@ -535,10 +668,18 @@ public final class Cs2SystemCommands {
     public static final class AccessorySwitchTimeRequestFrame extends Cs2Frame {
         AccessorySwitchTimeRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** Target device UID. */
+        /**
+         * Returns the addressed device UID.
+         *
+         * @return the target device UID
+         */
         public McanUid targetUid() { return data().uidAt(0); }
 
-        /** Switch time in 10 ms increments (0 = factory default). */
+        /**
+         * Returns the configured accessory switch time.
+         *
+         * @return the switch time in 10 ms increments (0 = factory default)
+         */
         public int time10ms() { return data().int16At(5); }
     }
 
@@ -546,10 +687,18 @@ public final class Cs2SystemCommands {
     public static final class AccessorySwitchTimeReplyFrame extends Cs2Frame {
         AccessorySwitchTimeReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** Target device UID. */
+        /**
+         * Returns the addressed device UID.
+         *
+         * @return the target device UID
+         */
         public McanUid targetUid() { return data().uidAt(0); }
 
-        /** Switch time in 10 ms increments (0 = factory default). */
+        /**
+         * Returns the configured accessory switch time.
+         *
+         * @return the switch time in 10 ms increments (0 = factory default)
+         */
         public int time10ms() { return data().int16At(5); }
     }
 
@@ -557,10 +706,18 @@ public final class Cs2SystemCommands {
     public static final class FastReadMfxRequestFrame extends Cs2Frame {
         FastReadMfxRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** Sender device UID. */
+        /**
+         * Returns the sending device UID.
+         *
+         * @return the sender device UID
+         */
         public McanUid senderUid() { return data().uidAt(0); }
 
-        /** 16-bit MFX track address (SID). */
+        /**
+         * Returns the addressed MFX track address.
+         *
+         * @return the 16-bit MFX track address (SID)
+         */
         public int mfxSid() { return data().int16At(5); }
     }
 
@@ -568,10 +725,18 @@ public final class Cs2SystemCommands {
     public static final class FastReadMfxReplyFrame extends Cs2Frame {
         FastReadMfxReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** Sender device UID. */
+        /**
+         * Returns the sending device UID.
+         *
+         * @return the sender device UID
+         */
         public McanUid senderUid() { return data().uidAt(0); }
 
-        /** 16-bit MFX track address (SID). */
+        /**
+         * Returns the addressed MFX track address.
+         *
+         * @return the 16-bit MFX track address (SID)
+         */
         public int mfxSid() { return data().int16At(5); }
     }
 
@@ -579,10 +744,18 @@ public final class Cs2SystemCommands {
     public static final class EnableTrackProtocolRequestFrame extends Cs2Frame {
         EnableTrackProtocolRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** Target device UID. */
+        /**
+         * Returns the addressed device UID.
+         *
+         * @return the target device UID
+         */
         public McanUid targetUid() { return data().uidAt(0); }
 
-        /** Protocol enable bitmask (see TRACK_PROTOCOL_* constants). */
+        /**
+         * Returns the protocol enable bitmask.
+         *
+         * @return the protocol enable bitmask (see TRACK_PROTOCOL_* constants)
+         */
         public int protocolMask() { return data().byteAt(5); }
     }
 
@@ -590,10 +763,18 @@ public final class Cs2SystemCommands {
     public static final class EnableTrackProtocolReplyFrame extends Cs2Frame {
         EnableTrackProtocolReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** Target device UID. */
+        /**
+         * Returns the addressed device UID.
+         *
+         * @return the target device UID
+         */
         public McanUid targetUid() { return data().uidAt(0); }
 
-        /** Protocol enable bitmask (see TRACK_PROTOCOL_* constants). */
+        /**
+         * Returns the protocol enable bitmask.
+         *
+         * @return the protocol enable bitmask (see TRACK_PROTOCOL_* constants)
+         */
         public int protocolMask() { return data().byteAt(5); }
     }
 
@@ -601,10 +782,18 @@ public final class Cs2SystemCommands {
     public static final class MfxReregistrationRequestFrame extends Cs2Frame {
         MfxReregistrationRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** Target device UID. */
+        /**
+         * Returns the addressed device UID.
+         *
+         * @return the target device UID
+         */
         public McanUid targetUid() { return data().uidAt(0); }
 
-        /** 16-bit re-registration counter value. */
+        /**
+         * Returns the re-registration counter value.
+         *
+         * @return the 16-bit re-registration counter value
+         */
         public int counter() { return data().int16At(5); }
     }
 
@@ -612,10 +801,18 @@ public final class Cs2SystemCommands {
     public static final class MfxReregistrationReplyFrame extends Cs2Frame {
         MfxReregistrationReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** Target device UID. */
+        /**
+         * Returns the addressed device UID.
+         *
+         * @return the target device UID
+         */
         public McanUid targetUid() { return data().uidAt(0); }
 
-        /** 16-bit re-registration counter value. */
+        /**
+         * Returns the re-registration counter value.
+         *
+         * @return the 16-bit re-registration counter value
+         */
         public int counter() { return data().int16At(5); }
     }
 
@@ -623,10 +820,18 @@ public final class Cs2SystemCommands {
     public static final class SystemOverloadFrame extends Cs2Frame {
         SystemOverloadFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** Reporting device UID. */
+        /**
+         * Returns the reporting device UID.
+         *
+         * @return the reporting device UID
+         */
         public McanUid senderUid() { return data().uidAt(0); }
 
-        /** Channel number that caused the overload. */
+        /**
+         * Returns the overloaded channel.
+         *
+         * @return the channel number that caused the overload
+         */
         public int channel() { return data().byteAt(5); }
     }
 
@@ -634,10 +839,18 @@ public final class Cs2SystemCommands {
     public static final class SystemStatusRequestFrame extends Cs2Frame {
         SystemStatusRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** Target device UID. */
+        /**
+         * Returns the addressed device UID.
+         *
+         * @return the target device UID
+         */
         public McanUid deviceUid() { return data().uidAt(0); }
 
-        /** Channel number to query. */
+        /**
+         * Returns the queried channel.
+         *
+         * @return the channel number to query
+         */
         public int channel() { return data().byteAt(5); }
     }
 
@@ -645,13 +858,25 @@ public final class Cs2SystemCommands {
     public static final class SystemStatusReplyFrame extends Cs2Frame {
         SystemStatusReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** Sender device UID. */
+        /**
+         * Returns the reporting device UID.
+         *
+         * @return the sender device UID
+         */
         public McanUid deviceUid() { return data().uidAt(0); }
 
-        /** Channel number. */
+        /**
+         * Returns the channel the measurement applies to.
+         *
+         * @return the channel number
+         */
         public int channel() { return data().byteAt(5); }
 
-        /** 16-bit measured value. */
+        /**
+         * Returns the measured value for the channel.
+         *
+         * @return the 16-bit measured value
+         */
         public int measuredValue() { return data().int16At(6); }
     }
 
@@ -659,7 +884,11 @@ public final class Cs2SystemCommands {
     public static final class DeviceIdentifierRequestFrame extends Cs2Frame {
         DeviceIdentifierRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** Target device UID. */
+        /**
+         * Returns the addressed device UID.
+         *
+         * @return the target device UID
+         */
         public McanUid targetUid() { return data().uidAt(0); }
     }
 
@@ -667,10 +896,18 @@ public final class Cs2SystemCommands {
     public static final class DeviceIdentifierReplyFrame extends Cs2Frame {
         DeviceIdentifierReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** Target device UID. */
+        /**
+         * Returns the addressed device UID.
+         *
+         * @return the target device UID
+         */
         public McanUid targetUid() { return data().uidAt(0); }
 
-        /** 16-bit device identifier. */
+        /**
+         * Returns the device identifier.
+         *
+         * @return the 16-bit device identifier
+         */
         public int identifier() { return data().int16At(5); }
     }
 
@@ -681,10 +918,18 @@ public final class Cs2SystemCommands {
     public static final class MfxSeekRequestFrame extends Cs2Frame {
         MfxSeekRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** Sender device UID. */
+        /**
+         * Returns the requesting device UID.
+         *
+         * @return the sender device UID
+         */
         public McanUid senderUid() { return data().uidAt(0); }
 
-        /** MFX seek range value (data byte 5; 0 = force re-registration). */
+        /**
+         * Returns the MFX seek range value.
+         *
+         * @return the MFX seek range value (data byte 5; 0 = force re-registration)
+         */
         public int range() { return data().byteAt(5); }
     }
 
@@ -692,10 +937,18 @@ public final class Cs2SystemCommands {
     public static final class MfxSeekReplyFrame extends Cs2Frame {
         MfxSeekReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** Sender device UID. */
+        /**
+         * Returns the requesting device UID.
+         *
+         * @return the sender device UID
+         */
         public McanUid senderUid() { return data().uidAt(0); }
 
-        /** MFX seek range value (data byte 5). */
+        /**
+         * Returns the MFX seek range value.
+         *
+         * @return the MFX seek range value (data byte 5)
+         */
         public int range() { return data().byteAt(5); }
     }
 
@@ -703,10 +956,18 @@ public final class Cs2SystemCommands {
     public static final class SystemResetRequestFrame extends Cs2Frame {
         SystemResetRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** Target device UID. */
+        /**
+         * Returns the addressed device UID.
+         *
+         * @return the target device UID
+         */
         public McanUid targetUid() { return data().uidAt(0); }
 
-        /** Reset target parameter (device-specific). */
+        /**
+         * Returns the reset target parameter.
+         *
+         * @return the reset target parameter (device-specific)
+         */
         public int resetTarget() { return data().byteAt(5); }
     }
 
@@ -714,10 +975,18 @@ public final class Cs2SystemCommands {
     public static final class SystemResetReplyFrame extends Cs2Frame {
         SystemResetReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** Target device UID. */
+        /**
+         * Returns the addressed device UID.
+         *
+         * @return the target device UID
+         */
         public McanUid targetUid() { return data().uidAt(0); }
 
-        /** Reset target parameter (device-specific). */
+        /**
+         * Returns the reset target parameter.
+         *
+         * @return the reset target parameter (device-specific)
+         */
         public int resetTarget() { return data().byteAt(5); }
     }
 

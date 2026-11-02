@@ -69,10 +69,18 @@ public final class CdBFrameParser {
 
         public CdBFrameType frameType() { return frameType; }
 
-        /** 8-bit CdB device class ID. */
+        /**
+         * 8-bit CdB device class ID.
+         *
+         * @return the 8-bit CdB device class ID
+         */
         public int classId() { return classId; }
 
-        /** Module slot (0 = broadcast ping, 1–127 = addressed). */
+        /**
+         * Module slot (0 = broadcast ping, 1–127 = addressed).
+         *
+         * @return the module slot
+         */
         public int moduleId() { return moduleId; }
 
         /**
@@ -120,12 +128,20 @@ public final class CdBFrameParser {
             super(CdBFrameType.PING_REPLY, classId, moduleId, raw);
         }
 
-        /** True when the module is factory-fresh (moduleId=0, DLC=6). */
+        /**
+         * True when the module is factory-fresh (moduleId=0, DLC=6).
+         *
+         * @return true if the device is factory-fresh
+         */
         public boolean isFactoryFresh() {
             return moduleId() == 0 && raw().dlc() == 6;
         }
 
-        /** True when the module is commissioned (moduleId &gt; 0, DLC=3). */
+        /**
+         * True when the module is commissioned (moduleId &gt; 0, DLC=3).
+         *
+         * @return true if the module is commissioned and operational
+         */
         public boolean isOperational() {
             return moduleId() > 0 && raw().dlc() == 3;
         }
@@ -137,6 +153,8 @@ public final class CdBFrameParser {
          * to a broadcast discovery ping.
          * Each of the four channel addresses occupies two big endian data bytes starting at frame byte[5].
          * Decode with {@link #addressPayload()}.
+         *
+         * @return true if the reply carries a 4-address payload
          */
         public boolean hasAddressPayload() {
             return moduleId() > 0 && raw().dlc() == 8;
@@ -181,10 +199,18 @@ public final class CdBFrameParser {
             super(CdBFrameType.READ, classId, moduleId, raw);
         }
 
-        /** Sub-register slot (data byte 0, frame byte[5]). */
+        /**
+         * Sub-register slot (data byte 0, frame byte[5]).
+         *
+         * @return the sub-register slot number
+         */
         public int slot() { return bytes()[5] & 0xFF; }
 
-        /** Register number (data byte 1, frame byte[6]). */
+        /**
+         * Register number (data byte 1, frame byte[6]).
+         *
+         * @return the register number
+         */
         public int reg()  { return bytes()[6] & 0xFF; }
     }
 
@@ -194,13 +220,25 @@ public final class CdBFrameParser {
             super(CdBFrameType.READ_REPLY, classId, moduleId, raw);
         }
 
-        /** Sub-register slot echoed from the request (frame byte[5]). */
+        /**
+         * Sub-register slot echoed from the request (frame byte[5]).
+         *
+         * @return the sub-register slot number
+         */
         public int slot()  { return bytes()[5] & 0xFF; }
 
-        /** Register number echoed from the request (frame byte[6]). */
+        /**
+         * Register number echoed from the request (frame byte[6]).
+         *
+         * @return the register number
+         */
         public int reg()   { return bytes()[6] & 0xFF; }
 
-        /** 16-bit register value (frame bytes[7..8], big-endian). */
+        /**
+         * 16-bit register value (frame bytes[7..8], big-endian).
+         *
+         * @return the 16-bit register value
+         */
         public int value() { return ((bytes()[7] & 0xFF) << 8) | (bytes()[8] & 0xFF); }
     }
 
@@ -210,13 +248,25 @@ public final class CdBFrameParser {
             super(CdBFrameType.WRITE, classId, moduleId, raw);
         }
 
-        /** Sub-register slot (frame byte[5]). */
+        /**
+         * Sub-register slot (frame byte[5]).
+         *
+         * @return the sub-register slot number
+         */
         public int slot()  { return bytes()[5] & 0xFF; }
 
-        /** Register number (frame byte[6]). */
+        /**
+         * Register number (frame byte[6]).
+         *
+         * @return the register number
+         */
         public int reg()   { return bytes()[6] & 0xFF; }
 
-        /** 16-bit value to write (frame bytes[7..8], big-endian). */
+        /**
+         * 16-bit value to write (frame bytes[7..8], big-endian).
+         *
+         * @return the 16-bit value to write
+         */
         public int value() { return ((bytes()[7] & 0xFF) << 8) | (bytes()[8] & 0xFF); }
     }
 }

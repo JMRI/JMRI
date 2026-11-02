@@ -118,13 +118,25 @@ public final class Cs2AutomationCommands {
     public static final class AutomationStatusFrame extends Cs2Frame {
         AutomationStatusFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** 16-bit device identifier. */
+        /**
+         * 16-bit device identifier.
+         *
+         * @return the 16-bit device identifier
+         */
         public int deviceId() { return data().int16At(0); }
 
-        /** 16-bit automation function code (high byte = row, low byte = column). */
+        /**
+         * 16-bit automation function code (high byte = row, low byte = column).
+         *
+         * @return the 16-bit automation function code
+         */
         public int function() { return data().int16At(2); }
 
-        /** Current activation status (see STATUS_* constants). */
+        /**
+         * Current activation status (see STATUS_* constants).
+         *
+         * @return the current activation status
+         */
         public int status() { return data().byteAt(4); }
     }
 }

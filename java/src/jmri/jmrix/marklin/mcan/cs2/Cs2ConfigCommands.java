@@ -209,7 +209,11 @@ public final class Cs2ConfigCommands {
     public static final class BootCanRequestFrame extends Cs2Frame {
         BootCanRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** Returns true when this is a normal Gleisbox activation (DLC=5, magic byte present). */
+        /**
+         * Returns true when this is a normal Gleisbox activation (DLC=5, magic byte present).
+         *
+         * @return true if the frame is a normal Gleisbox activation (DLC=5 with magic byte), false otherwise
+         */
         public boolean isGleisboxActivation() {
             return header().dlc() == 5 && data().byteAt(4) == GLEISBOX_MAGIC;
         }
@@ -222,10 +226,18 @@ public final class Cs2ConfigCommands {
     public static final class UpdateOfferRequestFrame extends Cs2Frame {
         UpdateOfferRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** 32-bit target device UID. */
+        /**
+         * Returns the 32-bit target device UID.
+         *
+         * @return the target device UID
+         */
         public McanUid uid() { return data().uidAt(0); }
 
-        /** 16-bit firmware version being offered. */
+        /**
+         * Returns the 16-bit firmware version being offered.
+         *
+         * @return the firmware version being offered
+         */
         public int version() { return data().int16At(4); }
     }
 
@@ -237,13 +249,25 @@ public final class Cs2ConfigCommands {
     public static final class ReadConfigDataRequestFrame extends Cs2Frame {
         ReadConfigDataRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** 32-bit target device UID. */
+        /**
+         * Returns the 32-bit target device UID.
+         *
+         * @return the target device UID
+         */
         public McanUid uid() { return data().uidAt(0); }
 
-        /** Channel index to read. */
+        /**
+         * Returns the channel index to read.
+         *
+         * @return the channel index being requested
+         */
         public int channelIndex() { return data().byteAt(4); }
 
-        /** Sub-index within the channel. */
+        /**
+         * Returns the sub-index within the channel.
+         *
+         * @return the sub-index within the channel
+         */
         public int subIndex() { return data().byteAt(5); }
     }
 
@@ -256,17 +280,29 @@ public final class Cs2ConfigCommands {
             super(header, data, raw);
         }
 
-        /** 32-bit device UID. */
+        /**
+         * Returns the 32-bit device UID.
+         *
+         * @return the device UID
+         */
         public McanUid uid() {
             return data().uidAt(0);
         }
 
-        /** 16-bit software version. */
+        /**
+         * Returns the 16-bit software version.
+         *
+         * @return the software version
+         */
         public int softwareVersion() {
             return data().int16At(4);
         }
 
-        /** 16-bit device type code. */
+        /**
+         * Returns the 16-bit device type code.
+         *
+         * @return the device type code
+         */
         public int deviceType() {
             return data().int16At(6);
         }
@@ -284,13 +320,25 @@ public final class Cs2ConfigCommands {
     public static final class UpdateOfferReplyFrame extends Cs2Frame {
         UpdateOfferReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** 32-bit device UID. */
+        /**
+         * Returns the 32-bit device UID.
+         *
+         * @return the device UID
+         */
         public McanUid uid() { return data().uidAt(0); }
 
-        /** 16-bit firmware version offered. */
+        /**
+         * Returns the 16-bit firmware version offered.
+         *
+         * @return the firmware version offered
+         */
         public int version() { return data().int16At(4); }
 
-        /** 16-bit device type code. */
+        /**
+         * Returns the 16-bit device type code.
+         *
+         * @return the device type code
+         */
         public int deviceType() { return data().int16At(6); }
     }
 
@@ -304,16 +352,32 @@ public final class Cs2ConfigCommands {
     public static final class ReadConfigDataReplyFrame extends Cs2Frame {
         ReadConfigDataReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** 32-bit target device UID. */
+        /**
+         * Returns the 32-bit target device UID.
+         *
+         * @return the target device UID
+         */
         public McanUid uid() { return data().uidAt(0); }
 
-        /** Channel index being read. */
+        /**
+         * Returns the channel index being read.
+         *
+         * @return the channel index being read
+         */
         public int channelIndex() { return data().byteAt(4); }
 
-        /** Sub-index within the channel. */
+        /**
+         * Returns the sub-index within the channel.
+         *
+         * @return the sub-index within the channel
+         */
         public int subIndex() { return data().byteAt(5); }
 
-        /** Number of data packets that will follow. */
+        /**
+         * Returns the number of data packets that will follow.
+         *
+         * @return the number of data packets that will follow
+         */
         public int packetCount() { return data().byteAt(6); }
     }
 
@@ -326,7 +390,11 @@ public final class Cs2ConfigCommands {
     public static final class BootRequestFrame extends Cs2Frame {
         BootRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** 32-bit target device UID. */
+        /**
+         * Returns the 32-bit target device UID.
+         *
+         * @return the target device UID
+         */
         public McanUid uid() { return data().uidAt(0); }
     }
 

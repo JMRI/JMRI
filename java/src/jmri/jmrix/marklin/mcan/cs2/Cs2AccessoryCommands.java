@@ -158,18 +158,32 @@ public final class Cs2AccessoryCommands {
             super(header, data, raw);
         }
 
-        /** 32-bit accessory address from data bytes 0–3. */
+        /**
+         * 32-bit accessory address from data bytes 0–3.
+         *
+         * @return the 32-bit accessory address
+         */
         public long address() { return data().int32At(0); }
 
-        /** Aspect/position value from data byte 4 (present when DLC&gt;=5). Returns 0 for query. */
+        /**
+         * Aspect/position value from data byte 4 (present when DLC&gt;=5). Returns 0 for query.
+         *
+         * @return the aspect/position value or 0 for a query frame
+         */
         public int aspect() { return header().dlc() >= 5 ? data().byteAt(4) : 0; }
 
-        /** Power state from data byte 5 (present when DLC&gt;=6): true=on. */
+        /**
+         * Power state from data byte 5 (present when DLC&gt;=6): true=on.
+         *
+         * @return true if the accessory power is on
+         */
         public boolean power() { return header().dlc() >= 6 && data().byteAt(5) != 0; }
 
         /**
          * Explicit switch time in 10 ms steps from data bytes 6–7 (DLC=8 only).
          * Returns 0 for DLC=6 frames.
+         *
+         * @return the switch time in 10 ms steps or 0 when not present
          */
         public int time10ms() { return header().dlc() == 8 ? data().int16At(6) : 0; }
     }
@@ -182,17 +196,29 @@ public final class Cs2AccessoryCommands {
             super(header, data, raw);
         }
 
-        /** 32-bit accessory address from data bytes 0–3. */
+        /**
+         * 32-bit accessory address from data bytes 0–3.
+         *
+         * @return the 32-bit accessory address
+         */
         public long address() {
             return data().int32At(0);
         }
 
-        /** Aspect/position value from data byte 4 (present when DLC&gt;=5). */
+        /**
+         * Aspect/position value from data byte 4 (present when DLC&gt;=5).
+         *
+         * @return the aspect/position value
+         */
         public int aspect() {
             return data().byteAt(4);
         }
 
-        /** Power state from data byte 5 (present when DLC=6 or 8): true=on. */
+        /**
+         * Power state from data byte 5 (present when DLC=6 or 8): true=on.
+         *
+         * @return true if the accessory power is on
+         */
         public boolean power() {
             return data().byteAt(5) != 0;
         }
@@ -200,6 +226,8 @@ public final class Cs2AccessoryCommands {
         /**
          * Explicit switch time in 10 ms steps from data bytes 6–7 (present when DLC=8 only).
          * Returns 0 for DLC=6 frames.
+         *
+         * @return The switch time in 10 ms steps or 0 when not present
          */
         public int time10ms() {
             return data().int16At(6);
@@ -207,16 +235,24 @@ public final class Cs2AccessoryCommands {
     }
 
     /**
-     * An extended MFX bind reply (0x0C, DLC=6): echoes the MFX-UID and assigned SID.
+     * An extended MFX bind reply (0x0C, DLC=6): Echoes the MFX-UID and assigned SID.
      * Same payload layout as {@link jmri.jmrix.marklin.mcan.cs2.Cs2DecoderCommands.MfxBindReplyFrame}.
      */
     public static final class MfxBindExReplyFrame extends Cs2Frame {
         MfxBindExReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** 32-bit MFX UID. */
+        /**
+         * 32-bit MFX UID.
+         *
+         * @return the 32-bit MFX UID
+         */
         public long mfxUid() { return data().int32At(0); }
 
-        /** 16-bit MFX track SID that was assigned. */
+        /**
+         * 16-bit MFX track SID that was assigned.
+         *
+         * @return the assigned 16-bit MFX track SID
+         */
         public int mfxSid() { return data().int16At(4); }
     }
 

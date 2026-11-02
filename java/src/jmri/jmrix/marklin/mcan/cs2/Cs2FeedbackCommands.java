@@ -171,10 +171,18 @@ public final class Cs2FeedbackCommands {
     public static final class S88PollFrame extends Cs2Frame {
         S88PollFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** The 32-bit UID of the requester (data bytes 0–3). */
+        /**
+         * The 32-bit UID of the requester (data bytes 0–3).
+         *
+         * @return the 32-bit UID of the requester
+         */
         public McanUid requesterUid() { return data().uidAt(0); }
 
-        /** The S88 module index to poll (data byte 4). */
+        /**
+         * The S88 module index to poll (data byte 4).
+         *
+         * @return the S88 module index to poll
+         */
         public int module() { return data().byteAt(4); }
     }
 
@@ -182,13 +190,19 @@ public final class Cs2FeedbackCommands {
     public static final class S88PollReplyFrame extends Cs2Frame {
         S88PollReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** The S88 module index (from data byte 4). */
+        /**
+         * The S88 module index (from data byte 4).
+         *
+         * @return the S88 module index
+         */
         public int module() { return data().byteAt(4); }
 
         /**
          * 16-bit contact state bitfield from data bytes 5–6 (DLC=7 reply).
          * Each bit represents one S88 contact on the module (bit 15 = contact 1).
          * Returns 0 for request frames (DLC=5).
+         *
+         * @return the 16-bit contact state bitfield, or 0 for request frames
          */
         public int state() { return data().int16At(5); }
     }
@@ -197,16 +211,32 @@ public final class Cs2FeedbackCommands {
     public static final class S88EventFrame extends Cs2Frame {
         S88EventFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** The 16-bit contact address. */
+        /**
+         * The 16-bit contact address.
+         *
+         * @return the 16-bit contact address
+         */
         public int contactId() { return data().int16At(0); }
 
-        /** The previous contact state (0 or 1). */
+        /**
+         * The previous contact state (0 or 1).
+         *
+         * @return the previous contact state (0 or 1)
+         */
         public int oldState() { return data().byteAt(2); }
 
-        /** The new contact state (0 or 1). */
+        /**
+         * The new contact state (0 or 1).
+         *
+         * @return the new contact state (0 or 1)
+         */
         public int newState() { return data().byteAt(3); }
 
-        /** The 16-bit timestamp (10ms units). */
+        /**
+         * The 16-bit timestamp (10ms units).
+         *
+         * @return the 16-bit timestamp in 10 ms units
+         */
         public int time() { return data().int16At(4); }
     }
 
@@ -218,10 +248,18 @@ public final class Cs2FeedbackCommands {
     public static final class FeedbackBroadcastFrame extends Cs2Frame {
         FeedbackBroadcastFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** The 1-based S88 module index. */
+        /**
+         * The 1-based S88 module index.
+         *
+         * @return the 1-based S88 module index
+         */
         public int moduleIndex() { return data().byteAt(0); }
 
-        /** The 16-bit contact state bitfield (bit 15 = contact 1). */
+        /**
+         * The 16-bit contact state bitfield (bit 15 = contact 1).
+         *
+         * @return the 16-bit contact state bitfield
+         */
         public int state() { return data().int16At(1); }
     }
 }
