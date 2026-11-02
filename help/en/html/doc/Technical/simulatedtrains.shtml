@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="generator" content="HTML Tidy for HTML5 for Apple macOS version 5.8.0">
+  <title>JMRI: Writing Tests with Simulated Trains</title>
+  <meta name="author" content="Keith Bruce">
+  <meta name="keywords" content="JMRI technical code JUnit testing simulation simulated trains ground truth">
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
+      <h1>JMRI Code: Writing Tests with Simulated Trains</h1>
+
+      <ul>
+        <li>
+          <a href="#purpose">What the simulator is for</a>
+        </li>
+
+        <li>
+          <a href="#helper">The test helper and the standard layouts</a>
+        </li>
+
+        <li>
+          <a href="#realtime">Real time: assert order, not durations</a>
+        </li>
+
+        <li>
+          <a href="#truth">Ground truth</a>
+        </li>
+
+        <li>
+          <a href="#offsets">Truth offsets</a>
+        </li>
+
+        <li>
+          <a href="#independence">The independence rule</a>
+        </li>
+
+        <li>
+          <a href="#teardown">Removing trains</a>
+        </li>
+      </ul>
+
+      <h2 id="purpose">What the simulator is for</h2>
+
+      <p>JMRI's simulator connections accept speed commands, but on their own nothing moves.
+      Simulated trains add trains that do move. In a profile whose connections are all simulators,
+      a test places a virtual train on a Block. The train then moves on the layout's own track, as
+      its throttle tells it. It sets the Blocks' sensors as it passes, with the time it passed.</p>
+
+      <p>This lets a test drive Blocks, Dispatcher, Warrants and scripts with moving trains, without
+      a real layout. The simulator also knows exactly where each train really is. So a test can
+      compare what JMRI concluded with what really happened.</p>
+
+      <p>The simulator is in the package <code>jmri.jmrit.simulation</code>. Its Javadoc
+      describes each class.</p>
+
+      <h2 id="helper">The test helper and the standard layouts</h2>
+
+      <p>Two classes in the test tree help tests in any package:</p>
+
+      <ul>
+        <li><code>jmri.jmrit.simulation.SimulationTestUtil</code> sets up a fully simulated
+        profile with an Internal connection. It makes plain Blocks with internal sensors, places
+        trains, gets throttles to drive them, and waits for and reads the ground truth. Its
+        <code>removeTrains()</code> is for the tear-down.</li>
+
+        <li><code>jmri.jmrit.simulation.SimulationTestLayouts</code> builds standard layouts in
+        code, each on its own Layout Editor panel:
+          <ul>
+            <li>a loop with a passing loop: an oval with a station, where a main platform road
+            and a loop road run between two turnouts;</li>
+
+            <li>a terminus: an approach, a throat turnout and two platform roads ending at end
+            bumpers;</li>
+
+            <li>a junction with a crossover: double track, a crossover between the lines, and a
+            junction turnout leading to a branch line.</li>
+          </ul>
+        Each has Layout Blocks with internal sensors (<code>IS</code> and the Block's name),
+        internal turnouts (<code>IT</code> and the turnout's name), real lengths in millimetres,
+        and the Block paths JMRI makes after loading a panel. All turnouts start closed. The class
+        Javadoc gives each layout's Blocks and lengths.</li>
+      </ul>
+
+      <p><code>SimulationTestLayouts</code> also has made-up locos. Each is written as a roster
+      file, as DecoderPro writes one, with CV3, CV4, CV29 and a speed profile. The simulator reads
+      the momentum CVs and the measured speeds from it.</p>
+
+      <p>The layouts are drawn on panels, so tests that use them need a display. Mark them
+      <code>@DisabledIfHeadless</code>. Tests that use only <code>SimulationTestUtil</code>'s
+      plain Blocks run headless.</p>
+
+      <p>A short example: a train runs from the approach into platform 2 of the terminus.</p>
+      <pre style="font-family: monospace;">
+@DisabledIfHeadless
+public class MyTerminusTest {
+
+    private SimulationTestLayout layout;
+
+    @Test
+    public void testIntoPlatform2() throws IOException {
+        layout.turnout("Throat").setCommandedState(Turnout.THROWN);
+        RosterEntry tank = SimulationTestLayouts.rosterEntry(SimulationTestLayouts.Loco.TANK);
+        VirtualTrain t = VirtualTrain.builder("Local")
+                .loco(SimulatedLoco.builder(tank).length(120).build())
+                .length(200).build();
+        SimulationTestUtil.place(t, layout.block("Approach"), null, 1200);
+
+        DccThrottle throttle = SimulationTestUtil.throttle(3);
+        throttle.setSpeedSetting(0.8f);
+        SimulationTestUtil.waitForFrontIn(t, layout.block("Platform2"));
+        throttle.setSpeedSetting(0.0f);
+        SimulationTestUtil.waitForTruth(tr -&gt; tr.getTrain(t).getSpeedMmPerSecond() == 0.0, "stopped");
+        assertEquals(layout.block("Platform2"), SimulationTestUtil.truth(t).getFrontBlock());
+    }
+
+    @BeforeEach
+    public void setUp(@TempDir File folder) {
+        JUnitUtil.setUp();
+        SimulationTestLayouts.setUpProfile(folder);
+        layout = SimulationTestLayouts.terminus();
+    }
+
+    @AfterEach
+    public void tearDown() {
+        SimulationTestUtil.removeTrains();
+        layout.dispose();
+        JUnitUtil.deregisterBlockManagerShutdownTask();
+        JUnitUtil.tearDown();
+    }
+}
+</pre>
+
+      <p><code>SimulationTestLayoutsTest</code> has more examples: a train round the loop, into a
+      terminus platform and back out, across the crossover and onto the branch.</p>
+
+      <h2 id="realtime">Real time: assert order, not durations</h2>
+
+      <p>Trains in tests move in real time, on the simulator's own thread. Dispatcher, Warrants
+      and the throttles' users run on real timers and threads, so the trains they drive must move
+      on the same clock.</p>
+
+      <p>A test machine can be busy, so how long anything takes varies from run to run. A test
+      must therefore not assert durations, and must not sleep. Instead:</p>
+
+      <ul>
+        <li>wait for a condition, with <code>SimulationTestUtil.waitForFrontIn</code>,
+        <code>waitForTruth</code> or <code>JUnitUtil.waitFor</code>;</li>
+
+        <li>assert the order of events, such as the order in which sensors went active;</li>
+
+        <li>assert the ground truth: where the train really is, and whether it has stopped.</li>
+      </ul>
+
+      <p>Only wait in turn for Blocks a train takes seconds to pass. A train may pass a short
+      Block between two looks, and the wait then never ends. Record sensor changes with a
+      listener instead, and check their order afterwards.</p>
+
+      <p>The simulator's own tests also run it step by step on a manual clock, so that the times
+      they check are exact. That clock stays inside the package. A test of other JMRI code driven
+      by it would see JMRI's timers and the trains disagree about the time.</p>
+
+      <h2 id="truth">Ground truth</h2>
+
+      <p><code>SimulatedLayout.getTruth()</code>, or <code>SimulationTestUtil.truth()</code>,
+      gives what is really happening. For each train it gives:</p>
+
+      <ul>
+        <li>its Blocks, from front to rear;</li>
+
+        <li>how far its front is into its front Block, in millimetres;</li>
+
+        <li>its speed, negative when it moves rear first;</li>
+
+        <li>whether it was stopped by a collision, and why it is held if it is.</li>
+      </ul>
+
+      <p>It also lists every collision: which trains, where and when.</p>
+
+      <p>Compare what JMRI concluded with the ground truth. For example, check that the Block
+      Dispatcher thinks a train is in is the Block the train is really in. Or check that the
+      sensors that are active are just the Blocks the trains really occupy.</p>
+
+      <h2 id="offsets">Truth offsets</h2>
+
+      <p>Where the simulator and JMRI read the same data, they agree on the data. A Block's
+      length, or a loco's speed profile, is right for both, or wrong for both. A test that uses
+      the data unchanged checks JMRI's code only: its arithmetic, timing, ordering, the Block
+      chosen and the thread used. That is still worth checking. But it can't show whether JMRI
+      copes with data that are wrong.</p>
+
+      <p>So a train can be told to differ from what JMRI is told:</p>
+
+      <ul>
+        <li><code>VirtualTrain.Builder.speedFactorPercent</code>: it runs a set percentage
+        faster or slower than its speed profile;</li>
+
+        <li><code>VirtualTrain.Builder.lengthOffsetMm</code>: it is longer or shorter than the
+        length JMRI is given.</li>
+      </ul>
+
+      <p>A test that claims to check a correction, a calibration or an estimate must set at least
+      one offset, and say which. Examples are a learned speed, a stopping distance, an operator
+      correction, or a train's position between sensors. Without an offset, the test checks
+      JMRI's code only, and it should say so.</p>
+
+      <h2 id="independence">The independence rule</h2>
+
+      <p>A simulator that shares logic with what it tests has the same bug in both places. The two
+      then agree, and a test that compares them passes however wrong both are. So the simulator
+      works things out itself. It never calls the logic under test.</p>
+
+      <p>The simulator may read configuration and data:</p>
+
+      <ul>
+        <li><code>Block</code> (its length and sensor), <code>Path</code> (lengths, and turnout
+        settings as data), <code>Sensor</code> and <code>Turnout</code>;</li>
+
+        <li>the Layout Editor track objects;</li>
+
+        <li>OBlock, OBlockManager, OPath and Portal;</li>
+
+        <li>roster entries, and the speed profile's measured speeds.</li>
+      </ul>
+
+      <p>It may not use:</p>
+
+      <ul>
+        <li>Dispatcher (<code>jmri.jmrit.dispatcher</code>), Signal Mast Logic and
+        Entry/Exit;</li>
+
+        <li>Warrants and Tracker: all of <code>jmri.jmrit.logix</code> except OBlock,
+        OBlockManager, OPath and Portal;</li>
+
+        <li>Block tracking: <code>Block</code>'s occupancy, value and direction methods
+        (<code>getState</code>, <code>setState</code>, the <code>going...</code> methods,
+        <code>findFromPath</code>, <code>getValue</code>, <code>setValue</code>,
+        <code>getDirection</code>, <code>setDirection</code>), <code>BeanSetting.check()</code>,
+        <code>Path.checkPathSet()</code> and <code>Path.getLengthMm()</code>;</li>
+
+        <li>Layout Block routing: <code>LayoutBlockConnectivityTools</code>,
+        <code>ConnectivityUtil</code>, <code>LayoutEditorAuxTools</code>, and
+        <code>LayoutTurnout</code>'s state and turnout getters;</li>
+
+        <li><code>RosterSpeedProfile</code>'s calculations (only its stored speeds may be read)
+        and <code>SpeedUtil</code>;</li>
+
+        <li>a system's own encoding of its messages; for CBUS, <code>CbusAddress</code> and
+        <code>CbusSensor</code>.</li>
+      </ul>
+
+      <p>A system's adapter, which lives with that system's code, sends the messages a real
+      device on that system would send, and builds them as that system's beans do. Its tests
+      check those messages against tables worked out from the system's own specification, in
+      the test tree and not from JMRI's code, so a fault in JMRI's encoding still shows.</p>
+
+      <p>So, on Layout Editor panels, the simulator follows the drawn track itself. It does not use
+      the Block paths JMRI builds from the drawing. A fault in building paths then sends JMRI one
+      way and the train the other, and a test sees it. Momentum comes from the simulator's own
+      decoder model, written from the NMRA standard. Speeds between measured steps are
+      interpolated by the simulator itself.</p>
+
+      <p>A rule in <code>ArchitectureTest</code> enforces this on every build. It fails if a
+      class in the simulation package depends on anything in the list above. If you change the
+      simulator, keep to the rule. Don't weaken the rule to get round it.</p>
+
+      <p>A second rule works the other way round: the rest of JMRI doesn't use the simulator, so
+      it can't change how JMRI behaves on a real layout. Only the simulator and the packages listed
+      in <code>ArchitectureTest</code>'s <code>SIMULATION_USERS</code> may depend on it. A system's
+      adapter is added to that list with its package. Tests are not checked by this rule.</p>
+
+      <p>Control Panel Editor panels have no drawn track, only OBlocks and their paths. There the
+      simulator has to use the paths too, so the check is weaker. Tests say which kind of panel
+      they used.</p>
+
+      <h2 id="teardown">Removing trains</h2>
+
+      <p>Call <code>SimulationTestUtil.removeTrains()</code> in the tear-down, before
+      <code>JUnitUtil.tearDown()</code>. It removes every train and waits for the simulator's
+      thread to stop. Then close any panel on the GUI thread, for example with
+      <code>SimulationTestLayout.dispose()</code>.</p>
+
+      <p>Remove trains only after anything driving them has stopped. Terminate Dispatcher's Active
+      Trains and end Warrants first. Removing a train leaves every Block it is in, so their
+      sensors go inactive. Dispatcher or a Warrant still running would see its train leave its
+      Blocks without entering others, and log that the train has gone.</p>
+
+      <p>See also <a href="JUnit.shtml">Unit testing with JUnit</a>.</p>
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/help.js"></script>
+</body>
+</html>
