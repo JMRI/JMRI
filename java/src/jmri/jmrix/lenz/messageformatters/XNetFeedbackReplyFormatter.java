@@ -28,7 +28,8 @@ public class XNetFeedbackReplyFormatter implements XPressNetMessageFormatter {
 
     @Override
     public boolean handlesMessage(Message m) {
-        return m instanceof XNetReply && (m.getElement(0) & 0xF0)   == XNetConstants.BC_FEEDBACK;
+        return m instanceof XNetReply
+                && (m.getElement(0) & 0xF1) == XNetConstants.BC_FEEDBACK;
     }
 
     @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST", justification = "cast is checked in handlesMessage")
@@ -127,4 +128,3 @@ public class XNetFeedbackReplyFormatter implements XPressNetMessageFormatter {
     }
 
 }
-

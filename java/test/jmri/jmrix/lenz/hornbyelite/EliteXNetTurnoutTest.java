@@ -93,6 +93,33 @@ public class EliteXNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
         assertEquals( Turnout.THROWN, t.getKnownState(), "state after THROWN message");
     }
 
+    @Test
+    @Override
+    public void testExactBroadcastMotionFeedback() {
+        t.setFeedbackMode(Turnout.EXACT);
+        t.setCommandedState(Turnout.THROWN);
+        EliteXNetTurnout turnout = (EliteXNetTurnout) t;
+        turnout.message(lnis.outbound.lastElement());
+        int sent = lnis.outbound.size();
+        turnout.message(createBroadcastFeedback(0xA2));
+        assertEquals(Turnout.INCONSISTENT, t.getKnownState(), "motion not complete");
+        assertEquals(sent, lnis.outbound.size(), "no command before motion completes");
+
+        turnout.message(createBroadcastFeedback(0x22));
+        assertEquals(Turnout.THROWN, t.getKnownState(), "completed motion from third pair");
+        assertEquals(sent + 1, lnis.outbound.size(), "queued feedback request sent without an off message");
+        assertEquals("42 05 81 C6", lnis.outbound.lastElement().toString());
+    }
+
+    @Override
+    protected void checkBroadcastAcknowledged(int sent, boolean sensorFeedback) {
+        assertEquals(sent, lnis.outbound.size(), "Elite acknowledges feedback without an off message");
+        assertEquals(Turnout.THROWN, t.getKnownState(), "Elite completes the commanded state");
+        ((EliteXNetTurnout) t).message(new XNetReply("01 04 05"));
+        assertEquals(sent, lnis.outbound.size(), "OK does not send an off message");
+        assertEquals(Turnout.THROWN, t.getKnownState());
+    }
+
     @Override
     @BeforeEach
     public void setUp() {
