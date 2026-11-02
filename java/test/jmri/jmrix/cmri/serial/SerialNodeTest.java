@@ -207,6 +207,31 @@ public class SerialNodeTest {
     }
 
     @Test
+    public void testEsp32NodeFixedNumbers() {
+        // ESP32CPNode: every card position has its byte, whatever its type (firmware v2.07)
+        SerialNode e = new SerialNode(2, SerialNode.ESP32NODE, stcs);
+        Assert.assertEquals("54 cards, all output", 54, e.numOutputCards());
+        e.setCardTypeByAddress(2, SerialNode.INPUT_CARD);   // 0x21 port A an input
+        Assert.assertEquals("one input card", 1, e.numInputCards());
+        Assert.assertEquals("still 54 output bytes", 54, e.numOutputBytes());
+        e.setOutputBit(129, false);   // CT2129 = 0x40 ch 0 = card 17 bit 0
+        e.setOutputBit(302, false);   // CT2302 = signal logic bit 2 = card 38 bit 5
+        e.setOutputBit(428, false);   // CT2428 = signal logic bit 128 = card 54 bit 3
+        AbstractMRMessage m = e.createOutPacket();
+        Assert.assertEquals("packet size: address, T, 54 bytes", 56, m.getNumDataElements());
+        Assert.assertEquals("packet type", 84, m.getElement(1));  // 'T'
+        Assert.assertEquals("card 17 = servo board 0x40 ch 0-7", 1, m.getElement(2 + 16) & 0xff);
+        Assert.assertEquals("card 38 bit 5", 32, m.getElement(2 + 37) & 0xff);
+        Assert.assertEquals("card 54 bit 3", 8, m.getElement(2 + 53) & 0xff);
+        // Init: NI 16 (16 is DLE, so it goes as DLE 16), NO 54
+        AbstractMRMessage i = e.createInitPacket();
+        Assert.assertEquals("init NDP 'E'", 69, i.getElement(2));
+        Assert.assertEquals("init NI escaped", 16, i.getElement(7));
+        Assert.assertEquals("init NI", 16, i.getElement(8));
+        Assert.assertEquals("init NO", 54, i.getElement(9));
+    }
+
+    @Test
     public void testMarkChangesInitial() {
         SerialNode b = new SerialNode(stcs);
         SerialSensor s1 = new SerialSensor("CS1", "a");
