@@ -68,6 +68,12 @@
                     when closed and shows when a log file could not be opened,
                     and the SPROG 3 Plus CAN disable setting is shown instead of
                     being greyed out.</li>
+                <li>CBUS Event Table: once the Event Table or the CBUS Console
+                    has been opened, adding, removing or renaming a sensor,
+                    turnout or light updates only the events it uses, instead of
+                    rebuilding the whole table each time. Loading a panel or
+                    adding beans with either window open no longer slows down
+                    as the layout grows.</li>
                 <li>CBUS throttles: a released throttle is removed from the
                     session list, so an emergency stop reaches every remaining
                     throttle instead of failing partway through; after a command
