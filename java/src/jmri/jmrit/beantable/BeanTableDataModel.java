@@ -596,6 +596,22 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     }
 
     /**
+     * Clear the Comment of every Turnout whose Comment starts with prefix,
+     * e.g. the mast or head name JMRI wrote there when it was set up. The
+     * Turnouts themselves stay; Comments typed in by the user are left alone.
+     *
+     * @param prefix start of the Comment JMRI wrote
+     */
+    public static void clearTurnoutComments(@Nonnull String prefix) {
+        for (Turnout t : InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet()) {
+            String comment = t.getComment();
+            if (comment != null && comment.startsWith(prefix)) {
+                t.setComment(null);
+            }
+        }
+    }
+
+    /**
      * Configure a table to have our standard rows and columns. This is
      * optional, in that other table formats can use this table model. But we
      * put it here to help keep it consistent.

@@ -972,11 +972,17 @@
 
         <h4>Signal Heads</h4>
             <ul>
-                <li></li>
+                <li>Deleting a Signal Head now clears the Comments JMRI wrote on
+                    its output Turnouts when it was set up. The Turnouts stay;
+                    Comments entered by the user are left alone.</li>
             </ul>
 
         <h4>Signal Masts</h4>
             <ul>
+                <li>Deleting a Signal Mast now clears the "<i>mast</i>:output<i>N</i>"
+                    Comments JMRI wrote on its output Turnouts. Editing an Output
+                    Matrix Mast clears them from outputs it no longer uses. The
+                    Turnouts stay; Comments entered by the user are left alone.</li>
                 <li>A Signal Mast Logic mast now goes to danger as soon as a
                     block on its route becomes occupied, instead of first
                     waiting for the signal logic delay; changes back towards
@@ -1089,6 +1095,9 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
+            <li>The Turnout and Sensor tables can now add a sequential range of
+                up to 1000 items at once (was 100), e.g. a whole C/MRI node. The
+                confirmation for a large range is unchanged.</li>
             <li>Code and scripts can now be told of every change of a sensor's
                 raw state, before any debounce, with the time it was received
                 (<code>Sensor.addRawStateListener</code>). Nothing that listens
