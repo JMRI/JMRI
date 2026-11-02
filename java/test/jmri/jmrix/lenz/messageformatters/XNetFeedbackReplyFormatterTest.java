@@ -203,6 +203,41 @@ public class XNetFeedbackReplyFormatterTest extends AbstractMessageFormatterTest
         Assertions.assertEquals(targetString, formatter.formatMessage(r));
     }
 
+    @Test
+    void testMultipleSensorFeedbackOnMessageHandling() {
+        XNetReply r = new XNetReply("44 4F 44 33 50 24");
+        Assertions.assertTrue(formatter.handlesMessage(r));
+        String targetString =
+                Bundle.getMessage("XNetReplyFeedbackLabel") + " " +
+                        Bundle.getMessage("XNetReplyFeedbackEncoder") + " " + 79 + " ";
+        targetString += Bundle.getMessage("XNetReplyContactLabel") + " 1 ";
+        targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
+        targetString += " " + Bundle.getMessage("PowerStateOff") + "; ";
+        targetString += Bundle.getMessage("XNetReplyContactLabel") + " 2 ";
+        targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
+        targetString += " " + Bundle.getMessage("PowerStateOff") + "; ";
+        targetString += Bundle.getMessage("XNetReplyContactLabel") + " 3 ";
+        targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
+        targetString += " " + Bundle.getMessage("PowerStateOn") + "; ";
+        targetString += Bundle.getMessage("XNetReplyContactLabel") + " 4 ";
+        targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
+        targetString += " " + Bundle.getMessage("PowerStateOff") + "; ";
+        targetString += Bundle.getMessage("XNetReplyFeedbackEncoder") + " " + 51 + " ";
+        targetString += Bundle.getMessage("XNetReplyContactLabel") + " 5 ";
+        targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
+        targetString += " " + Bundle.getMessage("PowerStateOff") + "; ";
+        targetString += Bundle.getMessage("XNetReplyContactLabel") + " 6 ";
+        targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
+        targetString += " " + Bundle.getMessage("PowerStateOff") + "; ";
+        targetString += Bundle.getMessage("XNetReplyContactLabel") + " 7 ";
+        targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
+        targetString += " " + Bundle.getMessage("PowerStateOff") + "; ";
+        targetString += Bundle.getMessage("XNetReplyContactLabel") + " 8 ";
+        targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
+        targetString += " " + Bundle.getMessage("PowerStateOff") + "; ";
+        Assertions.assertEquals(targetString, formatter.formatMessage(r));
+    }
+
     @Override
     @BeforeEach
     public void setUp() {

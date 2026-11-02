@@ -113,17 +113,31 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
         if (log.isDebugEnabled()) {
             log.debug("received message: {}", l);
         }
-        Boolean opt = l.selectModuleFeedback(address);
-        if (opt != null) {
+        Boolean feedback = getFeedbackState(l);
+        if (feedback != null) {
             if (log.isDebugEnabled()) {
-                        log.debug("Message for sensor {} (Address {} position {})", systemName, baseaddress, address - (baseaddress * 8));
+                log.debug("Message for sensor {} (Address {} position {})",
+                        systemName, baseaddress, address - (baseaddress * 8));
             }
-            if (opt ^ _inverted) {
+            if (feedback ^ _inverted) {
                 setOwnState(Sensor.ACTIVE, l.getReceivedTime());
             } else {
                 setOwnState(Sensor.INACTIVE, l.getReceivedTime());
             }
         }
+    }
+
+    private Boolean getFeedbackState(XNetReply reply) {
+        for (int item = 0; item < reply.getFeedbackMessageItems(); item++) {
+            int i = 1 + (item * 2);
+            if (reply.getFeedbackMessageType(i) != 2
+                    || reply.getFeedbackEncoderMsgAddr(i) != baseaddress
+                    || (reply.getElement(i + 1) & 0x10) != nibble) {
+                continue;
+            }
+            return (reply.getElement(i + 1) & (1 << ((address - 1) % 4))) != 0;
+        }
+        return null;
     }
 
     /**
