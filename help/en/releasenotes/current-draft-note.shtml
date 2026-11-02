@@ -637,6 +637,11 @@
              <li>An automatic train's speed ramp no longer carries on after
                  the train is halted, and a new ramp no longer runs alongside
                  an old one when the speed is changed quickly.</li>
+             <li>Trains waiting for a fast clock departure or restart time
+                 now start when the clock passes that time, even if the clock
+                 jumps over the exact minute. Before, they waited a whole fast
+                 clock day. If the clock is set back, only the exact minute
+                 counts.</li>
              <li>An automatic train now always finds the correct next Block
                  in its Section. Before, block or signal changes at the same
                  moment could give it the wrong Block or none. Reversing or
