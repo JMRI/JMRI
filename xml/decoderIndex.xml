@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.17.3plus+jake+20261010T1212Z+R626f7224cd2 on Sat Oct 10 08:12:31 EDT 2026-->
-  <decoderIndex version="729">
+  <!--Written by JMRI version 5.17.4plus+jake+20261103T1152Z+Rc57f3528ab2 on Tue Nov 03 06:53:23 EST 2026-->
+  <decoderIndex version="731">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2024-12-10" updated="2025-03-30" lastadd="171">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -572,6 +572,7 @@
           <output name="2" label="rearlight" />
         </model>
         <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
           <functionlabel num="1" lockable="true">Bell</functionlabel>
           <functionlabel num="2" lockable="false">Horn 1</functionlabel>
           <functionlabel num="3" lockable="true">Coupler</functionlabel>

@@ -208,6 +208,9 @@ public class AllocatedSectionBlockEventsTest {
      * With strict train tracking, the head entering the next Block and then
      * the one after it within a millisecond must be followed, not taken as a
      * Block ahead entered illegally.
+     *
+     * @throws ReflectiveOperationException if a field of the train can't be set
+     * @throws InterruptedException         if interrupted while sleeping
      */
     @Test
     public void testStrictTrackingFollowsFastBlockEntries() throws ReflectiveOperationException, InterruptedException {

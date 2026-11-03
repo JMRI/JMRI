@@ -1,6 +1,7 @@
 package jmri.implementation;
 
 import java.util.Hashtable;
+import java.util.Objects;
 
 import jmri.*;
 import jmri.jmrit.dispatcher.DispatcherFrame;
@@ -30,7 +31,9 @@ public class DefaultSignalMastLogicReservedBlockTest {
         VirtualSignalMast source = new VirtualSignalMast("IF$vsm:basic:one-searchlight($1)");
         VirtualSignalMast dest = new VirtualSignalMast("IF$vsm:basic:one-searchlight($2)");
 
-        LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock("ILB1", "Block One");
+        LayoutBlock lb = Objects.requireNonNull(
+                InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock("ILB1", "Block One"),
+                "LayoutBlock Block One");
         lb.initializeLayoutBlock();
         Block block = lb.getBlock();
         block.setState(Block.UNOCCUPIED);

@@ -14,6 +14,7 @@ import org.junit.jupiter.api.*;
  * @author Mark Underwood
  * @author Egbert Broerse 2021
  */
+@SuppressWarnings("deprecation")
 public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     @Test
@@ -45,7 +46,7 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * 
+     *
      */
     @Test
     @Override
@@ -58,11 +59,11 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     /**
-     * Test sending speed and directions for expected message formats, 
-     *   various command station versions, fkeys, states. 
-     *   Set up commandstation to set version, set speed and direction, 
+     * Test sending speed and directions for expected message formats,
+     *   various command station versions, fkeys, states.
+     *   Set up commandstation to set version, set speed and direction,
      *   then verify the syntax of the last message added to the queue
-     */    
+     */
     @Test
     public void testSpeedSettingAndDirection(){
         DCCppCommandStation cs = tc.getCommandStation();
@@ -120,11 +121,11 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     /**
      * Test sending FKeys for expected message formats, various commandstation
-     *   versions, fkeys, states. 
-     *   Set up commandstation to get version, set a function, 
+     *   versions, fkeys, states.
+     *   Set up commandstation to get version, set a function,
      *   then verify the syntax of the last message added to the queue
      *   turn off after each test, since old syntax sends groups
-     */    
+     */
     @Test
     public void testFunctionFormats(){
         DCCppCommandStation cs = tc.getCommandStation();

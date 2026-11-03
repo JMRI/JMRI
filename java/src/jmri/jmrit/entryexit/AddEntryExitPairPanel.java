@@ -679,7 +679,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
 
     JCheckBox useAbsSignalMode = new JCheckBox(Bundle.getMessage("UseAbsSignalMode"));  // NOI18N
     JCheckBox quietFail = new JCheckBox(Bundle.getMessage("QuietFail"));  // NOI18N
-    JCheckBox skipGuiFix = new JCheckBox(Bundle.getMessage("SkipGuiFix"));  // NOI18N
+    JCheckBox enableDoubleClick = new JCheckBox(Bundle.getMessage("EnableDoubleClick"));  // NOI18N
     JCheckBox dispatcherUse = new JCheckBox(Bundle.getMessage("DispatcherInt"));  // NOI18N
 
     JComboBox<String> settingTrackColorBox = new JComboBox<>();
@@ -782,8 +782,8 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
             optionsPane.add(p5);
 
             JPanel p6 = new JPanel();
-            p6.add(skipGuiFix);
-            skipGuiFix.setSelected(nxPairs.isSkipGuiFix());
+            p6.add(enableDoubleClick);
+            enableDoubleClick.setSelected(nxPairs.isDoubleClickEnabled());
             optionsPane.add(p6);
 
             JPanel p7 = new JPanel();
@@ -819,7 +819,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
         nxPairs.setMemoryClearDelay((int) memoryClearDelay.getValue());
         nxPairs.setAbsSignalMode(useAbsSignalMode.isSelected());
         nxPairs.setQuietFail(quietFail.isSelected());
-        nxPairs.setSkipGuiFix(skipGuiFix.isSelected());
+        nxPairs.setEnableDoubleClick(enableDoubleClick.isSelected());
         nxPairs.setDispatcherIntegration(dispatcherUse.isSelected());
 
         String memoryName = memoryComboBox.getSelectedItemDisplayName();

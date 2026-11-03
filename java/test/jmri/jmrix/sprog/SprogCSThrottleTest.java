@@ -11,6 +11,7 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2017
  */
+@SuppressWarnings("deprecation")
 public class SprogCSThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     private SprogTrafficControlScaffold stcs = null;

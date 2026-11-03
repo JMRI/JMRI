@@ -87,6 +87,9 @@ the data is actually logged.
         <!-- Needed for jmri.util.JUnitAppenderTest -->
         <Logger name="jmri.util.JUnitAppenderTest" level="INFO"/>
 
+        <!-- Needed for jmri.util.startup.StartupActionsManagerTest -->
+        <Logger name="jmri.util.startup.StartupActionsManager" level="INFO"/>
+
         <!-- Needed for jmri.util.LoggingUtilTest -->
         <Logger name="jmri.util.LoggingUtilTest" level="INFO"/>
         <Logger name="LoggingUtilTest-extra-logger" level="INFO"/>

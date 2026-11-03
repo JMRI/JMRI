@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.beans.PropertyChangeListener;
 import java.util.List;
+import java.util.Objects;
 
 import jmri.*;
 import jmri.jmrit.display.EditorManager;
@@ -38,14 +39,13 @@ public class DestinationPointsStartBlockTest {
         SignalMastLogicManager smlm = InstanceManager.getDefault(SignalMastLogicManager.class);
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
 
-        SignalMast sourceMast = smm.getSignalMast("Left-TO-A");
+        SignalMast sourceMast = Objects.requireNonNull(smm.getSignalMast("Left-TO-A"), "Left-TO-A");
         SignalMast destMast = smm.getSignalMast("Right-TO-B");
-        assertNotNull(sourceMast);
         assertNotNull(destMast);
 
         // Use a temporary signal mast logic, as created by NX when no stored logic exists
-        SignalMastLogic stored = smlm.getSignalMastLogic(sourceMast);
-        assertNotNull(stored);
+        SignalMastLogic stored = Objects.requireNonNull(smlm.getSignalMastLogic(sourceMast),
+                "stored signal mast logic of Left-TO-A");
         ThreadingUtil.runOnGUI(() -> smlm.removeSignalMastLogic(stored));
         assertNull(smlm.getSignalMastLogic(sourceMast));
 
@@ -54,8 +54,8 @@ public class DestinationPointsStartBlockTest {
         }
 
         // The route needs the turnout closed, so it will be moved
-        Turnout leftTO = InstanceManager.getDefault(TurnoutManager.class).getTurnout("Left TO");
-        assertNotNull(leftTO);
+        Turnout leftTO = Objects.requireNonNull(InstanceManager.getDefault(TurnoutManager.class).getTurnout("Left TO"),
+                "Left TO");
         leftTO.setCommandedState(Turnout.THROWN);
 
         // A train enters the start block as soon as the turnout starts to move
@@ -83,15 +83,16 @@ public class DestinationPointsStartBlockTest {
         leftTO.removePropertyChangeListener(trainArrives);
 
         assertEquals(Turnout.CLOSED, leftTO.getKnownState(), "turnout set for the route");
-        assertEquals(Block.OCCUPIED, lbm.getLayoutBlock("Left Approach").getBlock().getState(), "start block occupied");
+        assertEquals(Block.OCCUPIED, Objects.requireNonNull(lbm.getLayoutBlock("Left Approach"), "Left Approach")
+                .getBlock().getState(), "start block occupied");
 
         // The first block after the start block must still be protected by the route
-        SignalMastLogic sml = smlm.getSignalMastLogic(sourceMast);
-        assertNotNull(sml);
+        SignalMastLogic sml = Objects.requireNonNull(smlm.getSignalMastLogic(sourceMast),
+                "signal mast logic of Left-TO-A");
         List<Block> autoBlocks = sml.getAutoBlocks(destMast);
-        assertTrue(autoBlocks.contains(lbm.getLayoutBlock("Left TO").getBlock()),
+        assertTrue(autoBlocks.contains(Objects.requireNonNull(lbm.getLayoutBlock("Left TO"), "Left TO").getBlock()),
                 "first block of the route is in the signal logic: " + autoBlocks);
-        assertTrue(autoBlocks.contains(lbm.getLayoutBlock("Main").getBlock()),
+        assertTrue(autoBlocks.contains(Objects.requireNonNull(lbm.getLayoutBlock("Main"), "Main").getBlock()),
                 "last block of the route is in the signal logic: " + autoBlocks);
         assertEquals(2, autoBlocks.size(), "route blocks in the signal logic: " + autoBlocks);
         assertTrue(dp.isActive(), "route still active");

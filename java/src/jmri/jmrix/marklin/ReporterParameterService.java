@@ -6,7 +6,7 @@ import java.util.List;
 import jmri.jmrix.marklin.mcan.cdb.CdBConfigCommands;
 import jmri.jmrix.marklin.mcan.cdb.CdBFrameParser;
 import jmri.jmrix.marklin.mcan.cdb.CdBReporterCommands;
-import jmri.jmrix.marklin.mcan.classify.CdBFrameType;
+import jmri.jmrix.marklin.mcan.cdb.CdBFrameType;
 import jmri.util.ThreadingUtil;
 
 /**
@@ -259,9 +259,9 @@ public class ReporterParameterService {
             return;
         }
 
-        if (frame.frameType() == CdBFrameType.READ_REPLY) {
+        if (frame instanceof CdBFrameParser.ReadReplyFrame) {
             if (frame.moduleId() != currentRawId) return;
-            dispatchReadReply(raw);
+            dispatchReadReply((CdBFrameParser.ReadReplyFrame) frame);
         }
     }
 
@@ -275,6 +275,10 @@ public class ReporterParameterService {
     public void handleStatusFrame(MarklinReply raw) {
         if (raw.getElement(0) != 0 || raw.getElement(1) != 35) return;
         int hash16 = ((raw.getElement(2) & 0xFF) << 8) | (raw.getElement(3) & 0xFF);
+        // TODO: uncertain, verify with a live module.
+        // Compares the module
+        // number, expecting 0x0A80 + module
+        // This check lacks the fingerprint and classifies as CdB.
         // Check module matches: (hash16 - 2816) == adresseRaw - 128
         int check = hash16 - 2816;
         if (check != currentRawId - 128) return;
@@ -282,13 +286,13 @@ public class ReporterParameterService {
         int absRmk = ((raw.getElement(7) & 0xFF) << 8) + (raw.getElement(8) & 0xFF);
         int status = raw.getElement(9) & 0xFF;
 
-        // Störung check
+        // Störung (fault) check
         if (rmkStoerungValue == absRmk) {
             boolean ok = (status == 1);
             ThreadingUtil.runOnGUI(() -> listeners.forEach(l -> l.stoerungStatusReceived(ok)));
         }
 
-        // Freez check
+        // Freeze check
         if (freezAdresse == absRmk) {
             boolean boosterOn = (status == 0);
             ThreadingUtil.runOnGUI(() -> listeners.forEach(l -> l.freezStatusReceived(boosterOn)));
@@ -305,9 +309,9 @@ public class ReporterParameterService {
 
     // ---- private dispatch ----
 
-    private void dispatchReadReply(MarklinReply raw) {
-        int subcmd = raw.getElement(5) & 0xFF;
-        int reg = raw.getElement(6) & 0xFF;
+    private void dispatchReadReply(CdBFrameParser.ReadReplyFrame raw) {
+        int subcmd = raw.slot();
+        int reg = raw.reg();
 
         switch (reg) {
             case 250: handleModulname(raw, subcmd);    break;
@@ -328,19 +332,19 @@ public class ReporterParameterService {
         }
     }
 
-    private void handleModulname(MarklinReply raw, int subcmd) {
+    private void handleModulname(CdBFrameParser.ReadReplyFrame raw, int subcmd) {
         if (subcmd == 0) modulnameBuffer.setLength(0);
-        for (int i = 7; i <= 12; i++) {
-            int ch = raw.getElement(i) & 0xFF;
+        for (int i = 2; i <= 7; i++) {
+            int ch = raw.dataByte(i);
             if (ch > 0 && ch < 255) modulnameBuffer.append((char) ch);
         }
         final String name = modulnameBuffer.toString();
         ThreadingUtil.runOnGUI(() -> listeners.forEach(l -> l.moduleNameReceived(name)));
     }
 
-    private void handleFirmware(MarklinReply raw) {
-        firmwareHi = raw.getElement(7) & 0xFF;
-        firmwareLo = raw.getElement(8) & 0xFF;
+    private void handleFirmware(CdBFrameParser.ReadReplyFrame raw) {
+        firmwareHi = raw.dataByte(2);
+        firmwareLo = raw.dataByte(3);
         final int hi = firmwareHi;
         final int lo = firmwareLo;
         boolean sonder = showSonderfunktion(hi, lo);
@@ -348,35 +352,35 @@ public class ReporterParameterService {
         ThreadingUtil.runOnGUI(() -> listeners.forEach(l -> l.firmwareReceived(hi, lo, sonder, slave)));
     }
 
-    private void handleEinschaltzeit(MarklinReply raw, int subcmd) {
+    private void handleEinschaltzeit(CdBFrameParser.ReadReplyFrame raw, int subcmd) {
         if (subcmd < 1 || subcmd > 8) return;
-        int v = ((raw.getElement(7) & 0xFF) << 8) + (raw.getElement(8) & 0xFF);
+        int v = raw.value();
         v = clampEinschaltzeit(v);
         final int ch = subcmd;
         final int val = v;
         ThreadingUtil.runOnGUI(() -> listeners.forEach(l -> l.einschaltzeitReceived(ch, val)));
     }
 
-    private void handleAusschaltzeit(MarklinReply raw, int subcmd) {
+    private void handleAusschaltzeit(CdBFrameParser.ReadReplyFrame raw, int subcmd) {
         if (subcmd < 1 || subcmd > 8) return;
-        int v = ((raw.getElement(7) & 0xFF) << 8) + (raw.getElement(8) & 0xFF);
+        int v = raw.value();
         v = clampAusschaltzeit(v);
         final int ch = subcmd;
         final int val = v;
         ThreadingUtil.runOnGUI(() -> listeners.forEach(l -> l.ausschaltzeitReceived(ch, val)));
     }
 
-    private void handleSonderfunktion(MarklinReply raw) {
-        int idx = ((raw.getElement(7) & 0xFF) << 8) + (raw.getElement(8) & 0xFF);
+    private void handleSonderfunktion(CdBFrameParser.ReadReplyFrame raw) {
+        int idx = raw.value();
         final int i = Math.min(idx, 2);
         ThreadingUtil.runOnGUI(() -> listeners.forEach(l -> l.sonderfunktionReceived(i)));
     }
 
-    private void handleHardware(MarklinReply raw) {
-        final int hi = raw.getElement(7) & 0xFF;
-        final int lo = raw.getElement(8) & 0xFF;
+    private void handleHardware(CdBFrameParser.ReadReplyFrame raw) {
+        final int hi = raw.dataByte(2);
+        final int lo = raw.dataByte(3);
         Integer chip = null;
-        if ((raw.getElement(4) & 0xFF) == 5) chip = raw.getElement(9) & 0xFF;
+        if (raw.raw().dlc() == 5) chip = raw.dataByte(4);
         int hwVal = hi;
         String anlText = null;
         if (hwVal > 7) anlText = "See manual version 2.2";
@@ -386,14 +390,12 @@ public class ReporterParameterService {
         ThreadingUtil.runOnGUI(() -> listeners.forEach(l -> l.hardwareReceived(hi, lo, chipFinal, anl)));
     }
 
-    private void handleSubtype(MarklinReply raw) {
+    private void handleSubtype(CdBFrameParser.ReadReplyFrame raw) {
         // Subtype 3 = no StromSniffer-specific features
     }
 
-    private void handleVoltage(MarklinReply raw) {
-        long v = (raw.getElement(7) & 0xFF);
-        v <<= 8;
-        v = (v + (raw.getElement(8) & 0xFF)) * 68L;
+    private void handleVoltage(CdBFrameParser.ReadReplyFrame raw) {
+        long v = raw.value() * 68L;
         v /= 1000L;
         long vor = v / 100L;
         long nach = v - vor * 100L;
@@ -403,22 +405,22 @@ public class ReporterParameterService {
         ThreadingUtil.runOnGUI(() -> listeners.forEach(l -> l.voltageReceived(txt, w)));
     }
 
-    private void handleStoerungAkt(MarklinReply raw) {
-        final boolean on = (raw.getElement(8) == 1);
+    private void handleStoerungAkt(CdBFrameParser.ReadReplyFrame raw) {
+        final boolean on = (raw.dataByte(3) == 1);
         ThreadingUtil.runOnGUI(() -> listeners.forEach(l -> l.stoerungAktReceived(on)));
     }
 
-    private void handleRmkStoerung(MarklinReply raw) {
-        int v = ((raw.getElement(7) & 0xFF) << 8) + (raw.getElement(8) & 0xFF);
+    private void handleRmkStoerung(CdBFrameParser.ReadReplyFrame raw) {
+        int v = raw.value();
         rmkStoerungValue = v;
         final int val = v;
         ThreadingUtil.runOnGUI(() -> listeners.forEach(l -> l.rmkStoerungReceived(val)));
     }
 
-    private void handleFreezOrSlave16(MarklinReply raw) {
+    private void handleFreezOrSlave16(CdBFrameParser.ReadReplyFrame raw) {
         if (isStromSniffer()) {
-            if (raw.getElement(5) == 0 && (raw.getElement(8) & 0xFF) < 2) {
-                final boolean on = (raw.getElement(8) == 1);
+            if (raw.slot() == 0 && (raw.dataByte(3)) < 2) {
+                final boolean on = (raw.dataByte(3) == 1);
                 ThreadingUtil.runOnGUI(() -> listeners.forEach(l -> l.freezCheckReceived(on)));
             }
         } else if (firmwareHi < 6) {
@@ -426,27 +428,27 @@ public class ReporterParameterService {
         }
     }
 
-    private void handleFreezStatus17(MarklinReply raw) {
+    private void handleFreezStatus17(CdBFrameParser.ReadReplyFrame raw) {
         if (!isStromSniffer()) return;
-        final boolean boosterOn = (raw.getElement(8) == 1);
+        final boolean boosterOn = (raw.dataByte(3) == 1);
         ThreadingUtil.runOnGUI(() -> listeners.forEach(l -> l.freezStatusReceived(boosterOn)));
     }
 
-    private void handleFreezAdresse18(MarklinReply raw) {
+    private void handleFreezAdresse18(CdBFrameParser.ReadReplyFrame raw) {
         if (!isStromSniffer()) return;
-        int v = ((raw.getElement(7) & 0xFF) << 8) + (raw.getElement(8) & 0xFF);
+        int v = raw.value();
         v = (v >= 1 && v <= 65000) ? v : 100;
         freezAdresse = v;
         final int val = v;
         ThreadingUtil.runOnGUI(() -> listeners.forEach(l -> l.freezAdresseReceived(val)));
     }
 
-    private void handleSlaveAdresse21(MarklinReply raw) {
+    private void handleSlaveAdresse21(CdBFrameParser.ReadReplyFrame raw) {
         handleSlaveAdresseFromRaw(raw);
     }
 
-    private void handleSlaveAdresseFromRaw(MarklinReply raw) {
-        int v = ((raw.getElement(7) & 0xFF) << 8) + (raw.getElement(8) & 0xFF);
+    private void handleSlaveAdresseFromRaw(CdBFrameParser.ReadReplyFrame raw) {
+        int v = raw.value();
         if (v < 255) {
             final int val = v;
             final boolean enabled = (v != 0);
@@ -456,12 +458,12 @@ public class ReporterParameterService {
 
     // ---- static helpers ----
 
-    /** Clamp Einschaltzeit to valid range 1-6000; default 30 if out of range. */
+    /** Clamp Einschaltzeit to valid range 1-6000. Default 30 if out of range. */
     public static int clampEinschaltzeit(int v) {
         return (v >= 1 && v <= 6000) ? v : 30;
     }
 
-    /** Clamp Ausschaltzeit to valid range 1-6000; default 120 if out of range. */
+    /** Clamp Ausschaltzeit to valid range 1-6000. Default 120 if out of range. */
     public static int clampAusschaltzeit(int v) {
         return (v >= 1 && v <= 6000) ? v : 120;
     }

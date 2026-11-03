@@ -11,7 +11,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * Converts Stream-based I/O to/from Marklin CS2 / CS3 / CC-Schnittstelle messages. The
  * "MarklinInterface" side sends/receives message objects.
  * <p>
- * The connection to a MarklinPortController is via a pair of UDP Streams, which
+ * The connection to a MarklinPortController is via a pair of TCP or UDP Streams which
  * then carry sequences of characters for transmission. Note that this
  * processing is handled in an independent thread.
  * <p>
@@ -45,13 +45,12 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
     private final CdBClassFilter cdBFilter = new CdBClassFilter();
 
     /**
-     * Provide access to the CdB config frame prefilter.
+     * Provide access to the CdB config frame dispatcher.
      * <p>
-     * CdB device-management code registers a {@link CdBConfigListener} here
-     * to receive ping, indexed-read, indexed-write and read-reply frames
-     * that would otherwise be mis-interpreted as standard MCAN traffic.
+     * CdB device management code registers a {@link CdBConfigListener} here
+     * to receive typed ping, read, write and read-reply frames.
      *
-     * @return the shared CdB pre-filter for this traffic controller
+     * @return the shared CdB dispatcher for this traffic controller
      */
     public CdBClassFilter getCdBFilter() {
         return cdBFilter;
@@ -93,23 +92,34 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
     }
 
     /**
-     * Forward a MarklinReply to all registered MarklinInterface listeners.
+     * Distribute a reply: CdB configuration frames are first handed once to the
+     * {@link CdBClassFilter}'s {@link CdBConfigListener}.
+     *
+     * Then every reply regardless of its protocol goes to all ordinary {@link MarklinListener}s.
      * <p>
-     * CdB device configuration frames are offered to the {@link CdBClassFilter}
-     * first.  If the filter claims the frame it is dispatched to
-     * {@link CdBConfigListener} instances and <em>not</em> forwarded to the
-     * standard Märklin listener chain, preventing mis-interpretation of
-     * overlapping command codes.
+     * Ordinary listeners are not shielded from CdB frames.
+     *
+     * They decode through {@link MarklinReply#getFrame()} or the CS2 header check.
+     * {@inheritDoc }
+     */
+    @Override
+    protected void notifyReply(AbstractMRReply r, AbstractMRListener dest) {
+        if (r instanceof MarklinReply) {
+            try {
+                cdBFilter.offer((MarklinReply) r);
+            } catch (RuntimeException e) {
+                log.warn("CdB dispatch failed for {}", r, e);
+            }
+        }
+        super.notifyReply(r, dest);
+    }
+
+    /**
+     * Forward a MarklinReply to one registered MarklinInterface listener.
      * {@inheritDoc }
      */
     @Override
     protected void forwardReply(AbstractMRListener client, AbstractMRReply r) {
-        if (r instanceof MarklinReply) {
-            MarklinReply mr = (MarklinReply) r;
-            if (cdBFilter.offer(mr)) {
-                return;
-            }
-        }
         ((MarklinListener) client).reply((MarklinReply) r);
     }
 

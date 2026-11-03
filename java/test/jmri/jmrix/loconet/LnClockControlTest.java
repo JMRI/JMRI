@@ -68,6 +68,7 @@ public class LnClockControlTest {
     }
 
     @Test
+    @SuppressWarnings("deprecation")        // Date(int,int,int)
     public void testLnClockStart() throws jmri.JmriException {
         // a brute-force approach to testing that the power bit follows
         LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();

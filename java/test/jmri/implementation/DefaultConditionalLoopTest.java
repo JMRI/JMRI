@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import jmri.*;
 import jmri.util.JUnitAppender;
@@ -81,8 +82,8 @@ public class DefaultConditionalLoopTest {
         gate.setKnownState(Sensor.ACTIVE);
 
         assertEquals(1, seen[0], "a listener added after the Logix is still told about the change");
-        LogEvent error = JUnitAppender.checkForMessageStartingWith("Logix loop stopped");
-        assertNotNull(error, "loop is logged");
+        LogEvent error = Objects.requireNonNull(JUnitAppender.checkForMessageStartingWith("Logix loop stopped"),
+                "loop is logged");
         String message = error.getMessage().getFormattedMessage();
         String loop = message.substring(message.lastIndexOf(": ") + 2);
         assertEquals(1, count(loop, "IX20C1"), "each Conditional in the loop is named once: " + message);
@@ -125,8 +126,8 @@ public class DefaultConditionalLoopTest {
 
         gate.setKnownState(Sensor.ACTIVE);
 
-        LogEvent error = JUnitAppender.checkForMessageStartingWith("Logix loop stopped");
-        assertNotNull(error, "loop is logged");
+        LogEvent error = Objects.requireNonNull(JUnitAppender.checkForMessageStartingWith("Logix loop stopped"),
+                "loop is logged");
         String message = error.getMessage().getFormattedMessage();
         String loop = message.substring(message.lastIndexOf(": ") + 2);
         assertTrue(loop.startsWith("... -> "), "earlier Conditionals are left out: " + message);
@@ -146,6 +147,8 @@ public class DefaultConditionalLoopTest {
     /**
      * A chain of 100 Logixes, each setting the input of the next one only
      * when its own input becomes active, is not a loop and runs to the end.
+     *
+     * @throws JmriException if a sensor can't be set
      */
     @Test
     public void testLongChainStillRuns() throws JmriException {
@@ -171,6 +174,8 @@ public class DefaultConditionalLoopTest {
      * handled: it is logged in the outermost calculation, naming where the
      * calculations started, and passed on to the sensor change that started
      * them.
+     *
+     * @throws JmriException if a sensor can't be set
      */
     @Test
     public void testVeryLongLoopIsLogged() throws JmriException {
@@ -191,8 +196,9 @@ public class DefaultConditionalLoopTest {
         assertThrows(StackOverflowError.class, () -> gate.setKnownState(Sensor.ACTIVE),
                 "the stack overflow is passed on");
 
-        LogEvent error = JUnitAppender.checkForMessageStartingWith("Logix calculations started by");
-        assertNotNull(error, "the stack overflow is logged");
+        LogEvent error = Objects.requireNonNull(
+                JUnitAppender.checkForMessageStartingWith("Logix calculations started by"),
+                "the stack overflow is logged");
         assertTrue(error.getMessage().getFormattedMessage().contains("IX2199C1"),
                 "the message names where the calculations started: " + error.getMessage().getFormattedMessage());
         JUnitAppender.suppressErrorMessageStartsWith("Logix loop stopped");
@@ -203,6 +209,8 @@ public class DefaultConditionalLoopTest {
      * whose actions set several of its own inputs, is calculated again
      * inside its own calculation once for each input it changes. That ends
      * by itself and is not a loop.
+     *
+     * @throws JmriException if a sensor can't be set
      */
     @Test
     public void testSettingOwnInputsIsNotALoop() throws JmriException {

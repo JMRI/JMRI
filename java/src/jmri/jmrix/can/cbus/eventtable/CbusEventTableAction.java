@@ -6,6 +6,7 @@ import java.beans.PropertyChangeListener;
 import javax.annotation.Nonnull;
 import javax.swing.JCheckBox;
 
+import jmri.Manager;
 import jmri.NamedBean;
 import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.can.CanMessage;
@@ -33,7 +34,7 @@ public class CbusEventTableAction implements PropertyChangeListener {
 
     protected boolean sessionConfirmDeleteRow=true; // display confirm popup
 
-    private void linkHwaddtoEvent(NamedBean bean, boolean beanState, CanMessage m){
+    private void linkHwaddtoEvent(NamedBean bean, boolean beanState, CanMessage m, boolean fire){
         if (m==null){
             return;
         }
@@ -41,7 +42,46 @@ public class CbusEventTableAction implements PropertyChangeListener {
         int nn = CbusMessage.getNodeNumber(m);
         CbusTableEvent event = _model.provideEvent(nn,en);
         event.appendOnOffBean(bean, beanState, CbusEvent.getEvState(m));
-        fireJmriCellsChanged(_model.getEventTableRow(nn, en));
+        if (fire) {
+            fireJmriCellsChanged(_model.getEventTableRow(nn, en));
+        }
+    }
+
+    /**
+     * Associate a Sensor, Turnout or Light with the events it uses.
+     * @param nb the bean
+     * @param fire true to update the rows changed in the GUI
+     */
+    private void linkBean(NamedBean nb, boolean fire){
+        if (nb instanceof CbusEventInterface) {
+            linkHwaddtoEvent( nb, true, ((CbusEventInterface)nb).getBeanOnMessage(), fire);
+            linkHwaddtoEvent( nb, false, ((CbusEventInterface)nb).getBeanOffMessage(), fire);
+        }
+    }
+
+    /**
+     * Remove a Sensor, Turnout or Light from every event it is associated with.
+     * @param nb the bean
+     */
+    private void unlinkBean(NamedBean nb){
+        for (int i=0; i < _model.getRowCount(); i++) {
+            if (_model._mainArray.get(i).removeBean(nb)) {
+                fireJmriCellsChanged(i);
+            }
+        }
+    }
+
+    /**
+     * Update in the GUI the rows a Sensor, Turnout or Light is associated with,
+     * eg. after its user name changes.
+     * @param nb the bean
+     */
+    private void fireJmriCellsChanged(NamedBean nb){
+        for (int i=0; i < _model.getRowCount(); i++) {
+            if (_model._mainArray.get(i).hasBean(nb)) {
+                fireJmriCellsChanged(i);
+            }
+        }
     }
 
     private void fireJmriCellsChanged(int row){
@@ -52,9 +92,12 @@ public class CbusEventTableAction implements PropertyChangeListener {
     }
 
     private void fireAllJmriCellsChanged(){
-        for (int i=0; i < _model.getRowCount(); i++) {
-            fireJmriCellsChanged(i);
-        }
+        ThreadingUtil.runOnGUIEventually( ()->{
+            int rows = _model.getRowCount();
+            if (rows > 0) {
+                _model.fireTableRowsUpdated(0, rows - 1);
+            }
+        });
     }
 
     /**
@@ -64,16 +107,11 @@ public class CbusEventTableAction implements PropertyChangeListener {
 
         // reset all columns
         _model._mainArray.forEach((n) -> n.resetBeans() );
-        fireAllJmriCellsChanged();
         for (Class<?> classType : classTypes) {
             jmri.Manager<?> sm = (jmri.Manager<?>) _model._memo.get(classType);
-            sm.getNamedBeanSet().forEach((nb) -> {
-                if (nb instanceof CbusEventInterface) {
-                    linkHwaddtoEvent( nb, true, ((CbusEventInterface)nb).getBeanOnMessage());
-                    linkHwaddtoEvent( nb, false, ((CbusEventInterface)nb).getBeanOffMessage());
-                }
-            });
+            sm.getNamedBeanSet().forEach((nb) -> linkBean(nb, false));
         }
+        fireAllJmriCellsChanged();
     }
 
     public void resetAllSessionTotals() {
@@ -99,7 +137,38 @@ public class CbusEventTableAction implements PropertyChangeListener {
     /** {@inheritDoc} */
     @Override
     public void propertyChange(PropertyChangeEvent ev){
-        updatejmricols();
+        switch (ev.getPropertyName()) {
+            case Manager.PROPERTY_BEANS:
+                // one bean added or removed, so update only the events it uses
+                if (ev.getNewValue() instanceof NamedBean) {
+                    linkBean((NamedBean) ev.getNewValue(), true);
+                } else if (ev.getOldValue() instanceof NamedBean) {
+                    unlinkBean((NamedBean) ev.getOldValue());
+                } else {
+                    // no bean given: the set as a whole may have changed, eg.
+                    // "beans" events were silenced while beans were added
+                    updatejmricols();
+                }
+                break;
+            case Manager.PROPERTY_LENGTH:
+                // follows each "beans" event; while "beans" events are
+                // silenced, one without a bean follows when they resume
+                break;
+            case Manager.PROPERTY_DISPLAY_LIST_NAME:
+                // a user name changed; the names are worked out when the rows
+                // are drawn, so only the rows of that bean need drawing again
+                NamedBean renamed = (ev.getNewValue() instanceof String && ev.getSource() instanceof Manager)
+                    ? ((Manager<?>) ev.getSource()).getByUserName((String) ev.getNewValue()) : null;
+                if (renamed != null) {
+                    fireJmriCellsChanged(renamed);
+                } else {
+                    fireAllJmriCellsChanged();
+                }
+                break;
+            default:
+                updatejmricols();
+                break;
+        }
     }
 
     /**

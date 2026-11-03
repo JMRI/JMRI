@@ -80,16 +80,33 @@ public enum AddressSpace {
         this.label = label;
     }
 
-    /** CAN ID Local-ID base offset for this address space. */
+    /**
+     * CAN ID Local-ID base offset for this address space.
+     *
+     * @return the base offset
+     */
     public int base() { return base; }
 
-    /** Number of addresses in this space. */
+    /**
+     * Number of addresses in this space.
+     *
+     * @return the number of addresses
+     */
     public int size() { return size; }
 
-    /** Human-readable display label. */
+    /**
+     * Human-readable display label.
+     *
+     * @return the display label
+     */
     public String label() { return label; }
 
-    /** Returns true if {@code canOffset} falls within this address space's range. */
+    /**
+     * Returns true if {@code canOffset} falls within this address space's range.
+     *
+     * @param canOffset raw CAN ID Local-ID value
+     * @return true if {@code canOffset} falls within this address space's range
+     */
     public boolean containsOffset(int canOffset) {
         return canOffset >= base && canOffset < base + size;
     }

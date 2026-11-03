@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author Paul Bender Copyright (C) 2017
  */
+@SuppressWarnings("deprecation")
 public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     @Test

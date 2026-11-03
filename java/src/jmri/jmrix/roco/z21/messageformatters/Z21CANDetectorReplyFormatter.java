@@ -90,7 +90,7 @@ public class Z21CANDetectorReplyFormatter implements Z21MessageFormatter {
     }
 
     // address value is the 16 bits of the two bytes containing the
-    // address.  The most significan two bits represent the direction.
+    // address.  The most significant two bits represent the direction.
     private String getCanDetectorLocoAddressString(int addressValue) {
         String addressString;
         if(addressValue==0) {
