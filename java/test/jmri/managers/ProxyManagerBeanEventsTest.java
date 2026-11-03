@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import jmri.*;
@@ -94,7 +95,7 @@ public class ProxyManagerBeanEventsTest {
             }
             s20 = s;
         }
-        internal.deregister(s5);
+        internal.deregister(Objects.requireNonNull(s5, "sensor 5"));
         assertEquals(0, recomputes, "whole set rebuilt for single changes");
 
         assertEquals(19, proxy.getNamedBeanSet().size());

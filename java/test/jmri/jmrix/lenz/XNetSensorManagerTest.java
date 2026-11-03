@@ -69,6 +69,30 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         // see if sensor exists
         assertNotNull(l.getBySystemName("XS22"));
     }
+    @Test
+    public void testXNetBroadcastSensorStatusMsg() {
+        XNetReply m;
+
+        assertEquals( 0, l.getNamedBeanSet().size(), "0 sensors initially");
+
+        // notify the Sensor that somebody else changed it...
+        m = new XNetReply();
+        m.setElement(0, 0x44);     // Opcode for feedback response with 2 feedback modules represented
+        m.setElement(1, 0x4F);     // Feedback module address
+        m.setElement(2, 0x44);     // Lower nibble, input 3 active
+        m.setElement(3, 0x33);     // Feedback module address
+        m.setElement(4, 0x50);     // Upper nibble, all inputs inactive
+        m.setElement(5, 0x2C);     // The XOR of everything above
+        ((XNetSensorManager) l).message(m);
+        assertEquals( 16, l.getNamedBeanSet().size(), "16 sensors created");
+        Sensor moduleFourF = l.getBySystemName("XS635");
+        Sensor moduleThirtyThree = l.getBySystemName("XS414");
+        JUnitUtil.waitFor(() -> moduleFourF.getState() == Sensor.ACTIVE, "module 0x4F sensor updated");
+        JUnitUtil.waitFor(() -> moduleThirtyThree.getState() == Sensor.INACTIVE, "module 0x33 sensor updated");
+        assertEquals(Sensor.ACTIVE, moduleFourF.getKnownState(), "XS635 inactive");
+        assertEquals(Sensor.INACTIVE, moduleThirtyThree.getKnownState(), "XS414 inactive");
+        assertEquals(Sensor.UNKNOWN, l.getBySystemName("XS411").getKnownState(), "unaddressed nibble remains unknown");
+    }
 
     @Test
     public void testAsAbstractFactory() {

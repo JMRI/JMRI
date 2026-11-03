@@ -1,8 +1,9 @@
 package jmri.jmrix.marklin;
 
 import java.util.Objects;
-import jmri.jmrix.marklin.mcan.device.CdBDeviceClass;
-import jmri.jmrix.marklin.mcan.protocol.NativeDeviceInfo;
+import jmri.jmrix.marklin.mcan.McanUid;
+import jmri.jmrix.marklin.mcan.cdb.CdBDeviceClass;
+import jmri.jmrix.marklin.mcan.cs2.NativeDeviceInfo;
 
 /**
  * Immutable identity representation for Märklin CAN (MCAN) devices.
@@ -67,11 +68,11 @@ public abstract class McanDeviceIdentity {
     /**
      * Create identity for a Native MCAN device.
      *
-     * @param uid 32-bit device UID
+     * @param uid device UID
      * @param deviceType 16-bit device type code
      * @return Native device identity
      */
-    public static Native forNative(long uid, int deviceType) {
+    public static Native forNative(McanUid uid, int deviceType) {
         return new Native(uid, deviceType);
     }
 
@@ -90,15 +91,15 @@ public abstract class McanDeviceIdentity {
      * Identity representation for native MCAN devices.
      */
     public static final class Native extends McanDeviceIdentity {
-        private final long uid;
+        private final McanUid uid;
         private final int deviceType;
 
-        public Native(long uid, int deviceType) {
-            this.uid = uid & 0xFFFFFFFFL;
+        public Native(McanUid uid, int deviceType) {
+            this.uid = Objects.requireNonNull(uid, "uid");
             this.deviceType = deviceType & 0xFFFF;
         }
 
-        public long getUid() {
+        public McanUid getUid() {
             return uid;
         }
 
@@ -108,13 +109,13 @@ public abstract class McanDeviceIdentity {
 
         @Override
         public String getSystemIdFragment() {
-            return String.format("uid-%08x", uid);
+            return String.format("uid-%08x", uid.toLong());
         }
 
         @Override
         public String getDisplayName() {
             String typeName = NativeDeviceInfo.deviceTypeName(deviceType);
-            return String.format("%s (UID=0x%08X)", typeName, uid);
+            return String.format("%s (UID=%s)", typeName, uid.toHexString());
         }
 
         @Override
@@ -132,7 +133,7 @@ public abstract class McanDeviceIdentity {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             Native aNative = (Native) o;
-            return uid == aNative.uid && deviceType == aNative.deviceType;
+            return uid.equals(aNative.uid) && deviceType == aNative.deviceType;
         }
 
         @Override

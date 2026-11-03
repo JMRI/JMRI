@@ -1,5 +1,8 @@
 package jmri.jmrix.marklin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
 
@@ -139,6 +142,65 @@ public class MarklinSensorManagerTest extends jmri.managers.AbstractSensorMgrTes
         ((MarklinSensorManager)l).reply(reply);
         Assertions.assertEquals(Sensor.INACTIVE, sensor.getState());
         Assertions.assertEquals(Sensor.ACTIVE, sensor2.getState());
+    }
+
+    @Test
+    public void testIncomingReplyGivesItsReceivedTime() {
+        Sensor sensor = l.provideSensor("MS1:01");
+        List<Long> times = new ArrayList<>();
+        List<Integer> states = new ArrayList<>();
+        sensor.addRawStateListener((s, oldState, newState, timeNanos) -> {
+            states.add(newState);
+            times.add(timeNanos);
+        });
+
+        MarklinReply event = new MarklinReply(s88EventModule1Contact1Active());
+        event.setReceivedTime(1234L);
+        ((MarklinSensorManager)l).reply(event);
+
+        // module 1's poll reply, contact 1 inactive: dated too
+        MarklinReply pollReply = new MarklinReply(s88PollReplyModule1(0x00, 0x00));
+        pollReply.setReceivedTime(5678L);
+        ((MarklinSensorManager)l).reply(pollReply);
+
+        long before = System.nanoTime();
+        // not stamped, no time recorded
+        ((MarklinSensorManager)l).reply(new MarklinReply(s88EventModule1Contact1Active()));
+        long after = System.nanoTime();
+
+        Assertions.assertEquals(List.of(Sensor.ACTIVE, Sensor.INACTIVE, Sensor.ACTIVE), states);
+        Assertions.assertEquals(1234L, times.get(0), "the S88 event's received time");
+        Assertions.assertEquals(5678L, times.get(1), "the poll reply's received time");
+        Assertions.assertTrue(times.get(2) >= before && times.get(2) <= after, "not stamped: dated when set");
+    }
+
+    // A CS2 S88 event frame: module 1, contact 1 goes active, as in testReplyS88Command
+    private static int[] s88EventModule1Contact1Active() {
+        int[] frame = new int[13];
+        frame[1] = 0x22; // command 0x11, response=false
+        frame[2] = 0x03; // hash high
+        frame[4] = 0x08; // DLC=8
+        frame[5] = 0x01; // contactId high = module 1
+        frame[6] = 0x01; // contactId low  = contact 1
+        frame[7] = 0x00; // oldState=0
+        frame[8] = 0x01; // newState=1 (active)
+        return frame;
+    }
+
+    // A CS2 S88 poll reply for module 1, as in testReplyFeeCommand
+    private static int[] s88PollReplyModule1(int statusHi, int statusLo) {
+        int[] frame = new int[13];
+        frame[1] = 0x21; // command 0x10, response=true
+        frame[2] = 0x03; // hash high
+        frame[4] = 0x07; // DLC=7
+        frame[5] = 0x12; // bytes 5-8: UID
+        frame[6] = 0x34;
+        frame[7] = 0x56;
+        frame[8] = 0x78;
+        frame[9] = 0x01; // S88 module number = 1
+        frame[10] = statusHi;
+        frame[11] = statusLo;
+        return frame;
     }
 
     @BeforeEach

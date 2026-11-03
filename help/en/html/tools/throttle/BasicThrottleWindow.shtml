@@ -146,6 +146,10 @@
       This is the basic functionality of the Function Panel. All buttons function act like an on/off
       toggle - click once to turn "on"; click again to turn "off".<br>
       <br>
+      A consist functions panel is available through the View menu that allows to independently
+      control the functions of each locomotive in a consist. The regular function panel will send commands
+      to the consist adress (head unit or specific consist address depending on consist setup).
+      <br>
 
       <h3>Function Button config pane</h3>
       <img src="images/FunctionButtonProperties.png" alt="FunctionButtonProperties.png"><br>

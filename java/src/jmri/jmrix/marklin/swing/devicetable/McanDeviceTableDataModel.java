@@ -12,7 +12,7 @@ import jmri.jmrix.marklin.McanDeviceManager;
 import jmri.jmrix.marklin.McanDeviceService;
 import jmri.jmrix.marklin.WeichenChefMagnetGeneration;
 import jmri.jmrix.marklin.WeichenChefMagnetService;
-import jmri.jmrix.marklin.mcan.device.CdBDeviceClass;
+import jmri.jmrix.marklin.mcan.cdb.CdBDeviceClass;
 import jmri.util.ThreadingUtil;
 
 /**
@@ -152,7 +152,7 @@ public class McanDeviceTableDataModel extends AbstractTableModel implements Prop
             return "Module " + ((McanDeviceIdentity.CdB) id).getModuleId();
         }
         if (id.isNative()) {
-            return String.format("UID 0x%08X", ((McanDeviceIdentity.Native) id).getUid());
+            return "UID " + ((McanDeviceIdentity.Native) id).getUid().toHexString();
         }
         return "";
     }

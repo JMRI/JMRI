@@ -1,5 +1,7 @@
 package jmri.jmrix.can.cbus;
 
+import java.util.TimerTask;
+
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.jmrix.can.CanMessage;
@@ -9,6 +11,7 @@ import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.util.swing.TextAreaFIFO;
 import jmri.util.ThreadingUtil;
+import jmri.util.TimerUtil;
 
 /**
  * Class to send CAN Frames.
@@ -49,6 +52,10 @@ public class CbusSend {
     
     /**
      * Sends an outgoing CanMessage or incoming CanReply from a CanReply with a specified delay
+     * <p>
+     * As a connection's receive thread does, the frame is taken as received
+     * when the delay ends, off the layout thread, and an incoming CanReply is
+     * given that received time before it waits for the layout thread.
      * @param r A CanReply Can Frame which will be sent
      * @param sendReply true to send as incoming CcanReply
      * @param sendMessage true to send as outgoing CanMessage
@@ -57,15 +64,23 @@ public class CbusSend {
     public void sendWithDelay( CanReply r, Boolean sendReply, Boolean sendMessage, int delay ){
         CbusMessage.setId(r, tc.getCanid() );
         CbusMessage.setPri(r, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-        ThreadingUtil.runOnLayoutDelayed( () -> {
-            if (sendReply) {
-                tc.sendCanReply(r, null);
+        TimerUtil.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (sendReply) {
+                    r.setReceivedTime(System.nanoTime());
+                }
+                ThreadingUtil.runOnLayoutEventually( () -> {
+                    if (sendReply) {
+                        tc.sendCanReply(r, null);
+                    }
+                    if (sendMessage) {
+                        CanMessage m = new CanMessage(r);
+                        tc.sendCanMessage(m, null);
+                    }
+                });
             }
-            if (sendMessage) {
-                CanMessage m = new CanMessage(r);
-                tc.sendCanMessage(m, null);
-            }
-        },delay );
+        }, delay);
     }
 
     /**

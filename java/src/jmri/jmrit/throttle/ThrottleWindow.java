@@ -863,6 +863,9 @@ public class ThrottleWindow extends JmriJFrame implements ThrottleControllersUIC
         updateCurentThrottleFrame();
         setVisible(true);
         requestFocus();
+        if (getExtendedState() == JFrame.ICONIFIED) { // uniconify if iconified
+            setExtendedState(JFrame.NORMAL); 
+        }           
         toFront();
         pcs.firePropertyChange("ThrottleFrameChanged", otf, getCurentThrottleController());
     }

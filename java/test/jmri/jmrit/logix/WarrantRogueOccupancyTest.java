@@ -3,6 +3,7 @@ package jmri.jmrit.logix;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import jmri.InstanceManager;
 import jmri.Sensor;
@@ -63,12 +64,10 @@ public class WarrantRogueOccupancyTest {
 
         OBlockManager blockMgr = InstanceManager.getDefault(OBlockManager.class);
         bA = blockMgr.createNewOBlock("OB1", "A");
-        OBlock bB = blockMgr.createNewOBlock("OB2", "B");
-        OBlock bC = blockMgr.createNewOBlock("OB3", "C");
+        OBlock bB = Objects.requireNonNull(blockMgr.createNewOBlock("OB2", "B"), "OBlock B");
+        OBlock bC = Objects.requireNonNull(blockMgr.createNewOBlock("OB3", "C"), "OBlock C");
         bD = blockMgr.createNewOBlock("OB4", "D");
         assertNotNull(bA);
-        assertNotNull(bB);
-        assertNotNull(bC);
         assertNotNull(bD);
 
         PortalManager portalMgr = InstanceManager.getDefault(PortalManager.class);

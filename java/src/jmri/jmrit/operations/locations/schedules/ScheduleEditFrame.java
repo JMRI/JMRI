@@ -244,7 +244,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
             }
 
             if (_track != null) {
-                _track.setScheduleId(Track.NONE);
+                _track.setSchedule(null);
             }
 
             manager.deregister(schedule);

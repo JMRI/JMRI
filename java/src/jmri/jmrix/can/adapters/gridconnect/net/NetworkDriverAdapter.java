@@ -60,6 +60,23 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Each GridConnect frame is written to the socket in a single write, so
+     * TCP's delay for small writes while an earlier one is unacknowledged
+     * (Nagle's algorithm) cannot combine the parts of a frame; it only holds
+     * frames back, by up to the gateway's delayed acknowledgement time. It is
+     * turned off, on the first connection and on every reconnection.
+     */
+    @Override
+    public void connect() throws java.io.IOException {
+        super.connect();
+        if (opened && socketConn != null) {
+            socketConn.setTcpNoDelay(true);
+        }
+    }
+
     @Override
     public boolean status() {
         return opened;

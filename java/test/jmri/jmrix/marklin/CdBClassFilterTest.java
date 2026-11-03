@@ -1,9 +1,9 @@
 package jmri.jmrix.marklin;
 
 import jmri.jmrix.marklin.mcan.cdb.CdBFrameParser;
-import jmri.jmrix.marklin.mcan.classify.CdBFrameType;
-import jmri.jmrix.marklin.mcan.classify.ClassifiedFrame;
-import jmri.jmrix.marklin.mcan.classify.FrameProtocol;
+import jmri.jmrix.marklin.mcan.cdb.CdBFrameType;
+import jmri.jmrix.marklin.mcan.McanFrame;
+import jmri.jmrix.marklin.mcan.FrameProtocol;
 import jmri.jmrix.marklin.mcan.classify.ProtocolClassifier;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.*;
@@ -38,6 +38,10 @@ public class CdBClassFilterTest {
         return new MarklinReply(raw);
     }
 
+    private static boolean isCdBConfig(MarklinReply r) {
+        return new CdBClassFilter().offer(r);
+    }
+
     // -- CdB class ID formula ----------------
 
     private static long cdBPingId(int canClass) {
@@ -65,7 +69,7 @@ public class CdBClassFilterTest {
         int cls = Integer.parseInt(classHex, 16);
         long pingId = cdBPingId(cls);
         MarklinReply r = frameFromCanId(pingId, 0);
-        assertTrue(CdBClassFilter.isCdBConfigFrame(r),
+        assertTrue(isCdBConfig(r),
             label + " ping should be identified as CdB config");
     }
 
@@ -79,7 +83,7 @@ public class CdBClassFilterTest {
         long[] offsets = {0x00000, 0x10000, 0x40000, 0x50000, 0x60000};
         for (long off : offsets) {
             MarklinReply r = frameFromCanId(base + off, 2, 0x00, 0x01);
-            assertTrue(CdBClassFilter.isCdBConfigFrame(r),
+            assertTrue(isCdBConfig(r),
                 String.format("class 0x%02X offset 0x%05X", cls, off));
         }
     }
@@ -94,7 +98,7 @@ public class CdBClassFilterTest {
         // Replace byte 3 with module 5 → 0x85
         long withModule = (readId & 0xFFFFFF00L) | 0x85;
         MarklinReply r = frameFromCanId(withModule, 2, 0x01, 0x04);
-        assertTrue(CdBClassFilter.isCdBConfigFrame(r),
+        assertTrue(isCdBConfig(r),
             "module-addressed read should still match CdB hash pattern");
     }
 
@@ -106,21 +110,21 @@ public class CdBClassFilterTest {
     void standardSystemGoIsNotCdB() {
         // 00 00 47 11   -  standard system command with hash 0x4711
         MarklinReply r = frameFromCanId(0x00004711L, 5, 0,0,0,0, 0x01);
-        assertFalse(CdBClassFilter.isCdBConfigFrame(r));
+        assertFalse(isCdBConfig(r));
     }
 
     @Test
     void standardAccessoryCommandIsNotCdB() {
         // 00 16 47 11   -  standard accessory (cmd 0x0B)
         MarklinReply r = frameFromCanId(0x00164711L, 6, 0,0,0x30,0x00, 0x01,0x01);
-        assertFalse(CdBClassFilter.isCdBConfigFrame(r));
+        assertFalse(isCdBConfig(r));
     }
 
     @Test
     void standardFeedbackEventIsNotCdB() {
         // 00 22 47 11   -  standard S88 event (cmd 0x11)
         MarklinReply r = frameFromCanId(0x00224711L, 8, 0,0,0,1, 0x00,0x01,0,0);
-        assertFalse(CdBClassFilter.isCdBConfigFrame(r));
+        assertFalse(isCdBConfig(r));
     }
 
     @Test
@@ -128,7 +132,7 @@ public class CdBClassFilterTest {
         // 00 16 03 00   -  CdB manual turnout, but this IS a standard MCAN
         //                accessory command.  Hash = 0x0300, not 0x_A80.
         MarklinReply r = frameFromCanId(0x00160300L, 6, 0,0,0x30,0x00, 0x01,0x01);
-        assertFalse(CdBClassFilter.isCdBConfigFrame(r),
+        assertFalse(isCdBConfig(r),
             "CdB manual turnout is standard MCAN, must not be intercepted");
     }
 
@@ -136,7 +140,7 @@ public class CdBClassFilterTest {
     void cdBOccupancyEventIsNotConfig() {
         // 00 23 xx xx   -  occupancy event, standard MCAN feedback frame
         MarklinReply r = frameFromCanId(0x00230000L, 6, 0,0,0,5, 0x00,0,0,0);
-        assertFalse(CdBClassFilter.isCdBConfigFrame(r),
+        assertFalse(isCdBConfig(r),
             "CdB occupancy event is standard MCAN, must not be intercepted");
     }
 
@@ -144,12 +148,12 @@ public class CdBClassFilterTest {
     void cdBTurnoutStatusIsNotConfig() {
         // 00 17 xx xx   -  turnout position status, standard MCAN
         MarklinReply r = frameFromCanId(0x00170000L, 6, 0,0,0x30,0x00, 0xFD,0,0,0);
-        assertFalse(CdBClassFilter.isCdBConfigFrame(r),
+        assertFalse(isCdBConfig(r),
             "CdB turnout status is standard MCAN, must not be intercepted");
     }
 
     // =====================================================================
-    //  3.  ProtocolClassifier + CdBFrameParser.parse() recovers class and type
+    //  3.  ProtocolClassifier + (CdBFrameParser.CdBFrame) () recovers class and type
     //      (replaces the old CdBClassFilter.classify() tests)
     // =====================================================================
 
@@ -167,9 +171,9 @@ public class CdBClassFilterTest {
         raw[3] = (int)( pingId        & 0xFF);
         raw[4] = 0;
 
-        ClassifiedFrame cf = ProtocolClassifier.classify(raw);
+        McanFrame cf = ProtocolClassifier.classify(raw);
         assertEquals(FrameProtocol.CDB_CONFIG, cf.protocol());
-        CdBFrameParser.CdBFrame frame = CdBFrameParser.parse(cf);
+        CdBFrameParser.CdBFrame frame = (CdBFrameParser.CdBFrame) cf;
 
         assertEquals(CdBFrameType.PING, frame.frameType());
         assertEquals(cls, frame.classId(), String.format("expected class 0x%02X", cls));
@@ -192,9 +196,9 @@ public class CdBClassFilterTest {
         raw[4] = 4;
         raw[5] = 0x01; raw[6] = 0x04; raw[7] = 0x00; raw[8] = 0x0A;
 
-        ClassifiedFrame cf = ProtocolClassifier.classify(raw);
+        McanFrame cf = ProtocolClassifier.classify(raw);
         assertEquals(FrameProtocol.CDB_CONFIG, cf.protocol());
-        CdBFrameParser.CdBFrame frame = CdBFrameParser.parse(cf);
+        CdBFrameParser.CdBFrame frame = (CdBFrameParser.CdBFrame) cf;
 
         assertEquals(CdBFrameType.READ_REPLY, frame.frameType());
         assertEquals(cls, frame.classId());
@@ -214,9 +218,9 @@ public class CdBClassFilterTest {
         raw[4] = 4;
         raw[5] = 0x00; raw[6] = 0x03; raw[7] = 0x00; raw[8] = 0x64;
 
-        ClassifiedFrame cf = ProtocolClassifier.classify(raw);
+        McanFrame cf = ProtocolClassifier.classify(raw);
         assertEquals(FrameProtocol.CDB_CONFIG, cf.protocol());
-        CdBFrameParser.CdBFrame frame = CdBFrameParser.parse(cf);
+        CdBFrameParser.CdBFrame frame = (CdBFrameParser.CdBFrame) cf;
 
         assertEquals(CdBFrameType.WRITE, frame.frameType());
         assertEquals(cls, frame.classId());

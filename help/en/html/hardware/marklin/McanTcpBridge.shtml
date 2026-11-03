@@ -541,7 +541,7 @@ java -Dorg.slf4j.simpleLogger.defaultLogLevel=DEBUG -jar mcan-tcp-bridge.jar --p
 
       <ul>
         <li><a href="index.shtml">M&auml;rklin Hardware Support</a></li>
-        <li><a href="MarklinCanCodec.shtml">M&auml;rklin CAN Codec Library</a></li>
+        <li><a href="McanLibrary.shtml">M&auml;rklin CAN Protocol Library</a></li>
       </ul>
 
       <!--#include virtual="/help/en/parts/Footer.shtml" -->

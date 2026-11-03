@@ -9,7 +9,8 @@ import jmri.jmrix.marklin.mcan.address.CdBAddressCodec;
 import jmri.jmrix.marklin.mcan.cdb.CdBConfigCommands;
 import jmri.jmrix.marklin.mcan.cdb.CdBFrameParser;
 import jmri.jmrix.marklin.mcan.cdb.CdBWeichenChefCommands;
-import jmri.jmrix.marklin.mcan.classify.CdBFrameType;
+import jmri.jmrix.marklin.mcan.cdb.CdBFrameType;
+import jmri.jmrix.marklin.mcan.cs2.Cs2AccessoryCommands;
 import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -360,17 +361,21 @@ public class WeichenChefKombiParameterService {
 
     /**
      * Handle a standard MCAN status frame (position/occupancy from accessory decoder).
-     * Packet format: byte[0]=0, byte[1]=23, byte[3]=moduleAddr-128, bytes[7-8]=address, byte[9]=status.
+     * Accepts a priority-0 accessory reply (0x0B) whose hash low byte is the module or 48;
+     * the low 16 accessory address bits select the channel and the aspect carries the status.
      *
      * @param raw raw 13-byte reply
      */
     public void handleStatusFrame(MarklinReply raw) {
-        if (raw.getElement(0) != 0 || raw.getElement(1) != 23) return;
-        int frameAddr = raw.getElement(3) & 0xFF;
+        if (!(raw.getFrame() instanceof Cs2AccessoryCommands.AccessoryReplyFrame)) return;
+        Cs2AccessoryCommands.AccessoryReplyFrame reply = (Cs2AccessoryCommands.AccessoryReplyFrame) raw.getFrame();
+        if (reply.header().priority() != 0) return;
+        // The reference tool matches the module in the hash low byte and the low 16 address bits.
+        int frameAddr = reply.header().hash() & 0xFF;
         if (frameAddr != currentRawId && frameAddr != 48) return;
 
-        int addr = ((raw.getElement(7) & 0xFF) << 8) + (raw.getElement(8) & 0xFF);
-        int status = raw.getElement(9) & 0xFF;
+        int addr = (int) (reply.address() & 0xFFFF);
+        int status = reply.aspect();
 
         for (int i = 0; i < moduleAddresses.length; i++) {
             if (moduleAddresses[i] == addr) {
