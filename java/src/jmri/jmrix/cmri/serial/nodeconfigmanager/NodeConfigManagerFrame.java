@@ -104,14 +104,14 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     protected int cpNodeOnboard = 4;        //Number of fixed bytes(cards) for a cpNode
     // ESP32Node cards (fixed numbers, firmware v2.07), numbered from 0 as in C/MRI: 0-15
     // MCP23017 0x20-0x27 (port A, B), Output or Input; 16-31 PCA9685 servo boards 0x40-0x47,
-    // two cards each (ch 0-7, ch 8-15); 32-53 no pins: CT n257-n300 not used, n301-n428 signal
-    // logic. Cards 16-53 are always Output, fitted or not, so every CT keeps its number (see
+    // two cards each (ch 0-7, ch 8-15); 32-63 no pins: CT n257-n512 signal logic (firmware
+    // v2.11). Cards 16-63 are always Output, fitted or not, so every CT keeps its number (see
     // SerialNode.ESP32NODE_CARDS).
     public static final int ESP32NODE_IOX_CARDS = 16;
     public static final int ESP32NODE_SERVO_CARDS = 16;
     public static final int ESP32NODE_CARDS = SerialNode.ESP32NODE_CARDS;
     private static final String ESP32NODE_CARDS_TEXT
-            = " None -- fixed numbers: cards 0-15 MCP23017 0x20-0x27, 16-31 servo boards 0x40-0x47, 32-53 no pins (CT n301-n428 signal logic)";
+            = " None -- fixed numbers: cards 0-15 MCP23017 0x20-0x27, 16-31 servo boards 0x40-0x47, 32-63 no pins (CT n257-n512 signal logic)";
     protected int osNodeOnboard = 8;        //Number of fixed bytes(cards) for a osNode
 
     protected boolean errorInStatus1 = false;
@@ -929,7 +929,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                  * Here add code for other types of nodes
                  */
 
-                // ESP32Node shows 54 cards, the other IOX node types 16
+                // ESP32Node shows 64 cards, the other IOX node types 16
                 if (cpnodeConfigModel != null) {
                     cpnodeConfigModel.fireTableDataChanged();
                 }
@@ -1102,7 +1102,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         TableCellEditor esp32PortEditor = new DefaultCellEditor(esp32PortCombo);
         JTable cpnodeConfigTable = new JTable(cpnodeConfigModel) {
             // ESP32Node chip ports (cards 0-15) are Output or Input (fixed numbers: no No Card);
-            // cards 16-53 are always Output and can't be edited (CPnodeConfigModel.isCellEditable)
+            // cards 16-63 are always Output and can't be edited (CPnodeConfigModel.isCellEditable)
             @Override
             public TableCellEditor getCellEditor(int row, int column) {
                 if (nodeType == SerialNode.ESP32NODE && row < ESP32NODE_IOX_CARDS
@@ -1540,8 +1540,8 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             }
         }
         // ESP32Node fixed numbers (e.g. an older 16- or 32-card profile): a chip port is
-        // Output or Input (No Card becomes Output, keeping its numbers), cards 17-48 (servo
-        // boards, signal logic) are always Output, and there are no cards past 48
+        // Output or Input (No Card becomes Output, keeping its numbers), cards 16-63 (servo
+        // boards, signal logic) are always Output
         if (nodeType == SerialNode.ESP32NODE) {
             for (int i = 0; i < ESP32NODE_CARDS; i++) {
                 boolean in = i < ESP32NODE_IOX_CARDS && curNode.isInputCard(i);
@@ -2526,7 +2526,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                 case CARDNUM_COLUMN:
                     int i = r / 2;
                     if (nodeType == SerialNode.ESP32NODE && r >= ESP32NODE_IOX_CARDS + ESP32NODE_SERVO_CARDS) {
-                        // no pins: signal logic bits 1-128 are CT n301-n428 (card 37 bit 4 to card 53 bit 3)
+                        // no pins: signal logic bits 1-256 are CT n257-n512 (card 32 bit 0 to card 63 bit 7)
                         int lo = Math.max(r * 8 + 1, SerialNode.ESP32NODE_LOGIC_FIRST) - SerialNode.ESP32NODE_LOGIC_FIRST + 1;
                         int hi = Math.min(r * 8 + 8, SerialNode.ESP32NODE_LOGIC_FIRST + SerialNode.ESP32NODE_LOGIC_BITS - 1)
                                 - SerialNode.ESP32NODE_LOGIC_FIRST + 1;

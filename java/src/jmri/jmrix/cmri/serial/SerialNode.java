@@ -65,15 +65,15 @@ public class SerialNode extends AbstractNode {
                                                  // card), and user-facing "Card N" numbers in
                                                  // DiagnosticFrame/NodeConfigManagerFrame are 0-based too
                                                  // (Card 0 = 0x20/A), as in C/MRI.
-    // ESP32CPNode fixed numbers (firmware v2.07): every CT is locked to its card position, so
-    // the Transmit always carries one byte per card (CT n001 = card 0 bit 0 ... n432 = card 53
-    // bit 7) and the poll reply one byte per MCP23017 port (CS n001 ... n128), whatever the
-    // card types. Cards 0-15 MCP23017 0x20 A .. 0x27 B (Output or Input), 16-31 servo boards
-    // 0x40-0x47 (Output), 32-53 no pins (Output): CT n257-n300 not used, n301-n428 the signal
-    // logic (every signal's Output Matrix outputs).
-    public static final int ESP32NODE_CARDS = 54;
-    public static final int ESP32NODE_LOGIC_FIRST = 301;   // CT n301: signal logic bit 1
-    public static final int ESP32NODE_LOGIC_BITS = 128;
+    // ESP32CPNode fixed numbers (firmware v2.11): every CT is locked to its card position, so
+    // the Transmit always carries one byte per card (CT n001 = card 0 bit 0 ... n512 = card 63
+    // bit 7, all 64 cards C/MRI allows) and the poll reply one byte per MCP23017 port (CS n001
+    // ... n128), whatever the card types. Cards 0-15 MCP23017 0x20 A .. 0x27 B (Output or
+    // Input), 16-31 servo boards 0x40-0x47 (Output), 32-63 no pins (Output): CT n257-n512 the
+    // signal logic (every signal's Output Matrix outputs).
+    public static final int ESP32NODE_CARDS = 64;
+    public static final int ESP32NODE_LOGIC_FIRST = 257;   // CT n257: signal logic bit 1
+    public static final int ESP32NODE_LOGIC_BITS = 256;
     public static final int ESP32NODE_INPUT_CARDS = 16;
 
     public static final int NDP_USICSUSIC24 = 78; // 'N' USIC/SUSIC 24 bit cards
@@ -347,6 +347,25 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
+     * ESP32CPNode fixed numbers: make every card position Output, except a chip
+     * port (cards 0-15) that is Input, with no cards past ESP32NODE_CARDS. A node
+     * saved with fewer cards (e.g. 54) then has all its CTs as soon as it is
+     * loaded. Does nothing for other node types.
+     */
+    public void setEsp32FixedCards() {
+        if (nodeType != ESP32NODE) {
+            return;
+        }
+        for (int i = 0; i < MAXCARDLOCATIONBYTES; i++) {
+            if (i >= ESP32NODE_CARDS) {
+                setCardTypeLocation(i, NO_CARD);
+            } else if (i >= ESP32NODE_INPUT_CARDS || !isInputCard(i)) {
+                setCardTypeLocation(i, OUTPUT_CARD);
+            }
+        }
+    }
+
+    /**
      * Get number of output cards.
      * @return number of output cards.
      */
@@ -507,7 +526,7 @@ public class SerialNode extends AbstractNode {
             // needed anywhere this type is handled (see DiagnosticFrame,
             // NodeConfigManagerFrame, which special-case CPNODE's onboard offset
             // and must NOT apply it to ESP32NODE).
-            // Fixed numbers: all 54 cards (chips, servo boards, no-pin cards) start as OUTPUT.
+            // Fixed numbers: all 64 cards (chips, servo boards, no-pin cards) start as OUTPUT.
             for (int i=0;i<ESP32NODE_CARDS;i++)
             {
              cardTypeLocation[i] = OUTPUT_CARD;
@@ -1212,7 +1231,7 @@ public class SerialNode extends AbstractNode {
                            }
                            // -------------------------------------------------
                            // Input and output byte count: fixed numbers, one
-                           // byte per card position (16 in, 54 out) -- see
+                           // byte per card position (16 in, 64 out) -- see
                            // ESP32NODE_CARDS
                            // -------------------------------------------------
                            initBytes[nInitBytes++] = (byte)ESP32NODE_INPUT_CARDS;

@@ -37,18 +37,17 @@ public class NodeConfigManagerFrameTest extends jmri.util.JmriJFrameTestBase {
         Assertions.assertEquals(16, m.getRowCount());
         f.nodeType = SerialNode.ESP32NODE;
         f.cpNodeOnboard = 0;
-        Assertions.assertEquals(54, m.getRowCount());
+        Assertions.assertEquals(64, m.getRowCount());
         int col = NodeConfigManagerFrame.CPnodeConfigModel.CARDNUM_COLUMN;
         Assertions.assertEquals("20", m.getValueAt(0, col).toString().trim().substring(0, 2));
         Assertions.assertTrue(m.getValueAt(16, col).toString().contains("40") && m.getValueAt(16, col).toString().contains("ch 0-7"));
         Assertions.assertTrue(m.getValueAt(31, col).toString().contains("ch 8-15"));
         Assertions.assertTrue(m.getValueAt(30, col).toString().contains("47"));
-        Assertions.assertEquals("not used", m.getValueAt(32, col).toString().trim());   // CT n257-n264
-        Assertions.assertEquals("logic 1-4", m.getValueAt(37, col).toString().trim());  // card 38: CT n301-n304
-        Assertions.assertEquals("logic 5-12", m.getValueAt(38, col).toString().trim());
-        Assertions.assertEquals("logic 125-128", m.getValueAt(53, col).toString().trim());
+        Assertions.assertEquals("logic 1-8", m.getValueAt(32, col).toString().trim());   // card 32: CT n257-n264
+        Assertions.assertEquals("logic 9-16", m.getValueAt(33, col).toString().trim());
+        Assertions.assertEquals("logic 249-256", m.getValueAt(63, col).toString().trim());  // card 63: CT n505-n512
 
-        // fixed numbers: cards 1-16 Output or Input (never No Card); 17-54 always Output, not editable
+        // fixed numbers: cards 0-15 Output or Input (never No Card); 16-63 always Output, not editable
         int type = NodeConfigManagerFrame.CPnodeConfigModel.CARDTYPE_COLUMN;
         String in = Bundle.getMessage("CardTypeInput");
         String out = Bundle.getMessage("CardTypeOutput");
