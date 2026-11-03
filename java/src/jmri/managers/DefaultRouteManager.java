@@ -24,9 +24,18 @@ public class DefaultRouteManager extends AbstractManager<Route> implements Route
     }
     
     final void addListeners(){
-        InstanceManager.getDefault(TurnoutManager.class).addVetoableChangeListener(this);
-        InstanceManager.getDefault(SensorManager.class).addVetoableChangeListener(this);
+        turnoutManager = InstanceManager.getDefault(TurnoutManager.class);
+        turnoutManager.addVetoableChangeListener(this);
+        sensorManager = InstanceManager.getDefault(SensorManager.class);
+        sensorManager.addVetoableChangeListener(this);
     }
+
+    /**
+     * The TurnoutManager and SensorManager this manager listens to for deletions, so that {@link #dispose()}
+     * stops listening to those, not to whatever the InstanceManager holds by then.
+     */
+    private TurnoutManager turnoutManager;
+    private SensorManager sensorManager;
 
     @Override
     public int getXMLOrder() {
@@ -128,8 +137,8 @@ public class DefaultRouteManager extends AbstractManager<Route> implements Route
     
     @Override
     public void dispose(){
-        InstanceManager.getDefault(TurnoutManager.class).removeVetoableChangeListener(this);
-        InstanceManager.getDefault(SensorManager.class).removeVetoableChangeListener(this);
+        turnoutManager.removeVetoableChangeListener(this);
+        sensorManager.removeVetoableChangeListener(this);
         super.dispose();
     }
 

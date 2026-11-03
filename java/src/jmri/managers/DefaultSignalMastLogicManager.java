@@ -32,10 +32,21 @@ public class DefaultSignalMastLogicManager
     }
 
     final void addListeners(){
-        InstanceManager.getDefault(LayoutBlockManager.class).addPropertyChangeListener(propertyBlockManagerListener);
-        InstanceManager.getDefault(SignalMastManager.class).addVetoableChangeListener(this);
-        InstanceManager.getDefault(TurnoutManager.class).addVetoableChangeListener(this);
+        layoutBlockManager = InstanceManager.getDefault(LayoutBlockManager.class);
+        layoutBlockManager.addPropertyChangeListener(propertyBlockManagerListener);
+        signalMastManager = InstanceManager.getDefault(SignalMastManager.class);
+        signalMastManager.addVetoableChangeListener(this);
+        turnoutManager = InstanceManager.getDefault(TurnoutManager.class);
+        turnoutManager.addVetoableChangeListener(this);
     }
+
+    /**
+     * The LayoutBlockManager, SignalMastManager and TurnoutManager this manager listens to, so that
+     * {@link #dispose()} stops listening to those, not to whatever the InstanceManager holds by then.
+     */
+    private LayoutBlockManager layoutBlockManager;
+    private SignalMastManager signalMastManager;
+    private TurnoutManager turnoutManager;
 
     /**
      * {@inheritDoc}
@@ -507,9 +518,9 @@ public class DefaultSignalMastLogicManager
     /** {@inheritDoc} */
     @Override
     public void dispose(){
-        InstanceManager.getDefault(LayoutBlockManager.class).removePropertyChangeListener(propertyBlockManagerListener);
-        InstanceManager.getDefault(SignalMastManager.class).removeVetoableChangeListener(this);
-        InstanceManager.getDefault(TurnoutManager.class).removeVetoableChangeListener(this);
+        layoutBlockManager.removePropertyChangeListener(propertyBlockManagerListener);
+        signalMastManager.removeVetoableChangeListener(this);
+        turnoutManager.removeVetoableChangeListener(this);
         super.dispose();
     }
 
