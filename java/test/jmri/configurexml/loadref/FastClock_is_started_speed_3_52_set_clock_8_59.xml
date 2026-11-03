@@ -12,7 +12,7 @@
       <systemName>IUInternalTimeProvider</systemName>
       <isRunning>yes</isRunning>
       <rate>3.52</rate>
-      <zonedDateTime>2025-12-03T07:59</zonedDateTime>
+      <zonedDateTime>2025-12-03T07:59ZEtc/GMT</zonedDateTime>
     </InternalDateTime>
     <InternalDateTime class="jmri.time.implementation.configurexml.SystemDateTimeXml">
       <systemName>IUSystemClock</systemName>
