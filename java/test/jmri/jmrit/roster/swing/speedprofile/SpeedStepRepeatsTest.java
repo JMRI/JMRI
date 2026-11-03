@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import jmri.util.JUnitUtil;
 
@@ -78,20 +79,18 @@ public class SpeedStepRepeatsTest {
         assertNotNull(e);
         assertEquals(1, e.step);
         SpeedStepRepeats.Samples fwd = e.forward;
-        assertEquals(20.0f, fwd.getFirst(), 1e-6f);
+        assertEquals(20.0f, Objects.requireNonNull(fwd.getFirst(), "first forward speed"), 1e-6f);
         assertEquals(Arrays.asList(21.0f, 22.0f, 20.0f), fwd.getRepeats());
         assertEquals(21.0f, fwd.mean(), 1e-6f);
         assertEquals(20.0f, fwd.min(), 1e-6f);
         assertEquals(22.0f, fwd.max(), 1e-6f);
-        Float spread = fwd.spreadPercent();
-        assertNotNull(spread);
+        Float spread = Objects.requireNonNull(fwd.spreadPercent(), "forward spread");
         assertEquals(100.0f / 21.0f, spread, 1e-4f, "half the range, as a percentage of the mean");
-        Float change = fwd.changePercent();
-        assertNotNull(change);
+        Float change = Objects.requireNonNull(fwd.changePercent(), "forward change");
         assertEquals(5.0f, change, 1e-4f, "the mean against the first run");
 
         SpeedStepRepeats.Samples rev = e.reverse;
-        assertEquals(18.0f, rev.getFirst(), 1e-6f);
+        assertEquals(18.0f, Objects.requireNonNull(rev.getFirst(), "first reverse speed"), 1e-6f);
         assertTrue(rev.getRepeats().isEmpty());
         assertNull(rev.spreadPercent());
         assertNull(rev.changePercent());

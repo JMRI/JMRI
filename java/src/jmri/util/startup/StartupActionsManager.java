@@ -392,9 +392,6 @@ public class StartupActionsManager extends AbstractPreferencesManager {
                 continue;
             }
             StartupActionFactory factory = memo.getActionFactory();
-            if (factory == null) {
-                continue;
-            }
             for (Class<?> clazz : factory.getActionClasses()) {
                 if (clazz.getName().equals(className)) {
                     result.add(memo);
