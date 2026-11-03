@@ -28,6 +28,15 @@ public class ZTC611XNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest{
         // We do not send off messages to the ZTC 611
     }
 
+    @Override
+    protected void checkBroadcastAcknowledged(int sent, boolean sensorFeedback) {
+        assertEquals(sent, lnis.outbound.size(), "ZTC611 acknowledges feedback without an off message");
+        assertEquals(Turnout.THROWN, t.getKnownState(), "ZTC611 completes the commanded state");
+        ((ZTC611XNetTurnout) t).message(new XNetReply("01 04 05"));
+        assertEquals(sent, lnis.outbound.size(), "OK does not send an off message");
+        assertEquals(Turnout.THROWN, t.getKnownState());
+    }
+
     // Test the XNetTurnout message sequence.
     @Test
     @Override
