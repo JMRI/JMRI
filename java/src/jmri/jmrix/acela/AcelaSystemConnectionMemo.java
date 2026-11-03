@@ -88,7 +88,6 @@ public class AcelaSystemConnectionMemo extends DefaultSystemConnectionMemo imple
         getTrafficController().setSensorManager(getSensorManager());
 
         InstanceManager.setTurnoutManager(getTurnoutManager());
-        getTrafficController().setTurnoutManager(getTurnoutManager());
 
         register(); // registers general type
     }
