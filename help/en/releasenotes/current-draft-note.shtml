@@ -870,6 +870,15 @@
                 split into or joined from, how it is detected, and its length
                 from each source. Nothing uses it yet, so nothing
                 changes for users.</li>
+            <li>The operator can now tell train tracking where trains are: in the
+                Block dialog, choose the train in "Train here" and press
+                Confirm, or press Clear Block when no train is there; on a
+                Layout Editor panel in operating mode, drag a loco marker onto
+                a Block's track. This changes only train tracking's record of
+                the train, not Dispatcher or Warrants. Panels whose items don't
+                control the layout show the dialog without these. JMRI's
+                permissions can limit who may do it (Train tracking: Correct
+                where trains are); everyone may by default.</li>
             <li>For developers: a new page, <a href=
                 "https://www.jmri.org/help/en/html/doc/Technical/simulatedtrains.shtml">Writing
                 Tests with Simulated Trains</a>, explains how to write tests with simulated
