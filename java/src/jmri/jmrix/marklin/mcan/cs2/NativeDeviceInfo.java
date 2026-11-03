@@ -47,15 +47,25 @@ public final class NativeDeviceInfo {
     public int  softwareVersion() { return softwareVersion; }
     public int  hash()            { return hash; }
 
-    /** True when UID is the broadcast address (0x00000000). */
+    /**
+     * True when UID is the broadcast address (0x00000000).
+     *
+     * @return true if the UID is the broadcast address
+     */
     public boolean isBroadcast()    { return uid.isBroadcast(); }
 
-    /** True when UID is the uninitialized sentinel (0xFFFFFFFF). */
+    /**
+     * True when UID is the uninitialized sentinel (0xFFFFFFFF).
+     *
+     * @return true if the UID is the uninitialized sentinel
+     */
     public boolean isUninitialized() { return uid.isUninitialized(); }
 
     /**
      * True when the hash in this reply matches the hash derivable from the UID.
      * A mismatch indicates either a hash collision or a non-standard device.
+     *
+     * @return true if the stored hash matches the hash derived from the UID
      */
     public boolean isHashValid() {
         int expected = uid.calculateHash();
@@ -67,6 +77,9 @@ public final class NativeDeviceInfo {
     /**
      * Returns a human-readable name for a device type code.
      * Unknown types return a formatted hex string.
+     *
+     * @param deviceType the device type code
+     * @return the human-readable device type name
      */
     public static String deviceTypeName(int deviceType) {
         switch (deviceType) {
