@@ -2,6 +2,9 @@ package jmri.jmrix.openlcb.swing.lccpro;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -36,6 +39,8 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
 
     CanSystemConnectionMemo memo;
     MimicNodeStore nodestore;
+    private final Set<MimicNodeStore.NodeMemo> listenedNodeMemos = new HashSet<>();
+    private final AtomicBoolean tableUpdatePending = new AtomicBoolean(false);
     
     public LccProTableModel(CanSystemConnectionMemo memo) {
         this.memo = memo;
@@ -48,15 +53,57 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
 
     @Override
     public void propertyChange(PropertyChangeEvent e) {
-        // set this up to fireTableDataChanged() when a new node appears
         log.trace("received {}", e);
-        // SNIP might take a bit, so fire slightly later
-        jmri.util.ThreadingUtil.runOnGUIDelayed( ()->{ 
-            fireTableDataChanged(); 
-        }, 250);
-        jmri.util.ThreadingUtil.runOnGUIDelayed( ()->{ 
-            fireTableDataChanged(); 
-        }, 1000);
+        if (e.getSource() == nodestore) {
+            if (MimicNodeStore.CLEAR_ALL_NODES.equals(e.getPropertyName())) {
+                clearNodeMemoListeners();
+                requestTableUpdate();
+            } else if (MimicNodeStore.ADD_PROP_NODE.equals(e.getPropertyName())
+                    && e.getNewValue() instanceof MimicNodeStore.NodeMemo) {
+                MimicNodeStore.NodeMemo nodeMemo = (MimicNodeStore.NodeMemo) e.getNewValue();
+                synchronized (listenedNodeMemos) {
+                    if (listenedNodeMemos.add(nodeMemo)) {
+                        nodeMemo.addPropertyChangeListener(this);
+                    }
+                }
+                requestTableUpdate();
+            }
+            return;
+        }
+
+        if (e.getSource() instanceof MimicNodeStore.NodeMemo) {
+            // The node collection can change while the event is queued on the EDT,
+            // so a row-specific update may no longer refer to a valid sorter row.
+            requestTableUpdate();
+        }
+    }
+
+    /**
+     * Ask for the whole table to be redrawn on the GUI (Swing) thread.
+     * <p>
+     * The events come from the thread handling OpenLCB messages, which must
+     * not wait for Swing, so the update is queued rather than run and waited
+     * for. While one update is queued, further requests are covered by it: a
+     * burst of node replies, as at start-up, gives one redraw, not one each.
+     */
+    private void requestTableUpdate() {
+        if (tableUpdatePending.compareAndSet(false, true)) {
+            jmri.util.ThreadingUtil.runOnGUIEventually(() -> {
+                // cleared before the redraw, so a change arriving during it
+                // queues another update rather than being lost
+                tableUpdatePending.set(false);
+                fireTableDataChanged();
+            });
+        }
+    }
+
+    private void clearNodeMemoListeners() {
+        synchronized (listenedNodeMemos) {
+            for (MimicNodeStore.NodeMemo nodeMemo : listenedNodeMemos) {
+                nodeMemo.removePropertyChangeListener(this);
+            }
+            listenedNodeMemos.clear();
+        }
     }
 
     @Override
@@ -262,6 +309,7 @@ public class LccProTableModel extends DefaultTableModel implements PropertyChang
     // drop listeners
     public void dispose() {
         nodestore.removePropertyChangeListener(this);
+        clearNodeMemoListeners();
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LccProTableModel.class);

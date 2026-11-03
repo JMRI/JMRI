@@ -118,6 +118,9 @@
                 <li>CBUS Reporters with erase-on-timeout: reading the same
                     tag again restarts the timeout, so a tag still being read is
                     no longer cleared early.</li>
+                <li>CBUS and LCC network connections using GridConnect: frames
+                    are sent at once, instead of TCP holding a frame back while
+                    an earlier one is unacknowledged (TCP_NODELAY).</li>
                 <li>CBUS node number requests: closing the connection, or
                     turning off listening for node number requests, now stops a
                     request that has just arrived from opening the node number
@@ -659,6 +662,11 @@
              <li>Automatic release of Sections is faster when many Sections
                  are allocated, as each check now goes through the allocated
                  Sections once. Which Sections are released is unchanged.</li>
+             <li>An automatic train no longer sometimes takes its next Block
+                 to belong to another train when one of its Sections is
+                 released at the same moment. Before, a warning was written
+                 that the new current signal mast is null, and the train's
+                 speed was set from its allocations instead.</li>
              <li>Automatic allocation now plans meets in passing loops for
                  opposing trains on single track, including trains running their
                  Transit in reverse; before, meet planning never took effect. A
@@ -922,6 +930,10 @@
                 Removing one of several connections of the same type (for
                 example two CBUS connections) no longer hides the Start Up
                 actions of the others.</li>
+            <li>The session log now records how long the Start Up actions took:
+                the total, then a line for each action with its time, in the
+                order they were performed, so that a slow start can be traced
+                to its cause.</li>
         </ul>
 
     <h3>Resources</h3>
