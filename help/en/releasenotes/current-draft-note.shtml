@@ -1077,6 +1077,7 @@
             <li>Roster functions editor panel now supports drag'n drop of a roster entry function (from another roster media window, function labels pane), that function properties will be copied to the targetted one</li>
             <li>Throttles Preferences pane allows to define the default throttle layout for new throttles (NMRA of NEM, see bellow), or custom. NMRA selected as a default. (see <a href="https://github.com/JMRI/JMRI/issues/15523"> #15523 </a>)</li>
             <li>Throttle address selector now shows the all roster group by default (see <a href="https://github.com/JMRI/JMRI/issues/15730"> #15730 </a>)</li>
+            <li>Throttle list window now unminimizes a throttle window when it is selected if it was minimized (see <a href="https://github.com/JMRI/JMRI/issues/15734"> #15734 </a>)</li>
         </ul>
 
     <h3>Timetable</h3>
