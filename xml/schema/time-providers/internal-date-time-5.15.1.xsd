@@ -45,7 +45,7 @@
 
               <xs:element name="isRunning" type="yesNoType" minOccurs="0" maxOccurs="1"/>
               <xs:element name="rate" type="xs:float" minOccurs="0" maxOccurs="1"/>
-              <xs:element name="localDateTime" type="xs:string" minOccurs="0" maxOccurs="1" />
+              <xs:element name="zonedDateTime" type="xs:string" minOccurs="0" maxOccurs="1" />
 
             </xs:sequence>
             
