@@ -120,7 +120,7 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
             log.debug("Sensor Def Reply received: '{}'", l);
             if (l.getSensorDefNumInt() == address) {
                 log.debug("Def Message for sensor {} (Pin {})", systemName, address);
-                setOwnState(Sensor.UNKNOWN);
+                setOwnState(Sensor.UNKNOWN, l.getReceivedTime());
                 l.getProperties().forEach((key, value) -> {
                     this.setProperty(key, value); //copy the defining properties from message to sensor
                 });
@@ -128,11 +128,11 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
         } else if (l.isSensorReply() && (l.getSensorNumInt() == address)) {
                 log.debug("Message for sensor {} (Pin {})", systemName, address);
             if (l.getSensorIsActive()) {
-                setOwnState(_inverted ? Sensor.INACTIVE : Sensor.ACTIVE);
+                setOwnState(_inverted ? Sensor.INACTIVE : Sensor.ACTIVE, l.getReceivedTime());
             } else if (l.getSensorIsInactive()){
-                setOwnState(_inverted ? Sensor.ACTIVE : Sensor.INACTIVE);
+                setOwnState(_inverted ? Sensor.ACTIVE : Sensor.INACTIVE, l.getReceivedTime());
             } else {
-                setOwnState(Sensor.UNKNOWN);
+                setOwnState(Sensor.UNKNOWN, l.getReceivedTime());
             }
         }
     }

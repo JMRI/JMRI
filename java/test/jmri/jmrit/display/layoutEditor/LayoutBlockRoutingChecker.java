@@ -118,6 +118,8 @@ class LayoutBlockRoutingChecker {
      * Compare every route in every table with the expected values, and look
      * for routes that should be held but are not.
      *
+     * @param count a one-element array whose element is increased by the
+     *              number of routes compared
      * @return a description of the routes that differ, empty if none; a
      *         route that can not reach its destination starts "unreachable"
      *         and one that should be held but is not starts "missing"

@@ -91,8 +91,8 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
             element.addContent(new Element("quietfail").addContent("yes"));  // NOI18N
         }
 
-        if (p.isSkipGuiFix()) {
-            element.addContent(new Element("skipguifix").addContent("yes"));  // NOI18N
+        if (p.isDoubleClickEnabled()) {
+            element.addContent(new Element("enabledoubleclick").addContent("yes"));  // NOI18N
         }
 
         for (int k = 0; k < editors.size(); k++) {
@@ -252,8 +252,13 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
             eep.setQuietFail(true);
         }
 
+        // Convert the old setting.
         if (shared.getChild("skipguifix") != null && shared.getChild("skipguifix").getText().equals("yes")) {  // NOI18N
-            eep.setSkipGuiFix(true);
+            eep.setEnableDoubleClick(true);
+        }
+
+        if (shared.getChild("enabledoubleclick") != null && shared.getChild("enabledoubleclick").getText().equals("yes")) {  // NOI18N
+            eep.setEnableDoubleClick(true);
         }
 
         List<Element> panelList = shared.getChildren("layoutPanel");  // NOI18N

@@ -97,6 +97,7 @@ public class Track extends PropertyChangeSupport {
                                             // cars en-route
     protected int _mode = MATCH; // default is match mode
     protected boolean _holdCustomLoads = false; // hold cars with custom loads
+    protected boolean _hit = false;
 
     // drop & pick up options
     protected String _dropOption = ANY; // controls which route or train can set
@@ -1925,7 +1926,7 @@ public class Track extends PropertyChangeSupport {
         return _scheduleId;
     }
 
-    public void setScheduleId(String id) {
+    protected void setScheduleId(String id) {
         String old = _scheduleId;
         _scheduleId = id;
         if (!old.equals(id)) {
@@ -2007,7 +2008,7 @@ public class Track extends PropertyChangeSupport {
             log.warn("Can not find schedule ({}) assigned to track ({})", getScheduleId(), getName());
             return null;
         }
-        List<ScheduleItem> items = sch.getItemsBySequenceList();
+        List<ScheduleItem> items = getScheduleList();
         ScheduleItem nextSi = null;
         for (int i = 0; i < items.size(); i++) {
             nextSi = items.get(i);
@@ -2022,6 +2023,30 @@ public class Track extends PropertyChangeSupport {
             }
         }
         return nextSi;
+    }
+    
+    private List<ScheduleItem> getScheduleList() {
+        if (getScheduleMode() == MATCH) {
+            List<ScheduleItem> items = getSchedule().getItemsByHitList();
+            if (getScheduleItemHit()) {
+                setScheduleItemHit(false);
+                // reset
+                setScheduleItemId(items.get(items.size() - 1).getId());
+            }
+            return items;
+        }
+        return getSchedule().getItemsBySequenceList();
+    }
+    
+    private void setScheduleItemHit(boolean hit) {
+        _hit = hit;
+    }
+    
+    /*
+     * return true if any schedule items had a match
+     */
+    private boolean getScheduleItemHit() {
+        return _hit;
     }
 
     /**
@@ -2120,6 +2145,7 @@ public class Track extends PropertyChangeSupport {
             if (si != null) {
                 // bump hit count for this schedule item
                 si.setHits(si.getHits() + 1);
+                setScheduleItemHit(true);
                 return OKAY;
             }
             log.debug("Schedule id ({}) not valid for track ({})", car.getScheduleItemId(), getName());

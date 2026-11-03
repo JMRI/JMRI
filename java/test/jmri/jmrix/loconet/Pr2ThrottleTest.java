@@ -11,10 +11,11 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2017
  */
+@SuppressWarnings("deprecation")
 public class Pr2ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     private LocoNetSystemConnectionMemo memo;
- 
+
     @Test
     public void testCTor() {
         Assert.assertNotNull("exists",instance);

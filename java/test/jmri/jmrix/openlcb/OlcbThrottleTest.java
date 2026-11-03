@@ -13,6 +13,7 @@ import org.openlcb.*;
  *
  * @author Bob Jacobsen Copyright 2008, 2010, 2011
  */
+@SuppressWarnings("deprecation")
 public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     private static OlcbSystemConnectionMemoScaffold memo;

@@ -306,6 +306,73 @@
       <p>The NCE USB Interface can be connected to all NCE systems, Power Cab, SB3 (SmartBooster),
       SB5, Twin or Power Pro. You must select the correct system from the preference menu for
       reliable operation.</p>
+      <p>Depending on the jumper settings, which depends on what system it is connecting to, will also select the baud rate.
+      	Here is a table of the jumper settings:
+      </p>
+      	
+      <table>
+      	<thead>
+      		<tr>
+      			<th>DCC System Name</th>
+      			<th>DCC System Firmware Version</th>
+      			<th>Jumper JP2</th>
+      			<th>Jumper JP3</th>
+      			<th>Jumper JP4</th>
+      			<th>Baud Rate</th>
+      			<th>USB Cab Address</th>
+      			<th>Version reported to PC</th>
+      			<th>Accessory Address Range</th>
+      			<th>Accessory Ops Mode Program?</th>
+      			<th>Locomotive Ops Mode Program></th>
+      			<th>Prog Track Support?</th>
+      			<th>AIU Read Back?</th>
+      			<th>CS Memory Access?</th>
+      		</tr>
+      		<tr>
+      			<td>PowerCab</td><td>1.28c</td><td>off</td><td>off</td><td>off</td>
+      			<td>9600</td><td>3</td><td>7.3.0</td>
+      			<td>1-2044</td><td>Yes</td><td>Yes</td>
+      			<td>Yes</td><td>No</td><td>No</td>
+    		</tr>
+      		<tr>
+      			<td>SB5 or SB3a</td><td>1.65</td><td>off</td><td>off</td><td><b>ON</b></td>
+      			<td>19200</td><td>Set by PC</td><td>7.3.1</td>
+      			<td>1-2044</td><td>Yes</td><td>Yes</td>
+      			<td>No</td><td>Yes</td><td>Yes</td>
+    		</tr>
+      		<tr>
+      			<td>SB5 or SB3a</td><td>1.65</td><td>off</td><td><b>ON</b></td><td>off</td>
+      			<td>9600</td><td>Set by PC</td><td>7.3.2</td>
+      			<td>1-2044</td><td>Yes</td><td>Yes</td><td>No</td><td>Yes</td><td>Yes</td>
+    		</tr>
+      		<tr>
+      			<td>PowerCab or Twin</td><td>1.28c</td><td>off</td><td><b>ON</b></td><td><b>ON</b></td>
+      			<td>19200</td><td>Set by PC</td><td>7.3.3</td>
+      			<td>1-2044</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td>
+    		</tr>
+      		<tr>
+      			<td>PowerCab</td><td>1.28c</td><td><b>ON</b></td><td>off</td><td>off</td>
+      			<td>9600</td><td>3</td><td>7.3.4</td>
+      			<td>1-250</td><td>Yes</td><td>Yes</td><td>Yes</td><td>No</td><td>No</td>
+    		</tr>
+      		<tr>
+      			<td>SB3 or SB3a</td><td>1.28d</td><td><b>ON</b></td><td>off</td><td><b>ON</b></td>
+      			<td>19200</td><td>Set by PC</td><td>7.3.5</td>
+      			<td>1-250</td><td>Yes</td><td>Yes</td><td>No</td><td>No</td><td>No</td>
+    		</tr>
+      		<tr>
+      			<td>PowerPro</td><td>3.1.07</td><td><b>ON</b></td><td><b>ON</b></td><td>off</td>
+      			<td>9600</td><td>Set by PC</td><td>7.3.6</td>
+      			<td>1-2044</td><td>No</td><td>No</td><td>No</td><td>Yes</td><td>No</td>
+    		</tr>
+      		<tr>
+      			<td>All Systems</td><td>1.65</td><td><b>ON</b></td><td><b>ON</b></td><td><b>ON</b></td>
+      			<td>19200</td><td>Set by PC</td><td>7.3.7</td>
+      			<td>1-2044</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td><td>Yes</td>
+    		</tr>
+      	</thead>
+      </table>
+      <p><i>This table was based on NCE documentation released around Feb 2021, but the paper copy still reads 27 Sep 2012.</i></p>
 
       <ul>
         <li>On most computers, you'll need to install a driver for the <a href=
@@ -346,15 +413,14 @@
 
         <li>Select "NCE USB" from the top selection box. You can then select the proper serial port
         in the second selection box.</li>
+        
+        <li>Depending on jumper settings, you may need to select 9,600 or 19,200 baud. Use the table above.</li>
 
         <li>If given the option to select a baud rate choose 9,600 which is the default for
         NCE.</li>
 
         <li>Select the type of system that you are connecting the USB adapter to, Power Cab, SB3,
         or Power Pro (PowerHouse). The default is Power Cab, no jumpers installed.</li>
-
-        <li>Now confirm that the adapter's baud rate is also set for 9,600 by removing jumper #1.
-        Installing jumper #1 sets the baud rate to 19,200.</li>
 
         <li>The series of radio buttons labeled "GUI style" allows you to select how the program
         will look. "Metal" is the native Java look available on all types. Other choices will vary

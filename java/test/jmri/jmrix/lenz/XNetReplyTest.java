@@ -391,7 +391,26 @@ public class XNetReplyTest extends jmri.jmrix.AbstractMessageTestBase {
                 "Broadcast Turnout Message Address for Feedback Other message");
     }
 
-    // getting the feedback message type (turnout without feedback, 
+    @Test
+    public void testMixedBroadcastTurnoutMsgAddr() {
+        XNetReply r = new XNetReply("48 05 29 06 48 07 91 08 60 00");
+        r.setParity();
+        assertTrue(r.checkParity());
+        assertEquals(21, r.getTurnoutMsgAddr(1), "turnout with feedback");
+        assertEquals(-1, r.getTurnoutMsgAddr(3), "encoder is not a turnout");
+        assertEquals(31, r.getTurnoutMsgAddr(5), "upper turnout nibble");
+        assertEquals(-1, r.getTurnoutMsgAddr(7), "reserved type is not a turnout");
+
+        r = new XNetReply("48 08 60 07 91 06 48 05 29 00");
+        r.setParity();
+        assertTrue(r.checkParity());
+        assertEquals(-1, r.getTurnoutMsgAddr(1), "reserved type first");
+        assertEquals(31, r.getTurnoutMsgAddr(3), "turnout after reserved type");
+        assertEquals(-1, r.getTurnoutMsgAddr(5), "encoder before turnout");
+        assertEquals(21, r.getTurnoutMsgAddr(7), "last turnout pair");
+    }
+
+    // getting the feedback message type (turnout without feedback,
     // turnout with feedback, or sensor)
     @Test
     public void testGetFeedbackMessageType() {

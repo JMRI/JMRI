@@ -138,9 +138,9 @@ public class MarklinSendBootActionTest {
         assertEquals(0x00, bootMessage.getElement(0), "Element 0 (high bits)");
         assertEquals(0x36, bootMessage.getElement(1), "Element 1 (low bits)");
 
-        // Hash bytes should be from MarklinConstants
-        assertEquals(0x47, bootMessage.getElement(2), "Element 2 (hash byte 1)"); // MarklinConstants.HASHBYTE1
-        assertEquals(0x11, bootMessage.getElement(3), "Element 3 (hash byte 2)"); // MarklinConstants.HASHBYTE2
+        // Hash bytes are now the broadcast hash 0x0300 (CS2 fingerprint)
+        assertEquals(0x03, bootMessage.getElement(2), "Element 2 (hash byte 1)");
+        assertEquals(0x00, bootMessage.getElement(3), "Element 3 (hash byte 2)");
 
         // DLC should be 5
         assertEquals(0x05, bootMessage.getElement(4), "Element 4 (DLC)");

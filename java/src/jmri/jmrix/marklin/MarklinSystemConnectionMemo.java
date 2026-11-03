@@ -35,7 +35,6 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnect
 
     public MarklinSystemConnectionMemo() {
         super("M", "Marklin-CS2");
-        register(); // registers general type
         InstanceManager.store(this, MarklinSystemConnectionMemo.class); // also register as specific type
         //Needs to be implemented
         InstanceManager.store(cf = new jmri.jmrix.marklin.swing.MarklinComponentFactory(this),
@@ -84,6 +83,11 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnect
         store(sensorManager, SensorManager.class);
         jmri.InstanceManager.setSensorManager(sensorManager);
 
+        McanDeviceManager mcanDeviceManager = new McanDeviceManager(this);
+        store(mcanDeviceManager, McanDeviceManager.class);
+        jmri.InstanceManager.store(mcanDeviceManager, McanDeviceManager.class);
+        getSeniorThrottleService();
+
         register();
     }
 
@@ -117,15 +121,43 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnect
         return (MarklinPowerManager)get(PowerManager.class);
     }
 
+    public McanDeviceManager getMcanDeviceManager() {
+        return get(McanDeviceManager.class);
+    }
+
+    private SeniorThrottleService seniorThrottleService;
+    private Ms2LocoInfoService ms2LocoInfoService;
+
+    public synchronized SeniorThrottleService getSeniorThrottleService() {
+        if (seniorThrottleService == null) {
+            seniorThrottleService = new SeniorThrottleService(
+                    java.util.Objects.requireNonNull(getMcanDeviceManager(), "MCAN manager not configured"));
+        }
+        return seniorThrottleService;
+    }
+
+    public synchronized Ms2LocoInfoService getMs2LocoInfoService() {
+        if (ms2LocoInfoService == null) {
+            ms2LocoInfoService = new Ms2LocoInfoService(this);
+        }
+        return ms2LocoInfoService;
+    }
+
     @Override
     public void dispose() {
-        et = null;
+        if (ms2LocoInfoService != null) {
+            ms2LocoInfoService.dispose();
+        }
+        if (seniorThrottleService != null) {
+            seniorThrottleService.dispose();
+        }
         InstanceManager.deregister(this, MarklinSystemConnectionMemo.class);
         if (cf != null) {
             InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
         }
 
         super.dispose();
+        et = null;
     }
 
 }

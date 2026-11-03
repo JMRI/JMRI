@@ -22,13 +22,13 @@ public class MarklinLightTest extends jmri.implementation.AbstractLightTestBase 
 
     @Override
     public void checkOnMsgSent() {
-        assertEquals("00 16 47 11 06 00 00 38 00 01 01 00 00",
+        assertEquals("00 16 03 00 06 00 00 38 00 01 01 00 00",
                 tc.getSentMessages().get(0).toString());
     }
 
     @Override
     public void checkOffMsgSent() {
-        assertEquals("00 16 47 11 06 00 00 38 00 00 01 00 00",
+        assertEquals("00 16 03 00 06 00 00 38 00 00 01 00 00",
                 tc.getSentMessages().get(0).toString());
     }
 
@@ -50,8 +50,7 @@ public class MarklinLightTest extends jmri.implementation.AbstractLightTestBase 
                 assertEquals(state, light.getState(), "release must not change the light state");
             }
 
-            MarklinReply reply = new MarklinReply();
-            reply.setCommand(MarklinConstants.ACCCOMMANDSTART);
+            MarklinReply reply = accessoryReply();
             reply.setAddress(wireAddress);
             int sent = tc.getSentMessages().size();
             reply.setElement(9, 1);
@@ -69,8 +68,7 @@ public class MarklinLightTest extends jmri.implementation.AbstractLightTestBase 
     @Test
     public void testFeedbackFiltering() {
         MarklinLight light = (MarklinLight) t;
-        MarklinReply reply = new MarklinReply();
-        reply.setCommand(MarklinConstants.ACCCOMMANDSTART);
+        MarklinReply reply = accessoryReply();
         reply.setAddress(MarklinConstants.MM1ACCSTART);
         reply.setElement(9, 1);
         light.reply(reply);
@@ -86,6 +84,15 @@ public class MarklinLightTest extends jmri.implementation.AbstractLightTestBase 
         assertEquals(0, tc.getSentMessages().size());
     }
 
+    /** Accessory frame with a CS2-fingerprinted hash (0x0300) and DLC=6. */
+    private static MarklinReply accessoryReply() {
+        MarklinReply reply = new MarklinReply();
+        reply.setCommand(MarklinConstants.ACCCOMMANDSTART);
+        reply.setElement(2, 0x03);
+        reply.setElement(4, 6);
+        return reply;
+    }
+
     @Test
     public void testInvalidStateDoesNotSend() {
         assertThrows(IllegalArgumentException.class, () -> t.setState(Light.UNKNOWN));
@@ -96,7 +103,7 @@ public class MarklinLightTest extends jmri.implementation.AbstractLightTestBase 
     public void testDisposeReleasesOutput() {
         t.setState(Light.ON);
         t.dispose();
-        assertEquals("00 16 47 11 06 00 00 38 00 01 00 00 00", tc.getLastMessageSent().toString());
+        assertEquals("00 16 03 00 06 00 00 38 00 01 00 00 00", tc.getLastMessageSent().toString());
         assertEquals(0, numListeners());
     }
 

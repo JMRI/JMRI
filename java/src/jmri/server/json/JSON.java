@@ -550,6 +550,12 @@ public final class JSON {
      * @since 1.1
      */
     public static final String EMPTIES = "empties";
+    
+    /**
+     * {@value #COMMENT_TERMINATION}
+     *
+     */
+    public static final String COMMENT_TERMINATION = "commentTermination";
 
     /* JSON signalling tokens */
     /**

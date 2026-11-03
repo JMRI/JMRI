@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.beans.PropertyChangeListener;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -79,8 +80,7 @@ public class DestinationPointsRouteSettingTest {
      * @param name the name of the sensor
      */
     private void click(String name) {
-        Sensor sensor = sm.getSensor(name);
-        assertNotNull(sensor, name);
+        Sensor sensor = Objects.requireNonNull(sm.getSensor(name), name);
         sensor.setCommandedState(sensor.getKnownState() == Sensor.ACTIVE ? Sensor.INACTIVE : Sensor.ACTIVE);
     }
 
@@ -88,13 +88,13 @@ public class DestinationPointsRouteSettingTest {
      * Make sure no NX button of the route is selected before the clicks of a test.
      */
     private void releaseButtons() {
-        sm.getSensor("NX-Left-TO-A").setCommandedState(Sensor.INACTIVE);
-        sm.getSensor("NX-Right-TO-B").setCommandedState(Sensor.INACTIVE);
+        Objects.requireNonNull(sm.getSensor("NX-Left-TO-A"), "NX-Left-TO-A").setCommandedState(Sensor.INACTIVE);
+        Objects.requireNonNull(sm.getSensor("NX-Right-TO-B"), "NX-Right-TO-B").setCommandedState(Sensor.INACTIVE);
     }
 
     @Test
-    public void testTurnoutsSetOnLayoutThreadWithOldGuiBehavior() {
-        eep.setSkipGuiFix(true);
+    public void testTurnoutsSetOnLayoutThreadWithDoubleClick() {
+        eep.setEnableDoubleClick(true);
         eep.turnoutSetDelay = 300;
         requestRoute();
         JUnitUtil.waitFor(commanded::get, "turnout commanded");
@@ -115,7 +115,7 @@ public class DestinationPointsRouteSettingTest {
 
     @Test
     public void testTurnoutsSetOnLayoutThread() {
-        eep.setSkipGuiFix(false);
+        eep.setEnableDoubleClick(false);
         requestRoute();
         JUnitUtil.waitFor(commanded::get, "turnout commanded");
         JUnitUtil.waitFor(this::isRouteSet, "route set");
@@ -127,10 +127,10 @@ public class DestinationPointsRouteSettingTest {
     }
 
     @Test
-    public void testTurnoutListenerOccupiesRouteBlockWithOldGuiBehavior() {
+    public void testTurnoutListenerOccupiesRouteBlockWithDoubleClick() {
         // Something listening to the turnout, for example a Logix, reports the train in the
         // first block of the route as soon as the turnout is commanded
-        eep.setSkipGuiFix(true);
+        eep.setEnableDoubleClick(true);
         Sensor firstBlockSensor = sm.provideSensor("S-Left-TO");
         PropertyChangeListener trainMoves = e -> {
             if (Turnout.PROPERTY_COMMANDED_STATE.equals(e.getPropertyName())) {
@@ -150,7 +150,7 @@ public class DestinationPointsRouteSettingTest {
 
     @Test
     public void testClearDownWhileTurnoutsAreSet() {
-        eep.setSkipGuiFix(false);
+        eep.setEnableDoubleClick(false);
         eep.turnoutSetDelay = 500;
         PropertyChangeListener cancel = e -> {
             if (Turnout.PROPERTY_COMMANDED_STATE.equals(e.getPropertyName())) {
@@ -207,10 +207,10 @@ public class DestinationPointsRouteSettingTest {
     }
 
     @Test
-    public void testDoubleClickWithOldGuiBehavior() {
+    public void testDoubleClickWithDoubleClick() {
         // A second click on the destination is handled after the route has been set, so it does
         // not cancel the route
-        eep.setSkipGuiFix(true);
+        eep.setEnableDoubleClick(true);
         eep.setClearDownOption(EntryExitPairs.AUTOCANCEL);
         eep.turnoutSetDelay = 300;
         ThreadingUtil.runOnLayout(() -> {
@@ -224,14 +224,16 @@ public class DestinationPointsRouteSettingTest {
         ThreadingUtil.runOnLayout(() -> { });
         ThreadingUtil.runOnLayout(() -> { });
         assertTrue(dp.isActive(), "route not cancelled by the second click");
-        assertEquals(Sensor.ACTIVE, sm.getSensor("NX-Right-TO-B").getKnownState(), "second click handled");
+        assertEquals(Sensor.ACTIVE,
+                Objects.requireNonNull(sm.getSensor("NX-Right-TO-B"), "NX-Right-TO-B").getKnownState(),
+                "second click handled");
     }
 
     @Test
-    public void testHeldClickWritesSensorOnceWithOldGuiBehavior() throws JmriException {
+    public void testHeldClickWritesSensorOnceWithDoubleClick() throws JmriException {
         // A click on another NX button while a route is set is held back and handled when the
         // route is complete, without the sensor of that button being written again
-        eep.setSkipGuiFix(true);
+        eep.setEnableDoubleClick(true);
         eep.turnoutSetDelay = 300;
         Sensor other = sm.provideSensor("NX-Left-EB");
         other.setState(Sensor.INACTIVE);
@@ -260,10 +262,10 @@ public class DestinationPointsRouteSettingTest {
     }
 
     @Test
-    public void testErrorWhileCompletingRouteWithOldGuiBehavior() throws JmriException {
+    public void testErrorWhileCompletingRouteWithDoubleClick() throws JmriException {
         // Something listening to the NX buttons fails when the route updates them, both when
         // the route is completed and again when the failure is handled
-        eep.setSkipGuiFix(true);
+        eep.setEnableDoubleClick(true);
         eep.turnoutSetDelay = 300;
         AtomicBoolean armed = new AtomicBoolean(false);
         AtomicInteger failures = new AtomicInteger();
@@ -274,8 +276,8 @@ public class DestinationPointsRouteSettingTest {
                 throw new IllegalStateException("listener failed");
             }
         };
-        Sensor srcSensor = sm.getSensor("NX-Left-TO-A");
-        Sensor destSensor = sm.getSensor("NX-Right-TO-B");
+        Sensor srcSensor = Objects.requireNonNull(sm.getSensor("NX-Left-TO-A"), "NX-Left-TO-A");
+        Sensor destSensor = Objects.requireNonNull(sm.getSensor("NX-Right-TO-B"), "NX-Right-TO-B");
         Sensor other = sm.provideSensor("NX-Left-EB");
         other.setState(Sensor.INACTIVE);
         PointDetails otherPd = eep.getPointDetails(other, panel);
@@ -304,7 +306,7 @@ public class DestinationPointsRouteSettingTest {
     public void testDoubleClickCancelsRoute() {
         // Without the old GUI behavior a second click on the destination while the route is set
         // cancels the route
-        eep.setSkipGuiFix(false);
+        eep.setEnableDoubleClick(false);
         eep.setClearDownOption(EntryExitPairs.AUTOCANCEL);
         eep.turnoutSetDelay = 300;
         ThreadingUtil.runOnLayout(() -> {
@@ -347,8 +349,8 @@ public class DestinationPointsRouteSettingTest {
         assertNotNull(destMast);
 
         // Use a temporary signal mast logic, as created by NX when no stored logic exists
-        SignalMastLogic stored = smlm.getSignalMastLogic(sourceMast);
-        assertNotNull(stored);
+        SignalMastLogic stored = Objects.requireNonNull(smlm.getSignalMastLogic(sourceMast),
+                "stored signal mast logic of Left-TO-A");
         ThreadingUtil.runOnGUI(() -> smlm.removeSignalMastLogic(stored));
         assertNull(smlm.getSignalMastLogic(sourceMast));
 

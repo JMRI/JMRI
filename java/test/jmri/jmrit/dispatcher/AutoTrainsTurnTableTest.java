@@ -212,6 +212,10 @@ public class AutoTrainsTurnTableTest {
         //force turntable to unknown/ideterminate
         resetTurnTable(sm);
 
+        // Dispatcher adds its own listener to the Return sensor when the train stops at the end
+        Sensor returnSensor = sm.provideSensor("Return");
+        int returnListenersBefore = returnSensor.getNumPropertyChangeListeners();
+
         d.loadTrainFromTrainInfo("TestTurnTable_TT1_ML.xml");
 
         assertThat(d.getActiveTrainsList().size()).withFailMessage("Train Loaded").isEqualTo(1);
@@ -291,9 +295,11 @@ public class AutoTrainsTurnTableTest {
             return (Math.abs(aat.getThrottle().getSpeedSetting() ) < TOLERANCE );
             }, "Stopping at end failed");
 
-        JUnitUtil.waitFor(WAIT_INTERVAL);
-
-        JUnitUtil.setBeanStateAndWait(sm.provideSensor("Return"), Sensor.ACTIVE);
+        // Dispatcher starts listening for the restart sensor once its stop tasks have run,
+        // and only a change to ACTIVE after that restarts the train, so wait for its listener.
+        JUnitUtil.waitFor(() -> returnSensor.getNumPropertyChangeListeners() > returnListenersBefore,
+                "Dispatcher listening for the Return sensor");
+        JUnitUtil.setBeanStateAndWait(returnSensor, Sensor.ACTIVE);
         JUnitUtil.waitFor(() -> {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedSlow ) < TOLERANCE );
             }, "Depart return trip "+ speedSlow + " but was " + aat.getThrottle().getSpeedSetting());
@@ -305,6 +311,11 @@ public class AutoTrainsTurnTableTest {
             return (Math.abs(aat.getThrottle().getSpeedSetting() - speedSlow ) < TOLERANCE );
             }, "keep going turntable left in correct state "+ speedSlow + " but was " + aat.getThrottle().getSpeedSetting());
 
+        // The train may only enter the turntable once it is allocated to it. Entering it
+        // earlier puts the train on unallocated track, and strict tracking stops it as lost.
+        JUnitUtil.waitFor(() -> at.getAllocatedSectionList().stream()
+                .anyMatch(as -> "TT".equals(as.getSection().getDisplayName())),
+                "turntable allocated before the train enters it");
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("TT"), Sensor.ACTIVE);
         resetTurnTable(sm);
         JUnitUtil.setBeanStateAndWait(sm.provideSensor("TT2"), Sensor.INACTIVE);

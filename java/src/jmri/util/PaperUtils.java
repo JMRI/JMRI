@@ -48,7 +48,8 @@ public class PaperUtils {
     public static Dimension getOrientedPaperSizeInPointsIfPossible() {
         PrintService service = PrintServiceLookup.lookupDefaultPrintService();
         if (service == null) {
-            log.warn("No default printer found");
+            // not a problem: the caller falls back to the paper size for the locale
+            log.info("No default printer found, using the paper size for the locale");
             return null;
         }
 
@@ -139,7 +140,8 @@ public class PaperUtils {
                 }
             }
         } else {
-            log.warn("No default printer found");
+            // not a problem: the page attributes are left as they are
+            log.info("No default printer found, page attributes left unchanged");
         }
     }
 

@@ -4289,6 +4289,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         /**
          * A copy holding only the destination and next block, used in
          * temporary lists. It does not listen to the destination block.
+         *
+         * @param dstBlock the destination block of the route
+         * @param nxtBlock the next block on the route towards the destination
          */
         Routes(Block dstBlock, Block nxtBlock) {
             destBlock = dstBlock;

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -108,9 +109,9 @@ public class RouteFinderStopTest {
     private void makeLayout() {
         OBlockManager blkMgr = InstanceManager.getDefault(OBlockManager.class);
         PortalManager portalMgr = InstanceManager.getDefault(PortalManager.class);
-        OBlock b1 = blkMgr.createNewOBlock("OB1", "Origin");
+        OBlock b1 = Objects.requireNonNull(blkMgr.createNewOBlock("OB1", "Origin"), "OBlock Origin");
         OBlock b2 = blkMgr.createNewOBlock("OB2", "Middle");
-        OBlock b3 = blkMgr.createNewOBlock("OB3", "Destination");
+        OBlock b3 = Objects.requireNonNull(blkMgr.createNewOBlock("OB3", "Destination"), "OBlock Destination");
         Portal p12 = portalMgr.providePortal("P12");
         p12.setFromBlock(b1, false);
         p12.setToBlock(b2, false);
