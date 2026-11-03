@@ -6,7 +6,6 @@ import java.beans.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.DecimalFormat;
 import java.util.Locale;
 
 import javax.annotation.*;
@@ -24,9 +23,6 @@ import jmri.util.*;
  */
 public class DefaultNamedTableManager extends AbstractManager<NamedTable>
         implements NamedTableManager {
-
-    DecimalFormat paddedNumber = new DecimalFormat("0000");
-
 
     /**
      * {@inheritDoc}

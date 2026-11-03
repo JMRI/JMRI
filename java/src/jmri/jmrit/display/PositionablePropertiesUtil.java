@@ -301,7 +301,6 @@ public class PositionablePropertiesUtil {
     javax.swing.JSpinner yPositionTextSpin;
     javax.swing.JSpinner widthSizeTextSpin;
     javax.swing.JSpinner heightSizeTextSpin;
-    JCheckBox autoWidth;
 
     /**
      * Create and fill in the Contents tab of the UI (Text Label objects).

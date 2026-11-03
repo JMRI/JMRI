@@ -559,8 +559,6 @@ public class LayoutTurntableView extends LayoutTrackView {
         return result;
     }
 
-    public String tLayoutBlockName = "";
-
     /**
      * Is this turntable turnout controlled?
      *

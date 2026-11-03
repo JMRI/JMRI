@@ -47,7 +47,6 @@ public class AutoTurnouts {
 
     // operational variables
     protected DispatcherFrame _dispatcher = null;
-    boolean userInformed = false;
 
     /**
      * Check that all turnouts are correctly set for travel in the designated

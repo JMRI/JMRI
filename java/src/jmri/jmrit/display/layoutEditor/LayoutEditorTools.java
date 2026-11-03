@@ -9172,8 +9172,6 @@ public final class LayoutEditorTools {
         return new Point(xpos, ypos);
     }
 
-    double adjust = (5.0 / 90.0);
-    int awayright = 5;
     private final int offSetFromPoint = 5;
 
     //Correct for SM111, sm101, sm121, SM80
@@ -10495,8 +10493,6 @@ public final class LayoutEditorTools {
 
     JPanel signalMastLevelXingPanel = new JPanel(new FlowLayout());
 
-    Border blackline = BorderFactory.createLineBorder(Color.black);
-
     //display dialog for Set Signals at Level Crossing tool
     public void setSignalMastsAtLevelXingFromMenu(@Nonnull LevelXing xing,
             @Nonnull String[] blocks,
@@ -11186,8 +11182,6 @@ public final class LayoutEditorTools {
         setSensorsAtTurnoutFrame.setPreferredSize(null);
         setSensorsAtTurnoutFrame.pack();
     }   //turnoutSensorsGetSaved
-
-    SensorIcon turnoutSensorBlockIcon;
 
     private void setSensorsDonePressed(ActionEvent a) {
         log.trace("setSensorsDonePressed (turnouts)");  // NOI18N

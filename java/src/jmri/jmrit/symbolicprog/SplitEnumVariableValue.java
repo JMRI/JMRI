@@ -64,7 +64,6 @@ public class SplitEnumVariableValue extends VariableValue
 
     private static final int RETRY_COUNT = 2;
 
-    int atest = 1;
     private final List<JTree> trees = new ArrayList<>();
 
     private final List<ComboCheckBox> comboCBs = new ArrayList<>();
@@ -860,8 +859,6 @@ public class SplitEnumVariableValue extends VariableValue
         // if we got to here, we need to add a new reserved value entry
         addReservedEntry(value);
     }
-
-    java.util.List<Component> reps = new java.util.ArrayList<>();
 
     public int retry = 0; // counts retrys of a single CV
 
