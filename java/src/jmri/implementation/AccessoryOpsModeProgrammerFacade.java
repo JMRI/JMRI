@@ -66,7 +66,7 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
         log.debug("Constructing AccessoryOpsModeProgrammerFacade");
         this._usingProgrammer = null;
         this.mode = prog.getMode();
-        this._addrType = (addrType == null) ? "" : addrType.toLowerCase(); // NOI18N
+        this._addrType = addrType.toLowerCase();
         this._delay = delay;
         this._baseProg = baseProg;
     }
