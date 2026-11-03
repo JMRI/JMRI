@@ -742,6 +742,15 @@
                 JMRI withdraws its ZeroConf (mDNS) announcements, such as the
                 Hub's, WiThrottle's and the Web Server's. The wait is now about
                 2 seconds in all.</li>
+            <li>A new window, Tools &gt; Train Tracking &gt; Set-up Checks,
+                lists what in a layout's set-up makes following trains less
+                sure: trains with no length, or no speed profile for their lead
+                loco; Blocks with no length; a detected Block with no paths; a
+                path with no path back; a sensor used by two Blocks; a Block
+                with no detector whose routes depend on a turnout with no
+                feedback; and Blocks joined through Blocks with no detector by
+                more than one way. Each says what is wrong. The checks only
+                read, and change nothing.</li>
             <li>For developers: a new train record (<code>jmri.TrainRecord</code>,
                 from the <code>jmri.TrainRecordManager</code>) holds what is
                 known about a train from one run to the next: its name, the
