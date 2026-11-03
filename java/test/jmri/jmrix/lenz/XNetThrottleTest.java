@@ -17,6 +17,7 @@ import org.junit.jupiter.api.*;
  * @author Paul Bender Copyright (C) 2008-2016
  */
 @Timeout(1)
+@SuppressWarnings("deprecation")
 public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     protected XNetInterfaceScaffold tc = null;
