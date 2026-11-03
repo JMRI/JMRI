@@ -131,6 +131,9 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
      * Constructor for creating an EntryExitPairs object and create a transparent JPanel for it.
      */
     public EntryExitPairs() {
+        // EntryExitPairs needs the SignalMastLogicManager initialized so load it here.
+        InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
+
         memo = InstanceManager.getDefault(InternalSystemConnectionMemo.class);
         InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent(cm -> cm.registerUser(this));
         InstanceManager.getDefault(LayoutBlockManager.class).addPropertyChangeListener(propertyBlockManagerListener);
