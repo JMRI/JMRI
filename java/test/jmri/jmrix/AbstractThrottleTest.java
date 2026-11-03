@@ -26,6 +26,7 @@ import org.junit.jupiter.api.io.TempDir;
  *
  * @author Randall Wood 2015
  */
+@SuppressWarnings("deprecation")
 public class AbstractThrottleTest {
 
     protected AbstractThrottle instance = null;
@@ -72,13 +73,13 @@ public class AbstractThrottleTest {
 
     /**
      * How many functions are we testing?
-     * 
+     *
      * @param maxFns to be tested
      */
     protected void setMaxFns(int maxFns) {
         this.maxFns = maxFns;
     }
-    
+
     /**
      * Test of getSpeedSetting method, of class AbstractThrottle.
      */

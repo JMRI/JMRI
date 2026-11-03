@@ -798,6 +798,22 @@
           If the Release button is clicked, that Section is immediately <em>released</em>. Section
           status becomes <strong>FREE</strong>, and the Section is available for allocation to an
           Active Train.</p>
+
+          <p>So that a train's route is never left with a gap, only two of a train's Sections can be
+          released this way, and only while they are unoccupied:</p>
+          <ul>
+            <li>its oldest Section, once the train has left it;</li>
+            <li>its furthest allocated Section, before the train reaches it. If this is the Section
+            directly ahead of the train, the train must be stopped first: an automatic train must
+            have come to a stand, and any other train must be STOPPED or WAITING. You are then asked
+            whether to terminate the train. If you don't, it stays active and stops at the end of
+            its allocated Sections, and carries on along its Transit when it is allocated further.</li>
+          </ul>
+
+          <p>With <strong>Auto Allocate</strong> on, releasing a Section ahead of a train also ticks
+          the train's <strong>Held</strong> box in the Active Trains table, so that the Section is not
+          allocated to it again straight away. Untick <strong>Held</strong> to let the train carry on.
+          Releasing Sections from scripts, Logix or LogixNG is not restricted.</p>
         </li>
       </ul>
 

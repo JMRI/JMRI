@@ -2,10 +2,6 @@ package jmri.jmrit.operations.trains.gui;
 
 import java.text.MessageFormat;
 
-import org.junit.Assert;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
@@ -15,6 +11,10 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
+
+import org.junit.Assert;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  *
@@ -40,6 +40,7 @@ public class TrainEditFrameTest extends OperationsTestCase {
             trainEditFrame.trainNameTextField.setText("Test Train Name");
             trainEditFrame.trainDescriptionTextField.setText("Test Train Description");
             trainEditFrame.commentTextArea.setText("Test Train Comment");
+            trainEditFrame.commentTerminationTextArea.setText("Test Train Comment 2");
             trainEditFrame.dayBox.setSelectedItem("2");
             trainEditFrame.hourBox.setSelectedItem("15");
             trainEditFrame.minuteBox.setSelectedItem("45");
@@ -54,6 +55,7 @@ public class TrainEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("train name", "Test Train Name", train.getName());
         Assert.assertEquals("train description", "Test Train Description", train.getDescription());
         Assert.assertEquals("train comment", "Test Train Comment", train.getCommentWithColor());
+        Assert.assertEquals("train comment termination", "Test Train Comment 2", train.getCommentTerminationWithColor());
         Assert.assertEquals("train depart time", "2:15:45", train.getDepartureTime());
         Assert.assertEquals("train route", null, train.getRoute());
         Assert.assertTrue("train accepts car type Boxcar", train.isTypeNameAccepted("Boxcar"));
@@ -207,6 +209,7 @@ public class TrainEditFrameTest extends OperationsTestCase {
         trainEditFrame.trainNameTextField.setText("Test Add Train Name");
         trainEditFrame.trainDescriptionTextField.setText("Test Train Description");
         trainEditFrame.commentTextArea.setText("Test Train Comment");
+        trainEditFrame.commentTerminationTextArea.setText("Test Train Comment 2");
 
         JemmyUtil.enterClickAndLeave(trainEditFrame.addTrainButton);
 
@@ -218,6 +221,7 @@ public class TrainEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("train name", "Test Add Train Name", train.getName());
         Assert.assertEquals("train description", "Test Train Description", train.getDescription());
         Assert.assertEquals("train comment", "Test Train Comment", train.getCommentWithColor());
+        Assert.assertEquals("train comment", "Test Train Comment 2", train.getCommentTerminationWithColor());
         Assert.assertEquals("train depart time", "0:00:00", train.getDepartureTime());
         Assert.assertEquals("train route", null, train.getRoute());
         Assert.assertTrue("train accepts car type Boxcar", train.isTypeNameAccepted("Boxcar"));

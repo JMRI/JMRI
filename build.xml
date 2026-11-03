@@ -1393,6 +1393,22 @@
         </antcall>
     </target>
 
+    <target name="mcan-tcp-bridge"
+            depends="debug"
+            description="build and run MCAN Protocol Serial-to-TCP Bridge">
+        <antcall target="-run-jmri-application">
+            <param name="application.classname" value="external.marklin.McanTcpBridge"/>
+        </antcall>
+    </target>
+
+    <target name="mcan-poke"
+            depends="debug"
+            description="build and run marklin-poke CAN bus probe tool">
+        <antcall target="-run-jmri-application">
+            <param name="application.classname" value="external.marklin.MarklinPoke"/>
+        </antcall>
+    </target>
+
     <!-- end of application startup targets -->
 
     <!-- ============================================================================= -->
@@ -2072,6 +2088,87 @@
             </section>
           </manifest>
         </jar>
+    </target>
+
+    <target name="mcan-tcp-bridge-jar"
+            description="create standalone MCAN Protocol Serial-to-TCP Bridge JAR with dependencies"
+            depends="debug">
+        <mkdir dir="${dist}"/>
+
+        <jar jarfile="${dist}/mcan-tcp-bridge.jar"
+             compress="true">
+            <fileset dir="${target}">
+                <include name="external/marklin/McanTcpBridge.class"/>
+                <include name="external/marklin/McanTcpBridge$*.class"/>
+                <include name="external/marklin/ExternalDirectJSerialPort.class"/>
+                <include name="external/marklin/ExternalDirectJSerialPort$*.class"/>
+            </fileset>
+            <fileset dir="${target}">
+                <include name="jmri/jmrix/marklin/**/*.class"/>
+            </fileset>
+            <!-- Use wildcards to automatically match whatever versions are in lib/ -->
+            <zipfileset src="${libdir}/jSerialComm-2.11.4.jar" excludes="META-INF/*.SF,META-INF/*.RSA,META-INF/*.DSA"/>
+            <zipfileset src="${libdir}/slf4j-api-2.0.17.jar" excludes="META-INF/*.SF,META-INF/*.RSA,META-INF/*.DSA"/>
+            <zipfileset excludes="META-INF/*.SF,META-INF/*.RSA,META-INF/*.DSA">
+                <fileset dir="${libdir}">
+                    <include name="log4j-api-*.jar"/>
+                </fileset>
+            </zipfileset>
+            <zipfileset excludes="META-INF/*.SF,META-INF/*.RSA,META-INF/*.DSA">
+                <fileset dir="${libdir}">
+                    <include name="log4j-core-*.jar"/>
+                    <exclude name="log4j-core-test-*.jar"/>
+                </fileset>
+            </zipfileset>
+            <zipfileset excludes="META-INF/*.SF,META-INF/*.RSA,META-INF/*.DSA">
+                <fileset dir="${libdir}">
+                    <include name="log4j-slf4j2-impl-*.jar"/>
+                </fileset>
+            </zipfileset>
+            <manifest>
+                <attribute name="Main-Class" value="external.marklin.McanTcpBridge"/>
+                <attribute name="Implementation-Title" value="MCAN Protocol Serial To TCP Multiplexer Bridge"/>
+                <attribute name="Implementation-Version" value="${release}"/>
+                <attribute name="Implementation-Vendor" value="JMRI"/>
+            </manifest>
+        </jar>
+
+        <echo message=""/>
+        <echo message="Standalone bridge JAR created: ${dist}/mcan-tcp-bridge.jar"/>
+        <echo message=""/>
+        <echo message="Usage:"/>
+        <echo message="  Single device:    java -jar ${dist}/mcan-tcp-bridge.jar --port COM3"/>
+        <echo message="  Custom TCP port:  java -jar ${dist}/mcan-tcp-bridge.jar --port COM3:50000"/>
+        <echo message="  Multiple devices: java -jar ${dist}/mcan-tcp-bridge.jar --port COM2,COM3:49999,COM4:50000"/>
+        <echo message="  Help:             java -jar ${dist}/mcan-tcp-bridge.jar --help"/>
+        <echo message=""/>
+    </target>
+
+    <target name="mcan-poke-jar"
+            description="create standalone marklin-poke CAN bus probe tool JAR"
+            depends="debug">
+        <mkdir dir="${dist}"/>
+        <jar jarfile="${dist}/marklin-poke.jar" compress="true">
+            <fileset dir="${target}">
+                <include name="external/marklin/MarklinPoke.class"/>
+                <include name="external/marklin/MarklinPoke$*.class"/>
+                <include name="external/marklin/MarklinPokeRunner.class"/>
+                <include name="external/marklin/MarklinPokeRunner$*.class"/>
+            </fileset>
+            <manifest>
+                <attribute name="Main-Class" value="external.marklin.MarklinPoke"/>
+                <attribute name="Implementation-Title" value="marklin-poke CAN Bus Probe Tool"/>
+                <attribute name="Implementation-Version" value="${release}"/>
+                <attribute name="Implementation-Vendor" value="JMRI"/>
+            </manifest>
+        </jar>
+        <echo message=""/>
+        <echo message="marklin-poke JAR created: ${dist}/marklin-poke.jar"/>
+        <echo message=""/>
+        <echo message="Usage:"/>
+        <echo message="  java -jar ${dist}/marklin-poke.jar --command &quot;AA BB CC DD EE FF 00 11 22 33 44 55 66&quot;"/>
+        <echo message="  java -jar ${dist}/marklin-poke.jar --host 192.168.1.10 --port 15731 --command &quot;...&quot; --padding 300 --watch 5"/>
+        <echo message=""/>
     </target>
 
     <target name="native-image" depends="jar" description="create native launchers">

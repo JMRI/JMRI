@@ -37,7 +37,7 @@ public class SerialDriverAdapter extends CdBPortController {
         int baud = currentBaudNumber(mBaudRate);
         setBaudRate(currentSerialPort, baud);
         configureLeads(currentSerialPort, true, true);
-        setFlowControl(currentSerialPort, FlowControl.NONE);
+        setFlowControl(currentSerialPort, FlowControl.RTSCTS);
 
         // report status
         reportPortStatus(log, portName);

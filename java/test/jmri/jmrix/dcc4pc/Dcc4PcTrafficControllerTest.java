@@ -50,7 +50,7 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
 
         ostream.flush();
         JUnitUtil.waitFor(() -> tostream.available() == 4, "total length");
-        
+
         // test the result of sending
         Assert.assertEquals("total length ", 4, tostream.available());
         Assert.assertEquals("Char 0", (byte)'0', tostream.readByte());
@@ -94,6 +94,7 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
 
     // Issue 29: waiting for a reply with nothing arriving must not use a whole CPU core.
     @Test
+    @SuppressWarnings("deprecation")
     public void testLoadCharsIdleDoesNotSpin() throws Exception {
         AtomicBoolean dsr = new AtomicBoolean(true);
         Dcc4PcTrafficController c = loadCharsController(dsr);
@@ -330,18 +331,18 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
 
     @Test
     public void testListenerScaffold() {
-        
+
         Dcc4PcListenerScaffold l = new Dcc4PcListenerScaffold();
         Dcc4PcMessage m = Dcc4PcMessage.getInfo();
         l.message(m);
         Assertions.assertTrue( m == rcvdMsg );
-        
+
         Dcc4PcReply reply = new Dcc4PcReply(new byte[]{0x01,0x02,0x03});
         l.reply(reply);
         Assertions.assertEquals(reply, rcvdReply);
 
     }
-    
+
     // internal class to simulate a Dcc4PcListener
     private class Dcc4PcListenerScaffold implements Dcc4PcListener {
 
@@ -365,7 +366,7 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         }
 
     }
-    
+
     Dcc4PcReply rcvdReply;
     Dcc4PcMessage rcvdMsg;
 

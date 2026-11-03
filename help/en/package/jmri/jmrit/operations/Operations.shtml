@@ -1749,6 +1749,12 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
           <td>Train Comment</td>
           <td>Comment</td>
         </tr>
+        
+        <tr>
+          <td>TCT</td>
+          <td>Train Comment Termination</td>
+          <td>Comment</td>
+        </tr>
 
         <tr>
           <td>TD</td>
@@ -4546,6 +4552,7 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
 
       <p>The program allows passenger cars, cabooses, and cars with FRED to return to their
         original location and track.
+        
       <h4>Utility checkbox</h4>
       When the utility checkbox is selected, it instructions the program when printing Manifests and
       switch lists to not show the individual car's road and number, but rather the quantity of cars
@@ -4566,6 +4573,10 @@ Command sequences should also be enclose in "strong" formatting.    jerryg2003 2
         Comment</a> to the switch list that the car is transporting hazardous materials. You can also
       classify a car's <a href="#EditCarLoads">load</a> as hazardous. The program when blocking a
       train will attempt to place non-hazardous cars in front of hazardous cars.
+
+      <p>To protect the rear of the train when transporting hazardous materials, you can place
+        a buffer car at the end of the train using the passenger option and a positive blocking
+        number.</p>
 
       <h4>Location and Track</h4>
       Now set the car's location on the layout. If the car is off the layout, set the location to

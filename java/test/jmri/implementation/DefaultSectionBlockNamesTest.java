@@ -2,9 +2,10 @@ package jmri.implementation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.Objects;
 
 import jmri.Block;
 import jmri.BlockManager;
@@ -88,8 +89,9 @@ public class DefaultSectionBlockNamesTest {
     }
 
     private LayoutBlock layoutBlock(String systemName, String userName) {
-        LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock(systemName, userName);
-        assertNotNull(lb, userName);
+        LayoutBlock lb = Objects.requireNonNull(
+                InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock(systemName, userName),
+                userName);
         lb.initializeLayoutBlock();
         return lb;
     }

@@ -67,6 +67,10 @@ public class MaleSocketStackCleanupTest {
      * A loop whose body has a local variable and executes Continue. Each
      * pass must remove the local variable again, or the next pass fails
      * with "Symbol table already contains the variable".
+     *
+     * @throws JmriException    if a socket can't be connected or the
+     *                          ConditionalNG fails to execute
+     * @throws ParserException if the loop formula can't be parsed
      */
     @Test
     public void testContinueInLoop() throws JmriException, ParserException {

@@ -150,7 +150,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     }
 
     private int getTurnoutAddrFromData(int a1, int a2) {
-        if (getFeedbackMessageType() > 1) {
+        if (((a2 & 0x60) >> 5) > 1) {
             return -1;
         }
         int address = (a1 & 0xff) * 4 + 1;
@@ -161,9 +161,10 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
-     * If this is a feedback broadcast message and the specified startbyte is
-     * the address byte of an addres byte data byte pair for a turnout, return
-     * the address. Otherwise return -1.
+     * If this is a feedback broadcast message and the specified startByte is
+     * the address byte of an address/data byte pair for a turnout, return
+     * the address. The type is checked for that pair, independently of other
+     * pairs in the broadcast. Encoder and reserved types return -1.
      *
      * @param startByte address byte of the address byte/data byte pair.
      * @return the integer address or -1 if not a turnout message

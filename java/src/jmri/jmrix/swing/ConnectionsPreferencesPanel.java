@@ -306,7 +306,7 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Managing
         StartupActionsManager manager = InstanceManager.getOptionalDefault(StartupActionsManager.class).orElse(null);
         List<AbstractActionModel> models = (prefix == null || manager == null)
                 ? new ArrayList<>() : manager.getActionsForConnection(prefix);
-        if (models.isEmpty()) {
+        if (manager == null || models.isEmpty()) {
             return JmriJOptionPane.showConfirmDialog(this, question,
                     rb.getString("MessageDeleteConnection"),
                     JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION;

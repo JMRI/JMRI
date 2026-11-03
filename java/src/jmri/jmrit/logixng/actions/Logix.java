@@ -16,7 +16,9 @@ public class Logix extends AbstractDigitalAction
         implements FemaleSocketListener {
 
     private ExecuteType _executeType = ExecuteType.ExecuteOnChange;
-    private boolean _lastExpressionResult = false;
+    // null until the first evaluation, as a Logix conditional starts UNKNOWN,
+    // so that the first result counts as a change whether true or false
+    private Boolean _lastExpressionResult = null;
     private String _expressionSocketSystemName;
     private String _actionSocketSystemName;
     private final FemaleDigitalExpressionSocket _expressionSocket;
@@ -69,7 +71,9 @@ public class Logix extends AbstractDigitalAction
     public void execute() throws JmriException {
         boolean result = _expressionSocket.evaluate();
 
-        if ((_executeType == ExecuteType.ExecuteAlways) || (result != _lastExpressionResult)) {
+        // result is either true or false
+        // _lastExpressionResult is true, false or null
+        if ((_executeType == ExecuteType.ExecuteAlways) || !Boolean.valueOf(result).equals(_lastExpressionResult)) {
             _actionSocket.execute(result);
         }
         _lastExpressionResult = result;

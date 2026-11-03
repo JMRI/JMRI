@@ -1009,7 +1009,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      * <p>
      * A neighbour becoming unoccupied is either its train arriving here or its
      * train leaving the other way. If its train is known to have gone
-     * elsewhere (see {@link #trainLeftAwayFrom(Block)}), it did not enter this
+     * elsewhere (see {@code trainLeftAwayFrom(Block)}), it did not enter this
      * Block and is no longer a possible entrant; if only one possible entrant
      * is then left, that is the train that entered. Otherwise its train is
      * taken to have entered this Block, and this Block takes its value.

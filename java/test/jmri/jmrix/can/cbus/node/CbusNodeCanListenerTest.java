@@ -2,6 +2,7 @@ package jmri.jmrix.can.cbus.node;
 
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import jmri.jmrix.can.CanMessage;
@@ -119,8 +120,8 @@ public class CbusNodeCanListenerTest {
         nodeToEdit.getCanListener().message(mUnlearn);
         assertFalse( nodeToEdit.getNodeInLearnMode(), "node out of learn mode after NNULN sent");
 
-        CbusNodeEvent taught = nodeToEdit.getNodeEventManager().getNodeEvent(123, 456);
-        assertNotNull(taught);
+        CbusNodeEvent taught = Objects.requireNonNull(nodeToEdit.getNodeEventManager().getNodeEvent(123, 456),
+            "node event 123 456");
         assertEquals( 1, taught.getEvVar(1), "ev var 1 taught");
         assertEquals( 255, taught.getEvVar(2), "ev var 2 taught");
 
@@ -352,8 +353,10 @@ public class CbusNodeCanListenerTest {
         assertEquals( 100, nodeToEdit.getNodeEventManager().getOutstandingEvVars(), "100 event variables outstanding");
         assertFalse( nodeToEdit.getNodeEventManager().isEventIndexValid(), "event index invalid");
         assertEquals( 1, allEvUpdates.get(), "1 ALLEVUPDATE notification for 25 events");
-        assertEquals( 7961, nodeToEdit.getNodeEventManager().getNodeEventByArrayID(24).getParentNn(), "event parent node");
-        assertEquals( -1, nodeToEdit.getNodeEventManager().getNodeEventByArrayID(24).getIndex(), "event index unknown");
+        CbusNodeEvent event24 = Objects.requireNonNull(nodeToEdit.getNodeEventManager().getNodeEventByArrayID(24),
+            "node event at array ID 24");
+        assertEquals( 7961, event24.getParentNn(), "event parent node");
+        assertEquals( -1, event24.getIndex(), "event index unknown");
 
         r.setElement(3, 0); // 0 events
         nodeToEdit.getCanListener().reply(r);

@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Conductor Panel. Shows work for a train one location at a time.
  *
- * @author Dan Boudreau Copyright (C) 2011, 2013
+ * @author Dan Boudreau Copyright (C) 2011, 2013, 2026
  * 
  */
 public class TrainConductorPanel extends CommonConductorYardmasterPanel {
@@ -29,6 +29,8 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
     JLabel textTrainName = new JLabel();
     JLabel textTrainDepartureTime = new JLabel();
     JLabel textNextLocationName = new JLabel();
+    
+    JTextPane textCommentTerminationPane = new JTextPane();
 
     // panels
     JPanel pTrainDepartureTime = new JPanel();
@@ -74,6 +76,12 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
         pLocation.add(pLocationName); // location name
         pLocation.add(pTrainDepartureTime);
         pLocation.add(pNextLocationName);
+        
+        // Termination comment
+        textCommentTerminationPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("CommentTerminaton")));
+        textCommentTerminationPane.setBackground(null);
+        textCommentTerminationPane.setEditable(false);
+        textCommentTerminationPane.setMaximumSize(new Dimension(2000, 200));
 
         // row 14
         JPanel pRow14 = new JPanel();
@@ -101,6 +109,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
         add(pWorkPanes);
         add(movePane);
         add(pStatus);
+        add(textCommentTerminationPane);
         add(pRow14);
 
         // setup buttons
@@ -111,12 +120,19 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
             loadTrainComment();
             loadRouteComment();
             loadRailroadName();
+            loadTrainTerminationComment();
             // listen for train changes
             _train.addPropertyChangeListener(this);
         }
         trainManager.addPropertyChangeListener(this);
         
         update();
+    }
+    
+    private void loadTrainTerminationComment() {
+        textCommentTerminationPane.setVisible(false);
+        textCommentTerminationPane.setText(_train.getCommentTerminationCurrent());
+        textCommentTerminationPane.setForeground(_train.getCommentTerminationColor());
     }
 
     @Override
@@ -179,6 +195,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
 
                 // adjust move button text
                 if (rl == _train.getTrainTerminatesRouteLocation()) {
+                    textCommentTerminationPane.setVisible(!textCommentTerminationPane.getText().isBlank());
                     moveButton.setText(Bundle.getMessage("Terminate"));
                 } else {
                     moveButton.setText(Bundle.getMessage("Move"));

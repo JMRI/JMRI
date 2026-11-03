@@ -55,6 +55,7 @@ public class Xml {
     protected static final String BUILT_END_YEAR = "builtEndYear"; // NOI18N
     protected static final String CAR_OWNERS = "carOwners"; // NOI18N
     protected static final String CAR_OWNER = "carOwner"; // NOI18N
+    protected static final String COMMENT_TERMINATION = "commentTermination"; // NOI18N
 
     protected static final String NUMBER_ENGINES = "numberEngines"; // NOI18N
     protected static final String LEG2_ENGINES = "leg2Engines"; // NOI18N

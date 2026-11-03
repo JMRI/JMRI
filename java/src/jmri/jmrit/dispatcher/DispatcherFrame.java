@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -122,6 +123,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         if (fastClock == null) {
             log.error("Failed to instantiate a fast clock when constructing Dispatcher");
         } else {
+            lastFastClockTime = fastClock.getTime();
             minuteChangeListener = new java.beans.PropertyChangeListener() {
                 @Override
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -595,6 +597,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     private final Timebase fastClock = InstanceManager.getNullableDefault(jmri.Timebase.class);
     private final Sensor fastClockSensor = InstanceManager.sensorManagerInstance().provideSensor("ISCLOCKRUNNING");
     private transient java.beans.PropertyChangeListener minuteChangeListener = null;
+    private java.util.Date lastFastClockTime = null;  // fast clock time at the last minute change
 
     // dispatcher window variables
     protected JmriJFrame dispatcherFrame = null;
@@ -850,9 +853,118 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         });
     }
 
+    /**
+     * Release an Allocated Section when the dispatcher clicks its Release
+     * button in the Allocated Sections table.
+     * <p>
+     * Only a train's oldest Section, once the train has left it, or its
+     * furthest allocated Section, if the train has not reached it, can be
+     * released, so that the train's route is never left with a gap. The
+     * Section directly ahead of the train can only be released while the
+     * train is stopped, and the dispatcher is then offered to terminate the
+     * train. With Auto Allocate on, a release ahead of the train puts the
+     * train's allocation on hold, so that the Section is not allocated to it
+     * again straight away. Scripts and Dispatcher's own releases are not
+     * restricted.
+     *
+     * @param index the row of the Allocated Section in the table
+     */
     void releaseAllocatedSectionFromTable(int index) {
         AllocatedSection as = allocatedSections.get(index);
+        String refusal = getManualReleaseRefusal(as);
+        if (refusal != null) {
+            JmriJOptionPane.showMessageDialog(dispatcherFrame, refusal,
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        ActiveTrain at = as.getActiveTrain();
+        boolean aheadOfTrain = !as.getEntered();
+        boolean nextOfTrain = aheadOfTrain && isNextSectionOfTrain(as);
+        if (aheadOfTrain && _AutoAllocate) {
+            // before the release is queued, so that the allocator cannot allocate it again first
+            at.holdAllocation(true);
+            activeTrainsTableModel.fireTableDataChanged();
+        }
         releaseAllocatedSection(as, false);
+        if (nextOfTrain) {
+            int selectedValue = JmriJOptionPane.showOptionDialog(dispatcherFrame,
+                    java.text.MessageFormat.format(Bundle.getMessage("QuestionTerminateAfterRelease"),
+                            new Object[]{as.getSectionName(), at.getActiveTrainName()}),
+                    Bundle.getMessage("MessageTitle"),
+                    JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.QUESTION_MESSAGE, null,
+                    new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo")},
+                    Bundle.getMessage("ButtonNo"));
+            if (selectedValue == 0) { // array position 0, Yes pressed
+                terminateActiveTrain(at, true, false);
+            }
+        }
+    }
+
+    /**
+     * Get why the dispatcher may not release an Allocated Section from the
+     * Allocated Sections table.
+     *
+     * @param as the Allocated Section
+     * @return the reason, to show to the dispatcher, or null if it may be
+     *         released
+     */
+    @CheckForNull
+    String getManualReleaseRefusal(@Nonnull AllocatedSection as) {
+        if (as.getSection().getOccupancy() == Section.OCCUPIED) {
+            return java.text.MessageFormat.format(Bundle.getMessage("ReleaseRefusedOccupied"),
+                    new Object[]{as.getSectionName()});
+        }
+        AllocatedSection oldest = null;
+        AllocatedSection furthest = null;
+        for (AllocatedSection a : as.getActiveTrain().getAllocatedSectionList()) {
+            if (oldest == null || a.getAllocationNumber() < oldest.getAllocationNumber()) {
+                oldest = a;
+            }
+            if (furthest == null || a.getAllocationNumber() > furthest.getAllocationNumber()) {
+                furthest = a;
+            }
+        }
+        if (as == oldest && as.getExited()) {
+            return null;
+        }
+        if (as == furthest && !as.getEntered()) {
+            if (isNextSectionOfTrain(as) && !isTrainStopped(as.getActiveTrain())) {
+                return java.text.MessageFormat.format(Bundle.getMessage("ReleaseRefusedMoving"),
+                        new Object[]{as.getSectionName(), as.getActiveTrain().getActiveTrainName()});
+            }
+            return null;
+        }
+        return java.text.MessageFormat.format(Bundle.getMessage("ReleaseRefusedMiddle"),
+                new Object[]{as.getSectionName(), as.getActiveTrain().getActiveTrainName()});
+    }
+
+    /**
+     * Whether an Allocated Section is the one directly ahead of its train:
+     * the train has not entered it, nor any Section allocated before it.
+     */
+    private boolean isNextSectionOfTrain(@Nonnull AllocatedSection as) {
+        if (as.getEntered()) {
+            return false;
+        }
+        for (AllocatedSection a : as.getActiveTrain().getAllocatedSectionList()) {
+            if (a != as && !a.getEntered() && a.getAllocationNumber() < as.getAllocationNumber()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Whether a train is stopped, so that the Section ahead of it may be
+     * released: an automatic train's engineer must have stopped it, and any
+     * other train must be STOPPED or WAITING.
+     */
+    private boolean isTrainStopped(@Nonnull ActiveTrain at) {
+        if (at.getMode() == ActiveTrain.AUTOMATIC && at.getAutoActiveTrain() != null) {
+            AutoActiveTrain.AutoEngineer engineer = at.getAutoActiveTrain().getAutoEngineer();
+            return engineer == null || engineer.isStopped();
+        }
+        return at.getStatus() == ActiveTrain.STOPPED || at.getStatus() == ActiveTrain.WAITING;
     }
 
     // allocate extra window variables
@@ -1926,6 +2038,18 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         allocationRequestTableModel.fireTableDataChanged();
     }
 
+    /**
+     * Cancel an allocation request, if it is still queued.
+     *
+     * @param ar the allocation request to cancel
+     */
+    protected void cancelAllocationRequest(AllocationRequest ar) {
+        int index = allocationRequests.indexOf(ar);
+        if (index >= 0) {
+            cancelAllocationRequest(index);
+        }
+    }
+
     private void allocateRequested(int index) {
         AllocationRequest ar = allocationRequests.get(index);
         allocateSection(ar, null);
@@ -2961,8 +3085,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 allocatedSections.remove(i - 1);
             }
         }
-        as.getSection().setState(Section.FREE);
-        as.getActiveTrain().removeAllocatedSection(as);
+        as.getActiveTrain().releaseAllocatedSection(as);
         as.dispose();
         if (allocatedSectionTableModel != null) {
             allocatedSectionTableModel.fireTableDataChanged();
@@ -2990,20 +3113,23 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * Handle activity that is triggered by the fast clock
      */
     protected void newFastClockMinute() {
+        java.util.Date previousTime = lastFastClockTime;
+        java.util.Date now = fastClock.getTime();
+        lastFastClockTime = now;
         for (int i = delayedTrains.size() - 1; i >= 0; i--) {
             ActiveTrain at = delayedTrains.get(i);
             // check if this Active Train is waiting to start
             if ((!at.getStarted()) && at.getDelayedStart() != ActiveTrain.NODELAY) {
                 // is it time to start?
                 if (at.getDelayedStart() == ActiveTrain.TIMEDDELAY) {
-                    if (isFastClockTimeGE(at.getDepartureTimeHr(), at.getDepartureTimeMin())) {
+                    if (isFastClockTimeReached(at.getDepartureTimeHr(), at.getDepartureTimeMin(), previousTime, now)) {
                         // allow this train to start
                         at.setStarted();
                         delayedTrains.remove(i);
                     }
                 }
             } else if (at.getStarted() && at.getStatus() == ActiveTrain.READY && at.reachedRestartPoint()) {
-                if (isFastClockTimeGE(at.getRestartDepartHr(), at.getRestartDepartMin())) {
+                if (isFastClockTimeReached(at.getRestartDepartHr(), at.getRestartDepartMin(), previousTime, now)) {
                     at.restart();
                     delayedTrains.remove(i);
                 }
@@ -3027,6 +3153,48 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         int nowHours = now.get(Calendar.HOUR_OF_DAY);
         int nowMinutes = now.get(Calendar.MINUTE);
         return ((nowHours * 60) + nowMinutes) == ((hr * 60) + min);
+    }
+
+    /**
+     * Check whether the fast clock has reached a time of day since the
+     * previous minute change. The clock can move on by more than one minute
+     * at a time, for example when it is set forward, runs at a high rate or
+     * the minute change is handled late, so a time that was passed over still
+     * counts as reached. If the clock has been set back, or the previous time
+     * is not known, only the exact minute counts.
+     * <p>
+     * Departure and restart times are kept as an hour and minute with no
+     * date, so the time is taken as its latest occurrence not after now: on
+     * the fast clock's current day, or the day before if that is later than
+     * now.
+     *
+     * @param hr       the hour to test against (0-23)
+     * @param min      the minute to test against (0-59)
+     * @param previous the fast clock time at the previous minute change, or
+     *                 null if not known
+     * @param now      the fast clock time now
+     * @return true if the time is in the current minute, or is after
+     *         previous and not after now
+     */
+    static boolean isFastClockTimeReached(int hr, int min, @CheckForNull java.util.Date previous,
+            @Nonnull java.util.Date now) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(now);
+        cal.set(Calendar.HOUR_OF_DAY, hr);
+        cal.set(Calendar.MINUTE, min);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        if (cal.getTime().after(now)) {
+            cal.add(Calendar.DAY_OF_MONTH, -1);
+        }
+        java.util.Date time = cal.getTime();
+        if (now.getTime() - time.getTime() < 60000L) {
+            return true;  // the exact minute
+        }
+        if (previous == null || !previous.before(now)) {
+            return false;
+        }
+        return time.after(previous);
     }
 
     // option access methods
