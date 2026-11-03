@@ -605,7 +605,11 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>When the user name of a sensor, turnout or other item is changed
+                from one name to another in any way, for example by a script,
+                the places that use it by that name now follow the change.
+                Before, only a change made in a table window did this, and
+                after storing and reloading, a LogixNG could lose the item.</li>
         </ul>
 
    <h3>Warrants</h3>

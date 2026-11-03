@@ -4,6 +4,7 @@ import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -83,6 +84,32 @@ public class NamedBeanHandleManagerTest {
         NamedBeanHandle<Sensor> checkRename = nbhm.getNamedBeanHandle("ISno_user_name", sm.provideSensor("ISno_user_name"));
         nbhm.updateBeanFromUserToSystem(checkRename.getBean());
         jmri.util.JUnitAppender.assertWarnMessage("updateBeanFromUserToSystem requires non-blank user name: \"ISno_user_name\" not renamed");
+    }
+
+    @Test
+    public void testUserNameChangeUpdatesReferences() {
+        Sensor s1 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS1");
+        s1.setUserName("OldName");
+        NamedBeanHandle<Sensor> byUserName = nbhm.getNamedBeanHandle("OldName", s1);
+        NamedBeanHandle<Sensor> bySystemName = nbhm.getNamedBeanHandle("IS1", s1);
+
+        // changed directly on the bean, as a script or the JSON server does
+        s1.setUserName("NewName");
+
+        assertEquals("NewName", byUserName.getName(), "reference by user name follows the change");
+        assertEquals("IS1", bySystemName.getName(), "reference by system name is not changed");
+        assertTrue( byUserName.getBean() == s1, "reference still points at the same sensor");
+    }
+
+    @Test
+    public void testFirstUserNameLeavesReferences() {
+        Sensor s1 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS1");
+        NamedBeanHandle<Sensor> bySystemName = nbhm.getNamedBeanHandle("IS1", s1);
+
+        s1.setUserName("NewName");
+
+        // whether references change to the user name is the caller's choice
+        assertEquals("IS1", bySystemName.getName(), "reference by system name is not changed");
     }
 
     private NamedBeanHandleManager nbhm = null;
