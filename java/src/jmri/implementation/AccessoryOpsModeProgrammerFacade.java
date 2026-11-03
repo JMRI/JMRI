@@ -66,7 +66,6 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
         log.debug("Constructing AccessoryOpsModeProgrammerFacade");
         this._usingProgrammer = null;
         this.mode = prog.getMode();
-        this.aprog = prog;
         this._addrType = (addrType == null) ? "" : addrType.toLowerCase(); // NOI18N
         this._delay = delay;
         this._baseProg = baseProg;
@@ -95,8 +94,6 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
     @Override
     public void setMode(ProgrammingMode p) {
     }
-
-    Programmer aprog;
 
     @Override
     public boolean getCanRead() {
