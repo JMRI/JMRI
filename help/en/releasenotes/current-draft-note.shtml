@@ -26,6 +26,11 @@
 
         <h4>CBUS</h4>
             <ul>
+                <li>For developers: a CBUS connection now reports the speed and
+                    direction commanded for each loco, from the command
+                    station's sessions on the bus, whichever cab sent them
+                    (<code>jmri.LocoSpeedSource</code>), and when a session
+                    ends. It only listens. Nothing users see changes.</li>
                 <li>CBUS throttles: when several throttles are asked for at
                     the same moment, for example by Dispatcher starting several
                     automatic trains, by opening a saved throttle layout or by
