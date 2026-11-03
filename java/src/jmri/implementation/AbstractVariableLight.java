@@ -2,8 +2,6 @@ package jmri.implementation;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
-import java.util.Date;
-
 import javax.annotation.Nonnull;
 
 import jmri.InstanceManager;
@@ -246,10 +244,7 @@ public abstract class AbstractVariableLight
      * Variables needed but not saved to files/panels
      */
     protected double mTransitionTargetIntensity = 0.0;
-    protected Date mLastTransitionDate = null;
-    protected long mNextTransitionTs = 0;
     protected Timebase internalClock = null;
-    protected javax.swing.Timer alarmSyncUpdate = null;
     protected java.beans.PropertyChangeListener minuteChangeListener = null;
 
     /**
