@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -131,10 +132,14 @@ public class SimpleThrottlePanel extends JPanel implements ThrottleControllerUI 
         if (myContainer == null) {
             return;
         }
-        if (myContainer instanceof Window) {
-            ((Window) myContainer).toFront();
+        if (myContainer instanceof Frame) {
+            Frame f = (Frame) myContainer;            
+            if (f.getExtendedState() == JFrame.ICONIFIED) { // uniconify if iconified
+                f.setExtendedState(JFrame.NORMAL); 
+            }
+            f.toFront();      
         } else {
-            log.warn("Unable to set simple throttle window to front, myContainer is not an instance of Window");
+            log.warn("Unable to set simple throttle window to front, myContainer is not an instance of Frame");
         }
     }
 
