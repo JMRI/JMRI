@@ -80,6 +80,6 @@ public class ProxyTimeProviderManager extends AbstractProxyManager<TimeProvider>
     }
 
     // initialize logging
-//    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProxyClockManager.class);
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ProxyClockManager.class);
 
 }
