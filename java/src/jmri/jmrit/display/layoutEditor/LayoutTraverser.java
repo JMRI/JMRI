@@ -1287,7 +1287,7 @@ public class LayoutTraverser extends LayoutTrack {
 
         for (int idx = 0; idx < 2; idx++) {
             var slot = slotList.get(pairIndex * 2 + idx);
-            msg.append(isSlotConnectionClear(slot));
+            msg.append(isSlotConnectionClear(slot, true));
         }
 
         if (msg.length() > 0) {
@@ -1308,13 +1308,15 @@ public class LayoutTraverser extends LayoutTrack {
      * @param track The A or B side of a slot.
      * @return an empty StringBuilder if clear or a set of messages.
      */
-    public StringBuilder isSlotConnectionClear(SlotTrack track) {
+    public StringBuilder isSlotConnectionClear(SlotTrack track, boolean checkForConnection) {
         var smlManager = InstanceManager.getDefault(SignalMastLogicManager.class);
         var msg = new StringBuilder();
 
         var trackSegment = track.getConnect();
-        if (trackSegment != null) {
-            msg.append(Bundle.getMessage("TV_Connection"));
+        if (checkForConnection) {
+            if (trackSegment != null) {
+                msg.append(Bundle.getMessage("TV_Connection"));
+            }
         }
 
         // slot approach mast
@@ -1378,19 +1380,19 @@ public class LayoutTraverser extends LayoutTrack {
         if (buffer != null && models.containsSignalMast(buffer)) {
             msg.append(Bundle.getMessage("TTV_Buffer_Mast", buffer.getDisplayName()));
         }
-
-        msg.append("\n");
-
+        
         int issueCount = 0;
         StringBuilder firstIssue = new StringBuilder();
 
         for (var slotTrack : slotList) {
-            StringBuilder slotMsg = isSlotConnectionClear(slotTrack);
+            boolean checkForConnection = false;
+            StringBuilder slotMsg = isSlotConnectionClear(slotTrack, checkForConnection);
 
             if (slotMsg.length() > 0) {
                 issueCount++;
 
                 if (firstIssue.length() == 0) {
+                    firstIssue.append("\n");
                     firstIssue.append(slotMsg);
                 }
             }
@@ -1413,7 +1415,7 @@ public class LayoutTraverser extends LayoutTrack {
                     msg.toString(),
                     Bundle.getMessage("WarningTitle"),  // NOI18N
                     JmriJOptionPane.WARNING_MESSAGE);
-            removeOk = true;
+            removeOk = false;
         }
 
         return removeOk;

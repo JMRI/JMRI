@@ -664,14 +664,15 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
 
             // Side A Setup
             approachMastComboBoxA = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), slotA.getApproachMast(), DisplayOptions.DISPLAYNAME);
-            LayoutEditor.setupComboBox(approachMastComboBoxA, false, true, true);
+//            LayoutEditor.setupComboBox(approachMastComboBoxA, false, true, true);
             approachMastComboBoxA.setAllowNull(true);
             
             disabledCheckBoxA = new JCheckBox(Bundle.getMessage("Disabled"));
             disabledCheckBoxA.setSelected(slotA.isDisabled());
             disabledCheckBoxA.addActionListener((ActionEvent e) -> {
                 if (disabledCheckBoxA.isSelected()) {
-                    var msg = layoutTraverser.isSlotConnectionClear(slotA);
+                    boolean checkForConnectedTrackSegmentA = true;
+                    var msg = layoutTraverser.isSlotConnectionClear(slotA, checkForConnectedTrackSegmentA);
                     if (msg.length() > 0) {
                         msg.insert(0, Bundle.getMessage("TV_Message_Header"));
                         msg.append(Bundle.getMessage("TV_Message_Slot_Disable"));
@@ -689,14 +690,15 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
 
             // Side B Setup
             approachMastComboBoxB = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), slotB.getApproachMast(), DisplayOptions.DISPLAYNAME);
-            LayoutEditor.setupComboBox(approachMastComboBoxB, false, true, true);
+//            LayoutEditor.setupComboBox(approachMastComboBoxB, false, true, true);
             approachMastComboBoxB.setAllowNull(true);
 
             disabledCheckBoxB = new JCheckBox(Bundle.getMessage("Disabled"));
             disabledCheckBoxB.setSelected(slotB.isDisabled());
             disabledCheckBoxB.addActionListener((ActionEvent e) -> {
                 if (disabledCheckBoxB.isSelected()) {
-                    var msg = layoutTraverser.isSlotConnectionClear(slotB);
+                    boolean checkForConnectedTrackSegmentB = true;
+                    var msg = layoutTraverser.isSlotConnectionClear(slotB, checkForConnectedTrackSegmentB);
                     if (msg.length() > 0) {
                         msg.insert(0, Bundle.getMessage("TV_Message_Header"));
                         JmriJOptionPane.showMessageDialog(editLayoutTraverserFrame,
