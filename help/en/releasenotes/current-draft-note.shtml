@@ -481,7 +481,13 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>When a LogixNG is loaded and an item it uses, such as a sensor,
+              is not found, an error now names the missing item in the
+              System Console. Before, the item was silently left empty and
+              shown as ''.</li>
+          <li>Execute action, Last result of digital expression and the
+              Entry/Exit action and expression no longer lose their item when
+              another file is loaded after the item was renamed.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
