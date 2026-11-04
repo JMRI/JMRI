@@ -175,15 +175,16 @@ public class CbusAddressTest {
     @Test
     @SuppressWarnings({"unlikely-arg-type"})
     public void testEqualsOK() {
-        assertEquals(new CbusAddress("+001"), new CbusAddress("+001"));
-        assertEquals(new CbusAddress("+001"), new CbusAddress("x9800000001"));
-        assertEquals(new CbusAddress("+200001"), new CbusAddress("x9000020001"));
-        assertNotNull(new CbusAddress("+200001"));
-        assertNotEquals(new CbusAddress("+200001"), "foo");
-        assertNotEquals(new CbusAddress("+001"), new CbusAddress("+002"));
-        assertNotEquals(new CbusAddress("+N123E123"), new CbusAddress("+N456E123"));
-        assertNotEquals(new CbusAddress("+N123E123"), new CbusAddress("+N123E456"));
-        assertNotEquals(new CbusAddress("-268"), new CanReply(new int[]{CbusConstants.CBUS_SNN, 0x00, 12}));
+        assertTrue((new CbusAddress("+001")).equals(new CbusAddress("+001")));
+        assertTrue((new CbusAddress("+001")).equals(new CbusAddress("x9800000001")));
+        assertTrue((new CbusAddress("+200001")).equals(new CbusAddress("x9000020001")));
+        assertNotNull( new CbusAddress("+200001"));
+        assertFalse((new CbusAddress("+200001")).equals("foo"));
+        assertFalse((new CbusAddress("+001")).equals(new CbusAddress("+002")));
+        assertFalse((new CbusAddress("+N123E123")).equals(new CbusAddress("+N456E123")));
+        assertFalse((new CbusAddress("+N123E123")).equals(new CbusAddress("+N123E456")));
+        assertFalse(new CbusAddress("-268").equals(
+            new CanReply(new int[]{CbusConstants.CBUS_SNN, 0x00, 12})));
     }
 
     @Test
