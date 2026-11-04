@@ -1355,8 +1355,10 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         startSensor.removePropertyChangeListener(startListener);
     }
     */
-    long startTime;
-    long finishTime;
+
+    // These two fields are declared volatile to fix Spotbugs warning AT_NONATOMIC_64BIT_PRIMITIVE
+    volatile long startTime;
+    volatile long finishTime;
 
     ArrayList<Double> forwardOverRuns = new ArrayList<>();
     ArrayList<Double> reverseOverRuns = new ArrayList<>();
