@@ -1,11 +1,10 @@
 package jmri;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
-import java.util.Collections;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrix.internal.InternalSensorManager;
@@ -13,12 +12,6 @@ import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests for the Block class
@@ -38,7 +31,7 @@ public class BlockTest {
     }
 
     @Test
-    @SuppressWarnings({"unlikely-arg-type", "ObjectEqualsNull", "IncompatibleEquals"}) // String / StringBuffer seems to be unrelated to Block
+    @SuppressWarnings({"unlikely-arg-type"}) // String / StringBuffer seems to be unrelated to Block
     public void testEquals() {
         Block b1 = new Block("SystemName1");
         Block b2 = new Block("SystemName2");
@@ -53,11 +46,11 @@ public class BlockTest {
         assertTrue(b1.equals(b1a)); // commutes
         
         // check null
-        assertFalse(b1.equals(null));
+        assertNotNull(b1);
 
         // check another type
-        assertFalse(b1.equals(new StringBuffer("foo")));
-        assertFalse(b1.equals("foo"));
+        assertNotEquals(b1, new StringBuffer("foo"));
+        assertNotEquals(b1,"foo");
     }
 
     @Test

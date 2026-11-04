@@ -1,17 +1,12 @@
 package jmri.jmrix.sprog.simulator;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
+import java.io.*;
+
+// no special xSimulatorController
+import jmri.jmrix.sprog.*;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
-import jmri.jmrix.sprog.SprogMessage;
-import jmri.jmrix.sprog.SprogPortController; // no special xSimulatorController
-import jmri.jmrix.sprog.SprogReply;
-import jmri.jmrix.sprog.SprogSystemConnectionMemo;
-import jmri.jmrix.sprog.SprogTrafficController;
 import jmri.util.ImmediatePipedOutputStream;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,7 +68,7 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
             log.debug("tempPipeI created");
             pout = new DataOutputStream(tempPipeI);
             inpipe = new DataInputStream(new PipedInputStream(tempPipeI));
-            log.debug("inpipe created {}", inpipe != null);
+            log.debug("inpipe created");
             PipedOutputStream tempPipeO = new ImmediatePipedOutputStream();
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));

@@ -36,10 +36,11 @@ public class AbstractPortControllerScaffold extends AbstractPortController {
     public AbstractPortControllerScaffold(SystemConnectionMemo connectionMemo) throws IOException {
         super(connectionMemo);
         PipedInputStream tempPipe = new PipedInputStream();
-        ostream = new DataOutputStream(new PipedOutputStream(tempPipe));
+        PipedOutputStream tempPipeOut = new PipedOutputStream(tempPipe);
+        ostream = new DataOutputStream(tempPipeOut);
         tempPipe = new PipedInputStream();
         istream = new DataInputStream(tempPipe);
-        tistream = new DataOutputStream(new PipedOutputStream(tempPipe));
+        tistream = new DataOutputStream(tempPipeOut);
     }
 
     // returns the InputStream from the port
