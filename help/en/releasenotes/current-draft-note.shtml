@@ -804,5 +804,11 @@
                 do, they move on the layout's own track and set internal
                 sensors as they pass, with the time they passed. The sample
                 script SimulatedTrains.py shows two trains running.</li>
+            <li>For developers: tests and scripts can set faults on simulated
+                trains' layout: detector drop-outs, a sensor showing a train
+                that isn't there, swapped sensors, a Block longer or shorter
+                than JMRI has it, a stalled train and a train that parts. A
+                train whose turnout is moved under it now derails and stays
+                where it stopped.</li>
         </ul>
 
