@@ -426,7 +426,6 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     protected boolean useCurrentSpeedSteps;
     protected int useCurrentSpeedSteps_index;
     protected List<Integer> speedSettingsToUse;
-    RosterSpeedProfile rosterSpeedProfile;
 
     protected float profileSpeedAtStart;
 
