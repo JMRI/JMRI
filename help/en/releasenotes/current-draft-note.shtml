@@ -26,7 +26,11 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>CBUS sensors, turnouts and lights: each frame sent or
+                    received is now passed only to the sensors, turnouts and
+                    lights that use its event, instead of to every one on the
+                    connection, so the time taken for each frame no longer grows
+                    with the size of the layout.</li>
             </ul>
 
         <h4>C/MRI</h4>
