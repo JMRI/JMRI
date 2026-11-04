@@ -46,11 +46,11 @@ public class BlockTest {
         assertTrue(b1.equals(b1a)); // commutes
         
         // check null
-        assertNotNull(b1);
+        assertFalse(b1.equals(null));
 
         // check another type
-        assertNotEquals(b1, new StringBuffer("foo"));
-        assertNotEquals(b1,"foo");
+        assertFalse(b1.equals(new StringBuffer("foo")));
+        assertFalse(b1.equals("foo"));
     }
 
     @Test

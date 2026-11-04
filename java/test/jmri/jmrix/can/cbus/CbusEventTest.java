@@ -1,14 +1,12 @@
 package jmri.jmrix.can.cbus;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.*;
 
 /**
  *
@@ -99,7 +97,7 @@ public class CbusEventTest {
     }
 
     @Test
-    @SuppressWarnings({"unlikely-arg-type", "IncompatibleEquals"}) // CanReply and CanMessage are CanFrame with custom equals
+    @SuppressWarnings({"unlikely-arg-type"}) // CanReply and CanMessage are CanFrame with custom equals
     public void testEquals(){
     
         CbusEvent t = new CbusEvent(123,456);

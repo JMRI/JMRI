@@ -1,18 +1,12 @@
 package jmri.jmrit.logix;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.util.ArrayList;
 
-import jmri.BeanSetting;
-import jmri.Block;
-import jmri.InstanceManager;
-import jmri.Turnout;
+import jmri.*;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -90,7 +84,7 @@ public class OPathTest {
 
     @Test
     @SuppressFBWarnings( value = "EC_UNRELATED_TYPES", justification = "testing equals method")
-    @SuppressWarnings({"unlikely-arg-type", "IncompatibleEquals", "ObjectEqualsNull"}) // String seems to be unrelated to OPath
+    @SuppressWarnings({"unlikely-arg-type"}) // String seems to be unrelated to OPath
     public void testEquals() {
         Block b1 = new Block("IB1");
 

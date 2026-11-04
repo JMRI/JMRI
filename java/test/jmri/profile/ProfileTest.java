@@ -1,10 +1,6 @@
 package jmri.profile;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -144,7 +140,7 @@ public class ProfileTest {
      */
     @Test
     // tests that equals() does not allow a String to equal a Profile
-    @SuppressWarnings({"unlikely-arg-type", "IncompatibleEquals"})
+    @SuppressWarnings({"unlikely-arg-type"})
     public void testEquals(@TempDir File folder) throws IOException {
         File rootFolder = folder;
         File profileFolder = new File(rootFolder, "test");
