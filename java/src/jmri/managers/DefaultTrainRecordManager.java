@@ -114,9 +114,10 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
     public TrainRecord getByRosterEntry(@Nonnull BasicRosterEntry entry) {
         String id = Objects.requireNonNull(entry, "entry").getId();
         for (TrainRecord r : records) {
-            BasicRosterEntry e = r.getRosterEntry();
-            if (e == entry || (e != null && id != null && id.equals(e.getId()))) {
-                return r;
+            for (BasicRosterEntry e : r.getRosterEntries()) {
+                if (e == entry || (id != null && id.equals(e.getId()))) {
+                    return r;
+                }
             }
         }
         return null;

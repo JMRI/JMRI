@@ -12,7 +12,7 @@ import jmri.TrainRecord;
 import jmri.TrainRecord.Detection;
 import jmri.TrainRecord.DetectionMarker;
 import jmri.TrainRecord.LengthSource;
-import jmri.TrainRecord.Unit;
+import jmri.TrainRecord.TrainComponent;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JUnitUtil;
 
@@ -38,7 +38,7 @@ public class DefaultTrainRecordTest {
         assertEquals("1A23", record.toString());
         assertNull(record.getRosterEntry());
         assertTrue(record.getIdTags().isEmpty());
-        assertEquals(List.of(new Unit(null, null)), record.getUnits(), "one unit with no length");
+        assertEquals(List.of(new TrainComponent(null, null)), record.getTrainComponents(), "one component with no length");
         assertEquals(Detection.ENTIRE_TRAIN, record.getDetection());
         assertEquals(List.of(DetectionMarker.wholeTrain()), record.getMarkers());
         for (LengthSource s : LengthSource.values()) {
@@ -84,20 +84,57 @@ public class DefaultTrainRecordTest {
         e.setId("Class 43");
         record.setRosterEntry(e);
         assertSame(e, record.getRosterEntry());
+        assertEquals(List.of(e), record.getRosterEntries());
         assertEquals(1, registry.entries.size());
-        assertEquals(TrainRecord.PROPERTY_ROSTER_ENTRY, events.get(0).getPropertyName());
+        assertEquals(List.of(TrainRecord.PROPERTY_ROSTER_ENTRIES, TrainRecord.PROPERTY_ROSTER_ENTRY), propertyNames());
 
         record.setRosterEntry(e);
-        assertEquals(1, events.size(), "the same entry changes nothing");
+        assertEquals(2, events.size(), "the same entry changes nothing");
 
         record.setRosterEntry(null);
         assertNull(record.getRosterEntry());
-        assertEquals(2, events.size());
+        assertTrue(record.getRosterEntries().isEmpty());
+        assertEquals(4, events.size());
         assertEquals(1, registry.entries.size(), "clearing isn't checked");
 
         registry.refuse = true;
         assertThrows(IllegalArgumentException.class, () -> record.setRosterEntry(e));
         assertNull(record.getRosterEntry(), "a refused entry isn't taken");
+    }
+
+    @Test
+    public void testRosterEntriesOfSeveralLocos() {
+        RosterEntry lead = new RosterEntry();
+        lead.setId("47012");
+        RosterEntry second = new RosterEntry();
+        second.setId("47013");
+        record.setRosterEntries(List.of(lead, second));
+        assertEquals(List.of(lead, second), record.getRosterEntries());
+        assertSame(lead, record.getRosterEntry(), "the first is the lead loco");
+        assertEquals(List.of(lead, second), registry.entries, "each new entry is checked");
+        assertEquals(List.of(TrainRecord.PROPERTY_ROSTER_ENTRIES, TrainRecord.PROPERTY_ROSTER_ENTRY), propertyNames());
+
+        events.clear();
+        record.setRosterEntry(second);
+        assertEquals(List.of(second, lead), record.getRosterEntries(), "a loco already listed moves to the front");
+        assertEquals(2, registry.entries.size(), "entries the record already has aren't checked again");
+        assertEquals(List.of(TrainRecord.PROPERTY_ROSTER_ENTRIES, TrainRecord.PROPERTY_ROSTER_ENTRY), propertyNames());
+
+        events.clear();
+        record.setRosterEntries(List.of(second));
+        assertEquals(List.of(TrainRecord.PROPERTY_ROSTER_ENTRIES), propertyNames(), "the lead loco is unchanged");
+
+        record.setRosterEntry(null);
+        assertTrue(record.getRosterEntries().isEmpty(), "removing the lead loco's entry");
+
+        RosterEntry sameId = new RosterEntry();
+        sameId.setId("47012");
+        assertThrows(IllegalArgumentException.class, () -> record.setRosterEntries(List.of(lead, sameId)),
+                "the same loco can't be listed twice");
+        assertTrue(record.getRosterEntries().isEmpty(), "a refused list isn't taken");
+
+        record.getRosterEntries().add(lead);
+        assertTrue(record.getRosterEntries().isEmpty(), "the list returned is a copy");
     }
 
     @Test
@@ -126,27 +163,27 @@ public class DefaultTrainRecordTest {
     }
 
     @Test
-    public void testUnits() {
-        List<Unit> units = List.of(new Unit("loco", 220.0), new Unit("coaches", 800.0));
-        record.setUnits(units);
-        assertEquals(units, record.getUnits());
-        assertEquals(Double.valueOf(1020.0), record.getLength(LengthSource.UNITS), "the sum of the units' lengths");
-        assertEquals(List.of(TrainRecord.PROPERTY_UNITS, TrainRecord.PROPERTY_LENGTHS), propertyNames());
+    public void testTrainComponents() {
+        List<TrainComponent> components = List.of(new TrainComponent("loco", 220.0), new TrainComponent("coaches", 800.0));
+        record.setTrainComponents(components);
+        assertEquals(components, record.getTrainComponents());
+        assertEquals(Double.valueOf(1020.0), record.getLength(LengthSource.TRAIN_COMPONENTS), "the sum of the components' lengths");
+        assertEquals(List.of(TrainRecord.PROPERTY_TRAIN_COMPONENTS, TrainRecord.PROPERTY_LENGTHS), propertyNames());
 
-        record.setUnits(new ArrayList<>(units));
-        assertEquals(2, events.size(), "the same units change nothing");
+        record.setTrainComponents(new ArrayList<>(components));
+        assertEquals(2, events.size(), "the same components change nothing");
 
-        record.setUnits(List.of(new Unit("loco", 220.0), new Unit("wagons", null)));
-        assertNull(record.getLength(LengthSource.UNITS), "no length unless every unit has one");
+        record.setTrainComponents(List.of(new TrainComponent("loco", 220.0), new TrainComponent("wagons", null)));
+        assertNull(record.getLength(LengthSource.TRAIN_COMPONENTS), "no length unless every component has one");
         assertEquals(4, events.size());
 
-        record.setUnits(List.of(new Unit("loco", 220.0), new Unit("vans", null)));
-        assertEquals(5, events.size(), "units changed but the units' length did not");
-        assertEquals(TrainRecord.PROPERTY_UNITS, events.get(4).getPropertyName());
+        record.setTrainComponents(List.of(new TrainComponent("loco", 220.0), new TrainComponent("vans", null)));
+        assertEquals(5, events.size(), "components changed but their length did not");
+        assertEquals(TrainRecord.PROPERTY_TRAIN_COMPONENTS, events.get(4).getPropertyName());
 
-        assertThrows(IllegalArgumentException.class, () -> record.setUnits(List.of()));
-        record.getUnits().clear();
-        assertEquals(2, record.getUnits().size(), "the list returned is a copy");
+        assertThrows(IllegalArgumentException.class, () -> record.setTrainComponents(List.of()));
+        record.getTrainComponents().clear();
+        assertEquals(2, record.getTrainComponents().size(), "the list returned is a copy");
     }
 
     @Test
@@ -193,8 +230,8 @@ public class DefaultTrainRecordTest {
         record.setLength(LengthSource.ENTERED, 900.0);
         record.setLength(LengthSource.ROSTER, 250.0);
         assertEquals(900.0, record.getHoldingLength());
-        record.setUnits(List.of(new Unit("loco", 250.0), new Unit("coaches", 700.0)));
-        assertEquals(Double.valueOf(950.0), record.getHoldingLength(), "the units' length counts");
+        record.setTrainComponents(List.of(new TrainComponent("loco", 250.0), new TrainComponent("coaches", 700.0)));
+        assertEquals(Double.valueOf(950.0), record.getHoldingLength(), "the components' length counts");
         record.setMeasuredLength(1010.0, false);
         assertEquals(1010.0, record.getHoldingLength(), "a measured length counts, consistent or not");
         record.setLength(LengthSource.OPERATIONS, 1200.0);
@@ -233,7 +270,7 @@ public class DefaultTrainRecordTest {
 
     @Test
     public void testLengthChecks() {
-        assertThrows(IllegalArgumentException.class, () -> record.setLength(LengthSource.UNITS, 100.0));
+        assertThrows(IllegalArgumentException.class, () -> record.setLength(LengthSource.TRAIN_COMPONENTS, 100.0));
         assertThrows(IllegalArgumentException.class, () -> record.setLength(LengthSource.MEASURED, 100.0));
         assertThrows(IllegalArgumentException.class, () -> record.setLength(LengthSource.ENTERED, 0.0));
         assertThrows(IllegalArgumentException.class, () -> record.setLength(LengthSource.ROSTER, Double.NaN));
@@ -250,7 +287,7 @@ public class DefaultTrainRecordTest {
         assertThrows(IllegalStateException.class, () -> record.setRosterEntry(null));
         assertThrows(IllegalStateException.class, () -> record.addIdTag(tag));
         assertThrows(IllegalStateException.class, () -> record.removeIdTag(tag));
-        assertThrows(IllegalStateException.class, () -> record.setUnits(List.of(new Unit(null, null))));
+        assertThrows(IllegalStateException.class, () -> record.setTrainComponents(List.of(new TrainComponent(null, null))));
         assertThrows(IllegalStateException.class, () -> record.setDetection(Detection.HEAD_ONLY));
         assertThrows(IllegalStateException.class,
                 () -> record.setCustomMarkers(List.of(DetectionMarker.front(null))));

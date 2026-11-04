@@ -28,8 +28,8 @@ public interface TrainRecordManager extends PropertyChangeProvider {
     String PROPERTY_RECORDS = "records"; // NOI18N
 
     /**
-     * Create a record for a train. It is one unit with no length, detected as
-     * Entire Train, with no roster entry and no ID tags.
+     * Create a record for a train. It is one component with no length,
+     * detected as Entire Train, with no roster entries and no ID tags.
      *
      * @param name the train's name; leading and trailing spaces are removed
      *             as for a user name
@@ -66,8 +66,8 @@ public interface TrainRecordManager extends PropertyChangeProvider {
 
     /**
      * @param entry a roster entry
-     * @return the record whose loco has this roster entry, or an entry with
-     *         the same ID, or null
+     * @return the record one of whose locos has this roster entry, or an
+     *         entry with the same ID, or null
      */
     @CheckForNull
     TrainRecord getByRosterEntry(@Nonnull BasicRosterEntry entry);

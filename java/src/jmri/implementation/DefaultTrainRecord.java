@@ -22,7 +22,7 @@ import jmri.beans.PropertyChangeSupport;
 /**
  * The default {@link TrainRecord}. Records are made by a
  * {@link jmri.TrainRecordManager}, which is told of every change of name,
- * roster entry and ID tag before it is made, so it can keep each unique.
+ * roster entries and ID tags before it is made, so it can keep each unique.
  *
  * @author Keith Bruce Copyright (C) 2026
  * @since 5.19.1
@@ -60,9 +60,9 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
 
     private final Registry registry;
     private String name;
-    private BasicRosterEntry rosterEntry;
+    private List<BasicRosterEntry> rosterEntries = Collections.emptyList();
     private final Set<IdTag> idTags = new LinkedHashSet<>();
-    private List<Unit> units = Collections.singletonList(new Unit(null, null));
+    private List<TrainComponent> components = Collections.singletonList(new TrainComponent(null, null));
     private Detection detection = Detection.ENTIRE_TRAIN;
     private List<DetectionMarker> customMarkers = null;
     private final Map<LengthSource, Double> lengths = new EnumMap<>(LengthSource.class);
@@ -70,7 +70,8 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     private boolean removed = false;
 
     /**
-     * Make a record: one unit with no length, detected as Entire Train.
+     * Make a record: one component with no length, no locos, detected as
+     * Entire Train.
      *
      * @param name     the train's name, already normalised and checked
      * @param registry the manager to tell of changes that must be unique
@@ -122,7 +123,7 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     @Override
     @CheckForNull
     public BasicRosterEntry getRosterEntry() {
-        return rosterEntry;
+        return rosterEntries.isEmpty() ? null : rosterEntries.get(0);
     }
 
     /** {@inheritDoc} */
@@ -130,15 +131,78 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     @InvokeOnLayoutThread
     public void setRosterEntry(@CheckForNull BasicRosterEntry entry) {
         checkNotRemoved();
-        if (entry == rosterEntry) {
+        List<BasicRosterEntry> list = new ArrayList<>(rosterEntries);
+        if (entry == null) {
+            if (list.isEmpty()) {
+                return;
+            }
+            list.remove(0);
+        } else {
+            int at = indexOf(list, entry);
+            if (at == 0) {
+                return;
+            }
+            if (at > 0) {
+                list.remove(at);
+            }
+            list.add(0, entry);
+        }
+        setRosterEntries(list);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @Nonnull
+    public List<BasicRosterEntry> getRosterEntries() {
+        return new ArrayList<>(rosterEntries);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @InvokeOnLayoutThread
+    public void setRosterEntries(@Nonnull List<BasicRosterEntry> entries) {
+        Objects.requireNonNull(entries, "entries");
+        checkNotRemoved();
+        List<BasicRosterEntry> list = new ArrayList<>(entries.size());
+        for (BasicRosterEntry e : entries) {
+            Objects.requireNonNull(e, "entry");
+            if (indexOf(list, e) >= 0) {
+                throw new IllegalArgumentException("roster entry " + e.getId() + " is listed twice");
+            }
+            list.add(e);
+        }
+        if (list.equals(rosterEntries)) {
             return;
         }
-        if (entry != null) {
-            registry.checkRosterEntry(this, entry);
+        for (BasicRosterEntry e : list) {
+            if (indexOf(rosterEntries, e) < 0) {
+                registry.checkRosterEntry(this, e);
+            }
         }
-        BasicRosterEntry old = rosterEntry;
-        rosterEntry = entry;
-        firePropertyChange(PROPERTY_ROSTER_ENTRY, old, entry);
+        BasicRosterEntry oldLead = getRosterEntry();
+        List<BasicRosterEntry> old = getRosterEntries();
+        rosterEntries = Collections.unmodifiableList(list);
+        firePropertyChange(PROPERTY_ROSTER_ENTRIES, old, getRosterEntries());
+        if (oldLead != getRosterEntry()) {
+            firePropertyChange(PROPERTY_ROSTER_ENTRY, oldLead, getRosterEntry());
+        }
+    }
+
+    /**
+     * @param list  roster entries
+     * @param entry a roster entry
+     * @return where the entry, or one with its roster ID, is in the list, or
+     *         -1
+     */
+    private static int indexOf(List<BasicRosterEntry> list, BasicRosterEntry entry) {
+        String id = entry.getId();
+        for (int i = 0; i < list.size(); i++) {
+            BasicRosterEntry e = list.get(i);
+            if (e == entry || (id != null && id.equals(e.getId()))) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     /** {@inheritDoc} */
@@ -180,30 +244,30 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     /** {@inheritDoc} */
     @Override
     @Nonnull
-    public List<Unit> getUnits() {
-        return new ArrayList<>(units);
+    public List<TrainComponent> getTrainComponents() {
+        return new ArrayList<>(components);
     }
 
     /** {@inheritDoc} */
     @Override
     @InvokeOnLayoutThread
-    public void setUnits(@Nonnull List<Unit> units) {
-        Objects.requireNonNull(units, "units");
+    public void setTrainComponents(@Nonnull List<TrainComponent> components) {
+        Objects.requireNonNull(components, "components");
         checkNotRemoved();
-        if (units.isEmpty()) {
-            throw new IllegalArgumentException("a train has at least one unit");
+        if (components.isEmpty()) {
+            throw new IllegalArgumentException("a train has at least one component");
         }
-        for (Unit u : units) {
-            Objects.requireNonNull(u, "unit");
+        for (TrainComponent c : components) {
+            Objects.requireNonNull(c, "component");
         }
-        if (units.equals(this.units)) {
+        if (components.equals(this.components)) {
             return;
         }
-        Double oldUnitsLength = getLength(LengthSource.UNITS);
-        List<Unit> old = getUnits();
-        this.units = Collections.unmodifiableList(new ArrayList<>(units));
-        firePropertyChange(PROPERTY_UNITS, old, getUnits());
-        if (!Objects.equals(oldUnitsLength, getLength(LengthSource.UNITS))) {
+        Double oldComponentsLength = getLength(LengthSource.TRAIN_COMPONENTS);
+        List<TrainComponent> old = getTrainComponents();
+        this.components = Collections.unmodifiableList(new ArrayList<>(components));
+        firePropertyChange(PROPERTY_TRAIN_COMPONENTS, old, getTrainComponents());
+        if (!Objects.equals(oldComponentsLength, getLength(LengthSource.TRAIN_COMPONENTS))) {
             firePropertyChange(PROPERTY_LENGTHS, null, null);
         }
     }
@@ -273,10 +337,10 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     @CheckForNull
     public Double getLength(@Nonnull LengthSource source) {
         Objects.requireNonNull(source, "source");
-        if (source == LengthSource.UNITS) {
+        if (source == LengthSource.TRAIN_COMPONENTS) {
             double sum = 0;
-            for (Unit u : units) {
-                Double l = u.getLength();
+            for (TrainComponent c : components) {
+                Double l = c.getLength();
                 if (l == null) {
                     return null;
                 }
@@ -293,8 +357,8 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     public void setLength(@Nonnull LengthSource source, @CheckForNull Double mm) {
         Objects.requireNonNull(source, "source");
         checkNotRemoved();
-        if (source == LengthSource.UNITS) {
-            throw new IllegalArgumentException("the units' length comes from the units");
+        if (source == LengthSource.TRAIN_COMPONENTS) {
+            throw new IllegalArgumentException("the components' length comes from the components");
         }
         if (source == LengthSource.MEASURED) {
             throw new IllegalArgumentException("set a measured length with setMeasuredLength");

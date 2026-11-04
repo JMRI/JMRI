@@ -97,6 +97,25 @@ public class DefaultTrainRecordManagerTest {
     }
 
     @Test
+    public void testSecondLocoBelongsToOneRecord() {
+        RosterEntry lead = new RosterEntry();
+        lead.setId("47012");
+        RosterEntry second = new RosterEntry();
+        second.setId("47013");
+        TrainRecord a = manager.newRecord("A");
+        TrainRecord b = manager.newRecord("B");
+        a.setRosterEntries(java.util.List.of(lead, second));
+        assertSame(a, manager.getByRosterEntry(second), "found by a loco that isn't the lead");
+        assertThrows(IllegalArgumentException.class, () -> b.setRosterEntry(second));
+        assertThrows(IllegalArgumentException.class, () -> b.setRosterEntries(java.util.List.of(second)));
+        assertTrue(b.getRosterEntries().isEmpty(), "a refused entry isn't taken");
+
+        a.setRosterEntries(java.util.List.of(lead));
+        b.setRosterEntry(second);
+        assertSame(b, manager.getByRosterEntry(second), "free once the other record lets it go");
+    }
+
+    @Test
     public void testIdTagBelongsToOneRecord() {
         IdTag tag = new DefaultIdTag("ID1234");
         TrainRecord a = manager.newRecord("A");

@@ -5,7 +5,7 @@ import java.util.List;
 import jmri.TrainRecord.Detection;
 import jmri.TrainRecord.DetectionMarker;
 import jmri.TrainRecord.DetectionMarker.Placement;
-import jmri.TrainRecord.Unit;
+import jmri.TrainRecord.TrainComponent;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -13,7 +13,7 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Tests for the value classes in {@link TrainRecord}: units and detection
+ * Tests for the value classes in {@link TrainRecord}: train components and detection
  * markers.
  *
  * @author Keith Bruce Copyright (C) 2026
@@ -21,24 +21,26 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TrainRecordTest {
 
     @Test
-    public void testUnit() {
-        Unit u = new Unit("loco", 210.0);
-        assertEquals("loco", u.getName());
-        assertEquals(210.0, u.getLength());
-        Unit none = new Unit(null, null);
-        assertNull(none.getName());
+    public void testTrainComponent() {
+        TrainComponent c = new TrainComponent("loco", 210.0);
+        assertEquals("loco", c.getName());
+        assertEquals(210.0, c.getLength());
+        TrainComponent none = new TrainComponent(null, null);
+        assertEquals("", none.getName(), "no name is \"\", never null");
         assertNull(none.getLength());
-        assertEquals(new Unit("loco", 210.0), u);
-        assertEquals(new Unit("loco", 210.0).hashCode(), u.hashCode());
-        assertNotEquals(new Unit("loco", 200.0), u);
-        assertNotEquals(new Unit("coach", 210.0), u);
+        assertEquals(new TrainComponent("", null), none);
+        assertEquals("rake", new TrainComponent("  rake ", null).getName(), "the name is trimmed");
+        assertEquals(new TrainComponent("loco", 210.0), c);
+        assertEquals(new TrainComponent("loco", 210.0).hashCode(), c.hashCode());
+        assertNotEquals(new TrainComponent("loco", 200.0), c);
+        assertNotEquals(new TrainComponent("coach", 210.0), c);
     }
 
     @Test
-    public void testUnitLengthMustBePositive() {
-        assertThrows(IllegalArgumentException.class, () -> new Unit("u", 0.0));
-        assertThrows(IllegalArgumentException.class, () -> new Unit("u", -1.0));
-        assertThrows(IllegalArgumentException.class, () -> new Unit("u", Double.NaN));
+    public void testTrainComponentLengthMustBePositive() {
+        assertThrows(IllegalArgumentException.class, () -> new TrainComponent("c", 0.0));
+        assertThrows(IllegalArgumentException.class, () -> new TrainComponent("c", -1.0));
+        assertThrows(IllegalArgumentException.class, () -> new TrainComponent("c", Double.NaN));
     }
 
     @Test

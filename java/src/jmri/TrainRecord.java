@@ -18,10 +18,10 @@ import jmri.beans.PropertyChangeProvider;
  * A train record is one object per train, so that every part of JMRI that
  * needs to know about a train can refer to the same one. It holds:
  * <ul>
- * <li>the train's identity: its name, the roster entry of its loco if it has
- * one, and any ID tags known to belong to it;</li>
- * <li>what it is made of: its units, the parts of it that can be uncoupled
- * from the rest, each with a length where one is known;</li>
+ * <li>the train's identity: its name, the roster entries of its locos (lead
+ * loco first) where they have them, and any ID tags known to belong to it;</li>
+ * <li>what it is made of: its components, the parts it is split into or
+ * joined from, each with a length where one is known;</li>
  * <li>which parts of it detection can see: Entire Train, Head Only, Head and
  * Tail, or a custom list of detection markers;</li>
  * <li>its length from each source that gives one, and the rule for which is
@@ -44,19 +44,24 @@ public interface TrainRecord extends PropertyChangeProvider {
 
     /** Property name for a change of name. */
     String PROPERTY_NAME = "name"; // NOI18N
-    /** Property name for a change of roster entry. */
+    /** Property name for a change of the lead loco's roster entry. */
     String PROPERTY_ROSTER_ENTRY = "rosterEntry"; // NOI18N
+    /**
+     * Property name for a change in the locos' roster entries; the old and
+     * new values are the lists, as {@link #getRosterEntries()} gives them.
+     */
+    String PROPERTY_ROSTER_ENTRIES = "rosterEntries"; // NOI18N
     /** Property name for a change in the ID tags. */
     String PROPERTY_ID_TAGS = "idTags"; // NOI18N
-    /** Property name for a change in the units. */
-    String PROPERTY_UNITS = "units"; // NOI18N
+    /** Property name for a change in the train's components. */
+    String PROPERTY_TRAIN_COMPONENTS = "trainComponents"; // NOI18N
     /**
      * Property name for a change of detection or detection markers; the old
      * and new values are the markers, as {@link #getMarkers()} gives them.
      */
     String PROPERTY_DETECTION = "detection"; // NOI18N
     /**
-     * Property name for a change in any length, the units' length included;
+     * Property name for a change in any length, the components' length included;
      * the old and new values are null, so read the lengths from the record.
      */
     String PROPERTY_LENGTHS = "lengths"; // NOI18N
@@ -80,21 +85,48 @@ public interface TrainRecord extends PropertyChangeProvider {
     void setName(@Nonnull String name);
 
     /**
-     * @return the roster entry of the train's loco, or null if it has none
+     * The roster entry of the train's lead loco: the loco Dispatcher and
+     * Warrants drive.
+     *
+     * @return the first of {@link #getRosterEntries()}, or null if the train
+     *         has no loco with a roster entry
      */
     @CheckForNull
     BasicRosterEntry getRosterEntry();
 
     /**
-     * Set the roster entry of the train's loco. A roster entry belongs to at
-     * most one record.
+     * Make a roster entry the lead loco's. If the entry is already one of the
+     * train's locos it moves to the front; otherwise it is added at the front.
+     * Null removes the lead loco's entry, and the next loco, if any, leads.
+     * A roster entry belongs to at most one record.
      *
-     * @param entry the roster entry, or null for none
+     * @param entry the roster entry, or null to remove the lead loco's
      * @throws IllegalArgumentException if another record has this entry
      * @throws IllegalStateException    if the record has been removed
      */
     @InvokeOnLayoutThread
     void setRosterEntry(@CheckForNull BasicRosterEntry entry);
+
+    /**
+     * The roster entries of the train's locos, such as both locos of a
+     * double-headed train, in order from the lead loco.
+     *
+     * @return the entries, lead loco first, possibly empty; a copy
+     */
+    @Nonnull
+    List<BasicRosterEntry> getRosterEntries();
+
+    /**
+     * Set the roster entries of the train's locos. Each roster entry belongs
+     * to at most one record, and appears in the list at most once.
+     *
+     * @param entries the entries, lead loco first; empty for none
+     * @throws IllegalArgumentException if an entry appears twice, or another
+     *                                  record has one of them
+     * @throws IllegalStateException    if the record has been removed
+     */
+    @InvokeOnLayoutThread
+    void setRosterEntries(@Nonnull List<BasicRosterEntry> entries);
 
     /**
      * @return the ID tags known to belong to the train, in the order added;
@@ -125,23 +157,25 @@ public interface TrainRecord extends PropertyChangeProvider {
     void removeIdTag(@Nonnull IdTag tag);
 
     /**
-     * The train's units, front first. A train that has never been split is
-     * one unit, and that is the default: nobody declares units in advance.
+     * The train's components, front first: the parts it is split into or
+     * joined from. A train that is never split is one component however many
+     * vehicles it has, and that is the default, so nobody declares components
+     * in advance.
      *
-     * @return the units, front first, never empty; a copy
+     * @return the components, front first, never empty; a copy
      */
     @Nonnull
-    List<Unit> getUnits();
+    List<TrainComponent> getTrainComponents();
 
     /**
-     * Set the train's units, front first.
+     * Set the train's components, front first.
      *
-     * @param units the units, front first, at least one
+     * @param components the components, front first, at least one
      * @throws IllegalArgumentException if the list is empty
      * @throws IllegalStateException    if the record has been removed
      */
     @InvokeOnLayoutThread
-    void setUnits(@Nonnull List<Unit> units);
+    void setTrainComponents(@Nonnull List<TrainComponent> components);
 
     /**
      * @return how the train is detected
@@ -202,14 +236,14 @@ public interface TrainRecord extends PropertyChangeProvider {
 
     /**
      * Set or clear the train's length from one source. For
-     * {@link LengthSource#UNITS} use {@link #setUnits}: that length is worked
-     * out from the units. For {@link LengthSource#MEASURED} use
+     * {@link LengthSource#TRAIN_COMPONENTS} use {@link #setTrainComponents}:
+     * that length is worked out from the components. For {@link LengthSource#MEASURED} use
      * {@link #setMeasuredLength}.
      *
      * @param source the source
      * @param mm     the length in millimetres, more than 0, or null to clear
      * @throws IllegalArgumentException if the source is
-     *                                  {@link LengthSource#UNITS} or
+     *                                  {@link LengthSource#TRAIN_COMPONENTS} or
      *                                  {@link LengthSource#MEASURED}, or the
      *                                  length is not more than 0
      * @throws IllegalStateException    if the record has been removed
@@ -285,50 +319,54 @@ public interface TrainRecord extends PropertyChangeProvider {
     enum LengthSource {
         /** Entered for the train, as Dispatcher's Max Train Length. */
         ENTERED,
-        /** The loco's roster entry. */
+        /** The locos' roster entries. */
         ROSTER,
         /** Operations car and engine lengths. */
         OPERATIONS,
-        /** The sum of the units' lengths, when every unit has one. */
-        UNITS,
+        /** The sum of the components' lengths, when every component has one. */
+        TRAIN_COMPONENTS,
         /** Measured from the train's crossings. */
         MEASURED
     }
 
     /**
-     * A part of a train that can be uncoupled from the rest: a loco, a
-     * multiple unit, or a rake of wagons that is never broken up.
+     * A part a train is split into or joined from as one piece, such as a
+     * rake of wagons left at a station, or the portion that goes on. It is
+     * not every vehicle that could be uncoupled: a train that is never split
+     * is one component however many vehicles it has, and one that leaves a
+     * rake of wagons at a station is two, the rake and the rest.
      */
     @Immutable
-    final class Unit {
+    final class TrainComponent {
 
         private final String name;
         private final Double lengthMm;
 
         /**
-         * @param name     the unit's name, or null for none
+         * @param name     the component's name; null is taken as "", and
+         *                 leading and trailing spaces are removed
          * @param lengthMm its length in millimetres, more than 0, or null if
          *                 not known
          * @throws IllegalArgumentException if the length is not more than 0
          */
-        public Unit(@CheckForNull String name, @CheckForNull Double lengthMm) {
+        public TrainComponent(@CheckForNull String name, @CheckForNull Double lengthMm) {
             if (lengthMm != null && !(lengthMm > 0)) {
-                throw new IllegalArgumentException("unit length must be more than 0: " + lengthMm);
+                throw new IllegalArgumentException("component length must be more than 0: " + lengthMm);
             }
-            this.name = name;
+            this.name = name == null ? "" : name.trim();
             this.lengthMm = lengthMm;
         }
 
         /**
-         * @return the unit's name, or null for none
+         * @return the component's name, or "" if it has none; never null
          */
-        @CheckForNull
+        @Nonnull
         public String getName() {
             return name;
         }
 
         /**
-         * @return the unit's length in millimetres, or null if not known
+         * @return the component's length in millimetres, or null if not known
          */
         @CheckForNull
         public Double getLength() {
@@ -340,11 +378,11 @@ public interface TrainRecord extends PropertyChangeProvider {
             if (this == o) {
                 return true;
             }
-            if (!(o instanceof Unit)) {
+            if (!(o instanceof TrainComponent)) {
                 return false;
             }
-            Unit u = (Unit) o;
-            return Objects.equals(name, u.name) && Objects.equals(lengthMm, u.lengthMm);
+            TrainComponent c = (TrainComponent) o;
+            return name.equals(c.name) && Objects.equals(lengthMm, c.lengthMm);
         }
 
         @Override
@@ -354,7 +392,7 @@ public interface TrainRecord extends PropertyChangeProvider {
 
         @Override
         public String toString() {
-            return "Unit[" + name + ", " + lengthMm + " mm]";
+            return "TrainComponent[" + name + ", " + lengthMm + " mm]";
         }
     }
 
