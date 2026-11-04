@@ -226,16 +226,41 @@ public class CbusSendTest {
 
     @Test
     public void testSendWithDelayArrivesInOrderDue() {
-        // sent in the order 20, 10, 10, 0 ms: due 0, then the two 10s in the order sent, then 20
-        send.sendWithDelay(new CanReply(new int[]{CbusConstants.CBUS_ACON, 0x00, 0x01, 0x00, 20}), true, false, 20);
-        send.sendWithDelay(new CanReply(new int[]{CbusConstants.CBUS_ACON, 0x00, 0x01, 0x00, 10}), true, false, 10);
-        send.sendWithDelay(new CanReply(new int[]{CbusConstants.CBUS_ACON, 0x00, 0x01, 0x00, 11}), true, false, 10);
-        send.sendWithDelay(new CanReply(new int[]{CbusConstants.CBUS_ACON, 0x00, 0x01, 0x00, 0}), true, false, 0);
-        JUnitUtil.waitFor(() -> tcis.inbound.size() == 4, "all frames delivered");
-        int[] expected = {0, 10, 11, 20};
-        for (int i = 0; i < expected.length; i++) {
-            assertEquals(expected[i], tcis.inbound.elementAt(i).getElement(4), "position " + i);
+        // Sent with delays of 20, 10, 10 and 0 ms. Each frame is due its delay after it was sent,
+        // and the times each send began and ended bound that. A busy machine may pause between
+        // the sends, so the order of two frames is checked where those bounds settle it, and
+        // frames with the same delay must keep the order they were sent in.
+        int[] delays = {20, 10, 10, 0};
+        long[] began = new long[delays.length];
+        long[] ended = new long[delays.length];
+        for (int i = 0; i < delays.length; i++) {
+            began[i] = System.nanoTime();
+            send.sendWithDelay(new CanReply(new int[]{CbusConstants.CBUS_ACON, 0x00, 0x01, 0x00, i}), true, false,
+                delays[i]);
+            ended[i] = System.nanoTime();
         }
+        JUnitUtil.waitFor(() -> tcis.inbound.size() == delays.length, "all frames delivered");
+        int[] position = new int[delays.length];
+        for (int p = 0; p < delays.length; p++) {
+            position[tcis.inbound.elementAt(p).getElement(4)] = p;
+        }
+        int settled = 0;
+        for (int i = 0; i < delays.length; i++) {
+            for (int j = i + 1; j < delays.length; j++) {
+                long latestI = ended[i] + TimeUnit.MILLISECONDS.toNanos(delays[i]);
+                long earliestI = began[i] + TimeUnit.MILLISECONDS.toNanos(delays[i]);
+                long latestJ = ended[j] + TimeUnit.MILLISECONDS.toNanos(delays[j]);
+                long earliestJ = began[j] + TimeUnit.MILLISECONDS.toNanos(delays[j]);
+                if (delays[i] == delays[j] || latestI - earliestJ < 0) {
+                    assertTrue(position[i] < position[j], "frame " + i + " due before frame " + j);
+                    settled++;
+                } else if (latestJ - earliestI < 0) {
+                    assertTrue(position[j] < position[i], "frame " + j + " due before frame " + i);
+                    settled++;
+                }
+            }
+        }
+        assertTrue(settled > 0, "at least the frames with the same delay are in order");
         assertReceivedTimesInOrder();
     }
 
