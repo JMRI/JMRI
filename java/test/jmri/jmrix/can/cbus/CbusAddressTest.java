@@ -369,11 +369,11 @@ public class CbusAddressTest {
         assertFalse(invalid.check(), "ABC is invalid");
         assertEquals(0, invalid.hashCode(), "invalid hashcode is 0");
         assertEquals(0, invalidToo.hashCode(), "out of range hashcode is 0");
-        assertNotEquals(invalid, valid, "invalid not equal to valid");
-        assertNotEquals(valid, invalid, "valid not equal to invalid");
-        assertNotNull(invalid, "invalid not equal to null");
-        assertNotEquals(invalid, "ABC", "invalid not equal to String");
-        assertEquals(invalid, invalidToo, "two invalid addresses are equal");
+        assertFalse(invalid.equals(valid), "invalid not equal to valid");
+        assertFalse(valid.equals(invalid), "valid not equal to invalid");
+        assertFalse(invalid.equals(null), "invalid not equal to null");
+        assertFalse(invalid.equals("ABC"), "invalid not equal to String");
+        assertTrue(invalid.equals(invalidToo), "two invalid addresses are equal");
     }
 
     @Test
