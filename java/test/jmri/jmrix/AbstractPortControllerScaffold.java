@@ -40,7 +40,8 @@ public class AbstractPortControllerScaffold extends AbstractPortController {
         ostream = new DataOutputStream(tempPipeOut);
         tempPipe = new PipedInputStream();
         istream = new DataInputStream(tempPipe);
-        tistream = new DataOutputStream(tempPipeOut);
+        PipedOutputStream tempPipeOut2 = new PipedOutputStream(tempPipe);
+        tistream = new DataOutputStream(tempPipeOut2);
     }
 
     // returns the InputStream from the port
