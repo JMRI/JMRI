@@ -2,11 +2,7 @@ package jmri.jmrit.roster.swing.speedprofile;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -1214,14 +1210,18 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     SpeedStepRepeatsTable repeatsTable = null;
 
     void removeSpeedProfile() {
-        cancelButton();
-        RosterSpeedProfile rosterSpeedProfile = re.getSpeedProfile();
-        if (rosterSpeedProfile != null) {
-            rosterSpeedProfile.clearCurrentProfile();
+        if (re != null) {
+            cancelButton();
+            RosterSpeedProfile rosterSpeedProfile = re.getSpeedProfile();
+            if (rosterSpeedProfile != null) {
+                rosterSpeedProfile.clearCurrentProfile();
+            }
+            re.updateFile();
+            Roster.getDefault().writeRoster();
+            save = false;
+        } else {
+            log.info("There is no roster entry");
         }
-        re.updateFile();
-        Roster.getDefault().writeRoster();
-        save = false;
     }
 
     /**
@@ -1513,14 +1513,20 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         lengthUnitMm.setSelected(true);
 
         log.debug("Check if there's anything to load");
-        try {
-            root = JDOMUtil.toJDOMElement(ProfileUtils.getAuxiliaryConfiguration(ProfileManager.getDefault().getActiveProfile())
-                    .getConfigurationFragment(XML_ROOT, XML_NAMESPACE, true));
-        } catch (NullPointerException ex) {
+        var activeProfile = ProfileManager.getDefault().getActiveProfile();
+        if (activeProfile == null) {
             // expected if never saved before
             log.debug("Nothing to load");
             return;
         }
+        var config = ProfileUtils.getAuxiliaryConfiguration(activeProfile)
+                .getConfigurationFragment(XML_ROOT, XML_NAMESPACE, true);
+        if (config == null) {
+            // expected if never saved before
+            log.debug("Nothing to load");
+            return;
+        }
+        root = JDOMUtil.toJDOMElement(config);
 
         log.debug("Start loading SpeedProfiler settings...");
 
@@ -1571,7 +1577,12 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
                     try {
                         manager.newSensor(e.getChild("sensorvalue").getText(),null);
                     } catch (IllegalArgumentException iex) {
-                        JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorSensorCannotCreate", e.getChild("sensorvalue").getText()));
+                        try {
+                            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorSensorCannotCreate", e.getChild("sensorvalue").getText()));
+                        } catch (HeadlessException e2) {
+                            // This cannot happen since we would not be here if JMRI is headless.
+                            // But Spotbugs fails on throwing exception in constructor.
+                        }
                     }
                 }
                 switch (sensorType) {
