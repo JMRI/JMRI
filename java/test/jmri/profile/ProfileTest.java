@@ -140,7 +140,7 @@ public class ProfileTest {
      */
     @Test
     // tests that equals() does not allow a String to equal a Profile
-    @SuppressWarnings({"unlikely-arg-type"})
+    @SuppressWarnings({"unlikely-arg-type", "IncompatibleEquals"})
     public void testEquals(@TempDir File folder) throws IOException {
         File rootFolder = folder;
         File profileFolder = new File(rootFolder, "test");

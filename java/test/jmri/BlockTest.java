@@ -31,7 +31,7 @@ public class BlockTest {
     }
 
     @Test
-    @SuppressWarnings({"unlikely-arg-type"}) // String / StringBuffer seems to be unrelated to Block
+    @SuppressWarnings({"unlikely-arg-type", "ObjectEqualsNull", "IncompatibleEquals"}) // String / StringBuffer seems to be unrelated to Block
     public void testEquals() {
         Block b1 = new Block("SystemName1");
         Block b2 = new Block("SystemName2");

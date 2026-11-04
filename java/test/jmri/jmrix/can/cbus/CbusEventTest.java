@@ -97,7 +97,7 @@ public class CbusEventTest {
     }
 
     @Test
-    @SuppressWarnings({"unlikely-arg-type"}) // CanReply and CanMessage are CanFrame with custom equals
+    @SuppressWarnings({"unlikely-arg-type", "IncompatibleEquals"}) // CanReply and CanMessage are CanFrame with custom equals
     public void testEquals(){
     
         CbusEvent t = new CbusEvent(123,456);

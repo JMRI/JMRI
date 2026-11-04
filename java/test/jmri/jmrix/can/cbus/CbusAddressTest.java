@@ -173,7 +173,7 @@ public class CbusAddressTest {
     }
 
     @Test
-    @SuppressWarnings({"unlikely-arg-type"})
+    @SuppressWarnings({"unlikely-arg-type", "IncompatibleEquals"})
     public void testEqualsOK() {
         assertTrue((new CbusAddress("+001")).equals(new CbusAddress("+001")));
         assertTrue((new CbusAddress("+001")).equals(new CbusAddress("x9800000001")));
@@ -361,7 +361,7 @@ public class CbusAddressTest {
     }
 
     @Test
-    @SuppressWarnings({"unlikely-arg-type"})
+    @SuppressWarnings({"unlikely-arg-type", "IncompatibleEquals"})
     public void testEqualsHashcodeInvalidAddress() {
         CbusAddress invalid = new CbusAddress("ABC");
         CbusAddress invalidToo = new CbusAddress("+6553600000");

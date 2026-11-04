@@ -84,7 +84,7 @@ public class OPathTest {
 
     @Test
     @SuppressFBWarnings( value = "EC_UNRELATED_TYPES", justification = "testing equals method")
-    @SuppressWarnings({"unlikely-arg-type"}) // String seems to be unrelated to OPath
+    @SuppressWarnings({"unlikely-arg-type", "IncompatibleEquals", "ObjectEqualsNull"}) // String seems to be unrelated to OPath
     public void testEquals() {
         Block b1 = new Block("IB1");
 

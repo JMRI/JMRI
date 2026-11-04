@@ -18,7 +18,7 @@ public class TurnoutOperationTest {
 
     @Test
     @SuppressFBWarnings("EC_UNRELATED_TYPES") // testing equals
-    @SuppressWarnings({"unlikely-arg-type"}) // String unrelated when testing Wrong type
+    @SuppressWarnings({"unlikely-arg-type", "ObjectEqualsNull", "IncompatibleEquals"}) // String unrelated when testing Wrong type
     public void testEquals() {
         TurnoutOperation to1 = new TurnoutOperation("to1"){
             @Override
