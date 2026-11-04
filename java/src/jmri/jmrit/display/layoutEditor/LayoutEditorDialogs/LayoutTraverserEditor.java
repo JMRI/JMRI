@@ -225,6 +225,11 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
             updateSlotPanel();
         });
         editLayoutTraverserUseSignalMastsCheckBox.addActionListener(e -> {
+            if (!editLayoutTraverserUseSignalMastsCheckBox.isSelected()
+                    && !layoutTraverser.isRemoveAllowed()) {
+                editLayoutTraverserUseSignalMastsCheckBox.setSelected(true);
+                return;
+            }
             layoutTraverser.setDispatcherManaged(editLayoutTraverserUseSignalMastsCheckBox.isSelected());
             updateSlotPanel();
         });
@@ -515,6 +520,7 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
         layoutTraverser.setMainline(editLayoutTraverserMainlineComboBox.getSelectedIndex() == 0);
 
         if (layoutTraverser.isDispatcherManaged()) {
+            editLayoutTraverserUseSignalMastsCheckBox.isSelected();
             // Always remove any existing icons for this traverser's approach masts first.
             List<SignalMastIcon> iconsToRemove = new ArrayList<>();
             for (Positionable p : layoutEditor.getContents()) {
@@ -708,33 +714,61 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
             // Orientation Labels
             JLabel labelA = new JLabel();
             JLabel labelB = new JLabel();
-            if (layoutTraverser.getOrientation() == LayoutTraverser.HORIZONTAL) {
-                labelA.setText(Bundle.getMessage("MakeLabel", Bundle.getMessage("ApproachMastSlotLeft")));
-                labelB.setText(Bundle.getMessage("MakeLabel", Bundle.getMessage("ApproachMastSlotRight")));
-            } else {
-                labelA.setText(Bundle.getMessage("MakeLabel", Bundle.getMessage("ApproachMastSlotUp")));
-                labelB.setText(Bundle.getMessage("MakeLabel", Bundle.getMessage("ApproachMastSlotDown")));
+            if (layoutTraverser.isDispatcherManaged()) {
+                if (layoutTraverser.getOrientation() == LayoutTraverser.HORIZONTAL) {
+                    labelA.setText(Bundle.getMessage("MakeLabel", Bundle.getMessage("ApproachMastSlotLeft")));
+                    labelB.setText(Bundle.getMessage("MakeLabel", Bundle.getMessage("ApproachMastSlotRight")));
+                } else {
+                    labelA.setText(Bundle.getMessage("MakeLabel", Bundle.getMessage("ApproachMastSlotUp")));
+                    labelB.setText(Bundle.getMessage("MakeLabel", Bundle.getMessage("ApproachMastSlotDown")));
+                }
+            }else {
+                if (layoutTraverser.getOrientation() == LayoutTraverser.HORIZONTAL) {
+                    labelA.setText(Bundle.getMessage("MakeLabel", Bundle.getMessage("SlotLeft")));
+                    labelB.setText(Bundle.getMessage("MakeLabel", Bundle.getMessage("SlotRight")));
+                } else {
+                    labelA.setText(Bundle.getMessage("MakeLabel", Bundle.getMessage("SlotUp")));
+                    labelB.setText(Bundle.getMessage("MakeLabel", Bundle.getMessage("SlotDown")));
+                }
             }
 
-            // Row 1: Side A Signal Mast & Disable
-            c.gridy = 1;
-            c.gridx = 0;
-            turnoutDetailsPanel.add(labelA, c);
-            c.gridx = 1;
-            turnoutDetailsPanel.add(approachMastComboBoxA, c);
-            c.gridx = 2;
-            turnoutDetailsPanel.add(disabledCheckBoxA, c);
-            approachMastComboBoxA.setVisible(layoutTraverser.isDispatcherManaged());
+            if (layoutTraverser.isDispatcherManaged()) {
+                // Row 1: Side A Signal Mast & Disable
+                c.gridy = 1;
+                c.gridx = 0;
+                turnoutDetailsPanel.add(labelA, c);
+                c.gridx = 1;
+                turnoutDetailsPanel.add(approachMastComboBoxA, c);
+                c.gridx = 2;
+                turnoutDetailsPanel.add(disabledCheckBoxA, c);
+                approachMastComboBoxA.setVisible(layoutTraverser.isDispatcherManaged());
 
-            // Row 2: Side B Signal Mast & Disable
-            c.gridy = 2;
-            c.gridx = 0;
-            turnoutDetailsPanel.add(labelB, c);
-            c.gridx = 1;
-            turnoutDetailsPanel.add(approachMastComboBoxB, c);
-            c.gridx = 2;
-            turnoutDetailsPanel.add(disabledCheckBoxB, c);
-            approachMastComboBoxB.setVisible(layoutTraverser.isDispatcherManaged());
+                // Row 2: Side B Signal Mast & Disable
+                c.gridy = 2;
+                c.gridx = 0;
+                turnoutDetailsPanel.add(labelB, c);
+                c.gridx = 1;
+                turnoutDetailsPanel.add(approachMastComboBoxB, c);
+                c.gridx = 2;
+                turnoutDetailsPanel.add(disabledCheckBoxB, c);
+                approachMastComboBoxB.setVisible(layoutTraverser.isDispatcherManaged());
+            }else{
+                // Row 1: Side A Signal Mast & Disable
+                c.gridy = 1;
+                c.gridx = 0;
+                turnoutDetailsPanel.add(labelA, c);
+                c.gridx = 1;
+                turnoutDetailsPanel.add(disabledCheckBoxA, c);
+                approachMastComboBoxA.setVisible(layoutTraverser.isDispatcherManaged());
+
+                // Row 2: Side B Signal Mast & Disable
+                c.gridy = 1;
+                c.gridx = 2;
+                turnoutDetailsPanel.add(labelB, c);
+                c.gridx = 3;
+                turnoutDetailsPanel.add(disabledCheckBoxB, c);
+                approachMastComboBoxB.setVisible(layoutTraverser.isDispatcherManaged());
+            }
 
             this.add(turnoutDetailsPanel);
 

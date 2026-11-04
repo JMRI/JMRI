@@ -1379,8 +1379,29 @@ public class LayoutTraverser extends LayoutTrack {
             msg.append(Bundle.getMessage("TTV_Buffer_Mast", buffer.getDisplayName()));
         }
 
+        msg.append("\n");
+
+        int issueCount = 0;
+        StringBuilder firstIssue = new StringBuilder();
+
         for (var slotTrack : slotList) {
-           msg.append(isSlotConnectionClear(slotTrack));
+            StringBuilder slotMsg = isSlotConnectionClear(slotTrack);
+
+            if (slotMsg.length() > 0) {
+                issueCount++;
+
+                if (firstIssue.length() == 0) {
+                    firstIssue.append(slotMsg);
+                }
+            }
+        }
+
+        msg.append(firstIssue);
+
+        if (issueCount > 1) {
+            msg.append("...\n");
+            msg.append(issueCount - 1);
+            msg.append(" additional slot connections have similar issues.\n");
         }
 
         if (msg.length() > 0) {
@@ -1392,7 +1413,7 @@ public class LayoutTraverser extends LayoutTrack {
                     msg.toString(),
                     Bundle.getMessage("WarningTitle"),  // NOI18N
                     JmriJOptionPane.WARNING_MESSAGE);
-            removeOk = false;
+            removeOk = true;
         }
 
         return removeOk;
