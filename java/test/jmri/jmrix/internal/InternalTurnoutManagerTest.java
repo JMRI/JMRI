@@ -7,6 +7,7 @@ import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -110,52 +111,70 @@ public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgr
         assertThat(t1.isFollowingCommandedState()).isTrue();
         assertThat(t2.isFollowingCommandedState()).isTrue();
 
-        t1.setCommandedState(Turnout.CLOSED);
-        assertThat(t1.getKnownState()).isEqualTo(Turnout.CLOSED);
-        assertThat(t2.getKnownState()).isEqualTo(Turnout.UNKNOWN);
+        // Every step runs on the layout thread, where DELAYED feedback sets the
+        // known state, so no step can overlap a feedback change still being
+        // passed on to the following turnout.
+        ThreadingUtil.runOnLayout(() -> t1.setCommandedState(Turnout.CLOSED));
+        assertThat(knownStates(t1, t2)).containsExactly(Turnout.CLOSED, Turnout.UNKNOWN);
 
-        t2.setLeadingTurnout(t1);
-        assertThat(t1.getKnownState()).isEqualTo(Turnout.CLOSED);
-        assertThat(t2.getKnownState()).isEqualTo(Turnout.UNKNOWN);
+        ThreadingUtil.runOnLayout(() -> t2.setLeadingTurnout(t1));
+        assertThat(knownStates(t1, t2)).containsExactly(Turnout.CLOSED, Turnout.UNKNOWN);
 
-        t1.setCommandedState(Turnout.THROWN);
-        assertThat(t1.getKnownState()).isEqualTo(Turnout.THROWN);
-        assertThat(t2.getKnownState()).isEqualTo(Turnout.THROWN);
+        ThreadingUtil.runOnLayout(() -> t1.setCommandedState(Turnout.THROWN));
+        assertThat(knownStates(t1, t2)).containsExactly(Turnout.THROWN, Turnout.THROWN);
 
-        t1.setFeedbackMode(Turnout.DELAYED);
-        t1.setCommandedState(Turnout.CLOSED);
-        assertThat(t1.getKnownState()).isEqualTo(Turnout.INCONSISTENT);
-        assertThat(t2.getKnownState()).isEqualTo(Turnout.INCONSISTENT);
-        JUnitUtil.waitFor(() -> t1.getKnownState() == Turnout.CLOSED,"Turnout did not go closed");
-        assertThat(t1.getKnownState()).isEqualTo(Turnout.CLOSED);
-        assertThat(t2.getKnownState()).isEqualTo(Turnout.CLOSED);
+        int[] inconsistent = ThreadingUtil.runOnGUIwithReturn(() -> {
+            t1.setFeedbackMode(Turnout.DELAYED);
+            t1.setCommandedState(Turnout.CLOSED);
+            return new int[]{t1.getKnownState(), t2.getKnownState()};
+        });
+        assertThat(inconsistent).containsExactly(Turnout.INCONSISTENT, Turnout.INCONSISTENT);
+        JUnitUtil.waitFor(() -> t1.getKnownState() == Turnout.CLOSED, "Turnout did not go closed");
+        assertThat(knownStates(t1, t2)).containsExactly(Turnout.CLOSED, Turnout.CLOSED);
 
         // verify no stack overflow when following in a circular pattern
-        t1.setFeedbackMode(Turnout.DIRECT);
-        t1.setLeadingTurnout(t2);
+        ThreadingUtil.runOnLayout(() -> {
+            t1.setFeedbackMode(Turnout.DIRECT);
+            t1.setLeadingTurnout(t2);
+        });
         assertThat(t1.getLeadingTurnout()).isEqualTo(t2);
         assertThat(t2.getLeadingTurnout()).isEqualTo(t1);
         // will throw stack overflow if not correctly implemented
-        t1.setCommandedState(Turnout.THROWN);
-        assertThat(t1.getKnownState()).isEqualTo(Turnout.THROWN);
-        assertThat(t2.getKnownState()).isEqualTo(Turnout.THROWN);
+        ThreadingUtil.runOnLayout(() -> t1.setCommandedState(Turnout.THROWN));
+        assertThat(knownStates(t1, t2)).containsExactly(Turnout.THROWN, Turnout.THROWN);
         // will throw stack overflow if not correctly implemented
-        t2.setCommandedState(Turnout.CLOSED);
-        assertThat(t1.getKnownState()).isEqualTo(Turnout.CLOSED);
-        assertThat(t2.getKnownState()).isEqualTo(Turnout.CLOSED);
+        ThreadingUtil.runOnLayout(() -> t2.setCommandedState(Turnout.CLOSED));
+        assertThat(knownStates(t1, t2)).containsExactly(Turnout.CLOSED, Turnout.CLOSED);
 
-        // verify
-        t1.setFeedbackMode(Turnout.DELAYED);
-        t1.setLeadingTurnout(null);
-        t2.setFollowingCommandedState(false);
+        // verify: a turnout not following the commanded state shows its own
+        // commanded state once its leading turnout's known state matches the
+        // leading turnout's commanded state
+        ThreadingUtil.runOnLayout(() -> {
+            t1.setFeedbackMode(Turnout.DELAYED);
+            t1.setLeadingTurnout(null);
+            t2.setFollowingCommandedState(false);
+        });
         assertThat(t1.getCommandedState()).isEqualTo(Turnout.CLOSED);
         assertThat(t2.getCommandedState()).isEqualTo(Turnout.CLOSED);
-        t1.setCommandedState(Turnout.THROWN);
-        assertThat(t1.getKnownState()).isEqualTo(Turnout.INCONSISTENT);
-        assertThat(t2.getKnownState()).isEqualTo(Turnout.INCONSISTENT);
+        inconsistent = ThreadingUtil.runOnGUIwithReturn(() -> {
+            t1.setCommandedState(Turnout.THROWN);
+            return new int[]{t1.getKnownState(), t2.getKnownState()};
+        });
+        assertThat(inconsistent).containsExactly(Turnout.INCONSISTENT, Turnout.INCONSISTENT);
         JUnitUtil.waitFor(() -> t1.getKnownState() == Turnout.THROWN, "Turnout did not go thrown");
-        assertThat(t1.getKnownState()).isEqualTo(Turnout.THROWN);
-        assertThat(t2.getKnownState()).isEqualTo(Turnout.CLOSED);
+        assertThat(knownStates(t1, t2)).containsExactly(Turnout.THROWN, Turnout.CLOSED);
+    }
+
+    /**
+     * Read the known states on the layout thread, so after any feedback change
+     * being made there has also reached the turnouts following it.
+     *
+     * @param a the first turnout
+     * @param b the second turnout
+     * @return their known states
+     */
+    private static int[] knownStates(Turnout a, Turnout b) {
+        return ThreadingUtil.runOnGUIwithReturn(() -> new int[]{a.getKnownState(), b.getKnownState()});
     }
 
     @Test
