@@ -72,9 +72,9 @@ public class RaspberryPiConnectionConfig extends jmri.jmrix.AbstractConnectionCo
             if (adapter.getSystemConnectionMemo() != null) {
                 systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
                 connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
-                NUMOPTIONS = NUMOPTIONS + 2;
+                increaseNumOptions(2);
             }
-            addStandardDetails(adapter, false, NUMOPTIONS);
+            addStandardDetails(adapter, false, getNumOptions());
             init = false;
             checkInitDone();
         }

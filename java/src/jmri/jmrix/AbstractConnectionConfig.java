@@ -53,8 +53,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
 
     abstract public void updateAdapter();
 
-    @SuppressFBWarnings(value = "URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD", justification = "Field used by implementing classes")
-    protected int NUMOPTIONS = 2;
+    private int numOptions = 2;
 
     // Load localized field names
     protected JCheckBox showAdvanced = new JCheckBox(Bundle.getMessage("AdditionalConnectionSettings"));
@@ -66,6 +65,22 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
     protected JPanel _details = null;
 
     protected final Map<String, Option> options = new TreeMap<>();
+
+    /**
+     * Increase the number of options.
+     * @param num how many to increase
+     */
+    protected void increaseNumOptions(int num) {
+        numOptions += num;
+    }
+
+    /**
+     * Get the number of options.
+     * @return num options
+     */
+    protected int getNumOptions() {
+        return numOptions;
+    }
 
     /**
      * Determine if configuration needs to be written to disk.
