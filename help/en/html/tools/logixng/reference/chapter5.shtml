@@ -1548,7 +1548,8 @@ LogixNG: IQ:AUTO:0001
         will stop running.</li>
 
         <li><strong>Reset:</strong> When the <strong>Reset</strong> expression is true, the sequence
-        will be interrupted if running, and return to the first action/expresson pair.</li>
+        will be interrupted if running, and return to the first action/expresson pair. It does this
+        once each time the expression becomes true, not again while it stays true.</li>
       </ul>
 
       <div style="margin-left: 2em">

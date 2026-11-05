@@ -23,6 +23,8 @@ public class Sequence extends AbstractDigitalAction
         private boolean _waitingForNewStart = false;
         // Set once "Start immediately" has started the sequence: it starts it only once.
         private boolean _startedImmediately = false;
+        // Set while the Reset expression is true: it resets the sequence once each time it becomes true.
+        private boolean _resetHeld = false;
     }
 
     public static final int EXPRESSION_START = 0;
@@ -172,10 +174,15 @@ public class Sequence extends AbstractDigitalAction
                 }
             }
 
-            if (_resetExpressionSocket.isConnected()
-                    && _resetExpressionSocket.evaluate()) {
-                state._currentStep = -1;
-//                System.out.format("Reset: _currentStep: %d%n", _currentStep);
+            if (_resetExpressionSocket.isConnected()) {
+                if (_resetExpressionSocket.evaluate()) {
+                    if (!state._resetHeld) {
+                        state._currentStep = -1;
+                        state._resetHeld = true;
+                    }
+                } else {
+                    state._resetHeld = false;
+                }
             }
 
             if (!state._isRunning) return;

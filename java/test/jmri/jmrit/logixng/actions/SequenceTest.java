@@ -29,6 +29,7 @@ import org.junit.jupiter.api.*;
 public class SequenceTest {
 
     private Sensor start;
+    private Sensor reset;
     private Sensor step1;
     private Sensor step2;
     // each step's action toggles a turnout, so each run of an action is a change of state
@@ -65,10 +66,14 @@ public class SequenceTest {
      * for "Step 1" and "Step 2" to be Active.
      */
     private void twoStepSequence() throws SocketAlreadyConnectedException {
-        twoStepSequence(false);
+        twoStepSequence(false, false);
     }
 
     private void twoStepSequence(boolean startImmediately) throws SocketAlreadyConnectedException {
+        twoStepSequence(startImmediately, false);
+    }
+
+    private void twoStepSequence(boolean startImmediately, boolean withReset) throws SocketAlreadyConnectedException {
         DigitalActionManager actions = InstanceManager.getDefault(DigitalActionManager.class);
         DigitalExpressionManager expressions = InstanceManager.getDefault(DigitalExpressionManager.class);
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
@@ -92,6 +97,9 @@ public class SequenceTest {
         conditionalNG.getChild(0).connect(actions.registerAction(sequence));
         if (!startImmediately) {
             sequence.getChild(Sequence.EXPRESSION_START).connect(startIsActive);
+        }
+        if (withReset) {
+            sequence.getChild(Sequence.EXPRESSION_RESET).connect(expressions.registerExpression(isActive(reset)));
         }
         sequence.getChild(3).connect(action1);
         sequence.getChild(4).connect(expression1);
@@ -127,6 +135,20 @@ public class SequenceTest {
     }
 
     @Test
+    public void testResetsOnceWhileResetStaysTrue() throws SocketAlreadyConnectedException, JmriException {
+        twoStepSequence(false, true);
+        set(start, Sensor.ACTIVE);
+        assertEquals(List.of("step 1"), stepsRun, "started");
+        set(reset, Sensor.ACTIVE);
+        assertEquals(List.of("step 1", "step 1"), stepsRun, "reset: the first step again");
+        set(step2, Sensor.ACTIVE);
+        assertEquals(List.of("step 1", "step 1"), stepsRun, "not reset again by a later event while Reset is true");
+        set(reset, Sensor.INACTIVE);
+        set(reset, Sensor.ACTIVE);
+        assertEquals(List.of("step 1", "step 1", "step 1"), stepsRun, "reset again when Reset is true again");
+    }
+
+    @Test
     public void testStartImmediatelyRunsOnce() throws SocketAlreadyConnectedException, JmriException {
         twoStepSequence(true);
         set(step1, Sensor.ACTIVE);
@@ -146,9 +168,10 @@ public class SequenceTest {
         JUnitUtil.initLogixNGManager();
         SensorManager sm = InstanceManager.getDefault(SensorManager.class);
         start = sm.provide("IS101");
+        reset = sm.provide("IS104");
         step1 = sm.provide("IS102");
         step2 = sm.provide("IS103");
-        for (Sensor s : List.of(start, step1, step2)) {
+        for (Sensor s : List.of(start, reset, step1, step2)) {
             try {
                 s.setState(Sensor.INACTIVE);
             } catch (JmriException e) {
