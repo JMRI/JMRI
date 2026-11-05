@@ -1363,11 +1363,6 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     long startTime;
     long finishTime;
 
-    ArrayList<Double> forwardOverRuns = new ArrayList<>();
-    ArrayList<Double> reverseOverRuns = new ArrayList<>();
-
-    JPanel update;
-
     static class SensorDetails {
 
         Sensor sensor = null;
