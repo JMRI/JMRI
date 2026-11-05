@@ -651,7 +651,11 @@ public class LayoutTraverserView extends LayoutTrackView {
         }
 
         // Draw the sliding bridge`
-        int currentPositionConnectionIndex = getPosition();
+
+        // if the turnout is changed, we do not know what slot is being activated. we assumed the rh slot to set lastKnownIndex
+        // when we check whether the slot is activated we must check for both the rh and ls slot to check whether the slot should be drawn
+        int currentPositionConnectionIndex = getPosition();    //this is lastKnownIndex
+
         int orderedIndex = -1;
         if (currentPositionConnectionIndex != -1) {
             for (int i = 0; i < getNumberSlots(); i++) {
@@ -662,7 +666,10 @@ public class LayoutTraverserView extends LayoutTrackView {
             }
         }
         // Only draw the bridge if a slot is selected, it's not disabled, and its mainline status matches the current pass
-        if (orderedIndex != -1 && !traverser.isSlotDisabled(orderedIndex) && (isMain == traverser.isMainline())) {
+        // when we check whether the slot is activated we must check for both the rh and ls slot
+        if (orderedIndex != -1 &&
+                (!traverser.isSlotDisabled(orderedIndex) || !traverser.isSlotDisabled(orderedIndex - 1)) &&
+                        (isMain == traverser.isMainline())) {
             // Set color for bridge
             if (isBlock) {
                 LayoutBlock lb = getLayoutBlock();
