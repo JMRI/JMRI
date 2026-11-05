@@ -10,7 +10,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @CheckReturnValue
 
 @javax.annotation.concurrent.Immutable
-@SuppressFBWarnings(value = {"NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", "HSM_HIDING_METHOD"},
+@SuppressFBWarnings(value = {"HSM_HIDING_METHOD"},
     justification = "Desired pattern is repeated class names with package-level access to members")
 
 /**
