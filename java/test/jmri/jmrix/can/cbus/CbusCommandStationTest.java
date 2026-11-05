@@ -173,6 +173,32 @@ public class CbusCommandStationTest {
     }
     
     
+    // the sent listener given with a speed and direction goes with that DSPD,
+    // and only with it; keep-alives carry none
+    @Test
+    public void testSetSpeedDirSentListener() {
+        Assert.assertNotNull(t);
+        Assert.assertNotNull(lnis);
+        jmri.jmrix.AbstractMRMessage.SentListener l = (message, timeNanos) -> {
+        };
+
+        t.setSpeedDir(5, 0x80, l);
+        Assert.assertEquals("DSPD sent", "[78] 47 05 80", lnis.outbound.lastElement().toString());
+        Assert.assertSame("DSPD carries the listener", l, lnis.outbound.lastElement().getSentListener());
+
+        t.setSpeedDir(5, 0x81);
+        Assert.assertNull("no listener given, none carried", lnis.outbound.lastElement().getSentListener());
+
+        t.sendKeepAlive(5);
+        Assert.assertEquals("DKEEP sent", "[78] 23 05", lnis.outbound.lastElement().toString());
+        Assert.assertNull("keep-alive carries none", lnis.outbound.lastElement().getSentListener());
+
+        int sent = lnis.outbound.size();
+        t.setSpeedDir(-1, 0x80, l);
+        jmri.util.JUnitAppender.assertWarnMessage("Invalid session handle -1 for DSPD, not sent to layout");
+        Assert.assertEquals("nothing sent for handle -1", sent, lnis.outbound.size());
+    }
+
     // a negative session handle ( disposed or stolen throttle ) must never reach the CAN bus
     @Test
     public void testNegativeSessionHandleNotSent() {

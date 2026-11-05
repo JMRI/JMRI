@@ -1,6 +1,7 @@
 package jmri.jmrix;
 
 import java.util.Objects;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.util.StringUtil;
 import org.slf4j.Logger;
@@ -303,6 +304,96 @@ abstract public class AbstractMRMessage extends AbstractMessage {
     public String getSourceLetter() {
         return sourceLetter;
     } 
+
+    /**
+     * Told when a message has been written to the connection.
+     *
+     * @since 5.19.1
+     */
+    @FunctionalInterface
+    public interface SentListener {
+
+        /**
+         * The message has been written to the connection. Called on the
+         * layout thread (Swing thread); keep it short.
+         *
+         * @param message   the message
+         * @param timeNanos when it was written, on the
+         *                  {@link System#nanoTime()} scale, as
+         *                  {@link AbstractMRMessage#getSentTime()} gives
+         *                  it. Only differences between such times have a
+         *                  meaning.
+         */
+        void messageSent(@Nonnull AbstractMRMessage message, long timeNanos);
+    }
+
+    // Set on the thread that wrote the message, read on others: the time is
+    // written before the volatile flag, so a reader that sees the flag sees
+    // the time.
+    private long sentTime = 0L;
+    private volatile boolean hasSentTime = false;
+    private volatile SentListener sentListener = null;
+
+    /**
+     * Record when this message was written to the connection, on the
+     * {@link System#nanoTime()} scale. Set by the traffic controller as soon
+     * as the write has returned, on the thread that wrote it. Not kept by a
+     * copy, which is a new message still to be sent.
+     *
+     * @param timeNanos the time
+     * @since 5.19.1
+     */
+    public void setSentTime(long timeNanos) {
+        sentTime = timeNanos;
+        hasSentTime = true;
+    }
+
+    /**
+     * @return true if the time this message was written to the connection
+     *         has been recorded; false while it waits to be sent, and for a
+     *         connection that doesn't record it
+     * @since 5.19.1
+     */
+    public boolean hasSentTime() {
+        return hasSentTime;
+    }
+
+    /**
+     * Get when this message was written to the connection, on the
+     * {@link System#nanoTime()} scale; only differences between such times
+     * have a meaning. If the message is written more than once, the latest
+     * time.
+     *
+     * @return the time, or 0 if it was not recorded; see
+     *         {@link #hasSentTime()}
+     * @since 5.19.1
+     */
+    public long getSentTime() {
+        return hasSentTime ? sentTime : 0L;
+    }
+
+    /**
+     * Ask to be told when this message has been written to the connection,
+     * each time it is. Not told if it is never written, for example if there
+     * is no connection or the write fails, nor by a connection that doesn't
+     * record when it writes. Not kept by a copy.
+     *
+     * @param listener the listener, or null for none
+     * @since 5.19.1
+     */
+    public void setSentListener(@CheckForNull SentListener listener) {
+        sentListener = listener;
+    }
+
+    /**
+     * @return the listener to tell when this message has been written, or
+     *         null
+     * @since 5.19.1
+     */
+    @CheckForNull
+    public SentListener getSentListener() {
+        return sentListener;
+    }
 
     private static final Logger log = LoggerFactory.getLogger(AbstractMRMessage.class);
 

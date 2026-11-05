@@ -621,6 +621,15 @@
         <a id="throttle" name="throttle"></a>
         <ul>
             <li></li>
+            <li>Code and scripts can now be told when each speed or direction
+                command from a throttle has actually been sent to the layout,
+                and when (<code>Throttle.addSpeedSentListener</code>). The time
+                is taken as soon as the command is written to the connection,
+                after any wait for other work or for messages queued ahead of
+                it. CBUS throttles report it, on real CBUS connections and on
+                CAN Simulation; <code>Throttle.reportsSpeedSent()</code> says
+                whether a throttle does. Nothing that listens to a throttle's
+                properties sees anything new.</li>
         </ul>
 
     <h3>Timetable</h3>
