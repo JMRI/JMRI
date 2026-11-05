@@ -664,6 +664,30 @@ public class SimulatedLayoutTest {
         JUnitUtil.waitThreadTerminated(SimulatedLayout.THREAD_NAME);
     }
 
+    @Test
+    public void testTruthIsDatedWhenItWasTrue() {
+        real = new SimulatedLayout();
+        SimulatedLayout real = this.real;
+        real.addSpeedSource(throttle);
+        Block[] b = line();
+        VirtualTrain t = train("T", 3, 100, Detection.entireTrain());
+        real.place(t, b[1], b[0], 10.0);
+        long sent = System.nanoTime();
+        throttle.setSpeed(new DccLocoAddress(3, false), 100, SpeedStepMode.NMRA_DCC_128, true, sent);
+        for (int i = 0; i < 20; i++) {
+            JUnitUtil.waitFor(7);
+            SimulationTruth truth = real.getTruth();
+            SimulationTruth.TrainTruth tt = trainIn(truth, t);
+            // 100 mm/s from when the command was sent, with no momentum
+            double expected = 10.0 + Math.max(0, truth.getTimeNanos() - sent) / 1e9 * 100.0;
+            assertEquals(expected, tt.getFrontPositionMm(), 1e-3,
+                    "the front is where it was at the truth's time, " + i);
+        }
+        real.remove(t);
+        JUnitUtil.waitFor(() -> !real.isMoverRunning(), "mover stopped with the last train removed");
+        JUnitUtil.waitThreadTerminated(SimulatedLayout.THREAD_NAME);
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

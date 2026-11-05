@@ -544,6 +544,11 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
 
     /**
      * Where every train is now. Taken under a lock held only for copying.
+     * <p>
+     * While trains move, positions change a step at a time, so the truth is
+     * for the end of the last step, and its time says so; it can be up to
+     * one step ({@value #STEP_MS} ms) before this is called. While none can
+     * move, it is for now.
      *
      * @return the truth
      */
@@ -557,7 +562,8 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
             list.add(new SimulationTruth.TrainTruth(t.train, t.blocks(), t.position - front.start, t.speed,
                     t.crashed, held == null ? null : held.text()));
         }
-        return new SimulationTruth(now(), list, new ArrayList<>(collisions));
+        long when = manual || thread == null || idle() ? now() : lastTick; // positions are as of the last step
+        return new SimulationTruth(when, list, new ArrayList<>(collisions));
     }
 
     // ---------------------------------------------------------------------

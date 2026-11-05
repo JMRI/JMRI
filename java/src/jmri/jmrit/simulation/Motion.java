@@ -8,6 +8,10 @@ import java.util.List;
  * function of time, made of parts of even acceleration. Within each part the
  * train moves one way only, so a position is passed at most once per part and
  * the time it is passed can be worked out exactly.
+ * <p>
+ * Units are those of {@link Velocity}: times in seconds from the start of the
+ * step, positions in millimetres along the train's route (where its front
+ * is), speeds in mm/s and accelerations in mm/s&sup2;.
  *
  * @author Keith Bruce Copyright (C) 2026
  */

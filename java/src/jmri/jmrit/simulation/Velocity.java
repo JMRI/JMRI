@@ -8,12 +8,27 @@ import java.util.TreeSet;
  * A velocity over a time interval, made of straight-line parts. The parts
  * cover the interval without gaps and need not join, so a velocity can change
  * at once (an emergency stop, or a decoder without momentum).
+ * <p>
+ * Times are in seconds from the start of one step of the simulator, so a
+ * step's velocity runs from 0 to the step's length,
+ * {@link SimulatedLayout#STEP_SECONDS}. When the step starts is kept by the
+ * caller in nanoseconds on the {@link System#nanoTime()} scale (or the manual
+ * clock in the package's tests); the times here don't depend on that epoch.
+ * <p>
+ * Velocities are in millimetres per second of the model, not scale speed,
+ * along the train's own route: positive when the train moves front first,
+ * negative when it moves rear first. A loco's velocity is the same, taken
+ * the train's way, so a loco facing the rear runs forward as a negative
+ * velocity.
  *
  * @author Keith Bruce Copyright (C) 2026
  */
 final class Velocity {
 
-    /** One straight-line part: velocity v0 at t0 changing evenly to v1 at t1. */
+    /**
+     * One straight-line part: velocity v0 at t0 changing evenly to v1 at t1.
+     * Times in seconds from the step's start, velocities in mm/s.
+     */
     static final class Part {
 
         final double t0;

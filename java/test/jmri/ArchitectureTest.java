@@ -592,6 +592,25 @@ public class ArchitectureTest {
         .that().resideInAPackage("jmri.jmrit.simulation..")
         .should().callMethodWhere(CALL_SIMULATION_TESTS);
 
+    /**
+     * The packages that may use simulated trains, besides the simulator
+     * itself. Nothing else in JMRI depends on them, so a simulator can't
+     * change how JMRI behaves on a real layout. A system's adapter, which
+     * takes that system's commands to simulated trains and reports their
+     * detection in that system's messages, is added here with its package.
+     */
+    private static final String[] SIMULATION_USERS = {"jmri.jmrit.simulation.."};
+
+    /**
+     * Only the simulator and the packages in {@code SIMULATION_USERS} use
+     * simulated trains. Tests are not checked, as this test reads only
+     * JMRI's own classes.
+     */
+    @ArchTest
+    public static final ArchRule checkOnlySimulationUsersUseSimulation = noClasses()
+        .that().resideOutsideOfPackages(SIMULATION_USERS)
+        .should().dependOnClassesThat().resideInAPackage("jmri.jmrit.simulation..");
+
     @Test
     public void testHelpFileNamesUseShtml(){
         String path = FileUtil.getExternalFilename(FileUtil.PROGRAM + "help");
