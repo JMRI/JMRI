@@ -1,7 +1,7 @@
 package jmri.jmrix.ecos;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.List;
+
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -117,11 +117,6 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     protected AbstractMRMessage enterNormalMode() {
         return EcosMessage.getExitProgMode();
     }
-
-    @SuppressFBWarnings(value = "MS_PKGPROTECT")
-    // SpotBugs wants this package protected, but we're removing it when multi-connection
-    // migration is complete
-    protected static final EcosTrafficController self = null;
 
     /** {@inheritDoc} */
     @Override
