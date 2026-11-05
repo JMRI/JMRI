@@ -395,11 +395,11 @@ public interface Section extends NamedBean {
      * occupied Block, in the direction of travel, to the end of the Section.
      *
      * @param value the value to set
-     * @deprecated since 5.17.5; to show the train a Section is allocated to,
+     * @deprecated since 5.19.1; to show the train a Section is allocated to,
      *             use {@link Block#setAllocatedValue(Object)} on its Blocks,
      *             which leaves the Block values to Block tracking
      */
-    @Deprecated(since="5.17.5", forRemoval=true)
+    @Deprecated(since="5.19.1", forRemoval=true)
     void setNameFromActiveBlock(Object value);
 
     /**
@@ -412,11 +412,11 @@ public interface Section extends NamedBean {
      * so the text set above doesn't get wiped out.
      *
      * @param set true to suppress the update; false otherwise
-     * @deprecated since 5.17.5; to show the train a Section is allocated to
+     * @deprecated since 5.19.1; to show the train a Section is allocated to
      *             while its Blocks are empty, use
      *             {@link Block#setAllocatedValue(Object)} on its Blocks
      */
-    @Deprecated(since="5.17.5", forRemoval=true)
+    @Deprecated(since="5.19.1", forRemoval=true)
     void suppressNameUpdate(boolean set);
 
     @SuppressWarnings("hiding")     // Field has same name as a field in the super class

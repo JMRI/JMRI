@@ -166,7 +166,7 @@
  * <a href="https://semver.org">semantic version rules</a>,
  * prior to that the version is just a major.minor version.
  * <dl>
- * <dt>5.5.0 (JMRI 5.17.5)</dt>
+ * <dt>5.5.0 (JMRI 5.19.1)</dt>
  * <dd>
  * <ul>
  * <li>block adds {@code allocatedValue}, the train the block is allocated to,
