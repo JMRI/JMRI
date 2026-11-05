@@ -2678,10 +2678,10 @@ $(document).ready(function() {
                 //console.log("HEARD BLOCK " + name + " value=" + value);
                 value = valueToShow(value);
                 // A Block Contents icon shows the train in the block or, when there is none, the train
-                // the block is allocated to, as on a JMRI panel. An input icon edits the value itself.
+                // the block is allocated to, marked as on a JMRI panel. An input icon edits the value itself.
                 var shown = value;
-                if (value === null && isDefined(data.allocatedValue)) {
-                    shown = valueToShow(data.allocatedValue);
+                if (value === null && isDefined(data.allocatedValue) && data.allocatedValue !== null) {
+                    shown = allocatedValueToShow(data.allocatedValue);
                 }
                 updateWidgets(name, value, data, function($widget) {
                     return $widget.widgetType == "BlockContentsIcon" ? shown : value;
@@ -4452,6 +4452,14 @@ function valueToShow(value) {
         return value.data.name; // if roster icon not set, just show the name
     }
     return value;
+}
+
+// the html to show for the train a block is allocated to while it is not yet in the block: its name in
+// italics after an arrow, as on a JMRI panel; a roster entry by its name rather than its icon
+function allocatedValueToShow(allocatedValue) {
+    var name = (allocatedValue.type == "rosterEntry") ? allocatedValue.data.name : valueToShow(allocatedValue);
+    name = String(name).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    return "<html><i>\u2192 " + name + "</i></html>";
 }
 
 function updateOccupancy(sensorName, state, data) {

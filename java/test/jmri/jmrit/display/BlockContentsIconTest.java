@@ -5,6 +5,7 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import javax.swing.JFrame;
 
@@ -95,18 +96,59 @@ public class BlockContentsIconTest extends PositionableLabelTest {
     @Test
     public void testShowAllocatedValue() {
         jmri.Block block = jmri.InstanceManager.getDefault(BlockManager.class).provideBlock("IB1");
+        java.awt.Font font = to.getFont();
 
         block.setAllocatedValue("Train A");
         new QueueTool().waitEmpty();
-        assertEquals("Train A", to.getText(), "the train the Block is allocated to");
+        assertEquals("<html><i>\u2192 Train A</i></html>", to.getText(),
+            "the train the Block is allocated to, in italics after an arrow");
 
         block.setValue("Loco 47");
         new QueueTool().waitEmpty();
-        assertEquals("Loco 47", to.getText(), "the train in the Block");
+        assertEquals("Loco 47", to.getText(), "the train in the Block, as it is");
 
         block.setValue(null);
         new QueueTool().waitEmpty();
-        assertEquals("Train A", to.getText(), "the allocated train again once the Block is empty");
+        assertEquals("<html><i>\u2192 Train A</i></html>", to.getText(),
+            "the allocated train again once the Block is empty");
+
+        block.setAllocatedValue(null);
+        new QueueTool().waitEmpty();
+        assertNull(to.getText(), "nothing once the Block is no longer allocated");
+        assertEquals(font, to.getFont(), "the label's font, which the panel file keeps, is never changed");
+    }
+
+    @Test
+    public void testAllocatedTextNames() {
+        jmri.jmrit.roster.RosterEntry re = new jmri.jmrit.roster.RosterEntry();
+        re.setId("Loco 47");
+        assertEquals("<html><i>\u2192 Loco 47</i></html>", BlockContentsIcon.allocatedText(re),
+            "a roster entry by its name");
+        assertEquals("<html><i>\u2192 A &lt;b&gt; &amp; Caf\u00e9</i></html>",
+            BlockContentsIcon.allocatedText("A <b> & Caf\u00e9"),
+            "only what HTML needs is escaped");
+        assertEquals("<html><i>\u2192 Loco 47 tag</i></html>",
+            BlockContentsIcon.allocatedText(new jmri.implementation.DefaultIdTag("ID47", "Loco 47 tag")),
+            "an ID tag by its display name");
+        jmri.Reportable report = new jmri.Reportable() {
+            @Override
+            public String toReportString() {
+                return "report 47";
+            }
+        };
+        assertEquals("<html><i>\u2192 report 47</i></html>", BlockContentsIcon.allocatedText(report),
+            "anything else a reporter gives by its report");
+    }
+
+    @Test
+    public void testIconMapShowsAllocatedValueAsBefore() {
+        jmri.Block block = jmri.InstanceManager.getDefault(BlockManager.class).provideBlock("IB1");
+        NamedIcon trainIcon = new NamedIcon("program:resources/icons/redTransparentBox.gif", "box");
+        ((BlockContentsIcon) to).addKeyAndIcon(trainIcon, "Train A");
+
+        block.setAllocatedValue("Train A");
+        new QueueTool().waitEmpty();
+        assertEquals(trainIcon, to.getIcon(), "an icon map still shows the allocated train's icon");
     }
 
     @Test

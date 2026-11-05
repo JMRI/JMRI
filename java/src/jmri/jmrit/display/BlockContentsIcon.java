@@ -291,9 +291,41 @@ public class BlockContentsIcon extends MemoryIcon {
             jmri.InstanceManager.throttleManagerInstance().removeListener(re.getDccLocoAddress(), this);
             re = null;
         }
-        // the train in the Block, or the train it is allocated to
-        Object key = getBlock().getDisplayValue();
-        displayState(key);
+        Object value = getBlock().getValue();
+        Object allocatedValue = getBlock().getAllocatedValue();
+        if (value == null && allocatedValue != null && getMap() == null) {
+            // the train the Block is allocated to, not yet in it
+            displayState(allocatedText(allocatedValue));
+        } else {
+            // the train in the Block or, shown by an icon map, the train it is allocated to
+            displayState(getBlock().getDisplayValue());
+        }
+    }
+
+    /**
+     * Get the text that shows the train a Block is allocated to, so that it
+     * can be told apart from a train in the Block: its name in italics, after
+     * an arrow. As HTML, so that the label's own font, which the panel file
+     * keeps, is left alone.
+     *
+     * @param allocatedValue the Block's allocated value
+     * @return the text to show
+     */
+    @Nonnull
+    static String allocatedText(@Nonnull Object allocatedValue) {
+        String name;
+        if (allocatedValue instanceof jmri.jmrit.roster.RosterEntry) {
+            name = ((jmri.jmrit.roster.RosterEntry) allocatedValue).titleString();
+        } else if (allocatedValue instanceof jmri.IdTag) {
+            name = ((jmri.IdTag) allocatedValue).getDisplayName();
+        } else if (allocatedValue instanceof jmri.Reportable) {
+            name = ((jmri.Reportable) allocatedValue).toReportString();
+        } else {
+            name = allocatedValue.toString();
+        }
+        // escape only what HTML needs, so names with accents show as they are
+        String escaped = name.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
+        return "<html><i>" + Bundle.getMessage("AllocatedValueShown", escaped) + "</i></html>";
     }
 
     @Override

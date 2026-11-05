@@ -158,6 +158,14 @@
           alternate color option, makes it easy for the dispatcher to see which Allocated Section
           is allocated to which Active Train when viewing a Layout Editor panel.</p>
 
+          <p><span class="since">since 5.17.5</span>A Block Contents icon shows the train a Block
+          is allocated to in italics after an arrow, for example <em>&rarr; 47012</em>, until Block
+          tracking places the train in the Block, and then shows it as usual, so you can see which
+          trains are really in their Blocks. A Block that stays marked although it is occupied is
+          one where Block tracking could not tell which train entered. Web panels show it the same
+          way. A Block Contents icon that uses an icon for each value, and a Layout Block memory,
+          show the train as before.</p>
+
           <p>The name is kept separately from the Block's value, which shows the train actually in
           the Block and is passed from Block to Block as the train moves. Logix, LogixNG and scripts
           that read a Block's value therefore see the train in it, not the train it is allocated
