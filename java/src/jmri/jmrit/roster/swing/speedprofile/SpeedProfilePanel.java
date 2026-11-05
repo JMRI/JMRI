@@ -1360,9 +1360,8 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     }
     */
 
-    // These two fields are declared volatile to fix Spotbugs warning AT_NONATOMIC_64BIT_PRIMITIVE
-    volatile long startTime;
-    volatile long finishTime;
+    long startTime;
+    long finishTime;
 
     ArrayList<Double> forwardOverRuns = new ArrayList<>();
     ArrayList<Double> reverseOverRuns = new ArrayList<>();
