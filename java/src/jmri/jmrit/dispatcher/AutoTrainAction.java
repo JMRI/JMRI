@@ -1,6 +1,5 @@
 package jmri.jmrit.dispatcher;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -13,6 +12,7 @@ import jmri.SignalMast;
 import jmri.SignalMastManager;
 import jmri.TransitSection;
 import jmri.TransitSectionAction;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -366,8 +366,6 @@ public class AutoTrainAction {
     // this method is called to execute the action, when the "When" event has happened.
     // it is "public" because it may be called from a TransitSectionAction.
 // djd debugging - need to check this out - probably useless, but harmless
-    @SuppressFBWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD",
-            justification = "used only by thread that can be stopped, no conflict with other threads expected")
     public synchronized void executeAction(TransitSectionAction tsa) {
         if (tsa == null) {
             log.error("executeAction called with null TransitSectionAction");

@@ -1,12 +1,12 @@
 package jmri.jmrix.marklin;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
 import jmri.jmrix.marklin.mcan.address.AddressSpace;
 import jmri.jmrix.marklin.mcan.cs2.Cs2Frame;
 import jmri.jmrix.marklin.mcan.cs2.Cs2DecoderCommands;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -119,7 +119,6 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
-    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     @Override
     public synchronized void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
@@ -129,11 +128,11 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
         if (value > 1000) {
             value = 1000;    // max possible speed
         }
-        
+
         if (this.speedSetting > 0 && value == 0) {
             value = 1;      // ensure non-zero input results in non-zero output
         }
-        
+
         if (value < 0) {
             //Emergency Stop
             tc.sendMarklinMessage(MarklinMessage.setLocoEmergencyStop(getCANAddress()), this);
