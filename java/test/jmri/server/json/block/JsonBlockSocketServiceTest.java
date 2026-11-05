@@ -23,6 +23,7 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  *
@@ -76,6 +77,29 @@ public class JsonBlockSocketServiceTest {
         assertEquals( 2, block1.getNumPropertyChangeListeners(), "Block is being listened to by service");
         service.onClose();
         assertEquals( 1, block1.getNumPropertyChangeListeners(), "Block is no longer listened to by service");
+    }
+
+    @Test
+    public void testAllocatedValueChange() throws IOException, JmriException, JsonException {
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        JsonNode message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IB1");
+        BlockManager manager = InstanceManager.getDefault(BlockManager.class);
+        Block block1 = manager.provideBlock("IB1");
+        JsonBlockSocketService service = new JsonBlockSocketService(connection);
+        service.onMessage(JsonBlock.BLOCK, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        JsonNode result = connection.getMessage();
+        assertNotNull(result);
+        assertTrue(result.path(JSON.DATA).path(JsonBlock.ALLOCATED_VALUE).isNull(), "Not allocated");
+        // a client listening to the block hears it allocated and released
+        block1.setAllocatedValue("Train 1");
+        result = connection.getMessage();
+        assertNotNull(result);
+        assertEquals("Train 1", result.path(JSON.DATA).path(JsonBlock.ALLOCATED_VALUE).asText());
+        block1.setAllocatedValue(null);
+        result = connection.getMessage();
+        assertNotNull(result);
+        assertTrue(result.path(JSON.DATA).path(JsonBlock.ALLOCATED_VALUE).isNull(), "Released");
+        service.onClose();
     }
 
     @Test

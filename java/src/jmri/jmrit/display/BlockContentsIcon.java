@@ -291,8 +291,17 @@ public class BlockContentsIcon extends MemoryIcon {
             jmri.InstanceManager.throttleManagerInstance().removeListener(re.getDccLocoAddress(), this);
             re = null;
         }
-        Object key = getBlock().getValue();
+        // the train in the Block, or the train it is allocated to
+        Object key = getBlock().getDisplayValue();
         displayState(key);
+    }
+
+    @Override
+    public void propertyChange(java.beans.PropertyChangeEvent e) {
+        super.propertyChange(e);
+        if (Block.PROPERTY_ALLOCATED_VALUE.equals(e.getPropertyName())) {
+            displayState();
+        }
     }
 
     @Override

@@ -105,7 +105,6 @@ public class DoubleTurnoutSignalHead extends DefaultSignalHead {
         }
         mRed = null;
         mGreen = null;
-        jmri.InstanceManager.turnoutManagerInstance().removeVetoableChangeListener(this);
         super.dispose();
     }
 

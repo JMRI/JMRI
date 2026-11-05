@@ -176,6 +176,18 @@ public class CbusAddress {
     }
 
     /**
+     * The key {@link CbusBeanDispatcher} files a bean with this address under.
+     * Any frame that {@link #match} or {@link #matchRequest} accepts has the
+     * same key.
+     *
+     * @return the key, or {@link CbusBeanDispatcher#NO_KEY} if the address
+     *         was not parsed into a frame
+     */
+    long dispatchKey() {
+        return CbusBeanDispatcher.key(aFrame);
+    }
+
+    /**
      * Does the CbusAddress match.
      *
      * @param r CanReply or CanMessage being tested

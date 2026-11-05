@@ -1,17 +1,11 @@
 package jmri.jmrix.tmcc.simulator;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
+import java.io.*;
 
-import jmri.jmrix.tmcc.SerialMessage;
-import jmri.jmrix.tmcc.SerialPortController; // no special xSimulatorController
-import jmri.jmrix.tmcc.SerialReply;
-import jmri.jmrix.tmcc.SerialTrafficController;
-import jmri.jmrix.tmcc.TmccSystemConnectionMemo;
+// no special xSimulatorController
+import jmri.jmrix.tmcc.*;
 import jmri.util.ImmediatePipedOutputStream;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,7 +52,7 @@ public class SimulatorAdapter extends SerialPortController implements Runnable {
             log.debug("tempPipeI created");
             pout = new DataOutputStream(tempPipeI);
             inpipe = new DataInputStream(new PipedInputStream(tempPipeI));
-            log.debug("inpipe created {}", inpipe != null);
+            log.debug("inpipe created");
             PipedOutputStream tempPipeO = new ImmediatePipedOutputStream();
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));

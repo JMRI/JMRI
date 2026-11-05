@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Memory;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -17,6 +18,7 @@ import org.junit.jupiter.api.*;
  *
  * @author Keith Bruce 2026
  */
+@SuppressWarnings("deprecation") // setSuppressNameUpdate is deprecated, but still works until removed
 public class LayoutBlockSuppressNameUpdateTest {
 
     private Block block;
@@ -29,6 +31,7 @@ public class LayoutBlockSuppressNameUpdateTest {
         layoutBlock.setSuppressNameUpdate(true);
         block.setValue(null);
         assertEquals("Train", memory.getValue(), "memory not updated while suppressed");
+        JUnitAppender.assertWarnMessage("LayoutBlock.setSuppressNameUpdate is deprecated, please remove references to it");
     }
 
     @Test
@@ -39,6 +42,7 @@ public class LayoutBlockSuppressNameUpdateTest {
 
         layoutBlock.setSuppressNameUpdate(false);
         assertNull(memory.getValue(), "memory set from the block when updates resume");
+        JUnitAppender.assertWarnMessage("LayoutBlock.setSuppressNameUpdate is deprecated, please remove references to it");
     }
 
     @BeforeEach

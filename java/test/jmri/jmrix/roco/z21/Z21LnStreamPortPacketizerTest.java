@@ -1,15 +1,12 @@
 package jmri.jmrix.roco.z21;
 
+import java.io.*;
+
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
 
 /**
  * Tests for jmri.jmrix.loconet.streamport.StreamPortPacketizer
@@ -36,7 +33,8 @@ public class Z21LnStreamPortPacketizerTest extends jmri.jmrix.loconet.streamport
         try {
            PipedInputStream tempPipe;
            tempPipe = new PipedInputStream();
-           ostream = new DataOutputStream(new PipedOutputStream(tempPipe));
+           PipedOutputStream tempPipeOut = new PipedOutputStream(tempPipe);
+           ostream = new DataOutputStream(tempPipeOut);
 
            tempPipe = new PipedInputStream();
            istream = new DataInputStream(tempPipe);

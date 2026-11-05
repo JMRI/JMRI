@@ -2676,20 +2676,16 @@ $(document).ready(function() {
             },
             block: function(name, value, data) {
                 //console.log("HEARD BLOCK " + name + " value=" + value);
-                if (value !== null) {
-                    if (value.type == "idTag") {
-                        value = value.data.userName; // for idTags, use the value in userName instead
-                    } else if (value.type == "reporter") {
-                        value = value.data.value;    // for reporters, use the value in data instead
-                    } else if (value.type == "rosterEntry") {
-                        if (value.data.icon !== null) {
-                            value = "<html><img src='" + value.data.icon + "'></html>"; // for rosterEntries, create an image tag instead
-                        } else {
-                            value = value.data.name; // if roster icon not set, just show the name
-                        }
-                    }
+                value = valueToShow(value);
+                // A Block Contents icon shows the train in the block or, when there is none, the train
+                // the block is allocated to, as on a JMRI panel. An input icon edits the value itself.
+                var shown = value;
+                if (value === null && isDefined(data.allocatedValue)) {
+                    shown = valueToShow(data.allocatedValue);
                 }
-                updateWidgets(name, value, data);
+                updateWidgets(name, value, data, function($widget) {
+                    return $widget.widgetType == "BlockContentsIcon" ? shown : value;
+                });
             },
             oblock: function(name, status, data) { // data contains data.status (Allocated, Occupied,... not state)
                 //console.log("HEARD JSON OBLOCK " + name + " status=" + status + " (" + data.status + ")");
@@ -2708,21 +2704,8 @@ $(document).ready(function() {
                 }
             },
             memory: function(name, value, data) {
-                if (value !== null) {
-                    //console.log("MEMORY " + name + " value=" + value + " data=" + data);
-                    if (value.type == "idTag") {
-                        value = value.data.userName; // for idTags, use the value in userName instead
-                    } else if (value.type == "reporter"){
-                        value = value.data.value;    // for reporters, use the value in data instead
-                    } else if (value.type == "rosterEntry") {
-                        if (value.data.icon !== null) {
-                            value = "<html><img src='" + value.data.icon + "'></html>"; // for rosterEntries, create an image tag instead
-                        } else {
-                            value = value.data.name; // if roster icon not set, just show the name
-                        }
-                    }
-                }
-                updateWidgets(name, value, data);
+                //console.log("MEMORY " + name + " value=" + value + " data=" + data);
+                updateWidgets(name, valueToShow(value), data);
             },
             reporter: function(name, value, data) {
                 //console.log("REPORTER " + name + " value=" + value + " data=" + data);
@@ -4432,21 +4415,43 @@ function createPanelCanvas() {
     }    
 };
 
-function updateWidgets(name, state, data) {
-    // update all widgets based on the element that changed, using systemname
+// update all widgets based on the element that changed; stateFor, if given, picks the state for each widget
+function updateWidgets(name, state, data, stateFor) {
+    var stateOf = function(widgetId) {
+        return isDefined(stateFor) ? stateFor($gWidgets[widgetId]) : state;
+    };
+    // using systemname
     if (whereUsed[name]) {
         //log.log("updateWidgets(" + name + ", " + state + ")");
         $.each(whereUsed[name], function(index, widgetId) {
-            $setWidgetState(widgetId, state, data);
+            $setWidgetState(widgetId, stateOf(widgetId), data);
         });
     }
-    //update all widgets based on the element that changed, using username
+    // using username
     if (isDefined(data.userName) && whereUsed[data.userName]) {
         //log.log("updateWidgets by username (" + data.userName + "), " + state);
         $.each(whereUsed[data.userName], function(index, widgetId) {
-            $setWidgetState(widgetId, state, data);
+            $setWidgetState(widgetId, stateOf(widgetId), data);
         });
     }
+}
+
+// the text or html to show for a memory or block value: idTags by user name, reporters by their value,
+// roster entries by their icon or name, anything else as it is
+function valueToShow(value) {
+    if (value === null || isUndefined(value)) {
+        return null;
+    } else if (value.type == "idTag") {
+        return value.data.userName;
+    } else if (value.type == "reporter") {
+        return value.data.value;
+    } else if (value.type == "rosterEntry") {
+        if (value.data.icon !== null) {
+            return "<html><img src='" + value.data.icon + "'></html>";
+        }
+        return value.data.name; // if roster icon not set, just show the name
+    }
+    return value;
 }
 
 function updateOccupancy(sensorName, state, data) {

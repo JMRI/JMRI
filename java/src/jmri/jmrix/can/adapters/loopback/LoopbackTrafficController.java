@@ -46,12 +46,18 @@ public class LoopbackTrafficController extends jmri.jmrix.can.TrafficController 
 
     /**
      * Forward a preformatted message to the actual interface.
+     * <p>
+     * There is no connection to write to: the message is on the simulated
+     * bus when its listeners are told, so that is when it is taken to have
+     * been sent.
      * {@inheritDoc}
      */
     @Override
     public void sendCanMessage(CanMessage m, CanListener reply) {
         log.debug("TrafficController sendCanMessage() {}", m);
+        long sentTime = System.nanoTime();
         notifyMessage(m, reply);
+        messageSent(m, sentTime);
     }
 
     /**

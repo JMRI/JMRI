@@ -337,6 +337,13 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
      * track of user name changes to individual NamedBeans. It is not completely
      * implemented yet. In particular, listeners are not added to newly
      * registered objects.
+     * <p>
+     * When a bean's user name changes from one name to another, the references
+     * that use the old user name are updated to use the new one, however the
+     * name was changed (a bean table, a script, the JSON server and so on).
+     * References are not changed when a user name is set for the first time or
+     * removed; whether references then use the system name or the user name is
+     * left to the caller, through {@link NamedBeanHandleManager}.
      *
      * @param e the event
      */
@@ -359,6 +366,9 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
                         _tuser.get(now).setUserName(null);
                     }
                     _tuser.put(now, t); // put new name for this bean
+                    if (old != null) {
+                        renameReferences(old, now, t);
+                    }
                 }
             } catch (ClassCastException ex) {
                 log.error("Received event of wrong type {}", e.getSource().getClass().getName(), ex);
@@ -366,6 +376,22 @@ public abstract class AbstractManager<E extends NamedBean> extends VetoableChang
 
             // called DisplayListName, as DisplayName might get used at some point by a NamedBean
             firePropertyChange(PROPERTY_DISPLAY_LIST_NAME, old, now); // NOI18N
+        }
+    }
+
+    /**
+     * Update the references to a bean that use its old user name, so they
+     * use its new user name. Without this, a reference stored by name after a
+     * rename would not be found when the file is loaded again.
+     *
+     * @param oldName the previous user name
+     * @param newName the new user name
+     * @param bean    the bean whose user name changed
+     */
+    private void renameReferences(@Nonnull String oldName, @Nonnull String newName, @Nonnull E bean) {
+        // with no NamedBeanHandleManager there are no references to update
+        if (InstanceManager.containsDefault(NamedBeanHandleManager.class)) {
+            InstanceManager.getDefault(NamedBeanHandleManager.class).renameBean(oldName, newName, bean);
         }
     }
 
