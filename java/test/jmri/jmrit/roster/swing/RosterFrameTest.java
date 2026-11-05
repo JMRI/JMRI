@@ -18,6 +18,11 @@ public class RosterFrameTest {
 
     private RosterFrame frame = null;
 
+    /** The selected entries, read on the layout thread (Swing thread), where the table changes them. */
+    private RosterEntry[] selected() {
+        return ThreadingUtil.runOnGUIwithReturn(() -> frame.getSelectedRosterEntries());
+    }
+
     @Test
     public void testCtor() {
         Assertions.assertNotNull( frame, "exists");
@@ -89,9 +94,9 @@ public class RosterFrameTest {
         operator.pushIdentifyButton();
 
         JUnitUtil.waitFor(() -> {
-            return frame.getSelectedRosterEntries().length == 1;
+            return selected().length == 1;
         }, "selection complete");
-        RosterEntry[] selected = frame.getSelectedRosterEntries();
+        RosterEntry[] selected = selected();
         Assertions.assertEquals( 1, selected.length, "selected ");
         Assertions.assertEquals( re1, selected[0], "selected ");
 
@@ -141,9 +146,9 @@ public class RosterFrameTest {
         //    }, "error message at end");
 
         JUnitUtil.waitFor(() -> {
-            return frame.getSelectedRosterEntries().length == 1;
+            return selected().length == 1;
         }, "selection complete");
-        RosterEntry[] selected = frame.getSelectedRosterEntries();
+        RosterEntry[] selected = selected();
         Assertions.assertEquals( re1, selected[0], "selected ");
         Assertions.assertTrue( frame.checkIfEntrySelected(), "entry selected ");
 
@@ -187,9 +192,9 @@ public class RosterFrameTest {
         // right now, nothing is ever selected, because multiple selection
         // is not working.  See @Ignore above
         JUnitUtil.waitFor(() -> {
-            return frame.getSelectedRosterEntries().length == 2;
+            return selected().length == 2;
         }, "selection complete");
-        RosterEntry[] selected = frame.getSelectedRosterEntries();
+        RosterEntry[] selected = selected();
         Assertions.assertEquals( re1, selected[0], "selected ");
         Assertions.assertEquals( re3, selected[1], "selected ");
         Assertions.assertTrue( frame.checkIfEntrySelected(), "entry selected");
@@ -237,9 +242,9 @@ public class RosterFrameTest {
         operator.pushIdentifyButton();
 
         JUnitUtil.waitFor(() -> {
-            return frame.getSelectedRosterEntries().length == 1;
+            return selected().length == 1;
         }, "selection complete");
-        RosterEntry[] selected = frame.getSelectedRosterEntries();
+        RosterEntry[] selected = selected();
         Assertions.assertEquals( 1, selected.length, "selected "); // failed here with 0
         Assertions.assertEquals( re3, selected[0], "selected ");  // 2nd address=3 selected by decoder match
         Assertions.assertTrue( frame.checkIfEntrySelected(), "entry selected");

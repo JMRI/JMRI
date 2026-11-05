@@ -313,28 +313,34 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
     // between selection changes will not require the creation of a new array
     @Override
     public RosterEntry[] getSelectedRosterEntries() {
-        if (selectedRosterEntries == null) {
+        RosterEntry[] entries = selectedRosterEntries;
+        if (entries == null) {
             int[] rows = dataTable.getSelectedRows();
-            selectedRosterEntries = new RosterEntry[rows.length];
+            // filled before it is cached, so the cache never holds an entry not yet looked up
+            entries = new RosterEntry[rows.length];
             for (int idx = 0; idx < rows.length; idx++) {
-                selectedRosterEntries[idx] = Roster.getDefault().getEntryForId(
+                entries[idx] = Roster.getDefault().getEntryForId(
                     dataModel.getValueAt(sorter.convertRowIndexToModel(rows[idx]), RosterTableModel.IDCOL).toString());
             }
+            selectedRosterEntries = entries;
         }
-        return Arrays.copyOf(selectedRosterEntries, selectedRosterEntries.length);
+        return Arrays.copyOf(entries, entries.length);
     }
 
     // cache getSortedRosterEntries so that multiple calls to this
     // between selection changes will not require the creation of a new array
     public RosterEntry[] getSortedRosterEntries() {
-        if (sortedRosterEntries == null) {
-            sortedRosterEntries = new RosterEntry[sorter.getModelRowCount()];
-            for (int idx = 0; idx < sorter.getModelRowCount(); idx++) {
-                sortedRosterEntries[idx] = Roster.getDefault().getEntryForId(
+        RosterEntry[] entries = sortedRosterEntries;
+        if (entries == null) {
+            // filled before it is cached, as for the selected entries
+            entries = new RosterEntry[sorter.getModelRowCount()];
+            for (int idx = 0; idx < entries.length; idx++) {
+                entries[idx] = Roster.getDefault().getEntryForId(
                     dataModel.getValueAt(sorter.convertRowIndexToModel(idx), RosterTableModel.IDCOL).toString());
             }
+            sortedRosterEntries = entries;
         }
-        return Arrays.copyOf(sortedRosterEntries, sortedRosterEntries.length);
+        return Arrays.copyOf(entries, entries.length);
     }
 
     public void setEditable(boolean editable) {
