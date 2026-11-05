@@ -737,5 +737,10 @@
         <a id="Misc" name="Misc"></a>
         <ul>
             <li></li>
+            <li>Quitting JMRI, and closing the CBUS or LCC Hub window, no
+                longer wait about 2 seconds for each network address while
+                JMRI withdraws its ZeroConf (mDNS) announcements, such as the
+                Hub's, WiThrottle's and the Web Server's. The wait is now about
+                2 seconds in all.</li>
         </ul>
 
