@@ -224,7 +224,7 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
                     //bs.setSetting(Turnout.CLOSED);  - This was the form before BeanSetting was returned to Immutable
                     _path.getSettings().set(row, new BeanSetting(bs.getBean(), bs.getBeanName(), Turnout.CLOSED));
                 } else if (setting.equals(SET_THROWN)) {
-                    //bs.setSetting(Turnout.THROWN); 
+                    //bs.setSetting(Turnout.THROWN);
                     _path.getSettings().set(row, new BeanSetting(bs.getBean(), bs.getBeanName(), Turnout.THROWN));
                 } else {
                     JmriJOptionPane.showMessageDialog(null, Bundle.getMessage("TurnoutMustBeSet", SET_CLOSED, SET_THROWN),
@@ -284,7 +284,6 @@ public class PathTurnoutTableModel extends AbstractTableModel implements Propert
         protected final void eventEditorMousePressed() {
             this.editor.add(getEditorBox(table.convertRowIndexToModel(this.currentRow))); // add editorBox to JPanel
             this.editor.revalidate();
-            SwingUtilities.invokeLater(this.comboBoxFocusRequester);
             log.debug("eventEditorMousePressed in row: {})", this.currentRow);  // NOI18N
         }
 

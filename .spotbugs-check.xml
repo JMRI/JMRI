@@ -36,7 +36,6 @@
            <Bug pattern="UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD" /> <!-- 4 cases -->
            <Bug pattern="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" /> <!-- 141 cases -->
            <Bug pattern="UWF_UNWRITTEN_FIELD" /> <!-- 6 cases -->
-           <Bug pattern="UWF_UNWRITTEN_PUBLIC_OR_PROTECTED_FIELD" /> <!-- 1 case -->
            <Bug pattern="UWF_NULL_FIELD" /> <!-- 6 cases -->
 			<!-- Temporary disable these until we have decided what to do about them -->
 
@@ -69,7 +68,6 @@
            <Bug pattern="THROWS_METHOD_THROWS_RUNTIMEEXCEPTION" />
            <Bug pattern="THROWS_METHOD_THROWS_CLAUSE_BASIC_EXCEPTION" />
            <Bug pattern="AT_UNSAFE_RESOURCE_ACCESS_IN_THREAD" />
-           <Bug pattern="OS_OPEN_STREAM_EXCEPTION_PATH" />
         </Or>
      </Match>
     

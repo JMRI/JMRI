@@ -28,7 +28,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.SortOrder;
-import javax.swing.SwingUtilities;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
@@ -930,17 +929,17 @@ public class SignallingPanel extends JmriPanel {
         sml.setMasts(hashSignalMasts, destMast);
 
         sml.allowTurnoutLock(lockTurnouts.isSelected(), destMast);
-        
+
         //required to set up transits using Layout Panel
         //this.setAssociatedSection(destMast);
-        
+
         sml.initialise(destMast);
         if (smlPairAdded) {
             log.debug("New SML");  // NOI18N
             firePropertyChange("newDestination", null, destMastBox.getSelectedItem()); // to show new SML in underlying table  // NOI18N
         }
     }
-    
+
     void setAssociatedSection(SignalMast destMast){
         SectionManager sm = InstanceManager.getDefault(SectionManager.class);
         if (!sml.getAutoBlocksBetweenMasts(destMast).isEmpty()) {
@@ -1571,7 +1570,6 @@ public class SignallingPanel extends JmriPanel {
             protected final void eventEditorMousePressed() {
                 this.editor.add(getEditorBox(table.convertRowIndexToModel(this.currentRow))); // add editorBox to JPanel
                 this.editor.revalidate();
-                SwingUtilities.invokeLater(this.comboBoxFocusRequester);
                 log.debug("eventEditorMousePressed in row: {})", this.currentRow);  // NOI18N
             }
 
@@ -2039,7 +2037,6 @@ public class SignallingPanel extends JmriPanel {
             protected final void eventEditorMousePressed() {
                 this.editor.add(getEditorBox(table.convertRowIndexToModel(this.currentRow))); // add eb to JPanel
                 this.editor.revalidate();
-                SwingUtilities.invokeLater(this.comboBoxFocusRequester);
                 log.debug("eventEditorMousePressed in row: {}; me = {})", this.currentRow, this.toString());  // NOI18N
             }
 
