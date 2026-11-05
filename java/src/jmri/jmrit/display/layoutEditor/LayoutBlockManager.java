@@ -13,9 +13,11 @@ import jmri.jmrit.display.EditorManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Memory;
+import jmri.MemoryManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
+import jmri.SensorManager;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.Turnout;
@@ -41,9 +43,18 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
     public LayoutBlockManager() {
         super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
-        InstanceManager.sensorManagerInstance().addVetoableChangeListener(LayoutBlockManager.this);
-        InstanceManager.memoryManagerInstance().addVetoableChangeListener(LayoutBlockManager.this);
+        sensorManager = InstanceManager.sensorManagerInstance();
+        sensorManager.addVetoableChangeListener(LayoutBlockManager.this);
+        memoryManager = InstanceManager.memoryManagerInstance();
+        memoryManager.addVetoableChangeListener(LayoutBlockManager.this);
     }
+
+    /**
+     * The SensorManager and MemoryManager this manager listens to for deletions, so that
+     * {@link #dispose()} stops listening to those, not to whatever the InstanceManager holds by then.
+     */
+    private final SensorManager sensorManager;
+    private final MemoryManager memoryManager;
 
     /**
      * String constant for advanced routing enabled.
@@ -2928,8 +2939,8 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
     @Override
     public void dispose(){
-        InstanceManager.sensorManagerInstance().removeVetoableChangeListener(this);
-        InstanceManager.memoryManagerInstance().removeVetoableChangeListener(this);
+        sensorManager.removeVetoableChangeListener(this);
+        memoryManager.removeVetoableChangeListener(this);
         super.dispose();
     }
 

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.util.StdDateFormat;
 import java.beans.PropertyChangeListener;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import jmri.BasicRosterEntry;
 import jmri.CommandStation;
@@ -935,6 +937,58 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
             return value + 1; // add 1 to the value to avoid the estop
         } else {
             return 0; // non-emergency stop
+        }
+    }
+
+    private final List<SpeedSentListener> speedSentListeners = new CopyOnWriteArrayList<>();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addSpeedSentListener(@Nonnull SpeedSentListener listener) {
+        speedSentListeners.add(listener);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void removeSpeedSentListener(@Nonnull SpeedSentListener listener) {
+        speedSentListeners.remove(listener);
+    }
+
+    /**
+     * Is anything listening for speed or direction commands being sent? A
+     * Throttle that reports them can skip asking its connection when not.
+     *
+     * @return true if there is a {@link jmri.Throttle.SpeedSentListener}
+     * @since 5.19.1
+     */
+    protected boolean hasSpeedSentListeners() {
+        return !speedSentListeners.isEmpty();
+    }
+
+    /**
+     * Tell the {@link jmri.Throttle.SpeedSentListener}s that a speed or
+     * direction command has been sent. For a Throttle that
+     * {@link #reportsSpeedSent() reports} it, when its connection has
+     * written the command. One that throws is logged and does not stop the
+     * others.
+     *
+     * @param speed     the speed the command set, -1 for an emergency stop
+     * @param forward   the direction the command set
+     * @param timeNanos when the command was written to the connection, on the
+     *                  {@link System#nanoTime()} scale
+     * @since 5.19.1
+     */
+    protected void fireSpeedSent(float speed, boolean forward, long timeNanos) {
+        for (SpeedSentListener l : speedSentListeners) {
+            try {
+                l.speedSent(this, speed, forward, timeNanos);
+            } catch (RuntimeException e) {
+                log.error("Speed sent listener of throttle {} failed", getLocoAddress(), e);
+            }
         }
     }
 
