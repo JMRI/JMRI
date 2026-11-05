@@ -182,8 +182,6 @@ public class DefaultUser implements User {
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
-        justification="The text is from an exception")
     public void setPassword(String newPassword) {
         PermissionManager pMngr = InstanceManager.getDefault(PermissionManager.class);
 
