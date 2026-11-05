@@ -173,6 +173,39 @@ public class ActionBlockValueTypeTest {
     }
 
     @Test
+    public void testLocalVariableStopsListeningWhenDisabled() throws JmriException {
+        ActionLocalVariable local = localVariableAction(BlockValueType.DisplayValue);
+        start();
+        set(() -> block.setAllocatedValue("AAA"));
+        assertEquals("AAA", memory.getValue());
+        set(() -> logixNG.setEnabled(false));
+        set(() -> block.setValue("BBB"));
+        set(() -> block.setAllocatedValue("CCC"));
+        assertEquals("AAA", memory.getValue(), "not run: disabled, so no longer listening to either property");
+        // changing the choice logs an error while listeners are registered
+        local.setBlockValueType(BlockValueType.AllocatedValue);
+        set(() -> logixNG.setEnabled(true));
+        set(() -> block.setAllocatedValue("DDD"));
+        assertEquals("DDD", memory.getValue(), "listening again, to the new choice");
+    }
+
+    @Test
+    public void testTableStopsListeningWhenDisabled() throws JmriException {
+        ActionTable inTable = tableAction(BlockValueType.DisplayValue);
+        start();
+        set(() -> block.setAllocatedValue("AAA"));
+        assertEquals("AAA", cell());
+        set(() -> logixNG.setEnabled(false));
+        set(() -> block.setValue("BBB"));
+        set(() -> block.setAllocatedValue("CCC"));
+        assertEquals("AAA", cell(), "not run: disabled, so no longer listening to either property");
+        inTable.setBlockValueType(BlockValueType.AllocatedValue);
+        set(() -> logixNG.setEnabled(true));
+        set(() -> block.setAllocatedValue("DDD"));
+        assertEquals("DDD", cell(), "listening again, to the new choice");
+    }
+
+    @Test
     public void testDescriptions() throws JmriException {
         ActionLocalVariable local = localVariableAction(BlockValueType.Value);
         assertEquals("Set variable result to the value of block IB1 (Listen)", local.getLongDescription(Locale.ENGLISH));
