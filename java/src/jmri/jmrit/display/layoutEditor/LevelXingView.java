@@ -350,6 +350,16 @@ public class LevelXingView extends LayoutTrackView {
     }
 
     /**
+     * {@inheritDoc}
+     * <p>
+     * A crossing is drawn in the colours of the blocks of its two tracks.
+     */
+    @Override
+    public boolean usesLayoutBlock(@Nonnull LayoutBlock layoutBlock) {
+        return (getLayoutBlockAC() == layoutBlock) || (getLayoutBlockBD() == layoutBlock);
+    }
+
+    /**
      * Add Layout Blocks.
      */
 //     @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null is accepted as a valid value")

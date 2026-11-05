@@ -26,7 +26,11 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>CBUS sensors, turnouts and lights: each frame sent or
+                    received is now passed only to the sensors, turnouts and
+                    lights that use its event, instead of to every one on the
+                    connection, so the time taken for each frame no longer grows
+                    with the size of the layout.</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -440,6 +444,21 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
+             <li>An automatic train waiting for a stop sensor that never goes
+                 active no longer runs on out of its Section at its stopping
+                 speed. It is stopped as soon as it enters a free Block beyond
+                 the Section, and a train stopping by distance into its
+                 destination Section is also stopped when, by reckoning from
+                 its speed profile, it reaches the end of the Section. A
+                 warning naming the stop sensor is written to the System
+                 Console.</li>
+             <li></li>
+             <li>A Block change that an automatic train handles just after
+                 one of its Sections is released, or as the train is
+                 terminated, no longer gives warnings such as "No next Block"
+                 or that the train has disappeared. The train now uses the
+                 direction the Section was allocated in, and ignores Block
+                 changes once it is being terminated.</li>
              <li>"Place train name in allocated Blocks" no longer writes the
                  train's name into the value of the Blocks Dispatcher
                  allocates, so the train name shown in allocated Blocks is no
@@ -487,6 +506,9 @@
         <a id="LE" name="LE"></a>
         <ul>
             <li></li>
+            <li>Layout Editor panels now repaint only the track of a Block
+                whose occupancy or other state changed, rather than the whole
+                panel.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -509,7 +531,13 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
-          <li></li>
+          <li>When a LogixNG is loaded and an item it uses, such as a sensor,
+              is not found, an error now names the missing item in the
+              System Console. Before, the item was silently left empty and
+              shown as ''.</li>
+          <li>Execute action, Last result of digital expression and the
+              Entry/Exit action and expression no longer lose their item when
+              another file is loaded after the item was renamed.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
@@ -633,7 +661,11 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
-            <li></li>
+            <li>When the user name of a sensor, turnout or other item is changed
+                from one name to another in any way, for example by a script,
+                the places that use it by that name now follow the change.
+                Before, only a change made in a table window did this, and
+                after storing and reloading, a LogixNG could lose the item.</li>
         </ul>
 
    <h3>Warrants</h3>

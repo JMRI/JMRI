@@ -461,6 +461,10 @@
           the specified distance but stop whenever it reaches the stop sensor, whether this is before
           or after the distance given unless <strong>Override stop sensors</strong> has been selected,
           in which case the stop sensors will be ignored.</p>
+          <p><span class="since">since 5.17.5</span>If the stop sensor fails, the train is stopped
+          when, by reckoning from its speed profile, it reaches the end of the section, or as soon as
+          it enters a free block beyond it. See
+          <a href="Dispatcher.shtml#automatic">Running trains automatically</a>.</p>
         </li>
 
         <li>

@@ -62,8 +62,9 @@ public class CbusSensor extends AbstractSensor implements CanListener, CbusEvent
                 log.error("Can't parse CbusSensor system name: {}", address);
                 return;
         }
-        // connect
-        addTc(tc);
+        // connect, through the connection's dispatcher, which offers this bean
+        // only the frames of its own addresses
+        CbusBeanDispatcher.add(tc, this, addrActive, addrInactive);
     }
 
     /**
@@ -83,7 +84,7 @@ public class CbusSensor extends AbstractSensor implements CanListener, CbusEvent
             m.setOpCode(CbusConstants.CBUS_AREQ);
         }
         CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-        tc.sendCanMessage(m, this);
+        CbusBeanDispatcher.send(tc, m, this);
     }
 
     /**
@@ -112,7 +113,7 @@ public class CbusSensor extends AbstractSensor implements CanListener, CbusEvent
                 return;
         }
         CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-        tc.sendCanMessage(m, this);
+        CbusBeanDispatcher.send(tc, m, this);
     }
     
     /**
@@ -207,7 +208,7 @@ public class CbusSensor extends AbstractSensor implements CanListener, CbusEvent
      */
     @Override
     public void dispose() {
-        tc.removeCanListener(this);
+        CbusBeanDispatcher.remove(tc, this);
         super.dispose();
     }
 
