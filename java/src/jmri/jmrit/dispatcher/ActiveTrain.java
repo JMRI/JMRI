@@ -1555,6 +1555,26 @@ public class ActiveTrain implements PropertyChangeProvider {
         }
     }
 
+    private volatile boolean mTerminating = false;
+
+    /**
+     * Mark this train as being terminated. Block changes in its Sections that
+     * are still waiting to be handled are dropped from now on, as its Sections
+     * are about to be released.
+     */
+    protected void setTerminating() {
+        mTerminating = true;
+    }
+
+    /**
+     * Check whether this train is being terminated or has been.
+     *
+     * @return true once termination has begun
+     */
+    protected boolean isTerminating() {
+        return mTerminating || getMode() == TERMINATED;
+    }
+
     public void terminate() {
         mDispatcher.removeDelayedTrain(this);
         if (getDelaySensor() != null && delaySensorListener != null) {

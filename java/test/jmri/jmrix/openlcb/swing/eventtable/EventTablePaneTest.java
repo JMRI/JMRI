@@ -9,7 +9,9 @@ import jmri.jmrix.openlcb.*;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.openlcb.*;
 import org.openlcb.implementations.EventTable;
@@ -21,7 +23,7 @@ import org.openlcb.implementations.EventTable;
 public class EventTablePaneTest extends jmri.util.swing.JmriPanelTest {
 
     @Test
-    public void CsvWriteReadTest() {
+    public void CsvWriteReadTest(@TempDir File folder) {
         // first add some system content
         olcbStore.addMatch(new EventID("1.2.3.4.5.6.7.8"), "namedEvent");
         
@@ -37,11 +39,11 @@ public class EventTablePaneTest extends jmri.util.swing.JmriPanelTest {
         testPanel.model.recordConsumer(new EventID("1.2.3.4.5.6.7.8"), new NodeID("1.2.3.4.5.6"), "");
         
         // write a temporary CSV file
-        testPanel.model.csvWriteOperation(new File("temp/eventNameTable.csv"));
+        File csvFile = new File(folder, "eventNameTable.csv");
+        testPanel.model.csvWriteOperation(csvFile);
+        assertTrue(csvFile.isFile(), "CSV file written");
         
-        // clear the state
-        testPanel.model = getModel();   
-        
+        // clear the state: a new name store with no names, and a model using it
         olcbStore.deregisterShutdownTask();
         olcbStore = new OlcbEventNameStore() {
             @Override 
@@ -53,14 +55,14 @@ public class EventTablePaneTest extends jmri.util.swing.JmriPanelTest {
                 // don't write the eventNames.xml file
             }
         };        
+        testPanel.model = getModel();
         testPanel.nameStore = olcbStore;
         
         // read that back
-        testPanel.model.csvReadOperation(new File("temp/eventNameTable.csv"));
+        testPanel.model.csvReadOperation(csvFile);
         
-        // and check the event name mapping
-        var resultName = model.getValueAt(0, EventTableDataModel.COL_EVENTNAME);
-        assertEquals("namedEvent", resultName);
+        // and check the event name mapping came from the file
+        assertEquals("namedEvent", olcbStore.getEventName(new EventID("1.2.3.4.5.6.7.8")));
         
     }
     
