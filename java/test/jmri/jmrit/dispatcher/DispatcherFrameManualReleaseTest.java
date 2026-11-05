@@ -13,6 +13,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import jmri.InstanceManager;
 import jmri.Section;
@@ -84,8 +85,7 @@ public class DispatcherFrameManualReleaseTest {
         allocated(1, true, false, true);
         AllocatedSection middle = allocated(2, false, false, false);
         allocated(3, false, false, false);
-        String refusal = d.getManualReleaseRefusal(middle);
-        assertNotNull(refusal, "releasing it would leave a gap");
+        String refusal = Objects.requireNonNull(d.getManualReleaseRefusal(middle), "releasing it would leave a gap");
         assertTrue(refusal.contains("Section 2"), refusal);
     }
 

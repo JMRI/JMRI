@@ -94,6 +94,21 @@ public class XNetSensorTest extends jmri.implementation.AbstractSensorTestBase {
         assertTrue(times.get(1) >= before && times.get(1) <= after, "not stamped: dated when set");
     }
 
+    @Test
+    public void testXNetBroadcastSensorStatusMsg() {
+        XNetReply reply = new XNetReply("44 04 40 05 42 47");
+        ((XNetSensor) t).message(reply);
+        assertEquals(Sensor.ACTIVE, t.getKnownState(), "feedback from second module pair");
+
+        reply = new XNetReply("44 04 40 05 40 45");
+        ((XNetSensor) t).message(reply);
+        assertEquals(Sensor.INACTIVE, t.getKnownState(), "updated feedback from second module pair");
+
+        reply = new XNetReply("44 04 40 06 42 44");
+        ((XNetSensor) t).message(reply);
+        assertEquals(Sensor.INACTIVE, t.getKnownState(), "unmatched module pair does not change state");
+    }
+
     // XNetSensor test for setting state
     @Test
     public void testXNetSensorSetState() throws jmri.JmriException {

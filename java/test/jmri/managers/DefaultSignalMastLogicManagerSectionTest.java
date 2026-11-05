@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import jmri.*;
 import jmri.implementation.DefaultSignalMastLogic;
@@ -16,7 +17,6 @@ import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
@@ -91,8 +91,8 @@ public class DefaultSignalMastLogicManagerSectionTest {
         assertNull(sml.associated.get(d1), "user section is not used for the logic");
         assertEquals(Section.USERDEFINED, userSection.getSectionType(), "user section left alone");
 
-        Section created = secm.getSection("Src:D2");
-        assertNotNull(created, "section generated for the destination after the user section");
+        Section created = Objects.requireNonNull(secm.getSection("Src:D2"),
+                "section generated for the destination after the user section");
         assertEquals(Section.SIGNALMASTLOGIC, created.getSectionType());
         assertSame(created, sml.associated.get(d2));
         assertEquals("D2", created.getProperty("forwardMast"));

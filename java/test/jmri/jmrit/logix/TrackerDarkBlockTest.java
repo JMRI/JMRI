@@ -1,6 +1,7 @@
 package jmri.jmrit.logix;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 import jmri.Block;
 import jmri.InstanceManager;
@@ -28,8 +29,7 @@ public class TrackerDarkBlockTest {
     private PortalManager portalMgr;
 
     private OBlock block(String sysName, String userName, int state) {
-        OBlock b = blkMgr.createNewOBlock(sysName, userName);
-        assertNotNull(b);
+        OBlock b = Objects.requireNonNull(blkMgr.createNewOBlock(sysName, userName), userName);
         b.setState(state);
         return b;
     }
