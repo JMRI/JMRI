@@ -459,7 +459,7 @@
                  or that the train has disappeared. The train now uses the
                  direction the Section was allocated in, and ignores Block
                  changes once it is being terminated.</li>
-             <li>"Place train name in allocated Blocks" no longer writes the
+             <li><strong>Place train name in allocated Blocks</strong> no longer writes the
                  train's name into the value of the Blocks Dispatcher
                  allocates, so the train name shown in allocated Blocks is no
                  longer overwritten or lost as trains move. With the option
