@@ -347,10 +347,11 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     /**
-     * Redraw panels using this layout block.
+     * Redraw panels using this layout block: on each, the part drawn in this
+     * block's colours (the whole panel in edit mode).
      */
     public void redrawLayoutBlockPanels() {
-        panels.stream().forEach(LayoutEditor::redrawPanel);
+        panels.stream().forEach(panel -> panel.redrawLayoutBlock(this));
         firePropertyChange(PROPERTY_REDRAW, null, null);
     }
 

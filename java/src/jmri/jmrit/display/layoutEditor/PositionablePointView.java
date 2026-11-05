@@ -255,6 +255,17 @@ public class PositionablePointView extends LayoutTrackView {
         return new Rectangle2D.Double(c.getX() - 0.5, c.getY() - 0.5, 1.0, 1.0);
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Anchors, end bumpers and edge connectors are not drawn in a layout
+     * block's colours; the track segments joined to them are.
+     */
+    @Override
+    public boolean usesLayoutBlock(@Nonnull LayoutBlock layoutBlock) {
+        return false;
+    }
+
     @CheckReturnValue
     @Nonnull
     public String getEastBoundSignal() {

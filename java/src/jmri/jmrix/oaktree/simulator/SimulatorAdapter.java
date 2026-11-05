@@ -2,12 +2,12 @@ package jmri.jmrix.oaktree.simulator;
 
 import java.io.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 // no special xSimulatorController
 import jmri.jmrix.oaktree.*;
 import jmri.util.ImmediatePipedOutputStream;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provide access to a simulated OakTree system.
@@ -55,7 +55,7 @@ public class SimulatorAdapter extends SerialPortController implements Runnable {
             log.debug("tempPipeI created");
             pout = new DataOutputStream(tempPipeI);
             inpipe = new DataInputStream(new PipedInputStream(tempPipeI));
-            log.debug("inpipe created {}", inpipe != null);
+            log.debug("inpipe created");
             PipedOutputStream tempPipeO = new ImmediatePipedOutputStream();
             outpipe = new DataOutputStream(tempPipeO);
             pin = new DataInputStream(new PipedInputStream(tempPipeO));

@@ -834,6 +834,18 @@ public class LayoutTurnoutView extends LayoutTrackView {
         return result;
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * A turnout, crossover or slip is drawn in the colours of up to four
+     * blocks, one for each of its legs.
+     */
+    @Override
+    public boolean usesLayoutBlock(@Nonnull LayoutBlock layoutBlock) {
+        return (getLayoutBlock() == layoutBlock) || (getLayoutBlockB() == layoutBlock)
+                || (getLayoutBlockC() == layoutBlock) || (getLayoutBlockD() == layoutBlock);
+    }
+
     // updates connectivity for blocks assigned to this turnout and connected track segments
     public void updateBlockInfo() {
         turnout.updateBlockInfo();
