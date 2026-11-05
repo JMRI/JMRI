@@ -67,7 +67,10 @@ import org.jdom2.JDOMException;
  * After a forward run, the Start and Finish sensors are swapped for a run in
  * reverse.
  */
-@SuppressFBWarnings(value = {"AT_NONATOMIC_OPERATIONS_ON_SHARED_VARIABLE", "AT_STALE_THREAD_WRITE_OF_PRIMITIVE"},
+@SuppressFBWarnings(value = {
+    "AT_NONATOMIC_OPERATIONS_ON_SHARED_VARIABLE",
+    "AT_NONATOMIC_64BIT_PRIMITIVE",
+    "AT_STALE_THREAD_WRITE_OF_PRIMITIVE"},
     justification = "This class is not thread safe.")
 
 class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleListener {
