@@ -60,7 +60,6 @@
            <Bug pattern="AT_STALE_THREAD_WRITE_OF_PRIMITIVE" />
            <Bug pattern="US_USELESS_SUPPRESSION_ON_METHOD" />
            <Bug pattern="US_USELESS_SUPPRESSION_ON_FIELD" />
-           <Bug pattern="US_USELESS_SUPPRESSION_ON_CLASS" />
            <Bug pattern="SF_SWITCH_FALLTHROUGH" />
         </Or>
      </Match>
