@@ -9,6 +9,7 @@ import jmri.BlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.BlockValueType;
 import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 import jmri.jmrit.logixng.util.LogixNG_SelectEnum;
 import jmri.jmrit.logixng.util.LogixNG_SelectString;
@@ -23,7 +24,12 @@ import jmri.jmrit.logixng.util.parser.*;
  *   <li>Is [not] Other (UNKNOWN, INCONSISTENT, UNDETECTED)</li>
  *   <li>Is [not] Allocated (based on the LayoutBlock useAlternateColor)</li>
  *   <li>Value [not] equals string</li>
+ *   <li>Allocated value [not] equals string</li>
+ *   <li>Display value [not] equals string</li>
  * </ul>
+ * The allocated value is the train Dispatcher has allocated the Block to, and
+ * the display value is what panels show: the value, or the allocated value
+ * when the Block has no value. See {@link BlockValueType}.
  * @author Daniel Bergqvist Copyright 2021
  * @author Dave Sand Copyright 2021
  */
@@ -134,9 +140,12 @@ public class ExpressionBlock extends AbstractDigitalExpression
                 break;
 
             case ValueMatches:
+            case AllocatedValueMatches:
+            case DisplayValueMatches:
                 String blockValue = _selectBlockValue.evaluateValue(conditionalNG);
-                currentState = blockValue.equals(block.getValue())
-                        ? BlockState.ValueMatches.getID() : 0;
+                BlockValueType valueType = checkBlockState.getValueType();
+                currentState = valueType != null && blockValue.equals(valueType.getValue(block))
+                        ? checkBlockState.getID() : 0;
                 break;
 
             default:
@@ -173,8 +182,8 @@ public class ExpressionBlock extends AbstractDigitalExpression
         if (_selectEnum.isDirectAddressing()) {
             BlockState blockState = _selectEnum.getEnum();
 
-            if (blockState == BlockState.ValueMatches) {
-                String bundleKey = "Block_Long_Value";
+            if (blockState.getValueType() != null) {
+                String bundleKey = blockState.getLongDescriptionKey();
                 String equalsString = _is_IsNot == Is_IsNot_Enum.Is ? Bundle.getMessage("Block_Equal") : Bundle.getMessage("Block_NotEqual");
                 return Bundle.getMessage(locale, bundleKey, namedBean, equalsString, _selectBlockValue.getDescription(locale));
             } else if (blockState == BlockState.Other) {
@@ -221,9 +230,13 @@ public class ExpressionBlock extends AbstractDigitalExpression
         // checks has changed. For example, a reporter in the block may
         // change the value of the block often.
         String propertyName = evt.getPropertyName();
-        if (Block.PROPERTY_VALUE.equals(propertyName)) {
-            if (_selectEnum.isDirectAddressing() && (_selectEnum.getEnum() != BlockState.ValueMatches)) {
-                return;
+        if (Block.PROPERTY_VALUE.equals(propertyName)
+                || Block.PROPERTY_ALLOCATED_VALUE.equals(propertyName)) {
+            if (_selectEnum.isDirectAddressing()) {
+                BlockValueType valueType = _selectEnum.getEnum().getValueType();
+                if (valueType == null || !valueType.getPropertyNames().contains(propertyName)) {
+                    return;
+                }
             }
         } else if (Block.PROPERTY_ALLOCATED.equals(propertyName)) {
             if (_selectEnum.isDirectAddressing() && (_selectEnum.getEnum() != BlockState.Allocated)) {
@@ -245,18 +258,48 @@ public class ExpressionBlock extends AbstractDigitalExpression
         NotOccupied(4, Bundle.getMessage("Block_StateNotOccupied")),
         Other(-1, Bundle.getMessage("Block_StateOther")),
         Allocated(-2, Bundle.getMessage("Block_Allocated")),
-        ValueMatches(-3, Bundle.getMessage("Block_ValueMatches"));
+        ValueMatches(-3, Bundle.getMessage("Block_ValueMatches"),
+                BlockValueType.Value, "Block_Long_Value"),
+        /** @since 5.19.1 */
+        AllocatedValueMatches(-4, Bundle.getMessage("Block_AllocatedValueMatches"),
+                BlockValueType.AllocatedValue, "Block_Long_AllocatedValue"),
+        /** @since 5.19.1 */
+        DisplayValueMatches(-5, Bundle.getMessage("Block_DisplayValueMatches"),
+                BlockValueType.DisplayValue, "Block_Long_DisplayValue");
 
         private final int _id;
         private final String _text;
+        private final BlockValueType _valueType;
+        private final String _longDescriptionKey;
 
         private BlockState(int id, String text) {
+            this(id, text, null, null);
+        }
+
+        private BlockState(int id, String text, BlockValueType valueType, String longDescriptionKey) {
             this._id = id;
             this._text = text;
+            this._valueType = valueType;
+            this._longDescriptionKey = longDescriptionKey;
         }
 
         public int getID() {
             return _id;
+        }
+
+        /**
+         * Get which of the Block's values this state compares with a string.
+         *
+         * @return the value compared, or null if this state compares none
+         * @since 5.19.1
+         */
+        @javax.annotation.CheckForNull
+        public BlockValueType getValueType() {
+            return _valueType;
+        }
+
+        private String getLongDescriptionKey() {
+            return _longDescriptionKey;
         }
 
         @Override

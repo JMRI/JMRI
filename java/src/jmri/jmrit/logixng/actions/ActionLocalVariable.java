@@ -10,6 +10,7 @@ import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.jmrit.logixng.util.parser.ExpressionNode;
+import jmri.jmrit.logixng.util.BlockValueType;
 import jmri.jmrit.logixng.util.LogixNG_SelectNamedBean;
 import jmri.jmrit.logixng.util.LogixNG_SelectTable;
 import jmri.jmrit.logixng.util.ReferenceUtil;
@@ -47,6 +48,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
     private ExpressionNode _expressionNode;
     private boolean _listenToMemory = false;
     private boolean _listenToBlock = false;
+    private BlockValueType _blockValueType = BlockValueType.Value;
     private boolean _listenToReporter = false;
 
     private final LogixNG_SelectTable _selectTable =
@@ -83,6 +85,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
         _selectTable.copy(copy._selectTable);
         copy.setListenToMemory(_listenToMemory);
         copy.setListenToBlock(_listenToBlock);
+        copy.setBlockValueType(_blockValueType);
         copy.setListenToReporter(_listenToReporter);
         return manager.registerAction(copy);
     }
@@ -180,6 +183,28 @@ public class ActionLocalVariable extends AbstractDigitalAction
         return _listenToBlock;
     }
 
+    /**
+     * Set which of the Block's values is copied.
+     *
+     * @param blockValueType the value to copy
+     * @since 5.19.1
+     */
+    public void setBlockValueType(@Nonnull BlockValueType blockValueType) {
+        assertListenersAreNotRegistered(log, "setBlockValueType");   // No I18N
+        _blockValueType = blockValueType;
+    }
+
+    /**
+     * Get which of the Block's values is copied.
+     *
+     * @return the value copied
+     * @since 5.19.1
+     */
+    @Nonnull
+    public BlockValueType getBlockValueType() {
+        return _blockValueType;
+    }
+
     public void setListenToReporter(boolean listenToReporter) {
         this._listenToReporter = listenToReporter;
     }
@@ -275,7 +300,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
                 case CopyBlockToVariable:
                     Block block = _selectBlockNamedBean.evaluateNamedBean(conditionalNG);
                     if (block != null) {
-                        symbolTable.setValue(_localVariable, block.getValue());
+                        symbolTable.setValue(_localVariable, _blockValueType.getValue(block));
                     } else {
                         log.warn("ActionLocalVariable should copy block value to variable but block is null");
                     }
@@ -353,7 +378,7 @@ public class ActionLocalVariable extends AbstractDigitalAction
                         _localVariable, _reference);
 
             case CopyBlockToVariable:
-                return Bundle.getMessage(locale, "ActionLocalVariable_Long_CopyBlockToVariable",
+                return Bundle.getMessage(locale, blockValueKey("ActionLocalVariable_Long_CopyBlockToVariable"),
                         _localVariable, copyToBlockName, Base.getListenString(_listenToBlock));
 
             case CopyTableCellToVariable:
@@ -374,6 +399,16 @@ public class ActionLocalVariable extends AbstractDigitalAction
         }
     }
 
+    /**
+     * Get the bundle key that describes copying the chosen value of a Block.
+     *
+     * @param valueKey the key that describes copying its value
+     * @return the key for the chosen value
+     */
+    private String blockValueKey(String valueKey) {
+        return _blockValueType == BlockValueType.Value ? valueKey : valueKey + "_" + _blockValueType.name();
+    }
+
     /** {@inheritDoc} */
     @Override
     public void setup() {
@@ -390,7 +425,9 @@ public class ActionLocalVariable extends AbstractDigitalAction
             }
             if (_listenToBlock
                     && (_variableOperation == VariableOperation.CopyBlockToVariable)) {
-                _selectBlockNamedBean.addPropertyChangeListener("value", this);
+                for (String property : _blockValueType.getPropertyNames()) {
+                    _selectBlockNamedBean.addPropertyChangeListener(property, this);
+                }
             }
             if (_listenToReporter
                     && (_variableOperation == VariableOperation.CopyReporterToVariable)) {
@@ -410,7 +447,9 @@ public class ActionLocalVariable extends AbstractDigitalAction
             }
             if (_listenToBlock
                     && (_variableOperation == VariableOperation.CopyBlockToVariable)) {
-                _selectBlockNamedBean.removePropertyChangeListener("value", this);
+                for (String property : _blockValueType.getPropertyNames()) {
+                    _selectBlockNamedBean.removePropertyChangeListener(property, this);
+                }
             }
             if (_listenToReporter
                     && (_variableOperation == VariableOperation.CopyReporterToVariable)) {

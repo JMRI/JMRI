@@ -12,6 +12,7 @@ import jmri.jmrit.logixng.actions.ActionLocalVariable;
 import jmri.jmrit.logixng.actions.ActionLocalVariable.ConstantType;
 import jmri.jmrit.logixng.actions.ActionLocalVariable.VariableOperation;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
+import jmri.jmrit.logixng.util.BlockValueType;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectTableSwing;
 import jmri.util.swing.BeanSelectPanel;
@@ -33,6 +34,7 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
     private JCheckBox _listenOnMemory;
     private BeanSelectPanel<Block> _copyBlockBeanPanel;
     private JCheckBox _listenOnBlock;
+    private JComboBox<BlockValueType> _copyBlockValueComboBox;
     private BeanSelectPanel<Reporter> _copyReporterBeanPanel;
     private JCheckBox _listenOnReporter;
     private JPanel _setToNull;
@@ -113,7 +115,10 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
 
         _copyBlockBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(BlockManager.class), null);
         _listenOnBlock = new JCheckBox(Bundle.getMessage("ActionLocalVariable_ListenOnBlock"));
+        _copyBlockValueComboBox = new JComboBox<>(BlockValueType.values());
+        JComboBoxUtil.setupComboBoxMaxRows(_copyBlockValueComboBox);
         _copyBlock.add(_copyBlockBeanPanel);
+        _copyBlock.add(_copyBlockValueComboBox);
         _copyBlock.add(_listenOnBlock);
 
         _copyReporterBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(ReporterManager.class), null);
@@ -164,6 +169,7 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
 
             _listenOnMemory.setSelected(action.getListenToMemory());
             _listenOnBlock.setSelected(action.getListenToBlock());
+            _copyBlockValueComboBox.setSelectedItem(action.getBlockValueType());
             _listenOnReporter.setSelected(action.getListenToReporter());
         }
 
@@ -304,6 +310,7 @@ public class ActionLocalVariableSwing extends AbstractDigitalActionSwing {
 
         action.setListenToMemory(_listenOnMemory.isSelected());
         action.setListenToBlock(_listenOnBlock.isSelected());
+        action.setBlockValueType(_copyBlockValueComboBox.getItemAt(_copyBlockValueComboBox.getSelectedIndex()));
         action.setListenToReporter(_listenOnReporter.isSelected());
     }
 

@@ -87,7 +87,7 @@ public class ExpressionBlockSwing extends AbstractDigitalExpressionSwing {
 
     private void setDataPanelState() {
         boolean newState = (_selectBlockStateSwing.getAddressing() != NamedBeanAddressing.Direct)
-                || (_selectBlockStateSwing.getEnum() == BlockState.ValueMatches);
+                || (_selectBlockStateSwing.getEnum().getValueType() != null);
         _selectBlockValueSwing.setEnabled(newState);
     }
 

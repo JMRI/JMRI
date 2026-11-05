@@ -25,6 +25,7 @@ import org.junit.jupiter.api.*;
  * <p>
  * The Section has Blocks B1, B2 and B3, in that order. The train is in B2.
  */
+@SuppressWarnings("removal") // tests deprecated methods, which still work until removed
 public class DefaultSectionBlockNamesTest {
 
     private DefaultSection section;
@@ -34,6 +35,18 @@ public class DefaultSectionBlockNamesTest {
     private LayoutBlock lb1;
     private LayoutBlock lb2;
     private LayoutBlock lb3;
+
+    @Test
+    public void testSetNameInBlocks() {
+        section.setNameInBlocks("Train");
+        assertEquals("Train", b1.getValue(), "B1");
+        assertEquals("Train", b2.getValue(), "B2");
+        assertEquals("Train", b3.getValue(), "B3");
+        JUnitAppender.assertWarnMessage("Section.setNameInBlocks is deprecated, please remove references to it");
+        section.setNameInBlocks((Object) null);
+        assertNull(b2.getValue(), "cleared");
+        // and no second warning: an unexpected one fails the test
+    }
 
     @Test
     public void testForward() {

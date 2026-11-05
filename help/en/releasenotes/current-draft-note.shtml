@@ -488,6 +488,9 @@
                  <code>LayoutBlock.setSuppressNameUpdate</code> are no longer
                  needed; they still work, but log a warning the first time
                  they are used, and will be removed.</li>
+             <li><code>Section.setNameInBlocks</code> is no longer used
+                 either; it still works, but logs a warning the first time it
+                 is used, and will be removed.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -531,6 +534,15 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+          <li>The Block expression can compare a Block's allocated value or
+              its display value with a string, as well as its value, and the
+              Local Variable and Table actions can copy a Block's allocated
+              value or display value instead of its value. The allocated value
+              is the train Dispatcher has allocated the Block to, with
+              <strong>Place train name in allocated Blocks</strong> on; the display value is
+              what panels show: the value, or the allocated value when the
+              Block has no value. A LogixNG that relied on Dispatcher's train
+              name in the value can use the display value.</li>
           <li>When a LogixNG is loaded and an item it uses, such as a sensor,
               is not found, an error now names the missing item in the
               System Console. Before, the item was silently left empty and
@@ -684,6 +696,9 @@
                 the places that use it by that name now follow the change.
                 Before, only a change made in a table window did this, and
                 after storing and reloading, a LogixNG could lose the item.</li>
+            <li>The Block Table has an Allocated Value column, hidden until
+                chosen, showing the train Dispatcher has allocated each Block
+                to.</li>
         </ul>
 
    <h3>Warrants</h3>
