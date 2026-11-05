@@ -2152,24 +2152,14 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     private List<CSVRecord> getCsvRecords(String fileName) {
         var recordList = new ArrayList<CSVRecord>();
-        FileReader fileReader;
-        try {
-            fileReader = new FileReader(_csvDirectoryPath + fileName);
+
+        try (FileReader fileReader = new FileReader(_csvDirectoryPath + fileName);
+                BufferedReader bufferedReader = new BufferedReader(fileReader);
+                CSVParser csvFile = new CSVParser(bufferedReader, CSVFormat.DEFAULT)) {
+            recordList.addAll(csvFile.getRecords());
         } catch (FileNotFoundException ex) {
             _csvMessages.add(Bundle.getMessage("ImportFileNotFound", fileName));
             return recordList;
-        }
-
-        BufferedReader bufferedReader;
-        CSVParser csvFile;
-
-        try {
-            bufferedReader = new BufferedReader(fileReader);
-            csvFile = new CSVParser(bufferedReader, CSVFormat.DEFAULT);
-            recordList.addAll(csvFile.getRecords());
-            csvFile.close();
-            bufferedReader.close();
-            fileReader.close();
         } catch (IOException iox) {
             _csvMessages.add(Bundle.getMessage("ImportFileIOError", iox.getMessage(), fileName));
         }
