@@ -18,6 +18,12 @@ public class JsonBlock {
      */
     public static final String BLOCKS = "blocks"; // NOI18N
     /**
+     * {@value #ALLOCATED_VALUE}
+     *
+     * @see jmri.Block#getAllocatedValue()
+     */
+    public static final String ALLOCATED_VALUE = "allocatedValue"; // NOI18N
+    /**
      * {@value #CURVATURE}
      */
     public static final String CURVATURE = "curvature"; // NOI18N
