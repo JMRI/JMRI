@@ -49,6 +49,8 @@ public class BlockTableDataModelTest extends AbstractBeanTableDataModelBase<Bloc
         assertEquals("AAA", m.getValueAt(row, BlockTableDataModel.ALLOCATEDVALUECOL));
         assertEquals("the value is separate", "", m.getValueAt(row, BlockTableDataModel.VALUECOL));
         Assert.assertFalse("read only", m.isCellEditable(row, BlockTableDataModel.ALLOCATEDVALUECOL));
+        // an unknown column logs an error, which fails the test
+        Assert.assertTrue("has a width", m.getPreferredWidth(BlockTableDataModel.ALLOCATEDVALUECOL) > 0);
     }
 
     @BeforeEach

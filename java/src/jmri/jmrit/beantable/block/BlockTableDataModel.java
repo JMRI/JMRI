@@ -333,6 +333,7 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
             case STATECOL:
             case REPORTERCOL:
             case SENSORCOL:
+            case ALLOCATEDVALUECOL:
                 return new JTextField(8).getPreferredSize().width;
             default:
                 return super.getPreferredWidth(col);
