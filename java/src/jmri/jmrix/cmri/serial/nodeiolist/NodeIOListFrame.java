@@ -267,7 +267,7 @@ public class NodeIOListFrame extends jmri.util.JmriJFrame {
             case SerialNode.ESP32NODE:
                 numInputBits = bitsPerCard * numInputCards;
                 numOutputBits = bitsPerCard * numOutputCards;
-                nodeType = "ESP32Node - ";
+                nodeType = "ESP32CPNode - ";
                 break;
             default:
                 break;

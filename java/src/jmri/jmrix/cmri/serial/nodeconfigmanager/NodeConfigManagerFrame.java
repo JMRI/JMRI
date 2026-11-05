@@ -102,6 +102,16 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 
     protected int numCards = 0;             //set by consistency check routine
     protected int cpNodeOnboard = 4;        //Number of fixed bytes(cards) for a cpNode
+    // ESP32Node cards (fixed numbers, firmware v2.07), numbered from 0 as in C/MRI: 0-15
+    // MCP23017 0x20-0x27 (port A, B), Output or Input; 16-31 PCA9685 servo boards 0x40-0x47,
+    // two cards each (ch 0-7, ch 8-15); 32-63 no pins: CT n257-n512 signal logic (firmware
+    // v2.11). Cards 16-63 are always Output, fitted or not, so every CT keeps its number (see
+    // SerialNode.ESP32NODE_CARDS).
+    public static final int ESP32NODE_IOX_CARDS = 16;
+    public static final int ESP32NODE_SERVO_CARDS = 16;
+    public static final int ESP32NODE_CARDS = SerialNode.ESP32NODE_CARDS;
+    private static final String ESP32NODE_CARDS_TEXT
+            = " None -- fixed numbers: cards 0-15 MCP23017 0x20-0x27, 16-31 servo boards 0x40-0x47, 32-63 no pins (CT n257-n512 signal logic)";
     protected int osNodeOnboard = 8;        //Number of fixed bytes(cards) for a osNode
 
     protected boolean errorInStatus1 = false;
@@ -762,7 +772,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
     private String[] nodeTableColumnsNames
             = {"Address", "   Type", "Bits per Card", "IN Cards", "OUT Cards", "IN Bits", "OUT Bits", " ", "  Description"};
 
-    private String[] nodeTableTypes = {"--", "SMINI", "SUSIC", "CPNODE", "CPMEGA", "ESP32Node"};
+    private String[] nodeTableTypes = {"--", "SMINI", "SUSIC", "CPNODE", "CPMEGA", "ESP32CPNode"};
 
     /*
      * ----------------------------------------------------------
@@ -821,7 +831,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         nodeTypeBox.addItem("USIC_SUSIC");
         nodeTypeBox.addItem("CPNODE");
         nodeTypeBox.addItem("CPMEGA");
-        nodeTypeBox.addItem("ESP32Node");
+        nodeTypeBox.addItem("ESP32CPNode");
 
         /*
          * Here add code for other types of nodes
@@ -893,7 +903,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                     nodeType = SerialNode.CPMEGA;
                     cpNodeOnboard = 4;
                     onBoardBytesText.setText(Bundle.getMessage("LabelOnBoardBytes") + " 8 Bytes");
-                } else if (s.equals("ESP32Node")) {
+                } else if (s.equals("ESP32CPNode")) {
                     panel2.setVisible(false);
                     panel2a.setVisible(false);
                     panel2b.setVisible(true);   // IOX-style card grid -- ALL 16 cards, no onboard reservation
@@ -908,11 +918,21 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                     panelnodeOpt.setVisible(true);
                     nodeType = SerialNode.ESP32NODE;
                     cpNodeOnboard = 0;
-                    onBoardBytesText.setText(Bundle.getMessage("LabelOnBoardBytes") + " None -- 8 MCP23017 chips (0x20-0x27), 16 bytes");
+                    onBoardBytesText.setText(Bundle.getMessage("LabelOnBoardBytes") + ESP32NODE_CARDS_TEXT);
+                    // fixed numbers: every card is there, an Input port stays Input
+                    for (int i = 0; i < 64; i++) {
+                        boolean in = i < ESP32NODE_IOX_CARDS && Bundle.getMessage("CardTypeInput").equals(cardType[i]);
+                        cardType[i] = Bundle.getMessage(i >= ESP32NODE_CARDS ? "CardTypeNone" : (in ? "CardTypeInput" : "CardTypeOutput"));
+                    }
                 }
                 /*
                  * Here add code for other types of nodes
                  */
+
+                // ESP32Node shows 64 cards, the other IOX node types 16
+                if (cpnodeConfigModel != null) {
+                    cpnodeConfigModel.fireTableDataChanged();
+                }
 
                 // reset notes as appropriate
                 resetNotes();
@@ -1075,8 +1095,23 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 
         panel2b.add(panel2b1);
 
-        TableModel cpnodeConfigModel = new CPnodeConfigModel();
-        JTable cpnodeConfigTable = new JTable(cpnodeConfigModel);
+        cpnodeConfigModel = new CPnodeConfigModel();
+        JComboBox<String> esp32PortCombo = new JComboBox<>();
+        esp32PortCombo.addItem(Bundle.getMessage("CardTypeOutput"));
+        esp32PortCombo.addItem(Bundle.getMessage("CardTypeInput"));
+        TableCellEditor esp32PortEditor = new DefaultCellEditor(esp32PortCombo);
+        JTable cpnodeConfigTable = new JTable(cpnodeConfigModel) {
+            // ESP32Node chip ports (cards 0-15) are Output or Input (fixed numbers: no No Card);
+            // cards 16-63 are always Output and can't be edited (CPnodeConfigModel.isCellEditable)
+            @Override
+            public TableCellEditor getCellEditor(int row, int column) {
+                if (nodeType == SerialNode.ESP32NODE && row < ESP32NODE_IOX_CARDS
+                        && convertColumnIndexToModel(column) == CPnodeConfigModel.CARDTYPE_COLUMN) {
+                    return esp32PortEditor;
+                }
+                return super.getCellEditor(row, column);
+            }
+        };
         cpnodeConfigTable.setRowSelectionAllowed(false);
         cpnodeConfigTable.setPreferredScrollableViewportSize(new java.awt.Dimension(240, 130)); //160
 
@@ -1456,11 +1491,11 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 
             // ESP32Node
             case SerialNode.ESP32NODE:
-                nodeTypeBox.setSelectedItem("ESP32Node");
+                nodeTypeBox.setSelectedItem("ESP32CPNode");
                 bitsPerCard = 8;
                 cardSize8Box.setSelectedItem(Bundle.getMessage("CardSize8"));
                 cpNodeOnboard = 0;
-                onBoardBytesText.setText(Bundle.getMessage("LabelOnBoardBytes") + " None -- 8 MCP23017 chips (0x20-0x27), 16 bytes");
+                onBoardBytesText.setText(Bundle.getMessage("LabelOnBoardBytes") + ESP32NODE_CARDS_TEXT);
 
                 // ESP32Node Options -- same option bits as CPNODE/CPMEGA
                 cbx_cpnodeopt_SENDEOT.setSelected(curNode.iscpnodeBit(SerialNode.optbitNode_SENDEOT));
@@ -1503,6 +1538,28 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
             } else {
                 cardType[i] = Bundle.getMessage("CardTypeNone");
             }
+        }
+        // ESP32Node fixed numbers (e.g. an older 16- or 32-card profile): a chip port is
+        // Output or Input (No Card becomes Output, keeping its numbers), cards 16-63 (servo
+        // boards, signal logic) are always Output
+        if (nodeType == SerialNode.ESP32NODE) {
+            for (int i = 0; i < ESP32NODE_CARDS; i++) {
+                boolean in = i < ESP32NODE_IOX_CARDS && curNode.isInputCard(i);
+                String type = Bundle.getMessage(in ? "CardTypeInput" : "CardTypeOutput");
+                if (!type.equals(cardType[i])) {
+                    log.warn("ESP32CPNode {} card {} set to {} (fixed numbers)", curNode.getNodeAddress(), i + 1, type);
+                }
+                cardType[i] = type;
+            }
+            for (int i = ESP32NODE_CARDS; i < 64; i++) {
+                if (curNode.isOutputCard(i) || curNode.isInputCard(i)) {
+                    log.warn("ESP32CPNode {} has no card {}; set to No Card", curNode.getNodeAddress(), i + 1);
+                }
+                cardType[i] = Bundle.getMessage("CardTypeNone");
+            }
+        }
+        if (cpnodeConfigModel != null) {
+            cpnodeConfigModel.fireTableDataChanged();
         }
 
         if (nodeType == SerialNode.CPMEGA) {
@@ -2291,6 +2348,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         Bundle.getMessage("HeadingCardType")
     };
     private final String[] cardType = new String[64];
+    private CPnodeConfigModel cpnodeConfigModel = null;
     private final String[] onBoardType = new String[16];
 
     /**
@@ -2450,26 +2508,37 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
 
         @Override
         public int getRowCount() {
-            return 16;
+            return (nodeType == SerialNode.ESP32NODE) ? ESP32NODE_CARDS : 16;
         }
 
         @Override
         public Object getValueAt(int r, int c) {
             String[] cdPort = {"  A", "  B"};
             String val = "     ";
-            // ESP32Node has no onboard-reserved cards (unlike CPNODE's 2 onboard
-            // OUTPUT bytes, which is why the diagnostic dialog and this label both
-            // add 2 for CPNODE) -- but it's still numbered 1-based (Card 1 = first
-            // real card) to match how people naturally count cards, hence +1 here
-            // (cpNodeOnboard, the actual array-index skip used below for cardType[],
-            // stays 0 for ESP32Node -- this offset is display-only).
-            int cardLabelOffset = (nodeType == SerialNode.ESP32NODE) ? 1 : 2;
+            // ESP32Node has no onboard-reserved cards (unlike CPNODE, whose label adds 2 for
+            // its 2 onboard OUTPUT bytes), so its cards are numbered from 0 as in C/MRI
+            // (Card 0 = 0x20 A).
+            int cardLabelOffset = (nodeType == SerialNode.ESP32NODE) ? 0 : 2;
             switch (c) {
                 case CARD_COLUMN:
                     val = Integer.toString(r+cardLabelOffset);
                     return "   " + val;
                 case CARDNUM_COLUMN:
                     int i = r / 2;
+                    if (nodeType == SerialNode.ESP32NODE && r >= ESP32NODE_IOX_CARDS + ESP32NODE_SERVO_CARDS) {
+                        // no pins: signal logic bits 1-256 are CT n257-n512 (card 32 bit 0 to card 63 bit 7)
+                        int lo = Math.max(r * 8 + 1, SerialNode.ESP32NODE_LOGIC_FIRST) - SerialNode.ESP32NODE_LOGIC_FIRST + 1;
+                        int hi = Math.min(r * 8 + 8, SerialNode.ESP32NODE_LOGIC_FIRST + SerialNode.ESP32NODE_LOGIC_BITS - 1)
+                                - SerialNode.ESP32NODE_LOGIC_FIRST + 1;
+                        return lo > hi ? "    not used" : "    logic " + lo + "-" + hi;
+                    }
+                    if (nodeType == SerialNode.ESP32NODE && r >= ESP32NODE_IOX_CARDS) {
+                        // servo board 0x40 + n: Port A bits drive ch 0-7, Port B bits ch 8-15
+                        if (r % 2 == 0) {
+                            val = Integer.toHexString(0x40 + (r - ESP32NODE_IOX_CARDS) / 2) + " ";
+                        }
+                        return "    " + val + "  " + (r % 2 == 0 ? "ch 0-7" : "ch 8-15");
+                    }
                     if (r % 2 == 0) {
                         val = Integer.toHexString(0x20 + i) + " ";
                     }
@@ -2484,13 +2553,19 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
         @Override
         public void setValueAt(Object type, int r, int c) {
             if (c == CARDTYPE_COLUMN) {
+                if (nodeType == SerialNode.ESP32NODE) {
+                    // fixed numbers: a chip port is Output or Input; servo boards and signal logic stay Output
+                    if (r >= ESP32NODE_IOX_CARDS || Bundle.getMessage("CardTypeNone").equals(type)) {
+                        return;
+                    }
+                }
                 cardType[r + cpNodeOnboard] = (String) type;
             }
         }
 
         @Override
         public boolean isCellEditable(int r, int c) {
-            return (c == CARDTYPE_COLUMN);
+            return (c == CARDTYPE_COLUMN) && !(nodeType == SerialNode.ESP32NODE && r >= ESP32NODE_IOX_CARDS);
         }
 
         public static final int CARD_COLUMN = 0;
