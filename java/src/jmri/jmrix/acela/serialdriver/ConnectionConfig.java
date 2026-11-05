@@ -45,8 +45,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         setInstance();
 
         b.addActionListener(new NodeConfigAction());
-        if (!additionalItems.contains(b)) {
-            additionalItems.add(b);
+        if (!getAdditionalItems().contains(b)) {
+            getAdditionalItems().add(b);
         }
         super.loadDetails(details);
     }

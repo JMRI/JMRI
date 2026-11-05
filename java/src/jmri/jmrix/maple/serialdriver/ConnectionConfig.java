@@ -41,8 +41,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
         // have to embed the usual one in a new JPanel
         b.addActionListener(new NodeConfigAction((MapleSystemConnectionMemo)adapter.getSystemConnectionMemo()));
-        if (!additionalItems.contains(b)) {
-            additionalItems.add(b);
+        if (!getAdditionalItems().contains(b)) {
+            getAdditionalItems().add(b);
         }
         super.loadDetails(details);
     }

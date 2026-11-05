@@ -181,7 +181,7 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
             }
         }
         cL.gridwidth = 2;
-        for (JComponent item : additionalItems) {
+        for (JComponent item : getAdditionalItems()) {
             cL.gridy = i;
             gbLayout.setConstraints(item, cL);
             _details.add(item);

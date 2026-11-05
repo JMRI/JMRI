@@ -446,7 +446,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             i++;
         }
         cL.gridwidth = 2;
-        for (JComponent item : additionalItems) {
+        for (JComponent item : getAdditionalItems()) {
             cL.gridy = i;
             gbLayout.setConstraints(item, cL);
             _details.add(item);

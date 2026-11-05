@@ -1,6 +1,5 @@
 package jmri.jmrix;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.awt.*;
 import java.awt.event.FocusEvent;
@@ -8,6 +7,7 @@ import java.awt.event.FocusListener;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
+
 import javax.annotation.Nonnull;
 import javax.swing.*;
 
@@ -165,8 +165,15 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
     @Override
     abstract public String getInfo();
 
-    @SuppressFBWarnings(value = "URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD", justification = "Field used by implementing classes")
-    protected ArrayList<JComponent> additionalItems = new ArrayList<>(0);
+    private ArrayList<JComponent> additionalItems = new ArrayList<>(0);
+
+    /**
+     * Get the list of additional items.
+     * @return the list
+     */
+    protected ArrayList<JComponent> getAdditionalItems() {
+        return additionalItems;
+    }
 
     /**
      * Load the Swing widgets needed to configure this connection into a
