@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.EnumMap;
+import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -97,6 +99,9 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
         this.name = Objects.requireNonNull(name, "name");
         this.registry = Objects.requireNonNull(registry, "registry");
     }
+    private final Deque<Reason> history = new ArrayDeque<>();
+    private final Map<Block, Reason> blockReasons = new HashMap<>();
+    private Reason confidenceReason = null;
 
     /**
      * Normalise a train name as for a user name.
@@ -442,8 +447,13 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     /** {@inheritDoc} */
     @Override
     @InvokeOnLayoutThread
-    public void place(@Nonnull List<Block> blocks, boolean frontKnown) {
+    public void place(@Nonnull List<Block> blocks, boolean frontKnown, @Nonnull Reason.Rule rule) {
         Objects.requireNonNull(blocks, "blocks");
+        Objects.requireNonNull(rule, "rule");
+        if (rule != Reason.Rule.PLACED && rule != Reason.Rule.PLACED_BY_VALUE
+                && rule != Reason.Rule.PLACED_BY_DISPATCHER) {
+            throw new IllegalArgumentException("not a rule that places: " + rule);
+        }
         checkNotDisposed();
         if (blocks.isEmpty()) {
             throw new IllegalArgumentException("a train is placed in at least one Block");
@@ -463,9 +473,19 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
         for (int i = blocks.size() - 1; i >= 0; i--) {
             addToTrail(new TrailEntry(blocks.get(i), null, null, now, time));
         }
+        blockReasons.clear();
+        Reason reason = null;
+        for (Block b : blocks) {
+            Reason r = new Reason(rule, b, null, null, List.of(), time);
+            blockReasons.put(b, r);
+            if (reason == null) {
+                reason = r;
+            }
+        }
         setDirection(frontKnown, null);
-        setConfidence(Confidence.CONFIRMED);
+        setConfidence(Confidence.CONFIRMED, reason);
         firePropertyChange(PROPERTY_BLOCKS, old, getBlocks());
+        addToHistory(reason);
         registry.placementChanged(this);
     }
 
@@ -478,10 +498,13 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
             return;
         }
         List<Block> old = getBlocks();
+        Reason reason = Reason.of(Reason.Rule.UNPLACED, null);
         blocks.clear();
+        blockReasons.clear();
         setDirection(false, null);
-        setConfidence(null);
+        setConfidence(null, null);
         firePropertyChange(PROPERTY_BLOCKS, old, getBlocks());
+        addToHistory(reason);
         registry.placementChanged(this);
     }
 
@@ -529,9 +552,11 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
      *                  false if at the last
      * @param timeNanos when, on the {@link System#nanoTime()} scale
      * @param time      when, as a wall-clock time
+     * @param settled   true if it was one of several trains that could have
+     *                  entered, and the Block's value named it
      */
     @InvokeOnLayoutThread
-    void entered(@Nonnull Block block, boolean atFirst, long timeNanos, @Nonnull Instant time) {
+    void entered(@Nonnull Block block, boolean atFirst, long timeNanos, @Nonnull Instant time, boolean settled) {
         if (disposed || blocks.isEmpty() || blocks.contains(block)) {
             return;
         }
@@ -551,10 +576,14 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
         }
         TrailEntry entry = new TrailEntry(block, from, end, timeNanos, time);
         addToTrail(entry);
+        Reason.Rule rule = settled ? Reason.Rule.SETTLED_BY_VALUE : Reason.Rule.ENTERED;
+        Reason reason = new Reason(rule, block, from, block.getSensor(), List.of(), time);
+        blockReasons.put(block, reason);
         setDirection(true, end);
-        setConfidence(Confidence.CONFIRMED);
+        setConfidence(Confidence.CONFIRMED, reason);
         firePropertyChange(PROPERTY_BLOCKS, old, getBlocks());
         firePropertyChange(PROPERTY_TRAIL, null, entry);
+        addToHistory(reason);
     }
 
     /**
@@ -562,9 +591,12 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
      * is still in others. Called by the {@link TrainRecordWatcher}.
      *
      * @param block the Block left
+     * @param rule  {@link jmri.TrainRecord.Reason.Rule#LEFT}, or
+     *              {@link jmri.TrainRecord.Reason.Rule#LEFT_DARK_BEHIND} for a Block with no
+     *              detector behind one it was seen to leave
      */
     @InvokeOnLayoutThread
-    void left(@Nonnull Block block) {
+    void left(@Nonnull Block block, @Nonnull Reason.Rule rule) {
         if (disposed || blocks.size() < 2) {
             return;
         }
@@ -574,23 +606,70 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
         }
         List<Block> old = getBlocks();
         blocks.remove(i);
+        blockReasons.remove(block);
         firePropertyChange(PROPERTY_BLOCKS, old, getBlocks());
+        addToHistory(new Reason(rule, block, null, block.getSensor(), List.of(), Instant.now()));
     }
 
     /**
      * Set how sure JMRI is of where the train is. Called by the
      * {@link TrainRecordWatcher}, and by placing.
      *
-     * @param c the confidence, or null when not placed
+     * @param c      the confidence, or null when not placed
+     * @param reason why; kept in the history unless it is the reason for a
+     *               change of Blocks, which keeps it itself
      */
     @InvokeOnLayoutThread
-    void setConfidence(@CheckForNull Confidence c) {
+    void setConfidence(@CheckForNull Confidence c, @CheckForNull Reason reason) {
         if (c == confidence) {
+            if (c != null && reason != null && PLACING_OR_MOVING.contains(reason.getRule())) {
+                confidenceReason = reason; // as sure as before, from a newer fix
+            }
             return;
         }
         Confidence old = confidence;
         confidence = c;
+        confidenceReason = c == null ? null : reason;
+        if (reason != null && !PLACING_OR_MOVING.contains(reason.getRule())) {
+            addToHistory(reason);
+        }
         firePropertyChange(PROPERTY_CONFIDENCE, old, c);
+    }
+
+    private static final Set<Reason.Rule> PLACING_OR_MOVING = EnumSet.of(Reason.Rule.PLACED,
+            Reason.Rule.PLACED_BY_VALUE, Reason.Rule.PLACED_BY_DISPATCHER, Reason.Rule.UNPLACED,
+            Reason.Rule.ENTERED, Reason.Rule.ENTERED_THROUGH_DARK, Reason.Rule.SETTLED_BY_VALUE);
+
+    private void addToHistory(@CheckForNull Reason reason) {
+        if (reason == null) {
+            return;
+        }
+        history.addFirst(reason);
+        while (history.size() > HISTORY_LENGTH) {
+            history.removeLast();
+        }
+        firePropertyChange(PROPERTY_HISTORY, null, reason);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @Nonnull
+    public List<Reason> getHistory() {
+        return new ArrayList<>(history);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @CheckForNull
+    public Reason getReason(@Nonnull Block block) {
+        return blocks.contains(block) ? blockReasons.get(block) : null;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @CheckForNull
+    public Reason getConfidenceReason() {
+        return confidenceReason;
     }
 
     private void setDirection(boolean frontKnown, End leading) {

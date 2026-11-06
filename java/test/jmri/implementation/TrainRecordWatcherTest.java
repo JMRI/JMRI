@@ -445,8 +445,8 @@ public class TrainRecordWatcherTest {
         assertTrue(names.contains(TrainRecord.PROPERTY_CONFIDENCE));
         names.clear();
         occupy(b[1]);
-        assertEquals(List.of(TrainRecord.PROPERTY_DIRECTION, TrainRecord.PROPERTY_BLOCKS, TrainRecord.PROPERTY_TRAIL),
-                names);
+        assertEquals(List.of(TrainRecord.PROPERTY_DIRECTION, TrainRecord.PROPERTY_BLOCKS, TrainRecord.PROPERTY_TRAIL,
+                TrainRecord.PROPERTY_HISTORY), names, "the history entry last");
     }
 
     @Test

@@ -812,6 +812,15 @@
                 feedback; and Blocks joined through Blocks with no detector by
                 more than one way. Each says what is wrong. The checks only
                 read, and change nothing.</li>
+            <li>Where a train has been placed in a Block (by Dispatcher, or by
+                setting a Block's value to the train), right-clicking the
+                Block's track on a Layout Editor panel in operating mode, or a
+                Block Contents icon, now offers "Block ...". It shows the
+                trains in the Block, how sure JMRI is of where each is, why,
+                and the last 20 things that happened there. The Block Table
+                has Train and "Why?" columns, which can be shown from the
+                column header's menu. A Block Contents icon's double-click
+                still edits the Block's value. Nothing on the layout changes.</li>
             <li>For developers: a new train record (<code>jmri.TrainRecord</code>,
                 from the <code>jmri.TrainRecordManager</code>) holds what is
                 known about a train from one run to the next: its name, the

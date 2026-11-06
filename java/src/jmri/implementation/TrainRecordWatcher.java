@@ -21,6 +21,7 @@ import jmri.Path;
 import jmri.Sensor;
 import jmri.TrainRecord;
 import jmri.TrainRecord.Confidence;
+import jmri.TrainRecord.Reason;
 import jmri.util.ThreadingUtil;
 
 /**
@@ -223,7 +224,7 @@ public class TrainRecordWatcher {
             List<Block> blocks = r.getBlocks();
             if (blocks.contains(block)) {
                 if (r.getConfidence() == Confidence.ESTIMATED) {
-                    r.setConfidence(Confidence.CONFIRMED);
+                    r.setConfidence(Confidence.CONFIRMED, reason(Reason.Rule.SEEN_AGAIN, block, time));
                 }
                 return;
             }
@@ -237,23 +238,27 @@ public class TrainRecordWatcher {
             }
         }
         if (candidates.size() == 1) {
-            enter(block, candidates.get(0));
+            enter(block, candidates.get(0), false);
         } else if (candidates.size() > 1) {
             for (Candidate c : candidates) {
                 if (!beforeAmbiguity.containsKey(c.record)) {
                     beforeAmbiguity.put(c.record, c.record.getConfidence());
                 }
-                c.record.setConfidence(Confidence.AMBIGUOUS);
+                c.record.setConfidence(Confidence.AMBIGUOUS, reason(Reason.Rule.AMBIGUOUS, block, time));
             }
             ambiguous.put(block, candidates);
             settleByValue(block, block.getValue());
         }
     }
 
-    private void enter(Block block, Candidate c) {
-        c.record.entered(block, c.atFirst, c.timeNanos, c.time);
+    private void enter(Block block, Candidate c, boolean settled) {
+        c.record.entered(block, c.atFirst, c.timeNanos, c.time, settled);
         beforeAmbiguity.remove(c.record);
         leaveEmptyFarEnd(c.record);
+    }
+
+    private static Reason reason(Reason.Rule rule, Block block, Instant time) {
+        return new Reason(rule, block, null, block.getSensor(), List.of(), time);
     }
 
     /**
@@ -274,7 +279,7 @@ public class TrainRecordWatcher {
             if (far.getSensor() == null || far.getState() != Block.UNOCCUPIED) {
                 return;
             }
-            r.left(far);
+            r.left(far, Reason.Rule.LEFT);
         }
     }
 
@@ -302,10 +307,10 @@ public class TrainRecordWatcher {
         for (Candidate c : candidates) {
             if (c.record != chosen.record && !isAmbiguousElsewhere(c.record)) {
                 Confidence before = beforeAmbiguity.remove(c.record);
-                c.record.setConfidence(before);
+                c.record.setConfidence(before, reason(Reason.Rule.AMBIGUITY_CLEARED, block, Instant.now()));
             }
         }
-        enter(block, chosen);
+        enter(block, chosen, true);
     }
 
     private boolean isAmbiguousElsewhere(DefaultTrainRecord r) {
@@ -328,7 +333,7 @@ public class TrainRecordWatcher {
             for (Candidate c : pending) {
                 if (!isAmbiguousElsewhere(c.record)) {
                     Confidence before = beforeAmbiguity.remove(c.record);
-                    c.record.setConfidence(before);
+                    c.record.setConfidence(before, reason(Reason.Rule.AMBIGUITY_CLEARED, block, Instant.now()));
                 }
             }
         }
@@ -343,9 +348,10 @@ public class TrainRecordWatcher {
             }
             boolean atEnd = (i == 0 || i == blocks.size() - 1);
             if (blocks.size() > 1 && atEnd) {
-                r.left(block);
+                r.left(block, Reason.Rule.LEFT);
             } else if (r.getConfidence() == Confidence.CONFIRMED) {
-                r.setConfidence(Confidence.ESTIMATED);
+                // it can't have left: a drop-out, or a train gone onto undetected track
+                r.setConfidence(Confidence.ESTIMATED, reason(Reason.Rule.KEPT_AFTER_DROPOUT, block, Instant.now()));
             }
         }
     }
