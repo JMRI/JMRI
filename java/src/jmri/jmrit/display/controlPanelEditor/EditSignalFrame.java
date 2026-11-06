@@ -183,10 +183,10 @@ public class EditSignalFrame extends EditFrame {
         signalPanel.add(Box.createVerticalStrut(STRUT_SIZE / 2));
 
         String[] blurbLines = {Bundle.getMessage("DragMast", Bundle.getMessage("mastName"))};
-        
+
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-        _pickMast = new OpenPickListButton<>(blurbLines, PickListModel.signalMastPickModelInstance(), 
+        _pickMast = new OpenPickListButton<>(blurbLines, PickListModel.signalMastPickModelInstance(),
                 this, Bundle.getMessage("OpenPicklist", Bundle.getMessage("BeanNameSignalMast")));
         _mastTableAction = new SignalMastTableAction(Bundle.getMessage("ButtonCreateMast"));
         p = new JPanel();
@@ -200,7 +200,7 @@ public class EditSignalFrame extends EditFrame {
         pp.add(buttonCreate);
         p.add(pp);
         panel.add(p);
-        
+
         _pickHead = new OpenPickListButton<>(blurbLines, PickListModel.signalHeadPickModelInstance(),
                 this, Bundle.getMessage("OpenPicklist", Bundle.getMessage("BeanNameSignalHead")));
         _headTableAction = new SignalHeadTableAction(Bundle.getMessage("ButtonCreateHead"));
@@ -268,7 +268,7 @@ public class EditSignalFrame extends EditFrame {
             _parent._editor.highlight(icon);
         }
     }
-    
+
     private void setMastNameAndIcon(NamedBean mast, Portal portal) {
         _mastName.setText(mast.getDisplayName(DisplayOptions.DISPLAYNAME));
         _parent._editor.highlight(null);
@@ -285,7 +285,7 @@ public class EditSignalFrame extends EditFrame {
     /**
      * *********************** end setup *************************
      */
-    
+
     class PortalListListener implements ListSelectionListener {
         EditFrame _frame;
         PortalListListener(EditFrame parent) {
@@ -295,7 +295,7 @@ public class EditSignalFrame extends EditFrame {
         public void valueChanged(ListSelectionEvent e) {
             Portal portal = _portalList.getSelectedValue();
             if (log.isDebugEnabled()) {
-                log.debug("PortalList: valueChanged: portal = {}, _currentPortal = {}", (portal==null?"null":portal.getName()), 
+                log.debug("PortalList: valueChanged: portal = {}, _currentPortal = {}", (portal==null?"null":portal.getName()),
                         (_currentPortal==null?"null":_currentPortal.getName()));
             }
             NamedBean mast = null;
@@ -314,7 +314,7 @@ public class EditSignalFrame extends EditFrame {
                                 JmriJOptionPane.YES_NO_OPTION, JmriJOptionPane.QUESTION_MESSAGE);
                         if (answer == JmriJOptionPane.YES_OPTION) {
                             if (bean != null) {
-                                addMast(_currentPortal, bean);                            
+                                addMast(_currentPortal, bean);
 //                            } else {
 //                                changeName(_currentPortal);
                             }
@@ -334,7 +334,7 @@ public class EditSignalFrame extends EditFrame {
                    _portalIcon = piArray.get(0);
                }
             }
-            
+
             if (mast != null) {
                 setMastNameAndIcon(mast, portal);
             } else {
@@ -348,7 +348,7 @@ public class EditSignalFrame extends EditFrame {
             _signalList.setSelected(portal);
             setDragIcon(mast);
         }
-        
+
     }
 
     class SignalListListener  implements ListSelectionListener {
@@ -361,10 +361,10 @@ public class EditSignalFrame extends EditFrame {
             SignalPair sp = _signalList.getSelectedValue();
             if (log.isDebugEnabled()) {
                 if (sp != null) {
-                    log.debug("SignalList: valueChanged: portal = {}, signal = {}", 
+                    log.debug("SignalList: valueChanged: portal = {}, signal = {}",
                             sp._portal.getName(), sp._signal.getDisplayName());
                 } else {
-                    log.debug("SignalList: valueChanged: signalPair null"); 
+                    log.debug("SignalList: valueChanged: signalPair null");
                 }
             }
             NamedBean signal;
@@ -386,8 +386,8 @@ public class EditSignalFrame extends EditFrame {
         if (portal != null) {
             blk = portal.getProtectedBlock(mast);
             if (blk != null && !blk.equals(_homeBlock)) {
-                sb.append(Bundle.getMessage("mastProtectsPortal", 
-                        mast.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME), 
+                sb.append(Bundle.getMessage("mastProtectsPortal",
+                        mast.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME),
                         blk.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME),
                         portal.getName()));
                 sb.append("\n");
@@ -405,14 +405,14 @@ public class EditSignalFrame extends EditFrame {
                 String homeMastName = homeMast.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME);
                 sb.append(Bundle.getMessage("mastProtectsPortal", homeMastName, homeName, homePortal.getName()));
                 sb.append("\n");
-                sb.append(Bundle.getMessage("replaceSignalMast", homeMast.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME), 
+                sb.append(Bundle.getMessage("replaceSignalMast", homeMast.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME),
                                 mastName, homePortal.getName()));
             }
         } else if (sb.length() > 0) {
             sb.append(Bundle.getMessage("noMast", homePortal.getName(), homeName));
-            sb.append("\n");                    
+            sb.append("\n");
             sb.append(Bundle.getMessage("setSignal", mastName));
-            sb.append("\n");                    
+            sb.append("\n");
             sb.append(Bundle.getMessage("attachMast", mastName, homeName, homePortal.getName()));
         }
         if (sb.length() > 0) {
@@ -441,7 +441,7 @@ public class EditSignalFrame extends EditFrame {
         return signal;
     }
 
-    // Called from: 
+    // Called from:
     // ConfigureButton -    addMast(portal, mast); portal from portal list, mast from name field
     private void addMast(@Nonnull Portal portal, @Nonnull NamedBean newMast) {
         if (log.isDebugEnabled()) {
@@ -512,7 +512,7 @@ public class EditSignalFrame extends EditFrame {
                     }
                 }
             } else {
-                msg = Bundle.getMessage("noMast", portal.getName(), 
+                msg = Bundle.getMessage("noMast", portal.getName(),
                         _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME));
             }
         } else {
@@ -538,7 +538,7 @@ public class EditSignalFrame extends EditFrame {
             portal.setProtectSignal(null, 0, _homeBlock);
             _parent.putSignalPortal(oldMast, null);
         } else {
-            JmriJOptionPane.showMessageDialog(this, 
+            JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("noPortalProtection", _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME),
                             portal.getName()),
                     Bundle.getMessage("configureSignal"), JmriJOptionPane.INFORMATION_MESSAGE);
@@ -547,7 +547,7 @@ public class EditSignalFrame extends EditFrame {
     }
 
     /**
-     * Check for questions about configuring this signal 
+     * Check for questions about configuring this signal
      * @return message of any concerns. But ALWAYS non-null.
      */
     private String checkMastForSave() {
@@ -564,7 +564,7 @@ public class EditSignalFrame extends EditFrame {
                 String curPortalName = _currentPortal.getName();
                 sb.append(Bundle.getMessage("mastProtectsPortal", curMastName,
                         _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME), curPortalName));
-                sb.append("\n");                    
+                sb.append("\n");
                 String name = _mastName.getText();
                 if (name.trim().length() > 0) {
                     sb.append(Bundle.getMessage("NotFound", name));
@@ -597,7 +597,7 @@ public class EditSignalFrame extends EditFrame {
                     }
                     String curMastName = currentMast.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME);
                     sb.append(Bundle.getMessage("mastProtectsPortal", curMastName, homeName, curPortalName));
-                    sb.append("\n");                    
+                    sb.append("\n");
                     sb.append(Bundle.getMessage("replaceSignalMast", curMastName, selMastName, curPortalName));
                     sb.append("\n");
                     if (_lengthPanel.isChanged(_currentPortal.getEntranceSpaceForBlock(_homeBlock))) {
@@ -605,9 +605,9 @@ public class EditSignalFrame extends EditFrame {
                     }
                 } else {
                     sb.append(Bundle.getMessage("noMast", curPortalName, homeName));
-                    sb.append("\n");                    
+                    sb.append("\n");
                     sb.append(Bundle.getMessage("setSignal", selMastName));
-                    sb.append("\n");                    
+                    sb.append("\n");
                     sb.append(Bundle.getMessage("attachMast", selMastName,
                             homeName, _currentPortal.getName()));
                 }
@@ -727,7 +727,7 @@ public class EditSignalFrame extends EditFrame {
                 for (Entry<String, HashMap<String, NamedIcon>> entry : maps.entrySet()) {
                     HashMap<String, NamedIcon> map = entry.getValue();
                     for (Entry<String, NamedIcon> ent : map.entrySet()) {
-                        _dragHeadIcon.setIcon(ent.getKey(), new NamedIcon(ent.getValue()));
+                        _dragHeadIcon.setIcon(ent.getKey(), ent.getValue().cloneMe());
                     }
                     _dragHeadIcon.setFamily(entry.getKey());
                     break;
@@ -741,9 +741,9 @@ public class EditSignalFrame extends EditFrame {
     }
 
     SignalHeadIcon _dragHeadIcon;
-    
+
     //////////////////////////// DnD ////////////////////////////
-    protected JPanel makeDndIconPanel() { 
+    protected JPanel makeDndIconPanel() {
         JPanel dndPanel = new JPanel();
         dndPanel.setLayout(new BoxLayout(dndPanel, BoxLayout.Y_AXIS));
 

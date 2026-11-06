@@ -353,11 +353,11 @@ public class MultiSensorItemPanel extends TableItemPanel<Sensor> {
             if (flavor.isMimeTypeEqual(Editor.POSITIONABLE_FLAVOR)) {
                 if (_itemType.equals("MultiSensor")) {
                     MultiSensorIcon ms = new MultiSensorIcon(_frame.getEditor());
-                    ms.setInactiveIcon(new NamedIcon(iconMap.get("SensorStateInactive")));
-                    ms.setInconsistentIcon(new NamedIcon(iconMap.get("BeanStateInconsistent")));
-                    ms.setUnknownIcon(new NamedIcon(iconMap.get("BeanStateUnknown")));
+                    ms.setInactiveIcon(iconMap.get("SensorStateInactive").cloneMe());
+                    ms.setInconsistentIcon(iconMap.get("BeanStateInconsistent").cloneMe());
+                    ms.setUnknownIcon(iconMap.get("BeanStateUnknown").cloneMe());
                     for (int i = 0; i < selections.size(); i++) {
-                        ms.addEntry(selections.get(i).getDisplayName(), new NamedIcon(iconMap.get(POSITION[i])));
+                        ms.addEntry(selections.get(i).getDisplayName(), iconMap.get(POSITION[i]).cloneMe());
                     }
                     _selectionModel.clearSelection();
                     ms.setFamily(_family);

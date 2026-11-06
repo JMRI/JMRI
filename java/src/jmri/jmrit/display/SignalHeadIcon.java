@@ -384,7 +384,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.signalHeadPickModelInstance());
         int i = 0;
         for (Entry<String, NamedIcon> entry : _iconMap.entrySet()) {
-            _iconEditor.setIcon(i++, entry.getKey(), new NamedIcon(entry.getValue()));
+            _iconEditor.setIcon(i++, entry.getKey(), entry.getValue().cloneMe());
         }
         _iconEditor.makeIconPanel(false);
 
