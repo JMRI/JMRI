@@ -170,12 +170,16 @@ public class BlockContentsIcon extends MemoryIcon {
         } else {
             df = jmri.InstanceManager.getNullableDefault(jmri.jmrit.dispatcher.DispatcherFrame.class);
         }
+        // the train the menu is for, as the Block shows it
+        final Object train = trainForMenu();
+        final jmri.jmrit.roster.RosterEntry entry =
+                train instanceof jmri.jmrit.roster.RosterEntry ? (jmri.jmrit.roster.RosterEntry) train : null;
         final jmri.jmrit.dispatcher.ActiveTrain at;
         if (df != null) {
-            if (re != null) {
-                at = df.getActiveTrainForRoster(re);
+            if (entry != null) {
+                at = df.getActiveTrainForRoster(entry);
             } else {
-                at = df.getActiveTrainForName(this.getText());
+                at = df.getActiveTrainForName(train == null ? null : train.toString());
             }
         } else {
             at = null;
@@ -229,14 +233,14 @@ public class BlockContentsIcon extends MemoryIcon {
                 popup.add(new JSeparator());
             }
             return true;
-        } else if (re != null) {
+        } else if (entry != null) {
             // No active train, but have a roster, therefore a throttle can be created
             popup.add(new AbstractAction("Open Throttle") {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     ThrottleControllerUI tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
                     tf.toFront();
-                    tf.setRosterEntry(re);
+                    tf.setRosterEntry(entry);
                 }
             });
             // if dispatcher exists we can create a new train.
@@ -245,10 +249,10 @@ public class BlockContentsIcon extends MemoryIcon {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if (!df.getNewTrainActive()) {
-                            df.getActiveTrainFrame().initiateTrain(e, re, getBlock());
+                            df.getActiveTrainFrame().initiateTrain(e, entry, getBlock());
                             df.setNewTrainActive(true);
                         } else {
-                            df.getActiveTrainFrame().showActivateFrame(re);
+                            df.getActiveTrainFrame().showActivateFrame(entry);
                         }
                     }
 
@@ -326,6 +330,27 @@ public class BlockContentsIcon extends MemoryIcon {
         // escape only what HTML needs, so names with accents show as they are
         String escaped = name.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;");
         return "<html><i>" + Bundle.getMessage("AllocatedValueShown", escaped) + "</i></html>";
+    }
+
+    /**
+     * Get the train the popup menu's Dispatcher items are for: the train the
+     * icon shows. In a Block the train is allocated to but hasn't reached,
+     * that is the Block's allocated value, as Dispatcher set it (the train's
+     * name or its roster entry), not the marked text the icon shows for it.
+     *
+     * @return the roster entry, the train's name, or null if the icon shows
+     *         no train
+     */
+    Object trainForMenu() {
+        Block b = getBlock();
+        Object allocated = b == null ? null : b.getAllocatedValue();
+        if (b != null && allocated != null && b.getValue() == null && getMap() == null) {
+            return allocated instanceof jmri.jmrit.roster.RosterEntry ? allocated : allocated.toString();
+        }
+        if (re != null) {
+            return re;
+        }
+        return getText();
     }
 
     @Override

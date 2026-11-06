@@ -152,6 +152,95 @@ public class BlockContentsIconTest extends PositionableLabelTest {
     }
 
     @Test
+    public void testTrainForMenu() {
+        jmri.Block block = jmri.InstanceManager.getDefault(BlockManager.class).provideBlock("IB1");
+        BlockContentsIcon bci = (BlockContentsIcon) to;
+
+        block.setAllocatedValue("Train A");
+        new QueueTool().waitEmpty();
+        assertEquals("Train A", bci.trainForMenu(), "the allocated train by its name, not the marked text");
+
+        jmri.jmrit.roster.RosterEntry entry = new jmri.jmrit.roster.RosterEntry();
+        entry.setId("Loco 47");
+        block.setAllocatedValue(entry);
+        new QueueTool().waitEmpty();
+        assertEquals(entry, bci.trainForMenu(), "an allocated roster entry as itself");
+
+        block.setValue("Loco 12");
+        new QueueTool().waitEmpty();
+        assertEquals("Loco 12", bci.trainForMenu(), "a train in the Block as it is shown, as before");
+
+        jmri.jmrit.roster.RosterEntry inBlock = new jmri.jmrit.roster.RosterEntry();
+        inBlock.setId("Loco 12");
+        block.setValue(inBlock);
+        new QueueTool().waitEmpty();
+        assertEquals(inBlock, bci.trainForMenu(), "a roster entry in the Block as itself, as before");
+    }
+
+    @Test
+    public void testDispatcherMenuForAllocatedRosterEntry() {
+        jmri.Block block = jmri.InstanceManager.getDefault(BlockManager.class).provideBlock("IB1");
+        jmri.jmrit.roster.RosterEntry entry = new jmri.jmrit.roster.RosterEntry();
+        entry.setId("Loco 47");
+        jmri.jmrit.dispatcher.DispatcherFrame df = org.mockito.Mockito.mock(jmri.jmrit.dispatcher.DispatcherFrame.class);
+        jmri.InstanceManager.store(df, jmri.jmrit.dispatcher.DispatcherFrame.class);
+        to.setEditable(false);
+        block.setAllocatedValue(entry);
+        new QueueTool().waitEmpty();
+
+        // no Active Train for it: the roster entry's own items
+        assertEquals(java.util.List.of("Open Throttle", Bundle.getMessage("MenuNewTrain")), menuItems(),
+            "a throttle or a new train for the allocated loco");
+        org.mockito.Mockito.verify(df).getActiveTrainForRoster(entry);
+
+        // its Active Train: the train's items
+        jmri.jmrit.dispatcher.ActiveTrain at = org.mockito.Mockito.mock(jmri.jmrit.dispatcher.ActiveTrain.class);
+        org.mockito.Mockito.when(df.getActiveTrainForRoster(entry)).thenReturn(at);
+        org.mockito.Mockito.when(at.getStatus()).thenReturn(jmri.jmrit.dispatcher.ActiveTrain.RUNNING);
+        assertEquals(java.util.List.of(Bundle.getMessage("MenuTerminateTrain"), Bundle.getMessage("MenuAllocateExtra")),
+            menuItems(), "the train found by its roster entry");
+        jmri.InstanceManager.deregister(df, jmri.jmrit.dispatcher.DispatcherFrame.class);
+    }
+
+    private java.util.List<String> menuItems() {
+        javax.swing.JPopupMenu popup = new javax.swing.JPopupMenu();
+        ((BlockContentsIcon) to).showPopUp(popup);
+        java.util.List<String> items = new java.util.ArrayList<>();
+        for (java.awt.Component c : popup.getComponents()) {
+            if (c instanceof javax.swing.JMenuItem) {
+                items.add(((javax.swing.JMenuItem) c).getText());
+            }
+        }
+        return items;
+    }
+
+    @Test
+    public void testDispatcherMenuOnAllocatedBlock() {
+        jmri.Block block = jmri.InstanceManager.getDefault(BlockManager.class).provideBlock("IB1");
+        jmri.jmrit.dispatcher.DispatcherFrame df = org.mockito.Mockito.mock(jmri.jmrit.dispatcher.DispatcherFrame.class);
+        jmri.jmrit.dispatcher.ActiveTrain at = org.mockito.Mockito.mock(jmri.jmrit.dispatcher.ActiveTrain.class);
+        org.mockito.Mockito.when(df.getActiveTrainForName("Train A")).thenReturn(at);
+        org.mockito.Mockito.when(at.getStatus()).thenReturn(jmri.jmrit.dispatcher.ActiveTrain.RUNNING);
+        jmri.InstanceManager.store(df, jmri.jmrit.dispatcher.DispatcherFrame.class);
+        to.setEditable(false);
+
+        block.setAllocatedValue("Train A");
+        new QueueTool().waitEmpty();
+        javax.swing.JPopupMenu popup = new javax.swing.JPopupMenu();
+        org.junit.jupiter.api.Assertions.assertTrue(((BlockContentsIcon) to).showPopUp(popup),
+            "the train's menu, though the train hasn't reached the Block");
+        java.util.List<String> items = new java.util.ArrayList<>();
+        for (java.awt.Component c : popup.getComponents()) {
+            if (c instanceof javax.swing.JMenuItem) {
+                items.add(((javax.swing.JMenuItem) c).getText());
+            }
+        }
+        assertEquals(java.util.List.of(Bundle.getMessage("MenuTerminateTrain"), Bundle.getMessage("MenuAllocateExtra")),
+            items, "Terminate Train and Allocate Extra Sections for the allocated train");
+        jmri.InstanceManager.deregister(df, jmri.jmrit.dispatcher.DispatcherFrame.class);
+    }
+
+    @Test
     @Override
     @ToDo("The test in the parent class fails if there is no icon set")
     public void testGetAndSetScale() {
