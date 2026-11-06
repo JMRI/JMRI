@@ -329,6 +329,10 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
 
             footerAssignmentsPanel.add(new JSeparator());
 
+            doNotPlaceIcons.addActionListener(e -> placeTraverserApproachMastsImmediately());
+            placeIconsLeft.addActionListener(e -> placeTraverserApproachMastsImmediately());
+            placeIconsRight.addActionListener(e -> placeTraverserApproachMastsImmediately());
+
             JPanel mastPanel = new JPanel(new GridBagLayout());
             GridBagConstraints c = new GridBagConstraints();
             c.gridx = 0;
@@ -408,6 +412,66 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
         editLayoutTraverserSlotPanel.revalidate();
         editLayoutTraverserSlotPanel.repaint();
         editLayoutTraverserFrame.pack();
+    }
+
+    private void placeTraverserApproachMastsImmediately() {
+        if (!layoutTraverser.isDispatcherManaged() || layoutTraverserView == null) {
+            return;
+        }
+
+        // Remove existing approach mast icons
+        List<SignalMastIcon> iconsToRemove = new ArrayList<>();
+        for (Positionable p : layoutEditor.getContents()) {
+            if (p instanceof SignalMastIcon) {
+                SignalMastIcon icon = (SignalMastIcon) p;
+                for (LayoutTraverser.SlotTrack rt : layoutTraverser.getSlotList()) {
+                    if (rt.getApproachMast() != null
+                            && rt.getApproachMast().equals(icon.getSignalMast())) {
+                        iconsToRemove.add(icon);
+                        break;
+                    }
+                }
+            }
+        }
+
+        for (SignalMastIcon icon : iconsToRemove) {
+            icon.remove();
+            editLayoutTraverserNeedsRedraw = true;
+        }
+
+        if (doNotPlaceIcons.isSelected()) {
+            layoutEditor.redrawPanel();
+            layoutEditor.setDirty();
+            return;
+        }
+
+        boolean sideRight = placeIconsRight.isSelected();
+        int orientation = layoutTraverser.getOrientation();
+
+        for (int i = 0; i < layoutTraverser.getSlotList().size(); i++) {
+
+            LayoutTraverser.SlotTrack rt = layoutTraverser.getSlotList().get(i);
+
+            if (rt.getApproachMast() == null) {
+                continue;
+            }
+            Point2D anchor = layoutTraverserView.getSlotCoordsOrdered(i);
+
+            SignalMastIcon icon = new SignalMastIcon(layoutEditor);
+            icon.setSignalMast(rt.getApproachMast().getDisplayName());
+
+            layoutEditor.getLETools().placingBlockForTurntable(
+                    icon,
+                    sideRight,
+                    0.0,
+                    orientation,
+                    anchor);
+
+            editLayoutTraverserNeedsRedraw = true;
+        }
+
+        layoutEditor.redrawPanel();
+        layoutEditor.setDirty();
     }
 
     private void placeTraverserBridgeMastsImmediately() {
