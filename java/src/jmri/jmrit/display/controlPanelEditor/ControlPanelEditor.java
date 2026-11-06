@@ -837,12 +837,14 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
             if (_editorMenu == null) {  // replaces _fileMenu
                 _editorMenu = new JMenu(Bundle.getMessage("MenuEdit"));
-                _editorMenu.add(new AbstractAction(Bundle.getMessage("OpenEditor")) {
+                JMenuItem openEditor = new JMenuItem(new AbstractAction(Bundle.getMessage("OpenEditor")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         setAllEditable(true);
                     }
                 });
+                setMenuAcceleratorKey(openEditor, KeyEvent.VK_E);
+                _editorMenu.add(openEditor);
             }
             _menuBar.add(_editorMenu, 0);
         }
