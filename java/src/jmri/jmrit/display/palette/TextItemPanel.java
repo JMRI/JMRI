@@ -79,6 +79,8 @@ public class TextItemPanel extends ItemPanel {
     private AJSpinner _widthSpin;
     private AJSpinner _heightSpin;
 
+    JPanel dragger;
+
     public static final int BORDER = 1;
     public static final int MARGIN = 2;
     public static final int FWIDTH = 3;
@@ -106,7 +108,6 @@ public class TextItemPanel extends ItemPanel {
         _samplePanel.setName("SamplePanel");    // to find component for testing
         _samplePanel.setImage(_frame.getPreviewBackground());
     }
-    JPanel dragger;
 
     @Override
     public void init() {
@@ -114,7 +115,6 @@ public class TextItemPanel extends ItemPanel {
             add(instructions());
             PositionableLabel label = new PositionableLabel(Bundle.getMessage("sample"), _frame.getEditor());
             label.setLevel(Editor.LABELS);
-            JPanel dragger;
             try {
                dragger = new LabelDragJComponent(new DataFlavor(Editor.POSITIONABLE_FLAVOR), label);
             } catch (java.lang.ClassNotFoundException cnfe) {
