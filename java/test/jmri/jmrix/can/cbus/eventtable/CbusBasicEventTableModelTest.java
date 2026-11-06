@@ -15,10 +15,10 @@ public class CbusBasicEventTableModelTest {
 
     @Test
     public void testCTor() {
-        
+
         CbusBasicEventTableModel t = new CbusBasicEventTableModel(memo);
         Assertions.assertNotNull(t);
-        
+
     }
 
     // The row lookup cache must stay correct when rows are removed or the table is cleared
@@ -56,6 +56,7 @@ public class CbusBasicEventTableModelTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
         memo = new CanSystemConnectionMemo();
         memo.setProtocol(jmri.jmrix.can.CanConfigurationManager.SPROGCBUS);
         memo.configureManagers();

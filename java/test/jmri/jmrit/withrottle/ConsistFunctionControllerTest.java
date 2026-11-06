@@ -24,8 +24,9 @@ public class ConsistFunctionControllerTest {
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         InstanceManager.setDefault(NamedBeanHandleManager.class, new NamedBeanHandleManager());
+        jmri.util.JUnitUtil.initTimeProviderManager();
     }
-    
+
     @AfterEach
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();

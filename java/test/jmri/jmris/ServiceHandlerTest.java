@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Tests for the jmri.jmris.ServiceHandler class 
+ * Tests for the jmri.jmris.ServiceHandler class
  *
  * @author Paul Bender
  */
@@ -131,6 +131,7 @@ public class ServiceHandlerTest {
     @BeforeEach
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
+        jmri.util.JUnitUtil.initTimeProviderManager();
     }
 
     @AfterEach

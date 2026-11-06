@@ -41,13 +41,13 @@ public class PortTest {
     public void testConfigure() {
         CanSystemConnectionMemo memo = t.getSystemConnectionMemo();
         Assertions.assertNotNull(memo);
-        
+
         t.configure();
-        
+
         TrafficController tc = memo.getTrafficController();
         Assertions.assertNotNull(tc,"trafficcontroller not null and attatched to memo");
         Assertions.assertNotNull(jmri.InstanceManager.getNullableDefault(jmri.SensorManager.class),"memo configure managers called");
-        
+
         tc.terminateThreads();
     }
 
@@ -56,6 +56,7 @@ public class PortTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
         t = new Port();
     }
 

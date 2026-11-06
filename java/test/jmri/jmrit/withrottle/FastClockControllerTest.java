@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Steve Young Copyright (C) 2024
  */
 public class FastClockControllerTest {
-    
+
     @Test
     public void testCtor() {
         FastClockController t = new FastClockController();
@@ -63,8 +63,10 @@ public class FastClockControllerTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initTimeProviderManager();
     }
-    
+
     @AfterEach
     public void tearDown() {
         JUnitUtil.tearDown();

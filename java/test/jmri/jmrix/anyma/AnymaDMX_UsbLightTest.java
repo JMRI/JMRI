@@ -39,7 +39,8 @@ public class AnymaDMX_UsbLightTest extends AbstractLightTestBase {
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initTimeProviderManager();
         _memo = new AnymaDMX_SystemConnectionMemo();
         t = new AnymaDMX_UsbLight("DL1", "Test Light", _memo);
     }
