@@ -26,6 +26,12 @@
 
         <h4>CBUS</h4>
             <ul>
+                <li>CBUS throttles: when several throttles are asked for at
+                    the same moment, for example by Dispatcher starting several
+                    automatic trains, by opening a saved throttle layout or by
+                    a script, each now gets its throttle. Before, only the
+                    last request was answered and the others waited with no
+                    error. Each request now times out on its own.</li>
                 <li>CBUS sensors, turnouts and lights: each frame sent or
                     received is now passed only to the sensors, turnouts and
                     lights that use its event, instead of to every one on the

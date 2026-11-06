@@ -1066,6 +1066,210 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         assertEquals( 0, cbtm.getManagedThrottleCount(), "no managed throttles");
     }
 
+    // Requests for two locos sent before either is answered: each answer must reach its own request,
+    // in whichever order the command station sends them.
+    @Test
+    public void testTwoRequestsOutstandingBothAnswered() {
+        CbusThrottleManager cbtm = (CbusThrottleManager) tm;
+        DccLocoAddress addrA = new DccLocoAddress(1234, true);
+        DccLocoAddress addrB = new DccLocoAddress(4321, true);
+        CaptureThrottleListen listenA = new CaptureThrottleListen();
+        CaptureThrottleListen listenB = new CaptureThrottleListen();
+
+        tm.requestThrottle(addrA, listenA, true);
+        tm.requestThrottle(addrB, listenB, true);
+        assertEquals( 2, tc.outbound.size(), "2 RLOC sent");
+        assertEquals( "[78] 40 C4 D2", tc.outbound.elementAt(0).toString(), "RLOC A");
+        assertEquals( "[78] 40 D0 E1", tc.outbound.elementAt(1).toString(), "RLOC B");
+        assertEquals( 2, cbtm.getPendingRequestCount(), "both requests waiting");
+
+        // B answered first
+        cbtm.reply( new CanReply( new int[]{CbusConstants.CBUS_PLOC, 2, 0xd0, 0xe1, 0, 0, 0, 0 }, 0x12 ) );
+        JUnitUtil.waitFor(() -> listenB.found != null, "throttle for B");
+        assertNull( listenA.found, "A still waiting");
+        assertEquals( 1, cbtm.getPendingRequestCount(), "A still waiting");
+
+        cbtm.reply( new CanReply( new int[]{CbusConstants.CBUS_PLOC, 1, 0xc4, 0xd2, 0, 0, 0, 0 }, 0x12 ) );
+        JUnitUtil.waitFor(() -> listenA.found != null, "throttle for A");
+        assertEquals( 0, cbtm.getPendingRequestCount(), "nothing waiting");
+
+        assertEquals( addrA, listenA.found.getLocoAddress(), "A's throttle is for A");
+        assertEquals( addrB, listenB.found.getLocoAddress(), "B's throttle is for B");
+        assertEquals( 1, ((CbusThrottle) listenA.found).getHandle(), "A session 1");
+        assertEquals( 2, ((CbusThrottle) listenB.found).getHandle(), "B session 2");
+        assertEquals( 2, cbtm.getManagedThrottleCount(), "2 throttles managed");
+        assertFalse( listenA.getFailedRequest(), "A not failed");
+        assertFalse( listenB.getFailedRequest(), "B not failed");
+
+        assertTrue( tm.disposeThrottle(listenA.found, listenA));
+        assertTrue( tm.disposeThrottle(listenB.found, listenB));
+    }
+
+    // A request that is never answered times out on its own; an answered one is unaffected.
+    @Test
+    public void testUnansweredRequestTimesOutAlone() {
+        CbusThrottleManager cbtm = (CbusThrottleManager) tm;
+        cbtm.THROTTLE_TIMEOUT = 100;
+        DccLocoAddress addrA = new DccLocoAddress(1234, true);
+        DccLocoAddress addrB = new DccLocoAddress(4321, true);
+        CaptureThrottleListen listenA = new CaptureThrottleListen();
+        CaptureThrottleListen listenB = new CaptureThrottleListen();
+
+        tm.requestThrottle(addrA, listenA, true);
+        tm.requestThrottle(addrB, listenB, true);
+        cbtm.reply( new CanReply( new int[]{CbusConstants.CBUS_PLOC, 2, 0xd0, 0xe1, 0, 0, 0, 0 }, 0x12 ) );
+        JUnitUtil.waitFor(() -> listenB.found != null, "throttle for B");
+
+        JUnitUtil.waitFor(() -> listenA.getFailedRequest(), "A timed out");
+        assertEquals( "Throttle request failed for 1234(L) because " + Bundle.getMessage("ERR_THROTTLE_TIMEOUT"),
+            listenA.getLastNotification());
+        assertNull( listenA.found, "no throttle for A");
+        assertEquals( 0, cbtm.getPendingRequestCount(), "nothing waiting");
+        assertFalse( listenB.getFailedRequest(), "B not failed");
+        assertNotNull( tm.getThrottleInfo(addrB, Throttle.SPEEDSETTING), "B still known to manager");
+
+        // a late answer for A is ignored
+        cbtm.reply( new CanReply( new int[]{CbusConstants.CBUS_PLOC, 1, 0xc4, 0xd2, 0, 0, 0, 0 }, 0x12 ) );
+        assertNull( listenA.found, "no throttle for A from a late answer");
+        assertEquals( 1, cbtm.getManagedThrottleCount(), "only B managed");
+
+        assertTrue( tm.disposeThrottle(listenB.found, listenB));
+    }
+
+    // An error for one of two outstanding requests concerns that request only.
+    @Test
+    public void testErrorForOneOfTwoOutstandingRequests() {
+        CbusThrottleManager cbtm = (CbusThrottleManager) tm;
+        memo.setDisabled(true); // no command station, so no steal or share: the request fails
+        DccLocoAddress addrA = new DccLocoAddress(1234, true);
+        DccLocoAddress addrB = new DccLocoAddress(4321, true);
+        CaptureThrottleListen listenA = new CaptureThrottleListen();
+        CaptureThrottleListen listenB = new CaptureThrottleListen();
+
+        tm.requestThrottle(addrA, listenA, true);
+        tm.requestThrottle(addrB, listenB, true);
+
+        // A taken
+        cbtm.reply( new CanReply( new int[]{CbusConstants.CBUS_ERR, 0xc4, 0xd2, CbusConstants.ERR_LOCO_ADDRESS_TAKEN }, 0x12 ) );
+        assertTrue( listenA.getFailedRequest(), "A failed");
+        assertFalse( listenB.getFailedRequest(), "B not failed");
+        assertEquals( 1, cbtm.getPendingRequestCount(), "B still waiting");
+
+        cbtm.reply( new CanReply( new int[]{CbusConstants.CBUS_PLOC, 2, 0xd0, 0xe1, 0, 0, 0, 0 }, 0x12 ) );
+        JUnitUtil.waitFor(() -> listenB.found != null, "throttle for B");
+        assertEquals( 0, cbtm.getPendingRequestCount(), "nothing waiting");
+        assertTrue( tm.disposeThrottle(listenB.found, listenB));
+    }
+
+    // A steal request (second level) that is refused fails the request, with no further question.
+    @Test
+    public void testRefusedStealFailsRequest() {
+        CbusThrottleManager cbtm = (CbusThrottleManager) tm;
+        StealRequestThrottleListen listen = new StealRequestThrottleListen();
+        CbusNodeTableDataModel nodemodel = memo.get(CbusConfigurationManager.class)
+            .provide(CbusNodeTableDataModel.class);
+        CbusNode cs = nodemodel.provideNodeByNodeNum(65534);
+        cs.setCsNum(0);
+        cs.getNodeParamManager().setParameters(new int[]{7,165,4,10,0,0,255,4});
+        cs.getNodeNvManager().setNV(2, 0b00000010); // steal only enabled
+
+        tm.requestThrottle(141, listen, true);
+        cbtm.reply( new CanReply( new int[]{CbusConstants.CBUS_ERR, 0xc0, 0x8d, CbusConstants.ERR_LOCO_ADDRESS_TAKEN }, 0x12 ) );
+        assertEquals( "2: Got a Steal question 141(L)", listen.getLastNotification());
+        assertEquals( "[78] 61 C0 8D 01", tc.outbound.lastElement().toString(), "GLOC steal sent");
+        assertEquals( 1, cbtm.getPendingRequestCount(), "steal waiting");
+
+        // the steal is refused too
+        cbtm.reply( new CanReply( new int[]{CbusConstants.CBUS_ERR, 0xc0, 0x8d, CbusConstants.ERR_LOCO_ADDRESS_TAKEN }, 0x12 ) );
+        assertTrue( listen.getFailedRequest(), "request failed");
+        assertEquals( 0, cbtm.getPendingRequestCount(), "nothing waiting");
+        nodemodel.dispose();
+    }
+
+    // Recovery of a stolen throttle that gets no answer gives the throttle up, and only that one.
+    @Test
+    public void testRecoveryWithNoAnswerGivesUpThatThrottle() {
+        CbusThrottleManager cbtm = (CbusThrottleManager) tm;
+        InstanceManager.getDefault(ThrottlesPreferences.class).setSilentSteal(true);
+        DccLocoAddress addrA = new DccLocoAddress(1234, true);
+        DccLocoAddress addrB = new DccLocoAddress(4321, true);
+        CaptureThrottleListen listenA = new CaptureThrottleListen();
+        CaptureThrottleListen listenB = new CaptureThrottleListen();
+        CbusThrottle throttleA = acquireThrottle(addrA, 1, listenA);
+        CbusThrottle throttleB = acquireThrottle(addrB, 2, listenB);
+        cbtm.THROTTLE_TIMEOUT = 100;
+
+        cbtm.reply( new CanReply( new int[]{CbusConstants.CBUS_ERR, 1, 0, CbusConstants.ERR_SESSION_CANCELLED }, 0x12 ) );
+        JUnitAppender.assertWarnMessageStartingWith("External Steal / Cancel for loco 1234(L) Session 1");
+        JUnitUtil.waitFor(() -> tc.outbound.size() >= 3, "GLOC steal request sent for A");
+
+        JUnitUtil.waitFor(() -> cbtm.getManagedThrottleCount() == 1, "A given up");
+        JUnitAppender.assertWarnMessage("Session recovery not possible for 1234(L)");
+        assertEquals( -1, throttleA.getHandle(), "A disposed");
+        assertEquals( 2, throttleB.getHandle(), "B keeps session 2");
+        assertNull( tm.getThrottleInfo(addrA, Throttle.SPEEDSETTING), "A no longer known to manager");
+        assertNotNull( tm.getThrottleInfo(addrB, Throttle.SPEEDSETTING), "B still known to manager");
+        assertEquals( 0, cbtm.getPendingRequestCount(), "nothing waiting");
+        assertTrue( tm.disposeThrottle(throttleB, listenB));
+    }
+
+    // Recovery by silent share asks the command station to share the session.
+    @Test
+    public void testRecoveryBySilentShare() {
+        CbusThrottleManager cbtm = (CbusThrottleManager) tm;
+        InstanceManager.getDefault(ThrottlesPreferences.class).setSilentShare(true);
+        DccLocoAddress addrA = new DccLocoAddress(1234, true);
+        CaptureThrottleListen listenA = new CaptureThrottleListen();
+        CbusThrottle throttleA = acquireThrottle(addrA, 1, listenA);
+
+        cbtm.reply( new CanReply( new int[]{CbusConstants.CBUS_ERR, 1, 0, CbusConstants.ERR_SESSION_CANCELLED }, 0x12 ) );
+        JUnitAppender.assertWarnMessageStartingWith("External Steal / Cancel for loco 1234(L) Session 1");
+        JUnitUtil.waitFor(() -> tc.outbound.size() >= 2, "GLOC share request sent for A");
+        assertEquals( "[78] 61 C4 D2 02", tc.outbound.lastElement().toString(), "GLOC share A");
+        assertEquals( 1, cbtm.getPendingRequestCount(), "recovery waiting");
+
+        cbtm.reply( new CanReply( new int[]{CbusConstants.CBUS_PLOC, 3, 0xc4, 0xd2, 0x80, 0, 0, 0 }, 0x12 ) );
+        assertFalse( throttleA.isStolen(), "A recovered");
+        assertEquals( 3, throttleA.getHandle(), "A re-bound to session 3");
+        assertEquals( 0, cbtm.getPendingRequestCount(), "nothing waiting");
+        assertTrue( tm.disposeThrottle(throttleA, listenA));
+    }
+
+    // A second request for a loco still waiting replaces the first: only the second can time out.
+    @Test
+    public void testLaterRequestForSameLocoReplacesEarlier() {
+        CbusThrottleManager cbtm = (CbusThrottleManager) tm;
+        DccLocoAddress addrA = new DccLocoAddress(1234, true);
+        CaptureThrottleListen listenA = new CaptureThrottleListen();
+        tm.requestThrottle(addrA, listenA, true);
+        assertEquals( 1, cbtm.getPendingRequestCount(), "RLOC waiting");
+
+        tm.responseThrottleDecision(addrA, listenA, ThrottleListener.DecisionType.STEAL);
+        assertEquals( "[78] 61 C4 D2 01", tc.outbound.lastElement().toString(), "GLOC steal A");
+        assertEquals( 1, cbtm.getPendingRequestCount(), "one request waiting for A");
+
+        cbtm.reply( new CanReply( new int[]{CbusConstants.CBUS_PLOC, 1, 0xc4, 0xd2, 0, 0, 0, 0 }, 0x12 ) );
+        JUnitUtil.waitFor(() -> listenA.found != null, "throttle for A");
+        assertEquals( 0, cbtm.getPendingRequestCount(), "nothing waiting");
+        assertFalse( listenA.getFailedRequest(), "not failed");
+        assertTrue( tm.disposeThrottle(listenA.found, listenA));
+    }
+
+    // Disposing of the manager stops the timers of requests still waiting.
+    @Test
+    public void testDisposeStopsWaitingRequests() {
+        CbusThrottleManager cbtm = (CbusThrottleManager) tm;
+        cbtm.THROTTLE_TIMEOUT = 50;
+        CaptureThrottleListen listenA = new CaptureThrottleListen();
+        tm.requestThrottle(new DccLocoAddress(1234, true), listenA, true);
+        assertEquals( 1, cbtm.getPendingRequestCount(), "waiting");
+        tm.dispose();
+        assertEquals( 0, cbtm.getPendingRequestCount(), "nothing waiting after dispose");
+        // longer than the timeout: nothing must fail the request now
+        JUnitUtil.waitFor(200);
+        assertFalse( listenA.getFailedRequest(), "no timeout after dispose");
+    }
+
     private CanSystemConnectionMemo memo;
     private DccThrottle throttle;
     private TrafficControllerScaffold tc;
