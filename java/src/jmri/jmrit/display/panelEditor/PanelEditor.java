@@ -188,6 +188,12 @@ public class PanelEditor extends Editor implements ItemListener {
                 dispose();
             }
         });
+        fileMenu.addSeparator();
+        JMenuItem closeEditorItem = new JMenuItem(Bundle.getMessage("CloseEditor"));
+        closeEditorItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,
+                SystemType.isMacOSX() ? InputEvent.META_DOWN_MASK : InputEvent.CTRL_DOWN_MASK));
+        closeEditorItem.addActionListener(event -> setVisible(false));
+        fileMenu.add(closeEditorItem);
 
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.display.PanelEditor", true);

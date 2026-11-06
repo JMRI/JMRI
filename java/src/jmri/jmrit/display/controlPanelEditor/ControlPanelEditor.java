@@ -475,6 +475,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         });
         _fileMenu.addSeparator();
         editItem = new JMenuItem(Bundle.getMessage("CloseEditor"));
+        setMenuAcceleratorKey(editItem, KeyEvent.VK_E);
         _fileMenu.add(editItem);
         editItem.addActionListener((ActionEvent event) -> setAllEditable(false));
     }
