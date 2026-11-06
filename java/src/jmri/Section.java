@@ -380,14 +380,24 @@ public interface Section extends NamedBean {
      * Set the block values for blocks in this Section.
      *
      * @param name the value to set all blocks to
+     * @deprecated since 5.19.1; to show the train a Section is allocated to,
+     *             use {@link Block#setAllocatedValue(Object)} on its Blocks,
+     *             which leaves the Block values to Block tracking; to set the
+     *             values, use {@link Block#setValue(Object)} on each Block
      */
+    @Deprecated(since="5.19.1", forRemoval=true)
     void setNameInBlocks(String name);
 
     /**
      * Set the block values for blocks in this Section.
      *
      * @param value the name to set block values to
+     * @deprecated since 5.19.1; to show the train a Section is allocated to,
+     *             use {@link Block#setAllocatedValue(Object)} on its Blocks,
+     *             which leaves the Block values to Block tracking; to set the
+     *             values, use {@link Block#setValue(Object)} on each Block
      */
+    @Deprecated(since="5.19.1", forRemoval=true)
     void setNameInBlocks(Object value);
 
     /**

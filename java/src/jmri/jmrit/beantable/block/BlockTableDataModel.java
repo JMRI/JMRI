@@ -49,7 +49,12 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
     public static final int PERMISCOL = CURRENTREPCOL + 1;
     public static final int SPEEDCOL = PERMISCOL + 1;
     public static final int GHOSTCOL = SPEEDCOL + 1;
-    public static final int COLUMNCOUNT = GHOSTCOL + 1;
+    /**
+     * The train the Block is allocated to; read only, hidden until chosen.
+     * @since 5.19.1
+     */
+    public static final int ALLOCATEDVALUECOL = GHOSTCOL + 1;
+    public static final int COLUMNCOUNT = ALLOCATEDVALUECOL + 1;
 
     private final boolean _graphicState =
         InstanceManager.getDefault(GuiLafPreferencesManager.class).isGraphicTableState();
@@ -85,17 +90,23 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
             log.debug("requested getValue(\"{}\"), Block doesn't exist", name);
             return "(no Block)";
         }
-        Object m = b.getValue();
-        if (m != null) {
-            if ( m instanceof Reportable) {
-                return ((Reportable) m).toReportString();
-            }
-            else {
-                return m.toString();
-            }
-        } else {
+        return valueText(b.getValue());
+    }
+
+    /**
+     * The text the table shows for a Block's value or allocated value.
+     *
+     * @param m the value, which may be null
+     * @return the text; empty for null
+     */
+    private static String valueText(Object m) {
+        if (m == null) {
             return "";
         }
+        if (m instanceof Reportable) {
+            return ((Reportable) m).toReportString();
+        }
+        return m.toString();
     }
 
     @Override
@@ -174,6 +185,8 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
                 return b.isReportingCurrent();
             case EDITCOL:
                 return Bundle.getMessage("ButtonEdit");
+            case ALLOCATEDVALUECOL:
+                return valueText(b.getAllocatedValue());
             default:
                 return super.getValueAt(row, col);
         }
@@ -265,6 +278,8 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
                 return Bundle.getMessage("BlockReporterCurrent");
             case EDITCOL:
                 return Bundle.getMessage("ButtonEdit");
+            case ALLOCATEDVALUECOL:
+                return Bundle.getMessage("BlockAllocatedValueColName");
             default:
                 return super.getColumnName(col);
         }
@@ -275,6 +290,7 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
         switch (col) {
             case DIRECTIONCOL:
             case VALUECOL: // not a button
+            case ALLOCATEDVALUECOL:
                 return String.class;
             case LENGTHCOL:
                 return Float.class;
@@ -317,6 +333,7 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
             case STATECOL:
             case REPORTERCOL:
             case SENSORCOL:
+            case ALLOCATEDVALUECOL:
                 return new JTextField(8).getPreferredSize().width;
             default:
                 return super.getPreferredWidth(col);
@@ -342,6 +359,7 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
             case EDITCOL:
                 return true;
             case STATECOL:
+            case ALLOCATEDVALUECOL:
                 return false;
             default:
                 return super.isCellEditable(row, col);
@@ -361,6 +379,11 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
     public void configureTable(JTable table) {
         configStateColumn(table);
         super.configureTable(table);
+        if (table.getColumnModel() instanceof jmri.util.swing.XTableColumnModel) {
+            // only Dispatcher sets an allocated value, and only with "Place train name in allocated Blocks" on
+            jmri.util.swing.XTableColumnModel columns = (jmri.util.swing.XTableColumnModel) table.getColumnModel();
+            columns.setColumnVisible(columns.getColumnByModelIndex(ALLOCATEDVALUECOL), false);
+        }
     }
 
     void editButton(Block b) {

@@ -23,7 +23,7 @@ public class BlockTableDataModelTest extends AbstractBeanTableDataModelBase<Bloc
     
     @Override
     public int getModelColumnCount(){
-        return 16;
+        return 17;
     }
     
     @Test
@@ -35,6 +35,22 @@ public class BlockTableDataModelTest extends AbstractBeanTableDataModelBase<Bloc
         assertEquals("Column3 - User Comment",Bundle.getMessage("ColumnComment"), t.getColumnName(3));
         assertEquals("Column4 - Delete button","", t.getColumnName(4));
         
+    }
+
+    @Test
+    public void testAllocatedValueColumn() {
+        Block b = InstanceManager.getDefault(BlockManager.class).provide("IB1");
+        BlockTableDataModel m = (BlockTableDataModel) t;
+        assertEquals("only IB1", 1, m.getRowCount());
+        int row = 0;
+        assertEquals("Allocated Value", m.getColumnName(BlockTableDataModel.ALLOCATEDVALUECOL));
+        assertEquals("", m.getValueAt(row, BlockTableDataModel.ALLOCATEDVALUECOL));
+        b.setAllocatedValue("AAA");
+        assertEquals("AAA", m.getValueAt(row, BlockTableDataModel.ALLOCATEDVALUECOL));
+        assertEquals("the value is separate", "", m.getValueAt(row, BlockTableDataModel.VALUECOL));
+        Assert.assertFalse("read only", m.isCellEditable(row, BlockTableDataModel.ALLOCATEDVALUECOL));
+        // an unknown column logs an error, which fails the test
+        Assert.assertTrue("has a width", m.getPreferredWidth(BlockTableDataModel.ALLOCATEDVALUECOL) > 0);
     }
 
     @BeforeEach

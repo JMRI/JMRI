@@ -8,6 +8,7 @@ import jmri.jmrit.logixng.NamedTable;
 import jmri.jmrit.logixng.NamedTableManager;
 import jmri.jmrit.logixng.actions.ActionTable;
 import jmri.jmrit.logixng.actions.ActionTable.ConstantType;
+import jmri.jmrit.logixng.util.BlockValueType;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectTableXml;
 import jmri.jmrit.logixng.util.parser.ParserException;
@@ -54,6 +55,10 @@ public class ActionTableXml extends jmri.managers.configurexml.AbstractNamedBean
 
         element.addContent(selectBlockNamedBeanXml.store(p.getSelectBlockNamedBean(), "blockNamedBean"));
         element.addContent(new Element("listenToBlock").addContent(p.getListenToBlock() ? "yes" : "no"));
+        if (p.getBlockValueType() != BlockValueType.Value) {
+            // only when chosen, so files with the Block's value are stored as before
+            element.addContent(new Element("blockValue").addContent(p.getBlockValueType().name()));
+        }
 
         element.addContent(selectReporterNamedBeanXml.store(p.getSelectReporterNamedBean(), "reporterNamedBean"));
         element.addContent(new Element("listenToReporter").addContent(p.getListenToReporter() ? "yes" : "no"));
@@ -99,6 +104,15 @@ public class ActionTableXml extends jmri.managers.configurexml.AbstractNamedBean
         Element listenToBlockElem = shared.getChild("listenToBlock");
         if (listenToBlockElem != null) {
             h.setListenToBlock("yes".equals(listenToBlockElem.getTextTrim()));
+        }
+
+        Element blockValueElem = shared.getChild("blockValue");
+        if (blockValueElem != null) {
+            try {
+                h.setBlockValueType(BlockValueType.valueOf(blockValueElem.getTextTrim()));
+            } catch (IllegalArgumentException e) {
+                log.error("cannot set block value type: {}", blockValueElem.getTextTrim(), e);
+            }
         }
 
         Element listenToReporterElem = shared.getChild("listenToReporter");
