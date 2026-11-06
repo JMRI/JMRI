@@ -742,6 +742,13 @@
                 JMRI withdraws its ZeroConf (mDNS) announcements, such as the
                 Hub's, WiThrottle's and the Web Server's. The wait is now about
                 2 seconds in all.</li>
+            <li>For developers: a new train record (<code>jmri.TrainRecord</code>,
+                from the <code>jmri.TrainRecordManager</code>) holds what is
+                known about a train from one run to the next: its name, the
+                roster entries of its locos and its ID tags, the parts it is
+                split into or joined from, how it is detected, and its length
+                from each source. Nothing uses it yet, so nothing
+                changes for users.</li>
             <li>In a profile whose connections are all simulators (the
                 Internal connection, CAN Simulation and the other simulator
                 connections), scripts and tests can now place simulated
