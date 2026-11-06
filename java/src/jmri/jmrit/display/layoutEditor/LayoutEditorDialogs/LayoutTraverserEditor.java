@@ -520,7 +520,6 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
         layoutTraverser.setMainline(editLayoutTraverserMainlineComboBox.getSelectedIndex() == 0);
 
         if (layoutTraverser.isDispatcherManaged()) {
-            editLayoutTraverserUseSignalMastsCheckBox.isSelected();
             // Always remove any existing icons for this traverser's approach masts first.
             List<SignalMastIcon> iconsToRemove = new ArrayList<>();
             for (Positionable p : layoutEditor.getContents()) {
