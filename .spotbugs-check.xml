@@ -18,7 +18,6 @@
 
            <Bug pattern="IS2_INCONSISTENT_SYNC" /> <!-- 120 cases -->
            <Bug pattern="DCN_NULLPOINTER_EXCEPTION" /> <!-- 271 cases -->
-           <Bug pattern="SSD_DO_NOT_USE_INSTANCE_LOCK_ON_SHARED_STATIC_DATA" />
         </Or>
      </Match>
 
