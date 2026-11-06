@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Deque;
 import java.util.EnumMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ import jmri.BasicRosterEntry;
 import jmri.Block;
 import jmri.IdTag;
 import jmri.InvokeOnLayoutThread;
+import jmri.LocoAddress;
 import jmri.NamedBean;
 import jmri.TrainRecord;
 import jmri.beans.PropertyChangeSupport;
@@ -68,6 +70,15 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
          * @param record the record
          */
         void placementChanged(@Nonnull TrainRecord record);
+
+        /**
+         * Told after the record's roster entries, and so its loco addresses,
+         * change.
+         *
+         * @param record the record
+         */
+        default void rosterEntriesChanged(@Nonnull TrainRecord record) {
+        }
     }
 
     private final Registry registry;
@@ -85,6 +96,7 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     private End leadingEnd = null;
     private final Deque<TrailEntry> trail = new ArrayDeque<>();
     private Confidence confidence = null;
+    private final Deque<SpeedCommand> commands = new ArrayDeque<>();
 
     /**
      * Make a record: one component with no length, no locos, detected as
@@ -199,6 +211,7 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
         BasicRosterEntry oldLead = getRosterEntry();
         List<BasicRosterEntry> old = getRosterEntries();
         rosterEntries = Collections.unmodifiableList(list);
+        registry.rosterEntriesChanged(this);
         firePropertyChange(PROPERTY_ROSTER_ENTRIES, old, getRosterEntries());
         if (oldLead != getRosterEntry()) {
             firePropertyChange(PROPERTY_ROSTER_ENTRY, oldLead, getRosterEntry());
@@ -523,6 +536,87 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     @CheckForNull
     public Confidence getConfidence() {
         return confidence;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @Nonnull
+    public List<LocoAddress> getLocoAddresses() {
+        List<LocoAddress> addresses = new ArrayList<>();
+        for (BasicRosterEntry e : rosterEntries) {
+            LocoAddress a = e.getDccLocoAddress();
+            if (a != null) {
+                addresses.add(a);
+            }
+        }
+        return addresses;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @Nonnull
+    public List<SpeedCommand> getCommands() {
+        return new ArrayList<>(commands);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @Nonnull
+    public List<SpeedCommand> getCommands(@Nonnull LocoAddress address) {
+        List<SpeedCommand> list = new ArrayList<>();
+        for (SpeedCommand c : commands) {
+            if (c.isFor(address)) {
+                list.add(c);
+            }
+        }
+        return list;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @CheckForNull
+    public SpeedCommand getLastCommand() {
+        return commands.peekLast();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @CheckForNull
+    public SpeedCommand getLastCommand(@Nonnull LocoAddress address) {
+        for (Iterator<SpeedCommand> i = commands.descendingIterator(); i.hasNext();) {
+            SpeedCommand c = i.next();
+            if (c.isFor(address)) {
+                return c;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * A speed command, or a release, for one of the train's locos. A command
+     * repeating the speed and direction of the last for the same loco is not
+     * kept, unless that was a release. Called by the
+     * {@link TrainRecordSpeedWatcher}.
+     *
+     * @param command the command
+     */
+    @InvokeOnLayoutThread
+    void commanded(@Nonnull SpeedCommand command) {
+        if (removed) {
+            return;
+        }
+        SpeedCommand last = getLastCommand(command.getAddress());
+        if (last != null && !last.isRelease() && !command.isRelease() && command.sameSpeedAs(last)) {
+            return;
+        }
+        if (last != null && last.isRelease() && command.isRelease()) {
+            return;
+        }
+        commands.addLast(command);
+        while (commands.size() > COMMANDS_LENGTH) {
+            commands.removeFirst();
+        }
+        firePropertyChange(PROPERTY_COMMAND, last, command);
     }
 
     /**

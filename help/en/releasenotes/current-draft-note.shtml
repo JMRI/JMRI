@@ -709,6 +709,12 @@
                 a WiThrottle client, or the command station reporting another
                 throttle's command, and does not stop a throttle being
                 released. Nothing users see changes.</li>
+            <li>For developers: a train record now keeps the speed commands
+                for each of its locos, matched by the addresses of their roster
+                entries, from every throttle JMRI holds and from any connection
+                that sees other cabs' commands, each with the time it was
+                reported, and the release of each loco's address. It only
+                watches.</li>
         </ul>
 
     <h3>Timetable</h3>

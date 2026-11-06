@@ -17,6 +17,7 @@ import jmri.TrainRecord;
 import jmri.TrainRecordManager;
 import jmri.beans.PropertyChangeSupport;
 import jmri.implementation.DefaultTrainRecord;
+import jmri.implementation.TrainRecordSpeedWatcher;
 import jmri.implementation.TrainRecordWatcher;
 
 /**
@@ -31,11 +32,13 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
 
     private final List<DefaultTrainRecord> records = new ArrayList<>();
     private final TrainRecordWatcher watcher;
+    private final TrainRecordSpeedWatcher speedWatcher = new TrainRecordSpeedWatcher(() -> new ArrayList<>(records));
     private boolean disposed = false;
 
     /**
      * Make the manager, which starts following the layout's Blocks: their
-     * values always, their sensors while any record is placed.
+     * values always, their sensors while any record is placed. It follows
+     * speed commands while any record has a loco address.
      */
     public DefaultTrainRecordManager() {
         watcher = new TrainRecordWatcher(() -> new ArrayList<>(records), new TrainRecordWatcher.Placer() {
@@ -60,6 +63,7 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
         if (!disposed) {
             disposed = true;
             watcher.dispose();
+            speedWatcher.dispose();
         }
     }
 
@@ -117,6 +121,11 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
         }
 
         @Override
+        public void rosterEntriesChanged(@Nonnull TrainRecord record) {
+            speedWatcher.update();
+        }
+
+        @Override
         public void checkIdTag(@Nonnull TrainRecord record, @Nonnull IdTag tag) {
             TrainRecord other = getByIdTag(tag);
             if (other != null && other != record) {
@@ -156,6 +165,7 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
         records.remove(r);
         r.markRemoved();
         watcher.placementChanged();
+        speedWatcher.update();
         firePropertyChange(PROPERTY_RECORDS, r, null);
     }
 
