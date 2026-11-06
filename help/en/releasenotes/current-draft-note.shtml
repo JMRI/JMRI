@@ -746,6 +746,13 @@
                 that sees other cabs' commands, each with the time it was
                 reported, and the release of each loco's address. It only
                 watches.</li>
+            <li>For developers: where a train's leading end is can now be
+                estimated, as a range of distances into the Block it last
+                entered, from the time it entered, the speed commands for its
+                lead loco since, that loco's speed profile and its decoder's
+                momentum (CV3 and CV4)
+                (<code>jmri.jmrit.trainrecord.TrainPositionEstimator</code>).
+                Nothing uses it yet.</li>
         </ul>
 
     <h3>Timetable</h3>
