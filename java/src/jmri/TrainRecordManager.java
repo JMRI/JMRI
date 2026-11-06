@@ -78,4 +78,14 @@ public interface TrainRecordManager extends PropertyChangeProvider {
      */
     @CheckForNull
     TrainRecord getByIdTag(@Nonnull IdTag tag);
+
+    /**
+     * The record a Block value identifies: a roster entry's, an ID tag's,
+     * or, for a String, the record of that name.
+     *
+     * @param value a Block value
+     * @return the record, or null if the value identifies none
+     */
+    @CheckForNull
+    TrainRecord getByValue(@CheckForNull Object value);
 }

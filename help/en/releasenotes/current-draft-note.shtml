@@ -452,6 +452,19 @@
                  its speed profile, it reaches the end of the Section. A
                  warning naming the stop sensor is written to the System
                  Console.</li>
+             <li>For developers: each Active Train now refers to the record of
+                 its train (<code>ActiveTrain.getTrainRecord()</code>), found by
+                 its roster entry or name, which keeps its Train Detection and
+                 Max Train Length and is kept when the Active Train is
+                 terminated, so the next Active Train for the same train refers
+                 to it again. Nothing users see changes.</li>
+             <li>For developers: a placed train record now follows its train
+                 from Block to Block as detection sees it: the Blocks it is in,
+                 a trail of the Blocks it entered and when (from the sensor's
+                 first report), which end leads, and how sure JMRI is of where
+                 it is. Dispatcher places an Active Train's record in its start
+                 Block, and a record is placed where a Block's value names it.
+                 It only watches: nothing on the layout changes.</li>
              <li></li>
              <li>A Block change that an automatic train handles just after
                  one of its Sections is released, or as the train is
