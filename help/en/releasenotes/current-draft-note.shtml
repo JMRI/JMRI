@@ -459,6 +459,14 @@
                  or that the train has disappeared. The train now uses the
                  direction the Section was allocated in, and ignores Block
                  changes once it is being terminated.</li>
+             <li>When a train starts in a Block that contains turnouts,
+                 Dispatcher now checks that the turnouts it needs to leave the
+                 Block are set for its route. It does not move them, as the
+                 train may be standing on them: if one is set the other way,
+                 the train is not given its first Section, a warning names the
+                 turnout, and the train goes as soon as the turnout is set.
+                 Before, the turnouts in a train's starting Block were neither
+                 checked nor set, so a train could leave the wrong way.</li>
              <li><strong>Place train name in allocated Blocks</strong> no longer writes the
                  train's name into the value of the Blocks Dispatcher
                  allocates, so the train name shown in allocated Blocks is no
