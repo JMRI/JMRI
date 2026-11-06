@@ -8,6 +8,7 @@ import jmri.jmrix.debugthrottle.DebugThrottleManager;
 import jmri.managers.DefaultPowerManager;
 import jmri.managers.DefaultProgrammerManager;
 import jmri.progdebugger.DebugProgrammerManager;
+import jmri.time.TimeProviderManager;
 import jmri.util.NamedBeanPreferNumericComparator;
 
 /**
@@ -120,6 +121,18 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.DefaultSystemConnec
             InstanceManager.setTurnoutManager(turnoutManager);
         }
         return turnoutManager;
+    }
+
+    public InternalTimeProviderManager getTimeProviderManager() {
+        InternalTimeProviderManager timeProviderManager = (InternalTimeProviderManager) classObjectMap.get(TimeProviderManager.class);
+        if(timeProviderManager == null ) {
+            log.debug("Create InternalTimeProviderManager \"{}\" by request", getSystemPrefix());
+            timeProviderManager = new InternalTimeProviderManager(this);
+            store(timeProviderManager,TimeProviderManager.class);
+            // special due to ProxyManager support
+            InstanceManager.setTimeProviderManager(timeProviderManager);
+        }
+        return timeProviderManager;
     }
 
     public InternalMeterManager getMeterManager() {

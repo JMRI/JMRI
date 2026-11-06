@@ -308,7 +308,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
                 hardwareTimeSource = InstanceManager.getDefault(ClockControl.class);
                 masterName = hardwareTimeSource.getHardwareClockName();
             }
-            firePropertyChange("config", 0, 1); // inform listeners that the clock config has changed            
+            firePropertyChange("config", 0, 1); // inform listeners that the clock config has changed
         }
     }
 
@@ -580,10 +580,10 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         boolean startStopped = (initialState == ClockInitialRunState.DO_STOP);
         if (synchronizeWithHardware || correctHardware) {
             if (startStopped) {
-                InstanceManager.getList(ClockControl.class).forEach( cc -> 
+                InstanceManager.getList(ClockControl.class).forEach( cc ->
                     cc.initializeHardwareClock( 0, getTime(), (!internalMaster && !startSetTime)) );
             } else {
-                InstanceManager.getList(ClockControl.class).forEach( cc -> 
+                InstanceManager.getList(ClockControl.class).forEach( cc ->
                     cc.initializeHardwareClock( mFactor, getTime(), (!internalMaster && !startSetTime)) );
             }
         } else if (!internalMaster) {
