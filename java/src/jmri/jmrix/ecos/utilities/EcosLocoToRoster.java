@@ -875,8 +875,6 @@ public class EcosLocoToRoster implements EcosListener {
         }
     }
 
-    Element modelElem = null;
-
     Element decoderRoot = null;
     VariableTableModel variableModel;
     Element programmerRoot = null;
@@ -909,9 +907,6 @@ public class EcosLocoToRoster implements EcosListener {
         if (decoderRoot.getAttribute("showEmptyPanes") != null) {
             log.debug("Found in decoder {}", decoderRoot.getAttribute("showEmptyPanes").getValue());
         }
-
-        // save the pointer to the model element
-        modelElem = df.getModelElement();
     }
 
     // From PaneProgFrame
@@ -935,8 +930,6 @@ public class EcosLocoToRoster implements EcosListener {
             log.error("xml file top element is not programmer");
         }
     }
-
-    boolean getFunctionSupported = true;
 
     void getFunctionDetails(int func) {
         //Only gets information for function numbers upto 28
