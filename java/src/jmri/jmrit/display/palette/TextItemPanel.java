@@ -71,11 +71,11 @@ public class TextItemPanel extends ItemPanel {
     private AJRadioButton _fontButton;
     private AJRadioButton _borderButton;
     private AJRadioButton _backgroundButton;
-    protected int _selectedButton;  // allow access for testing
-    protected JColorChooser _chooser;   // allow access for testing
+    private int _selectedButton;
+    private JColorChooser _chooser;
 
-    protected AJSpinner _borderSpin;    // allow testing access
-    protected AJSpinner _marginSpin;
+    private AJSpinner _borderSpin;
+    private AJSpinner _marginSpin;
     private AJSpinner _widthSpin;
     private AJSpinner _heightSpin;
 
@@ -299,7 +299,7 @@ public class TextItemPanel extends ItemPanel {
     protected void makeFamiliesPanel() {}
 
 
-    protected class LabelDragJComponent extends DragJComponent {
+    private class LabelDragJComponent extends DragJComponent {
 
         public LabelDragJComponent(DataFlavor flavor, JComponent comp) {
             super(flavor, comp);
