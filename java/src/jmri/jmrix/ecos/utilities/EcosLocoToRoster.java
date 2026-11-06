@@ -71,7 +71,6 @@ public class EcosLocoToRoster implements EcosListener {
     Label _statusLabel = null;
     CvTableModel cvModel = null;
     Programmer mProgrammer;
-    JLabel progStatus;
 //    Programmer pProg;
     protected JComboBox<?> locoBox = null;
     protected JToggleButton iddecoder;
@@ -575,9 +574,9 @@ public class EcosLocoToRoster implements EcosListener {
         }
 
         mProgrammer = null;
-        cvModel = new CvTableModel(progStatus, mProgrammer);
-        variableModel = new VariableTableModel(progStatus, new String[]{"CV", "Value"}, cvModel);
-        resetModel = new ResetTableModel(progStatus, mProgrammer);
+        cvModel = new CvTableModel(null, mProgrammer);
+        variableModel = new VariableTableModel(null, new String[]{"CV", "Value"}, cvModel);
+        resetModel = new ResetTableModel(null, mProgrammer);
         storeloco();
         filename = "programmers" + File.separator + "Basic.xml";
         loadProgrammerFile(re);
