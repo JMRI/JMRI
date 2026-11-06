@@ -26,22 +26,20 @@
         <Confidence value="3" /> <!-- 3 is low priority, 2 is medium priority, 1 is high priority -->
         <Or>
 			<!-- Temporary disable these until we have decided what to do about them -->
-           <Bug pattern="AA_ASSERTION_OF_ARGUMENTS" /> <!-- 16 cases -->
-           <Bug pattern="PA_PUBLIC_MUTABLE_OBJECT_ATTRIBUTE" /> <!-- 93 cases -->
-           <Bug pattern="URF_UNREAD_FIELD" /> <!-- 112 cases -->
-           <Bug pattern="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" /> <!-- 50 cases -->
-           <Bug pattern="UUF_UNUSED_FIELD" /> <!-- 19 cases -->
-           <Bug pattern="UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD" /> <!-- 4 cases -->
-           <Bug pattern="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" /> <!-- 141 cases -->
-           <Bug pattern="UWF_UNWRITTEN_FIELD" /> <!-- 6 cases -->
-           <Bug pattern="UWF_NULL_FIELD" /> <!-- 6 cases -->
+           <Bug pattern="PA_PUBLIC_MUTABLE_OBJECT_ATTRIBUTE" /> <!-- 100 cases -->
+           <Bug pattern="URF_UNREAD_FIELD" /> <!-- 84 cases -->
+           <Bug pattern="URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD" /> <!-- 24 cases -->
+           <Bug pattern="UUF_UNUSED_FIELD" /> <!-- 6 cases -->
+           <Bug pattern="UUF_UNUSED_PUBLIC_OR_PROTECTED_FIELD" /> <!-- 6 cases -->
+           <Bug pattern="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" /> <!-- 155 cases -->
+           <Bug pattern="UWF_NULL_FIELD" /> <!-- 7 cases -->
 			<!-- Temporary disable these until we have decided what to do about them -->
 
-           <Bug pattern="IS2_INCONSISTENT_SYNC" />
-           <Bug pattern="NO_NOTIFY_NOT_NOTIFYALL" />
-           <Bug pattern="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE" />
-           <Bug pattern="UW_UNCOND_WAIT" />
-           <Bug pattern="WA_NOT_IN_LOOP" />
+           <Bug pattern="IS2_INCONSISTENT_SYNC" /> <!-- 120 cases -->
+           <Bug pattern="NO_NOTIFY_NOT_NOTIFYALL" /> <!-- 40 cases -->
+           <Bug pattern="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE" /> <!-- 32 cases -->
+           <Bug pattern="UW_UNCOND_WAIT" /> <!-- 45 cases -->
+           <Bug pattern="WA_NOT_IN_LOOP" /> <!-- 25 cases -->
         </Or>
      </Match>
 
@@ -50,22 +48,22 @@
         <Confidence value="2" /> <!-- 3 is low priority, 2 is medium priority, 1 is high priority -->
         <Or>
 		   <!-- Temporary disable these until we have decided what to do about them -->
-           <Bug pattern="HSM_HIDING_METHOD" /> <!-- 8 cases -->
-           <Bug pattern="AT_NONATOMIC_64BIT_PRIMITIVE" />
-           <Bug pattern="NN_NAKED_NOTIFY" />
-           <Bug pattern="AT_NONATOMIC_OPERATIONS_ON_SHARED_VARIABLE" />
-           <Bug pattern="AT_STALE_THREAD_WRITE_OF_PRIMITIVE" />
-           <Bug pattern="US_USELESS_SUPPRESSION_ON_METHOD" />
-           <Bug pattern="SF_SWITCH_FALLTHROUGH" />
+           <Bug pattern="HSM_HIDING_METHOD" /> <!-- 20 cases -->
+           <Bug pattern="AT_NONATOMIC_64BIT_PRIMITIVE" /> <!-- 28 cases -->
+           <Bug pattern="NN_NAKED_NOTIFY" /> <!-- 21 cases -->
+           <Bug pattern="AT_NONATOMIC_OPERATIONS_ON_SHARED_VARIABLE" /> <!-- 75 cases -->
+           <Bug pattern="AT_STALE_THREAD_WRITE_OF_PRIMITIVE" /> <!-- 997 cases -->
+           <Bug pattern="US_USELESS_SUPPRESSION_ON_METHOD" /> <!-- 2 cases -->
+           <Bug pattern="SF_SWITCH_FALLTHROUGH" /> <!-- 3 cases -->
         </Or>
      </Match>
      <Match>
         <Confidence value="3" /> <!-- 3 is low priority, 2 is medium priority, 1 is high priority -->
         <Or>
 		   <!-- Temporary disable these until we have decided what to do about them -->
-           <Bug pattern="THROWS_METHOD_THROWS_RUNTIMEEXCEPTION" />
-           <Bug pattern="THROWS_METHOD_THROWS_CLAUSE_BASIC_EXCEPTION" />
-           <Bug pattern="AT_UNSAFE_RESOURCE_ACCESS_IN_THREAD" />
+           <Bug pattern="THROWS_METHOD_THROWS_RUNTIMEEXCEPTION" /> <!-- 289 cases -->
+           <Bug pattern="THROWS_METHOD_THROWS_CLAUSE_BASIC_EXCEPTION" /> <!-- 3 cases -->
+           <Bug pattern="AT_UNSAFE_RESOURCE_ACCESS_IN_THREAD" /> <!-- 24 cases -->
         </Or>
      </Match>
     
