@@ -1032,8 +1032,6 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE",
-                justification = "False positive on the implied local variable in indexToRead++")
     private int determineNextStateForRead() {
         switch (indexToRead) {
             case 1: {
@@ -2681,7 +2679,6 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
 
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE", justification = "Cannot catch an exception without grabbing the exception, but we don't do anything with the exception details.")
     private void updateGuiFromOpSws49_64() {
         Integer readValue;
         boolean isUsed = true;
@@ -2830,7 +2827,6 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE", justification = "Cannot catch an exception without grabbing the exception, but we don't do anything with the exception details.")
     void updateGuiFromOpSws33_48() {
         Integer readValue;
         boolean isUsed = true;
