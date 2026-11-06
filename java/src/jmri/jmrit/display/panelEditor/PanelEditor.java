@@ -163,7 +163,11 @@ public class PanelEditor extends Editor implements ItemListener {
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         menuBar.add(fileMenu);
         fileMenu.add(new jmri.jmrit.display.NewPanelAction(Bundle.getMessage("MenuItemNew")));
-        fileMenu.add(new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("FileMenuItemStore")));
+        JMenuItem storeAllItem = new JMenuItem(
+                new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("FileMenuItemStore")));
+        storeAllItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
+                SystemType.isMacOSX() ? InputEvent.META_DOWN_MASK : InputEvent.CTRL_DOWN_MASK));
+        fileMenu.add(storeAllItem);
         JMenuItem storeIndexItem = new JMenuItem(Bundle.getMessage("MIStoreImageIndex"));
         fileMenu.add(storeIndexItem);
         storeIndexItem.addActionListener(event -> InstanceManager.getDefault(CatalogTreeManager.class).storeImageIndex());

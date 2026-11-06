@@ -437,7 +437,10 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _menuBar.add(_fileMenu, 0);
         _fileMenu.add(new jmri.jmrit.display.NewPanelAction(Bundle.getMessage("MenuItemNew")));
 
-        _fileMenu.add(new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("FileMenuItemStore")));
+        JMenuItem storeAllItem = new JMenuItem(
+                new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("FileMenuItemStore")));
+        setMenuAcceleratorKey(storeAllItem, KeyEvent.VK_S);
+        _fileMenu.add(storeAllItem);
         JMenuItem storeIndexItem = new JMenuItem(Bundle.getMessage("MIStoreImageIndex"));
         _fileMenu.add(storeIndexItem);
         storeIndexItem.addActionListener((ActionEvent event) -> InstanceManager.getDefault(CatalogTreeManager.class).storeImageIndex());
