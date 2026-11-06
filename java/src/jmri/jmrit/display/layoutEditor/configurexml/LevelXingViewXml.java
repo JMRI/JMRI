@@ -5,6 +5,11 @@ import java.awt.geom.Point2D;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 import jmri.jmrit.display.layoutEditor.LevelXingView;
+import jmri.tracktiles.TrackTile;
+import jmri.tracktiles.TrackTileManager;
+import jmri.tracktiles.NotATile;
+import jmri.tracktiles.UnknownTile;
+import jmri.InstanceManager;
 
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
@@ -108,6 +113,16 @@ public class LevelXingViewXml extends LayoutTrackViewXml {
         }
         if (!lt.getSensorDName().isEmpty()) {
             element.addContent(new Element("sensorD").addContent(lt.getSensorDName()));
+        }
+
+        // store track tile association  
+        TrackTile tile = lv.getTile();
+        if (tile != null && !(tile instanceof NotATile)) {
+            Element tileElement = new Element("tracktile");
+            tileElement.setAttribute("vendor", tile.getVendor());
+            tileElement.setAttribute("family", tile.getFamily());
+            tileElement.setAttribute("partcode", tile.getPartCode());
+            element.addContent(tileElement);
         }
 
         storeLogixNG_Data(lv, element);
@@ -266,6 +281,31 @@ public class LevelXingViewXml extends LayoutTrackViewXml {
             if (sensor != null && !sensor.isEmpty()) {
                 lt.setSensorDName(sensor);
             }
+        }
+
+        // load track tile association
+        Element tileElement = element.getChild("tracktile");
+        if (tileElement != null) {
+            String vendor = tileElement.getAttributeValue("vendor");
+            String family = tileElement.getAttributeValue("family");
+            String partCode = tileElement.getAttributeValue("partcode");
+            
+            if (vendor != null && family != null && partCode != null) {
+                String systemName = "TT:" + vendor + ":" + family + ":" + partCode;
+                TrackTileManager tileManager = InstanceManager.getDefault(TrackTileManager.class);
+                TrackTile tile = tileManager.getBySystemName(systemName);
+                
+                if (tile != null) {
+                    lv.setTile(tile);
+                } else {
+                    // Create UnknownTile as placeholder
+                    lv.setTile(new UnknownTile(systemName));
+                    log.warn("TrackTile not found: {}, using UnknownTile placeholder", systemName);
+                }
+            }
+        } else {
+            // No tile element found, set NotATile
+            lv.setTile(NotATile.getInstance());
         }
 
         loadLogixNG_Data(lv, element);

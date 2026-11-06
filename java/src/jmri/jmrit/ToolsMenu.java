@@ -106,6 +106,7 @@ public class ToolsMenu extends JMenu {
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemAudioTable"), "jmri.jmrit.beantable.AudioTableAction"));
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemIdTagTable"), "jmri.jmrit.beantable.IdTagTableTabAction"));
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemRailComTable"), "jmri.jmrit.beantable.RailComTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemTrackTilesTable"), "jmri.jmrit.beantable.TrackTileTableAction"));
         
         tableMenu.add(new JSeparator());
         JMenuItem settingsItem = new JMenuItem(Bundle.getMessage("MenuItemTablesSettings"));
