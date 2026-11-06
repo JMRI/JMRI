@@ -24,16 +24,38 @@ import static jmri.ThrottleListener.DecisionType;
  */
 public class CbusThrottleManager extends AbstractThrottleManager implements CanListener, Disposable {
 
-    private boolean _handleExpected = false;
-    private boolean _handleExpectedSecondLevelRequest = false;
-    private int _intAddr;
-    private DccLocoAddress _dccAddr;
     protected int THROTTLE_TIMEOUT = 5000;
     private boolean canErrorDialogVisible;
     private boolean invalidErrorDialogVisible;
     private boolean _singleThrottleInUse = false; // For single throttle support
 
     private final ConcurrentHashMap<Integer, CbusThrottle> softThrottles = new ConcurrentHashMap<>(CbusConstants.CBUS_MAX_SLOTS);
+
+    /**
+     * A session request sent to the command station and not yet answered.
+     * Requests for different loco addresses can be outstanding at the same
+     * time, each with its own timeout.
+     */
+    private static final class PendingRequest {
+        private final DccLocoAddress address;
+        private final boolean secondLevel; // a share or steal request (GLOC), not the first RLOC
+        private final boolean recovery; // regaining a session for a stolen Throttle
+        private TimerTask timer;
+
+        private PendingRequest(DccLocoAddress address, boolean secondLevel, boolean recovery) {
+            this.address = address;
+            this.secondLevel = secondLevel;
+            this.recovery = recovery;
+        }
+    }
+
+    /**
+     * Outstanding session requests, by loco address. Requests are made from the
+     * calling thread and answered on the layout thread (Swing thread), so the
+     * map is concurrent; each entry's timer is started before the entry is put
+     * in the map, and a request is finished only by removing that same entry.
+     */
+    private final ConcurrentHashMap<DccLocoAddress, PendingRequest> pendingRequests = new ConcurrentHashMap<>();
 
     public CbusThrottleManager(CanSystemConnectionMemo memo) {
         super(memo);
@@ -48,7 +70,9 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
     @Override
     public void dispose() {
         removeTc(tc);
-        stopThrottleRequestTimer();
+        for (PendingRequest p : pendingRequests.values()) {
+            finishRequest(p);
+        }
     }
 
     private final TrafficController tc;
@@ -69,61 +93,64 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
      */
     @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
-        startThrottleRequestTimer(false);
-        requestThrottleSetup(address, DecisionType.STEAL_OR_SHARE);
+        requestThrottleSetup(address, DecisionType.STEAL_OR_SHARE, false);
     }
 
     /**
-     * As this method is called by both throttle recovery and normal throttle creation,
-     * methods calling need to start their own timeouts to ensure the correct
-     * error message is displayed.
+     * Send a session request to the command station and wait for its answer.
+     * <p>
+     * Called both for normal throttle creation and for recovery of a stolen
+     * Throttle; isRecovery decides what a timeout does. A request for a loco
+     * address replaces any earlier request for the same address that is still
+     * waiting, and leaves requests for other addresses waiting.
      */
-    private void requestThrottleSetup(LocoAddress address, DecisionType decision) {
+    private void requestThrottleSetup(LocoAddress address, DecisionType decision, boolean isRecovery) {
         if ( !( address instanceof DccLocoAddress)) {
             log.error("{} is not a DccLocoAddress",address);
             return;
         }
 
         if (memo.hasMultipleThrottles() || !_singleThrottleInUse) {
-            _dccAddr = (DccLocoAddress) address;
-            _intAddr = _dccAddr.getNumber();
+            DccLocoAddress dccAddr = (DccLocoAddress) address;
+            int intAddr = dccAddr.getNumber();
 
             // The CBUS protocol requires that we request a session from the command
             // station. Throttle object will be notified by Command Station
-            log.debug("Requesting {} session for loco {}",decision,_dccAddr);
-            if (_dccAddr.isLongAddress()) {
-                _intAddr |= 0xC000;
+            log.debug("Requesting {} session for loco {}",decision,dccAddr);
+            if (dccAddr.isLongAddress()) {
+                intAddr |= 0xC000;
             }
             CanMessage msg;
+            boolean secondLevel;
 
             switch (decision) {
                 case STEAL_OR_SHARE:
                     // 1st line request
                     // Request a session for this throttle normally
-                    _handleExpectedSecondLevelRequest = false;
+                    secondLevel = false;
                     msg = new CanMessage(3, tc.getCanid());
                     msg.setOpCode(CbusConstants.CBUS_RLOC);
-                    msg.setElement(1, _intAddr / 256);
-                    msg.setElement(2, _intAddr & 0xff);
+                    msg.setElement(1, intAddr / 256);
+                    msg.setElement(2, intAddr & 0xff);
                     break;
                 case STEAL:
                     // 2nd line request
                     // Request a Steal session
-                    _handleExpectedSecondLevelRequest = true;
+                    secondLevel = true;
                     msg = new CanMessage(4, tc.getCanid());
                     msg.setOpCode(CbusConstants.CBUS_GLOC);
-                    msg.setElement(1, _intAddr / 256);
-                    msg.setElement(2, _intAddr & 0xff);
+                    msg.setElement(1, intAddr / 256);
+                    msg.setElement(2, intAddr & 0xff);
                     msg.setElement(3, 0x01); // bit 0 flag set
                     break;
                 case SHARE:
                     // 2nd line request
                     // Request a Share session
-                    _handleExpectedSecondLevelRequest = true;
+                    secondLevel = true;
                     msg = new CanMessage(4, tc.getCanid());
                     msg.setOpCode(CbusConstants.CBUS_GLOC);
-                    msg.setElement(1, _intAddr / 256);
-                    msg.setElement(2, _intAddr & 0xff);
+                    msg.setElement(1, intAddr / 256);
+                    msg.setElement(2, intAddr & 0xff);
                     msg.setElement(3, 0x02); // bit 1 flag set
                     break;
                 default:
@@ -131,8 +158,8 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
                     return;
             }
 
-            // send the request to layout
-            _handleExpected = true;
+            // wait for the answer, then send the request to layout
+            startRequest(new PendingRequest(dccAddr, secondLevel, isRecovery));
             tc.sendCanMessage(msg, this);
         } else {
             failedThrottleRequest(address, "Only one Throttle can be in use at anyone time with this connection.");
@@ -228,10 +255,9 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
                 boolean rcvdIsLong = (m.getElement(2) & 0xc0) != 0;
                 DccLocoAddress rcvdDccAddr = new DccLocoAddress(rcvdIntAddr, rcvdIsLong);
                 log.debug("Throttle manager received PLOC with session {} for address {}",m.getElement(1),rcvdIntAddr);
-                if ((_handleExpected) && rcvdDccAddr.equals(_dccAddr)) {
+                if (takeRequest(rcvdDccAddr) != null) {
                     log.debug("PLOC was expected");
                     // We're expecting an engine report and it matches our address
-                    stopThrottleRequestTimer();
                     handle = m.getElement(1);
                     if (!memo.hasMultipleThrottles()) {
                         _singleThrottleInUse = true;
@@ -252,7 +278,6 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
                                 throttle.setStolen(false); // sends the reactivation PCL
                            // },500 );
                             throttle.throttleInit(m.getElement(4), m.getElement(5), m.getElement(6), m.getElement(7));
-                            _handleExpected = false;
                             return;
                         }
                     }
@@ -262,7 +287,6 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
                     notifyThrottleKnown(throttle, rcvdDccAddr);
                     throttle.throttleInit(m.getElement(4), m.getElement(5), m.getElement(6), m.getElement(7));
                     softThrottles.put(handle, throttle);
-                    _handleExpected = false;
                 }
                 break;
             case CbusConstants.CBUS_ERR:
@@ -337,7 +361,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
         // DccLocoAddress rcvdDccAddr = new DccLocoAddress(rcvdIntAddr, rcvdIsLong);
         int errCode = m.getElement(3);
 
-        boolean responseForUs = ((_handleExpected) && new DccLocoAddress(rcvdIntAddr, rcvdIsLong).equals(_dccAddr));
+        DccLocoAddress rcvdDccAddr = new DccLocoAddress(rcvdIntAddr, rcvdIsLong);
 
         switch (errCode) {
             case CbusConstants.ERR_LOCO_STACK_FULL:
@@ -350,17 +374,14 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
                     errStr = Bundle.getMessage("ERR_LOCO_ADDRESS_TAKEN", rcvdIntAddr);
                 }
 
-                // log.debug("handlexpected {} _dccAddr {} got {} ", _handleExpected, _dccAddr, rcvdDccAddr);
-
-                if (responseForUs) { // We were expecting an engine report and it matches our address
+                PendingRequest request = takeRequest(rcvdDccAddr);
+                if (request != null) { // We were expecting an engine report and it matches our address
                     log.debug("Failed throttle request due to ERR");
-                    _handleExpected = false;
-                    stopThrottleRequestTimer();
 
                     // if this is the result of a share or steal request,
                     // we need to stop here and inform the ThrottleListener
-                    if ( _handleExpectedSecondLevelRequest ){
-                        failedThrottleRequest(_dccAddr, errStr);
+                    if ( request.secondLevel ){
+                        failedThrottleRequest(rcvdDccAddr, errStr);
                         return;
                     }
 
@@ -380,16 +401,16 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
                     }
 
                     if ( !steal && !share ){
-                        failedThrottleRequest(_dccAddr, errStr);
+                        failedThrottleRequest(rcvdDccAddr, errStr);
                     }
                     else if ( steal && share ){
-                        notifyDecisionRequest(_dccAddr, DecisionType.STEAL_OR_SHARE);
+                        notifyDecisionRequest(rcvdDccAddr, DecisionType.STEAL_OR_SHARE);
                     }
                     else if ( steal ){
-                        notifyDecisionRequest(_dccAddr, DecisionType.STEAL);
+                        notifyDecisionRequest(rcvdDccAddr, DecisionType.STEAL);
                     }
                     else { // must be share
-                        notifyDecisionRequest(_dccAddr, DecisionType.SHARE);
+                        notifyDecisionRequest(rcvdDccAddr, DecisionType.SHARE);
                     }
                 } else {
                     log.debug("ERR address not matched");
@@ -401,10 +422,9 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
                 // coming back online
                 log.warn("{}",Bundle.getMessage("ERR_SESSION_NOT_PRESENT",handle));
 
-                if (responseForUs) {
+                if (takeRequest(rcvdDccAddr) != null) {
                     // We were expecting an engine report and it matches our address
-                    _handleExpected = false;
-                    failedThrottleRequest(_dccAddr, Bundle.getMessage("CBUS_ERROR")
+                    failedThrottleRequest(rcvdDccAddr, Bundle.getMessage("CBUS_ERROR")
                         + Bundle.getMessage("ERR_SESSION_NOT_PRESENT",handle));
                     log.warn("Session not present when expecting a session number");
                 }
@@ -493,7 +513,6 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
         throttle.increaseNumRecoverAttempts();
 
         if (throttle.getNumRecoverAttempts() > 10) { // catch runaways
-            _handleExpected = false;
             throttle.throttleDispose(); // stop throttle keep-alive messages, send PCL ThrottleConnected false
             showSessionCancelDialogue(throttle.getLocoAddress());
             removeSoftThrottle(throttle); // remove from local list
@@ -517,18 +536,14 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
         if (share && InstanceManager.getDefault(ThrottlesPreferences.class).isSilentShare()){
             // share is available on command station AND silent share preference checked
             log.info("Requesting Silent Share loco {} to regain a session",throttle.getLocoAddress());
-            ThreadingUtil.runOnLayoutDelayed( () -> {
-                startThrottleRequestTimer(true);
-                requestThrottleSetup(throttle.getLocoAddress(), DecisionType.SHARE);
-            },1000);
+            ThreadingUtil.runOnLayoutDelayed( () ->
+                requestThrottleSetup(throttle.getLocoAddress(), DecisionType.SHARE, true), 1000);
         }
         else if (steal && InstanceManager.getDefault(ThrottlesPreferences.class).isSilentSteal()) {
             // steal is available on command station AND silent steal preference checked
             log.info("Requesting Silent Steal loco {} to regain a session",throttle.getLocoAddress());
-            ThreadingUtil.runOnLayoutDelayed( () -> {
-                startThrottleRequestTimer(true);
-                requestThrottleSetup(throttle.getLocoAddress(), DecisionType.STEAL);
-            },1000);
+            ThreadingUtil.runOnLayoutDelayed( () ->
+                requestThrottleSetup(throttle.getLocoAddress(), DecisionType.STEAL, true), 1000);
         } else {
             throttle.throttleDispose(); // stop throttle keep-alive messages, send PCL ThrottleConnected false
             showSessionCancelDialogue(throttle.getLocoAddress());
@@ -662,55 +677,89 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
     @Override
     public void responseThrottleDecision(LocoAddress address, ThrottleListener l, DecisionType decision) {
         log.debug("Received {} response for Loco {}, listener {}",decision,address,l);
-        startThrottleRequestTimer(false);
-        requestThrottleSetup(address,decision);
+        requestThrottleSetup(address, decision, false);
     }
-
-    private TimerTask throttleRequestTimer;
 
     /**
-     * Start timer to wait for command station to respond to RLOC or GLOC
+     * Start waiting for the command station to respond to RLOC or GLOC for
+     * one loco address. Replaces, and stops the timer of, any earlier request
+     * for the same address.
      */
-    private void startThrottleRequestTimer(boolean isRecovery) {
-        stopThrottleRequestTimer(); // do not leave a previous request timer running
-        throttleRequestTimer = new TimerTask() {
+    private void startRequest(PendingRequest request) {
+        request.timer = new TimerTask() {
             @Override
             public void run() {
-                timeout(isRecovery);
+                timeout(request);
             }
         };
-        TimerUtil.schedule(throttleRequestTimer, ( THROTTLE_TIMEOUT ) );
+        PendingRequest previous = pendingRequests.put(request.address, request);
+        if (previous != null && previous.timer != null) {
+            previous.timer.cancel();
+        }
+        TimerUtil.scheduleOnLayoutThread(request.timer, THROTTLE_TIMEOUT);
     }
 
-    private void stopThrottleRequestTimer(){
-        if (throttleRequestTimer!=null){
-            throttleRequestTimer.cancel();
+    /**
+     * Finish a request: stop its timer and stop waiting for it.
+     * @param request the request
+     * @return true if the request was still waiting, false if it had already
+     *         been answered, timed out or replaced by a later request
+     */
+    private boolean finishRequest(PendingRequest request) {
+        if (request.timer != null) {
+            request.timer.cancel();
         }
-        throttleRequestTimer = null;
+        return pendingRequests.remove(request.address, request);
+    }
+
+    /**
+     * Take the request waiting for an answer for a loco, if any: stop its
+     * timer and stop waiting for it.
+     * @param address the loco address the command station answered for
+     * @return the request, or null if none was waiting for that address
+     */
+    private PendingRequest takeRequest(DccLocoAddress address) {
+        PendingRequest request = pendingRequests.remove(address);
+        if (request != null && request.timer != null) {
+            request.timer.cancel();
+        }
+        return request;
+    }
+
+    /**
+     * Number of session requests waiting for the command station.
+     * Package access for testing.
+     * @return the number of outstanding requests
+     */
+    int getPendingRequestCount() {
+        return pendingRequests.size();
     }
 
     /**
      * Internal routine to notify failed throttle request a timeout
      */
-    private void timeout(boolean isRecovery) {
-        log.debug("Throttle request (RLOC or PLOC) timed out");
-        stopThrottleRequestTimer();
-        if (isRecovery){
-            log.warn("Session recovery not possible for {}",_dccAddr);
-            forceDisposeThrottle( _dccAddr ); // remove from JMRI share list
+    private void timeout(PendingRequest request) {
+        if (!finishRequest(request)) {
+            return; // answered, or replaced by a later request for the same loco
+        }
+        DccLocoAddress addr = request.address;
+        log.debug("Throttle request (RLOC or PLOC) timed out for {}", addr);
+        if (request.recovery){
+            log.warn("Session recovery not possible for {}",addr);
+            forceDisposeThrottle( addr ); // remove from JMRI share list
 
             for (Map.Entry<Integer, CbusThrottle> entry : softThrottles.entrySet()) {
                 CbusThrottle throttle = entry.getValue();
-                if (Objects.equals(throttle.getLocoAddress(), _dccAddr)) {
+                if (Objects.equals(throttle.getLocoAddress(), addr)) {
                     throttle.throttleDispose();
-                    showSessionCancelDialogue(_dccAddr);
+                    showSessionCancelDialogue(addr);
                     // handle is now -1, remove by map key
                     softThrottles.remove(entry.getKey());
                 }
             }
         }
         else { // not in recovery, normal request timeout, is command station connected?
-            failedThrottleRequest(_dccAddr, Bundle.getMessage("ERR_THROTTLE_TIMEOUT"));
+            failedThrottleRequest(addr, Bundle.getMessage("ERR_THROTTLE_TIMEOUT"));
         }
     }
 
