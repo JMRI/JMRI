@@ -459,6 +459,35 @@
                  or that the train has disappeared. The train now uses the
                  direction the Section was allocated in, and ignores Block
                  changes once it is being terminated.</li>
+             <li><strong>Place train name in allocated Blocks</strong> no longer writes the
+                 train's name into the value of the Blocks Dispatcher
+                 allocates, so the train name shown in allocated Blocks is no
+                 longer overwritten or lost as trains move. With the option
+                 off, the default, nothing changes. With it on, the train a
+                 Block is allocated to is kept as the Block's new allocated
+                 value, and Block Contents icons and Layout Block memories show
+                 it wherever the Block does not already show a train, so
+                 panels, including web panels, look as before. A Block Contents
+                 Input icon edits the Block's value, so it shows only the
+                 value, and is empty in an empty allocated Block.
+                 <strong>A Logix, LogixNG or script that reads the value of an
+                 allocated Block now gets only the train Block tracking has
+                 placed there:</strong> nothing where the Block is empty, or
+                 where Block tracking could not tell which train entered.
+                 <code>getDisplayValue()</code> gives what the value gave
+                 before, and <code>getAllocatedValue()</code> gives only the
+                 train the Block is allocated to; a script that listens for
+                 changes to a Block's value to notice allocations should also
+                 listen for its <code>allocatedValue</code> property. See the
+                 <a href="https://www.jmri.org/help/en/package/jmri/jmrit/beantable/BlockTable.shtml#allocatedValue">Block
+                 Table help</a>. So that anyone whose own script or Logix
+                 behaves differently can find out why, Dispatcher logs a note
+                 saying this the first time it allocates a Block in a session
+                 with the option on. <code>Section.setNameFromActiveBlock</code>,
+                 <code>Section.suppressNameUpdate</code> and
+                 <code>LayoutBlock.setSuppressNameUpdate</code> are no longer
+                 needed; they still work, but log a warning the first time
+                 they are used, and will be removed.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -577,11 +606,17 @@
 
         <h4>Signal Heads</h4>
             <ul>
-                <li></li>
+                <li>Deleting a Signal Head now clears the Comments JMRI wrote on
+                    its output Turnouts when it was set up. The Turnouts stay;
+                    Comments entered by the user are left alone.</li>
             </ul>
 
         <h4>Signal Masts</h4>
             <ul>
+                <li>Deleting a Signal Mast now clears the "<i>mast</i>:output<i>N</i>"
+                    Comments JMRI wrote on its output Turnouts. Editing an Output
+                    Matrix Mast clears them from outputs it no longer uses. The
+                    Turnouts stay; Comments entered by the user are left alone.</li>
                 <li></li>
             </ul>
 
@@ -615,6 +650,15 @@
         <a id="throttle" name="throttle"></a>
         <ul>
             <li></li>
+            <li>Code and scripts can now be told when each speed or direction
+                command from a throttle has actually been sent to the layout,
+                and when (<code>Throttle.addSpeedSentListener</code>). The time
+                is taken as soon as the command is written to the connection,
+                after any wait for other work or for messages queued ahead of
+                it. CBUS throttles report it, on real CBUS connections and on
+                CAN Simulation; <code>Throttle.reportsSpeedSent()</code> says
+                whether a throttle does. Nothing that listens to a throttle's
+                properties sees anything new.</li>
         </ul>
 
     <h3>Timetable</h3>
@@ -632,6 +676,9 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
+            <li>The Turnout and Sensor tables can now add a sequential range of
+                up to 1000 items at once (was 100), e.g. a whole C/MRI node. The
+                confirmation for a large range is unchanged.</li>
             <li>When the user name of a sensor, turnout or other item is changed
                 from one name to another in any way, for example by a script,
                 the places that use it by that name now follow the change.
@@ -654,7 +701,12 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>The JSON block object adds <code>allocatedValue</code>, the
+                train the Block is allocated to, kept apart from
+                <code>value</code>, the train in the Block. A web panel's
+                Block Contents icon shows the value or, when there is none,
+                the allocated value, as a JMRI panel does. The JSON protocol
+                version is now 5.5.0.</li>
         </ul>
 
     <h3>Where Used</h3>
@@ -685,5 +737,10 @@
         <a id="Misc" name="Misc"></a>
         <ul>
             <li></li>
+            <li>Quitting JMRI, and closing the CBUS or LCC Hub window, no
+                longer wait about 2 seconds for each network address while
+                JMRI withdraws its ZeroConf (mDNS) announcements, such as the
+                Hub's, WiThrottle's and the Web Server's. The wait is now about
+                2 seconds in all.</li>
         </ul>
 

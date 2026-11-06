@@ -195,6 +195,18 @@ public class SignalHeadTableModel extends jmri.jmrit.beantable.BeanTableDataMode
         return InstanceManager.getDefault(SignalHeadManager.class);
     }
 
+    /**
+     * Delete the head and clear the "SignalHead:head:..." Comments it left on
+     * its outputs; the outputs stay in the Turnout table.
+     */
+    @Override
+    protected void doDelete(SignalHead bean) {
+        String name = bean.getSystemName();
+        super.doDelete(bean);
+        clearTurnoutComments("SignalHead:" + name + ":");
+        clearTurnoutComments(Bundle.getMessage("BeanNameSignalHead") + ":" + name + ":"); // MERG SD2 inputs
+    }
+
     @Override
     public SignalHead getBySystemName(@Nonnull String name) {
         return InstanceManager.getDefault(SignalHeadManager.class).getBySystemName(name);

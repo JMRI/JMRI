@@ -116,6 +116,9 @@ abstract public class AbstractCanTrafficController
                 while (hm.getRetries() >= 0) {
                     if (portReadyToSend(controller)) {
                         ostream.write(msg);
+                        // the caller's message is the one stamped and told,
+                        // not its hardware encoding
+                        messageSent(m, System.nanoTime());
                         log.debug("message written");
                         break;
                     } else if (hm.getRetries() >= 0) {
