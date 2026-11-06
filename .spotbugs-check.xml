@@ -12,7 +12,6 @@
            <Bug pattern="CT_CONSTRUCTOR_THROW" /> <!-- 316 cases -->
            <Bug pattern="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE" /> <!-- 75 cases -->
            <Bug pattern="PA_PUBLIC_PRIMITIVE_ATTRIBUTE" /> <!-- 202 cases -->
-           <Bug pattern="SING_SINGLETON_GETTER_NOT_SYNCHRONIZED" /> <!-- 6 cases -->
            <Bug pattern="SS_SHOULD_BE_STATIC" /> <!-- 211 cases -->
            <Bug pattern="UWF_NULL_FIELD" /> <!-- 4 cases -->
 			<!-- Temporary disable these until we have decided what to do about them -->
