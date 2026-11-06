@@ -206,7 +206,7 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
     public static XBeeMessage getRemoteTransmissionRequest(Object address, byte[] payload) {
         if (address instanceof com.digi.xbee.api.models.XBee16BitAddress) {
             return getRemoteTransmissionRequest((com.digi.xbee.api.models.XBee16BitAddress) address, payload);
-        } else if (address instanceof XBee16BitAddress) {
+        } else if (address instanceof XBee64BitAddress) {
             return getRemoteTransmissionRequest((com.digi.xbee.api.models.XBee64BitAddress) address, payload);
         } else {
             throw new IllegalArgumentException("address is neither a XBee16BitAddress nor a XBee64BitAddress: " +
