@@ -85,7 +85,6 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         }
     }
 
-    protected String[] baudList;
     protected jmri.jmrix.SerialPortAdapter adapter;
 
     /**

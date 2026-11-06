@@ -467,12 +467,6 @@ public class TrackSegmentView extends LayoutTrackView {
         }
     }
 
-    // initialization instance variables (used when loading a LayoutEditor)
-    public String tConnect1Name = "";
-    public String tConnect2Name = "";
-
-    public String tLayoutBlockName = "";
-
     public void updateBlockInfo() {
         trackSegment.updateBlockInfo();
     }
