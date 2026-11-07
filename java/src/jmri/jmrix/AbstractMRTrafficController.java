@@ -365,10 +365,10 @@ public abstract class AbstractMRTrafficController {
     protected synchronized void sendMessage(AbstractMRMessage m, AbstractMRListener reply) {
         msgQueue.addLast(m);
         listenerQueue.addLast(reply);
-        synchronized (xmtRunnable) {
+        synchronized (XMT_RUNNABLE_LOCK) {
             if (mCurrentState == IDLESTATE) {
                 mCurrentState = NOTIFIEDSTATE;
-                xmtRunnable.notify();
+                XMT_RUNNABLE_LOCK.notify();
             }
         }
         if (m != null) {
@@ -461,7 +461,7 @@ public abstract class AbstractMRTrafficController {
                         log.debug("Message added back to queue: {}", m);
                         msgQueue.addFirst(m);
                         listenerQueue.addFirst(l);
-                        synchronized (xmtRunnable) {
+                        synchronized (XMT_RUNNABLE_LOCK) {
                             mCurrentState = IDLESTATE;
                         }
                     } else {
@@ -474,13 +474,13 @@ public abstract class AbstractMRTrafficController {
                 if (mWaitBeforePoll > waitTimePoll || mCurrentMode == PROGRAMINGMODE) {
                     try {
                         long startTime = Calendar.getInstance().getTimeInMillis();
-                        synchronized (xmtRunnable) {
+                        synchronized (XMT_RUNNABLE_LOCK) {
                             // Only wait while still IDLE. If a message was
                             // queued since the check above, sendMessage() has
                             // already moved to NOTIFIEDSTATE and sent its
                             // notify(), which nobody was waiting for.
                             if (mCurrentState == IDLESTATE) {
-                                xmtRunnable.wait(mWaitBeforePoll);
+                                XMT_RUNNABLE_LOCK.wait(mWaitBeforePoll);
                             }
                         }
                         long endTime = Calendar.getInstance().getTimeInMillis();
@@ -561,13 +561,13 @@ public abstract class AbstractMRTrafficController {
         while (endTime > (currentTime = Calendar.getInstance().getTimeInMillis())) {
             long wait = endTime - currentTime;
             try {
-                synchronized (xmtRunnable) {
+                synchronized (XMT_RUNNABLE_LOCK) {
                     // Do not wait if the current state has changed since we
                     // last set it.
                     if (mCurrentState != state) {
                         return;
                     }
-                    xmtRunnable.wait(wait); // rcvr normally ends this w state change
+                    XMT_RUNNABLE_LOCK.wait(wait); // rcvr normally ends this w state change
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // retain if needed later
@@ -596,8 +596,8 @@ public abstract class AbstractMRTrafficController {
         int loopCount = 0;
         while (replyInDispatch) {
             try {
-                synchronized (xmtRunnable) {
-                    xmtRunnable.wait(DISPATCH_WAIT_INTERVAL);
+                synchronized (XMT_RUNNABLE_LOCK) {
+                    XMT_RUNNABLE_LOCK.wait(DISPATCH_WAIT_INTERVAL);
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // retain if needed later
@@ -761,8 +761,8 @@ public abstract class AbstractMRTrafficController {
                         log.debug("Retry message: {} attempts remaining: {}", m, m.getRetries());
                         m.setRetries(m.getRetries() - 1);
                         try {
-                            synchronized (xmtRunnable) {
-                                xmtRunnable.wait(m.getTimeout());
+                            synchronized (XMT_RUNNABLE_LOCK) {
+                                XMT_RUNNABLE_LOCK.wait(m.getTimeout());
                             }
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later
@@ -836,7 +836,7 @@ public abstract class AbstractMRTrafficController {
     protected volatile Thread xmtThread = null;
     protected volatile Thread rcvThread = null;
 
-    protected volatile Runnable xmtRunnable = null;
+    protected final Object XMT_RUNNABLE_LOCK = new Object();
 
     /**
      * Make connection to an existing PortController object.
@@ -858,27 +858,23 @@ public abstract class AbstractMRTrafficController {
             }
             controller = p;
             // and start threads
-            xmtThread = jmri.util.ThreadingUtil.newThread(
-                xmtRunnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            transmitLoop();
-                        } catch (Throwable e) {
-                            if (!threadStopRequest) {
-                                log.error("Transmit thread terminated prematurely by: {}", e, e);
-                            }
-                            // see http://docs.oracle.com/javase/7/docs/api/java/lang/ThreadDeath.html
-                            // ThreadDeath must be thrown per Java API Javadocs
-                            //
-                            // The type ThreadDeath has been deprecated since version 20 and marked for removal
-                            // and the warning cannot be suppressed in Java 21. But external libraries might
-                            // throw the exception outside of JMRI control. So check the name of the exception
-                            // instead of using "instanceof".
-                            if ("java.lang.ThreadDeath".equals(e.getClass().getName())) {
-                                throw e;
-                            }
-                        }
+            xmtThread = jmri.util.ThreadingUtil.newThread(() -> {
+                try {
+                    transmitLoop();
+                } catch (Throwable e) {
+                    if (!threadStopRequest) {
+                        log.error("Transmit thread terminated prematurely by: {}", e, e);
+                    }
+                    // see http://docs.oracle.com/javase/7/docs/api/java/lang/ThreadDeath.html
+                    // ThreadDeath must be thrown per Java API Javadocs
+                    //
+                    // The type ThreadDeath has been deprecated since version 20 and marked for removal
+                    // and the warning cannot be suppressed in Java 21. But external libraries might
+                    // throw the exception outside of JMRI control. So check the name of the exception
+                    // instead of using "instanceof".
+                    if ("java.lang.ThreadDeath".equals(e.getClass().getName())) {
+                        throw e;
+                    }
                 }
             });
 
@@ -1192,25 +1188,25 @@ public abstract class AbstractMRTrafficController {
                     // message, otherwise go on to the next message
                     if (msg.isRetransmittableErrorMsg()) {
                         log.error("Automatic Recovery from Error Message: {}.  Retransmitted {} times.", msg, retransmitCount);
-                        synchronized (xmtRunnable) {
+                        synchronized (XMT_RUNNABLE_LOCK) {
                             mCurrentState = AUTORETRYSTATE;
                             if (retransmitCount > 0) {
                                 try {
-                                    xmtRunnable.wait(retransmitCount * 100L);
+                                    XMT_RUNNABLE_LOCK.wait(retransmitCount * 100L);
                                 } catch (InterruptedException e) {
                                     Thread.currentThread().interrupt(); // retain if needed later
                                 }
                             }
                             replyInDispatch = false;
-                            xmtRunnable.notify();
+                            XMT_RUNNABLE_LOCK.notify();
                             retransmitCount++;
                         }
                     } else {
                         // update state, and notify to continue
-                        synchronized (xmtRunnable) {
+                        synchronized (XMT_RUNNABLE_LOCK) {
                             mCurrentState = NOTIFIEDSTATE;
                             replyInDispatch = false;
-                            xmtRunnable.notify();
+                            XMT_RUNNABLE_LOCK.notify();
                             retransmitCount = 0;
                         }
                     }
@@ -1226,17 +1222,17 @@ public abstract class AbstractMRTrafficController {
                     int warmUpDelay = enterProgModeDelayTime();
                     if (warmUpDelay != 0) {
                         try {
-                            synchronized (xmtRunnable) {
-                                xmtRunnable.wait(warmUpDelay);
+                            synchronized (XMT_RUNNABLE_LOCK) {
+                                XMT_RUNNABLE_LOCK.wait(warmUpDelay);
                             }
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later
                         }
                     }
                     // update state, and notify to continue
-                    synchronized (xmtRunnable) {
+                    synchronized (XMT_RUNNABLE_LOCK) {
                         mCurrentState = OKSENDMSGSTATE;
-                        xmtRunnable.notify();
+                        XMT_RUNNABLE_LOCK.notify();
                     }
                     break;
                 }
@@ -1245,9 +1241,9 @@ public abstract class AbstractMRTrafficController {
                     mCurrentMode = NORMALMODE;
                     replyInDispatch = false;
                     // update state, and notify to continue
-                    synchronized (xmtRunnable) {
+                    synchronized (XMT_RUNNABLE_LOCK) {
                         mCurrentState = OKSENDMSGSTATE;
-                        xmtRunnable.notify();
+                        XMT_RUNNABLE_LOCK.notify();
                     }
                     break;
                 }
@@ -1255,13 +1251,13 @@ public abstract class AbstractMRTrafficController {
                     replyInDispatch = false;
                     if (allowUnexpectedReply) {
                         log.debug("Allowed unexpected reply received in state: {} was {}", mCurrentState, msg);
-                        synchronized (xmtRunnable) {
+                        synchronized (XMT_RUNNABLE_LOCK) {
                             // The transmit thread sometimes gets stuck
                             // when unexpected replies are received.  Notify
                             // it to clear the block without a timeout.
                             // (do not change the current state)
                             //if(mCurrentState!=IDLESTATE)
-                            xmtRunnable.notify();
+                            XMT_RUNNABLE_LOCK.notify();
                         }
                     } else {
                         unexpectedReplyStateError(mCurrentState, msg.toString());
@@ -1310,9 +1306,9 @@ public abstract class AbstractMRTrafficController {
             forwardToPort(modeMsg, null);
             // wait for reply
             try {
-                if (xmtRunnable != null) {
-                    synchronized (xmtRunnable) {
-                        xmtRunnable.wait(modeMsg.getTimeout());
+                if (XMT_RUNNABLE_LOCK != null) {
+                    synchronized (XMT_RUNNABLE_LOCK) {
+                        XMT_RUNNABLE_LOCK.wait(modeMsg.getTimeout());
                     }
                 }
             } catch (InterruptedException e) {
