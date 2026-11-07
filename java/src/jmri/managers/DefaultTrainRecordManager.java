@@ -83,7 +83,7 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
             }
             r = newRecord(name);
             if (value instanceof BasicRosterEntry) {
-                r.setRosterEntry((BasicRosterEntry) value);
+                r.insertFirstRosterEntry((BasicRosterEntry) value);
             } else {
                 r.addIdTag((IdTag) value);
             }

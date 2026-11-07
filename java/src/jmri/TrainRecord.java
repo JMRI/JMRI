@@ -44,8 +44,6 @@ public interface TrainRecord extends PropertyChangeProvider {
 
     /** Property name for a change of name. */
     String PROPERTY_NAME = "name"; // NOI18N
-    /** Property name for a change of the lead loco's roster entry. */
-    String PROPERTY_ROSTER_ENTRY = "rosterEntry"; // NOI18N
     /**
      * Property name for a change in the locos' roster entries; the old and
      * new values are the lists, as {@link #getRosterEntries()} gives them.
@@ -104,20 +102,29 @@ public interface TrainRecord extends PropertyChangeProvider {
      *         has no loco with a roster entry
      */
     @CheckForNull
-    BasicRosterEntry getRosterEntry();
+    BasicRosterEntry getFirstRosterEntry();
 
     /**
-     * Make a roster entry the lead loco's. If the entry is already one of the
-     * train's locos it moves to the front; otherwise it is added at the front.
-     * Null removes the lead loco's entry, and the next loco, if any, leads.
-     * A roster entry belongs to at most one record.
+     * Add a roster entry at the front of the train's locos, so that it is the
+     * lead loco's. A roster entry belongs to at most one record, and appears
+     * in its list at most once.
      *
-     * @param entry the roster entry, or null to remove the lead loco's
-     * @throws IllegalArgumentException if another record has this entry
+     * @param entry the roster entry
+     * @throws IllegalArgumentException if this record or another already has
+     *                                  the entry
      * @throws IllegalStateException    if the record has been removed
      */
     @InvokeOnLayoutThread
-    void setRosterEntry(@CheckForNull BasicRosterEntry entry);
+    void insertFirstRosterEntry(@Nonnull BasicRosterEntry entry);
+
+    /**
+     * Remove the first of the train's roster entries, the lead loco's; the
+     * next loco, if any, then leads. Does nothing if the train has none.
+     *
+     * @throws IllegalStateException if the record has been removed
+     */
+    @InvokeOnLayoutThread
+    void removeFirstRosterEntry();
 
     /**
      * The roster entries of the train's locos, such as both locos of a

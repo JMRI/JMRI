@@ -81,18 +81,18 @@ public class DefaultTrainRecordManagerTest {
         TrainRecord a = manager.newRecord("A");
         TrainRecord b = manager.newRecord("B");
         assertNull(manager.getByRosterEntry(e));
-        a.setRosterEntry(e);
+        a.insertFirstRosterEntry(e);
         assertSame(a, manager.getByRosterEntry(e));
-        assertThrows(IllegalArgumentException.class, () -> b.setRosterEntry(e));
-        assertNull(b.getRosterEntry());
+        assertThrows(IllegalArgumentException.class, () -> b.insertFirstRosterEntry(e));
+        assertNull(b.getFirstRosterEntry());
 
         RosterEntry sameId = new RosterEntry();
         sameId.setId("Class 43");
         assertSame(a, manager.getByRosterEntry(sameId), "an entry with the same ID is the same loco");
-        assertThrows(IllegalArgumentException.class, () -> b.setRosterEntry(sameId));
+        assertThrows(IllegalArgumentException.class, () -> b.insertFirstRosterEntry(sameId));
 
-        a.setRosterEntry(null);
-        b.setRosterEntry(e);
+        a.removeFirstRosterEntry();
+        b.insertFirstRosterEntry(e);
         assertSame(b, manager.getByRosterEntry(e), "free once the other record lets it go");
     }
 
@@ -106,12 +106,12 @@ public class DefaultTrainRecordManagerTest {
         TrainRecord b = manager.newRecord("B");
         a.setRosterEntries(java.util.List.of(lead, second));
         assertSame(a, manager.getByRosterEntry(second), "found by a loco that isn't the lead");
-        assertThrows(IllegalArgumentException.class, () -> b.setRosterEntry(second));
+        assertThrows(IllegalArgumentException.class, () -> b.insertFirstRosterEntry(second));
         assertThrows(IllegalArgumentException.class, () -> b.setRosterEntries(java.util.List.of(second)));
         assertTrue(b.getRosterEntries().isEmpty(), "a refused entry isn't taken");
 
         a.setRosterEntries(java.util.List.of(lead));
-        b.setRosterEntry(second);
+        b.insertFirstRosterEntry(second);
         assertSame(b, manager.getByRosterEntry(second), "free once the other record lets it go");
     }
 
@@ -136,7 +136,7 @@ public class DefaultTrainRecordManagerTest {
         e.setId("Class 43");
         IdTag tag = new DefaultIdTag("ID1234");
         TrainRecord a = manager.newRecord("A");
-        a.setRosterEntry(e);
+        a.insertFirstRosterEntry(e);
         a.addIdTag(tag);
         events.clear();
 
@@ -149,7 +149,7 @@ public class DefaultTrainRecordManagerTest {
         assertThrows(IllegalStateException.class, () -> a.setName("Z"));
 
         TrainRecord again = manager.newRecord("A");
-        again.setRosterEntry(e);
+        again.insertFirstRosterEntry(e);
         again.addIdTag(tag);
         assertSame(again, manager.getByRosterEntry(e), "a removed record's name, entry and tags are free");
 

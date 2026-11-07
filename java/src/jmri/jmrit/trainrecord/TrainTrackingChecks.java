@@ -205,7 +205,7 @@ public final class TrainTrackingChecks {
         }
         // the lead loco's: where a train is between detectors is estimated
         // from its lead loco's commands and speed profile
-        BasicRosterEntry entry = r.getRosterEntry();
+        BasicRosterEntry entry = r.getFirstRosterEntry();
         if (entry == null) {
             found.add(new Finding(Kind.TRAIN_NO_SPEED_PROFILE, r, List.of(),
                     Bundle.getMessage("CheckTrainNoRosterEntry", r.getName())));

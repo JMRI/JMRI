@@ -284,6 +284,7 @@ public class TrainRecordWatcherTest {
         ThreadingUtil.runOnLayout(() -> b[0].setValue(e));
         TrainRecord r = Objects.requireNonNull(manager.getByRosterEntry(e), "a roster entry value makes a record");
         assertEquals("Class 43", r.getName());
+        assertEquals(List.of(e), r.getRosterEntries(), "with the entry as its first and only loco");
         assertEquals(List.of(b[0]), r.getBlocks(), "placed where the value was set");
 
         IdTag tag = InstanceManager.getDefault(IdTagManager.class).provideIdTag("ID1234");

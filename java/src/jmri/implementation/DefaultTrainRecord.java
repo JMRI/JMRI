@@ -139,32 +139,30 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     /** {@inheritDoc} */
     @Override
     @CheckForNull
-    public BasicRosterEntry getRosterEntry() {
+    public BasicRosterEntry getFirstRosterEntry() {
         return rosterEntries.isEmpty() ? null : rosterEntries.get(0);
     }
 
     /** {@inheritDoc} */
     @Override
     @InvokeOnLayoutThread
-    public void setRosterEntry(@CheckForNull BasicRosterEntry entry) {
+    public void insertFirstRosterEntry(@Nonnull BasicRosterEntry entry) {
+        Objects.requireNonNull(entry, "entry");
         checkNotRemoved();
         List<BasicRosterEntry> list = new ArrayList<>(rosterEntries);
-        if (entry == null) {
-            if (list.isEmpty()) {
-                return;
-            }
-            list.remove(0);
-        } else {
-            int at = indexOf(list, entry);
-            if (at == 0) {
-                return;
-            }
-            if (at > 0) {
-                list.remove(at);
-            }
-            list.add(0, entry);
+        list.add(0, entry);
+        setRosterEntries(list); // refuses an entry this record or another already has
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @InvokeOnLayoutThread
+    public void removeFirstRosterEntry() {
+        checkNotRemoved();
+        if (rosterEntries.isEmpty()) {
+            return;
         }
-        setRosterEntries(list);
+        setRosterEntries(rosterEntries.subList(1, rosterEntries.size()));
     }
 
     /** {@inheritDoc} */
@@ -196,13 +194,9 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
                 registry.checkRosterEntry(this, e);
             }
         }
-        BasicRosterEntry oldLead = getRosterEntry();
         List<BasicRosterEntry> old = getRosterEntries();
         rosterEntries = Collections.unmodifiableList(list);
         firePropertyChange(PROPERTY_ROSTER_ENTRIES, old, getRosterEntries());
-        if (oldLead != getRosterEntry()) {
-            firePropertyChange(PROPERTY_ROSTER_ENTRY, oldLead, getRosterEntry());
-        }
     }
 
     /**

@@ -36,7 +36,7 @@ public class DefaultTrainRecordTest {
     public void testNewRecord() {
         assertEquals("1A23", record.getName());
         assertEquals("1A23", record.toString());
-        assertNull(record.getRosterEntry());
+        assertNull(record.getFirstRosterEntry());
         assertTrue(record.getIdTags().isEmpty());
         assertEquals(List.of(new TrainComponent(null, null)), record.getTrainComponents(), "one component with no length");
         assertEquals(Detection.ENTIRE_TRAIN, record.getDetection());
@@ -82,24 +82,28 @@ public class DefaultTrainRecordTest {
     public void testRosterEntry() {
         RosterEntry e = new RosterEntry();
         e.setId("Class 43");
-        record.setRosterEntry(e);
-        assertSame(e, record.getRosterEntry());
+        record.insertFirstRosterEntry(e);
+        assertSame(e, record.getFirstRosterEntry());
         assertEquals(List.of(e), record.getRosterEntries());
         assertEquals(1, registry.entries.size());
-        assertEquals(List.of(TrainRecord.PROPERTY_ROSTER_ENTRIES, TrainRecord.PROPERTY_ROSTER_ENTRY), propertyNames());
+        assertEquals(List.of(TrainRecord.PROPERTY_ROSTER_ENTRIES), propertyNames());
 
-        record.setRosterEntry(e);
-        assertEquals(2, events.size(), "the same entry changes nothing");
+        assertThrows(IllegalArgumentException.class, () -> record.insertFirstRosterEntry(e),
+                "an entry the record already has isn't added again");
+        assertEquals(List.of(e), record.getRosterEntries());
+        assertEquals(1, events.size(), "a refused entry changes nothing");
 
-        record.setRosterEntry(null);
-        assertNull(record.getRosterEntry());
+        record.removeFirstRosterEntry();
+        assertNull(record.getFirstRosterEntry());
         assertTrue(record.getRosterEntries().isEmpty());
-        assertEquals(4, events.size());
-        assertEquals(1, registry.entries.size(), "clearing isn't checked");
+        assertEquals(2, events.size());
+        assertEquals(1, registry.entries.size(), "removing isn't checked");
+        record.removeFirstRosterEntry();
+        assertEquals(2, events.size(), "removing from none changes nothing");
 
         registry.refuse = true;
-        assertThrows(IllegalArgumentException.class, () -> record.setRosterEntry(e));
-        assertNull(record.getRosterEntry(), "a refused entry isn't taken");
+        assertThrows(IllegalArgumentException.class, () -> record.insertFirstRosterEntry(e));
+        assertNull(record.getFirstRosterEntry(), "a refused entry isn't taken");
     }
 
     @Test
@@ -110,22 +114,28 @@ public class DefaultTrainRecordTest {
         second.setId("47013");
         record.setRosterEntries(List.of(lead, second));
         assertEquals(List.of(lead, second), record.getRosterEntries());
-        assertSame(lead, record.getRosterEntry(), "the first is the lead loco");
+        assertSame(lead, record.getFirstRosterEntry(), "the first is the lead loco");
         assertEquals(List.of(lead, second), registry.entries, "each new entry is checked");
-        assertEquals(List.of(TrainRecord.PROPERTY_ROSTER_ENTRIES, TrainRecord.PROPERTY_ROSTER_ENTRY), propertyNames());
+        assertEquals(List.of(TrainRecord.PROPERTY_ROSTER_ENTRIES), propertyNames());
 
         events.clear();
-        record.setRosterEntry(second);
-        assertEquals(List.of(second, lead), record.getRosterEntries(), "a loco already listed moves to the front");
+        record.setRosterEntries(List.of(second, lead));
+        assertEquals(List.of(second, lead), record.getRosterEntries(), "reordered as a whole list");
         assertEquals(2, registry.entries.size(), "entries the record already has aren't checked again");
-        assertEquals(List.of(TrainRecord.PROPERTY_ROSTER_ENTRIES, TrainRecord.PROPERTY_ROSTER_ENTRY), propertyNames());
+        assertEquals(List.of(TrainRecord.PROPERTY_ROSTER_ENTRIES), propertyNames());
 
-        events.clear();
-        record.setRosterEntries(List.of(second));
-        assertEquals(List.of(TrainRecord.PROPERTY_ROSTER_ENTRIES), propertyNames(), "the lead loco is unchanged");
+        record.removeFirstRosterEntry();
+        assertEquals(List.of(lead), record.getRosterEntries(), "the next loco leads");
 
-        record.setRosterEntry(null);
-        assertTrue(record.getRosterEntries().isEmpty(), "removing the lead loco's entry");
+        RosterEntry banker = new RosterEntry();
+        banker.setId("37425");
+        record.insertFirstRosterEntry(banker);
+        assertEquals(List.of(banker, lead), record.getRosterEntries(), "added at the front");
+        assertEquals(List.of(lead, second, banker), registry.entries, "the new entry is checked");
+
+        record.removeFirstRosterEntry();
+        record.removeFirstRosterEntry();
+        assertTrue(record.getRosterEntries().isEmpty(), "removing each in turn");
 
         RosterEntry sameId = new RosterEntry();
         sameId.setId("47012");
@@ -307,7 +317,10 @@ public class DefaultTrainRecordTest {
         assertTrue(record.isRemoved());
         IdTag tag = new DefaultIdTag("ID1");
         assertThrows(IllegalStateException.class, () -> record.setName("X"));
-        assertThrows(IllegalStateException.class, () -> record.setRosterEntry(null));
+        RosterEntry e = new RosterEntry();
+        e.setId("Class 43");
+        assertThrows(IllegalStateException.class, () -> record.insertFirstRosterEntry(e));
+        assertThrows(IllegalStateException.class, () -> record.removeFirstRosterEntry());
         assertThrows(IllegalStateException.class, () -> record.addIdTag(tag));
         assertThrows(IllegalStateException.class, () -> record.removeIdTag(tag));
         assertThrows(IllegalStateException.class, () -> record.setTrainComponents(List.of(new TrainComponent(null, null))));
