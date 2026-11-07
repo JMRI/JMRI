@@ -689,6 +689,11 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
+            <li>Sensors have a new setting, Detects: what the sensor's detector
+                sees of a train, its wheels (the default), the vehicle body, or
+                a tag or magnet. It is in the sensor's Edit dialog and in a
+                Sensor Table column, hidden until chosen. It describes the
+                detector only, and nothing changes for users who leave it.</li>
             <li>The Turnout and Sensor tables can now add a sequential range of
                 up to 1000 items at once (was 100), e.g. a whole C/MRI node. The
                 confirmation for a large range is unchanged.</li>
