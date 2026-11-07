@@ -446,8 +446,10 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
         }
 
         boolean sideRight = placeIconsRight.isSelected();
-        int orientation = layoutTraverser.getOrientation();
-
+        int orientation = layoutTraverser.getOrientation();  //if orientation of the traverser is the opposite of the approaach masts
+        log.warn("orientation {}", orientation);
+        int approachMastOrientation = (orientation==0 ? 1 : 0);
+        log.warn("approachMastOrientation {}", approachMastOrientation);
         for (int i = 0; i < layoutTraverser.getSlotList().size(); i++) {
 
             LayoutTraverser.SlotTrack rt = layoutTraverser.getSlotList().get(i);
@@ -455,17 +457,20 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
             if (rt.getApproachMast() == null) {
                 continue;
             }
+
             Point2D anchor = layoutTraverserView.getSlotCoordsOrdered(i);
+
+            boolean isEast;
+            if ((i % 2) == 0) {
+                isEast = true;
+            } else {
+                isEast = false;
+            }
 
             SignalMastIcon icon = new SignalMastIcon(layoutEditor);
             icon.setSignalMast(rt.getApproachMast().getDisplayName());
 
-            layoutEditor.getLETools().placingBlockForTurntable(
-                    icon,
-                    sideRight,
-                    0.0,
-                    orientation,
-                    anchor);
+            layoutEditor.getLETools().placingBlockForTraverser(icon, sideRight, 0.0, isEast, approachMastOrientation, anchor);
 
             editLayoutTraverserNeedsRedraw = true;
         }
@@ -605,14 +610,19 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
             if (!doNotPlaceIcons.isSelected()) { // placeIconsLeft or placeIconsRight is selected
                 for (int i = 0; i < layoutTraverser.getNumberSlots(); i++) {
                     LayoutTraverser.SlotTrack slot = layoutTraverser.getSlotList().get(i);
+                    boolean isEast;
+                    if ((i % 2) == 0) {
+                        isEast = true;
+                    } else {
+                        isEast = false;
+                    }
                     SignalMast mast = slot.getApproachMast();
                     if (mast != null) {
                         if (slot.getConnect() != null) {
                             SignalMastIcon icon = new SignalMastIcon(layoutEditor);
                             icon.setSignalMast(mast.getDisplayName());
-                            layoutEditor.getLETools().placingBlockForTurntable(icon, placeIconsRight.isSelected(),
-                                    0.0,
-                                    slot.getConnect(), layoutTraverserView.getSlotCoordsOrdered(i));
+                            layoutEditor.getLETools().placingBlockForTraverser(icon, placeIconsRight.isSelected(),
+                                    0.0, isEast, slot.getConnect(), layoutTraverserView.getSlotCoordsOrdered(i));
                             editLayoutTraverserNeedsRedraw = true;
                         }
                     }
@@ -729,7 +739,22 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
             approachMastComboBoxA = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), slotA.getApproachMast(), DisplayOptions.DISPLAYNAME);
 //            LayoutEditor.setupComboBox(approachMastComboBoxA, false, true, true);
             approachMastComboBoxA.setAllowNull(true);
-            
+
+            approachMastComboBoxA.addActionListener((ActionEvent e) -> {
+                if (!layoutTraverser.isDispatcherManaged()) {
+                    return;
+                }
+                SignalMast oldMastA = slotA.getApproachMast();
+                removeMast(oldMastA);
+                SignalMast mastA = approachMastComboBoxA.getSelectedItem();
+                log.warn("Selected mast = {}", mastA);
+                slotA.setApproachMast((mastA != null) ? mastA.getSystemName() : null);
+                log.warn("Stored mast = {}", slotA.getApproachMast());
+                log.warn("slotA={}", slotA.getApproachMast());
+                log.warn("slotB={}", slotB.getApproachMast());
+                placeTraverserApproachMastsImmediately();
+            });
+
             disabledCheckBoxA = new JCheckBox(Bundle.getMessage("Disabled"));
             disabledCheckBoxA.setSelected(slotA.isDisabled());
             disabledCheckBoxA.addActionListener((ActionEvent e) -> {
@@ -755,6 +780,21 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
             approachMastComboBoxB = new NamedBeanComboBox<>(InstanceManager.getDefault(SignalMastManager.class), slotB.getApproachMast(), DisplayOptions.DISPLAYNAME);
 //            LayoutEditor.setupComboBox(approachMastComboBoxB, false, true, true);
             approachMastComboBoxB.setAllowNull(true);
+
+            approachMastComboBoxB.addActionListener((ActionEvent e) -> {
+                if (!layoutTraverser.isDispatcherManaged()) {
+                    return;
+                }
+                SignalMast oldMastB = slotB.getApproachMast();
+                removeMast(oldMastB);
+                SignalMast mastB = approachMastComboBoxB.getSelectedItem();
+                log.warn("Selected mast = {}", mastB);
+                slotB.setApproachMast((mastB != null) ? mastB.getSystemName() : null);
+                log.warn("Stored mast = {}", slotB.getApproachMast());
+                log.warn("slotA={}", slotA.getApproachMast());
+                log.warn("slotB={}", slotB.getApproachMast());
+                placeTraverserApproachMastsImmediately();
+            });
 
             disabledCheckBoxB = new JCheckBox(Bundle.getMessage("Disabled"));
             disabledCheckBoxB.setSelected(slotB.isDisabled());
@@ -901,6 +941,21 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
             boolean visible = layoutTraverser.isTurnoutControlled() || layoutTraverser.isDispatcherManaged();
             turnoutDetailsPanel.setVisible(visible);
         }
+    }
+
+    private void removeMast(SignalMast oldMast) {
+        List<SignalMastIcon> iconsToRemove = new ArrayList<>();
+
+        for (Positionable p : layoutEditor.getContents()) {
+            if (p instanceof SignalMastIcon) {
+                SignalMastIcon icon = (SignalMastIcon) p;
+                if (icon.getSignalMast() == oldMast) {
+                    iconsToRemove.add(icon);
+                }
+            }
+        }
+
+        iconsToRemove.forEach(SignalMastIcon::remove);
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutTraverserEditor.class);
