@@ -318,6 +318,15 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     @Override
     public synchronized void message(XNetReply l) {
         log.debug("received message: {}", l);
+        if (internalState == QUEUEDMESSAGE) {
+            // Our command is with the traffic controller but not yet sent;
+            // message(XNetMessage) moves us on when it is. Sent messages and
+            // replies reach us in the order they happen, so this reply came
+            // before our command, e.g. the reply to the other turnout of our
+            // feedback pair, still reporting our old position.
+            log.debug("Turnout {} ignoring reply received before its command was sent: {}", mNumber, l);
+            return;
+        }
         if (internalState == OFFSENT) {
             if (l.isOkMessage() && !l.isUnsolicited()) {
                 /* the command was successfully received */

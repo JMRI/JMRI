@@ -55,6 +55,8 @@ public class EliteXNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest {
         assertEquals( "52 05 8A DD",
             lnis.outbound.elementAt(lnis.outbound.size() - 1).toString(),
             "on message sent");
+        // the traffic controller tells the turnout its command was sent
+        ((EliteXNetTurnout) t).message(lnis.outbound.elementAt(lnis.outbound.size() - 1));
 
         // notify that the command station received the reply
         XNetReply m = new XNetReply();
