@@ -538,6 +538,13 @@
           <li>Execute action, Last result of digital expression and the
               Entry/Exit action and expression no longer lose their item when
               another file is loaded after the item was renamed.</li>
+          <li>A Sequence that doesn't run continuously runs once each time its
+              <strong>Start</strong> expression becomes true. Before, it started again at once,
+              and on every later event, for as long as <strong>Start</strong> stayed true,
+              repeating its steps. <strong>Start sequence immediately on load</strong> now
+              starts it once, too, instead of on every event. In the same way, a
+              Sequence's <strong>Reset</strong> expression now resets it once each
+              time it becomes true, instead of on every event while it stays true.</li>
         </ul>
 
     <h3>Meters and MeterFrames</h3>
