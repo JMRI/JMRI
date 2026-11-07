@@ -1,6 +1,5 @@
 package jmri.jmrix;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -708,8 +707,6 @@ public abstract class AbstractMRTrafficController {
      * @param m the message to send
      * @param reply the Listener sending the message, often provided as 'this'
      */
-    @SuppressFBWarnings(value = {"TLW_TWO_LOCK_WAIT"},
-            justification = "Two locks needed for synchronization here, this is OK")
     protected synchronized void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         log.debug("forwardToPort message: [{}]", m);
         // remember who sent this

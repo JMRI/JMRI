@@ -802,7 +802,6 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
         protected final void eventEditorMousePressed() {
             this.editor.add(getEditorBox(table.convertRowIndexToModel(this.currentRow))); // add editorBox to JPanel
             this.editor.revalidate();
-            SwingUtilities.invokeLater(this.comboBoxFocusRequester);
             log.debug("eventEditorMousePressed in row: {})", this.currentRow);  // NOI18N
         }
 
@@ -866,7 +865,6 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel<OB
         protected final void eventEditorMousePressed() {
             this.editor.add(getEditorBox(table.convertRowIndexToModel(this.currentRow))); // add editorBox to JPanel
             this.editor.revalidate();
-            SwingUtilities.invokeLater(this.comboBoxFocusRequester);
             log.debug("eventEditorMousePressed in row: {})", this.currentRow);  // NOI18N
         }
 
