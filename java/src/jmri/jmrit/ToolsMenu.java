@@ -203,6 +203,10 @@ public class ToolsMenu extends JMenu {
         // more complex multi-window tools
         add(new jmri.jmrit.operations.OperationsMenu());
         add(new jmri.jmrit.dispatcher.DispatcherAction(Bundle.getMessage("MenuItemDispatcher")));
+        // train tracking, with its windows
+        JMenu trainTrackingMenu = new JMenu(jmri.jmrit.trainrecord.swing.SetUpChecksFrame.menuText());
+        trainTrackingMenu.add(new jmri.jmrit.trainrecord.swing.SetUpChecksFrame.Action());
+        add(trainTrackingMenu);
         add(new jmri.jmrit.timetable.swing.TimeTableAction(Bundle.getMessage("MenuItemTimeTable")));
         add(new jmri.jmrit.whereused.WhereUsedAction(Bundle.getMessage("MenuItemWhereUsed")));
         // CTC menu item with submenus
