@@ -48,7 +48,7 @@ public class BeanTableDataModelTest extends AbstractBeanTableDataModelBase<Senso
     
     @Override
     public int getModelColumnCount(){
-        return 13;
+        return 14;
     }
 
     // An implementation of BeanTableModel which can be used in testing.
