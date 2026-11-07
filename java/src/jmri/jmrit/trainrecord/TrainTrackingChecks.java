@@ -173,7 +173,7 @@ public final class TrainTrackingChecks {
     public static List<Finding> run(@Nonnull Collection<Block> blocks, @Nonnull Collection<TrainRecord> records) {
         List<Finding> found = new ArrayList<>();
         for (TrainRecord r : records) {
-            if (r.isRemoved()) {
+            if (r.isDisposed()) {
                 continue;
             }
             checkTrain(r, found);

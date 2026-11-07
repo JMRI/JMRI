@@ -141,7 +141,7 @@ public class DefaultTrainRecordManagerTest {
         events.clear();
 
         manager.remove(a);
-        assertTrue(a.isRemoved());
+        assertTrue(a.isDisposed());
         assertTrue(manager.getRecords().isEmpty());
         assertEquals(1, events.size());
         assertSame(a, events.get(0).getOldValue());
@@ -163,7 +163,7 @@ public class DefaultTrainRecordManagerTest {
     public void testRemoveAnotherManagersRecord() {
         TrainRecord other = new DefaultTrainRecordManager().newRecord("A");
         assertThrows(IllegalArgumentException.class, () -> manager.remove(other));
-        assertFalse(other.isRemoved());
+        assertFalse(other.isDisposed());
     }
 
     @BeforeEach

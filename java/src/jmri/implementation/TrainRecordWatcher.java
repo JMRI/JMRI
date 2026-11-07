@@ -159,7 +159,7 @@ public class TrainRecordWatcher {
     public void placementChanged() {
         boolean any = false;
         for (DefaultTrainRecord r : records.get()) {
-            if (r.isPlaced() && !r.isRemoved()) {
+            if (r.isPlaced() && !r.isDisposed()) {
                 any = true;
                 break;
             }
@@ -170,9 +170,9 @@ public class TrainRecordWatcher {
                 w.setSensorWatched(any);
             }
         }
-        ambiguous.values().forEach(list -> list.removeIf(c -> !c.record.isPlaced() || c.record.isRemoved()));
+        ambiguous.values().forEach(list -> list.removeIf(c -> !c.record.isPlaced() || c.record.isDisposed()));
         ambiguous.values().removeIf(List::isEmpty);
-        beforeAmbiguity.keySet().removeIf(r -> !r.isPlaced() || r.isRemoved());
+        beforeAmbiguity.keySet().removeIf(r -> !r.isPlaced() || r.isDisposed());
     }
 
     private void blockManagerChanged(PropertyChangeEvent e) {
@@ -217,7 +217,7 @@ public class TrainRecordWatcher {
         ambiguous.remove(block);
         List<Candidate> candidates = new ArrayList<>();
         for (DefaultTrainRecord r : records.get()) {
-            if (!r.isPlaced() || r.isRemoved()) {
+            if (!r.isPlaced() || r.isDisposed()) {
                 continue;
             }
             List<Block> blocks = r.getBlocks();
@@ -333,7 +333,7 @@ public class TrainRecordWatcher {
             }
         }
         for (DefaultTrainRecord r : records.get()) {
-            if (!r.isPlaced() || r.isRemoved()) {
+            if (!r.isPlaced() || r.isDisposed()) {
                 continue;
             }
             List<Block> blocks = r.getBlocks();

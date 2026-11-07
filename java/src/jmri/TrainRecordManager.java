@@ -42,8 +42,8 @@ public interface TrainRecordManager extends PropertyChangeProvider {
     TrainRecord newRecord(@Nonnull String name);
 
     /**
-     * Remove a record. It can't be changed afterwards. Removing a record that
-     * has already been removed does nothing.
+     * Remove a record and dispose of it, so it can't be changed afterwards.
+     * Removing a record that has already been removed does nothing.
      *
      * @param record the record
      * @throws IllegalArgumentException if the record isn't this manager's

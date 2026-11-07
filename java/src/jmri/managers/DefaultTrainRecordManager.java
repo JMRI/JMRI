@@ -146,7 +146,7 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
     @InvokeOnLayoutThread
     public void remove(@Nonnull TrainRecord record) {
         Objects.requireNonNull(record, "record");
-        if (record.isRemoved()) {
+        if (record.isDisposed()) {
             return;
         }
         if (!(record instanceof DefaultTrainRecord) || !records.contains(record)) {
@@ -154,7 +154,7 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
         }
         DefaultTrainRecord r = (DefaultTrainRecord) record;
         records.remove(r);
-        r.markRemoved();
+        r.dispose();
         watcher.placementChanged();
         firePropertyChange(PROPERTY_RECORDS, r, null);
     }

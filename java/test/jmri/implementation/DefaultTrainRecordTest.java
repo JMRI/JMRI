@@ -47,7 +47,7 @@ public class DefaultTrainRecordTest {
         assertNull(record.getHoldingLength());
         assertNull(record.getPlacingLength());
         assertFalse(record.isMeasuredLengthConsistent());
-        assertFalse(record.isRemoved());
+        assertFalse(record.isDisposed());
     }
 
     @Test
@@ -313,8 +313,8 @@ public class DefaultTrainRecordTest {
 
     @Test
     public void testRemovedRecordCantBeChanged() {
-        record.markRemoved();
-        assertTrue(record.isRemoved());
+        record.dispose();
+        assertTrue(record.isDisposed());
         IdTag tag = new DefaultIdTag("ID1");
         assertThrows(IllegalStateException.class, () -> record.setName("X"));
         RosterEntry e = new RosterEntry();
