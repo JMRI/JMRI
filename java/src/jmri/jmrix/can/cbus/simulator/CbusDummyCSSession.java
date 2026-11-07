@@ -1,7 +1,10 @@
 package jmri.jmrix.can.cbus.simulator;
 
 import java.awt.event.ActionListener;
+import javax.annotation.Nonnull;
 import javax.swing.Timer;
+import jmri.DccLocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.cbus.CbusConstants;
 
@@ -28,6 +31,7 @@ public class CbusDummyCSSession {
     private int _fc;
     private Timer _RefreshTimer;
     private Boolean _dispatched;
+    private SpeedStepMode _speedStepMode = SpeedStepMode.NMRA_DCC_128;
     
     public CbusDummyCSSession (CbusDummyCS cs, int sessionID, int rcvdIntAddr,Boolean rcvdIsLong ) {
         _cs = cs;
@@ -101,6 +105,67 @@ public class CbusDummyCSSession {
     protected void setSpd( int speeddir) {
         _speedDirection = speeddir;
         _RefreshTimer.restart();
+        _cs.sessionChanged(this);
+    }
+
+    /**
+     * Stop the loco at once, as for a request for an emergency stop of every
+     * loco (RESTP): the session's speed becomes the emergency stop value of
+     * its speed step mode, 2 in 28 step mode and 1 otherwise, with the
+     * direction bit clear.
+     */
+    protected void emergencyStop() {
+        setSpd(_speedStepMode == SpeedStepMode.NMRA_DCC_28 ? 2 : 1);
+    }
+
+    /**
+     * Set the speed step mode, as a request to set it (STMOD) does.
+     *
+     * @param mode the mode
+     */
+    protected void setSpeedStepMode(@Nonnull SpeedStepMode mode) {
+        _speedStepMode = mode;
+        _RefreshTimer.restart();
+        _cs.sessionChanged(this);
+    }
+
+    /**
+     * @return the loco address the session is for
+     * @since 5.19.1
+     */
+    @Nonnull
+    public DccLocoAddress getLocoAddress() {
+        return new DccLocoAddress(_Addr, _isLong);
+    }
+
+    /**
+     * The session's speed and direction, as the last request to set them
+     * (DSPD) gave it: the direction in bit 7 (set for forward) and the speed
+     * in bits 0 to 6, in the session's speed step mode.
+     *
+     * @return the speed and direction byte
+     * @since 5.19.1
+     */
+    public int getSpeedDirection() {
+        return _speedDirection;
+    }
+
+    /**
+     * @return the session's speed step mode: 128 steps unless a request to
+     *         set the mode (STMOD) has said otherwise
+     * @since 5.19.1
+     */
+    @Nonnull
+    public SpeedStepMode getSpeedStepMode() {
+        return _speedStepMode;
+    }
+
+    /**
+     * @return the session number
+     * @since 5.19.1
+     */
+    public int getSessionNumber() {
+        return _sessionID;
     }
     
     protected Boolean getIsDispatched() {
