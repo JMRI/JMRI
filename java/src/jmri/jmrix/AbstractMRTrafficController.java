@@ -1,6 +1,5 @@
 package jmri.jmrix;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -701,6 +700,10 @@ public abstract class AbstractMRTrafficController {
 
     protected boolean xmtException = false;
 
+    private synchronized boolean synchronizedPortReadyToSend(AbstractPortController p) {
+        return portReadyToSend(p);
+    }
+
     /**
      * Actually transmit the next message to the port.
      * @see #sendMessage(AbstractMRMessage, AbstractMRListener)
@@ -708,41 +711,48 @@ public abstract class AbstractMRTrafficController {
      * @param m the message to send
      * @param reply the Listener sending the message, often provided as 'this'
      */
-    @SuppressFBWarnings(value = {"TLW_TWO_LOCK_WAIT"},
-            justification = "Two locks needed for synchronization here, this is OK")
-    protected synchronized void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
-        log.debug("forwardToPort message: [{}]", m);
-        // remember who sent this
-        mLastSender = reply;
+    protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
 
-        // forward the message to the registered recipients,
-        // which includes the communications monitor, except the sender.
-        // Schedule notification via the Swing event queue to ensure order
-        log.trace("about to start XmtNotifier for {} last: {}", m, mLastSender, new Exception("traceback"));
-        Runnable r = new XmtNotifier(m, mLastSender, this);
-        SwingUtilities.invokeLater(r);
+        final OutputStream os;
 
         // stream to port in single write, as that's needed by serial
         int byteLength = lengthOfByteStream(m);
         byte[]  msg= new byte[byteLength];
-        log.debug("copying message, length = {}", byteLength);
-        // add header
-        int offset = addHeaderToOutput(msg, m);
 
-        // add data content
-        int len = m.getNumDataElements();
-        log.debug("copying data to message, length = {}", len);
-        if (len > byteLength) { // happens somehow
-            log.warn("Invalid message array size {} for {} elements, truncated", byteLength, len);
+        synchronized(this) {
+            log.debug("forwardToPort message: [{}]", m);
+            // remember who sent this
+            mLastSender = reply;
+
+            // forward the message to the registered recipients,
+            // which includes the communications monitor, except the sender.
+            // Schedule notification via the Swing event queue to ensure order
+            log.trace("about to start XmtNotifier for {} last: {}", m, mLastSender, new Exception("traceback"));
+            Runnable r = new XmtNotifier(m, mLastSender, this);
+            SwingUtilities.invokeLater(r);
+
+            log.debug("copying message, length = {}", byteLength);
+            // add header
+            int offset = addHeaderToOutput(msg, m);
+
+            // add data content
+            int len = m.getNumDataElements();
+            log.debug("copying data to message, length = {}", len);
+            if (len > byteLength) { // happens somehow
+                log.warn("Invalid message array size {} for {} elements, truncated", byteLength, len);
+            }
+            for (int i = 0; (i < len && i < byteLength); i++) {
+                msg[i + offset] = (byte) m.getElement(i);
+            }
+            // add trailer
+            addTrailerToOutput(msg, len + offset, m);
+
+            os = ostream;
         }
-        for (int i = 0; (i < len && i < byteLength); i++) {
-            msg[i + offset] = (byte) m.getElement(i);
-        }
-        // add trailer
-        addTrailerToOutput(msg, len + offset, m);
+
         // and stream the bytes
         try {
-            if (ostream != null) {
+            if (os != null) {
                 if (log.isDebugEnabled()) {
                     StringBuilder f = new StringBuilder();
                     for (int i = 0; i < msg.length; i++) {
@@ -751,9 +761,9 @@ public abstract class AbstractMRTrafficController {
                     log.debug("formatted message: {}", f.toString() );
                 }
                 while (m.getRetries() >= 0) {
-                    if (portReadyToSend(controller)) {
-                        ostream.write(msg);
-                        ostream.flush();
+                    if (synchronizedPortReadyToSend(controller)) {
+                        os.write(msg);
+                        os.flush();
                         messageSent(m, System.nanoTime());
                         log.debug("written, msg timeout: {} mSec", m.getTimeout());
                         break;
@@ -779,8 +789,10 @@ public abstract class AbstractMRTrafficController {
         } catch (IOException | RuntimeException e) {
             // TODO Currently there's no port recovery if an exception occurs
             // must restart JMRI to clear xmtException.
-            xmtException = true;
-            portWarn(e);
+            synchronized(this) {
+                xmtException = true;
+                portWarn(e);
+            }
         }
     }
 
