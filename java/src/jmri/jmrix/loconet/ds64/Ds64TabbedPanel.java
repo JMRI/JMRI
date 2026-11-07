@@ -2689,7 +2689,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                 readValue = (readValue << 1) + (opsw[i] ? 1 : 0);
             }
         }
-        readValue++; // account for physical/user numbering difference
+        ++readValue; // account for physical/user numbering difference
 
         String readValueString = readValue.toString();
         if ((opsw[63] == true) && (opsw[64] == true)) {
@@ -2837,7 +2837,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                 readValue = (readValue << 1) + (opsw[i] ? 1 : 0);
             }
         }
-        readValue++; // account for physical/user numbering difference
+        ++readValue; // account for physical/user numbering difference
 
         String readValueString = readValue.toString();
         if ((opsw[47] == true) && (opsw[48] == true)) {
