@@ -914,7 +914,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                             // have written a value for output2 - update GUI
                             outAddr2.setLastQueriedValue(outAddr2.getText());
                             outAddr2.repaint();
-                            indexToRead++;
+                            ++indexToRead;
                             read = false;
                             setOpSwIndex(indexToRead);
                             return 25;
@@ -943,7 +943,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                             } catch (NumberFormatException e) {
                                 routeA2[effectiveIndex].setIsUnused();
                             }
-                            indexToRead++;
+                            ++indexToRead;
                             read = false;
                             setOpSwIndex(indexToRead);
                             return 25;
@@ -964,7 +964,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                             } catch (NumberFormatException e) {
                                 routeA4[effectiveIndex].setIsUnused();
                             }
-                            indexToRead++;
+                            ++indexToRead;
                             read = false;
                             setOpSwIndex(indexToRead);
                             return 25;
@@ -985,7 +985,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                             } catch (NumberFormatException e) {
                                 routeA6[effectiveIndex].setIsUnused();
                             }
-                            indexToRead++;
+                            ++indexToRead;
                             read = false;
                             setOpSwIndex(indexToRead);
                             return 25;
@@ -1006,7 +1006,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                             } catch (NumberFormatException e) {
                                 routeA8[effectiveIndex].setIsUnused();
                             }
-                            indexToRead++;
+                            ++indexToRead;
                             read = false;
                             setOpSwIndex(indexToRead);
                             return 0;
@@ -1067,7 +1067,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
             case 42:
             case 46: {
                 // have read a value for Route n.  go to next value if necessary
-                indexToRead++;
+                ++indexToRead;
                 read = false;
                 setOpSwIndex(indexToRead);
                 return 25;
@@ -1081,7 +1081,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
             case 43:
             case 47: {
                 // have read last values for Route n.  No next value so stop.
-                indexToRead++;
+                ++indexToRead;
                 read = false;
                 setOpSwIndex(indexToRead);
                 return 0;
