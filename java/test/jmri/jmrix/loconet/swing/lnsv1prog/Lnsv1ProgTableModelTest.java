@@ -87,6 +87,11 @@ class Lnsv1ProgTableModelTest {
 
     @AfterEach
     public void tearDown() {
+        // a module reply looks the module up in the Roster on its own thread: let it finish before the reset
+        for (Thread t = JUnitUtil.getThreadByName(Lnsv1DevicesManager.ROSTER_THREAD_NAME + memo.getSystemPrefix()); t != null;
+                t = JUnitUtil.getThreadByName(Lnsv1DevicesManager.ROSTER_THREAD_NAME + memo.getSystemPrefix())) {
+            JUnitUtil.waitThreadTerminated(t);
+        }
         lptm.dispose();
         lptm = null;
         memo.dispose();

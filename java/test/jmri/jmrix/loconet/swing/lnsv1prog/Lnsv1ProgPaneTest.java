@@ -131,6 +131,11 @@ public class Lnsv1ProgPaneTest extends jmri.util.swing.JmriPanelTest {
     @Override
     @AfterEach
     public void tearDown() {
+        // a module reply looks the module up in the Roster on its own thread: let it finish before the reset
+        for (Thread t = JUnitUtil.getThreadByName(Lnsv1DevicesManager.ROSTER_THREAD_NAME + memo.getSystemPrefix()); t != null;
+                t = JUnitUtil.getThreadByName(Lnsv1DevicesManager.ROSTER_THREAD_NAME + memo.getSystemPrefix())) {
+            JUnitUtil.waitThreadTerminated(t);
+        }
         panel = null;
         memo.dispose();
 
