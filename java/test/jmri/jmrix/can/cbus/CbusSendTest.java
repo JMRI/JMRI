@@ -264,6 +264,26 @@ public class CbusSendTest {
         assertReceivedTimesInOrder();
     }
 
+    @Test
+    public void testSendAtGivesTheTimeAndTakesItsPlace() {
+        long now = System.nanoTime();
+        // a frame with a delay of 40 ms, then frames received 20 ms ago, now, and 30 ms from now
+        send.sendWithDelay(new CanReply(new int[]{CbusConstants.CBUS_ACON, 0x00, 0x01, 0x00, 40}), true, false, 40);
+        send.sendAt(new CanReply(new int[]{CbusConstants.CBUS_ACON, 0x00, 0x01, 0x00, 1}), now - 20_000_000L);
+        send.sendAt(new CanReply(new int[]{CbusConstants.CBUS_ACOF, 0x00, 0x01, 0x00, 2}), now);
+        send.sendAt(new CanReply(new int[]{CbusConstants.CBUS_ACON, 0x00, 0x01, 0x00, 30}), now + 30_000_000L);
+        JUnitUtil.waitFor(() -> tcis.inbound.size() == 4, "all frames delivered");
+        int[] expected = {1, 2, 30, 40};
+        for (int i = 0; i < expected.length; i++) {
+            assertEquals(expected[i], tcis.inbound.elementAt(i).getElement(4), "position " + i);
+        }
+        assertEquals(now - 20_000_000L, tcis.inbound.elementAt(0).getReceivedTime(), "the time given");
+        assertEquals(now, tcis.inbound.elementAt(1).getReceivedTime());
+        assertEquals(now + 30_000_000L, tcis.inbound.elementAt(2).getReceivedTime());
+        assertTrue(tcis.outbound.isEmpty(), "only incoming");
+        assertReceivedTimesInOrder();
+    }
+
     private void assertReceivedTimesInOrder() {
         for (int i = 1; i < tcis.inbound.size(); i++) {
             assertTrue(tcis.inbound.elementAt(i).getReceivedTime() - tcis.inbound.elementAt(i - 1).getReceivedTime() >= 0,
