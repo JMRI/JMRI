@@ -94,7 +94,10 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>LocoNet sensors now give raw state listeners the time each
+                    report was received, taken as soon as the message is read
+                    from LocoNet, instead of when it reached the layout thread
+                    (Swing thread), on every kind of LocoNet connection.</li>
             </ul>
 
         <h4>Maple</h4>
