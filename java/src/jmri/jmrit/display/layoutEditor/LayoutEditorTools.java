@@ -9969,14 +9969,12 @@ public final class LayoutEditorTools {
             }
             if (VerticalOrientation == LayoutTraverser.HORIZONTAL) {
                 offsetx = 0;
-                offsety = -30;
                 offsety = 0;
                 rotation = 0;
             } else {
-                offsetx = -30;
                 offsetx = 0;
                 offsety = 0;
-                rotation = 270;
+                rotation = 0;
             }
 
             int cpx = (int) loc.getX();
