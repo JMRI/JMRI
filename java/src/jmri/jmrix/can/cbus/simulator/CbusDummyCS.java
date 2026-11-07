@@ -1,6 +1,10 @@
 package jmri.jmrix.can.cbus.simulator;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import javax.annotation.Nonnull;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -61,8 +65,9 @@ public class CbusDummyCS extends CbusSimCanListener {
     }
     
     public void resetCS() {
-        for ( int i=0 ; (i < _csSessions.size()) ; i++) {
-            destroySession(_csSessions.get(i));
+        // a copy: destroySession removes each from the list
+        for (CbusDummyCSSession session : new ArrayList<>(_csSessions)) {
+            destroySession(session);
         }
         _csSessions = null;
         _csSessions = new ArrayList<>();
@@ -126,7 +131,7 @@ public class CbusDummyCS extends CbusSimCanListener {
             r.setElement(0, CbusConstants.CBUS_ESTOP);
            send.sendWithDelay(r,getSendIn(),getSendOut(),getDelay());
             for ( int i=0 ; (i < _csSessions.size()) ; i++) {
-                _csSessions.get(i).setSpd(1);
+                _csSessions.get(i).emergencyStop();
             }
         }
     }        
@@ -167,6 +172,7 @@ public class CbusDummyCS extends CbusSimCanListener {
         CbusDummyCSSession session = new CbusDummyCSSession( this, sessionid,rcvdIntAddr, rcvdIsLong);
         _csSessions.add(session);
         _currentSessions++;
+        sessionChanged(session);
         if ( _pane  != null ){
             _pane.setNumSessions(_currentSessions);
         }
@@ -230,6 +236,7 @@ public class CbusDummyCS extends CbusSimCanListener {
             if ( _csSessions.get(i) == session ) {
                 
                 _csSessions.get(i).dispose();
+                sessionEnded(session);
                 
                 _csSessions.set(i, null);
                 _csSessions.remove(i);
@@ -241,6 +248,35 @@ public class CbusDummyCS extends CbusSimCanListener {
             }
         }
         log.error("session not found to destroy");
+    }
+
+    private void processStmod ( int session, int mode ) {
+        for ( int i=0 ; (i < _csSessions.size()) ; i++) {
+            if ( _csSessions.get(i).getSessionNum() == session  && (
+            !_csSessions.get(i).getIsDispatched() )) {
+                SpeedStepMode m;
+                switch (mode & 0x03) {
+                    case CbusConstants.CBUS_SS_14:
+                        m = SpeedStepMode.NMRA_DCC_14;
+                        break;
+                    case CbusConstants.CBUS_SS_28_INTERLEAVE:
+                    case CbusConstants.CBUS_SS_28:
+                        m = SpeedStepMode.NMRA_DCC_28;
+                        break;
+                    default:
+                        m = SpeedStepMode.NMRA_DCC_128;
+                        break;
+                }
+                _csSessions.get(i).setSpeedStepMode(m);
+                return;
+            }
+        }
+        CanReply r = new CanReply(4);
+        r.setElement(0, CbusConstants.CBUS_ERR);
+        r.setElement(1, session);
+        r.setElement(2, 0);
+        r.setElement(3, 3);
+        send.sendWithDelay(r,getSendIn(),getSendOut(),getDelay());
     }
 
     private void processKloc ( int session ) {
@@ -298,6 +334,9 @@ public class CbusDummyCS extends CbusSimCanListener {
             case CbusConstants.CBUS_KLOC:
                 processKloc( session );
                 break;
+            case CbusConstants.CBUS_STMOD:
+                processStmod( session, m.getElement(2) );
+                break;
             default:
                 break;
         }
@@ -310,6 +349,72 @@ public class CbusDummyCS extends CbusSimCanListener {
     public void dispose(){
         super.dispose();
         resetCS();
+        sessionListeners.clear();
+    }
+
+    /**
+     * Told when a session starts or its speed, direction or speed step mode
+     * changes, and when it ends. Called on the thread the command station
+     * handles frames on, the layout thread (Swing thread), or on the
+     * thread that times a session out.
+     *
+     * @since 5.19.1
+     */
+    public interface SessionListener {
+
+        /**
+         * A session has started, or its speed, direction or speed step mode
+         * has changed.
+         *
+         * @param session the session
+         */
+        void sessionChanged(@Nonnull CbusDummyCSSession session);
+
+        /**
+         * A session has ended: released, timed out or reset.
+         *
+         * @param session the session
+         */
+        void sessionEnded(@Nonnull CbusDummyCSSession session);
+    }
+
+    private final List<SessionListener> sessionListeners = new CopyOnWriteArrayList<>();
+
+    /**
+     * @param listener to be told of changes to sessions
+     * @since 5.19.1
+     */
+    public void addSessionListener(@Nonnull SessionListener listener) {
+        sessionListeners.add(listener);
+    }
+
+    /**
+     * @param listener no longer to be told
+     * @since 5.19.1
+     */
+    public void removeSessionListener(@Nonnull SessionListener listener) {
+        sessionListeners.remove(listener);
+    }
+
+    /**
+     * @return the sessions now open, in the order they started
+     * @since 5.19.1
+     */
+    @Nonnull
+    public List<CbusDummyCSSession> getSessions() {
+        return new ArrayList<>(_csSessions);
+    }
+
+    void sessionChanged(CbusDummyCSSession session) {
+        for (SessionListener l : sessionListeners) {
+            l.sessionChanged(session);
+        }
+    }
+
+    private void sessionEnded(CbusDummyCSSession session) {
+        for (SessionListener l : sessionListeners) {
+            l.sessionEnded(session);
+        }
     }
 
     private static final Logger log = LoggerFactory.getLogger(CbusDummyCS.class);
