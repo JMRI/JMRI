@@ -449,6 +449,13 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
+             <li>With "Place train name in allocated Blocks" on, a Block
+                 Contents icon now shows the train a Block is allocated to in
+                 italics after an arrow, for example <em>&rarr; 47012</em>,
+                 until Block tracking places the train in the Block, so a
+                 dispatcher can see which trains are really in their Blocks.
+                 Web panels show it the same way. Icons that use an icon for
+                 each value, and Layout Block memories, are unchanged.</li>
              <li>An automatic train waiting for a stop sensor that never goes
                  active no longer runs on out of its Section at its stopping
                  speed. It is stopped as soon as it enters a free Block beyond
