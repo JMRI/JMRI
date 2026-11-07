@@ -756,5 +756,13 @@
                 split into or joined from, how it is detected, and its length
                 from each source. Nothing uses it yet, so nothing
                 changes for users.</li>
+            <li>In a profile whose connections are all simulators (the
+                Internal connection, CAN Simulation and the other simulator
+                connections), scripts and tests can now place simulated
+                trains. Driven by the Internal connection's throttles, as
+                Dispatcher, Warrants and throttle windows on that connection
+                do, they move on the layout's own track and set internal
+                sensors as they pass, with the time they passed. The sample
+                script SimulatedTrains.py shows two trains running.</li>
         </ul>
 
