@@ -65,6 +65,18 @@ public interface TrainRecord extends PropertyChangeProvider {
      * the old and new values are null, so read the lengths from the record.
      */
     String PROPERTY_LENGTHS = "lengths"; // NOI18N
+    /**
+     * Property name for a change in the Blocks the train is known to be in;
+     * the old and new values are the Blocks, as {@link #getBlocks()} gives
+     * them.
+     */
+    String PROPERTY_BLOCKS = "blocks"; // NOI18N
+    /** Property name for a new entry in the trail; the new value is the entry. */
+    String PROPERTY_TRAIL = "trail"; // NOI18N
+    /** Property name for a change of confidence. */
+    String PROPERTY_CONFIDENCE = "confidence"; // NOI18N
+    /** Property name for a change of the leading end or of whether the front is known. */
+    String PROPERTY_DIRECTION = "direction"; // NOI18N
 
     /**
      * @return the train's name, unique among the records
@@ -296,6 +308,181 @@ public interface TrainRecord extends PropertyChangeProvider {
      *         removed record can't be changed
      */
     boolean isRemoved();
+
+    /**
+     * @return true if the record knows where on the layout the train is
+     */
+    boolean isPlaced();
+
+    /**
+     * Say where the train is: the Blocks it is in. Its trail starts again
+     * from here, and its confidence becomes {@link Confidence#CONFIRMED}.
+     *
+     * @param blocks     the Blocks, at least one, front first if the front
+     *                   is known
+     * @param frontKnown true if the first Block given holds the front of
+     *                   the train
+     * @throws IllegalArgumentException if the list is empty or holds a
+     *                                  Block twice
+     * @throws IllegalStateException    if the record has been removed
+     */
+    @InvokeOnLayoutThread
+    void place(@Nonnull List<Block> blocks, boolean frontKnown);
+
+    /**
+     * Forget where the train is, as when it is taken off the layout.
+     *
+     * @throws IllegalStateException if the record has been removed
+     */
+    @InvokeOnLayoutThread
+    void unplace();
+
+    /**
+     * The Blocks the train is known to be in, as detection has shown them:
+     * for a train detected only in part, the Blocks its detected parts are
+     * in.
+     *
+     * @return the Blocks, front first if the front is known; empty if the
+     *         record is not placed; a copy
+     */
+    @Nonnull
+    List<Block> getBlocks();
+
+    /**
+     * @return true if it is known which end of {@link #getBlocks()} holds
+     *         the front of the train
+     */
+    boolean isFrontKnown();
+
+    /**
+     * @return the end of the train that led when it last moved, or null if
+     *         it hasn't been seen to move since it was placed
+     */
+    @CheckForNull
+    End getLeadingEnd();
+
+    /**
+     * The Blocks the train has entered, oldest first: the most recent
+     * {@value #TRAIL_LENGTH} entries.
+     *
+     * @return the trail; a copy
+     */
+    @Nonnull
+    List<TrailEntry> getTrail();
+
+    /** How many entries the trail keeps. */
+    int TRAIL_LENGTH = 64;
+
+    /**
+     * @return how sure JMRI is of where the train is; null if it is not
+     *         placed
+     */
+    @CheckForNull
+    Confidence getConfidence();
+
+    /**
+     * An end of a train.
+     */
+    enum End {
+        /** The front of the train. */
+        FRONT,
+        /** The rear of the train. */
+        REAR
+    }
+
+    /**
+     * How sure JMRI is of where a train is.
+     */
+    enum Confidence {
+        /** Just seen by a detector or a reporter, or placed. */
+        CONFIRMED,
+        /** Not seen where it was last known to be, as after a drop-out. */
+        ESTIMATED,
+        /** One of several trains that could have entered a Block. */
+        AMBIGUOUS,
+        /** Told to move but not seen to. */
+        STALLED,
+        /** Expected somewhere and not found. */
+        LOST
+    }
+
+    /**
+     * A Block a train entered.
+     */
+    @Immutable
+    final class TrailEntry {
+
+        private final Block block;
+        private final Block from;
+        private final End end;
+        private final long timeNanos;
+        private final java.time.Instant time;
+
+        /**
+         * @param block     the Block entered
+         * @param from      the Block it was entered from, or null if the
+         *                  train was placed there
+         * @param end       the end of the train that entered it, or null if
+         *                  not known
+         * @param timeNanos when, on the {@link System#nanoTime()} scale
+         * @param time      when, as a wall-clock time
+         */
+        public TrailEntry(@Nonnull Block block, @CheckForNull Block from, @CheckForNull End end, long timeNanos,
+                @Nonnull java.time.Instant time) {
+            this.block = Objects.requireNonNull(block, "block");
+            this.from = from;
+            this.end = end;
+            this.timeNanos = timeNanos;
+            this.time = Objects.requireNonNull(time, "time");
+        }
+
+        /**
+         * @return the Block entered
+         */
+        @Nonnull
+        public Block getBlock() {
+            return block;
+        }
+
+        /**
+         * @return the Block it was entered from, or null if the train was
+         *         placed there
+         */
+        @CheckForNull
+        public Block getFrom() {
+            return from;
+        }
+
+        /**
+         * @return the end of the train that entered, or null if not known
+         */
+        @CheckForNull
+        public End getEnd() {
+            return end;
+        }
+
+        /**
+         * @return when, on the {@link System#nanoTime()} scale: when the
+         *         Block's sensor first reported it
+         */
+        public long getTimeNanos() {
+            return timeNanos;
+        }
+
+        /**
+         * @return when, as a wall-clock time
+         */
+        @Nonnull
+        public java.time.Instant getTime() {
+            return time;
+        }
+
+        @Override
+        public String toString() {
+            return "TrailEntry[" + block.getDisplayName() + " from "
+                    + (from == null ? "nowhere" : from.getDisplayName()) + ", " + end + "]";
+        }
+    }
 
     /**
      * How a train is detected. The first three are Dispatcher's Train

@@ -178,6 +178,7 @@ public class DefaultTrainRecordManagerTest {
     public void tearDown() {
         manager = null;
         events = null;
+        JUnitUtil.deregisterBlockManagerShutdownTask();
         JUnitUtil.tearDown();
     }
 }

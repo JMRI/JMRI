@@ -279,6 +279,29 @@ public class DefaultTrainRecordTest {
     }
 
     @Test
+    public void testPlacing() {
+        jmri.Block a = new jmri.Block("IBA", "A");
+        jmri.Block b = new jmri.Block("IBB", "B");
+        record.place(List.of(a, b), true);
+        assertTrue(record.isPlaced());
+        assertEquals(List.of(a, b), record.getBlocks());
+        assertTrue(record.isFrontKnown());
+        assertNull(record.getLeadingEnd(), "not seen to move");
+        assertEquals(TrainRecord.Confidence.CONFIRMED, record.getConfidence());
+        assertEquals(2, record.getTrail().size(), "the trail starts from where it was placed");
+        assertEquals(1, registry.placements, "the registry is told");
+        assertThrows(IllegalArgumentException.class, () -> record.place(List.of(), true));
+        assertThrows(IllegalArgumentException.class, () -> record.place(List.of(a, a), true));
+        record.unplace();
+        assertFalse(record.isPlaced());
+        assertNull(record.getConfidence());
+        assertFalse(record.isFrontKnown());
+        assertEquals(2, registry.placements);
+        record.unplace();
+        assertEquals(2, registry.placements, "unplacing an unplaced record does nothing");
+    }
+
+    @Test
     public void testRemovedRecordCantBeChanged() {
         record.markRemoved();
         assertTrue(record.isRemoved());
@@ -293,6 +316,8 @@ public class DefaultTrainRecordTest {
                 () -> record.setCustomMarkers(List.of(DetectionMarker.front(null))));
         assertThrows(IllegalStateException.class, () -> record.setLength(LengthSource.ENTERED, 1.0));
         assertThrows(IllegalStateException.class, () -> record.setMeasuredLength(1.0, true));
+        assertThrows(IllegalStateException.class, () -> record.place(List.of(new jmri.Block("IBA", "A")), true));
+        assertThrows(IllegalStateException.class, () -> record.unplace());
         assertEquals("1A23", record.getName(), "it can still be read");
         assertTrue(events.isEmpty());
     }
@@ -312,6 +337,7 @@ public class DefaultTrainRecordTest {
         final List<String> names = new ArrayList<>();
         final List<BasicRosterEntry> entries = new ArrayList<>();
         final List<IdTag> tags = new ArrayList<>();
+        int placements = 0;
 
         @Override
         public void checkName(@Nonnull TrainRecord record, @Nonnull String name) {
@@ -329,6 +355,11 @@ public class DefaultTrainRecordTest {
         public void checkIdTag(@Nonnull TrainRecord record, @Nonnull IdTag tag) {
             check();
             tags.add(tag);
+        }
+
+        @Override
+        public void placementChanged(@Nonnull TrainRecord record) {
+            placements++;
         }
 
         private void check() {
