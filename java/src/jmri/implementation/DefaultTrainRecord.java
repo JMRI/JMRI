@@ -1,8 +1,12 @@
 package jmri.implementation;
 
+import java.time.Instant;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.EnumMap;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +17,7 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.BasicRosterEntry;
+import jmri.Block;
 import jmri.IdTag;
 import jmri.InvokeOnLayoutThread;
 import jmri.NamedBean;
@@ -56,6 +61,13 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
          * @throws IllegalArgumentException if another record has the tag
          */
         void checkIdTag(@Nonnull TrainRecord record, @Nonnull IdTag tag);
+
+        /**
+         * Told after the record is placed or unplaced.
+         *
+         * @param record the record
+         */
+        void placementChanged(@Nonnull TrainRecord record);
     }
 
     private final Registry registry;
@@ -68,6 +80,11 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     private final Map<LengthSource, Double> lengths = new EnumMap<>(LengthSource.class);
     private boolean measuredConsistent = false;
     private boolean removed = false;
+    private final List<Block> blocks = new ArrayList<>();
+    private boolean frontKnown = false;
+    private End leadingEnd = null;
+    private final Deque<TrailEntry> trail = new ArrayDeque<>();
+    private Confidence confidence = null;
 
     /**
      * Make a record: one component with no length, no locos, detected as
@@ -420,6 +437,182 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     @Override
     public boolean isRemoved() {
         return removed;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean isPlaced() {
+        return !blocks.isEmpty();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @InvokeOnLayoutThread
+    public void place(@Nonnull List<Block> blocks, boolean frontKnown) {
+        Objects.requireNonNull(blocks, "blocks");
+        checkNotRemoved();
+        if (blocks.isEmpty()) {
+            throw new IllegalArgumentException("a train is placed in at least one Block");
+        }
+        if (new HashSet<>(blocks).size() != blocks.size()) {
+            throw new IllegalArgumentException("a Block is given twice");
+        }
+        for (Block b : blocks) {
+            Objects.requireNonNull(b, "block");
+        }
+        List<Block> old = getBlocks();
+        this.blocks.clear();
+        this.blocks.addAll(blocks);
+        long now = System.nanoTime();
+        Instant time = Instant.now();
+        trail.clear();
+        for (int i = blocks.size() - 1; i >= 0; i--) {
+            addToTrail(new TrailEntry(blocks.get(i), null, null, now, time));
+        }
+        setDirection(frontKnown, null);
+        setConfidence(Confidence.CONFIRMED);
+        firePropertyChange(PROPERTY_BLOCKS, old, getBlocks());
+        registry.placementChanged(this);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @InvokeOnLayoutThread
+    public void unplace() {
+        checkNotRemoved();
+        if (blocks.isEmpty()) {
+            return;
+        }
+        List<Block> old = getBlocks();
+        blocks.clear();
+        setDirection(false, null);
+        setConfidence(null);
+        firePropertyChange(PROPERTY_BLOCKS, old, getBlocks());
+        registry.placementChanged(this);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @Nonnull
+    public List<Block> getBlocks() {
+        return new ArrayList<>(blocks);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean isFrontKnown() {
+        return frontKnown;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @CheckForNull
+    public End getLeadingEnd() {
+        return leadingEnd;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @Nonnull
+    public List<TrailEntry> getTrail() {
+        return new ArrayList<>(trail);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @CheckForNull
+    public Confidence getConfidence() {
+        return confidence;
+    }
+
+    /**
+     * The train has entered a Block at one end of the Blocks it is in. That
+     * end leads; if the front wasn't known, it is now: the end that led.
+     * Called by the {@link TrainRecordWatcher}.
+     *
+     * @param block     the Block entered
+     * @param atFirst   true if entered at the first of {@link #getBlocks()},
+     *                  false if at the last
+     * @param timeNanos when, on the {@link System#nanoTime()} scale
+     * @param time      when, as a wall-clock time
+     */
+    @InvokeOnLayoutThread
+    void entered(@Nonnull Block block, boolean atFirst, long timeNanos, @Nonnull Instant time) {
+        if (removed || blocks.isEmpty() || blocks.contains(block)) {
+            return;
+        }
+        List<Block> old = getBlocks();
+        Block from = atFirst ? blocks.get(0) : blocks.get(blocks.size() - 1);
+        if (!frontKnown && !atFirst) {
+            Collections.reverse(blocks);
+            atFirst = true;
+        }
+        End end;
+        if (atFirst) {
+            blocks.add(0, block);
+            end = End.FRONT;
+        } else {
+            blocks.add(block);
+            end = End.REAR;
+        }
+        TrailEntry entry = new TrailEntry(block, from, end, timeNanos, time);
+        addToTrail(entry);
+        setDirection(true, end);
+        setConfidence(Confidence.CONFIRMED);
+        firePropertyChange(PROPERTY_BLOCKS, old, getBlocks());
+        firePropertyChange(PROPERTY_TRAIL, null, entry);
+    }
+
+    /**
+     * The train has left a Block at one end of the Blocks it is in, while it
+     * is still in others. Called by the {@link TrainRecordWatcher}.
+     *
+     * @param block the Block left
+     */
+    @InvokeOnLayoutThread
+    void left(@Nonnull Block block) {
+        if (removed || blocks.size() < 2) {
+            return;
+        }
+        int i = blocks.indexOf(block);
+        if (i != 0 && i != blocks.size() - 1) {
+            return;
+        }
+        List<Block> old = getBlocks();
+        blocks.remove(i);
+        firePropertyChange(PROPERTY_BLOCKS, old, getBlocks());
+    }
+
+    /**
+     * Set how sure JMRI is of where the train is. Called by the
+     * {@link TrainRecordWatcher}, and by placing.
+     *
+     * @param c the confidence, or null when not placed
+     */
+    @InvokeOnLayoutThread
+    void setConfidence(@CheckForNull Confidence c) {
+        if (c == confidence) {
+            return;
+        }
+        Confidence old = confidence;
+        confidence = c;
+        firePropertyChange(PROPERTY_CONFIDENCE, old, c);
+    }
+
+    private void setDirection(boolean frontKnown, End leading) {
+        if (frontKnown == this.frontKnown && leading == leadingEnd) {
+            return;
+        }
+        this.frontKnown = frontKnown;
+        this.leadingEnd = leading;
+        firePropertyChange(PROPERTY_DIRECTION, null, null);
+    }
+
+    private void addToTrail(TrailEntry e) {
+        trail.addLast(e);
+        while (trail.size() > TRAIL_LENGTH) {
+            trail.removeFirst();
+        }
     }
 
     /**
