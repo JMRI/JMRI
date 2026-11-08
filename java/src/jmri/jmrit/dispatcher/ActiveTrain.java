@@ -484,7 +484,7 @@ public class ActiveTrain implements PropertyChangeProvider {
      * its Max Train Length as the entered length.
      */
     private void copyToTrainRecord() {
-        if (trainRecord == null || trainRecord.isRemoved()) {
+        if (trainRecord == null || trainRecord.isDisposed()) {
             return;
         }
         if (trainRecord.getDetection() != TrainRecord.Detection.CUSTOM) {

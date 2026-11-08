@@ -81,14 +81,14 @@ final class ActiveTrainRecords {
         }
         record = manager.getByName(name);
         if (record != null && record.getRosterEntries().isEmpty()) {
-            record.setRosterEntry(entry);
+            record.insertFirstRosterEntry(entry);
             return record;
         }
         String[] names = {name, entry.getId(), name + " " + entry.getId()};
         for (String n : names) {
             if (n != null && !n.trim().isEmpty() && manager.getByName(n) == null) {
                 record = manager.newRecord(n);
-                record.setRosterEntry(entry);
+                record.insertFirstRosterEntry(entry);
                 return record;
             }
         }
@@ -98,7 +98,7 @@ final class ActiveTrainRecords {
             i++;
         }
         record = manager.newRecord(name + " (" + i + ")");
-        record.setRosterEntry(entry);
+        record.insertFirstRosterEntry(entry);
         return record;
     }
 }
