@@ -16,7 +16,8 @@ public class WiThrottlePrefsPanelTest extends PreferencesPanelTestBase<WiThrottl
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();

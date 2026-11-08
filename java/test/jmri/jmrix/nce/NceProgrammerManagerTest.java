@@ -46,10 +46,11 @@ public class NceProgrammerManagerTest {
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initTimeProviderManager();
 
         memo = new NceSystemConnectionMemo();
         memo.setNceTrafficController(new NceTrafficController());
-        
+
         NceCmdStationMemory t = new NceCmdStationMemory();
         Assert.assertNotNull("exists",t);
         memo.getNceTrafficController().csm = t;

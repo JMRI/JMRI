@@ -23,6 +23,7 @@ public class SpecificLightTest {
         JUnitUtil.setUp();
 
         JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initTimeProviderManager();
         SpecificSystemConnectionMemo memo = new SpecificSystemConnectionMemo();
         tc = new SpecificTrafficController(memo);
         memo.setTrafficController(tc);
