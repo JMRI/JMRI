@@ -734,6 +734,12 @@
             <li>The Turnout and Sensor tables can now add a sequential range of
                 up to 1000 items at once (was 100), e.g. a whole C/MRI node. The
                 confirmation for a large range is unchanged.</li>
+            <li>A Block's Edit window, on its Physical Details tab, has a
+                length for each way through the Block that differs from the
+                Block's own, and whether the Block is a braking section (ABC
+                or a cut-out) for trains leaving towards a neighbour. Both are saved with the
+                Block; nothing acts on them yet, and nothing changes for users
+                who leave them.</li>
             <li>When the user name of a sensor, turnout or other item is changed
                 from one name to another in any way, for example by a script,
                 the places that use it by that name now follow the change.
