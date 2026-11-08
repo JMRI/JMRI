@@ -618,11 +618,7 @@ public class LayoutTraverserView extends LayoutTrackView {
             if (!traverser.isSlotDisabled(i)) { // Only draw if the slot is NOT disabled
                 Color slotColor = null;
                 TrackSegment ts = getSlotConnectOrdered(i);
-//                // A slot is mainline if the bridge is, or if the connected track is.
-//                boolean slotIsMain = false;
-//                if (ts != null) {
-//                    slotIsMain = ts.isMainline();
-//                }
+
                 // Set color for block, if any
                 if (isBlock) {
                     if (ts == null) {
