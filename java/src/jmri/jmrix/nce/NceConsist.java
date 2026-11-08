@@ -133,6 +133,89 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
         //notifyConsistListeners(locoAddress, ConsistListener.OPERATION_SUCCESS);
     }
 
+    /*
+     * NCE command station memory holds loco addresses only, not direction, so
+     * a loco learned from a memory read has an unknown direction. Tools that
+     * send a consist command to the command station themselves (the NCE
+     * Consist Editor) report the direction they sent here, so JMRI's copy
+     * matches the command station.
+     */
+    // dummy loco address the NCE Consist Editor puts in a slot during Replace
+    static final int NCE_REPLACE_PLACEHOLDER = 0x3FFF;
+
+    private final java.util.concurrent.ConcurrentHashMap<DccLocoAddress, Boolean> knownDir = new java.util.concurrent.ConcurrentHashMap<>();
+
+    /**
+     * Record the direction a loco was given in this consist by a command sent
+     * directly to the command station.
+     *
+     * @param locoAddress     the loco
+     * @param directionNormal true if forward in the consist
+     */
+    public void setKnownDirection(DccLocoAddress locoAddress, boolean directionNormal) {
+        knownDir.put(locoAddress, directionNormal);
+        if (consistDir != null && contains(locoAddress)
+                && getLocoDirection(locoAddress) != directionNormal) {
+            consistDir.put(locoAddress, directionNormal);
+            notifyConsistListeners(locoAddress, ConsistListener.OPERATION_SUCCESS);
+        }
+    }
+
+    // direction for a loco learned from command station memory
+    private boolean directionFor(DccLocoAddress locoAddress) {
+        Boolean d = knownDir.get(locoAddress);
+        return d == null ? true : d;
+    }
+
+    /**
+     * Restore a locomotive from the consist file. The file can be out of date:
+     * the consist may have been changed or killed on the command station while
+     * JMRI was not running (or by the NCE Consist Editor). So once the file has
+     * been loaded, check this consist against command station memory; locos
+     * the command station no longer has are dropped (see checkLocoConsist).
+     * The command station reader uses the 3-argument restore, which does not
+     * come through here.
+     */
+    @Override
+    public void restore(DccLocoAddress locoAddress, boolean directionNormal) {
+        super.restore(locoAddress, directionNormal);
+        scheduleVerify();
+    }
+
+    private boolean verifyScheduled = false;
+    private int verifyTries = 0;
+    private static final int VERIFY_DELAY_MS = 2000;
+    private static final int VERIFY_MAX_TRIES = 20;   // wait up to ~40 s for a slow first read
+
+    private synchronized void scheduleVerify() {
+        if (verifyScheduled || tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
+            return; // already pending, or a USB system (can't read command station memory)
+        }
+        verifyScheduled = true;
+        verifyTries = 0;
+        jmri.util.ThreadingUtil.runOnLayoutDelayed(this::verifyWithCommandStation, VERIFY_DELAY_MS);
+    }
+
+    private synchronized void verifyWithCommandStation() {
+        if (consistList == null) {
+            verifyScheduled = false;
+            return; // disposed
+        }
+        if (!isValid()) {
+            // the first read of command station memory is still running
+            if (++verifyTries < VERIFY_MAX_TRIES) {
+                jmri.util.ThreadingUtil.runOnLayoutDelayed(this::verifyWithCommandStation, VERIFY_DELAY_MS);
+            } else {
+                verifyScheduled = false;
+                log.warn("Consist {}: could not check it against the command station", getConsistAddress());
+            }
+            return;
+        }
+        verifyScheduled = false;
+        log.debug("Consist {}: checking the consist file copy against the command station", getConsistAddress());
+        checkConsist();
+    }
+
     /**
      * Remove a locomotive from this consist
      *
@@ -162,6 +245,28 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
         } else {
             log.error("Loco {} is not part of this consist {}", locoAddress, getConsistAddress());
         }
+    }
+
+    /**
+     * Drop a locomotive from JMRI's copy of this consist only. Used when the
+     * command station memory shows it is no longer there (the consist was
+     * changed or killed outside JMRI), so there is nothing to send to the
+     * command station, and the lead/rear rule in {@link #remove} does not
+     * apply.
+     *
+     * @param locoAddress the locomotive address to drop
+     */
+    private synchronized void removeFromJmriOnly(DccLocoAddress locoAddress) {
+        if (consistList == null || !contains(locoAddress)) {
+            return;
+        }
+        knownDir.remove(locoAddress);
+        resetRosterEntryCVValue(locoAddress);
+        consistRoster.remove(locoAddress);
+        consistPosition.remove(locoAddress);
+        consistDir.remove(locoAddress);
+        consistList.remove(locoAddress);
+        notifyConsistListeners(locoAddress, ConsistListener.OPERATION_SUCCESS);
     }
 
     private void loadConsist(int consistNum) {
@@ -428,9 +533,7 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
                 }
 
                 if (_validConsist && _locoNum == MID) {
-                    for (int index = 0; index < 8; index += 2) {
-                        checkLocoConsist(r, index, consistPosition.size());
-                    }
+                    checkMidLocos(r);
                 }
 
             } else {
@@ -462,32 +565,108 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
         private boolean addLocoConsist(NceReply r, int index, int position) {
             int address = getLocoAddrText(r, index);
             boolean isLong = getLocoAddressType(r, index); // Long (true) or short (false) address?
-            if (address != 0) {
+            if (address != 0 && address != NCE_REPLACE_PLACEHOLDER) {
                 log.debug("Add loco address {} to consist {}", address, _consistNum);
-                restore(new DccLocoAddress(address, isLong), true, position); // we don't know the direction of the loco
+                DccLocoAddress a = new DccLocoAddress(address, isLong);
+                restore(a, directionFor(a), position);
                 return true;
             }
             return false;
         }
 
+        /*
+         * Remove from JMRI's copy every loco at this lead/rear position other
+         * than keep (and any NCE Replace placeholder left from before).
+         */
+        private void dropOthersAt(int position, DccLocoAddress keep) {
+            ArrayList<DccLocoAddress> current = getConsistList();
+            if (current == null) {
+                return;
+            }
+            for (DccLocoAddress a : new ArrayList<>(current)) {
+                if (a.equals(keep)) {
+                    continue;
+                }
+                if (a.getNumber() == NCE_REPLACE_PLACEHOLDER || getPosition(a) == position) {
+                    removeFromJmriOnly(a);
+                }
+            }
+        }
+
+        /*
+         * Returns false if the command station has no lead loco for this
+         * consist (it was killed there), so the rear and mid reads are skipped.
+         */
         private boolean checkLocoConsist(NceReply r, int index, int position) {
             int address = getLocoAddrText(r, index);
             boolean isLong = getLocoAddressType(r, index); // Long (true) or short (false) address?
             DccLocoAddress locoAddress = new DccLocoAddress(address, isLong);
-            if (contains(locoAddress)) {
+            if (address == NCE_REPLACE_PLACEHOLDER) {
+                // NCE Consist Editor is part way through a Replace: the slot
+                // holds its dummy loco. Leave JMRI's copy alone until the
+                // real replacement loco is in.
+                log.debug("Replace in progress for consist {} position {}", _consistNum, position);
+            } else if (address != 0 && contains(locoAddress)) {
                 log.debug("Loco address {} found match for consist {}", locoAddress, _consistNum);
+                // drop stale locos also listed at this slot (old file, Replace)
+                dropOthersAt(position, locoAddress);
+                consistPosition.put(locoAddress, position);
             } else if (address != 0) {
                 log.debug("New loco address {} found for consist {}", locoAddress, _consistNum);
-                restore(locoAddress, true, position); // we don't know the direction of the loco
+                // a different loco now holds this slot (Replace): drop the old one
+                dropOthersAt(position, locoAddress);
+                restore(locoAddress, directionFor(locoAddress), position);
+            } else if (position == DccConsist.POSITION_LEAD) {
+                // No lead in command station memory: the consist was cleared
+                // outside JMRI. Empty JMRI's copy too. remove() can't be used
+                // here: it refuses the lead and rear loco and would send a
+                // command to the command station for a consist that is gone.
+                log.debug("Consist {} is empty in the command station, clearing it", _consistNum);
+                ArrayList<DccLocoAddress> current = getConsistList();
+                for (DccLocoAddress a : current == null ? new ArrayList<DccLocoAddress>() : new ArrayList<>(current)) {
+                    removeFromJmriOnly(a);
+                }
+                return false;
             } else {
                 log.debug("Found loco address 0 for consist {} index {} position {}", _consistNum, index, position);
                 // remove loco by position in consist
                 locoAddress = getLocoAddressByPosition(position);
                 if (locoAddress != null) {
-                    remove(locoAddress);
+                    removeFromJmriOnly(locoAddress);
                 }
             }
             return true;
+        }
+
+        /*
+         * Mid locos: the command station keeps up to 4. Add any it has that
+         * JMRI doesn't, and drop any JMRI mid loco it no longer has.
+         */
+        private void checkMidLocos(NceReply r) {
+            ArrayList<DccLocoAddress> inCs = new ArrayList<>();
+            for (int index = 0; index < 8; index += 2) {
+                int address = getLocoAddrText(r, index);
+                if (address == 0 || address == NCE_REPLACE_PLACEHOLDER) {
+                    continue;
+                }
+                DccLocoAddress a = new DccLocoAddress(address, getLocoAddressType(r, index));
+                inCs.add(a);
+                if (!contains(a)) {
+                    log.debug("New mid loco address {} found for consist {}", a, _consistNum);
+                    restore(a, directionFor(a), consistPosition.size());
+                }
+            }
+            ArrayList<DccLocoAddress> current = getConsistList();
+            if (current == null) {
+                return; // consist disposed
+            }
+            for (DccLocoAddress a : new ArrayList<>(current)) {
+                int position = getPosition(a);
+                if (position != DccConsist.POSITION_LEAD && position != DccConsist.POSITION_TRAIL && !inCs.contains(a)) {
+                    log.debug("Mid loco {} no longer in consist {} in the command station", a, _consistNum);
+                    removeFromJmriOnly(a);
+                }
+            }
         }
 
         private int getLocoAddrText(NceReply r, int index) {

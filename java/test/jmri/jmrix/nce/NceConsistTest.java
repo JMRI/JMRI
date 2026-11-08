@@ -79,10 +79,21 @@ public class NceConsistTest extends jmri.implementation.AbstractConsistTestBase 
         Assert.assertFalse("Direction in Advanced Consist",c.getLocoDirection(B));
     }
 
+    @Test public void checkSetKnownDirection(){
+        NceConsist nc = (NceConsist) c;
+        jmri.DccLocoAddress A = new jmri.DccLocoAddress(1000,true);
+        nc.restore(A,true,jmri.Consist.POSITION_LEAD); // as read from command station memory
+        Assert.assertTrue("Direction before",nc.getLocoDirection(A));
+        // the NCE Consist Editor reports it sent a reverse command
+        nc.setKnownDirection(A,false);
+        Assert.assertFalse("Direction after",nc.getLocoDirection(A));
+        Assert.assertEquals("Position kept",jmri.Consist.POSITION_LEAD,nc.getPosition(A));
+    }
+
     @Override
     @Test
     @Disabled("Remove requires response from command station")
-    @ToDo("re-write parent class test here and include simulated command station response") 
+    @ToDo("re-write parent class test here and include simulated command station response")
     public void checkRemoveWithGetRosterIDAdvanced(){
     }
 

@@ -1353,8 +1353,87 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
                 (byte) 0);
     }
 
+    private javax.swing.Timer consistManagerRefreshTimer = null;
+    private int consistManagerRefreshNum = 0;
+
+    /**
+     * This panel writes consists straight into command station memory, so the
+     * connection's ConsistManager (used by the Consist Tool, throttles and the
+     * JSON server) doesn't see the change. Once the edits settle, have that
+     * consist re-read from the command station.
+     *
+     * @param number the consist number just changed
+     */
+    private void scheduleConsistManagerRefresh(int number) {
+        if (number < CONSIST_MIN || number > CONSIST_MAX) {
+            return;
+        }
+        consistManagerRefreshNum = number;
+        if (consistManagerRefreshTimer == null) {
+            consistManagerRefreshTimer = new javax.swing.Timer(1000, e -> refreshConsistManager(consistManagerRefreshNum));
+            consistManagerRefreshTimer.setRepeats(false);
+        }
+        consistManagerRefreshTimer.restart();
+    }
+
+    private void refreshConsistManager(int number) {
+        jmri.ConsistManager cm = memo.get(jmri.ConsistManager.class);
+        if (cm == null) {
+            return;
+        }
+        // pass on the directions this panel sent; the command station's
+        // memory doesn't hold them, so a re-read alone would show forward
+        java.util.List<int[]> dirs;
+        synchronized (sentDirections) {
+            dirs = new java.util.ArrayList<>(sentDirections);
+            sentDirections.clear();
+        }
+        for (int[] d : dirs) {
+            jmri.Consist c = cm.getConsist(new DccLocoAddress(d[0], false));
+            if (c instanceof NceConsist) {
+                ((NceConsist) c).setKnownDirection(new DccLocoAddress(d[1], d[2] != 0), d[3] != 0);
+            }
+        }
+        jmri.Consist consist = cm.getConsist(new DccLocoAddress(number, false));
+        if (consist instanceof NceConsist) {
+            log.debug("Refreshing consist {} in the consist manager", number);
+            ((NceConsist) consist).checkConsist();
+        }
+    }
+
+    // {consist, loco address, long (1/0), forward (1/0)} for each consist add
+    // command sent, handed to the ConsistManager on the next refresh
+    private final java.util.List<int[]> sentDirections = new java.util.ArrayList<>();
+
+    private void noteSentDirection(int locoAddr, byte nceLocoCmd, byte consistNumber) {
+        boolean forward;
+        switch (nceLocoCmd) {
+            case NceMessage.LOCO_CMD_FWD_CONSIST_LEAD:
+            case NceMessage.LOCO_CMD_FWD_CONSIST_REAR:
+            case NceMessage.LOCO_CMD_FWD_CONSIST_MID:
+                forward = true;
+                break;
+            case NceMessage.LOCO_CMD_REV_CONSIST_LEAD:
+            case NceMessage.LOCO_CMD_REV_CONSIST_REAR:
+            case NceMessage.LOCO_CMD_REV_CONSIST_MID:
+                forward = false;
+                break;
+            default:
+                return;
+        }
+        if (locoAddr == LOC_ADR_REPLACE) {
+            return; // placeholder loco, not a real one
+        }
+        boolean isLong = locoAddr >= 0xC000;
+        int address = isLong ? locoAddr - 0xC000 : locoAddr;
+        synchronized (sentDirections) {
+            sentDirections.add(new int[]{consistNumber & 0xFF, address, isLong ? 1 : 0, forward ? 1 : 0});
+        }
+    }
+
     private void sendNceBinaryCommand(int locoAddr, byte nceLocoCmd,
             byte consistNumber) {
+        noteSentDirection(locoAddr, nceLocoCmd, consistNumber);
         byte[] bl = NceBinaryCommand.nceLocoCmd(locoAddr, nceLocoCmd,
                 consistNumber);
         sendNceMessage(bl, NceMessage.REPLY_1);
@@ -1387,6 +1466,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
             int recChar = nceReply.getElement(0);
             log.debug("command reply: {}", recChar);
             if (recChar == NceMessage.NCE_OKAY) {
+                scheduleConsistManagerRefresh(consistNum);
                 if (locoSearch && waiting == 0) {
                     readConsistMemory(consistNumVerify, LEAD);
                     consistStatus.setText(Bundle.getMessage("EditStateVERIFY"));

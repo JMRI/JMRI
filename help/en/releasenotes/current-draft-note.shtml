@@ -124,7 +124,13 @@
 
         <h4>NCE</h4>
             <ul>
-                <li></li>
+                <li>The consist list JMRI keeps for an NCE connection (used by
+                    the Consist Tool, throttles and the JSON/WebSocket server) now
+                    follows the command station: a consist cleared, changed or
+                    Replaced on a cab or in the NCE Consist Editor is updated in
+                    JMRI, consists reloaded from the consist roster file at
+                    start-up are checked against command station memory, and
+                    directions set in the NCE Consist Editor are kept.</li>
             </ul>
 
         <h4>Oak Tree</h4>
