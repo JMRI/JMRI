@@ -336,7 +336,7 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
                     functionButtons[i].setIconPath(null);
                     functionButtons[i].setSelectedIconPath(null);
                 }
-                if (text == null && fnImage == null && fnSelectedImage == null && preferences.isUsingExThrottle() && preferences.isHidingUndefinedFuncButt()) {
+                if ((text == null || text.isEmpty()) && fnImage == null && fnSelectedImage == null && preferences.isUsingExThrottle() && preferences.isHidingUndefinedFuncButt()) {
                     functionButtons[i].setDisplay(false);
                 }
                 String fontSize = rosterEntry.getAttribute("function"+fn+"_ThrottleFontSize");
