@@ -447,9 +447,9 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
 
         boolean sideRight = placeIconsRight.isSelected();
         int orientation = layoutTraverser.getOrientation();  //if orientation of the traverser is the opposite of the approaach masts
-        log.warn("orientation {}", orientation);
+        log.debug("orientation {}", orientation);
         int approachMastOrientation = (orientation==0 ? 1 : 0);
-        log.warn("approachMastOrientation {}", approachMastOrientation);
+        log.debug("approachMastOrientation {}", approachMastOrientation);
         for (int i = 0; i < layoutTraverser.getSlotList().size(); i++) {
 
             LayoutTraverser.SlotTrack rt = layoutTraverser.getSlotList().get(i);
@@ -588,73 +588,76 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
         }
         layoutTraverser.setMainline(editLayoutTraverserMainlineComboBox.getSelectedIndex() == 0);
 
-        if (layoutTraverser.isDispatcherManaged()) {
-            // Always remove any existing icons for this traverser's approach masts first.
-            List<SignalMastIcon> iconsToRemove = new ArrayList<>();
-            for (Positionable p : layoutEditor.getContents()) {
-                if (p instanceof SignalMastIcon) {
-                    SignalMastIcon icon = (SignalMastIcon) p;
-                    if (layoutTraverser.isApproachMast(icon.getSignalMast()) 
-                        || (layoutTraverser.getExitSignalMast() != null && layoutTraverser.getExitSignalMast().equals(icon.getSignalMast()))
-                        || (layoutTraverser.getBufferMast() != null && layoutTraverser.getBufferMast().equals(icon.getSignalMast()))) {
-                        iconsToRemove.add(icon);
-                    }
-                }
-            }
-            for (SignalMastIcon icon : iconsToRemove) {
-                icon.remove();
-                editLayoutTraverserNeedsRedraw = true;
-            }
+        placeTraverserApproachMastsImmediately();
+        placeTraverserBridgeMastsImmediately();
 
-            // Now, if requested, place the new icons for slots.
-            if (!doNotPlaceIcons.isSelected()) { // placeIconsLeft or placeIconsRight is selected
-                for (int i = 0; i < layoutTraverser.getNumberSlots(); i++) {
-                    LayoutTraverser.SlotTrack slot = layoutTraverser.getSlotList().get(i);
-                    boolean isEast;
-                    if ((i % 2) == 0) {
-                        isEast = true;
-                    } else {
-                        isEast = false;
-                    }
-                    SignalMast mast = slot.getApproachMast();
-                    if (mast != null) {
-                        if (slot.getConnect() != null) {
-                            SignalMastIcon icon = new SignalMastIcon(layoutEditor);
-                            icon.setSignalMast(mast.getDisplayName());
-                            layoutEditor.getLETools().placingBlockForTraverser(icon, placeIconsRight.isSelected(),
-                                    0.0, isEast, slot.getConnect(), layoutTraverserView.getSlotCoordsOrdered(i));
-                            editLayoutTraverserNeedsRedraw = true;
-                        }
-                    }
-                }
-            }
+//        if (layoutTraverser.isDispatcherManaged()) {
+//            // Always remove any existing icons for this traverser's approach masts first.
+//            List<SignalMastIcon> iconsToRemove = new ArrayList<>();
+//            for (Positionable p : layoutEditor.getContents()) {
+//                if (p instanceof SignalMastIcon) {
+//                    SignalMastIcon icon = (SignalMastIcon) p;
+//                    if (layoutTraverser.isApproachMast(icon.getSignalMast())
+//                        || (layoutTraverser.getExitSignalMast() != null && layoutTraverser.getExitSignalMast().equals(icon.getSignalMast()))
+//                        || (layoutTraverser.getBufferMast() != null && layoutTraverser.getBufferMast().equals(icon.getSignalMast()))) {
+//                        iconsToRemove.add(icon);
+//                    }
+//                }
+//            }
+//            for (SignalMastIcon icon : iconsToRemove) {
+//                icon.remove();
+//                editLayoutTraverserNeedsRedraw = true;
+//            }
 
-            // Now place Exit and Buffer masts if requested.
-            if (!bridgeDoNotPlaceIcons.isSelected()) {
-                Point2D center = layoutTraverserView.getControlPointCenter();
-                int orientation = layoutTraverser.getOrientation();
-
-                // Place Buffer Mast
-                if (layoutTraverser.getBufferMast() != null) {
-                    SignalMastIcon icon = new SignalMastIcon(layoutEditor);
-                    icon.setSignalMast(layoutTraverser.getBufferMast().getDisplayName());
-                    boolean sideRight = bridgePlaceIconsRight.isSelected();
-                    // Pass orientation (Integer) instead of TrackSegment
-                    layoutEditor.getLETools().placingBlockForTurntable(icon, !sideRight, 
-                            0.0, orientation, center);
-                }
-                // Place Exit Mast
-                if (layoutTraverser.getExitSignalMast() != null) {
-                    SignalMastIcon icon = new SignalMastIcon(layoutEditor);
-                    icon.setSignalMast(layoutTraverser.getExitSignalMast().getDisplayName());
-                    boolean sideRight = bridgePlaceIconsRight.isSelected();
-                    // Pass orientation (Integer) instead of TrackSegment
-                    layoutEditor.getLETools().placingBlockForTurntable(icon, sideRight, 
-                            0.0, orientation, center);
-                }
-                editLayoutTraverserNeedsRedraw = true;
-            }
-        }
+//            // Now, if requested, place the new icons for slots.
+//            if (!doNotPlaceIcons.isSelected()) { // placeIconsLeft or placeIconsRight is selected
+//                for (int i = 0; i < layoutTraverser.getNumberSlots(); i++) {
+//                    LayoutTraverser.SlotTrack slot = layoutTraverser.getSlotList().get(i);
+//                    boolean isEast;
+//                    if ((i % 2) == 0) {
+//                        isEast = true;
+//                    } else {
+//                        isEast = false;
+//                    }
+//                    SignalMast mast = slot.getApproachMast();
+//                    if (mast != null) {
+//                        if (slot.getConnect() != null) {
+//                            SignalMastIcon icon = new SignalMastIcon(layoutEditor);
+//                            icon.setSignalMast(mast.getDisplayName());
+//                            layoutEditor.getLETools().placingBlockForTraverser(icon, placeIconsRight.isSelected(),
+//                                    0.0, isEast, slot.getConnect(), layoutTraverserView.getSlotCoordsOrdered(i));
+//                            editLayoutTraverserNeedsRedraw = true;
+//                        }
+//                    }
+//                }
+//            }
+//
+//            // Now place Exit and Buffer masts if requested.
+//            if (!bridgeDoNotPlaceIcons.isSelected()) {
+//                Point2D center = layoutTraverserView.getControlPointCenter();
+//                int orientation = layoutTraverser.getOrientation();
+//
+//                // Place Buffer Mast
+//                if (layoutTraverser.getBufferMast() != null) {
+//                    SignalMastIcon icon = new SignalMastIcon(layoutEditor);
+//                    icon.setSignalMast(layoutTraverser.getBufferMast().getDisplayName());
+//                    boolean sideRight = bridgePlaceIconsRight.isSelected();
+//                    // Pass orientation (Integer) instead of TrackSegment
+//                    layoutEditor.getLETools().placingBlockForTurntable(icon, !sideRight,
+//                            0.0, orientation, center);
+//                }
+//                // Place Exit Mast
+//                if (layoutTraverser.getExitSignalMast() != null) {
+//                    SignalMastIcon icon = new SignalMastIcon(layoutEditor);
+//                    icon.setSignalMast(layoutTraverser.getExitSignalMast().getDisplayName());
+//                    boolean sideRight = bridgePlaceIconsRight.isSelected();
+//                    // Pass orientation (Integer) instead of TrackSegment
+//                    layoutEditor.getLETools().placingBlockForTurntable(icon, sideRight,
+//                            0.0, orientation, center);
+//                }
+//                editLayoutTraverserNeedsRedraw = true;
+//            }
+//        }
 
         saveSlotPanelDetail();
         editLayoutTraverserOpen = false;
@@ -747,11 +750,11 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
                 SignalMast oldMastA = slotA.getApproachMast();
                 removeMast(oldMastA);
                 SignalMast mastA = approachMastComboBoxA.getSelectedItem();
-                log.warn("Selected mast = {}", mastA);
+                log.debug("Selected mast = {}", mastA);
                 slotA.setApproachMast((mastA != null) ? mastA.getSystemName() : null);
-                log.warn("Stored mast = {}", slotA.getApproachMast());
-                log.warn("slotA={}", slotA.getApproachMast());
-                log.warn("slotB={}", slotB.getApproachMast());
+                log.debug("Stored mast = {}", slotA.getApproachMast());
+                log.debug("slotA={}", slotA.getApproachMast());
+                log.debug("slotB={}", slotB.getApproachMast());
                 placeTraverserApproachMastsImmediately();
             });
 
@@ -788,11 +791,11 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
                 SignalMast oldMastB = slotB.getApproachMast();
                 removeMast(oldMastB);
                 SignalMast mastB = approachMastComboBoxB.getSelectedItem();
-                log.warn("Selected mast = {}", mastB);
+                log.debug("Selected mast = {}", mastB);
                 slotB.setApproachMast((mastB != null) ? mastB.getSystemName() : null);
-                log.warn("Stored mast = {}", slotB.getApproachMast());
-                log.warn("slotA={}", slotA.getApproachMast());
-                log.warn("slotB={}", slotB.getApproachMast());
+                log.debug("Stored mast = {}", slotB.getApproachMast());
+                log.debug("slotA={}", slotA.getApproachMast());
+                log.debug("slotB={}", slotB.getApproachMast());
                 placeTraverserApproachMastsImmediately();
             });
 
