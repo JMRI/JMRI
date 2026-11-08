@@ -997,6 +997,13 @@
       System Console as a warning naming the Stop Sensor, which should then be checked. Where a
       Stop Sensor is the detection sensor of the Block beyond the Section, the train is meant to
       enter that Block, and neither check is made.<br>
+      <span class="since">since 5.17.5</span>A Section can have a <strong>Stop Point</strong> for
+      each direction, where the front of a train stops in it: where its Stop Sensor is, if it has
+      one. A train with a speed profile then slows over the distance to it, to its minimum reliable
+      speed if there is a Stop Sensor, or to a stop if not, at a signal or for want of the next
+      Section as well as at the end of its trip. Each Block its front enters, and each Block the end
+      of a detected train leaves, corrects how far it has to go. See
+      <a href="../beantable/SectionAddEdit.shtml">Adding/Editing Sections</a>.<br>
       For the second stopping method to work, train length must be entered, lengths of all Blocks
       in the Transit must be present in the Block Table, and the train must be fully detectable
       (this usually means all cars must have resistance wheels on one or more trucks). Block

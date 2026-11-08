@@ -298,6 +298,8 @@ public class SectionTableAction extends AbstractTableAction<Section> {
     NamedBeanComboBox<Sensor> reverseSensorBox;
     NamedBeanComboBox<Sensor> forwardStopSensorBox;
     NamedBeanComboBox<Sensor> reverseStopSensorBox;
+    JSpinner forwardStopPointSpinner;
+    JSpinner reverseStopPointSpinner;
     JRadioButton manually = new JRadioButton(rbx.getString("SetManually"), true);
     JRadioButton automatic = new JRadioButton(rbx.getString("UseConnectivity"), false);
     ButtonGroup entryPointOptions = null;
@@ -524,6 +526,19 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             p41.add(reverseStopSensorBox);
             reverseStopSensorBox.setToolTipText(rbx.getString("ReverseStopSensorHint"));
             addFrame.getContentPane().add(p41);
+            // set up for stop points
+            forwardStopPointSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 1000000, 10));
+            reverseStopPointSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 1000000, 10));
+            JPanel p42 = new JPanel();
+            p42.setLayout(new FlowLayout());
+            p42.add(new JLabel(rbx.getString("ForwardStopPoint")));
+            p42.add(forwardStopPointSpinner);
+            forwardStopPointSpinner.setToolTipText(rbx.getString("ForwardStopPointHint"));
+            p42.add(new JLabel("     "));
+            p42.add(new JLabel(rbx.getString("ReverseStopPoint")));
+            p42.add(reverseStopPointSpinner);
+            reverseStopPointSpinner.setToolTipText(rbx.getString("ReverseStopPointHint"));
+            addFrame.getContentPane().add(p42);
             addFrame.getContentPane().add(new JSeparator());
             // set up bottom row of buttons
             JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
@@ -611,6 +626,8 @@ public class SectionTableAction extends AbstractTableAction<Section> {
         reverseSensorBox.setSelectedItem(curSection.getReverseBlockingSensor());
         forwardStopSensorBox.setSelectedItem(curSection.getForwardStoppingSensor());
         reverseStopSensorBox.setSelectedItem(curSection.getReverseStoppingSensor());
+        forwardStopPointSpinner.setValue(Math.round(curSection.getStopPointMm(Section.FORWARD)));
+        reverseStopPointSpinner.setValue(Math.round(curSection.getStopPointMm(Section.REVERSE)));
         List<EntryPoint> list = curSection.getForwardEntryPointList();
         if (list.size() > 0) {
             for (int j = 0; j < list.size(); j++) {
@@ -632,6 +649,8 @@ public class SectionTableAction extends AbstractTableAction<Section> {
         reverseSensorBox.setSelectedItem(null);
         forwardStopSensorBox.setSelectedItem(null);
         reverseStopSensorBox.setSelectedItem(null);
+        forwardStopPointSpinner.setValue(0);
+        reverseStopPointSpinner.setValue(0);
         generationStateLabel.setText("");
     }
 
@@ -771,6 +790,8 @@ public class SectionTableAction extends AbstractTableAction<Section> {
         curSection.setReverseBlockingSensorName(reverseSensorBox.getSelectedItemDisplayName());
         curSection.setForwardStoppingSensorName(forwardStopSensorBox.getSelectedItemDisplayName());
         curSection.setReverseStoppingSensorName(reverseStopSensorBox.getSelectedItemDisplayName());
+        curSection.setStopPointMm(Section.FORWARD, ((Number) forwardStopPointSpinner.getValue()).floatValue());
+        curSection.setStopPointMm(Section.REVERSE, ((Number) reverseStopPointSpinner.getValue()).floatValue());
         for (int j = 0; j < entryPointList.size(); j++) {
             EntryPoint ep = entryPointList.get(j);
             if (ep.isForwardType()) {

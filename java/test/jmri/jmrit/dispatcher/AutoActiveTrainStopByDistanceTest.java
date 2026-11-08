@@ -51,6 +51,7 @@ public class AutoActiveTrainStopByDistanceTest {
     private Sensor[] blockSensor;
     private Sensor stopSensor;
     private Sensor block8Sensor;
+    private Section finalSection;
 
     /**
      * Load the layout, give Section B5-7 a forward stopping sensor, and start a
@@ -68,6 +69,36 @@ public class AutoActiveTrainStopByDistanceTest {
      *                           or null for a sensor of its own
      */
     private void startTrain(float stopDistanceMm, String stoppingSensorName) {
+        startTrain(stopDistanceMm, stoppingSensorName, 0.0f);
+    }
+
+    /**
+     * Load the layout and start the train.
+     *
+     * @param stopDistanceMm     the train's stop distance; 0 for none
+     * @param stoppingSensorName the forward stopping sensor of Section B5-7,
+     *                           null for a sensor of its own, or empty for none
+     * @param stopPointMm        the forward stop point of Section B5-7; 0 for
+     *                           none
+     */
+    private void startTrain(float stopDistanceMm, String stoppingSensorName, float stopPointMm) {
+        startTrain(stopDistanceMm, stoppingSensorName, stopPointMm, false);
+    }
+
+    /**
+     * Load the layout and start the train.
+     *
+     * @param stopDistanceMm     the train's stop distance; 0 for none
+     * @param stoppingSensorName the forward stopping sensor of Section B5-7,
+     *                           null for a sensor of its own, or empty for none
+     * @param stopPointMm        the forward stop point of Section B5-7; 0 for
+     *                           none
+     * @param block5Occupied     true to have Block 5 occupied, so that Section
+     *                           B5-7 cannot be allocated and the train must
+     *                           stop in Section B4
+     */
+    private void startTrain(float stopDistanceMm, String stoppingSensorName, float stopPointMm,
+            boolean block5Occupied) {
         jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
         };
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
@@ -85,11 +116,14 @@ public class AutoActiveTrainStopByDistanceTest {
         block8Sensor = sm.provideSensor("IS_BLOCK8");
         JUnitUtil.setBeanStateAndWait(block8Sensor, Sensor.INACTIVE);
 
-        stopSensor = sm.provideSensor(stoppingSensorName == null ? "IS_STOP_B7" : stoppingSensorName);
-        JUnitUtil.setBeanStateAndWait(stopSensor, Sensor.INACTIVE);
-        Section finalSection = InstanceManager.getDefault(SectionManager.class).getSection("Section B5-7");
+        finalSection = InstanceManager.getDefault(SectionManager.class).getSection("Section B5-7");
         assertNotNull(finalSection);
-        finalSection.setForwardStoppingSensorName(stopSensor.getSystemName());
+        if (stoppingSensorName == null || !stoppingSensorName.isEmpty()) {
+            stopSensor = sm.provideSensor(stoppingSensorName == null ? "IS_STOP_B7" : stoppingSensorName);
+            JUnitUtil.setBeanStateAndWait(stopSensor, Sensor.INACTIVE);
+            finalSection.setForwardStoppingSensorName(stopSensor.getSystemName());
+        }
+        finalSection.setStopPointMm(Section.FORWARD, stopPointMm);
 
         BlockManager bm = InstanceManager.getDefault(BlockManager.class);
         Block block8 = bm.provideBlock("IB_BLOCK8");
@@ -121,6 +155,9 @@ public class AutoActiveTrainStopByDistanceTest {
         dispatcherWindow = new JFrameOperator(Bundle.getMessage("TitleDispatcher"));
 
         JUnitUtil.setBeanStateAndWait(blockSensor[1], Sensor.ACTIVE);
+        if (block5Occupied) {
+            JUnitUtil.setBeanStateAndWait(blockSensor[5], Sensor.ACTIVE);
+        }
         dispatcher.loadTrainFromTrainInfo("FWDREV40.xml", DispatcherFrame.OVERRIDETYPE_ROSTER, "StopByDistance");
         assertEquals(1, dispatcher.getActiveTrainsList().size(), "Train loaded");
         ActiveTrain at = dispatcher.getActiveTrainsList().get(0);
@@ -129,7 +166,9 @@ public class AutoActiveTrainStopByDistanceTest {
         aat.setMinReliableOperatingSpeed(MIN_RELIABLE);
         aat.setStopByDistanceMm(stopDistanceMm);
 
-        JUnitUtil.waitFor(() -> dispatcher.getAllocatedSectionsList().size() == 3, "Allocated sections should be 3");
+        int sections = block5Occupied ? 2 : 3;
+        JUnitUtil.waitFor(() -> dispatcher.getAllocatedSectionsList().size() == sections,
+                "Allocated sections should be " + sections);
         JUnitUtil.waitFor(() -> aat.getThrottle() != null && aat.getThrottle().getSpeedSetting() > 0.0f,
                 "Failed to start");
     }
@@ -291,6 +330,121 @@ public class AutoActiveTrainStopByDistanceTest {
         assertEquals(MIN_RELIABLE, speed(), 0.01f, "keeps going to the stopping sensor in Block 8");
         JUnitUtil.setBeanStateAndWait(block8Sensor, Sensor.ACTIVE);
         JUnitUtil.waitFor(() -> speed() < TOLERANCE, () -> "did not stop on the sensor, speed " + speed());
+        finish();
+    }
+
+    /**
+     * Without a stop distance of its own, the train stops at its destination
+     * Section's stop point: it slows to its minimum reliable speed, keeps that
+     * speed, and stops when the stopping sensor goes active.
+     */
+    @Test
+    public void testStopsAtTheSectionStopPoint() {
+        startTrain(0.0f, null, 500.0f);
+        runToFinalSection();
+        JUnitUtil.waitFor(() -> Math.abs(speed() - MIN_RELIABLE) < 0.01f,
+                () -> "did not slow to the minimum reliable speed, speed " + speed());
+        JUnitUtil.waitFor(500);
+        assertEquals(MIN_RELIABLE, speed(), 0.01f, "keeps the minimum reliable speed until the sensor");
+        JUnitUtil.setBeanStateAndWait(stopSensor, Sensor.ACTIVE);
+        JUnitUtil.waitFor(() -> speed() < TOLERANCE, () -> "did not stop on the sensor, speed " + speed());
+        finish();
+    }
+
+    /**
+     * Each Block the head enters is a fix: with no stopping sensor, a stop
+     * point 500 mm into the Section is in Block 6, so the head entering
+     * Block 7 is past it, and the train stops at once rather than finishing
+     * the slowing it planned when it entered the Section.
+     */
+    @Test
+    public void testHeadEnteringABlockIsAFix() {
+        startTrain(0.0f, "", 500.0f);
+        runToFinalSection();
+        Assertions.assertTrue(speed() > TOLERANCE, "slowing, not stopped");
+        // the tail stays in Block 5, so that only the head gives fixes
+        headInto(6);
+        Assertions.assertTrue(speed() > TOLERANCE, "still slowing in Block 6");
+        headInto(7);
+        JUnitUtil.waitFor(200);
+        assertEquals(0.0f, speed(), TOLERANCE, "stops at once on passing the stop point");
+        finish();
+    }
+
+    /**
+     * Where the tail is detected, the tail leaving a Block is a fix: the head is
+     * then the train's length beyond the end of that Block. With the stop
+     * point just beyond where that puts the head, the train stops when the
+     * tail leaves Block 5.
+     */
+    @Test
+    public void testTailLeavingABlockIsAFix() {
+        startTrain(0.0f, "", 0.0f);
+        assertEquals(ActiveTrain.TrainDetection.TRAINDETECTION_WHOLETRAIN,
+                aat.getActiveTrain().getTrainDetection(), "tail detected");
+        float trainMm = aat.getMaxTrainLengthMM();
+        Assertions.assertTrue(trainMm > 0.0f && trainMm < 270.0f, "train fits in Block 6, length " + trainMm);
+        finalSection.setStopPointMm(Section.FORWARD, 279.4f + trainMm + 5.0f);
+        runToFinalSection();
+        headInto(6);
+        Assertions.assertTrue(speed() > TOLERANCE, "slowing, not stopped");
+        set(5, Sensor.INACTIVE);
+        JUnitUtil.waitFor(() -> speed() < TOLERANCE, () -> "did not stop 5 mm after the tail fix, speed " + speed());
+        finish();
+    }
+
+    /**
+     * A stop that is not the end of the trip, here for want of the next
+     * Section, uses the stop point of the Section the train stops in: the
+     * train slows to its minimum reliable speed, keeps that speed, and stops
+     * on the stopping sensor.
+     */
+    @Test
+    public void testStopsOnTheSensorWhenTheNextSectionIsNotAllocated() {
+        startTrain(0.0f, "", 0.0f, true);
+        Section b4 = InstanceManager.getDefault(SectionManager.class).getSection("Section B4");
+        assertNotNull(b4);
+        Sensor b4Stop = InstanceManager.getDefault(SensorManager.class).provideSensor("IS_STOP_B4");
+        JUnitUtil.setBeanStateAndWait(b4Stop, Sensor.INACTIVE);
+        b4.setForwardStoppingSensorName(b4Stop.getSystemName());
+        b4.setStopPointMm(Section.FORWARD, 600.0f);
+        headInto(2);
+        set(1, Sensor.INACTIVE);
+        headInto(3);
+        set(2, Sensor.INACTIVE);
+        headInto(4);
+        set(3, Sensor.INACTIVE);
+        JUnitUtil.waitFor(() -> Math.abs(speed() - MIN_RELIABLE) < 0.01f,
+                () -> "did not slow to the minimum reliable speed, speed " + speed());
+        JUnitUtil.waitFor(500);
+        assertEquals(MIN_RELIABLE, speed(), 0.01f, "keeps the minimum reliable speed until the sensor");
+        JUnitUtil.setBeanStateAndWait(b4Stop, Sensor.ACTIVE);
+        JUnitUtil.waitFor(() -> speed() < TOLERANCE, () -> "did not stop on the sensor, speed " + speed());
+        finish();
+    }
+
+    /**
+     * As above, with no stopping sensor: without a stop point the train would
+     * stop as soon as its tail left Block 3; with one it slows to a stop at
+     * the stop point.
+     */
+    @Test
+    public void testStopsByDistanceWhenTheNextSectionIsNotAllocated() {
+        // the last of the slowing is at the minimum reliable speed, 40 mm/s
+        JUnitUtil.WAITFOR_MAX_DELAY = 20000;
+        startTrain(0.0f, "", 0.0f, true);
+        Section b4 = InstanceManager.getDefault(SectionManager.class).getSection("Section B4");
+        assertNotNull(b4);
+        b4.setStopPointMm(Section.FORWARD, 400.0f);
+        headInto(2);
+        set(1, Sensor.INACTIVE);
+        headInto(3);
+        set(2, Sensor.INACTIVE);
+        headInto(4);
+        set(3, Sensor.INACTIVE);
+        JUnitUtil.waitFor(300);
+        Assertions.assertTrue(speed() > TOLERANCE, "slowing to the stop point, not stopped at once");
+        JUnitUtil.waitFor(() -> speed() < TOLERANCE, () -> "did not stop at the stop point, speed " + speed());
         finish();
     }
 

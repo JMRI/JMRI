@@ -75,6 +75,22 @@ public class DefaultSectionTest {
     Assert.assertTrue("blocks are not sent allocation events", blockEvents.isEmpty());
    }
 
+   @Test
+   public void testStopPoints() {
+    Section s = new DefaultSection("TS1");
+    Assert.assertEquals("none at first", 0.0f, s.getStopPointMm(Section.FORWARD), 0.0f);
+    Assert.assertEquals("none at first", 0.0f, s.getStopPointMm(Section.REVERSE), 0.0f);
+    s.setStopPointMm(Section.FORWARD, 420.5f);
+    s.setStopPointMm(Section.REVERSE, 150.0f);
+    Assert.assertEquals(420.5f, s.getStopPointMm(Section.FORWARD), 0.0f);
+    Assert.assertEquals(150.0f, s.getStopPointMm(Section.REVERSE), 0.0f);
+    Assert.assertEquals("kept as a property, so it is saved", 420.5f, s.getProperty(Section.STOP_POINT_FORWARD));
+    s.setStopPointMm(Section.FORWARD, 0.0f);
+    Assert.assertEquals("0 clears it", 0.0f, s.getStopPointMm(Section.FORWARD), 0.0f);
+    Assert.assertFalse("and removes the property", s.getPropertyKeys().contains(Section.STOP_POINT_FORWARD));
+    Assert.assertEquals("the other direction is kept", 150.0f, s.getStopPointMm(Section.REVERSE), 0.0f);
+   }
+
    @BeforeEach
    public void setUp() {
         JUnitUtil.setUp();
