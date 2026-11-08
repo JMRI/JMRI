@@ -541,6 +541,12 @@
     <h3>Signals</h3>
         <a id="Signals" name="Signals"></a>
         <ul>
+            <li>A Signal Mast no longer keeps changing between clear and
+                danger when automatic signal mast generation is allowed for
+                one of its Signal Mast Logic pairs. The pair listed the mast
+                itself among the masts that must show danger, so the mast
+                put itself back to danger each time it cleared (seen since
+                5.17.5, with the turnouts set for that route).</li>
             <li></li>
         </ul>
         <h4>Signal Systems</h4>
