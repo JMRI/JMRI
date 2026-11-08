@@ -347,10 +347,11 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     /**
-     * Redraw panels using this layout block.
+     * Redraw panels using this layout block: on each, the part drawn in this
+     * block's colours (the whole panel in edit mode).
      */
     public void redrawLayoutBlockPanels() {
-        panels.stream().forEach(LayoutEditor::redrawPanel);
+        panels.stream().forEach(panel -> panel.redrawLayoutBlock(this));
         firePropertyChange(PROPERTY_REDRAW, null, null);
     }
 
@@ -1052,8 +1053,13 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * suppressed.
      *
      * @param set true, update suppress. false, update normal
+     * @deprecated since 5.19.1; to show the train a block is allocated to
+     *             while it is empty, use {@link Block#setAllocatedValue(Object)},
+     *             which the memory shows when the block has no value
      */
+    @Deprecated(since="5.19.1", forRemoval=true)
     public void setSuppressNameUpdate(boolean set) {
+        jmri.util.LoggingUtil.deprecationWarning(log, "LayoutBlock.setSuppressNameUpdate");
         boolean resume = suppressNameUpdate && !set;
         suppressNameUpdate = set;
         if (resume) {
@@ -1063,12 +1069,15 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     /**
-     * Copy the block value to the memory, if there is one.
+     * Copy the value to show for the block to the memory, if there is one:
+     * the train in the block, or the train it is allocated to.
+     *
+     * @see Block#getDisplayValue()
      */
     private void updateMemoryFromBlock() {
         Memory m = getMemory();
         if ((m != null) && (block != null)) {
-            Object val = block.getValue();
+            Object val = block.getDisplayValue();
             if (val != null) {
                 if (!(val instanceof RosterEntry) && !(val instanceof Reportable)) {
                     val = val.toString();

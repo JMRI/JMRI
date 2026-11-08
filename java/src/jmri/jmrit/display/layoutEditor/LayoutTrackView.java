@@ -471,6 +471,29 @@ abstract public class LayoutTrackView implements InlineLogixNG {
     abstract public Rectangle2D getBounds();
 
     /**
+     * Tell whether this track is drawn, in whole or in part, in a layout
+     * block's colours, so that it has to be redrawn when that block's state or
+     * colours change.
+     *
+     * @param layoutBlock the layout block
+     * @return true if some of this track is drawn in that block's colours
+     */
+    abstract public boolean usesLayoutBlock(@Nonnull LayoutBlock layoutBlock);
+
+    /**
+     * Get an area that holds everything this track draws in a layout block's
+     * colours, before the width of the lines is allowed for. Used to redraw
+     * only that part of the panel when a block changes, so it may be larger
+     * than the track but never smaller.
+     *
+     * @return the area, in panel coordinates (not zoomed)
+     */
+    @Nonnull
+    public Rectangle2D getRepaintBounds() {
+        return getBounds();
+    }
+
+    /**
      * show the popup menu for this layout track
      *
      * @param mouseEvent the mouse down event that triggered this popup

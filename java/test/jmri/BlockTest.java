@@ -1,11 +1,10 @@
 package jmri;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
-import java.util.Collections;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrix.internal.InternalSensorManager;
@@ -13,12 +12,6 @@ import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests for the Block class

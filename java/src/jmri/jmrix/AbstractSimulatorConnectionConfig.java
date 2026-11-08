@@ -85,7 +85,6 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         }
     }
 
-    protected String[] baudList;
     protected jmri.jmrix.SerialPortAdapter adapter;
 
     /**
@@ -214,6 +213,16 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         } else {
             return null;
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * A simulator connection drives no real hardware.
+     */
+    @Override
+    public boolean isSimulator() {
+        return true;
     }
 
     @Override

@@ -44,8 +44,15 @@ public class DefaultTransitManager extends AbstractManager<Transit> implements j
     }
 
     final void addVetoListener(){
-        InstanceManager.getDefault(SectionManager.class).addVetoableChangeListener(this);
+        sectionManager = InstanceManager.getDefault(SectionManager.class);
+        sectionManager.addVetoableChangeListener(this);
     }
+
+    /**
+     * The SectionManager this manager listens to for deletions, so that {@link #dispose()}
+     * stops listening to that one, not to whatever the InstanceManager holds by then.
+     */
+    private SectionManager sectionManager;
 
     @Override
     public int getXMLOrder() {
@@ -214,7 +221,7 @@ public class DefaultTransitManager extends AbstractManager<Transit> implements j
 
     @Override
     public void dispose() {
-        InstanceManager.getDefault(SectionManager.class).removeVetoableChangeListener(this);
+        sectionManager.removeVetoableChangeListener(this);
         super.dispose();
     }
 

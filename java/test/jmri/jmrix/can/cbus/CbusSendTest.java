@@ -212,6 +212,66 @@ public class CbusSendTest {
     }
 
     @Test
+    public void testSendWithDelaySameDelayArrivesInOrderSent() {
+        int count = 50;
+        for (int i = 0; i < count; i++) {
+            send.sendWithDelay(new CanReply(new int[]{CbusConstants.CBUS_ACON, 0x00, 0x01, 0x00, i}), true, false, 5);
+        }
+        JUnitUtil.waitFor(() -> tcis.inbound.size() == count, "all frames delivered");
+        for (int i = 0; i < count; i++) {
+            assertEquals(i, tcis.inbound.elementAt(i).getElement(4), "frame " + i + " in the order sent");
+        }
+        assertReceivedTimesInOrder();
+    }
+
+    @Test
+    public void testSendWithDelayArrivesInOrderDue() {
+        // Sent with delays of 20, 10, 10 and 0 ms. Each frame is due its delay after it was sent,
+        // and the times each send began and ended bound that. A busy machine may pause between
+        // the sends, so the order of two frames is checked where those bounds settle it, and
+        // frames with the same delay must keep the order they were sent in.
+        int[] delays = {20, 10, 10, 0};
+        long[] began = new long[delays.length];
+        long[] ended = new long[delays.length];
+        for (int i = 0; i < delays.length; i++) {
+            began[i] = System.nanoTime();
+            send.sendWithDelay(new CanReply(new int[]{CbusConstants.CBUS_ACON, 0x00, 0x01, 0x00, i}), true, false,
+                delays[i]);
+            ended[i] = System.nanoTime();
+        }
+        JUnitUtil.waitFor(() -> tcis.inbound.size() == delays.length, "all frames delivered");
+        int[] position = new int[delays.length];
+        for (int p = 0; p < delays.length; p++) {
+            position[tcis.inbound.elementAt(p).getElement(4)] = p;
+        }
+        int settled = 0;
+        for (int i = 0; i < delays.length; i++) {
+            for (int j = i + 1; j < delays.length; j++) {
+                long latestI = ended[i] + TimeUnit.MILLISECONDS.toNanos(delays[i]);
+                long earliestI = began[i] + TimeUnit.MILLISECONDS.toNanos(delays[i]);
+                long latestJ = ended[j] + TimeUnit.MILLISECONDS.toNanos(delays[j]);
+                long earliestJ = began[j] + TimeUnit.MILLISECONDS.toNanos(delays[j]);
+                if (delays[i] == delays[j] || latestI - earliestJ < 0) {
+                    assertTrue(position[i] < position[j], "frame " + i + " due before frame " + j);
+                    settled++;
+                } else if (latestJ - earliestI < 0) {
+                    assertTrue(position[j] < position[i], "frame " + j + " due before frame " + i);
+                    settled++;
+                }
+            }
+        }
+        assertTrue(settled > 0, "at least the frames with the same delay are in order");
+        assertReceivedTimesInOrder();
+    }
+
+    private void assertReceivedTimesInOrder() {
+        for (int i = 1; i < tcis.inbound.size(); i++) {
+            assertTrue(tcis.inbound.elementAt(i).getReceivedTime() - tcis.inbound.elementAt(i - 1).getReceivedTime() >= 0,
+                "received times in delivery order, at " + i);
+        }
+    }
+
+    @Test
     public void testSendWithDelayOutgoingOnlyIsNotStamped() {
         CanReply r = new CanReply(new int[]{CbusConstants.CBUS_ACOF, 0x00, 0x01, 0x00, 0x02});
         send.sendWithDelay(r, false, true, 5);

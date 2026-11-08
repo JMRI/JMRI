@@ -114,6 +114,17 @@ public class SignalMastTableDataModel extends BeanTableDataModel<SignalMast> {
         return InstanceManager.getDefault(SignalMastManager.class);
     }
 
+    /**
+     * Delete the mast and clear the "mast:outputN" Comments it left on its
+     * outputs; the outputs stay in the Turnout table.
+     */
+    @Override
+    protected void doDelete(SignalMast bean) {
+        String name = bean.getSystemName();
+        super.doDelete(bean);
+        clearTurnoutComments(name + ":output");
+    }
+
     @Override
     protected SignalMast getBySystemName(@Nonnull String name) {
         return InstanceManager.getDefault(SignalMastManager.class).getBySystemName(name);

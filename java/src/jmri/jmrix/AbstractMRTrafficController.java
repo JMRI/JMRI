@@ -754,6 +754,7 @@ public abstract class AbstractMRTrafficController {
                     if (portReadyToSend(controller)) {
                         ostream.write(msg);
                         ostream.flush();
+                        messageSent(m, System.nanoTime());
                         log.debug("written, msg timeout: {} mSec", m.getTimeout());
                         break;
                     } else if (m.getRetries() >= 0) {
@@ -780,6 +781,33 @@ public abstract class AbstractMRTrafficController {
             // must restart JMRI to clear xmtException.
             xmtException = true;
             portWarn(e);
+        }
+    }
+
+    /**
+     * Record that a message has been written to the connection: give it the
+     * time, and tell its {@link AbstractMRMessage.SentListener}, if it has
+     * one, on the layout thread (Swing thread). Call as soon as the write has
+     * returned, on the thread that wrote it, and only if the write succeeded.
+     * The listener is told after the listeners of the outgoing message,
+     * which are queued on the layout thread (Swing thread) before the write.
+     *
+     * @param m         the message written
+     * @param timeNanos when it was written, on the {@link System#nanoTime()}
+     *                  scale
+     * @since 5.19.1
+     */
+    protected void messageSent(@Nonnull AbstractMRMessage m, long timeNanos) {
+        m.setSentTime(timeNanos);
+        AbstractMRMessage.SentListener l = m.getSentListener();
+        if (l != null) {
+            jmri.util.ThreadingUtil.runOnLayoutEventually(() -> {
+                try {
+                    l.messageSent(m, timeNanos);
+                } catch (RuntimeException e) {
+                    log.error("Sent listener of message {} failed", m, e);
+                }
+            });
         }
     }
 

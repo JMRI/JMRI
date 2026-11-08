@@ -36,7 +36,6 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
     String stopAspect;
 
     Hashtable<SignalMast, DestinationMast> destList = new Hashtable<>();
-    LayoutEditor editor;
 
     LayoutBlock facingBlock = null;
     LayoutBlock remoteProtectingBlock = null;

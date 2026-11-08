@@ -372,6 +372,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             }
             at.setTrainDetection(info.getTrainDetection());
             at.setMaxTrainLengthMM((long) (info.getMaxTrainLengthScaleMeters() * 1000.0 * getScale().getScaleFactor()));
+            ActiveTrainRecords.link(at);
             at.setAllocateMethod(info.getAllocationMethod());
             at.setDelayedStart(info.getDelayedStart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
             at.setDepartureTimeHr(info.getDepartureTimeHr()); // hour of day (fast-clock) to start this train
@@ -1859,6 +1860,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         if (at == null) {
             log.error("Null ActiveTrain pointer when attempting to terminate an ActiveTrain");
             return;
+        }
+        if (terminateNow) {
+            // before its Sections are released: a Block change still waiting to be
+            // handled would otherwise find the train with no Sections
+            at.setTerminating();
         }
         // terminate the train - remove any allocation requests
         for (int k = allocationRequests.size(); k > 0; k--) {

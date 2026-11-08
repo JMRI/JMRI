@@ -447,6 +447,7 @@ public class LoadAndStoreTestBase {
         JUnitUtil.closeAllPanels();
         JUnitUtil.clearShutDownManager();
         JUnitUtil.clearBlockBossLogic();
+        JUnitUtil.clearSignalMastLogic(); // none left to act in the next test, see #7898
         JUnitUtil.tearDown();
         System.setProperty("jmri.test.no-dialogs", "false");
     }

@@ -300,6 +300,73 @@ public interface Throttle extends PropertyChangeProvider {
      */
     void setIsForward(boolean forward);
 
+    /**
+     * Told when a speed or direction command from a Throttle has been sent to
+     * the layout, and when.
+     * <p>
+     * Setting the speed or direction can be some time before the command
+     * leaves JMRI: it may wait for other work and for other messages queued
+     * ahead of it. This gives the time it was written to the connection. A
+     * command that is never sent, such as one the Throttle suppresses as
+     * making no difference, is not reported. Keep-alive messages that repeat
+     * the speed are not reported either. Only a Throttle for which
+     * {@link Throttle#reportsSpeedSent()} is true tells it.
+     *
+     * @since 5.19.1
+     */
+    @FunctionalInterface
+    interface SpeedSentListener {
+
+        /**
+         * A speed or direction command has been sent. Called on the layout
+         * thread (Swing thread); keep it short.
+         *
+         * @param throttle  the Throttle
+         * @param speed     the speed the command set, as
+         *                  {@link Throttle#getSpeedSetting()} gives it: a
+         *                  fraction of
+         *                  maximum speed, or -1 for an emergency stop
+         * @param forward   the direction the command set
+         * @param timeNanos when the command was written to the connection,
+         *                  on the {@link System#nanoTime()} scale. Only
+         *                  differences between such times have a meaning.
+         */
+        void speedSent(@Nonnull Throttle throttle, float speed, boolean forward, long timeNanos);
+    }
+
+    /**
+     * Does this Throttle tell {@link SpeedSentListener}s when it has sent a
+     * speed or direction command? That depends on whether its connection
+     * records when it writes a message.
+     *
+     * @return true if it does; false by default
+     * @since 5.19.1
+     */
+    default boolean reportsSpeedSent() {
+        return false;
+    }
+
+    /**
+     * Ask to be told when each speed or direction command from this Throttle
+     * has been sent to the layout. A Throttle that doesn't report it never
+     * tells the listener; see {@link #reportsSpeedSent()}.
+     *
+     * @param listener the listener
+     * @since 5.19.1
+     */
+    default void addSpeedSentListener(@Nonnull SpeedSentListener listener) {
+    }
+
+    /**
+     * Stop telling a listener when speed or direction commands have been
+     * sent.
+     *
+     * @param listener the listener
+     * @since 5.19.1
+     */
+    default void removeSpeedSentListener(@Nonnull SpeedSentListener listener) {
+    }
+
     // functions - note that we use the naming for DCC, though that's not the implication;
     // see also DccThrottle interface
 
