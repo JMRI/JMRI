@@ -79,7 +79,7 @@
 
       <h3>Hide undefined Roster function buttons</h3>
       When a Roster is selected, the address panels buttons are initialized as defined in the
-      Functions Labels panel in DecoderPro Label&Media screen. If this option is enabled, buttons not defined (no text) in
+      Functions Labels panel in DecoderPro Label&Media screen. If this option is enabled, buttons not defined (no text, no function image) in
       PanelPro will be automatically hidden in the <a href="BasicThrottleWindow.shtml">Function
       Panel</a>.<br>
 
