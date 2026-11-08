@@ -1200,7 +1200,7 @@
             if (jmri.socket === null) {
                 $("#no-websockets").addClass("show").removeClass("hidden");
             }
-            $(window).unload(function () {
+            $(window).on('unload', function () {
                 if (jmri.socket != null) {
                     jmri.socket.close();
                 }
