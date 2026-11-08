@@ -62,6 +62,17 @@ public class NceInterfaceScaffold extends NceTrafficController {
         return;
     }
 
+    /**
+     * Send a reply to the listener that sent the last message, on the layout
+     * thread (Swing thread), as the traffic controller delivers replies.
+     *
+     * @param m the reply
+     */
+    public void sendTestReplyToLastSender(NceReply m) {
+        NceListener l = (NceListener) mLastSender;
+        jmri.util.ThreadingUtil.runOnLayout(() -> sendTestReply(m, l));
+    }
+
     /*
      * Check number of listeners, used for testing dispose()
      */

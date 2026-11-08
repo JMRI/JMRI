@@ -2,7 +2,6 @@ package jmri.jmrix.nce;
 
 import java.util.ArrayList;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.Consist;
 import jmri.ConsistListener;
 import jmri.DccLocoAddress;
@@ -21,7 +20,13 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
     public static final int CONSIST_MIN = 1;    // NCE doesn't use consist 0
     public static final int CONSIST_MAX = 127;
     private NceTrafficController tc = null;
-    private boolean _valid = false;
+    private volatile boolean _valid = false;
+
+    // Read state, guarded by readLock. Not "this": dispose() holds "this"
+    // while it waits for the read thread to end.
+    private final Object readLock = new Object();
+    private boolean reading = false;     // a read of command station memory is running
+    private boolean checkAgain = false;  // a check was asked for while reading
 
     // state machine stuff
     private int _busy = 0;
@@ -161,58 +166,31 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
         }
     }
 
-    // direction for a loco learned from command station memory
+    // direction for a loco learned from command station memory: the one the
+    // NCE Consist Editor sent, else the one JMRI already has (from the consist
+    // file, or the Consist Tool), else forward
     private boolean directionFor(DccLocoAddress locoAddress) {
         Boolean d = knownDir.get(locoAddress);
-        return d == null ? true : d;
+        if (d != null) {
+            return d;
+        }
+        ArrayList<DccLocoAddress> current = getConsistList();
+        return current == null || !current.contains(locoAddress) || getLocoDirection(locoAddress);
     }
 
     /**
      * Restore a locomotive from the consist file. The file can be out of date:
      * the consist may have been changed or killed on the command station while
-     * JMRI was not running (or by the NCE Consist Editor). So once the file has
-     * been loaded, check this consist against command station memory; locos
-     * the command station no longer has are dropped (see checkLocoConsist).
-     * The command station reader uses the 3-argument restore, which does not
-     * come through here.
+     * JMRI was not running (or by the NCE Consist Editor). So check this
+     * consist against command station memory; locos the command station no
+     * longer has are dropped (see checkLocoConsist). If a read is already
+     * running (the first read, started by the constructor), the check runs
+     * when it finishes, so it always sees the whole file. The command station
+     * reader uses the 3-argument restore, which does not come through here.
      */
     @Override
     public void restore(DccLocoAddress locoAddress, boolean directionNormal) {
         super.restore(locoAddress, directionNormal);
-        scheduleVerify();
-    }
-
-    private boolean verifyScheduled = false;
-    private int verifyTries = 0;
-    private static final int VERIFY_DELAY_MS = 2000;
-    private static final int VERIFY_MAX_TRIES = 20;   // wait up to ~40 s for a slow first read
-
-    private synchronized void scheduleVerify() {
-        if (verifyScheduled || tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
-            return; // already pending, or a USB system (can't read command station memory)
-        }
-        verifyScheduled = true;
-        verifyTries = 0;
-        jmri.util.ThreadingUtil.runOnLayoutDelayed(this::verifyWithCommandStation, VERIFY_DELAY_MS);
-    }
-
-    private synchronized void verifyWithCommandStation() {
-        if (consistList == null) {
-            verifyScheduled = false;
-            return; // disposed
-        }
-        if (!isValid()) {
-            // the first read of command station memory is still running
-            if (++verifyTries < VERIFY_MAX_TRIES) {
-                jmri.util.ThreadingUtil.runOnLayoutDelayed(this::verifyWithCommandStation, VERIFY_DELAY_MS);
-            } else {
-                verifyScheduled = false;
-                log.warn("Consist {}: could not check it against the command station", getConsistAddress());
-            }
-            return;
-        }
-        verifyScheduled = false;
-        log.debug("Consist {}: checking the consist file copy against the command station", getConsistAddress());
         checkConsist();
     }
 
@@ -275,15 +253,57 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
             return;
         }
         _consistNum = (byte) consistNum;
-        startReadNCEconsistThread(false);
+        if (canReadMemory()) {
+            synchronized (readLock) {
+                reading = true;
+            }
+            startReadNCEconsistThread(false);
+        }
     }
 
+    // command station memory can be read on a serial or network connection, not USB
+    private boolean canReadMemory() {
+        return tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_NONE;
+    }
+
+    /**
+     * Check JMRI's copy of this consist against command station memory, and
+     * bring it into step. If a read is already running, the check is made
+     * when it finishes, as the change being checked for may have come after
+     * that read started.
+     */
     public void checkConsist() {
-        if (!isValid()) {
-            return; // already checking the consist
+        if (consistList == null || _consistNum == 0 || !canReadMemory()) {
+            return; // disposed, out of range or a USB system
         }
-        setValid(false);
+        synchronized (readLock) {
+            if (reading) {
+                checkAgain = true;
+                return;
+            }
+            reading = true;
+            setValid(false);
+        }
         startReadNCEconsistThread(true);
+    }
+
+    /*
+     * Called on the read thread when a read of command station memory ends.
+     * A check asked for during the read is started on the layout thread
+     * (Swing thread), where checkConsist is otherwise called; it can't be
+     * started here, as dispose() may be waiting for this thread to end.
+     */
+    private void readFinished() {
+        boolean again;
+        synchronized (readLock) {
+            reading = false;
+            setValid(true);
+            again = checkAgain;
+            checkAgain = false;
+        }
+        if (again) {
+            jmri.util.ThreadingUtil.runOnLayoutEventually(this::checkConsist);
+        }
     }
 
     private NceReadConsist mb = null;
@@ -419,7 +439,7 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
 
         // state machine stuff
         private int _consistNum = 0;
-        private int _busy = 0;
+        private int _busy = 0; // guarded by this
         private boolean _validConsist = false;    // true when there's a lead and rear loco in the consist
         private boolean _check = false;    // when true update consist to match NCE CS
 
@@ -446,7 +466,8 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
                 readConsistMemory(_consistNum, LEAD);
                 readConsistMemory(_consistNum, REAR);
                 readConsistMemory(_consistNum, MID);
-                setValid(true);
+                readWait(); // for the last reply
+                readFinished();
             } catch (InterruptedException e) {
                 // we're done!
             } catch (Throwable t) {
@@ -484,7 +505,9 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
 
         private void sendNceMessage(byte[] b, int replyLength) {
             NceMessage m = NceMessage.createBinaryMessage(tc, b, replyLength);
-            _busy++;
+            synchronized (this) {
+                _busy++;
+            }
             _replyLen = replyLength; // Expect n byte response
             tc.sendNceMessage(m, this);
         }
@@ -492,13 +515,13 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
         // wait up to 30 sec per read
         private boolean readWait() throws InterruptedException { // throw interrupt upward
             int waitcount = 30;
-            while (_busy > 0) {
-                synchronized (this) {
+            synchronized (this) { // _busy is checked and waited on under the lock reply() notifies with
+                while (_busy > 0) {
+                    if (waitcount-- < 0) {
+                        log.error("read timeout");
+                        return false;
+                    }
                     wait(1000);
-                }
-                if (waitcount-- < 0) {
-                    log.error("read timeout");
-                    return false;
                 }
             }
             return true;
@@ -509,10 +532,13 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
             // not used
         }
 
-        @SuppressFBWarnings(value = "NN_NAKED_NOTIFY") // notify not naked
         @Override
         public void reply(NceReply r) {
-            if (_busy == 0) {
+            boolean expected;
+            synchronized (this) {
+                expected = _busy > 0;
+            }
+            if (!expected) {
                 log.debug("Consist {} read reply not for this consist", _consistNum);
                 return;
             }
@@ -551,10 +577,9 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
                 }
             }
 
-            _busy--;
-
             // wake up thread
             synchronized (this) {
+                _busy--;
                 notify();
             }
         }
