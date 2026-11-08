@@ -209,6 +209,10 @@ public class AutoAllocate implements Runnable {
                 // Check to see if there is a sensor temporarily block
                 // allocation blocking allocation
                 ActiveTrain activeTrain = ar.getActiveTrain();
+                if (activeTrain.isTerminating()) {
+                    // its requests are removed once the tasks before its terminate are done
+                    continue;
+                }
                 String trainName = activeTrain.getTrainName();
                 log.trace("{}: try to allocate [{}]", trainName, ar.getSection().getDisplayName(USERSYS));
                 if (activeTrain.getLastAllocatedSection() != null) {

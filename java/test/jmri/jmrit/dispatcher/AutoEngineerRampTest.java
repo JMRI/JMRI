@@ -106,6 +106,22 @@ public class AutoEngineerRampTest {
                 "late step of the old ramp did not advance the new ramp");
     }
 
+    @Test
+    public void testStopForGoodEndsRampAndRefusesLaterSpeeds() throws InterruptedException {
+        setRamp(200);
+        engineer.setTargetSpeed(1.0f);
+        assertEquals(0.1f, throttle.getSpeedSetting(), 0.0001f, "first step of the ramp");
+
+        changeWhileRampStepIsDue(() -> engineer.stopForGood());
+        assertEquals(0.0f, throttle.getSpeedSetting(), 0.0001f, "stopped, and the late ramp step did nothing");
+
+        // speeds asked for afterwards, as by an allocation that completes after the train was terminated
+        engineer.setTargetSpeed(0.8f);
+        engineer.setSpeedImmediate(0.5f);
+        Thread.sleep(500); // two more ramp intervals
+        assertEquals(0.0f, throttle.getSpeedSetting(), 0.0001f, "no speed set after the train was stopped for good");
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

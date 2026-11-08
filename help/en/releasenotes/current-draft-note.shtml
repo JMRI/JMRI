@@ -440,6 +440,14 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
+             <li>Terminating an automatic train no longer freezes JMRI.
+                 Terminating waited until the train's speed read zero, and
+                 if Dispatcher gave the train another Section at that moment
+                 the train set its speed again, so the wait never ended. The
+                 same could leave that Section allocated to a train that no
+                 longer existed, so no other train could have it. A train is
+                 now stopped at once when it is terminated, and is given
+                 nothing more.</li>
              <li>A Block change that an automatic train handles just after
                  one of its Sections is released, or as the train is
                  terminated, no longer gives warnings such as "No next Block"
