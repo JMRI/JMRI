@@ -588,6 +588,9 @@
         <a id="throttle" name="throttle"></a>
         <ul>
             <li>Throttle function button visibility implementation less confusing, documentation and code updated</li>
+            <li>Due to a Java throttle code refactoring, in Jynstruments, for ThrottleFrame jynstruments, the expected 
+                context class is now jmri.jmrit.throttle.implementation.ThrottleFrame instead of jmri.jmrit.throttle.ThrottleFrame,
+                you can check released code in jython/Jynstruments/ThrottleFrame/Bell.jyn for instance.</li>
         </ul>
 
     <h3>Timetable</h3>
