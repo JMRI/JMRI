@@ -745,6 +745,10 @@
                 Block Contents icon shows the value or, when there is none,
                 the allocated value, as a JMRI panel does. The JSON protocol
                 version is now 5.5.0.</li>
+            <li>The web server's pages now use jQuery 3.7.1 instead of
+                2.2.4, and the 2.2.4 copy has been removed. If you have
+                custom web pages that load <code>jquery-2.2.4.min.js</code>,
+                point them at <code>jquery-3.7.1.min.js</code> instead.</li>
         </ul>
 
     <h3>Where Used</h3>
