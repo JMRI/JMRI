@@ -692,6 +692,14 @@
                 CAN Simulation; <code>Throttle.reportsSpeedSent()</code> says
                 whether a throttle does. Nothing that listens to a throttle's
                 properties sees anything new.</li>
+            <li>For developers: each throttle manager now reports the speed
+                and direction set for each loco address JMRI holds a throttle
+                for, as they change, and when the address is released
+                (<code>jmri.LocoSpeedSource</code>). It sees every change,
+                whether from a throttle window, Dispatcher, a Warrant, a script,
+                a WiThrottle client, or the command station reporting another
+                throttle's command, and does not stop a throttle being
+                released. Nothing users see changes.</li>
         </ul>
 
     <h3>Timetable</h3>
