@@ -458,8 +458,10 @@ public abstract class AbstractMRTrafficController {
                         handleTimeout(m, l);
                     } else if (mCurrentState == AUTORETRYSTATE) {
                         log.debug("Message added back to queue: {}", m);
-                        msgQueue.addFirst(m);
-                        listenerQueue.addFirst(l);
+                        synchronized (this) { // as for every other change to the queues
+                            msgQueue.addFirst(m);
+                            listenerQueue.addFirst(l);
+                        }
                         synchronized (XMT_RUNNABLE_LOCK) {
                             mCurrentState = IDLESTATE;
                         }
