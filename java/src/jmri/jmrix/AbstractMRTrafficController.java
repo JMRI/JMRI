@@ -930,13 +930,15 @@ public abstract class AbstractMRTrafficController {
      * @param p the PortController
      */
     public void disconnectPort(AbstractPortController p) {
+        // ask the threads to stop first, so a read that fails as the streams
+        // go is taken as the stop, not as an error
+        threadStopRequest = true;
         istream = null;
         ostream = null;
         if (controller != p) {
             log.warn("disconnectPort: disconnect called from non-connected AbstractPortController");
         }
         controller = null;
-        threadStopRequest = true;
     }
 
     /**
@@ -979,8 +981,10 @@ public abstract class AbstractMRTrafficController {
                 // related to InterruptedException, catch first
                 break;
             } catch (IOException e) {
-                rcvException = true;
-                reportReceiveLoopException(e);
+                if (!threadStopRequest) { // a read fails as the connection is closed: not an error
+                    rcvException = true;
+                    reportReceiveLoopException(e);
+                }
                 break;
             } catch (RuntimeException e1) {
                 log.error("Exception in receive loop: {}", e1.toString(), e1);
