@@ -33,7 +33,7 @@ public class BiDiBProgrammer extends AbstractProgrammer {
     protected Node progNode; //the BiDiB progNode to sent the MSG_CS_PROG message to
     private boolean isBoosterOn = false;
     
-    private final boolean checkBoosterPower = false; //True if booster power ON should be checked before. This is a constant for now.
+//    private final boolean checkBoosterPower = false; //True if booster power ON should be checked before. This is a constant for now.
 
 //    @SuppressWarnings("OverridableMethodCallInConstructor")
     public BiDiBProgrammer(BiDiBTrafficController tc) {
