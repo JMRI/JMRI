@@ -174,7 +174,9 @@ public class TimeSinceMidnight extends AbstractAnalogExpression implements Prope
                 propertyChange(null);
             }
         };
-        TimerUtil.schedule(timerTask, System.currentTimeMillis() % millisInAMinute, millisInAMinute);
+        // first at the start of the next minute, then every minute
+        long toNextMinute = millisInAMinute - System.currentTimeMillis() % millisInAMinute;
+        TimerUtil.scheduleAtFixedRate(timerTask, toNextMinute, millisInAMinute);
     }
 
     /** {@inheritDoc} */
