@@ -165,11 +165,11 @@ public class BiDiBProgrammer extends AbstractProgrammer {
         if (progNode != null) {
             log.debug(" using programmer node {}, isBoosterOn = {}", progNode, isBoosterOn);
             // we observed that some hardware sends POWER OFF when set to PROG state (Tams mc2), which makes the check useless.
-            if (isBoosterOn  ||  !checkBoosterPower) {
+//            if (isBoosterOn  ||  !checkBoosterPower) {
                 //startLongTimer();
                 startShortTimer();
                 tc.sendBiDiBMessage(message, progNode);
-            }
+//            }
 // To satisfy the CI checks, we have to remove the following code
 //            else {
 //                // if the booster of OFF, return immediately without waiting for the timeout.
