@@ -596,7 +596,7 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
      */
     @InvokeOnLayoutThread
     void commanded(@Nonnull SpeedCommand command) {
-        if (removed) {
+        if (disposed) {
             return;
         }
         SpeedCommand last = getLastCommand(command.getAddress());

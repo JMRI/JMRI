@@ -160,7 +160,7 @@ public final class TrainRecordSpeedWatcher implements LocoSpeedSource.Listener {
             return;
         }
         for (DefaultTrainRecord r : records.get()) {
-            if (!r.isRemoved() && r.getLocoAddresses().stream().anyMatch(a -> sameAddress(address, a))) {
+            if (!r.isDisposed() && r.getLocoAddresses().stream().anyMatch(a -> sameAddress(address, a))) {
                 r.commanded(command.make(r.getLastCommand(address)));
             }
         }

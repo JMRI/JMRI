@@ -100,7 +100,9 @@ public class TrainRecordSpeedWatcherTest {
     private TrainRecord record(String name, RosterEntry entry) {
         return ThreadingUtil.runOnGUIwithReturn(() -> {
             TrainRecord r = manager.newRecord(name);
-            r.setRosterEntry(entry);
+            if (entry != null) {
+                r.insertFirstRosterEntry(entry);
+            }
             return r;
         });
     }
@@ -215,11 +217,11 @@ public class TrainRecordSpeedWatcherTest {
         assertTrue(source.listeners.isEmpty(), "no records");
         TrainRecord r = record("Up goods", null);
         assertTrue(source.listeners.isEmpty(), "no record with an address");
-        ThreadingUtil.runOnLayout(() -> r.setRosterEntry(loco("Class 37", 3, false)));
+        ThreadingUtil.runOnLayout(() -> r.insertFirstRosterEntry(loco("Class 37", 3, false)));
         assertEquals(1, source.listeners.size(), "a record with an address");
-        ThreadingUtil.runOnLayout(() -> r.setRosterEntry(null));
+        ThreadingUtil.runOnLayout(() -> r.removeFirstRosterEntry());
         assertTrue(source.listeners.isEmpty());
-        ThreadingUtil.runOnLayout(() -> r.setRosterEntry(loco("Class 37", 3, false)));
+        ThreadingUtil.runOnLayout(() -> r.insertFirstRosterEntry(loco("Class 37", 3, false)));
         ThreadingUtil.runOnLayout(() -> manager.remove(r));
         assertTrue(source.listeners.isEmpty(), "the record removed");
     }
@@ -262,7 +264,7 @@ public class TrainRecordSpeedWatcherTest {
         ThreadingUtil.runOnLayout(() -> {
             TrainRecord other = manager.newRecord("Down goods");
             manager.remove(r);
-            other.setRosterEntry(loco("Class 37", 3, false));
+            other.insertFirstRosterEntry(loco("Class 37", 3, false));
             source.speed(a, 0.6f, true, 2);
         });
         assertEquals(1, r.getCommands().size(), "a removed record is left alone");
