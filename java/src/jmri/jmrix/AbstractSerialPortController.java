@@ -84,9 +84,6 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         if (!opened) {
             try {
                 connect();
-                if (opened) {
-                    super.reconnect();
-                }
             } catch (IOException ex) {
                 log.trace("restart failed", ex); // main warning to log.error done within connect();
                 // if returned on exception stops thread and connection attempts
@@ -734,9 +731,14 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         }
         try {
             connect();
-            super.reconnect();
         } catch (IOException e) {
             log.warn("Error during reconnect", e);
+        }
+        if (opened) {
+            log.info("{}", Bundle.getMessage("ReconnectedTo", getCurrentPortName()));
+            resetupConnection();
+        } else {
+            super.reconnect(); // retries until it opens, then sets the connection up again
         }
     }
 

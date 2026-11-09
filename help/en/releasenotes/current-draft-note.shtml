@@ -1,6 +1,12 @@
 
     <h3>Hardware Support</h3>
         <ul>
+          <li>A serial connection that recovers from a failure (such as a
+              CANUSB4 or other GridConnect adapter, or a LocoBuffer) is now
+              set up again when the port reopens at the first attempt; before,
+              it showed as connected but sent and received nothing. An error
+              opening the port at the first attempt no longer stops the
+              retries.</li>
           <li></li>
         </ul>
 
