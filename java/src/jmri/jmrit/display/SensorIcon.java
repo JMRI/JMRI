@@ -404,6 +404,18 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
      */
     @Override
     public void displayState(int state) {
+        // Showing a state applies the state's colors through the display
+        // option setters; that is not a change of the options themselves,
+        // so web clients are not told to load the panel again.
+        PositionablePopupUtil.suppressWebPanelDisplayOptionNotifications();
+        try {
+            showState(state);
+        } finally {
+            PositionablePopupUtil.restoreWebPanelDisplayOptionNotifications();
+        }
+    }
+
+    private void showState(int state) {
         if (getNamedSensor() == null) {
             log.debug("Display state {}, disconnected", state);
         } else if (isIcon()) {
@@ -669,14 +681,29 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         }
         return clone;
     }
+
+    /**
+     * A state's text or background color was edited: show it, and tell web
+     * clients that the panel's display options have changed.
+     *
+     * @param color the new color
+     */
+    private void stateColorChanged(Color color) {
+        displayState(sensorState());
+        JmriColorChooser.addRecentColor(color);
+        PositionablePopupUtil util = getPopupUtility();
+        if (util != null) {
+            util.notifyWebPanelDisplayOptionsChanged();
+        }
+    }
+
     // The code below here is from the layoutsensoricon.
 
     Color textColorActive = Color.red;
 
     public void setTextActive(Color color) {
         textColorActive = color;
-        displayState(sensorState());
-        JmriColorChooser.addRecentColor(color);
+        stateColorChanged(color);
     }
 
     public Color getTextActive() {
@@ -687,8 +714,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     public void setTextInActive(Color color) {
         textColorInActive = color;
-        displayState(sensorState());
-        JmriColorChooser.addRecentColor(color);
+        stateColorChanged(color);
     }
 
     public Color getTextInActive() {
@@ -699,8 +725,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     public void setTextUnknown(Color color) {
         textColorUnknown = color;
-        displayState(sensorState());
-        JmriColorChooser.addRecentColor(color);
+        stateColorChanged(color);
     }
 
     public Color getTextUnknown() {
@@ -711,8 +736,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     public void setTextInconsistent(Color color) {
         textColorInconsistent = color;
-        displayState(sensorState());
-        JmriColorChooser.addRecentColor(color);
+        stateColorChanged(color);
     }
 
     public Color getTextInconsistent() {
@@ -723,8 +747,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     public void setBackgroundActive(Color color) {
         backgroundColorActive = color;
-        displayState(sensorState());
-        JmriColorChooser.addRecentColor(color);
+        stateColorChanged(color);
     }
 
     public Color getBackgroundActive() {
@@ -735,8 +758,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     public void setBackgroundInActive(Color color) {
         backgroundColorInActive = color;
-        displayState(sensorState());
-        JmriColorChooser.addRecentColor(color);
+        stateColorChanged(color);
     }
 
     public Color getBackgroundInActive() {
@@ -747,8 +769,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     public void setBackgroundUnknown(Color color) {
         backgroundColorUnknown = color;
-        displayState(sensorState());
-        JmriColorChooser.addRecentColor(color);
+        stateColorChanged(color);
     }
 
     public Color getBackgroundUnknown() {
@@ -759,8 +780,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     public void setBackgroundInconsistent(Color color) {
         backgroundColorInconsistent = color;
-        displayState(sensorState());
-        JmriColorChooser.addRecentColor(color);
+        stateColorChanged(color);
     }
 
     public Color getBackgroundInconsistent() {
