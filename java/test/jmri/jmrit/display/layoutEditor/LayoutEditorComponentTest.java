@@ -99,11 +99,10 @@ public class LayoutEditorComponentTest {
             });
             BufferedImage picture = draw(le);
             assertTrue(isDrawn(nearFrom, nearTo, zoom, picture, background), "near track drawn at zoom " + zoom);
-            if (zoom >= 1.0) {
-                // the far corner is out of view until scrolled to
-                ThreadingUtil.runOnGUI(() -> scrollTo(le, true));
-                picture = draw(le);
-            }
+            // the far corner can be out of view until scrolled to: zoomed in, or with a window
+            // smaller than asked for, as on a small screen
+            ThreadingUtil.runOnGUI(() -> scrollTo(le, true));
+            picture = draw(le);
             assertTrue(isDrawn(farFrom, farTo, zoom, picture, background), "far track drawn at zoom " + zoom);
         }
         JUnitUtil.dispose(le);
