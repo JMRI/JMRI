@@ -170,10 +170,8 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
             forwardToPort(m, reply);
             // wait for reply
             try {
-                if (XMT_RUNNABLE_LOCK != null) {
-                    synchronized (XMT_RUNNABLE_LOCK) {
-                        XMT_RUNNABLE_LOCK.wait(m.getTimeout());
-                    }
+                synchronized (XMT_RUNNABLE_LOCK) {
+                    XMT_RUNNABLE_LOCK.wait(m.getTimeout());
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // retain if needed later
@@ -208,10 +206,8 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
             forwardToPort(modeMsg, null);
             // wait for reply
             try {
-                if (XMT_RUNNABLE_LOCK != null) {
-                    synchronized (XMT_RUNNABLE_LOCK) {
-                        XMT_RUNNABLE_LOCK.wait(modeMsg.getTimeout());
-                    }
+                synchronized (XMT_RUNNABLE_LOCK) {
+                    XMT_RUNNABLE_LOCK.wait(modeMsg.getTimeout());
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // retain if needed later
@@ -230,10 +226,8 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
                 forwardToPort(modeMsg, null);
                 // wait for reply
                 try {
-                    if (XMT_RUNNABLE_LOCK != null) {
-                        synchronized (XMT_RUNNABLE_LOCK) {
-                            XMT_RUNNABLE_LOCK.wait(modeMsg.getTimeout());
-                        }
+                    synchronized (XMT_RUNNABLE_LOCK) {
+                        XMT_RUNNABLE_LOCK.wait(modeMsg.getTimeout());
                     }
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt(); // retain if needed later
@@ -269,10 +263,8 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
                         forwardToPort(modeMsg, null);
                         // wait for reply
                         try {
-                            if (XMT_RUNNABLE_LOCK != null) {
-                                synchronized (XMT_RUNNABLE_LOCK) {
-                                    XMT_RUNNABLE_LOCK.wait(modeMsg.getTimeout());
-                                }
+                            synchronized (XMT_RUNNABLE_LOCK) {
+                                XMT_RUNNABLE_LOCK.wait(modeMsg.getTimeout());
                             }
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later
