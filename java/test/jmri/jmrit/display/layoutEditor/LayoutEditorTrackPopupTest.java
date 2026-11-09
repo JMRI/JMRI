@@ -20,6 +20,8 @@ import jmri.util.ThreadingUtil;
 import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.DisabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 
 /**
  * In operating mode, the popup menu for the Block of a Layout Editor track.
@@ -65,6 +67,7 @@ public class LayoutEditorTrackPopupTest {
     }
 
     @Test
+    @DisabledOnOs(value = OS.WINDOWS, disabledReason = "on Windows, JMRI takes only the right button or meta as the popup trigger")
     public void testPopupWhereAControlClickIsThePopupTrigger() {
         // as on macOS: a control-click is the popup trigger
         popupOnTrack(InputEvent.BUTTON1_DOWN_MASK | InputEvent.CTRL_DOWN_MASK, MouseEvent.BUTTON1);
