@@ -434,10 +434,8 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
         forwardToPort(logoffMessage, null);
         // wait for reply
         try {
-            if (XMT_RUNNABLE_LOCK != null) {
-                synchronized (XMT_RUNNABLE_LOCK) {
-                    XMT_RUNNABLE_LOCK.wait(logoffMessage.getTimeout());
-                }
+            synchronized (XMT_RUNNABLE_LOCK) {
+                XMT_RUNNABLE_LOCK.wait(logoffMessage.getTimeout());
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt(); // retain if needed later
