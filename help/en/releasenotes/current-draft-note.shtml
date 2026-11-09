@@ -338,7 +338,7 @@
 
         <h4>Public Domain and DIY decoders</h4>
             <ul>
-                <li></li>
+                <li>added "MoBa-Licht Roland Weber" Interior lighting-Decoder</li>
             </ul>
 
         <h4>QSI</h4>
@@ -398,7 +398,8 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li></li>
+                <li>IntelliSound 4 microModule added</li>
+                <li>IntelliSound 6 Module added</li>
             </ul>
 
         <h4>Umelec</h4>
@@ -418,7 +419,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li></li>
+                <li>A few minor fixes for the MN decoder</li>
             </ul>
 
         <h4>Miscellaneous</h4>
