@@ -228,6 +228,33 @@
         occupancy for blocks that don't have real occupancy sensors.</li>
       </ul>
 
+      <h3 id="routes">Route Lengths and Braking Section</h3>
+
+      <p>The Physical Details tab also has two settings for a Block whose ways through differ in
+      length, and for a Block that is a braking section. Nothing in JMRI acts on either yet;
+      features that work out where a train is, or where it will stop, can use them.</p>
+
+      <ul>
+        <li><strong>Route Lengths</strong> - each way through the Block, from one neighbouring
+        Block to another, with its length. The ways are worked out from the Block's paths: two
+        neighbours reached only by setting one turnout both ways, as the two legs of a turnout are,
+        are not a way through. Leave a length blank to use the Block's own Length; set one only where a way through is longer or shorter than that, such as the
+        diverging road through a Block holding a turnout. A way has the same length whichever way
+        it is travelled. Lengths are shown in the units chosen for the Block's Length.
+        Two routes joining the same two neighbouring Blocks, as when a main line and a siding are
+        joined both by a turnout and by a crossover, share one length: enter the shorter of the
+        two, since a length counted too long would let a train be taken to have left the Block too
+        early. Better, put a Block boundary between the two connections, such as the crossover in
+        a Block of its own, which also helps routing.</li>
+
+        <li><strong>Braking Section</strong> - tick a neighbouring Block if the track itself brings
+        trains to a stand in this Block before they leave towards it, as with Automatic Brake
+        Control (ABC) or a cut-out ahead of a signal or buffer stop.</li>
+      </ul>
+
+      <p>Both are saved in the panel file with the Block's other properties, and appear on the
+      Properties tab.</p>
+
       <h2 id="usage">Usage</h2>
 
       <p>This is an information field, showing where you have the Block displayed on a Panel:</p>

@@ -50,7 +50,7 @@ public class ActiveTrainRecordsTest {
         TrainRecord r = ActiveTrainRecords.link(first);
         assertSame(r, first.getTrainRecord());
         assertEquals("1A23", r.getName());
-        assertNull(r.getRosterEntry());
+        assertNull(r.getFirstRosterEntry());
         ActiveTrain again = userTrain("1A23");
         assertSame(r, ActiveTrainRecords.link(again), "the same train, run again, has the same record");
         assertEquals(1, manager.getRecords().size());
@@ -61,7 +61,7 @@ public class ActiveTrainRecordsTest {
     public void testTrainWithRosterEntryByEntry() {
         RosterEntry e = entry("Class 43");
         TrainRecord r = ActiveTrainRecords.link(rosterTrain("Class 43", e));
-        assertSame(e, r.getRosterEntry());
+        assertSame(e, r.getFirstRosterEntry());
         assertEquals("Class 43", r.getName());
         assertSame(r, ActiveTrainRecords.link(rosterTrain("HST up", e)),
                 "the loco's record, whatever this run is called");
@@ -84,7 +84,7 @@ public class ActiveTrainRecordsTest {
         TrainRecord r = ActiveTrainRecords.link(userTrain("1A23"));
         RosterEntry e = entry("Class 43");
         assertSame(r, ActiveTrainRecords.link(rosterTrain("1A23", e)), "a named record with no loco takes this one");
-        assertSame(e, r.getRosterEntry());
+        assertSame(e, r.getFirstRosterEntry());
     }
 
     @Test
@@ -94,7 +94,7 @@ public class ActiveTrainRecordsTest {
         TrainRecord rb = ActiveTrainRecords.link(rosterTrain("Express", entry("Class 50")));
         assertNotSame(ra, rb, "another loco is another train");
         assertEquals("Class 50", rb.getName(), "named after its roster entry");
-        assertEquals("Class 50", Objects.requireNonNull(rb.getRosterEntry(), "roster entry").getId());
+        assertEquals("Class 50", Objects.requireNonNull(rb.getFirstRosterEntry(), "roster entry").getId());
 
         manager.newRecord("Class 31");
         TrainRecord rc = ActiveTrainRecords.link(rosterTrain("Express", entry("Class 31")));
@@ -104,7 +104,7 @@ public class ActiveTrainRecordsTest {
         manager.newRecord("Express Class 37");
         TrainRecord rd = ActiveTrainRecords.link(rosterTrain("Express", entry("Class 37")));
         assertEquals("Express (2)", rd.getName(), "numbered once every other name is taken");
-        assertEquals("Class 37", Objects.requireNonNull(rd.getRosterEntry(), "roster entry").getId());
+        assertEquals("Class 37", Objects.requireNonNull(rd.getFirstRosterEntry(), "roster entry").getId());
     }
 
     @Test

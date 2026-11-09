@@ -44,8 +44,6 @@ public interface TrainRecord extends PropertyChangeProvider {
 
     /** Property name for a change of name. */
     String PROPERTY_NAME = "name"; // NOI18N
-    /** Property name for a change of the lead loco's roster entry. */
-    String PROPERTY_ROSTER_ENTRY = "rosterEntry"; // NOI18N
     /**
      * Property name for a change in the locos' roster entries; the old and
      * new values are the lists, as {@link #getRosterEntries()} gives them.
@@ -91,7 +89,7 @@ public interface TrainRecord extends PropertyChangeProvider {
      *             for a user name
      * @throws IllegalArgumentException if the name is empty or another record
      *                                  has it
-     * @throws IllegalStateException    if the record has been removed
+     * @throws IllegalStateException    if the record has been disposed
      */
     @InvokeOnLayoutThread
     void setName(@Nonnull String name);
@@ -104,20 +102,29 @@ public interface TrainRecord extends PropertyChangeProvider {
      *         has no loco with a roster entry
      */
     @CheckForNull
-    BasicRosterEntry getRosterEntry();
+    BasicRosterEntry getFirstRosterEntry();
 
     /**
-     * Make a roster entry the lead loco's. If the entry is already one of the
-     * train's locos it moves to the front; otherwise it is added at the front.
-     * Null removes the lead loco's entry, and the next loco, if any, leads.
-     * A roster entry belongs to at most one record.
+     * Add a roster entry at the front of the train's locos, so that it is the
+     * lead loco's. A roster entry belongs to at most one record, and appears
+     * in its list at most once.
      *
-     * @param entry the roster entry, or null to remove the lead loco's
-     * @throws IllegalArgumentException if another record has this entry
-     * @throws IllegalStateException    if the record has been removed
+     * @param entry the roster entry
+     * @throws IllegalArgumentException if this record or another already has
+     *                                  the entry
+     * @throws IllegalStateException    if the record has been disposed
      */
     @InvokeOnLayoutThread
-    void setRosterEntry(@CheckForNull BasicRosterEntry entry);
+    void insertFirstRosterEntry(@Nonnull BasicRosterEntry entry);
+
+    /**
+     * Remove the first of the train's roster entries, the lead loco's; the
+     * next loco, if any, then leads. Does nothing if the train has none.
+     *
+     * @throws IllegalStateException if the record has been disposed
+     */
+    @InvokeOnLayoutThread
+    void removeFirstRosterEntry();
 
     /**
      * The roster entries of the train's locos, such as both locos of a
@@ -135,7 +142,7 @@ public interface TrainRecord extends PropertyChangeProvider {
      * @param entries the entries, lead loco first; empty for none
      * @throws IllegalArgumentException if an entry appears twice, or another
      *                                  record has one of them
-     * @throws IllegalStateException    if the record has been removed
+     * @throws IllegalStateException    if the record has been disposed
      */
     @InvokeOnLayoutThread
     void setRosterEntries(@Nonnull List<BasicRosterEntry> entries);
@@ -153,7 +160,7 @@ public interface TrainRecord extends PropertyChangeProvider {
      *
      * @param tag the tag
      * @throws IllegalArgumentException if another record has this tag
-     * @throws IllegalStateException    if the record has been removed
+     * @throws IllegalStateException    if the record has been disposed
      */
     @InvokeOnLayoutThread
     void addIdTag(@Nonnull IdTag tag);
@@ -163,7 +170,7 @@ public interface TrainRecord extends PropertyChangeProvider {
      * does nothing.
      *
      * @param tag the tag
-     * @throws IllegalStateException if the record has been removed
+     * @throws IllegalStateException if the record has been disposed
      */
     @InvokeOnLayoutThread
     void removeIdTag(@Nonnull IdTag tag);
@@ -184,7 +191,7 @@ public interface TrainRecord extends PropertyChangeProvider {
      *
      * @param components the components, front first, at least one
      * @throws IllegalArgumentException if the list is empty
-     * @throws IllegalStateException    if the record has been removed
+     * @throws IllegalStateException    if the record has been disposed
      */
     @InvokeOnLayoutThread
     void setTrainComponents(@Nonnull List<TrainComponent> components);
@@ -205,7 +212,7 @@ public interface TrainRecord extends PropertyChangeProvider {
      * @throws IllegalArgumentException if detection is
      *                                  {@link Detection#CUSTOM}; use
      *                                  {@link #setCustomMarkers} instead
-     * @throws IllegalStateException    if the record has been removed
+     * @throws IllegalStateException    if the record has been disposed
      */
     @InvokeOnLayoutThread
     void setDetection(@Nonnull Detection detection);
@@ -219,7 +226,7 @@ public interface TrainRecord extends PropertyChangeProvider {
      * @throws IllegalArgumentException if the list is empty, or a marker is
      *                                  {@link DetectionMarker.Placement#WHOLE_TRAIN},
      *                                  which only Entire Train uses
-     * @throws IllegalStateException    if the record has been removed
+     * @throws IllegalStateException    if the record has been disposed
      */
     @InvokeOnLayoutThread
     void setCustomMarkers(@Nonnull List<DetectionMarker> markers);
@@ -258,7 +265,7 @@ public interface TrainRecord extends PropertyChangeProvider {
      *                                  {@link LengthSource#TRAIN_COMPONENTS} or
      *                                  {@link LengthSource#MEASURED}, or the
      *                                  length is not more than 0
-     * @throws IllegalStateException    if the record has been removed
+     * @throws IllegalStateException    if the record has been disposed
      */
     @InvokeOnLayoutThread
     void setLength(@Nonnull LengthSource source, @CheckForNull Double mm);
@@ -272,7 +279,7 @@ public interface TrainRecord extends PropertyChangeProvider {
      * @param consistent true if the measurements are consistent enough to be
      *                   used for placing; ignored when clearing
      * @throws IllegalArgumentException if the length is not more than 0
-     * @throws IllegalStateException    if the record has been removed
+     * @throws IllegalStateException    if the record has been disposed
      */
     @InvokeOnLayoutThread
     void setMeasuredLength(@CheckForNull Double mm, boolean consistent);
@@ -304,10 +311,10 @@ public interface TrainRecord extends PropertyChangeProvider {
     Double getPlacingLength();
 
     /**
-     * @return true once the record has been removed from its manager; a
-     *         removed record can't be changed
+     * @return true once the record has been removed from its manager, which
+     *         disposes of it; a disposed record can't be changed
      */
-    boolean isRemoved();
+    boolean isDisposed();
 
     /**
      * @return true if the record knows where on the layout the train is
@@ -324,7 +331,7 @@ public interface TrainRecord extends PropertyChangeProvider {
      *                   the train
      * @throws IllegalArgumentException if the list is empty or holds a
      *                                  Block twice
-     * @throws IllegalStateException    if the record has been removed
+     * @throws IllegalStateException    if the record has been disposed
      */
     @InvokeOnLayoutThread
     void place(@Nonnull List<Block> blocks, boolean frontKnown);
@@ -332,7 +339,7 @@ public interface TrainRecord extends PropertyChangeProvider {
     /**
      * Forget where the train is, as when it is taken off the layout.
      *
-     * @throws IllegalStateException if the record has been removed
+     * @throws IllegalStateException if the record has been disposed
      */
     @InvokeOnLayoutThread
     void unplace();

@@ -78,7 +78,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
 
     private void startTransmitThread() {
         xmtThread = jmri.util.ThreadingUtil.newThread(
-                xmtRunnable = () -> {
+                () -> {
                     try {
                         transmitLoop();
                     } catch (Throwable e) {

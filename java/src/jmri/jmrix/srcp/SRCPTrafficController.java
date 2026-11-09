@@ -113,10 +113,10 @@ public class SRCPTrafficController extends AbstractMRTrafficController
                 switch (mCurrentState) {
                     case WAITMSGREPLYSTATE:
                         // update state, and notify to continue
-                        synchronized (xmtRunnable) {
+                        synchronized (XMT_RUNNABLE_LOCK) {
                             mCurrentState = NOTIFIEDSTATE;
                             replyInDispatch = false;
-                            xmtRunnable.notify();
+                            XMT_RUNNABLE_LOCK.notify();
                         }
                         break;
                     case WAITREPLYINPROGMODESTATE:
@@ -129,17 +129,17 @@ public class SRCPTrafficController extends AbstractMRTrafficController
                         int warmUpDelay = enterProgModeDelayTime();
                         if (warmUpDelay != 0) {
                             try {
-                                synchronized (xmtRunnable) {
-                                    xmtRunnable.wait(warmUpDelay);
+                                synchronized (XMT_RUNNABLE_LOCK) {
+                                    XMT_RUNNABLE_LOCK.wait(warmUpDelay);
                                 }
                             } catch (InterruptedException ex) {
                                 Thread.currentThread().interrupt(); // retain if needed later
                             }
                         }
                         // update state, and notify to continue
-                        synchronized (xmtRunnable) {
+                        synchronized (XMT_RUNNABLE_LOCK) {
                             mCurrentState = OKSENDMSGSTATE;
-                            xmtRunnable.notify();
+                            XMT_RUNNABLE_LOCK.notify();
                         }
                         break;
                     case WAITREPLYINNORMMODESTATE:
@@ -147,9 +147,9 @@ public class SRCPTrafficController extends AbstractMRTrafficController
                         mCurrentMode = NORMALMODE;
                         replyInDispatch = false;
                         // update state, and notify to continue
-                        synchronized (xmtRunnable) {
+                        synchronized (XMT_RUNNABLE_LOCK) {
                             mCurrentState = OKSENDMSGSTATE;
-                            xmtRunnable.notify();
+                            XMT_RUNNABLE_LOCK.notify();
                         }
                         break;
                     default:
@@ -157,12 +157,12 @@ public class SRCPTrafficController extends AbstractMRTrafficController
                         if (allowUnexpectedReply == true) {
                             log.debug("Allowed unexpected reply received in state: {} was {}", mCurrentState, e);
 
-                            synchronized (xmtRunnable) {
+                            synchronized (XMT_RUNNABLE_LOCK) {
                                 // The transmit thread sometimes gets stuck
                                 // when unexpected replies are received.  Notify
                                 // it to clear the block without a timeout.
                                 // (do not change the current state)
-                                xmtRunnable.notify();
+                                XMT_RUNNABLE_LOCK.notify();
                             }
                         } else {
                             unexpectedReplyStateError(mCurrentState, e.toString());

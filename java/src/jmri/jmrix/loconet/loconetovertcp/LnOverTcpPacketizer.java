@@ -187,6 +187,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                         }
 
                         // message is complete, dispatch it !!
+                        msg.setReceivedTime(System.nanoTime());
                         log.trace("message complete: {}", msg);
                         
                         // check if this message was supposed to be ignored
