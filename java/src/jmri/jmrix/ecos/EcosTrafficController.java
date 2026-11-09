@@ -170,9 +170,9 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
             forwardToPort(m, reply);
             // wait for reply
             try {
-                if (xmtRunnable != null) {
-                    synchronized (xmtRunnable) {
-                        xmtRunnable.wait(m.getTimeout());
+                if (XMT_RUNNABLE_LOCK != null) {
+                    synchronized (XMT_RUNNABLE_LOCK) {
+                        XMT_RUNNABLE_LOCK.wait(m.getTimeout());
                     }
                 }
             } catch (InterruptedException e) {
@@ -208,9 +208,9 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
             forwardToPort(modeMsg, null);
             // wait for reply
             try {
-                if (xmtRunnable != null) {
-                    synchronized (xmtRunnable) {
-                        xmtRunnable.wait(modeMsg.getTimeout());
+                if (XMT_RUNNABLE_LOCK != null) {
+                    synchronized (XMT_RUNNABLE_LOCK) {
+                        XMT_RUNNABLE_LOCK.wait(modeMsg.getTimeout());
                     }
                 }
             } catch (InterruptedException e) {
@@ -230,9 +230,9 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
                 forwardToPort(modeMsg, null);
                 // wait for reply
                 try {
-                    if (xmtRunnable != null) {
-                        synchronized (xmtRunnable) {
-                            xmtRunnable.wait(modeMsg.getTimeout());
+                    if (XMT_RUNNABLE_LOCK != null) {
+                        synchronized (XMT_RUNNABLE_LOCK) {
+                            XMT_RUNNABLE_LOCK.wait(modeMsg.getTimeout());
                         }
                     }
                 } catch (InterruptedException e) {
@@ -269,9 +269,9 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
                         forwardToPort(modeMsg, null);
                         // wait for reply
                         try {
-                            if (xmtRunnable != null) {
-                                synchronized (xmtRunnable) {
-                                    xmtRunnable.wait(modeMsg.getTimeout());
+                            if (XMT_RUNNABLE_LOCK != null) {
+                                synchronized (XMT_RUNNABLE_LOCK) {
+                                    XMT_RUNNABLE_LOCK.wait(modeMsg.getTimeout());
                                 }
                             }
                         } catch (InterruptedException e) {

@@ -215,6 +215,16 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * A simulator connection drives no real hardware.
+     */
+    @Override
+    public boolean isSimulator() {
+        return true;
+    }
+
     @Override
     public boolean getDisabled() {
         if (adapter == null) {

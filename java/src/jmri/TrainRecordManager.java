@@ -42,8 +42,8 @@ public interface TrainRecordManager extends PropertyChangeProvider {
     TrainRecord newRecord(@Nonnull String name);
 
     /**
-     * Remove a record. It can't be changed afterwards. Removing a record that
-     * has already been removed does nothing.
+     * Remove a record and dispose of it, so it can't be changed afterwards.
+     * Removing a record that has already been removed does nothing.
      *
      * @param record the record
      * @throws IllegalArgumentException if the record isn't this manager's
@@ -78,4 +78,14 @@ public interface TrainRecordManager extends PropertyChangeProvider {
      */
     @CheckForNull
     TrainRecord getByIdTag(@Nonnull IdTag tag);
+
+    /**
+     * The record a Block value identifies: a roster entry's, an ID tag's,
+     * or, for a String, the record of that name.
+     *
+     * @param value a Block value
+     * @return the record, or null if the value identifies none
+     */
+    @CheckForNull
+    TrainRecord getByValue(@CheckForNull Object value);
 }

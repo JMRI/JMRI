@@ -57,8 +57,8 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
         this.removeListener(l);
     }
 
-    /** Why this class locks the base class's xmtRunnable, which SpotBugs flags as visible outside the class. */
-    private static final String XMT_LOCK = "The base class waits and notifies on xmtRunnable, so the receive"
+    /** Why this class locks the base class's XMT_RUNNABLE_LOCK, which SpotBugs flags as visible outside the class. */
+    private static final String XMT_LOCK = "The base class waits and notifies on XMT_RUNNABLE_LOCK, so the receive"
             + " and transmit threads must synchronise on that same object to wake each other";
 
     public static final int RETRIEVINGDATA = 100;
@@ -478,8 +478,8 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                         log.debug("Retry message: {} attempts remaining: {}", m, m.getRetries());
                         m.setRetries(m.getRetries() - 1);
                         try {
-                            synchronized (xmtRunnable) {
-                                xmtRunnable.wait(m.getTimeout());
+                            synchronized (XMT_RUNNABLE_LOCK) {
+                                XMT_RUNNABLE_LOCK.wait(m.getTimeout());
                             }
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later
@@ -761,10 +761,10 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                     mLastMessage.setRetries(mLastMessage.getRetries() - 1);
                     if (mLastMessage.getRetries() >= 0) {
                         sequenceInProgress = false;
-                        synchronized (xmtRunnable) {
+                        synchronized (XMT_RUNNABLE_LOCK) {
                             mCurrentState = AUTORETRYSTATE;
                             replyInDispatch = false;
-                            xmtRunnable.notify();
+                            XMT_RUNNABLE_LOCK.notify();
                         }
                         return;
                     }
@@ -804,17 +804,17 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                         if (log.isDebugEnabled()) {
                             log.debug("Automatic Recovery from Error Message: {}", msg.toString());
                         }
-                        synchronized (xmtRunnable) {
+                        synchronized (XMT_RUNNABLE_LOCK) {
                             mCurrentState = AUTORETRYSTATE;
                             replyInDispatch = false;
-                            xmtRunnable.notify();
+                            XMT_RUNNABLE_LOCK.notify();
                         }
                     } else {
                         // update state, and notify to continue
-                        synchronized (xmtRunnable) {
+                        synchronized (XMT_RUNNABLE_LOCK) {
                             mCurrentState = NOTIFIEDSTATE;
                             replyInDispatch = false;
-                            xmtRunnable.notify();
+                            XMT_RUNNABLE_LOCK.notify();
                         }
                     }
                     break;
@@ -829,17 +829,17 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                     int warmUpDelay = enterProgModeDelayTime();
                     if (warmUpDelay != 0) {
                         try {
-                            synchronized (xmtRunnable) {
-                                xmtRunnable.wait(warmUpDelay);
+                            synchronized (XMT_RUNNABLE_LOCK) {
+                                XMT_RUNNABLE_LOCK.wait(warmUpDelay);
                             }
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later
                         }
                     }
                     // update state, and notify to continue
-                    synchronized (xmtRunnable) {
+                    synchronized (XMT_RUNNABLE_LOCK) {
                         mCurrentState = OKSENDMSGSTATE;
-                        xmtRunnable.notify();
+                        XMT_RUNNABLE_LOCK.notify();
                     }
                     break;
                 }
@@ -848,9 +848,9 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
                     mCurrentMode = NORMALMODE;
                     replyInDispatch = false;
                     // update state, and notify to continue
-                    synchronized (xmtRunnable) {
+                    synchronized (XMT_RUNNABLE_LOCK) {
                         mCurrentState = OKSENDMSGSTATE;
-                        xmtRunnable.notify();
+                        XMT_RUNNABLE_LOCK.notify();
                     }
                     break;
                 }
@@ -986,14 +986,14 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
         while (endTime > (currentTime = Calendar.getInstance().getTimeInMillis())) {
             long wait = endTime - currentTime;
             try {
-                synchronized (xmtRunnable) {
+                synchronized (XMT_RUNNABLE_LOCK) {
                     // Do not wait if the current state has changed since we
                     // last set it.
 
                     if (mCurrentState != state) {
                         return;
                     }
-                    xmtRunnable.wait(wait); // rcvr normally ends this w state change
+                    XMT_RUNNABLE_LOCK.wait(wait); // rcvr normally ends this w state change
                     //If we are in the process of reading the data then do not time out.
                     if (readingData) {
                         endTime = endTime + 10;

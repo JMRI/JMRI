@@ -183,6 +183,34 @@ public abstract class AbstractSensorTestBase {
 
     }
 
+    @Test
+    public void testDetects() {
+        Assertions.assertEquals(Sensor.Detects.WHEELS, t.getDetects(), "wheels until set");
+        java.util.List<java.beans.PropertyChangeEvent> events = new java.util.ArrayList<>();
+        java.beans.PropertyChangeListener l = e -> {
+            if (Sensor.PROPERTY_DETECTS.equals(e.getPropertyName())) {
+                events.add(e);
+            }
+        };
+        t.addPropertyChangeListener(l);
+
+        t.setDetects(Sensor.Detects.BODY);
+        Assertions.assertEquals(Sensor.Detects.BODY, t.getDetects());
+        t.setDetects(Sensor.Detects.BODY);
+        t.setDetects(Sensor.Detects.TAG);
+        Assertions.assertEquals(Sensor.Detects.TAG, t.getDetects());
+        t.setDetects(Sensor.Detects.WHEELS);
+        Assertions.assertEquals(Sensor.Detects.WHEELS, t.getDetects());
+        Assertions.assertFalse(t.getPropertyKeys().contains(Sensor.PROPERTY_DETECTS),
+                "the default isn't kept, so nothing is stored for it");
+        t.setDetects(Sensor.Detects.WHEELS);
+
+        Assertions.assertEquals(3, events.size(), "one event for each change, none when unchanged");
+        Assertions.assertEquals("tag", events.get(1).getNewValue(), "the stored name");
+        Assertions.assertEquals("wheels", events.get(2).getNewValue(), "back to the default");
+        t.removePropertyChangeListener(l);
+    }
+
     private void disposeAndWaitForDebounceThread(AbstractSensor t) {
         t.dispose();
     }

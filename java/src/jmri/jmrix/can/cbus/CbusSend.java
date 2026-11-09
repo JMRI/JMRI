@@ -1,6 +1,8 @@
 package jmri.jmrix.can.cbus;
 
+import java.util.PriorityQueue;
 import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
@@ -56,6 +58,9 @@ public class CbusSend {
      * As a connection's receive thread does, the frame is taken as received
      * when the delay ends, off the layout thread, and an incoming CanReply is
      * given that received time before it waits for the layout thread.
+     * <p>
+     * As on a bus, frames arrive in the order they are due, and frames due at
+     * the same moment arrive in the order they were sent.
      * @param r A CanReply Can Frame which will be sent
      * @param sendReply true to send as incoming CcanReply
      * @param sendMessage true to send as outgoing CanMessage
@@ -64,23 +69,107 @@ public class CbusSend {
     public void sendWithDelay( CanReply r, Boolean sendReply, Boolean sendMessage, int delay ){
         CbusMessage.setId(r, tc.getCanid() );
         CbusMessage.setPri(r, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
+        DelayedFrames.Frame frame = DelayedFrames.add(tc, r, sendReply, sendMessage, delay);
         TimerUtil.schedule(new TimerTask() {
             @Override
             public void run() {
-                if (sendReply) {
-                    r.setReceivedTime(System.nanoTime());
-                }
-                ThreadingUtil.runOnLayoutEventually( () -> {
-                    if (sendReply) {
-                        tc.sendCanReply(r, null);
-                    }
-                    if (sendMessage) {
-                        CanMessage m = new CanMessage(r);
-                        tc.sendCanMessage(m, null);
-                    }
-                });
+                DelayedFrames.deliverUpTo(frame);
             }
         }, delay);
+    }
+
+    /**
+     * Frames waiting for their delay to end, kept in the order a bus would
+     * deliver them: by when they are due, then by the order they were sent.
+     * <p>
+     * java.util.Timer does not keep tasks due at the same moment in the order
+     * they were scheduled, and it schedules by the millisecond clock, so a
+     * task may run slightly before its frame's due time. So no task delivers
+     * just its own frame, and none compares clocks: each delivers its own
+     * frame and every frame ordered before it. A frame is then never delivered
+     * after one ordered behind it, and none is left waiting.
+     */
+    static final class DelayedFrames {
+
+        private static final PriorityQueue<Frame> waiting = new PriorityQueue<>();
+        private static long sent = 0;
+
+        private DelayedFrames() {}
+
+        static final class Frame implements Comparable<Frame> {
+            private final long due;
+            private final long sequence;
+            private final TrafficController tc;
+            private final CanReply reply;
+            private final boolean sendReply;
+            private final boolean sendMessage;
+
+            private Frame(long due, long sequence, TrafficController tc, CanReply reply,
+                    boolean sendReply, boolean sendMessage) {
+                this.due = due;
+                this.sequence = sequence;
+                this.tc = tc;
+                this.reply = reply;
+                this.sendReply = sendReply;
+                this.sendMessage = sendMessage;
+            }
+
+            @Override
+            public int compareTo(Frame other) {
+                // compare nanoTime values by their difference, as System.nanoTime() advises
+                long d = due - other.due;
+                if (d != 0) {
+                    return d < 0 ? -1 : 1;
+                }
+                return Long.compare(sequence, other.sequence);
+            }
+
+            @Override
+            public boolean equals(Object o) {
+                return (o instanceof Frame) && ((Frame) o).sequence == sequence;
+            }
+
+            @Override
+            public int hashCode() {
+                return Long.hashCode(sequence);
+            }
+        }
+
+        static Frame add(TrafficController tc, CanReply reply, boolean sendReply, boolean sendMessage, int delay) {
+            synchronized (waiting) {
+                Frame f = new Frame(System.nanoTime() + TimeUnit.MILLISECONDS.toNanos(delay), sent++,
+                    tc, reply, sendReply, sendMessage);
+                waiting.add(f);
+                return f;
+            }
+        }
+
+        /**
+         * Deliver the given frame, unless an earlier task has, and every frame
+         * ordered before it, in order. Each incoming frame is given its
+         * received time and handed to the layout thread, which runs them in
+         * the order handed over.
+         * @param last the frame whose delay has ended
+         */
+        static void deliverUpTo(Frame last) {
+            synchronized (waiting) {
+                while (!waiting.isEmpty() && waiting.peek().compareTo(last) <= 0) {
+                    Frame f = waiting.poll();
+                    if (f.sendReply) {
+                        f.reply.setReceivedTime(System.nanoTime());
+                    }
+                    ThreadingUtil.runOnLayoutEventually( () -> {
+                        if (f.sendReply) {
+                            f.tc.sendCanReply(f.reply, null);
+                        }
+                        if (f.sendMessage) {
+                            CanMessage m = new CanMessage(f.reply);
+                            f.tc.sendCanMessage(m, null);
+                        }
+                    });
+                }
+            }
+        }
     }
 
     /**
