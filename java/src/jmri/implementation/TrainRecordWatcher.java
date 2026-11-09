@@ -72,7 +72,8 @@ public class TrainRecordWatcher {
     public interface Placer {
 
         /**
-         * A Block's value was set. Place the record it identifies there if
+         * A Block's value was set while it was occupied, or the Block went
+         * occupied with a value. Place the record it identifies there if
          * that record is not placed, making a record for a roster entry or
          * ID tag value that has none.
          *
@@ -442,6 +443,14 @@ public class TrainRecordWatcher {
                 onLayoutThread(() -> {
                     if (sensorWatched) {
                         attachSensor(block.getSensor());
+                    }
+                });
+            } else if (Block.PROPERTY_STATE.equals(name)) {
+                Object value = block.getValue();
+                boolean nowOccupied = Integer.valueOf(Block.OCCUPIED).equals(e.getNewValue());
+                onLayoutThread(() -> {
+                    if (nowOccupied && value != null) {
+                        placer.valueSet(block, value); // Block sets a value it takes before it goes occupied
                     }
                 });
             } else if (Block.PROPERTY_VALUE.equals(name)) {

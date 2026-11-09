@@ -315,6 +315,18 @@ public class TrainRecordWatcherTest {
     }
 
     @Test
+    public void testValueArrivingWithOccupancyPlaces() {
+        Block[] b = line("A", "B");
+        occupy(b[0]);
+        ThreadingUtil.runOnLayout(() -> b[0].setValue("Goods"));
+        TrainRecord r = manager.newRecord("Goods"); // made after A's value was set: not placed
+        assertFalse(r.isPlaced());
+        occupy(b[1]); // B takes A's value as it goes occupied
+        assertEquals("Goods", b[1].getValue());
+        assertEquals(List.of(b[1]), r.getBlocks(), "placed where the value arrived with the train");
+    }
+
+    @Test
     public void testPlacedRecordNotMovedByValue() {
         Block[] b = line("A", "B", "C");
         TrainRecord r = manager.newRecord("Goods");
