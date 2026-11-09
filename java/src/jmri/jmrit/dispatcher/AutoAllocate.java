@@ -754,8 +754,27 @@ public class AutoAllocate implements Runnable {
     }
 
     /*
+     * Add a plan only if it can be completed now; a plan that can't be
+     * completed would hold its trains for no reason.
+     */
+    private boolean addPlanIfItCanComplete(AllocationPlan ap) {
+        if (isPlanAbandoned(ap)) {
+            log.debug("Allocation Plan {} not made, it could not be completed", ap.getPlanNum());
+            ap.dispose();
+            return false;
+        }
+        _planList.add(ap);
+        return true;
+    }
+
+    /*
      * A plan can never be completed once one of its trains has been
-     * terminated, has finished, or has been reset and lost its allocations.
+     * terminated, has finished, or has been reset and lost its allocations;
+     * once a train has gone past its target, or has taken another Section
+     * where its target is; once a train's target is occupied or allocated by
+     * a train outside the plan, or allocated to the other train of the plan;
+     * or, in a passing meet, once every road the passing train could use is
+     * occupied or allocated by a train outside the plan.
      * Keeping such a plan would hold the other train forever.
      */
     private boolean isPlanAbandoned(AllocationPlan ap) {
@@ -768,7 +787,93 @@ public class AutoAllocate implements Runnable {
                 return true;
             }
         }
+        for (int j = 1; j < 3; j++) {
+            ActiveTrain at = ap.getActiveTrain(j);
+            Section target = ap.getTargetSection(j);
+            int targetSeq = ap.getTargetSectionSequenceNum(j);
+            if (!isAllocatedTo(target, at) && isPastSequence(at, targetSeq)) {
+                log.debug("Allocation Plan {} abandoned, {} is already past {}",
+                        ap.getPlanNum(), at.getTrainName(), target.getDisplayName(USERSYS));
+                return true;
+            }
+            if (holdsOtherSectionAt(at, target, targetSeq)) {
+                log.debug("Allocation Plan {} abandoned, {} has taken another Section in place of {}",
+                        ap.getPlanNum(), at.getTrainName(), target.getDisplayName(USERSYS));
+                return true;
+            }
+            if (!isAllocatedTo(target, at) && (isHeldOutsidePlan(target, ap)
+                    || isAllocatedTo(target, ap.getActiveTrain(3 - j)))) {
+                log.debug("Allocation Plan {} abandoned, {}'s target {} is held by another train",
+                        ap.getPlanNum(), at.getTrainName(), target.getDisplayName(USERSYS));
+                return true;
+            }
+        }
+        int passingSeq = ap.getPassingSequenceNum();
+        ActiveTrain passer = ap.getActiveTrain(2);
+        if ((ap.getPlanType() == AllocationPlan.PASSING_MEET) && (passingSeq > 0)
+                && !holdsSectionAt(passer, passingSeq)) {
+            boolean roadFree = false;
+            for (Section road : passer.getTransit().getSectionListBySeq(passingSeq)) {
+                if ((road != ap.getTargetSection(1)) && !isHeldOutsidePlan(road, ap)) {
+                    roadFree = true;
+                }
+            }
+            if (!roadFree) {
+                log.debug("Allocation Plan {} abandoned, {} has no free road to pass {}",
+                        ap.getPlanNum(), passer.getTrainName(), ap.getActiveTrain(1).getTrainName());
+                return true;
+            }
+        }
         return false;
+    }
+
+    private static boolean isAllocatedTo(Section s, ActiveTrain at) {
+        for (AllocatedSection as : at.getAllocatedSectionList()) {
+            if (as.getSection() == s) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /*
+     * Whether the head of a train is beyond a place in its Transit.
+     */
+    private boolean isPastSequence(ActiveTrain at, int seq) {
+        int current = getCurrentSequenceNumber(at);
+        if (current == 0) {
+            return false;
+        }
+        return at.isAllocationReversed() ? (current < seq) : (current > seq);
+    }
+
+    private static boolean holdsSectionAt(ActiveTrain at, int seq) {
+        for (AllocatedSection as : at.getAllocatedSectionList()) {
+            if (as.getSequence() == seq) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean holdsOtherSectionAt(ActiveTrain at, Section s, int seq) {
+        for (AllocatedSection as : at.getAllocatedSectionList()) {
+            if ((as.getSequence() == seq) && (as.getSection() != s)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /*
+     * Whether a Section is occupied or allocated, and not allocated to either
+     * train of the plan.
+     */
+    private static boolean isHeldOutsidePlan(Section s, AllocationPlan ap) {
+        if (isAllocatedTo(s, ap.getActiveTrain(1)) || isAllocatedTo(s, ap.getActiveTrain(2))) {
+            return false;
+        }
+        return (s.getOccupancy() == Section.OCCUPIED) || (s.getState() != Section.FREE);
     }
 
     protected void clearAllocationPlans() {
@@ -960,8 +1065,7 @@ public class AutoAllocate implements Runnable {
         ap.setTargetSection(aSec, aSecSeq, 1);
         ap.setActiveTrain(nt, 2);
         ap.setTargetSection(nSec, nSecSeq, 2);
-        _planList.add(ap);
-        return true;
+        return addPlanIfItCanComplete(ap);
     }
 
     private boolean checkForPassingPlan(AllocationRequest ar, ActiveTrain nt,
@@ -972,6 +1076,7 @@ public class AutoAllocate implements Runnable {
         Section aSec = null;
         int nSecSeq = 0;
         int aSecSeq = 0;
+        int passingSeq = 0;
         ActiveTrain at = ar.getActiveTrain();
         AllocationPlan apx = getPlanThisTrain(nt);
         if (apx != null) {
@@ -1063,6 +1168,7 @@ public class AutoAllocate implements Runnable {
             if ((aSec == null) || (nSec == null)) {
                 return false;
             }
+            passingSeq = nSecSeq;
             // push higher priority train one section further, if possible
             if (!nt.isAllocationReversed()) {
                 if (nSecSeq < nt.getTransit().getMaxSequence()) {
@@ -1099,8 +1205,8 @@ public class AutoAllocate implements Runnable {
         ap.setTargetSection(aSec, aSecSeq, 1);
         ap.setActiveTrain(nt, 2);
         ap.setTargetSection(nSec, nSecSeq, 2);
-        _planList.add(ap);
-        return true;
+        ap.setPassingSequenceNum(passingSeq);
+        return addPlanIfItCanComplete(ap);
     }
 
     private boolean isThereConflictingPlan(ActiveTrain at, Section aSec, int aSecSeq,

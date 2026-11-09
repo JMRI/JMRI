@@ -486,6 +486,15 @@
                  it is. Dispatcher places an Active Train's record in its start
                  Block, and a record is placed where a Block's value names it.
                  It only watches: nothing on the layout changes.</li>
+             <li>With automatic allocation, an automatic train is no longer
+                 held for good in a passing loop or before one, waiting for
+                 another train that cannot pass or meet it there. Dispatcher
+                 now plans a meet only when the other train has a free track
+                 to take, and drops the plan when the train it waits for can
+                 no longer get there: the other track is occupied or held by
+                 another train, a train has taken the other's track, or a
+                 train is already past the meeting place. Allocating by hand
+                 was needed to free the train.</li>
              <li></li>
              <li>A Block change that an automatic train handles just after
                  one of its Sections is released, or as the train is
