@@ -68,6 +68,13 @@ public class TrainRecordWatcherTest {
         return blocks;
     }
 
+    /** Blocks in a loop: a line with the last joined back to the first. */
+    private Block[] loop(String... names) {
+        Block[] blocks = line(names);
+        join(blocks[blocks.length - 1], blocks[0]);
+        return blocks;
+    }
+
     /** Set a sensor's state on the layout thread, at the next test time. */
     private long set(Sensor s, int state) {
         nanos += 1_000_000_000L;
@@ -447,6 +454,137 @@ public class TrainRecordWatcherTest {
         occupy(b[1]);
         assertEquals(List.of(TrainRecord.PROPERTY_DIRECTION, TrainRecord.PROPERTY_BLOCKS, TrainRecord.PROPERTY_TRAIL),
                 names);
+    }
+
+    @Test
+    public void testLoopLastBlockEnteredAtTheLeadingEnd() {
+        Block[] b = loop("A", "B", "C", "D");
+        TrainRecord r = manager.newRecord("T1");
+        place(r, true, b[1], b[0]);
+        occupy(b[2]); // now in C, B, A, moving A to B to C
+        assertEquals(List.of(b[2], b[1], b[0]), r.getBlocks());
+        assertEquals(End.FRONT, r.getLeadingEnd());
+        occupy(b[3]); // D is next to both ends of the train: C (front) and A (rear)
+        assertEquals(List.of(b[3], b[2], b[1], b[0]), r.getBlocks(), "entered at the end that leads");
+        assertEquals(End.FRONT, r.getLeadingEnd());
+        assertEquals(Confidence.CONFIRMED, r.getConfidence(), "one train is not ambiguous with itself");
+        clear(b[0]);
+        assertEquals(List.of(b[3], b[2], b[1]), r.getBlocks(), "the rear has left A");
+    }
+
+    @Test
+    public void testLoopLastBlockEnteredReversing() {
+        Block[] b = loop("A", "B", "C", "D");
+        TrainRecord r = manager.newRecord("T1");
+        place(r, true, b[2], b[1]);
+        occupy(b[0]); // entered at the rear: reversing, now C, B, A
+        assertEquals(End.REAR, r.getLeadingEnd());
+        occupy(b[3]); // next to both ends
+        assertEquals(List.of(b[2], b[1], b[0], b[3]), r.getBlocks(), "entered at the rear, which leads");
+        assertEquals(End.REAR, r.getLeadingEnd());
+        assertEquals(Confidence.CONFIRMED, r.getConfidence());
+    }
+
+    @Test
+    public void testLoopLastBlockWithNoLeadingEndSettledByTheEndLeft() {
+        Block[] b = loop("A", "B", "C", "D");
+        TrainRecord r = manager.newRecord("T1");
+        place(r, false, b[0], b[1], b[2]);
+        assertNull(r.getLeadingEnd());
+        occupy(b[3]); // next to both ends, and nothing says which end leads
+        assertEquals(List.of(b[0], b[1], b[2]), r.getBlocks(), "nothing added while the end isn't known");
+        assertEquals(Confidence.AMBIGUOUS, r.getConfidence());
+        clear(b[2]); // the train has left C: it moved away from C, so it entered D at A's end
+        assertEquals(List.of(b[3], b[0], b[1]), r.getBlocks(), "entered at the other end, then left C");
+        assertEquals(Confidence.CONFIRMED, r.getConfidence());
+        assertTrue(r.isFrontKnown(), "the end that led is the front");
+    }
+
+    @Test
+    public void testLoopLastBlockWithNoLeadingEndEmptiedKeepsConfidence() {
+        Block[] b = loop("A", "B", "C", "D");
+        TrainRecord r = manager.newRecord("T1");
+        place(r, false, b[0], b[1], b[2]);
+        occupy(b[3]);
+        assertEquals(Confidence.AMBIGUOUS, r.getConfidence());
+        clear(b[3]);
+        assertEquals(Confidence.CONFIRMED, r.getConfidence(), "as it was: never left without a confidence");
+        assertTrue(r.isPlaced());
+        assertEquals(List.of(b[0], b[1], b[2]), r.getBlocks());
+    }
+
+    @Test
+    public void testLoopLastBlockWithNoLeadingEndValueDoesNotPickAnEnd() {
+        Block[] b = loop("A", "B", "C", "D");
+        TrainRecord r = manager.newRecord("T1");
+        place(r, false, b[0], b[1], b[2]);
+        occupy(b[3]);
+        ThreadingUtil.runOnLayout(() -> b[3].setValue("T1"));
+        assertEquals(List.of(b[0], b[1], b[2]), r.getBlocks(), "the value names the train, not the end it entered at");
+        assertEquals(Confidence.AMBIGUOUS, r.getConfidence());
+        clear(b[0]);
+        assertEquals(List.of(b[3], b[2], b[1]), r.getBlocks(), "settled by the end it left; that end led");
+        assertEquals(Confidence.CONFIRMED, r.getConfidence());
+    }
+
+    @Test
+    public void testLoopSecondTrainAtBothEndsSettledByValue() {
+        Block[] b = loop("A", "B", "C", "D", "E", "F");
+        TrainRecord r = manager.newRecord("T1");
+        TrainRecord other = manager.newRecord("T2");
+        place(r, true, b[1], b[0]);
+        occupy(b[2]); // T1 in C, B, A, front at C
+        place(other, true, b[4]); // T2 in E
+        occupy(b[3]); // D: next to T1's front (C) and to T2 (E)
+        assertEquals(Confidence.AMBIGUOUS, r.getConfidence());
+        assertEquals(Confidence.AMBIGUOUS, other.getConfidence());
+        ThreadingUtil.runOnLayout(() -> b[3].setValue("T1"));
+        assertEquals(List.of(b[3], b[2], b[1], b[0]), r.getBlocks());
+        assertEquals(Confidence.CONFIRMED, r.getConfidence());
+        assertEquals(Confidence.CONFIRMED, other.getConfidence(), "the other train is as it was");
+    }
+
+    @Test
+    public void testLoopBothEndsAndAnotherTrainValueClearsTheOther() {
+        Block[] b = loop("A", "B", "C", "D");
+        Block e = block("E");
+        join(b[3], e);
+        TrainRecord r = manager.newRecord("T1");
+        TrainRecord other = manager.newRecord("T2");
+        place(r, false, b[0], b[1], b[2]);
+        place(other, true, e);
+        occupy(b[3]); // next to both ends of T1, and to T2
+        assertEquals(Confidence.AMBIGUOUS, r.getConfidence());
+        assertEquals(Confidence.AMBIGUOUS, other.getConfidence());
+        ThreadingUtil.runOnLayout(() -> b[3].setValue("T1"));
+        assertEquals(Confidence.CONFIRMED, other.getConfidence(), "the value rules out T2");
+        assertEquals(List.of(e), other.getBlocks());
+        assertEquals(Confidence.AMBIGUOUS, r.getConfidence(), "T1 entered, but at which end isn't known yet");
+        clear(b[2]);
+        assertEquals(List.of(b[3], b[0], b[1]), r.getBlocks(), "it left C, so it entered D at A's end");
+        assertEquals(Confidence.CONFIRMED, r.getConfidence());
+    }
+
+    @Test
+    public void testLoopBothEndsWhileAmbiguousAtAnotherBlock() {
+        Block[] b = loop("A", "B", "C", "D");
+        Block f = block("F");
+        Block g = block("G");
+        join(b[0], f);
+        join(f, g);
+        TrainRecord r = manager.newRecord("T1");
+        TrainRecord other = manager.newRecord("T2");
+        place(r, false, b[0], b[1], b[2]);
+        place(other, true, g);
+        occupy(b[3]); // next to both ends of T1
+        occupy(f); // next to T1's A end and to T2
+        assertEquals(Confidence.AMBIGUOUS, r.getConfidence());
+        clear(b[2]);
+        assertEquals(List.of(b[3], b[0], b[1]), r.getBlocks(), "D settled by the end T1 left");
+        assertEquals(Confidence.AMBIGUOUS, r.getConfidence(), "still one of two trains that could be in F");
+        clear(f);
+        assertEquals(Confidence.CONFIRMED, r.getConfidence(), "as it was before F");
+        assertEquals(Confidence.CONFIRMED, other.getConfidence());
     }
 
     @Test
