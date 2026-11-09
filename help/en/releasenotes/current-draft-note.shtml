@@ -441,6 +441,15 @@
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
              <li></li>
+             <li>With automatic allocation, an automatic train is no longer
+                 held for good in a passing loop or before one, waiting for
+                 another train that cannot pass or meet it there. Dispatcher
+                 now plans a meet only when the other train has a free track
+                 to take, and drops the plan when the train it waits for can
+                 no longer get there: the other track is occupied or held by
+                 another train, a train has taken the other's track, or a
+                 train is already past the meeting place. Allocating by hand
+                 was needed to free the train.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
