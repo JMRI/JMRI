@@ -3,7 +3,10 @@ package jmri.util;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.function.Consumer;
+
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.GuardedBy;
 
 
 /**
@@ -30,7 +33,6 @@ import javax.annotation.Nonnull;
  * Method JavaDoc tweaked from java.util.Timer.
  * @author Bob Jacobsen Copyright 2018
  */
-@javax.annotation.concurrent.Immutable
 public final class TimerUtil {
 
     // class only supplies static methods
@@ -45,13 +47,7 @@ public final class TimerUtil {
      * @param time time at which task is to be executed.
      */
     public static void schedule(@Nonnull TimerTask task, @Nonnull Date time) {
-        synchronized (commonTimer) {
-            try {
-                commonTimer.schedule(task, time);
-            } catch (IllegalStateException e) {
-                log.warn("During schedule()", e);
-            }
-        }
+        onTimer(t -> t.schedule(task, time));
     }
 
     /**
@@ -64,13 +60,7 @@ public final class TimerUtil {
      * @param period time in milliseconds between successive task executions.
      */
     public static void schedule(@Nonnull TimerTask task, @Nonnull Date firstTime, long period) {
-        synchronized (commonTimer) {
-            try {
-                commonTimer.schedule(task, firstTime, period);
-            } catch (IllegalStateException e) {
-                log.warn("During schedule()", e);
-            }
-        }
+        onTimer(t -> t.schedule(task, firstTime, period));
     }
 
     /**
@@ -79,13 +69,7 @@ public final class TimerUtil {
      * @param delay delay in milliseconds before task is to be executed.
      */
     public static void schedule(@Nonnull TimerTask task, long delay) {
-        synchronized (commonTimer) {
-            try {
-                commonTimer.schedule(task, delay);
-            } catch (IllegalStateException e) {
-                log.warn("During schedule()", e);
-            }
-        }
+        onTimer(t -> t.schedule(task, delay));
     }
 
     /**
@@ -98,13 +82,7 @@ public final class TimerUtil {
      * @param period time in milliseconds between successive task executions.
      */
     public static void schedule(@Nonnull TimerTask task, long delay, long period) {
-        synchronized (commonTimer) {
-            try {
-                commonTimer.schedule(task, delay, period);
-            } catch (IllegalStateException e) {
-                log.warn("During schedule()", e);
-            }
-        }
+        onTimer(t -> t.schedule(task, delay, period));
     }
 
     /**
@@ -117,13 +95,7 @@ public final class TimerUtil {
      * @param period time in milliseconds between successive task executions.
      */
     public static void scheduleAtFixedRate(@Nonnull TimerTask task, @Nonnull Date firstTime, long period) {
-        synchronized (commonTimer) {
-            try {
-                commonTimer.schedule(task, firstTime, period);
-            } catch (IllegalStateException e) {
-                log.warn("During schedule()", e);
-            }
-        }
+        onTimer(t -> t.schedule(task, firstTime, period));
     }
 
     /**
@@ -136,13 +108,7 @@ public final class TimerUtil {
      * @param period time in milliseconds between successive task executions.
      */
     public static void scheduleAtFixedRate(@Nonnull TimerTask task, long delay, long period) {
-        synchronized (commonTimer) {
-            try {
-                commonTimer.schedule(task, delay, period);
-            } catch (IllegalStateException e) {
-                log.warn("During schedule()", e);
-            }
-        }
+        onTimer(t -> t.schedule(task, delay, period));
     }
 
 
@@ -166,15 +132,9 @@ public final class TimerUtil {
      * @return Actual scheduled task; use this if you need to cancel
      */
     public static @Nonnull TimerTask scheduleOnGUIThread(@Nonnull TimerTask task, @Nonnull Date time) {
-        synchronized (commonTimer) {
-            var gtask = gtask(task);
-            try {
-                commonTimer.schedule(gtask, time);
-            } catch (IllegalStateException e) {
-                log.warn("During schedule()", e);
-            }
-            return gtask;
-        }
+        var gtask = gtask(task);
+        onTimer(t -> t.schedule(gtask, time));
+        return gtask;
     }
 
     /**
@@ -188,15 +148,9 @@ public final class TimerUtil {
      * @return Actual scheduled task; use this if you need to cancel
      */
     public static @Nonnull TimerTask scheduleOnGUIThread(@Nonnull TimerTask task, @Nonnull Date firstTime, long period) {
-        synchronized (commonTimer) {
-            var gtask = gtask(task);
-            try {
-                commonTimer.schedule(gtask, firstTime, period);
-            } catch (IllegalStateException e) {
-                log.warn("During schedule()", e);
-            }
-            return gtask;
-        }
+        var gtask = gtask(task);
+        onTimer(t -> t.schedule(gtask, firstTime, period));
+        return gtask;
     }
 
     /**
@@ -207,15 +161,9 @@ public final class TimerUtil {
      * @return Actual scheduled task; use this if you need to cancel
      */
     public static @Nonnull TimerTask scheduleOnGUIThread(@Nonnull TimerTask task, long delay) {
-        synchronized (commonTimer) {
-            var gtask = gtask(task);
-            try {
-                commonTimer.schedule(gtask, delay);
-            } catch (IllegalStateException e) {
-                log.warn("During schedule()", e);
-            }
-            return gtask;
-        }
+        var gtask = gtask(task);
+        onTimer(t -> t.schedule(gtask, delay));
+        return gtask;
     }
 
     /**
@@ -229,15 +177,9 @@ public final class TimerUtil {
      * @return Actual scheduled task; use this if you need to cancel
      */
     public static @Nonnull TimerTask scheduleOnGUIThread(@Nonnull TimerTask task, long delay, long period) {
-        synchronized (commonTimer) {
-            var gtask = gtask(task);
-            try {
-                commonTimer.schedule(gtask, delay, period);
-            } catch (IllegalStateException e) {
-                log.warn("During schedule()", e);
-            }
-            return gtask;
-        }
+        var gtask = gtask(task);
+        onTimer(t -> t.schedule(gtask, delay, period));
+        return gtask;
     }
 
     /**
@@ -251,15 +193,9 @@ public final class TimerUtil {
      * @return Actual scheduled task; use this if you need to cancel
      */
     public static @Nonnull TimerTask scheduleAtFixedRateOnGUIThread(@Nonnull TimerTask task, @Nonnull Date firstTime, long period) {
-        synchronized (commonTimer) {
-            var gtask = gtask(task);
-            try {
-                commonTimer.schedule(gtask, firstTime, period);
-            } catch (IllegalStateException e) {
-                log.warn("During schedule()", e);
-            }
-            return gtask;
-        }
+        var gtask = gtask(task);
+        onTimer(t -> t.schedule(gtask, firstTime, period));
+        return gtask;
     }
 
     /**
@@ -273,15 +209,9 @@ public final class TimerUtil {
      * @return Actual scheduled task; use this if you need to cancel
      */
     public static @Nonnull TimerTask scheduleAtFixedRateOnGUIThread(@Nonnull TimerTask task, long delay, long period) {
-        synchronized (commonTimer) {
-            var gtask = gtask(task);
-            try {
-                commonTimer.schedule(gtask, delay, period);
-            } catch (IllegalStateException e) {
-                log.warn("During schedule()", e);
-            }
-            return gtask;
-        }
+        var gtask = gtask(task);
+        onTimer(t -> t.schedule(gtask, delay, period));
+        return gtask;
     }
 
 
@@ -302,13 +232,7 @@ public final class TimerUtil {
      * @param time time at which task is to be executed.
      */
     public static void scheduleOnLayoutThread(@Nonnull TimerTask task, @Nonnull Date time) {
-        synchronized (commonTimer) {
-            try {
-                commonTimer.schedule(ltask(task), time);
-            } catch (IllegalStateException e) {
-                log.warn("During schedule()", e);
-            }
-        }
+        onTimer(t -> t.schedule(ltask(task), time));
     }
 
     /**
@@ -321,13 +245,7 @@ public final class TimerUtil {
      * @param period time in milliseconds between successive task executions.
      */
     public static void scheduleOnLayoutThread(@Nonnull TimerTask task, @Nonnull Date firstTime, long period) {
-        synchronized (commonTimer) {
-            try {
-                commonTimer.schedule(ltask(task), firstTime, period);
-            } catch (IllegalStateException e) {
-                log.warn("During schedule()", e);
-            }
-        }
+        onTimer(t -> t.schedule(ltask(task), firstTime, period));
     }
 
     /**
@@ -337,13 +255,7 @@ public final class TimerUtil {
      * @param delay delay in milliseconds before task is to be executed.
      */
     public static void scheduleOnLayoutThread(@Nonnull TimerTask task, long delay) {
-        synchronized (commonTimer) {
-            try {
-                commonTimer.schedule(ltask(task), delay);
-            } catch (IllegalStateException e) {
-                log.warn("During schedule()", e);
-            }
-        }
+        onTimer(t -> t.schedule(ltask(task), delay));
     }
 
     /**
@@ -356,13 +268,7 @@ public final class TimerUtil {
      * @param period time in milliseconds between successive task executions.
      */
     public static void scheduleOnLayoutThread(@Nonnull TimerTask task, long delay, long period) {
-        synchronized (commonTimer) {
-            try {
-                commonTimer.schedule(ltask(task), delay, period);
-            } catch (IllegalStateException e) {
-                log.warn("During schedule()", e);
-            }
-        }
+        onTimer(t -> t.schedule(ltask(task), delay, period));
     }
 
     /**
@@ -376,13 +282,7 @@ public final class TimerUtil {
      */
     public static void scheduleAtFixedRateOnLayoutThread(
         @Nonnull TimerTask task, @Nonnull Date firstTime, long period) {
-        synchronized (commonTimer) {
-            try {
-                commonTimer.schedule(ltask(task), firstTime, period);
-            } catch (IllegalStateException e) {
-                log.warn("During schedule()", e);
-            }
-        }
+        onTimer(t -> t.schedule(ltask(task), firstTime, period));
     }
 
     /**
@@ -395,16 +295,74 @@ public final class TimerUtil {
      * @param period time in milliseconds between successive task executions.
      */
     public static void scheduleAtFixedRateOnLayoutThread(@Nonnull TimerTask task, long delay, long period) {
-        synchronized (commonTimer) {
+        onTimer(t -> t.schedule(ltask(task), delay, period));
+    }
+
+    /**
+     * Run one scheduling call on the common timer.
+     * <p>
+     * A {@link Timer} runs its tasks on one thread, and an exception thrown
+     * by any task ends that thread and cancels the Timer: every later
+     * scheduling call on it throws {@link IllegalStateException}. If that has
+     * happened, a new common timer is started, so that a fault in one task
+     * does not stop every later delayed action in JMRI. Tasks that were
+     * waiting on the stopped timer when it stopped are lost; that is logged.
+     * An {@link IllegalStateException} for another reason, such as a task
+     * scheduled twice, is the caller's mistake and is logged as before.
+     *
+     * @param call the scheduling call, given the timer to use
+     */
+    private static void onTimer(@Nonnull Consumer<Timer> call) {
+        synchronized (timerLock) {
             try {
-                commonTimer.schedule(ltask(task), delay, period);
+                call.accept(commonTimer);
+                return;
+            } catch (IllegalStateException e) {
+                if (isRunning(commonTimer)) {
+                    log.warn("During schedule()", e);
+                    return;
+                }
+            }
+            log.error("JMRI Common Timer stopped after an exception in one of its tasks (logged when it happened);"
+                    + " starting a new one. Tasks that were waiting on it have been lost.");
+            commonTimer = newCommonTimer();
+            try {
+                call.accept(commonTimer);
             } catch (IllegalStateException e) {
                 log.warn("During schedule()", e);
             }
         }
     }
 
-    static final Timer commonTimer = new Timer("JMRI Common Timer", true);
+    /**
+     * @param timer a Timer
+     * @return false if the Timer has been cancelled, as it is when one of
+     *         its tasks throws, so that it can't schedule anything
+     */
+    private static boolean isRunning(@Nonnull Timer timer) {
+        TimerTask probe = new TimerTask() {
+            @Override
+            public void run() {
+                // only scheduled to find out whether the timer still accepts tasks
+            }
+        };
+        try {
+            timer.schedule(probe, 60_000L);
+            probe.cancel();
+            return true;
+        } catch (IllegalStateException e) {
+            return false;
+        }
+    }
+
+    private static Timer newCommonTimer() {
+        return new Timer("JMRI Common Timer", true);
+    }
+
+    private static final Object timerLock = new Object();
+
+    @GuardedBy("timerLock")
+    private static Timer commonTimer = newCommonTimer();
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimerUtil.class);
 }
