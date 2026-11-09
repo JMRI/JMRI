@@ -90,7 +90,7 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     private List<DetectionMarker> customMarkers = null;
     private final Map<LengthSource, Double> lengths = new EnumMap<>(LengthSource.class);
     private boolean measuredConsistent = false;
-    private boolean removed = false;
+    private boolean disposed = false;
     private final List<Block> blocks = new ArrayList<>();
     private boolean frontKnown = false;
     private End leadingEnd = null;
@@ -137,7 +137,7 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     @Override
     @InvokeOnLayoutThread
     public void setName(@Nonnull String name) {
-        checkNotRemoved();
+        checkNotDisposed();
         String n = normalizeName(name);
         if (n.equals(this.name)) {
             return;
@@ -151,32 +151,30 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     /** {@inheritDoc} */
     @Override
     @CheckForNull
-    public BasicRosterEntry getRosterEntry() {
+    public BasicRosterEntry getFirstRosterEntry() {
         return rosterEntries.isEmpty() ? null : rosterEntries.get(0);
     }
 
     /** {@inheritDoc} */
     @Override
     @InvokeOnLayoutThread
-    public void setRosterEntry(@CheckForNull BasicRosterEntry entry) {
-        checkNotRemoved();
+    public void insertFirstRosterEntry(@Nonnull BasicRosterEntry entry) {
+        Objects.requireNonNull(entry, "entry");
+        checkNotDisposed();
         List<BasicRosterEntry> list = new ArrayList<>(rosterEntries);
-        if (entry == null) {
-            if (list.isEmpty()) {
-                return;
-            }
-            list.remove(0);
-        } else {
-            int at = indexOf(list, entry);
-            if (at == 0) {
-                return;
-            }
-            if (at > 0) {
-                list.remove(at);
-            }
-            list.add(0, entry);
+        list.add(0, entry);
+        setRosterEntries(list); // refuses an entry this record or another already has
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @InvokeOnLayoutThread
+    public void removeFirstRosterEntry() {
+        checkNotDisposed();
+        if (rosterEntries.isEmpty()) {
+            return;
         }
-        setRosterEntries(list);
+        setRosterEntries(rosterEntries.subList(1, rosterEntries.size()));
     }
 
     /** {@inheritDoc} */
@@ -191,7 +189,7 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     @InvokeOnLayoutThread
     public void setRosterEntries(@Nonnull List<BasicRosterEntry> entries) {
         Objects.requireNonNull(entries, "entries");
-        checkNotRemoved();
+        checkNotDisposed();
         List<BasicRosterEntry> list = new ArrayList<>(entries.size());
         for (BasicRosterEntry e : entries) {
             Objects.requireNonNull(e, "entry");
@@ -208,14 +206,10 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
                 registry.checkRosterEntry(this, e);
             }
         }
-        BasicRosterEntry oldLead = getRosterEntry();
         List<BasicRosterEntry> old = getRosterEntries();
         rosterEntries = Collections.unmodifiableList(list);
         registry.rosterEntriesChanged(this);
         firePropertyChange(PROPERTY_ROSTER_ENTRIES, old, getRosterEntries());
-        if (oldLead != getRosterEntry()) {
-            firePropertyChange(PROPERTY_ROSTER_ENTRY, oldLead, getRosterEntry());
-        }
     }
 
     /**
@@ -247,7 +241,7 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     @InvokeOnLayoutThread
     public void addIdTag(@Nonnull IdTag tag) {
         Objects.requireNonNull(tag, "tag");
-        checkNotRemoved();
+        checkNotDisposed();
         if (idTags.contains(tag)) {
             return;
         }
@@ -262,7 +256,7 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     @InvokeOnLayoutThread
     public void removeIdTag(@Nonnull IdTag tag) {
         Objects.requireNonNull(tag, "tag");
-        checkNotRemoved();
+        checkNotDisposed();
         if (!idTags.contains(tag)) {
             return;
         }
@@ -283,7 +277,7 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     @InvokeOnLayoutThread
     public void setTrainComponents(@Nonnull List<TrainComponent> components) {
         Objects.requireNonNull(components, "components");
-        checkNotRemoved();
+        checkNotDisposed();
         if (components.isEmpty()) {
             throw new IllegalArgumentException("a train has at least one component");
         }
@@ -314,7 +308,7 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     @InvokeOnLayoutThread
     public void setDetection(@Nonnull Detection detection) {
         Objects.requireNonNull(detection, "detection");
-        checkNotRemoved();
+        checkNotDisposed();
         if (detection == Detection.CUSTOM) {
             throw new IllegalArgumentException("set a custom list of markers with setCustomMarkers");
         }
@@ -332,7 +326,7 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     @InvokeOnLayoutThread
     public void setCustomMarkers(@Nonnull List<DetectionMarker> markers) {
         Objects.requireNonNull(markers, "markers");
-        checkNotRemoved();
+        checkNotDisposed();
         if (markers.isEmpty()) {
             throw new IllegalArgumentException("a custom list has at least one marker");
         }
@@ -386,7 +380,7 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     @InvokeOnLayoutThread
     public void setLength(@Nonnull LengthSource source, @CheckForNull Double mm) {
         Objects.requireNonNull(source, "source");
-        checkNotRemoved();
+        checkNotDisposed();
         if (source == LengthSource.TRAIN_COMPONENTS) {
             throw new IllegalArgumentException("the components' length comes from the components");
         }
@@ -405,7 +399,7 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     @Override
     @InvokeOnLayoutThread
     public void setMeasuredLength(@CheckForNull Double mm, boolean consistent) {
-        checkNotRemoved();
+        checkNotDisposed();
         checkLength(mm);
         boolean c = mm != null && consistent;
         if (Objects.equals(mm, lengths.get(LengthSource.MEASURED)) && c == measuredConsistent) {
@@ -448,8 +442,8 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
 
     /** {@inheritDoc} */
     @Override
-    public boolean isRemoved() {
-        return removed;
+    public boolean isDisposed() {
+        return disposed;
     }
 
     /** {@inheritDoc} */
@@ -463,7 +457,7 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     @InvokeOnLayoutThread
     public void place(@Nonnull List<Block> blocks, boolean frontKnown) {
         Objects.requireNonNull(blocks, "blocks");
-        checkNotRemoved();
+        checkNotDisposed();
         if (blocks.isEmpty()) {
             throw new IllegalArgumentException("a train is placed in at least one Block");
         }
@@ -492,7 +486,7 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     @Override
     @InvokeOnLayoutThread
     public void unplace() {
-        checkNotRemoved();
+        checkNotDisposed();
         if (blocks.isEmpty()) {
             return;
         }
@@ -632,7 +626,7 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
      */
     @InvokeOnLayoutThread
     void entered(@Nonnull Block block, boolean atFirst, long timeNanos, @Nonnull Instant time) {
-        if (removed || blocks.isEmpty() || blocks.contains(block)) {
+        if (disposed || blocks.isEmpty() || blocks.contains(block)) {
             return;
         }
         List<Block> old = getBlocks();
@@ -665,7 +659,7 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
      */
     @InvokeOnLayoutThread
     void left(@Nonnull Block block) {
-        if (removed || blocks.size() < 2) {
+        if (disposed || blocks.size() < 2) {
             return;
         }
         int i = blocks.indexOf(block);
@@ -710,11 +704,12 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     }
 
     /**
-     * Mark the record removed, so it can't be changed. Called by its manager.
+     * Dispose of the record, so it can't be changed. Called by its manager
+     * when the record is removed.
      */
     @InvokeOnLayoutThread
-    public void markRemoved() {
-        removed = true;
+    public void dispose() {
+        disposed = true;
     }
 
     @Override
@@ -736,9 +731,9 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
         }
     }
 
-    private void checkNotRemoved() {
-        if (removed) {
-            throw new IllegalStateException("train record " + name + " has been removed");
+    private void checkNotDisposed() {
+        if (disposed) {
+            throw new IllegalStateException("train record " + name + " has been disposed");
         }
     }
 }

@@ -89,7 +89,7 @@ public class TrainTrackingChecksTest {
             RosterSpeedProfile p = new RosterSpeedProfile(withProfile);
             p.setSpeed(1000, 400, 400);
             withProfile.setSpeedProfile(p);
-            noLength.setRosterEntry(withProfile);
+            noLength.insertFirstRosterEntry(withProfile);
 
             TrainRecord bare = manager.newRecord("Shunt");
             TrainRecord noProfile = manager.newRecord("Down goods");
