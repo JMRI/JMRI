@@ -2,6 +2,8 @@ package jmri.jmrit.beantable.beanedit;
 
 import java.awt.event.ActionEvent;
 
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.*;
@@ -136,6 +138,7 @@ public class BlockEditAction extends BeanEditAction<Block> {
             Bundle.getMessage("BlockLengthColName"), Bundle.getMessage("BlockLengthText") ));
         basic.addItem(new BeanEditItem(p,
             Bundle.getMessage("BlockLengthUnits"), Bundle.getMessage("BlockLengthUnitsText")));
+        addRouteLengths(basic);
         basic.addItem(new BeanEditItem(curvatureField, Bundle.getMessage("BlockCurveColName"), ""));
         speedField = new JComboBox<>(speedList);
         JComboBoxUtil.setupComboBoxMaxRows(speedField);
@@ -149,6 +152,7 @@ public class BlockEditAction extends BeanEditAction<Block> {
         basic.addItem(new BeanEditItem(ghostField,
             Bundle.getMessage("BlockGhostColName"), Bundle.getMessage("BlockGhostText")));
         ghostField.setSelected(bean.getIsGhost());
+        addBraking(basic);
 
         basic.setSaveItem(new AbstractAction() {
             @Override
@@ -168,6 +172,7 @@ public class BlockEditAction extends BeanEditAction<Block> {
                 bean.setLength( metricUi ? len * 10.0f : len * 25.4f);
                 bean.setPermissiveWorking(permissiveField.isSelected());
                 bean.setIsGhost(ghostField.isSelected());
+                saveRoutes();
             }
         });
         basic.setResetItem(new AbstractAction() {
@@ -183,6 +188,7 @@ public class BlockEditAction extends BeanEditAction<Block> {
                 updateLength();
                 permissiveField.setSelected(bean.getPermissiveWorking());
                 ghostField.setSelected(bean.getIsGhost());
+                resetRoutes();
             }
         });
         bei.add(basic);
@@ -192,6 +198,201 @@ public class BlockEditAction extends BeanEditAction<Block> {
     private void updateLength() {
         metricUi = cm.isSelected();
         lengthSpinner.setValue(metricUi ?  bean.getLengthCm() : bean.getLengthIn());
+        routesModel.fireTableStructureChanged(); // the length column's units
+    }
+
+    private final RoutesModel routesModel = new RoutesModel();
+    final JTable routesTable = new JTable(routesModel);
+    private final JPanel brakingPanel = new JPanel();
+    final java.util.Map<Block, JCheckBox> brakingBoxes = new java.util.LinkedHashMap<>();
+
+    /**
+     * The length of each way through the Block, where it differs from the
+     * Block's own, on the Physical Details tab.
+     *
+     * @param panel the Physical Details tab
+     */
+    private void addRouteLengths(BeanItemPanel panel) {
+        routesTable.setName("BlockRouteLengths"); // NOI18N
+        routesTable.setRowSelectionAllowed(false);
+        routesTable.setDefaultEditor(Object.class, new LengthEditor());
+        routesTable.putClientProperty("terminateEditOnFocusLost", Boolean.TRUE); // NOI18N
+        JScrollPane scroll = new JScrollPane(routesTable);
+        scroll.setPreferredSize(new java.awt.Dimension(360, 110));
+        panel.addItem(new BeanEditItem(scroll,
+            Bundle.getMessage("BlockRouteLengths"), Bundle.getMessage("BlockRouteLengthsText")));
+    }
+
+    /**
+     * The neighbours towards which the Block is a braking section, on the
+     * Physical Details tab.
+     *
+     * @param panel the Physical Details tab
+     */
+    private void addBraking(BeanItemPanel panel) {
+        brakingPanel.setLayout(new BoxLayout(brakingPanel, BoxLayout.Y_AXIS));
+        panel.addItem(new BeanEditItem(brakingPanel,
+            Bundle.getMessage("BlockBraking"), Bundle.getMessage("BlockBrakingText")));
+    }
+
+    private void resetRoutes() {
+        if (routesTable.isEditing()) {
+            routesTable.getCellEditor().cancelCellEditing();
+        }
+        routesModel.load(bean);
+        brakingBoxes.clear();
+        brakingPanel.removeAll();
+        for (Path p : bean.getPaths()) {
+            Block towards = p.getBlock();
+            if (towards != null && towards != bean && !brakingBoxes.containsKey(towards)) {
+                JCheckBox box = new JCheckBox(Bundle.getMessage("BlockBrakingTowards", towards.getDisplayName()));
+                box.setSelected(bean.isBrakingTowards(towards));
+                brakingBoxes.put(towards, box);
+                brakingPanel.add(box);
+            }
+        }
+        if (brakingBoxes.isEmpty()) {
+            brakingPanel.add(new JLabel(Bundle.getMessage("BlockNoNeighbours")));
+        }
+        brakingPanel.revalidate();
+    }
+
+    private void saveRoutes() {
+        if (routesTable.isEditing() && !routesTable.getCellEditor().stopCellEditing()) {
+            routesTable.getCellEditor().cancelCellEditing(); // not a length: the one before is kept
+        }
+        for (int row = 0; row < routesModel.getRowCount(); row++) {
+            Block.WayThrough way = routesModel.ways.get(row);
+            Float mm = routesModel.lengths.get(row);
+            if (mm == null) {
+                bean.clearRouteLength(way.getOneEnd(), way.getOtherEnd());
+            } else {
+                bean.setRouteLengthMm(way.getOneEnd(), way.getOtherEnd(), mm);
+            }
+        }
+        brakingBoxes.forEach((towards, box) -> bean.setBrakingTowards(towards, box.isSelected()));
+    }
+
+    /**
+     * @param text a length as typed, in the user's locale
+     * @return the length, or null if blank
+     * @throws java.text.ParseException if it is not a length of more than 0
+     */
+    @CheckForNull
+    static Float parseLength(@Nonnull String text) throws java.text.ParseException {
+        String t = text.trim();
+        if (t.isEmpty()) {
+            return null;
+        }
+        float v = jmri.util.IntlUtilities.floatValue(t);
+        if (!(v > 0) || Float.isInfinite(v)) {
+            throw new java.text.ParseException(t, 0);
+        }
+        return v;
+    }
+
+    /**
+     * Edits a length, refusing (with a red border) anything that isn't a
+     * length or blank.
+     */
+    private static final class LengthEditor extends DefaultCellEditor {
+
+        LengthEditor() {
+            super(new JTextField());
+            ((JTextField) getComponent()).setHorizontalAlignment(SwingConstants.RIGHT);
+        }
+
+        @Override
+        public java.awt.Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected,
+                int row, int column) {
+            JTextField field = (JTextField) super.getTableCellEditorComponent(table, value, isSelected, row, column);
+            field.setBorder(new javax.swing.border.LineBorder(java.awt.Color.black));
+            return field;
+        }
+
+        @Override
+        public boolean stopCellEditing() {
+            JTextField field = (JTextField) getComponent();
+            try {
+                parseLength(field.getText());
+            } catch (java.text.ParseException e) {
+                field.setBorder(new javax.swing.border.LineBorder(java.awt.Color.red));
+                return false;
+            }
+            return super.stopCellEditing();
+        }
+    }
+
+    /**
+     * The ways through the Block and their lengths, held in mm and shown in
+     * the units chosen for the Block's length. A blank length means the
+     * Block's own.
+     */
+    private final class RoutesModel extends javax.swing.table.AbstractTableModel {
+
+        private final java.util.List<Block.WayThrough> ways = new java.util.ArrayList<>();
+        private final java.util.List<Float> lengths = new java.util.ArrayList<>();
+
+        void load(Block block) {
+            ways.clear();
+            lengths.clear();
+            for (Block.WayThrough w : block.getWaysThrough()) {
+                ways.add(w);
+                lengths.add(block.hasRouteLength(w.getOneEnd(), w.getOtherEnd())
+                    ? block.getRouteLengthMm(w.getOneEnd(), w.getOtherEnd()) : null);
+            }
+            fireTableDataChanged();
+        }
+
+        @Override
+        public int getRowCount() {
+            return ways.size();
+        }
+
+        @Override
+        public int getColumnCount() {
+            return 2;
+        }
+
+        @Override
+        public String getColumnName(int col) {
+            return col == 0 ? Bundle.getMessage("BlockRouteBetween")
+                : Bundle.getMessage("BlockRouteLength",
+                    Bundle.getMessage(metricUi ? "BlockRouteUnitCm" : "BlockRouteUnitInches"));
+        }
+
+        @Override
+        public boolean isCellEditable(int row, int col) {
+            return col == 1;
+        }
+
+        @Override
+        public Object getValueAt(int row, int col) {
+            if (col == 0) {
+                return ways.get(row).toString();
+            }
+            Float mm = lengths.get(row);
+            if (mm == null) {
+                return "";
+            }
+            java.text.NumberFormat f = java.text.NumberFormat.getNumberInstance();
+            f.setMinimumFractionDigits(2);
+            f.setMaximumFractionDigits(2);
+            f.setGroupingUsed(false);
+            return f.format(metricUi ? mm / 10.0f : mm / 25.4f);
+        }
+
+        @Override
+        public void setValueAt(Object value, int row, int col) {
+            Float v;
+            try {
+                v = parseLength(value == null ? "" : value.toString());
+            } catch (java.text.ParseException e) {
+                return; // the editor refuses anything else
+            }
+            lengths.set(row, (v == null || v == 0f) ? null : (metricUi ? v * 10.0f : v * 25.4f));
+            fireTableCellUpdated(row, col);
+        }
     }
 
     private NamedBeanComboBox<Sensor> sensorComboBox;

@@ -1,8 +1,6 @@
 package jmri.jmrit.beantable;
 
-import jmri.util.JUnitAppender;
-import jmri.util.JUnitUtil;
-import jmri.util.ThreadingUtil;
+import jmri.util.*;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
@@ -18,7 +16,7 @@ public class ListedTableFrameTest extends jmri.util.JmriJFrameTestBase {
     @Test
     @Override
     public void testShowAndClose() {
-        ((ListedTableFrame)frame).initTables();
+        ((ListedTableFrame<?>)frame).initTables();
         frame.initComponents();
         ThreadingUtil.runOnLayout(() -> {
             frame.setVisible(true);
@@ -39,7 +37,7 @@ public class ListedTableFrameTest extends jmri.util.JmriJFrameTestBase {
     @Test
     @Override
     public void testAccessibleContent() {
-        ((ListedTableFrame)frame).initTables();
+        ((ListedTableFrame<?>)frame).initTables();
         super.testAccessibleContent();
     }
 

@@ -1,5 +1,5 @@
 package jmri.jmrix.dccpp.network;
-    
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Arrays;
 import javax.swing.SwingUtilities;
@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * received.
  *
  * Based on LIUSBEthernetXnetPacketizer
- * 
+ *
  * @author Paul Bender, Copyright (C) 2011
  * @author      Mark Underwood, Copyright (C) 2015
  */
@@ -38,18 +38,18 @@ public class DCCppEthernetPacketizer extends jmri.jmrix.dccpp.serial.SerialDCCpp
         log.debug("forwardToPort message: [{}]", m);
         // remember who sent this
         mLastSender = reply;
-        
+
         // forward the message to the registered recipients,
         // which includes the communications monitor, except the sender.
         // Schedule notification via the Swing event queue to ensure order
         Runnable r = new XmtNotifier(m, mLastSender, this);
         SwingUtilities.invokeLater(r);
-        
+
         // stream to port in single write, as that's needed by serial
         byte[] msg = new byte[lengthOfByteStream(m)];
         // add header
         int offset = addHeaderToOutput(msg, m);
-        
+
         // add data content
         int len = m.getNumDataElements();
         for (int i = 0; i < len; i++) {
@@ -79,9 +79,9 @@ public class DCCppEthernetPacketizer extends jmri.jmrix.dccpp.serial.SerialDCCpp
                         m.setRetries(m.getRetries() - 1);
                         try {
                             int timeOut = m.getTimeout();
-                            synchronized (xmtRunnable) {
+                            synchronized (XMT_RUNNABLE_LOCK) {
                                 if (timeOut > 0) {
-                                    xmtRunnable.wait(timeOut);
+                                    XMT_RUNNABLE_LOCK.wait(timeOut);
                                 }
                             }
                         } catch (InterruptedException e) {

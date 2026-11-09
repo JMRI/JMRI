@@ -1,5 +1,7 @@
 package jmri.jmrix.internal;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -10,6 +12,11 @@ import org.junit.jupiter.api.*;
  * @author Paul Bender Copyright (C) 2016
  **/
 public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionConfigTestBase  {
+
+   @Test
+   public void testIsSimulator() {
+        assertTrue(cc.isSimulator(), "Internal is a simulator");
+   }
 
    @BeforeEach
    @Override

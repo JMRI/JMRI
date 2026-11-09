@@ -84,6 +84,10 @@ public class NamedBeanHandleManager extends AbstractManager<NamedBean> implement
      * <p>
      * <strong>Note</strong> this does not change the name on the bean, it only
      * changes the references.
+     * <p>
+     * A bean registered with a manager has this done for it when its user
+     * name changes from one name to another, so callers only need it for
+     * other changes of name.
      *
      * @param <T>     the type of the bean
      * @param oldName the name changing from

@@ -13,6 +13,7 @@ import jmri.InstanceManager;
 import jmri.Section;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -41,6 +42,7 @@ public class DefaultSectionBlockNamesTest {
         assertNull(b1.getValue(), "B1 is behind the train");
         assertEquals("Train", b2.getValue(), "B2 holds the train");
         assertEquals("Train", b3.getValue(), "B3 is ahead");
+        JUnitAppender.assertWarnMessage("Section.setNameFromActiveBlock is deprecated, please remove references to it");
     }
 
     @Test
@@ -50,6 +52,7 @@ public class DefaultSectionBlockNamesTest {
         assertEquals("Train", b1.getValue(), "B1 is ahead");
         assertEquals("Train", b2.getValue(), "B2 holds the train");
         assertNull(b3.getValue(), "B3 is behind the train");
+        JUnitAppender.assertWarnMessage("Section.setNameFromActiveBlock is deprecated, please remove references to it");
     }
 
     @Test
@@ -59,6 +62,14 @@ public class DefaultSectionBlockNamesTest {
         assertEquals("Train", b1.getValue(), "B1");
         assertEquals("Train", b2.getValue(), "B2");
         assertEquals("Train", b3.getValue(), "B3");
+        JUnitAppender.assertWarnMessage("Section.setNameFromActiveBlock is deprecated, please remove references to it");
+    }
+
+    @Test
+    public void testSuppressNameUpdateIsDeprecated() {
+        section.suppressNameUpdate(true);
+        JUnitAppender.assertWarnMessage("Section.suppressNameUpdate is deprecated, please remove references to it");
+        JUnitAppender.assertWarnMessage("LayoutBlock.setSuppressNameUpdate is deprecated, please remove references to it");
     }
 
     @Test

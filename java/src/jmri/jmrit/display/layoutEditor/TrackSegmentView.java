@@ -467,12 +467,6 @@ public class TrackSegmentView extends LayoutTrackView {
         }
     }
 
-    // initialization instance variables (used when loading a LayoutEditor)
-    public String tConnect1Name = "";
-    public String tConnect2Name = "";
-
-    public String tLayoutBlockName = "";
-
     public void updateBlockInfo() {
         trackSegment.updateBlockInfo();
     }
@@ -574,6 +568,32 @@ public class TrackSegmentView extends LayoutTrackView {
         }
         result.add(getCoordsCenter());
 
+        return result;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean usesLayoutBlock(@Nonnull LayoutBlock layoutBlock) {
+        return getLayoutBlock() == layoutBlock;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * An arc is drawn as part of a circle or ellipse, and an arc of more than
+     * half a turn goes outside the box round its ends and middle, so for an arc
+     * this adds the box round the whole circle or ellipse.
+     */
+    @Override
+    @Nonnull
+    public Rectangle2D getRepaintBounds() {
+        Rectangle2D result = getBounds();
+        if (isArc() && (getConnect1() != null) && (getConnect2() != null)) {
+            calculateTrackSegmentAngle();
+            result.add(new Rectangle2D.Double(getCX(), getCY(), getCW(), getCH()));
+        }
         return result;
     }
 

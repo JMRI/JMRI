@@ -3,6 +3,9 @@ package jmri.jmrix;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.*;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.GuardedBy;
 
@@ -10,6 +13,7 @@ import jmri.BasicRosterEntry;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
+import jmri.LocoSpeedSource;
 import jmri.SpeedStepMode;
 import jmri.SystemConnectionMemo;
 import jmri.Throttle;
@@ -21,11 +25,20 @@ import jmri.util.swing.JmriJOptionPane;
  * Abstract implementation of a ThrottleManager.
  * <p>
  * Based on Glen Oberhauser's original {@link jmri.jmrix.loconet.LnThrottleManager} implementation.
+ * <p>
+ * Each throttle manager is also a {@link LocoSpeedSource} for the throttles
+ * it has made: it reports each change of a throttle's speed setting or
+ * direction, whatever caused it (a user, Dispatcher, a Warrant, a script, or
+ * a report from the command station of another throttle's command), and the
+ * release of an address when its throttle is disposed. Watching this way
+ * doesn't keep a throttle from being released, as a property change listener
+ * on the throttle would. The current settings of an address that has a
+ * throttle are given by {@link #getThrottleInfo}.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Steve Rawlinson Copyright (C) 2016
  */
-abstract public class AbstractThrottleManager implements ThrottleManager {
+abstract public class AbstractThrottleManager implements ThrottleManager, LocoSpeedSource {
 
     public AbstractThrottleManager() {
     }
@@ -467,6 +480,9 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      */
     public synchronized void notifyThrottleKnown(DccThrottle throttle, LocoAddress addr) {
         log.debug("notifyThrottleKnown for {}", addr);
+        if (throttle instanceof AbstractThrottle) {
+            ((AbstractThrottle) throttle).setSpeedObserver(this::speedOrDirectionChanged);
+        }
         Addresses ads = null;
         if (!addressThrottles.containsKey(addr)) {
             log.debug("Address {} doesn't already exists so will add", addr);
@@ -703,13 +719,18 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             log.debug("Throttle {} still has {} active propertyChangeListeners registered to the throttle", t.getLocoAddress(), t.getPropertyChangeListeners().length);
             return false;
         }
+        boolean removed = false;
         synchronized (this) {
             if (addressThrottles.containsKey(la)) {
                 addressThrottles.remove(la);
+                removed = true;
                 log.debug("Loco Address {} removed from the stack ", la);
             } else {
                 log.debug("Loco Address {} not found in the stack ", la);
             }
+        }
+        if (removed) {
+            throttleDisposed(la, t);
         }
         return true;
     }
@@ -731,11 +752,86 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      */
     protected void forceDisposeThrottle(LocoAddress la) {
         log.debug("force dispose address {}", la);
-        if (addressThrottles.containsKey(la)) {
-            addressThrottles.remove(la);
+        Addresses removed = addressThrottles.remove(la);
+        if (removed != null) {
             log.debug("Loco Address {} removed from the stack ", la);
+            throttleDisposed(la, removed.getThrottle());
         } else {
             log.debug("Loco Address {} not found in the stack ", la);
+        }
+    }
+
+    private final CopyOnWriteArrayList<LocoSpeedSource.Listener> locoSpeedListeners = new CopyOnWriteArrayList<>();
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void addLocoSpeedListener(@Nonnull LocoSpeedSource.Listener listener) {
+        locoSpeedListeners.addIfAbsent(listener);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void removeLocoSpeedListener(@Nonnull LocoSpeedSource.Listener listener) {
+        locoSpeedListeners.remove(listener);
+    }
+
+    /**
+     * Report a throttle's change of speed setting or direction to the
+     * {@link jmri.LocoSpeedSource.Listener}s.
+     *
+     * @param throttle     the throttle
+     * @param propertyName {@link Throttle#SPEEDSETTING} or
+     *                     {@link Throttle#ISFORWARD}
+     * @param newValue     the new value, from the throttle's event
+     */
+    private void speedOrDirectionChanged(@Nonnull AbstractThrottle throttle, @Nonnull String propertyName,
+            @CheckForNull Object newValue) {
+        if (locoSpeedListeners.isEmpty()) {
+            return;
+        }
+        long timeNanos = System.nanoTime();
+        LocoAddress address = throttle.getLocoAddress();
+        if (address == null) {
+            return;
+        }
+        float speed = Throttle.SPEEDSETTING.equals(propertyName) && newValue instanceof Number
+                ? ((Number) newValue).floatValue() : throttle.getSpeedSetting();
+        boolean forward = Throttle.ISFORWARD.equals(propertyName) && newValue instanceof Boolean
+                ? (Boolean) newValue : throttle.getIsForward();
+        for (LocoSpeedSource.Listener l : locoSpeedListeners) {
+            try {
+                l.speedCommanded(address, speed, forward, timeNanos);
+            } catch (RuntimeException e) {
+                log.error("A loco speed listener failed on {}", address, e);
+            }
+        }
+    }
+
+    /**
+     * An address's throttle has been disposed: stop watching the throttle and
+     * tell the {@link jmri.LocoSpeedSource.Listener}s.
+     *
+     * @param address  the address
+     * @param throttle its throttle, or null if not known
+     */
+    private void throttleDisposed(@Nonnull LocoAddress address, @CheckForNull DccThrottle throttle) {
+        if (throttle instanceof AbstractThrottle) {
+            ((AbstractThrottle) throttle).setSpeedObserver(null);
+        }
+        if (locoSpeedListeners.isEmpty()) {
+            return;
+        }
+        long timeNanos = System.nanoTime();
+        for (LocoSpeedSource.Listener l : locoSpeedListeners) {
+            try {
+                l.released(address, timeNanos);
+            } catch (RuntimeException e) {
+                log.error("A loco speed listener failed on the release of {}", address, e);
+            }
         }
     }
 

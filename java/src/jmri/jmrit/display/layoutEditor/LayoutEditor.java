@@ -3090,6 +3090,95 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     /**
+     * Redraw the part of this panel drawn in a layout block's colours, after a
+     * change to that block. In edit mode, where selections, labels and edit
+     * controls can reach outside a block's tracks, the whole panel is redrawn.
+     *
+     * @param layoutBlock the layout block that changed
+     */
+    public void redrawLayoutBlock(@Nonnull LayoutBlock layoutBlock) {
+        if ((getTargetPanel() == null) || isEditable()) {
+            redrawPanel();
+        } else if (ThreadingUtil.isGUIThread()) {
+            repaintLayoutBlockArea(layoutBlock);
+        } else {
+            // the tracks are read and drawn on the GUI thread
+            ThreadingUtil.runOnGUIEventually(() -> repaintLayoutBlockArea(layoutBlock));
+        }
+    }
+
+    @InvokeOnGuiThread
+    private void repaintLayoutBlockArea(@Nonnull LayoutBlock layoutBlock) {
+        Rectangle area = getLayoutBlockRepaintArea(layoutBlock);
+        JComponent targetPanel = getTargetPanel();
+        if ((area != null) && (targetPanel != null)) {
+            targetPanel.repaint(area);
+        }
+    }
+
+    /**
+     * Get the part of the drawing that holds everything drawn in a layout
+     * block's colours, allowing for the width of the lines, in the coordinates
+     * of the target panel (that is, zoomed).
+     *
+     * @param layoutBlock the layout block
+     * @return the area, or null if nothing on this panel is drawn in that
+     *         block's colours
+     */
+    @InvokeOnGuiThread
+    @CheckForNull
+    public Rectangle getLayoutBlockRepaintArea(@Nonnull LayoutBlock layoutBlock) {
+        Rectangle2D area = null;
+        for (LayoutTrackView view : getLayoutTrackViews()) {
+            if (view.usesLayoutBlock(layoutBlock)) {
+                Rectangle2D bounds = view.getRepaintBounds();
+                if (area == null) {
+                    area = bounds;
+                } else {
+                    area.add(bounds);
+                }
+            }
+        }
+        if (area == null) {
+            return null;
+        }
+        double margin = getWidestTrackLineReach() + REPAINT_MARGIN;
+        double zoom = getZoom();
+        int left = (int) Math.floor((area.getMinX() - margin) * zoom);
+        int top = (int) Math.floor((area.getMinY() - margin) * zoom);
+        int right = (int) Math.ceil((area.getMaxX() + margin) * zoom);
+        int bottom = (int) Math.ceil((area.getMaxY() + margin) * zoom);
+        return new Rectangle(left, top, right - left, bottom - top);
+    }
+
+    /**
+     * Pixels (before zooming) added to a repaint area for antialiasing and
+     * rounding, beyond the widest track line.
+     */
+    private static final double REPAINT_MARGIN = 2.0;
+
+    /**
+     * Get how far the widest line drawn for a track reaches either side of the
+     * track's centre line: ballast, ties, the rails or the block line, on main
+     * or side track, whichever is widest.
+     */
+    private double getWidestTrackLineReach() {
+        LayoutTrackDrawingOptions options = getLayoutTrackDrawingOptions();
+        double reach = 0;
+        reach = Math.max(reach, options.getMainBallastWidth() / 2.0);
+        reach = Math.max(reach, options.getSideBallastWidth() / 2.0);
+        reach = Math.max(reach, options.getMainTieLength() / 2.0);
+        reach = Math.max(reach, options.getSideTieLength() / 2.0);
+        reach = Math.max(reach, options.getMainBlockLineWidth() / 2.0);
+        reach = Math.max(reach, options.getSideBlockLineWidth() / 2.0);
+        // two rails are drawn either side of the centre line, each the rail
+        // width wide and half the gap plus the rail width from the centre
+        reach = Math.max(reach, 1.5 * options.getMainRailWidth() + options.getMainRailGap() / 2.0);
+        reach = Math.max(reach, 1.5 * options.getSideRailWidth() + options.getSideRailGap() / 2.0);
+        return reach;
+    }
+
+    /**
      * Allow external set/reset of awaitingIconChange
      */
     public void setAwaitingIconChange() {

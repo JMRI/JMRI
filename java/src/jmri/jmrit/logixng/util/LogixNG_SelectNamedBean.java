@@ -94,12 +94,29 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
         return _addressing;
     }
 
+    /**
+     * Set the name of the bean to look up when {@link #setup()} is called,
+     * for a bean that may not exist yet when this is loaded.
+     * <p>
+     * The name is looked up at each setup until the bean is found. Setting or
+     * removing the bean in any other way replaces it.
+     *
+     * @param name the name of the bean
+     */
     public void setDelayedNamedBean(@Nonnull String name) {
         _delayedNamedBean = name;
     }
 
     public void setup() {
-        if (_delayedNamedBean != null) setNamedBean(_delayedNamedBean);
+        if (_delayedNamedBean != null) {
+            String name = _delayedNamedBean;
+            setNamedBean(name);
+            if (_handle == null) {
+                // Not found yet. Try again at the next setup, for example
+                // after the file that creates the bean is loaded.
+                _delayedNamedBean = name;
+            }
+        }
     }
 
     public void setNamedBean(@Nonnull String name) {
@@ -115,6 +132,7 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
 
     public void setNamedBean(@Nonnull NamedBeanHandle<E> handle) {
         _base.assertListenersAreNotRegistered(log, "setNamedBean");
+        _delayedNamedBean = null;
         _handle = handle;
         _manager.addVetoableChangeListener(this);
     }
@@ -131,6 +149,7 @@ public class LogixNG_SelectNamedBean<E extends NamedBean> implements VetoableCha
 
     public void removeNamedBean() {
         _base.assertListenersAreNotRegistered(log, "setNamedBean");
+        _delayedNamedBean = null;
         if (_handle != null) {
             _manager.removeVetoableChangeListener(this);
             _handle = null;

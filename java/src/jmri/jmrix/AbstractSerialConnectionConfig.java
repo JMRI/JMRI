@@ -1,28 +1,10 @@
 package jmri.jmrix;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.ItemEvent;
-import java.util.Collections;
-import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.Vector;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.JTextField;
-import javax.swing.ListCellRenderer;
-import javax.swing.SpinnerNumberModel;
+import javax.swing.*;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 
@@ -266,12 +248,15 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             adapter.setPort(port);
         });
         portBox.addPopupMenuListener(new PopupMenuListener(){
+            @Override
             public void popupMenuCanceled(PopupMenuEvent e) {
                 log.trace("popupMenuCanceled");
             }
+            @Override
             public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
                 log.trace("popupMenuWillBecomeInvisible");
             }
+            @Override
             public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
                 log.debug("popupMenuWillBecomeVisible");
                 refreshPortBox();
