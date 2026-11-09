@@ -488,7 +488,8 @@
                  It only watches: nothing on the layout changes.</li>
              <li></li>
              <li>A Section can have a stop point for each direction, set in
-                 the Section's Add/Edit window: where the front of a train
+                 the Section's Add/Edit window in mm or in inches (to the
+                 nearest 1/32): where the front of a train
                  stops in it, which is where its stopping sensor is if it has
                  one. An automatic train with a speed profile then slows over
                  the distance to the stop point whenever it stops in the
@@ -497,7 +498,10 @@
                  or at the stop point if there is none. Each Block the front of
                  the train enters, and, for trains whose end is detected, each
                  Block the end of the train leaves, corrects how far it has to
-                 go. Sections without a stop point work as before.</li>
+                 go. A stop point beyond the end of its Section is refused
+                 there, reported by Validate All Sections, and stops an
+                 automatic train being started. Sections without a stop point
+                 work as before.</li>
              <li>A Block change that an automatic train handles just after
                  one of its Sections is released, or as the train is
                  terminated, no longer gives warnings such as "No next Block"

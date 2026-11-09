@@ -108,17 +108,26 @@
         </li>
 
         <li>
-          <p><span class="since">since 5.17.5</span>Optionally enter a <strong>Forward Stop
-          Point</strong> and a <strong>Reverse Stop Point</strong>, in millimetres: for trains
-          travelling through the Section in that direction, how far from where they enter it the front
-          of a train is when it stops in the Section. Where there is a stopping sensor for that
-          direction, this is where it is. An automatic train with a speed profile then slows to stop
-          there whenever it stops in the Section, at a signal or for want of the next Section as well as
-          at the end of its trip: with a stopping sensor it slows to its minimum reliable speed by the
-          stop point and stops on the sensor; without one it slows to a stop at the stop point. Each
-          Block its front enters on the way, and, where the end of the train is detected, each Block
-          the end of the train leaves, tells it how far it has to go. Leave it at 0 to stop as
-          before.</p>
+          <p><span class="since">since 5.19.1</span>Optionally enter a <strong>Forward Stop
+          Point</strong> and a <strong>Reverse Stop Point</strong>: for trains travelling through the
+          Section in that direction, how far from where they enter it the front of a train is when it
+          stops in the Section. Where there is a stopping sensor for that direction, this is where it
+          is. Choose the units beside them: <strong>mm</strong>, or <strong>inches</strong> to the
+          nearest 1/32 inch, entered as <code>12</code>, <code>12.22</code>, <code>12 7/32</code> or
+          <code>7/32</code>. The stop points are shown in the same units the next time the Section is
+          edited; a new Section starts in the units the Block Table shows lengths in.</p>
+          <p>An automatic train with a speed profile then slows to stop there whenever it stops in the
+          Section, at a signal or for want of the next Section as well as at the end of its trip: with
+          a stopping sensor it slows to its minimum reliable speed by the stop point and stops on the
+          sensor; without one it slows to a stop at the stop point. Each Block its front enters on the
+          way, and, where the end of the train is detected, each Block the end of the train leaves,
+          tells it how far it has to go. Leave them blank to stop as before.</p>
+          <p>A stop point must be within the Section: no further than the total length of its Blocks.
+          One that is further is refused when the Section is created or updated, is reported by
+          <strong>Validate All Sections</strong>, and stops Dispatcher starting an automatic train
+          whose Transit includes the Section. If a Block in the Section has no length, the stop points
+          can't be checked and trains can't stop by distance there: you are warned, and asked to set
+          the Block's length in the Block Table.</p>
         </li>
 
         <li>

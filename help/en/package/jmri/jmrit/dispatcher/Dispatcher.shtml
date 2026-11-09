@@ -997,8 +997,8 @@
       System Console as a warning naming the Stop Sensor, which should then be checked. Where a
       Stop Sensor is the detection sensor of the Block beyond the Section, the train is meant to
       enter that Block, and neither check is made.<br>
-      <span class="since">since 5.17.5</span>A Section can have a <strong>Stop Point</strong> for
-      each direction, where the front of a train stops in it: where its Stop Sensor is, if it has
+      <span class="since">since 5.19.1</span>A Section can have a <strong>Stop Point</strong> for
+      each direction, in mm or inches, where the front of a train stops in it: where its Stop Sensor is, if it has
       one. A train with a speed profile then slows over the distance to it, to its minimum reliable
       speed if there is a Stop Sensor, or to a stop if not, at a signal or for want of the next
       Section as well as at the end of its trip. Each Block its front enters, and each Block the end

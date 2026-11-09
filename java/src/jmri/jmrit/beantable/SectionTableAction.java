@@ -298,8 +298,12 @@ public class SectionTableAction extends AbstractTableAction<Section> {
     NamedBeanComboBox<Sensor> reverseSensorBox;
     NamedBeanComboBox<Sensor> forwardStopSensorBox;
     NamedBeanComboBox<Sensor> reverseStopSensorBox;
-    JSpinner forwardStopPointSpinner;
-    JSpinner reverseStopPointSpinner;
+    JTextField forwardStopPointField;
+    JTextField reverseStopPointField;
+    JComboBox<SectionStopPoint.Units> stopPointUnitsBox;
+    private SectionStopPoint.Units stopPointUnits = SectionStopPoint.Units.MM;
+    private float fStopPointMm = 0.0f;
+    private float rStopPointMm = 0.0f;
     JRadioButton manually = new JRadioButton(rbx.getString("SetManually"), true);
     JRadioButton automatic = new JRadioButton(rbx.getString("UseConnectivity"), false);
     ButtonGroup entryPointOptions = null;
@@ -527,17 +531,25 @@ public class SectionTableAction extends AbstractTableAction<Section> {
             reverseStopSensorBox.setToolTipText(rbx.getString("ReverseStopSensorHint"));
             addFrame.getContentPane().add(p41);
             // set up for stop points
-            forwardStopPointSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 1000000, 10));
-            reverseStopPointSpinner = new JSpinner(new SpinnerNumberModel(0, 0, 1000000, 10));
+            forwardStopPointField = new JTextField(8);
+            reverseStopPointField = new JTextField(8);
+            stopPointUnitsBox = new JComboBox<>(SectionStopPoint.Units.values());
+            stopPointUnitsBox.setToolTipText(rbx.getString("StopPointUnitsHint"));
+            stopPointUnitsBox.addActionListener(e -> stopPointUnitsChanged());
             JPanel p42 = new JPanel();
             p42.setLayout(new FlowLayout());
-            p42.add(new JLabel(rbx.getString("ForwardStopPoint")));
-            p42.add(forwardStopPointSpinner);
-            forwardStopPointSpinner.setToolTipText(rbx.getString("ForwardStopPointHint"));
+            JLabel forwardStopPointLabel = new JLabel(rbx.getString("ForwardStopPoint"));
+            forwardStopPointLabel.setLabelFor(forwardStopPointField);
+            p42.add(forwardStopPointLabel);
+            p42.add(forwardStopPointField);
+            forwardStopPointField.setToolTipText(rbx.getString("ForwardStopPointHint"));
             p42.add(new JLabel("     "));
-            p42.add(new JLabel(rbx.getString("ReverseStopPoint")));
-            p42.add(reverseStopPointSpinner);
-            reverseStopPointSpinner.setToolTipText(rbx.getString("ReverseStopPointHint"));
+            JLabel reverseStopPointLabel = new JLabel(rbx.getString("ReverseStopPoint"));
+            reverseStopPointLabel.setLabelFor(reverseStopPointField);
+            p42.add(reverseStopPointLabel);
+            p42.add(reverseStopPointField);
+            reverseStopPointField.setToolTipText(rbx.getString("ReverseStopPointHint"));
+            p42.add(stopPointUnitsBox);
             addFrame.getContentPane().add(p42);
             addFrame.getContentPane().add(new JSeparator());
             // set up bottom row of buttons
@@ -626,8 +638,8 @@ public class SectionTableAction extends AbstractTableAction<Section> {
         reverseSensorBox.setSelectedItem(curSection.getReverseBlockingSensor());
         forwardStopSensorBox.setSelectedItem(curSection.getForwardStoppingSensor());
         reverseStopSensorBox.setSelectedItem(curSection.getReverseStoppingSensor());
-        forwardStopPointSpinner.setValue(Math.round(curSection.getStopPointMm(Section.FORWARD)));
-        reverseStopPointSpinner.setValue(Math.round(curSection.getStopPointMm(Section.REVERSE)));
+        showStopPoints(SectionStopPoint.getUnits(curSection), curSection.getStopPointMm(Section.FORWARD),
+                curSection.getStopPointMm(Section.REVERSE));
         List<EntryPoint> list = curSection.getForwardEntryPointList();
         if (list.size() > 0) {
             for (int j = 0; j < list.size(); j++) {
@@ -649,8 +661,7 @@ public class SectionTableAction extends AbstractTableAction<Section> {
         reverseSensorBox.setSelectedItem(null);
         forwardStopSensorBox.setSelectedItem(null);
         reverseStopSensorBox.setSelectedItem(null);
-        forwardStopPointSpinner.setValue(0);
-        reverseStopPointSpinner.setValue(0);
+        showStopPoints(SectionStopPoint.defaultUnits(), 0.0f, 0.0f);
         generationStateLabel.setText("");
     }
 
@@ -769,6 +780,88 @@ public class SectionTableAction extends AbstractTableAction<Section> {
         fStopSensor = forwardStopSensorBox.getSelectedItem();
         rStopSensor = reverseStopSensorBox.getSelectedItem();
 
+        return checkStopPoints();
+    }
+
+    /**
+     * Show the stop points in a choice of units.
+     *
+     * @param units     the units
+     * @param forwardMm the forward stop point in mm, 0 for none
+     * @param reverseMm the reverse stop point in mm, 0 for none
+     */
+    private void showStopPoints(SectionStopPoint.Units units, float forwardMm, float reverseMm) {
+        stopPointUnits = units;
+        stopPointUnitsBox.setSelectedItem(units);
+        forwardStopPointField.setText(SectionStopPoint.format(forwardMm, units));
+        reverseStopPointField.setText(SectionStopPoint.format(reverseMm, units));
+    }
+
+    /**
+     * Show the stop points entered in the units now chosen. Text that isn't a
+     * distance is left as it is, to be reported when the Section is saved.
+     */
+    private void stopPointUnitsChanged() {
+        SectionStopPoint.Units units = (SectionStopPoint.Units) stopPointUnitsBox.getSelectedItem();
+        if (units == null || units == stopPointUnits) {
+            return;
+        }
+        for (JTextField field : new JTextField[]{forwardStopPointField, reverseStopPointField}) {
+            try {
+                field.setText(SectionStopPoint.format(SectionStopPoint.parse(field.getText(), stopPointUnits), units));
+            } catch (java.text.ParseException ex) {
+                // leave it, to be reported on Create or Update
+            }
+        }
+        stopPointUnits = units;
+    }
+
+    /**
+     * Read the stop points, and check each is within the Section. A stop point
+     * in a Section where a Block has no length can't be checked, and is
+     * accepted with a warning.
+     *
+     * @return true if they can be saved
+     */
+    private boolean checkStopPoints() {
+        float[] mm = new float[2];
+        JTextField[] fields = {forwardStopPointField, reverseStopPointField};
+        String[] labels = {rbx.getString("ForwardStopPoint").replaceAll(":\\s*$", ""),
+                rbx.getString("ReverseStopPoint").replaceAll(":\\s*$", "")};
+        for (int i = 0; i < 2; i++) {
+            try {
+                mm[i] = SectionStopPoint.parse(fields[i].getText(), stopPointUnits);
+            } catch (java.text.ParseException ex) {
+                JmriJOptionPane.showMessageDialog(addFrame,
+                        java.text.MessageFormat.format(rbx.getString("StopPointNotADistance"),
+                                labels[i], fields[i].getText(), stopPointUnits),
+                        Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+                return false;
+            }
+        }
+        if (mm[0] > 0.0f || mm[1] > 0.0f) {
+            Block noLength = SectionStopPoint.blockWithNoLength(blockList);
+            if (noLength != null) {
+                JmriJOptionPane.showMessageDialog(addFrame,
+                        java.text.MessageFormat.format(rbx.getString("StopPointNoBlockLength"),
+                                noLength.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME)),
+                        Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
+            } else {
+                float length = SectionStopPoint.lengthMm(blockList);
+                for (int i = 0; i < 2; i++) {
+                    if (mm[i] > length + 0.5f) {
+                        JmriJOptionPane.showMessageDialog(addFrame,
+                                java.text.MessageFormat.format(rbx.getString("StopPointBeyondSection"), labels[i],
+                                        SectionStopPoint.format(mm[i], stopPointUnits),
+                                        SectionStopPoint.format(length, stopPointUnits), stopPointUnits),
+                                Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);
+                        return false;
+                    }
+                }
+            }
+        }
+        fStopPointMm = mm[0];
+        rStopPointMm = mm[1];
         return true;
     }
 
@@ -790,8 +883,9 @@ public class SectionTableAction extends AbstractTableAction<Section> {
         curSection.setReverseBlockingSensorName(reverseSensorBox.getSelectedItemDisplayName());
         curSection.setForwardStoppingSensorName(forwardStopSensorBox.getSelectedItemDisplayName());
         curSection.setReverseStoppingSensorName(reverseStopSensorBox.getSelectedItemDisplayName());
-        curSection.setStopPointMm(Section.FORWARD, ((Number) forwardStopPointSpinner.getValue()).floatValue());
-        curSection.setStopPointMm(Section.REVERSE, ((Number) reverseStopPointSpinner.getValue()).floatValue());
+        curSection.setStopPointMm(Section.FORWARD, fStopPointMm);
+        curSection.setStopPointMm(Section.REVERSE, rStopPointMm);
+        SectionStopPoint.setUnits(curSection, stopPointUnits);
         for (int j = 0; j < entryPointList.size(); j++) {
             EntryPoint ep = entryPointList.get(j);
             if (ep.isForwardType()) {

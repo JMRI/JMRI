@@ -86,19 +86,13 @@ public class AutoActiveTrainStopByDistanceTest {
     }
 
     /**
-     * Load the layout and start the train.
+     * Load the panel, add Block 8, set the final Section's stopping sensor and
+     * stop point, and open Dispatcher.
      *
-     * @param stopDistanceMm     the train's stop distance; 0 for none
-     * @param stoppingSensorName the forward stopping sensor of Section B5-7,
-     *                           null for a sensor of its own, or empty for none
-     * @param stopPointMm        the forward stop point of Section B5-7; 0 for
-     *                           none
-     * @param block5Occupied     true to have Block 5 occupied, so that Section
-     *                           B5-7 cannot be allocated and the train must
-     *                           stop in Section B4
+     * @param stoppingSensorName as for startTrain
+     * @param stopPointMm        the final Section's forward stop point
      */
-    private void startTrain(float stopDistanceMm, String stoppingSensorName, float stopPointMm,
-            boolean block5Occupied) {
+    private void setUpLayout(String stoppingSensorName, float stopPointMm) {
         jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
         };
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
@@ -153,6 +147,46 @@ public class AutoActiveTrainStopByDistanceTest {
         OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/MultiBlockStopdispatcheroptions.xml");
         dispatcher = InstanceManager.getDefault(DispatcherFrame.class);
         dispatcherWindow = new JFrameOperator(Bundle.getMessage("TitleDispatcher"));
+    }
+
+    /**
+     * A stop point beyond the end of its Section is found when the train is
+     * started, which is refused, as for any other Section that doesn't
+     * validate.
+     */
+    @Test
+    public void testNotStartedWithAStopPointBeyondItsSection() {
+        setUpLayout("", 1000.0f); // Section B5-7 is 3 x 279.4 mm
+        JUnitUtil.setBeanStateAndWait(blockSensor[1], Sensor.ACTIVE);
+        Thread error = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+                Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ButtonOK"));
+        dispatcher.loadTrainFromTrainInfo("FWDREV40.xml", DispatcherFrame.OVERRIDETYPE_ROSTER, "StopByDistance");
+        JUnitUtil.waitFor(() -> !error.isAlive(), "error shown");
+        assertEquals(0, dispatcher.getActiveTrainsList().size(), "not started");
+        jmri.util.JUnitAppender.assertErrorMessage(
+                "Forward stop point 1000mm is beyond the end of Section Section B5-7 (IY:AUTO:0003), whose Blocks are 838mm long.");
+        jmri.util.JUnitAppender.assertWarnMessageStartsWith("failed to create Active Train");
+        dispatcherWindow.requestClose();
+        JUnitUtil.dispose(dispatcher);
+        InstanceManager.getDefault(jmri.SignalMastManager.class).dispose();
+        InstanceManager.getDefault(jmri.SignalMastLogicManager.class).dispose();
+    }
+
+    /**
+     * Load the layout and start the train.
+     *
+     * @param stopDistanceMm     the train's stop distance; 0 for none
+     * @param stoppingSensorName the forward stopping sensor of Section B5-7,
+     *                           null for a sensor of its own, or empty for none
+     * @param stopPointMm        the forward stop point of Section B5-7; 0 for
+     *                           none
+     * @param block5Occupied     true to have Block 5 occupied, so that Section
+     *                           B5-7 cannot be allocated and the train must
+     *                           stop in Section B4
+     */
+    private void startTrain(float stopDistanceMm, String stoppingSensorName, float stopPointMm,
+            boolean block5Occupied) {
+        setUpLayout(stoppingSensorName, stopPointMm);
 
         JUnitUtil.setBeanStateAndWait(blockSensor[1], Sensor.ACTIVE);
         if (block5Occupied) {
