@@ -864,6 +864,12 @@
                 split into or joined from, how it is detected, and its length
                 from each source. Nothing uses it yet, so nothing
                 changes for users.</li>
+            <li>For developers: a new page, <a href=
+                "https://www.jmri.org/help/en/html/doc/Technical/simulatedtrains.shtml">Writing
+                Tests with Simulated Trains</a>, explains how to write tests with simulated
+                trains: the test helper and the standard test layouts, why tests assert the
+                order of events and the ground truth rather than durations, truth offsets, and
+                the rule that the simulator never uses the logic it tests.</li>
             <li>In a profile whose connections are all simulators (the
                 Internal connection, CAN Simulation and the other simulator
                 connections), scripts and tests can now place simulated
