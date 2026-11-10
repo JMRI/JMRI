@@ -239,11 +239,13 @@ public class TrainRecordWatcher {
         if (candidates.size() == 1 && candidates.get(0).end() != null) {
             enter(block, candidates.get(0), false);
         } else if (!candidates.isEmpty()) {
+            // one train alone here is next to both of its ends, and which leads isn't known
+            Reason.Rule rule = candidates.size() == 1 ? Reason.Rule.ENTERED_END_UNKNOWN : Reason.Rule.AMBIGUOUS;
             for (Candidate c : candidates) {
                 if (!beforeAmbiguity.containsKey(c.record)) {
                     beforeAmbiguity.put(c.record, c.record.getConfidence());
                 }
-                c.record.setConfidence(Confidence.AMBIGUOUS, reason(Reason.Rule.AMBIGUOUS, block, time));
+                c.record.setConfidence(Confidence.AMBIGUOUS, reason(rule, block, time));
             }
             ambiguous.put(block, candidates);
             settleByValue(block, block.getValue());
@@ -313,6 +315,8 @@ public class TrainRecordWatcher {
                 candidates.remove(chosen);
                 restore(block, candidates);
                 ambiguous.put(block, new ArrayList<>(List.of(chosen)));
+                chosen.record.setConfidence(Confidence.AMBIGUOUS,
+                        reason(Reason.Rule.ENTERED_END_UNKNOWN, block, chosen.time));
             }
             return;
         }

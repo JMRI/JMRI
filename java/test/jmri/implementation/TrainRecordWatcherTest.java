@@ -16,6 +16,7 @@ import jmri.SensorManager;
 import jmri.TrainRecord;
 import jmri.TrainRecord.Confidence;
 import jmri.TrainRecord.End;
+import jmri.TrainRecord.Reason.Rule;
 import jmri.TrainRecord.TrailEntry;
 import jmri.TrainRecordManager;
 import jmri.Turnout;
@@ -494,6 +495,10 @@ public class TrainRecordWatcherTest {
         occupy(b[3]); // next to both ends, and nothing says which end leads
         assertEquals(List.of(b[0], b[1], b[2]), r.getBlocks(), "nothing added while the end isn't known");
         assertEquals(Confidence.AMBIGUOUS, r.getConfidence());
+        TrainRecord.Reason why = Objects.requireNonNull(r.getConfidenceReason());
+        assertEquals(Rule.ENTERED_END_UNKNOWN, why.getRule(),
+                "not one of several trains: one train whose leading end isn't known");
+        assertEquals(b[3], why.getBlock());
         clear(b[2]); // the train has left C: it moved away from C, so it entered D at A's end
         assertEquals(List.of(b[3], b[0], b[1]), r.getBlocks(), "entered at the other end, then left C");
         assertEquals(Confidence.CONFIRMED, r.getConfidence());
@@ -556,10 +561,15 @@ public class TrainRecordWatcherTest {
         occupy(b[3]); // next to both ends of T1, and to T2
         assertEquals(Confidence.AMBIGUOUS, r.getConfidence());
         assertEquals(Confidence.AMBIGUOUS, other.getConfidence());
+        assertEquals(Rule.AMBIGUOUS, Objects.requireNonNull(r.getConfidenceReason()).getRule(), "one of two trains");
         ThreadingUtil.runOnLayout(() -> b[3].setValue("T1"));
         assertEquals(Confidence.CONFIRMED, other.getConfidence(), "the value rules out T2");
         assertEquals(List.of(e), other.getBlocks());
         assertEquals(Confidence.AMBIGUOUS, r.getConfidence(), "T1 entered, but at which end isn't known yet");
+        assertEquals(Rule.ENTERED_END_UNKNOWN, Objects.requireNonNull(r.getConfidenceReason()).getRule(),
+                "no longer one of two trains: only its leading end isn't known");
+        assertTrue(r.getHistory().stream().anyMatch(h -> h.getRule() == Rule.ENTERED_END_UNKNOWN),
+                "the new reason is in the history");
         clear(b[2]);
         assertEquals(List.of(b[3], b[0], b[1]), r.getBlocks(), "it left C, so it entered D at A's end");
         assertEquals(Confidence.CONFIRMED, r.getConfidence());

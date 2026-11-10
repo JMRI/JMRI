@@ -575,6 +575,12 @@ public interface TrainRecord extends PropertyChangeProvider {
             ENTERED_THROUGH_DARK,
             /** One of several trains that could have entered a Block. */
             AMBIGUOUS,
+            /**
+             * Entered a Block next to both of its ends while which end leads
+             * isn't known: which end entered isn't known until the train
+             * leaves one of them.
+             */
+            ENTERED_END_UNKNOWN,
             /** The Block's value named it as the train that entered. */
             SETTLED_BY_VALUE,
             /** Another train was named as the one that entered: no longer in doubt. */
