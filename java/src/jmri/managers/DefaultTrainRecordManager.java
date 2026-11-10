@@ -17,6 +17,7 @@ import jmri.TrainRecord;
 import jmri.TrainRecordManager;
 import jmri.beans.PropertyChangeSupport;
 import jmri.implementation.DefaultTrainRecord;
+import jmri.implementation.TrainRecordMakeupWatcher;
 import jmri.implementation.TrainRecordSpeedWatcher;
 import jmri.implementation.TrainRecordWatcher;
 
@@ -33,6 +34,7 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
     private final List<DefaultTrainRecord> records = new ArrayList<>();
     private final TrainRecordWatcher watcher;
     private final TrainRecordSpeedWatcher speedWatcher = new TrainRecordSpeedWatcher(() -> new ArrayList<>(records));
+    private final TrainRecordMakeupWatcher makeupWatcher = new TrainRecordMakeupWatcher(() -> new ArrayList<>(records));
     private boolean disposed = false;
     private final java.util.Map<Block, java.util.Deque<BlockEvent>> blockHistories = new java.util.HashMap<>();
     private final java.beans.PropertyChangeListener historyListener = this::historyChanged;
@@ -40,7 +42,8 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
     /**
      * Make the manager, which starts following the layout's Blocks: their
      * values always, their sensors while any record is placed. It follows
-     * speed commands while any record has a loco address.
+     * speed commands while any record has a loco address, and what trains
+     * are made up of (from Operations, say) while there is any record.
      */
     public DefaultTrainRecordManager() {
         watcher = new TrainRecordWatcher(() -> new ArrayList<>(records), new TrainRecordWatcher.Placer() {
@@ -66,6 +69,7 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
             disposed = true;
             watcher.dispose();
             speedWatcher.dispose();
+            makeupWatcher.dispose();
         }
     }
 
@@ -128,6 +132,11 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
         }
 
         @Override
+        public void nameChanged(@Nonnull TrainRecord record) {
+            makeupWatcher.update();
+        }
+
+        @Override
         public void checkIdTag(@Nonnull TrainRecord record, @Nonnull IdTag tag) {
             TrainRecord other = getByIdTag(tag);
             if (other != null && other != record) {
@@ -149,6 +158,7 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
         DefaultTrainRecord r = new DefaultTrainRecord(n, registry);
         r.addPropertyChangeListener(TrainRecord.PROPERTY_HISTORY, historyListener);
         records.add(r);
+        makeupWatcher.update();
         firePropertyChange(PROPERTY_RECORDS, null, r);
         return r;
     }
@@ -170,6 +180,7 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
         r.dispose();
         watcher.placementChanged();
         speedWatcher.update();
+        makeupWatcher.update();
         firePropertyChange(PROPERTY_RECORDS, r, null);
     }
 

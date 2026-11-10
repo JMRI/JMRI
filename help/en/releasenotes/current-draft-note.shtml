@@ -886,6 +886,11 @@
                 feedback; and Blocks joined through Blocks with no detector by
                 more than one way. Each says what is wrong. The checks only
                 read, and change nothing.</li>
+            <li>A train with the same name as a built Operations train now
+                takes what it is made up of from Operations: the groups of cars
+                it will set out at each stop, and the rest, with their lengths.
+                The Block dialog shows the train's set-outs and pick-ups at its
+                next stop.</li>
             <li>Where a train has been placed in a Block (by Dispatcher, or by
                 setting a Block's value to the train), right-clicking the
                 Block's track on a Layout Editor panel in operating mode, or a

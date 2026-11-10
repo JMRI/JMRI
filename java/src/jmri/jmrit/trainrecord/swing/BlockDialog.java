@@ -26,6 +26,7 @@ import jmri.Block;
 import jmri.InstanceManager;
 import jmri.NamedBean.DisplayOptions;
 import jmri.Path;
+import jmri.TrainMakeupSource;
 import jmri.TrainRecord;
 import jmri.TrainRecord.TrailEntry;
 import jmri.TrainRecordManager;
@@ -212,6 +213,10 @@ public class BlockDialog extends JmriJFrame {
             if (!position.isEmpty()) {
                 holds.add(new JLabel(position));
             }
+            String work = work(r);
+            if (!work.isEmpty()) {
+                holds.add(new JLabel(work));
+            }
             if (whyText.length() > 0) {
                 whyText.append("\n");
             }
@@ -227,6 +232,21 @@ public class BlockDialog extends JmriJFrame {
     /**
      * Where the train is heading from this Block, if that is known.
      */
+    /**
+     * @param r a train record
+     * @return the train's work at its next stop, from the source that knows
+     *         what it is made up of (Operations, say), or "" if none is known
+     */
+    @Nonnull
+    static String work(@Nonnull TrainRecord r) {
+        TrainMakeupSource.TrainMakeup m = TrainMakeupSource.find(r.getName());
+        if (m == null || m.getWork().isEmpty()) {
+            return "";
+        }
+        TrainMakeupSource.Work w = m.getWork().get(0);
+        return Bundle.getMessage("BlockDialogNextStopWork", w.getLocation(), w.getSetOuts(), w.getPickUps());
+    }
+
     private String position(TrainRecord r) {
         String towards = towards(r);
         return towards == null ? "" : Bundle.getMessage("BlockDialogHeadingTowards", towards);
