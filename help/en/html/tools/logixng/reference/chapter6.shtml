@@ -224,7 +224,13 @@
 
         <li><span class="since">since 5.19.1</span><strong>allocated value equal to</strong> and
         <strong>display value equal to:</strong> The same, for the block's allocated value or its
-        display value: a Block's <em>value</em> is the train Block tracking has placed in it; its <em>allocated value</em> is the train Dispatcher has allocated it to, with Dispatcher's <strong>Place train name in allocated Blocks</strong> option on; and its <em>display value</em> is what panels show: the value, or the allocated value when the Block has no value. See the <a href="../../../../package/jmri/jmrit/beantable/BlockTable.shtml#allocatedValue">Block Table help</a>.</li>
+        display value: a Block's <em>value</em> is the train Block tracking has placed in it; its
+        <em>allocated value</em> is the train Dispatcher has allocated it to, with Dispatcher's
+        <strong>Place train name in allocated Blocks</strong> option on; and its
+        <em>display value</em> is what panels show: the value, or the allocated value when the
+        Block has no value. See the
+        <a href="../../../../package/jmri/jmrit/beantable/BlockTable.shtml#allocatedValue">Block
+        Table help</a>.</li>
       </ul>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->

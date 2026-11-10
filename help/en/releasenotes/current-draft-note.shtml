@@ -578,10 +578,10 @@
               Local Variable and Table actions can copy a Block's allocated
               value or display value instead of its value. The allocated value
               is the train Dispatcher has allocated the Block to, with
-              <strong>Place train name in allocated Blocks</strong> on; the display value is
-              what panels show: the value, or the allocated value when the
-              Block has no value. A LogixNG that relied on Dispatcher's train
-              name in the value can use the display value.</li>
+              <strong>Place train name in allocated Blocks</strong> on; the
+              display value is what panels show: the value, or the allocated
+              value when the Block has no value. A LogixNG that relied on
+              Dispatcher's train name in the value can use the display value.</li>
           <li>When a LogixNG is loaded and an item it uses, such as a sensor,
               is not found, an error now names the missing item in the
               System Console. Before, the item was silently left empty and
