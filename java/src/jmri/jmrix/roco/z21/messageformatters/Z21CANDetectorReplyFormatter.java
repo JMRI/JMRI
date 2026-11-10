@@ -1,6 +1,6 @@
 package jmri.jmrix.roco.z21.messageformatters;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+// import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.jmrix.Message;
 import jmri.jmrix.roco.z21.Z21MessageFormatter;
 import jmri.jmrix.roco.z21.Z21MessageUtils;
@@ -19,7 +19,7 @@ public class Z21CANDetectorReplyFormatter implements Z21MessageFormatter {
     }
 
     @Override
-    @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
+//    @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     public String formatMessage(Message m) {
         if(!handlesMessage(m)){
             throw new IllegalArgumentException("Message is not a Z21 CAN Detector Reply");
