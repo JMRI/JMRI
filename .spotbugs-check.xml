@@ -53,7 +53,6 @@
            <Bug pattern="NN_NAKED_NOTIFY" />
            <Bug pattern="AT_NONATOMIC_OPERATIONS_ON_SHARED_VARIABLE" />
            <Bug pattern="AT_STALE_THREAD_WRITE_OF_PRIMITIVE" />
-           <Bug pattern="US_USELESS_SUPPRESSION_ON_METHOD" />
            <Bug pattern="SF_SWITCH_FALLTHROUGH" />
         </Or>
      </Match>
