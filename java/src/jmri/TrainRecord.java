@@ -75,6 +75,12 @@ public interface TrainRecord extends PropertyChangeProvider {
     String PROPERTY_CONFIDENCE = "confidence"; // NOI18N
     /** Property name for a change of the leading end or of whether the front is known. */
     String PROPERTY_DIRECTION = "direction"; // NOI18N
+    /**
+     * Property name for a new speed command for one of the train's locos, or
+     * its release; the new value is the command, the old value the last
+     * command for the same loco, or null.
+     */
+    String PROPERTY_COMMAND = "command"; // NOI18N
 
     /**
      * @return the train's name, unique among the records
@@ -411,6 +417,173 @@ public interface TrainRecord extends PropertyChangeProvider {
      */
     @CheckForNull
     Confidence getConfidence();
+
+    /**
+     * The addresses of the train's locos, from their roster entries, lead
+     * loco first. Speed commands for each of these addresses, from any
+     * {@link LocoSpeedSource}, are kept with the record.
+     *
+     * @return the addresses, lead loco first, possibly empty; a copy
+     */
+    @Nonnull
+    List<LocoAddress> getLocoAddresses();
+
+    /**
+     * The speed commands for the train's locos, oldest first: the most recent
+     * {@value #COMMANDS_LENGTH}, for all of its locos together. A command
+     * repeating the speed and direction of the one before it for the same
+     * loco is not kept: when several sources see the same command, the first
+     * to report it is kept.
+     *
+     * @return the commands; a copy
+     */
+    @Nonnull
+    List<SpeedCommand> getCommands();
+
+    /**
+     * The speed commands kept for one of the train's locos, oldest first.
+     *
+     * @param address the loco's address
+     * @return the commands for that address; a copy, empty if there are none
+     */
+    @Nonnull
+    List<SpeedCommand> getCommands(@Nonnull LocoAddress address);
+
+    /** How many speed commands a record keeps, for all of its locos. */
+    int COMMANDS_LENGTH = 256;
+
+    /**
+     * @return the most recent speed command for any of the train's locos, or
+     *         null if none has been seen
+     */
+    @CheckForNull
+    SpeedCommand getLastCommand();
+
+    /**
+     * @param address the address of one of the train's locos
+     * @return the most recent speed command for that loco, or null if none
+     *         has been seen
+     */
+    @CheckForNull
+    SpeedCommand getLastCommand(@Nonnull LocoAddress address);
+
+    /**
+     * A speed and direction commanded for one of a train's locos, or the
+     * release of its address.
+     */
+    @Immutable
+    final class SpeedCommand {
+
+        private final LocoAddress address;
+        private final float speedSetting;
+        private final boolean forward;
+        private final boolean release;
+        private final long timeNanos;
+        private final java.time.Instant time;
+
+        /**
+         * @param address      the loco's address
+         * @param speedSetting the speed setting, as
+         *                     {@link Throttle#getSpeedSetting()} gives it: 0
+         *                     to 1, or less than 0 for an emergency stop
+         * @param forward      true if the direction is forward
+         * @param release      true if this is the release of the loco's
+         *                     address, which leaves it at the speed and
+         *                     direction given
+         * @param timeNanos    when, on the {@link System#nanoTime()} scale
+         * @param time         when, as a wall-clock time
+         */
+        public SpeedCommand(@Nonnull LocoAddress address, float speedSetting, boolean forward, boolean release,
+                long timeNanos, @Nonnull java.time.Instant time) {
+            this.address = Objects.requireNonNull(address, "address");
+            this.speedSetting = speedSetting;
+            this.forward = forward;
+            this.release = release;
+            this.timeNanos = timeNanos;
+            this.time = Objects.requireNonNull(time, "time");
+        }
+
+        /**
+         * @return the address of the loco this was commanded for
+         */
+        @Nonnull
+        public LocoAddress getAddress() {
+            return address;
+        }
+
+        /**
+         * Loco addresses are the same if their numbers and protocols are: a
+         * short and a long address with the same number are different locos.
+         *
+         * @param other a loco address
+         * @return true if this was commanded for that address
+         */
+        public boolean isFor(@Nonnull LocoAddress other) {
+            return address.getNumber() == other.getNumber() && address.getProtocol() == other.getProtocol();
+        }
+
+        /**
+         * @return the speed setting: 0 to 1, or less than 0 for an emergency
+         *         stop
+         */
+        public float getSpeedSetting() {
+            return speedSetting;
+        }
+
+        /**
+         * @return true for an emergency stop
+         */
+        public boolean isEmergencyStop() {
+            return speedSetting < 0;
+        }
+
+        /**
+         * @return true if the direction is forward
+         */
+        public boolean isForward() {
+            return forward;
+        }
+
+        /**
+         * @return true if this is the release of the loco's address: nothing
+         *         was commanded, and the loco is left at the speed and
+         *         direction given
+         */
+        public boolean isRelease() {
+            return release;
+        }
+
+        /**
+         * @param other the other command
+         * @return true if this commands the same speed and direction as the
+         *         other
+         */
+        public boolean sameSpeedAs(@Nonnull SpeedCommand other) {
+            return Float.compare(speedSetting, other.speedSetting) == 0 && forward == other.forward;
+        }
+
+        /**
+         * @return when, on the {@link System#nanoTime()} scale: when the
+         *         source reported it
+         */
+        public long getTimeNanos() {
+            return timeNanos;
+        }
+
+        /**
+         * @return when, as a wall-clock time
+         */
+        @Nonnull
+        public java.time.Instant getTime() {
+            return time;
+        }
+
+        @Override
+        public String toString() {
+            return "SpeedCommand[" + address + ", " + (release ? "released at " : "") + speedSetting
+                    + (forward ? " forward]" : " reverse]");
+        }
+    }
 
     /**
      * An end of a train.
