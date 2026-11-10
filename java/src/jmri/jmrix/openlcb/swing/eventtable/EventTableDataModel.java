@@ -444,14 +444,6 @@ public class EventTableDataModel extends AbstractTableModel {
     }
 
     /**
-     * Remove all existing data, generally just in advance of an update
-     */
-    void clear() {
-        memos.clear();
-        fireTableDataChanged();  // don't queue this one, must be immediate
-    }
-
-    /**
      * Remove all existing data from currently-present nodes, generally just in advance of an update
      */
     void clearAllPresentNodes() {
