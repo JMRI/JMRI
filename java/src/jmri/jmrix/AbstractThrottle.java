@@ -22,6 +22,7 @@ import jmri.beans.PropertyChangeSupport;
 
 import jmri.jmrit.roster.RosterEntry;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.GuardedBy;
 
@@ -36,13 +37,27 @@ import javax.annotation.concurrent.GuardedBy;
  */
 abstract public class AbstractThrottle extends PropertyChangeSupport implements DccThrottle {
 
+    /**
+     * Volatile, so that a change made on one thread is seen on any other:
+     * subclasses set it directly, from the layout thread (Swing thread) and
+     * from their connection's threads, and the throttle manager reads it when
+     * it reports a change of direction to its {@link jmri.LocoSpeedSource}
+     * listeners.
+     */
     @GuardedBy("this")
-    protected float speedSetting;
+    protected volatile float speedSetting;
     /**
      * Question: should we set a default speed step mode so it's never zero?
      */
     protected SpeedStepMode speedStepMode = SpeedStepMode.UNKNOWN;
-    protected boolean isForward;
+    /**
+     * Volatile, so that a change made on one thread is seen on any other:
+     * subclasses set it directly, from the layout thread (Swing thread) and
+     * from their connection's threads, and the throttle manager reads it when
+     * it reports a change of speed to its {@link jmri.LocoSpeedSource}
+     * listeners.
+     */
+    protected volatile boolean isForward;
 
     /**
      * Array of Function values.
@@ -116,6 +131,101 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     }
 
     protected final SystemConnectionMemo adapterMemo;
+
+    /**
+     * Told when a throttle's speed setting or direction changes.
+     */
+    interface SpeedObserver {
+
+        /**
+         * The throttle's speed setting or direction has changed.
+         *
+         * @param throttle     the throttle
+         * @param propertyName {@link Throttle#SPEEDSETTING} or
+         *                     {@link Throttle#ISFORWARD}
+         * @param newValue     the new value, as the event gives it: some
+         *                     throttles tell their listeners before setting
+         *                     their own field, so it is taken from the event
+         */
+        void speedOrDirectionChanged(@Nonnull AbstractThrottle throttle, @Nonnull String propertyName,
+                @CheckForNull Object newValue);
+    }
+
+    /**
+     * Set by the throttle manager that made this throttle, so that it can
+     * report the throttle's speed and direction as a
+     * {@link jmri.LocoSpeedSource}. It is not a property change listener, so
+     * it does not keep the throttle from being disposed.
+     */
+    private volatile SpeedObserver speedObserver = null;
+
+    /**
+     * Set or clear the observer told when this throttle's speed setting or
+     * direction changes.
+     *
+     * @param observer the observer, or null for none
+     */
+    void setSpeedObserver(@CheckForNull SpeedObserver observer) {
+        speedObserver = observer;
+    }
+
+    /**
+     * Tell the speed observer, if there is one, that the speed setting or
+     * direction has changed. Every throttle reports those changes through
+     * firePropertyChange, whatever caused them, so this sees them all.
+     *
+     * @param propertyName the property changed
+     * @param newValue     its new value
+     */
+    private void observeSpeed(@CheckForNull String propertyName, @CheckForNull Object newValue) {
+        SpeedObserver observer = speedObserver;
+        if (observer != null && propertyName != null
+                && (SPEEDSETTING.equals(propertyName) || ISFORWARD.equals(propertyName))) {
+            observer.speedOrDirectionChanged(this, propertyName, newValue);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * A change of speed setting or direction is also reported to the
+     * throttle manager's {@link jmri.LocoSpeedSource.Listener}s.
+     */
+    @Override
+    public void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
+        if (!java.util.Objects.equals(oldValue, newValue)) {
+            observeSpeed(propertyName, newValue);
+        }
+        super.firePropertyChange(propertyName, oldValue, newValue);
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * A change of direction is also reported to the throttle manager's
+     * {@link jmri.LocoSpeedSource.Listener}s.
+     */
+    @Override
+    public void firePropertyChange(String propertyName, boolean oldValue, boolean newValue) {
+        if (oldValue != newValue) {
+            observeSpeed(propertyName, newValue);
+        }
+        super.firePropertyChange(propertyName, oldValue, newValue);
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * A change of speed setting or direction is also reported to the
+     * throttle manager's {@link jmri.LocoSpeedSource.Listener}s.
+     */
+    @Override
+    public void firePropertyChange(java.beans.PropertyChangeEvent event) {
+        if (!java.util.Objects.equals(event.getOldValue(), event.getNewValue())) {
+            observeSpeed(event.getPropertyName(), event.getNewValue());
+        }
+        super.firePropertyChange(event);
+    }
 
     /**
      * speed - expressed as a value {@literal 0.0 -> 1.0.} Negative means

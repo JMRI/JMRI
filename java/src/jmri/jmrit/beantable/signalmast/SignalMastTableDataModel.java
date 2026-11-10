@@ -307,7 +307,6 @@ public class SignalMastTableDataModel extends BeanTableDataModel<SignalMast> {
         protected final void eventEditorMousePressed() {
             this.editor.add(getEditorBox(table.convertRowIndexToModel(this.currentRow))); // add eb to JPanel
             this.editor.revalidate();
-            SwingUtilities.invokeLater(this.comboBoxFocusRequester);
             log.debug("eventEditorMousePressed in row: {}; me = {})", this.currentRow, this.toString());
         }
 

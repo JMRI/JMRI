@@ -152,8 +152,8 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
                     }
                     m.setRetries(m.getRetries() - 1);
                     try {
-                        synchronized (xmtRunnable) {
-                            xmtRunnable.wait(m.getTimeout());
+                        synchronized (XMT_RUNNABLE_LOCK) {
+                            XMT_RUNNABLE_LOCK.wait(m.getTimeout());
                         }
                     } catch (InterruptedException e) {
                         Thread.currentThread().interrupt(); // retain if needed later
@@ -211,7 +211,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
                     p.getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
         }
         // and start threads
-        xmtThread = new Thread(xmtRunnable = () -> {
+        xmtThread = new Thread(() -> {
             try {
                 transmitLoop();
             } catch (Throwable e) {
@@ -259,7 +259,7 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
      * (This is public for testing purposes) Runs in the "Receive" thread.
      */
     @SuppressFBWarnings(value = {"UW_UNCOND_WAIT", "WA_NOT_IN_LOOP", "NO_NOTIFY_NOT_NOTIFYALL"},
-            justification = "Wait is for external hardware, which doesn't necessarilly respond, to process the data.  Notify is used because Having more than one thread waiting on xmtRunnable is an error.")
+            justification = "Wait is for external hardware, which doesn't necessarilly respond, to process the data.  Notify is used because Having more than one thread waiting on XMT_RUNNABLE_LOCK is an error.")
     @Override
     public void handleOneIncomingReply() throws java.io.IOException {
         // we sit in this until the message is complete, relying on
@@ -339,17 +339,17 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
                         if (log.isDebugEnabled()) {
                             log.debug("Automatic Recovery from Error Message: +msg.toString()");
                         }
-                        synchronized (xmtRunnable) {
+                        synchronized (XMT_RUNNABLE_LOCK) {
                             mCurrentState = AUTORETRYSTATE;
                             replyInDispatch = false;
-                            xmtRunnable.notify();
+                            XMT_RUNNABLE_LOCK.notify();
                         }
                     } else {
                         // update state, and notify to continue
-                        synchronized (xmtRunnable) {
+                        synchronized (XMT_RUNNABLE_LOCK) {
                             mCurrentState = NOTIFIEDSTATE;
                             replyInDispatch = false;
-                            xmtRunnable.notify();
+                            XMT_RUNNABLE_LOCK.notify();
                         }
                     }
                     break;
@@ -364,8 +364,8 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
                     int warmUpDelay = enterProgModeDelayTime();
                     if (warmUpDelay != 0) {
                         try {
-                            synchronized (xmtRunnable) {
-                                xmtRunnable.wait(warmUpDelay);
+                            synchronized (XMT_RUNNABLE_LOCK) {
+                                XMT_RUNNABLE_LOCK.wait(warmUpDelay);
                             }
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later
@@ -373,9 +373,9 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
                         }
                     }
                     // update state, and notify to continue
-                    synchronized (xmtRunnable) {
+                    synchronized (XMT_RUNNABLE_LOCK) {
                         mCurrentState = OKSENDMSGSTATE;
-                        xmtRunnable.notify();
+                        XMT_RUNNABLE_LOCK.notify();
                     }
                     break;
                 }
@@ -384,9 +384,9 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
                     mCurrentMode = NORMALMODE;
                     replyInDispatch = false;
                     // update state, and notify to continue
-                    synchronized (xmtRunnable) {
+                    synchronized (XMT_RUNNABLE_LOCK) {
                         mCurrentState = OKSENDMSGSTATE;
-                        xmtRunnable.notify();
+                        XMT_RUNNABLE_LOCK.notify();
                     }
                     break;
                 }
@@ -396,13 +396,13 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
                         if (log.isDebugEnabled()) {
                             log.debug("Allowed unexpected reply received in state: {} was {}", mCurrentState, msg.toString());
                         }
-                        synchronized (xmtRunnable) {
+                        synchronized (XMT_RUNNABLE_LOCK) {
                             // The transmit thread sometimes gets stuck
                             // when unexpected replies are received.  Notify
                             // it to clear the block without a timeout.
                             // (do not change the current state)
                             //if(mCurrentState!=IDLESTATE)
-                            xmtRunnable.notify();
+                            XMT_RUNNABLE_LOCK.notify();
                         }
                     } else {
                         unexpectedReplyStateError(mCurrentState,msg.toString());
@@ -434,10 +434,8 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
         forwardToPort(logoffMessage, null);
         // wait for reply
         try {
-            if (xmtRunnable != null) {
-                synchronized (xmtRunnable) {
-                    xmtRunnable.wait(logoffMessage.getTimeout());
-                }
+            synchronized (XMT_RUNNABLE_LOCK) {
+                XMT_RUNNABLE_LOCK.wait(logoffMessage.getTimeout());
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt(); // retain if needed later

@@ -1,14 +1,12 @@
 package jmri.jmrix.loconet.uhlenbrock;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Calendar;
 import java.util.concurrent.ConcurrentLinkedQueue;
+
 import jmri.jmrix.loconet.LnPacketizer;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetMessageException;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Converts Stream-based I/O to/from LocoNet messages. The "LocoNetInterface"
@@ -36,8 +34,6 @@ import org.slf4j.LoggerFactory;
  */
 public class UhlenbrockPacketizer extends LnPacketizer {
 
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "Only used during system initialization")
     public UhlenbrockPacketizer(LocoNetSystemConnectionMemo m) {
         super(m);
         log.debug("UhlenbrockPacketizer instantiated");
@@ -210,6 +206,7 @@ public class UhlenbrockPacketizer extends LnPacketizer {
                     }
 
                     // message is complete, dispatch it !!
+                    msg.setReceivedTime(System.nanoTime());
                     log.trace("message complete: {}", msg);
 
                     // check if this message was supposed to be ignored
@@ -372,6 +369,6 @@ public class UhlenbrockPacketizer extends LnPacketizer {
 
     }
 
-    private static final Logger log = LoggerFactory.getLogger(UhlenbrockPacketizer.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(UhlenbrockPacketizer.class);
 
 }

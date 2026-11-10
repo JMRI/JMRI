@@ -18,6 +18,13 @@ public class Sequence extends AbstractDigitalAction
     private static class State {
         private int _currentStep = -1;
         private boolean _isRunning = false;
+        // Set when a sequence that doesn't run continuously has run to its end:
+        // it starts again only once the Start expression has been false.
+        private boolean _waitingForNewStart = false;
+        // Set once "Start immediately" has started the sequence: it starts it only once.
+        private boolean _startedImmediately = false;
+        // Set while the Reset expression is true: it resets the sequence once each time it becomes true.
+        private boolean _resetHeld = false;
     }
 
     public static final int EXPRESSION_START = 0;
@@ -142,7 +149,10 @@ public class Sequence extends AbstractDigitalAction
     @Override
     public void execute() throws JmriException {
         State state = _stateMap.computeIfAbsent(getConditionalNG(), o -> new State());
-        if (_startImmediately) state._isRunning = true;
+        if (_startImmediately && !state._startedImmediately) {
+            state._isRunning = true;
+            state._startedImmediately = true;
+        }
 
         // We want to limit the number of loops in case all expressions return
         // True so we don't get caught in an endless loop
@@ -154,16 +164,25 @@ public class Sequence extends AbstractDigitalAction
                 return;
             }
 
-            if (_startExpressionSocket.isConnected()
-                    && _startExpressionSocket.evaluate()) {
-                state._isRunning = true;
-//                System.out.format("Start: _currentStep: %d%n", _currentStep);
+            if (_startExpressionSocket.isConnected()) {
+                if (_startExpressionSocket.evaluate()) {
+                    if (!state._waitingForNewStart) {
+                        state._isRunning = true;
+                    }
+                } else {
+                    state._waitingForNewStart = false;
+                }
             }
 
-            if (_resetExpressionSocket.isConnected()
-                    && _resetExpressionSocket.evaluate()) {
-                state._currentStep = -1;
-//                System.out.format("Reset: _currentStep: %d%n", _currentStep);
+            if (_resetExpressionSocket.isConnected()) {
+                if (_resetExpressionSocket.evaluate()) {
+                    if (!state._resetHeld) {
+                        state._currentStep = -1;
+                        state._resetHeld = true;
+                    }
+                } else {
+                    state._resetHeld = false;
+                }
             }
 
             if (!state._isRunning) return;
@@ -195,6 +214,7 @@ public class Sequence extends AbstractDigitalAction
                         // Sequence is done, stop and reset the sequence so that it can be started again later
                         state._isRunning = false;
                         state._currentStep = -1;
+                        state._waitingForNewStart = true;
                     }
                 } else {
                     // Break the outer for loop

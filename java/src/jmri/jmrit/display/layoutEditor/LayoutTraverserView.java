@@ -445,8 +445,6 @@ public class LayoutTraverserView extends LayoutTrackView {
         return result;
     }
 
-    public String tLayoutBlockName = "";
-
     public boolean isTurnoutControlled() {
         return traverser.isTurnoutControlled();
     }
@@ -636,7 +634,7 @@ public class LayoutTraverserView extends LayoutTrackView {
             g2.draw(getBounds());
 
             // Draw the control circles with the standard track width
-            
+
             double circleRadius = Math.max(traverser.getDeckWidth() / 8.f, trackWidth * 2);
             double circleDiameter = circleRadius * 2.f;
             Point2D center = getControlPointCenter();

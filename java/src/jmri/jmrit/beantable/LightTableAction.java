@@ -4,7 +4,6 @@ import com.alexandriasoftware.swing.Validation;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Objects;
 
 import javax.annotation.Nonnull;
@@ -109,7 +108,6 @@ public class LightTableAction extends AbstractTableAction<Light> {
     JLabel userNameLabel = new JLabel(Bundle.getMessage("LabelUserName") + " ");
     JButton create;
     JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));
-    PropertyChangeListener colorChangeListener;
 
     JLabel status1 = new JLabel(Bundle.getMessage("LightCreateInst"));
     JLabel status2 = new JLabel("");
@@ -543,8 +541,6 @@ public class LightTableAction extends AbstractTableAction<Light> {
             InstanceManager.getDefault(UserPreferencesManager.class).setComboBoxLastSelection(systemSelectionCombo, prefixBox.getSelectedItem().getMemo().getUserName()); // store user pref
             addFrame.dispose();
             addFrame = null;
-            create.removePropertyChangeListener(colorChangeListener);
-
         }
     }
 

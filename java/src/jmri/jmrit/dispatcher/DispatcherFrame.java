@@ -372,6 +372,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             }
             at.setTrainDetection(info.getTrainDetection());
             at.setMaxTrainLengthMM((long) (info.getMaxTrainLengthScaleMeters() * 1000.0 * getScale().getScaleFactor()));
+            ActiveTrainRecords.link(at);
             at.setAllocateMethod(info.getAllocationMethod());
             at.setDelayedStart(info.getDelayedStart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
             at.setDepartureTimeHr(info.getDepartureTimeHr()); // hour of day (fast-clock) to start this train

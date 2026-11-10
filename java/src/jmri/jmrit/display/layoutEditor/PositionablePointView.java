@@ -622,10 +622,6 @@ public class PositionablePointView extends LayoutTrackView {
         }
     }
 
-    // initialization instance variables (used when loading a LayoutEditor)
-    public String trackSegment1Name = "";
-    public String trackSegment2Name = "";
-
     /**
      * setup a connection to a track
      *
@@ -725,14 +721,8 @@ public class PositionablePointView extends LayoutTrackView {
     protected int maxHeight() {
         return 5;
     }
-    // cursor location reference for this move (relative to object)
-    int xClick = 0;
-    int yClick = 0;
 
     public void mousePressed(JmriMouseEvent e) {
-        // remember where we are
-        xClick = e.getX();
-        yClick = e.getY();
         // if (debug) log.debug("Pressed: "+where(e));
         if (e.isPopupTrigger()) {
             showPopup(e);
