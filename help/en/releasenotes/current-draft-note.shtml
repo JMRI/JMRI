@@ -784,6 +784,11 @@
                 Block Contents icon shows the value or, when there is none,
                 the allocated value, as a JMRI panel does. The JSON protocol
                 version is now 5.5.0.</li>
+            <li>Removed old JavaScript and CSS files from <code>web/js</code>
+                and <code>web/css</code> that no JMRI page uses anymore,
+                including jQuery 1.8.2, jQuery Mobile, and the unminified
+                Bootstrap files. If you have custom web pages that load any
+                of these directly, they'll need updating.</li>
         </ul>
 
     <h3>Where Used</h3>
