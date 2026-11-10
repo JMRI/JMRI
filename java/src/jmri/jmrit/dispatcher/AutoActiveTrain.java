@@ -705,14 +705,38 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     // keeps track of number of horn execution threads that are active
+    // horns being sounded; guarded by itself
+    private final Object _hornLock = new Object();
     private int _activeHornThreads = 0;
 
     protected void decrementHornExecution() {
-        _activeHornThreads--;
+        synchronized (_hornLock) {
+            _activeHornThreads--;
+            _hornLock.notifyAll();
+        }
     }
 
     protected void incrementHornExecution() {
-        _activeHornThreads++;
+        synchronized (_hornLock) {
+            _activeHornThreads++;
+        }
+    }
+
+    /**
+     * Wait for horns being sounded to be turned off. Called once their actions
+     * have been interrupted, so each finishes by turning its horn off.
+     */
+    private void waitForHornsOff() {
+        synchronized (_hornLock) {
+            while (_activeHornThreads > 0) {
+                try {
+                    _hornLock.wait();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return;
+                }
+            }
+        }
     }
 
     //
@@ -1307,7 +1331,8 @@ public class AutoActiveTrain implements ThrottleListener {
         if (ix < 0) {
             return null;
         }
-        ix = (as.getSection().getState() == Section.REVERSE) ? ix - 1 : ix + 1;
+        // the direction it is allocated in: the Section may have been released since the Block changed
+        ix = (as.getDirection() == Section.REVERSE) ? ix - 1 : ix + 1;
         return (ix >= 0 && ix < blocks.size()) ? blocks.get(ix) : null;
     }
 
@@ -2622,26 +2647,16 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     public void terminate() {
-        // here add code to stop the train and release its throttle if it is in autoRun
-        while (_activeHornThreads > 0) {
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                // ignore this exception
-            }
-        }
+        // stop the train and release its throttle. Interrupting the actions
+        // ends any horn being sounded, which turns the horn off first.
         _autoTrainAction.clearRemainingActions();
+        waitForHornsOff();
         // a terminated train has no stop tasks left to run
         _waitForTrainToStop = null;
         if (_autoEngineer != null) {
-            _autoEngineer.setHalt(true);
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                // ignore this exception
-            }
-            waitUntilStopped();
-            _autoEngineer.abort();
+            // stopped at once, and nothing can set a speed from now on, so
+            // there is nothing to wait for
+            _autoEngineer.stopForGood();
             InstanceManager.throttleManagerInstance().releaseThrottle(_throttle, this);
         }
     }
@@ -2873,6 +2888,9 @@ public class AutoActiveTrain implements ThrottleListener {
         }
 
         public synchronized void setTargetSpeed(float speed) {
+            if (refuseAfterStop("speed " + speed)) {
+                return;
+            }
             stopAllTimers();
             if (speed < 0.0f) {
                 // estop is estop
@@ -2934,29 +2952,37 @@ public class AutoActiveTrain implements ThrottleListener {
                 // Mark that a RosterSpeedProfile timer/queue may be active so stopAllTimers() can cancel it on terminate.
                 speedProfileStoppingIsRunning = true;
 
-                // Run physics planner off the EDT
+                // Run physics planner off the EDT, unless this speed change has
+                // been cancelled before the thread starts
+                final int generation = rampGeneration;
                 Thread phys = jmri.util.ThreadingUtil.newThread(() -> {
-                    // Ensure min/max limits (including optional scale km/h cap) are in the profile
-                    warnScaleCapNotApplicable("setTargetSpeed (physics ramp)", forward);
-                    re.getSpeedProfile().setMinMaxLimitsKmh(
-                        minReliableOperatingSpeed,
-                        maxSpeed,
-                        AutoActiveTrain.this._maxSpeedScaleKmh,
-                        (float) AutoActiveTrain.this._dispatcher.getScale().getScaleRatio(),
-                        forward
-                    );
-                    // Delegate the acceleration plan & execution to RosterSpeedProfile
-                    re.getSpeedProfile().runPhysicsAccelerationToTargetThrottle(
-                        throttle,
-                        speed,
-                        AutoActiveTrain.this._driverPowerPercent,
-                        AutoActiveTrain.this._additionalWeightTonnes,
-                        AutoActiveTrain.this._rollingResistanceCoeff,
-                        (float) AutoActiveTrain.this._dispatcher.getScale().getScaleRatio(),
-                        speedFactor
-                    );
+                    synchronized (AutoEngineer.this) {
+                        if (generation != rampGeneration || stoppedForGood) {
+                            log.debug("{}: physics ramp cancelled before it started", _activeTrain.getTrainName());
+                            return;
+                    }
+                        // Ensure min/max limits (including optional scale km/h cap) are in the profile
+                        warnScaleCapNotApplicable("setTargetSpeed (physics ramp)", forward);
+                        re.getSpeedProfile().setMinMaxLimitsKmh(
+                            minReliableOperatingSpeed,
+                            maxSpeed,
+                            AutoActiveTrain.this._maxSpeedScaleKmh,
+                            (float) AutoActiveTrain.this._dispatcher.getScale().getScaleRatio(),
+                            forward
+                        );
+                        // Delegate the acceleration plan & execution to RosterSpeedProfile
+                        re.getSpeedProfile().runPhysicsAccelerationToTargetThrottle(
+                            throttle,
+                            speed,
+                            AutoActiveTrain.this._driverPowerPercent,
+                            AutoActiveTrain.this._additionalWeightTonnes,
+                            AutoActiveTrain.this._rollingResistanceCoeff,
+                            (float) AutoActiveTrain.this._dispatcher.getScale().getScaleRatio(),
+                            speedFactor
+                        );
+                    }
                 }, "PhysicsRamp " + AutoActiveTrain.this._activeTrain.getTrainName());
-                           phys.start();
+                phys.start();
                 return;
             }
             // Fallback to existing behaviour
@@ -3022,6 +3048,28 @@ public class AutoActiveTrain implements ThrottleListener {
             return applied;
         }
 
+        // true once the train is terminated: it is stopped, and no speed is set again
+        private boolean stoppedForGood = false;
+
+        /**
+         * Stop the train at once and for good, as it is terminated. Every
+         * speed change under way is cancelled, and none is made after this,
+         * whichever thread asks for it.
+         */
+        public synchronized void stopForGood() {
+            stopAllTimers();
+            stoppedForGood = true;
+            targetSpeed = 0.0f;
+            throttle.setSpeedSetting(0.0f);
+        }
+
+        private boolean refuseAfterStop(String what) {
+            if (stoppedForGood) {
+                log.debug("{}: terminated, {} ignored", _activeTrain.getTrainName(), what);
+            }
+            return stoppedForGood;
+        }
+
         /**
          * Flag from user's control.
          *
@@ -3048,6 +3096,9 @@ public class AutoActiveTrain implements ThrottleListener {
         }
 
         public synchronized void setTargetSpeed(float distance, float speed) {
+            if (refuseAfterStop("speed " + speed + " over " + distance)) {
+                return;
+            }
             log.debug("Set Target Speed[{}] with distance{{}] from speed[{}]",speed,distance,throttle.getSpeedSetting());
             stopAllTimers();
             if (speed < 0.0f) {
@@ -3148,7 +3199,7 @@ public class AutoActiveTrain implements ThrottleListener {
         }
 
         private synchronized void setNextStep(int generation) {
-            if (generation != rampGeneration) {
+            if (generation != rampGeneration || stoppedForGood) {
                 log.trace("Ramp stopped, step ignored");
                 return;
             }
@@ -3199,6 +3250,9 @@ public class AutoActiveTrain implements ThrottleListener {
          * @param speed 0.0 (stop) to 1.0 (full)
          */
         public synchronized void setSpeedImmediate(float speed) {
+            if (refuseAfterStop("speed " + speed)) {
+                return;
+            }
             log.trace("{}: setting speed directly to {}%", _activeTrain.getTrainName(), (int) (speed * 100));
             stopAllTimers();
             targetSpeed = applyMaxThrottleAndFactor(speed);
