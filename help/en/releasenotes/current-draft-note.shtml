@@ -648,6 +648,11 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
+                <li>BR-2003 now defines the junction indicator (feather)
+                    aspects Zero to Six, which its feather masts already
+                    use. A feather mast's aspect now has a speed (Normal)
+                    and a description, where before the signal system
+                    didn't know it.</li>
                 <li></li>
             </ul>
 
