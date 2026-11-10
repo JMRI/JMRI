@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.rollingstock.engines.gui;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.awt.GridBagLayout;
 import java.util.List;
@@ -44,7 +43,6 @@ public class EngineEditFrame extends RollingStockEditFrame {
         super(Bundle.getMessage("TitleEngineAdd"));
     }
 
-    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Checks for null")
     @Override
     public void initComponents() {
 

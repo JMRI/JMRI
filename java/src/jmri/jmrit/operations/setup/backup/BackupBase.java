@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.setup.backup;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -130,8 +129,6 @@ public abstract class BackupBase extends PropertyChangeSupport implements Instan
      * @return A sorted backup list.
      *
      */
-    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
-            justification = "not possible")  // NOI18N
     public String[] getBackupSetList() {
         String[] setList = getBackupRoot().list();
         // no guarantee of order, so we need to sort
@@ -149,8 +146,6 @@ public abstract class BackupBase extends PropertyChangeSupport implements Instan
         return dirs;
     }
 
-    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
-            justification = "not possible")  // NOI18N
     public BackupSet[] getBackupSets() {
         // This is a bit of a kludge for now, until I learn more about dynamic
         // sets
@@ -386,8 +381,6 @@ public abstract class BackupBase extends PropertyChangeSupport implements Instan
      * Reset Operations by deleting XML files, leaves directories and backup
      * files in place.
      */
-    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
-            justification = "not possible")  // NOI18N
     public void deleteOperationsFiles() {
         // TODO Maybe this should also only delete specific files used by Operations,
         // and not just all XML files.
@@ -444,7 +437,6 @@ public abstract class BackupBase extends PropertyChangeSupport implements Instan
          * @throws IOException Thrown when overwrite false and destination directory exists.
          *
          */
-        @SuppressFBWarnings(value = "OBL_UNSATISFIED_OBLIGATION")
         public static void copy(String sourceFileName, String destFileName,
                 Boolean overwrite) throws IOException {
 

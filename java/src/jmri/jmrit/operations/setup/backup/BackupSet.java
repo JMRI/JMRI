@@ -3,7 +3,6 @@
  */
 package jmri.jmrit.operations.setup.backup;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.io.File;
 import java.time.*;
@@ -44,7 +43,6 @@ public class BackupSet {
         deleteDirectoryAndFiles(_dir);
     }
 
-    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "not possible")
     private void deleteDirectoryAndFiles(File dir) {
         // Deletes all of the files in a directory, and then the directory
         // itself.
