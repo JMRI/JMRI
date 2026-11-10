@@ -33,7 +33,7 @@ public abstract class BackupBase extends PropertyChangeSupport implements Instan
     // Just for testing......
     // If this is not null, it will be thrown to simulate various IO exceptions
     // that are hard to reproduce when running tests..
-    public RuntimeException testException = null;
+//    public JmriUncheckedException testException = null;
 
     // The root directory for all Operations files, usually
     // "user / name / JMRI / operations"
@@ -287,10 +287,10 @@ public abstract class BackupBase extends PropertyChangeSupport implements Instan
         }
 
         // Throw a test exception, if we have one.
-        if (testException != null) {
-            testException.fillInStackTrace();
-            throw testException;
-        }
+//        if (testException != null) {
+//            testException.fillInStackTrace();
+//            throw testException;
+//        }
         firePropertyChange(COPY_FILES_CHANGED_PROPERTY, sourceDir, destDir);
     }
 
