@@ -21,7 +21,8 @@
 
         <h4><a href="http://bidib.org/index_e.html">BiDiB</a></h4>
             <ul>
-                <li></li>
+                <li>Global Programmer: Disable power-on check before programming
+                    since some hardware (e.g. Tams mc2) does not sent power state correctly.</li>
             </ul>
 
         <h4>CBUS</h4>
