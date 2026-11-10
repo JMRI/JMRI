@@ -2,6 +2,11 @@
     <h3>Hardware Support</h3>
         <ul>
           <li></li>
+          <li>For developers: a test that closes a connection from another
+              thread no longer sometimes fails on an "Input Stream NULL when
+              reading" error from the connection's receive thread. JMRI itself
+              closes a connection only from that thread, so nothing changes in
+              use.</li>
         </ul>
 
         <h4>Acela CTI</h4>
