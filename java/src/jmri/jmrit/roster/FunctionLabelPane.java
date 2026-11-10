@@ -178,10 +178,24 @@ public class FunctionLabelPane extends javax.swing.JPanel {
     }
     
     /**
-     * Reset all function button inputs on the panel to the NEM 608 definition
+     * Reset all function button inputs on the panel to the NEM 608 definition for steam locomotives
      */    
-    public void resetFnBtnNEM() {
-        functionTableModel.reset(RosterFunctionEntriesDefaults.NEM_FUNCTION_ENTRIES, RosterFunctionEntriesDefaults.NEM_SHUNTING_FN,null);
+    public void resetFnBtnNEMSteam() {
+        functionTableModel.reset(RosterFunctionEntriesDefaults.NEM_STEAM_FUNCTION_ENTRIES, RosterFunctionEntriesDefaults.NEM_SHUNTING_FN,null);
+    }
+
+    /**
+     * Reset all function button inputs on the panel to the NEM 608 definition for diesel locomotives
+     */    
+    public void resetFnBtnNEMDiesel() {
+        functionTableModel.reset(RosterFunctionEntriesDefaults.NEM_DIESEL_FUNCTION_ENTRIES, RosterFunctionEntriesDefaults.NEM_SHUNTING_FN,null);
+    }
+
+    /**
+     * Reset all function button inputs on the panel to the NEM 608 definition for electric locomotives
+     */    
+    public void resetFnBtnNEMElectric() {
+        functionTableModel.reset(RosterFunctionEntriesDefaults.NEM_ELECTRIC_FUNCTION_ENTRIES, RosterFunctionEntriesDefaults.NEM_SHUNTING_FN,null);
     }
 
     /**

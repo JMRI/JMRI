@@ -329,17 +329,24 @@ public class ThrottlesPreferencesUISettingsPane extends JPanel {
         bScript.addActionListener(new ThrottlesPreferencesUISettingsPane.OpenAction(fileChooser, tfDefaultThrottleLocation));
 
         JButton jbDefaultThrottleNMRA = new JButton(Bundle.getMessage("DefaultThrottleFileUseNMRA"));        
-        JButton jbDefaultThrottleNEM = new JButton(Bundle.getMessage("DefaultThrottleFileUseNEM"));
+        JButton jbDefaultThrottleNEMSteam = new JButton(Bundle.getMessage("DefaultThrottleFileUseNEMSteam"));
+        JButton jbDefaultThrottleNEMElectric = new JButton(Bundle.getMessage("DefaultThrottleFileUseNEMElectric"));
+        JButton jbDefaultThrottleNEMDiesel = new JButton(Bundle.getMessage("DefaultThrottleFileUseNEMDiesel"));
         jbDefaultThrottleNMRA.setToolTipText(Bundle.getMessage("DefaultThrottleFileUseNMRAToolTip"));
-        jbDefaultThrottleNEM.setToolTipText(Bundle.getMessage("DefaultThrottleFileUseNEMToolTip"));
+        jbDefaultThrottleNEMSteam.setToolTipText(Bundle.getMessage("DefaultThrottleFileUseNEMSteamToolTip"));
         jbDefaultThrottleNMRA.addActionListener(e -> tfDefaultThrottleLocation.setText("resources/throttle/NMRA throttle.xml") );
-        jbDefaultThrottleNEM.addActionListener(e -> tfDefaultThrottleLocation.setText("resources/throttle/NEM throttle.xml") );
-        
+        jbDefaultThrottleNEMSteam.addActionListener(e -> tfDefaultThrottleLocation.setText("resources/throttle/NEM throttle.xml") );
+        jbDefaultThrottleNEMElectric.addActionListener(e -> tfDefaultThrottleLocation.setText("resources/throttle/NEM electric throttle.xml") );
+        jbDefaultThrottleNEMDiesel.addActionListener(e -> tfDefaultThrottleLocation.setText("resources/throttle/NEM diesel throttle.xml") );
+
         JPanel bp = new JPanel();
         bp.setLayout(new BoxLayout(bp, BoxLayout.X_AXIS));    
         bp.add(bScript);
-        bp.add(jbDefaultThrottleNMRA); 
-        bp.add(jbDefaultThrottleNEM);         
+        bp.add(jbDefaultThrottleNMRA);
+        bp.add(jbDefaultThrottleNEMSteam);
+        bp.add(jbDefaultThrottleNEMDiesel);
+        bp.add(jbDefaultThrottleNEMElectric);
+        
 
         JPanel p = new JPanel(new BorderLayout());        
         p.add(new JLabel(Bundle.getMessage("DefaultThrottleFile")), BorderLayout.LINE_START);
