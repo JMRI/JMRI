@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>JMRI: Simulated Trains</title>
+  <meta name="author" content="Keith Bruce">
+  <meta name="keywords" content="java model railroad JMRI simulated trains simulator Dispatcher Warrants">
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
+
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+
+    <div id="mainContent">
+      <h1>JMRI: Simulated Trains</h1>
+
+      <p>Simulated trains are virtual trains that run on your layout's track as JMRI knows it, with
+      no layout connected. They move when JMRI sends them speed commands, as real trains would, and
+      set occupancy sensors as they pass, so Dispatcher, Warrants, Logix, LogixNG, scripts and
+      panels see them as they would see real trains. The simulator also keeps the truth of where
+      each train really is, which can be compared with what JMRI concluded.</p>
+
+      <h2 id="profile">Only in a simulated profile</h2>
+
+      <p>A train can only be placed in a profile whose connections are all simulators: the Internal
+      connection, and the simulator connections of the hardware systems, such as CAN Simulation.
+      Simulated trains can therefore never show occupancy on a real layout. If a real connection is
+      added while trains are placed, they are all removed, with a warning.</p>
+
+      <h2 id="driving">How they are driven and seen</h2>
+
+      <ul>
+        <li>Simulated trains obey the Internal connection's throttles, by DCC address. A throttle
+        window, Dispatcher, a Warrant or a script using that connection drives them with no further
+        set-up.</li>
+
+        <li>They set internal sensors. Give each Block an internal sensor as its occupancy sensor; a
+        Block's sensor goes active when the first part of a train that detectors see enters it, and
+        inactive when the last of every train has left it. A sensor of another connection is left
+        alone.</li>
+
+        <li>Two trains that touch both stop. A train whose turnout is moved under it derails and
+        stays where it stopped.</li>
+      </ul>
+
+      <h2 id="track">The track they run on</h2>
+
+      <p>The simulator works out its own routes from the layout's configuration:</p>
+
+      <ul>
+        <li>a Block drawn on a <a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout
+        Editor</a> panel is followed on the drawing, with its turnouts as they are set;</li>
+
+        <li>an OBlock is followed through its Portals and paths;</li>
+
+        <li>any other <a href="../Blocks.shtml">Block</a> is followed by its own paths, each of which
+        names the Block it leads to.</li>
+      </ul>
+
+      <p>Block lengths matter: a train takes as long to cross a Block as its length and speed
+      say.</p>
+
+      <h2 id="trains">The trains</h2>
+
+      <p>A simulated train has a name, its locos (the first is at the front), its length, and how
+      detectors see it: the whole train, only the loco, or the loco and a marker at the rear, such
+      as a resistor wheelset.</p>
+
+      <p>A loco can be described from its roster entry. Its speed then comes from the measured
+      steps of its <a href="../../../package/jmri/jmrit/roster/swing/speedprofile/SpeedProfileFrame.shtml">speed
+      profile</a>, and its momentum from CV3 and CV4 in its roster file (with CV23 and CV24 in a
+      consist). Without a profile, its speed is in proportion to the throttle setting, up to a scale
+      100 mph at the layout scale set in the Warrant preferences.</p>
+
+      <h2 id="placing">Placing a train</h2>
+
+      <p>There is no window for simulated trains yet: they are placed by scripts. The sample script
+      <a href="../../../../../jython/SimulatedTrains.py">SimulatedTrains.py</a> (<strong>Scripting
+      &rArr; Run Script...</strong>, in a profile whose connections are all simulators, such as one
+      with only the Internal connection) builds a short
+      line of five Blocks, places two trains on it, drives them with Internal throttles, and prints
+      after each move what each sensor reports beside which trains are really in each Block. It
+      removes its trains at the end.</p>
+
+      <p>In a script of your own, a train is described and placed like this:</p>
+      <pre style="font-family: monospace;">
+import jmri
+from jmri.jmrit.simulation import Detection, SimulatedLayout, SimulatedLoco, VirtualTrain
+
+loco = SimulatedLoco.builder(jmri.DccLocoAddress(3, False)).length(150).build()
+train = VirtualTrain.builder("Goods").loco(loco).length(400).detection(Detection.entireTrain()).build()
+layout = SimulatedLayout.getDefault()
+# front 200 mm into Block B2, having come from Block B1
+layout.place(train, blocks.getBlock("B2"), blocks.getBlock("B1"), 200)
+...
+layout.remove(train)
+</pre>
+
+      <p>For a loco in the roster, use <code>SimulatedLoco.builder(entry)</code> with its roster
+      entry instead of its address.</p>
+
+      <h2 id="uses">What they are for</h2>
+
+      <ul>
+        <li>Trying out Dispatcher, Warrants, Logix, LogixNG, scripts and panels before running them
+        on the layout, or when the layout isn't to hand.</li>
+
+        <li>Showing how a layout's automation works, with trains moving on its panels.</li>
+
+        <li>Testing JMRI itself. Tests and scripts can also set faults, such as a detector that
+        misses a train for a moment, a sensor showing a train that isn't there, two sensors wired
+        to each other's Blocks, a Block longer or shorter than JMRI has it, a train that stalls, or
+        a train that parts.</li>
+      </ul>
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
+    </div>
+    <!-- closes #mainContent-->
+  </div>
+  <!-- closes #mBody-->
+  <script src="/js/help.js"></script>
+</body>
+</html>

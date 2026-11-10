@@ -183,6 +183,7 @@
 <mapID target="html.tools.signaling.SignalingSetup" url="html/tools/signaling/SignalingSetup.shtml"/>
 <mapID target="html.tools.signaling.index" url="html/tools/signaling/index.shtml"/>
 <mapID target="html.tools.signaling.ldt.output" url="html/tools/signaling/ldt/output.shtml"/>
+<mapID target="html.tools.simulatedtrains.index" url="html/tools/simulatedtrains/index.shtml"/>
 <mapID target="html.tools.speedometer.NCE-Speedometer" url="html/tools/speedometer/NCE-Speedometer.shtml"/>
 <mapID target="html.tools.speedometer.SpeedMatch" url="html/tools/speedometer/SpeedMatch.shtml"/>
 <mapID target="html.tools.speedometer.index" url="html/tools/speedometer/index.shtml"/>

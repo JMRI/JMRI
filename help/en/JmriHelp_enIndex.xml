@@ -717,6 +717,8 @@
 
  <indexitem text="Simple Turnout Control " target="package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl"/>
 
+ <indexitem text="Simulated Trains " target="html.tools.simulatedtrains.index"/>
+
  <indexitem text="SoundPro " target="html.apps.SoundPro.SoundPro"/>
 
  <indexitem text="Speed Matching, Locomotive " target="html.tools.speedometer.SpeedMatch"/>

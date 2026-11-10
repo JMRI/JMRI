@@ -878,5 +878,10 @@
                 than JMRI has it, a stalled train and a train that parts. A
                 train whose turnout is moved under it now derails and stays
                 where it stopped.</li>
+            <li>A new help page, Tools: Simulated Trains, describes simulated
+                trains for users: where they can run, how they are driven
+                and seen, the track and trains they use, and how to place
+                them from a script. It is in the help's contents and index,
+                and linked from the Tools and Scripting examples pages.</li>
         </ul>
 
