@@ -353,7 +353,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> extends Vetoable
             }
             if (m != null) break;
         }
-//        if (m == null) throw new RuntimeException("Manager not created");
+//        if (m == null) throw new JmriUncheckedException("Manager not created");
         return m;
     }
 

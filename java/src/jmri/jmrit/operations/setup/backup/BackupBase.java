@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 import jmri.InstanceManagerAutoDefault;
+import jmri.JmriUncheckedException;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.OperationsXml;
@@ -82,7 +83,7 @@ public abstract class BackupBase extends PropertyChangeSupport implements Instan
         if (!getBackupRoot().exists()) {
             Boolean ok = getBackupRoot().mkdirs();
             if (!ok) {
-                throw new RuntimeException("Unable to make directory: " // NOI18N
+                throw new JmriUncheckedException("Unable to make directory: " // NOI18N
                         + getBackupRoot().getAbsolutePath());
             }
         }
@@ -479,7 +480,7 @@ public abstract class BackupBase extends PropertyChangeSupport implements Instan
 
             Boolean ok = dst.setLastModified(src.lastModified());
             if (!ok) {
-                throw new RuntimeException(
+                throw new JmriUncheckedException(
                         "Failed to set modified time on file: " // NOI18N
                                 + dst.getAbsolutePath());
             }

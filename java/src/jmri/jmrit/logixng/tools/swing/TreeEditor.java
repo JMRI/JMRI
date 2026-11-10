@@ -525,7 +525,7 @@ public class TreeEditor extends TreeViewer {
                         try {
                             femaleSocket.connect(socket);
                         } catch (SocketAlreadyConnectedException ex) {
-                            throw new RuntimeException(ex);
+                            throw new JmriUncheckedException(ex);
                         }
 
                         femaleSocket.forEntireTree((Base b) -> {

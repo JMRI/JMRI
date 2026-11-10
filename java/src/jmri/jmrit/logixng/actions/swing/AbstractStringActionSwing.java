@@ -26,7 +26,7 @@ public abstract class AbstractStringActionSwing extends AbstractSwingConfigurato
     /** {@inheritDoc} */
     @Override
     public void executeEvaluate(@Nonnull Base object) {
-        throw new RuntimeException("Not supported");
+        throw new JmriUncheckedException("Not supported");
     }
     
     /** {@inheritDoc} */

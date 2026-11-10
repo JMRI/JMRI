@@ -29,7 +29,7 @@ public abstract class AbstractStringExpressionSwing extends AbstractSwingConfigu
     @Override
     public void executeEvaluate(@Nonnull Base object) {
         ConditionalNG conditionalNG = object.getConditionalNG();
-        if (conditionalNG == null) throw new RuntimeException("Not supported yet");
+        if (conditionalNG == null) throw new JmriUncheckedException("Not supported yet");
 
         SymbolTable symbolTable = new DefaultSymbolTable();
         getAllSymbols(object, symbolTable);

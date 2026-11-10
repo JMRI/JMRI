@@ -62,7 +62,7 @@ public class ImportConditional {
             }
 
             if (conditionalNG == null) {
-                throw new RuntimeException("Cannot create new ConditionalNG with name: \"" + userName + "\"");
+                throw new JmriUncheckedException("Cannot create new ConditionalNG with name: \"" + userName + "\"");
             }
 
             _conditionalNG = conditionalNG;
