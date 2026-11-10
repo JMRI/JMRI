@@ -55,10 +55,6 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
         this.removeListener(l);
     }
 
-    /** Why this class locks the base class's XMT_RUNNABLE_LOCK, which SpotBugs flags as visible outside the class. */
-    private static final String XMT_LOCK = "The base class waits and notifies on XMT_RUNNABLE_LOCK, so the receive"
-            + " and transmit threads must synchronise on that same object to wake each other";
-
     public static final int RETRIEVINGDATA = 100;
 
     /**
