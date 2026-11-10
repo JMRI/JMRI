@@ -16,7 +16,7 @@ import jmri.jmrit.throttle.ThrottleFrameManager;
 /**
  * Handle X-BUS Protokoll (header type 0x40).
  * Only function to handle a loco throttle have been implemented.
- * 
+ *
  * @author Jean-Yves Roda (C) 2023
  * @author Eckart Meyer (C) 2025 (enhancements, WlanMaus support)
  */
@@ -31,9 +31,9 @@ public class Service40 {
  * Set a listener to be called on track power manager events.
  * The listener is called with the Z21 LAN_X_BC_TRACK_POWER_ON/OFF packet to
  * be sent to the client.
- * 
+ *
  * Note that throttle changes are handled in the AppClient class.
- * 
+ *
  * @param cl - listener class
  */
     public static void setChangeListener(PropertyChangeListener cl) {
@@ -51,7 +51,7 @@ public class Service40 {
 
 /**
  * Handle a X-Bus command.
- * 
+ *
  * @param data - the Z21 packet bytes without data length and header.
  * @param clientAddress - the sending client's InetAddress
  * @return a response packet to be sent to the client or null if nothing is to sent (yet).
@@ -84,7 +84,7 @@ public class Service40 {
 
 /**
  * Handle a LAN_X_GET_* commands.
- * 
+ *
  * @param db0 - X-Bus subcommand
  * @return a response packet to be sent to the client or null if nothing is to sent (yet).
  */
@@ -124,10 +124,10 @@ public class Service40 {
         }
         return null;
     }
-    
+
 /**
  * Set track power on to JMRI.
- * 
+ *
  * @param state - true to switch ON, false to switch OFF
  * @return a response packet to be sent to the client or null if nothing is to sent (yet).
  */
@@ -169,10 +169,10 @@ public class Service40 {
         return trackPowerPacket;
     }
 
-    
+
 /**
  * Handle a LAN_X_GET_LOCO_INFO command
- * 
+ *
  * @param data - the Z21 packet bytes without data length, header and X-header
  * @param clientAddress - the sending client's InetAddress
  * @return a response packet to be sent to the client or null if nothing is to sent (yet).
@@ -198,7 +198,7 @@ public class Service40 {
 
 /**
  * Handle LAN_X_SET_LOCO_* commands
- * 
+ *
  * @param data - the Z21 packet bytes without data length, header and X-header
  * @param clientAddress - the sending client's InetAddress
  * @return a response packet to be sent to the client or null if nothing is to sent (yet).
@@ -242,17 +242,16 @@ public class Service40 {
         }
         return null;
     }
-    
+
 /**
  * Handle LAN_X_GET_TURNOUT_INFO command.
  * Note: JMRI has no concept of turnout numbers as with the Z21 protocol.
  * So this would only work of mapping tables have already been set by user.
- * 
+ *
  * @param data - the Z21 packet bytes without data length, header and X-header
  * @param clientAddress - the sending client's InetAddress
  * @return a response packet to be sent to the client or null if nothing is to sent (yet).
  */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
     justification = "Messages can be of any length, null is used to indicate absence of message for caller")
     private static byte[] handleHeader43(byte[] data, InetAddress clientAddress) {
         // Get turnout status command
@@ -265,13 +264,11 @@ public class Service40 {
  * Handle LAN_X_SET_TURNOUT command.
  * Note: JMRI has no concept of turnout numbers as with the Z21 protocol.
  * So this would only work of mapping tables have already been set by user.
- * 
+ *
  * @param data - the Z21 packet bytes without data length, header and X-header
  * @param clientAddress - the sending client's InetAddress
  * @return a response packet to be sent to the client or null if nothing is to sent (yet).
  */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
-    justification = "Messages can be of any length, null is used to indicate absence of message for caller")
     private static byte[] handleHeader53(byte[] data, InetAddress clientAddress) {
         // Set turnout
         // WlanMaus sends in bit 0 of data[2]:
@@ -288,11 +285,11 @@ public class Service40 {
 /**
  * Handle LAN_X_SET_STOP command.
  * Stop the locos for all throttles found in JMRI.
- * 
+ *
  * @return a response packet to be sent to the client or null if nothing is to sent (yet).
  */
     private static byte[] handleHeader80() {
-        log.info("{} Stop all locos", moduleIdent);        
+        log.info("{} Stop all locos", moduleIdent);
         InstanceManager.getDefault(ThrottleFrameManager.class).emergencyStopAll();
         // send LAN_X_BC_STOPPED packet
         byte[] stoppedPacket =  new byte[7];
@@ -312,12 +309,12 @@ public class Service40 {
  * does not make sense. But for the case that the client behaves different
  * for Z21 command station software version, we just return the
  * currently newest version 1.43 (January 2025).
- * 
+ *
  * @return a response packet to be sent to the client or null if nothing is to sent (yet).
  */
     private static byte[] handleHeaderF1() {
         log.info("{} Get Firmware Version", moduleIdent);
-        
+
         // send Firmware Version Packet - always return 1.43
         byte[] fwVersionPacket =  new byte[9];
         fwVersionPacket[0] = (byte) 0x09;
