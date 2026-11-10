@@ -1,7 +1,7 @@
 package jmri.jmrix.ecos;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.List;
+
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -118,11 +118,6 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         return EcosMessage.getExitProgMode();
     }
 
-    @SuppressFBWarnings(value = "MS_PKGPROTECT")
-    // SpotBugs wants this package protected, but we're removing it when multi-connection
-    // migration is complete
-    protected static final EcosTrafficController self = null;
-
     /** {@inheritDoc} */
     @Override
     protected AbstractMRReply newReply() {
@@ -175,10 +170,8 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
             forwardToPort(m, reply);
             // wait for reply
             try {
-                if (XMT_RUNNABLE_LOCK != null) {
-                    synchronized (XMT_RUNNABLE_LOCK) {
-                        XMT_RUNNABLE_LOCK.wait(m.getTimeout());
-                    }
+                synchronized (XMT_RUNNABLE_LOCK) {
+                    XMT_RUNNABLE_LOCK.wait(m.getTimeout());
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // retain if needed later
@@ -213,10 +206,8 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
             forwardToPort(modeMsg, null);
             // wait for reply
             try {
-                if (XMT_RUNNABLE_LOCK != null) {
-                    synchronized (XMT_RUNNABLE_LOCK) {
-                        XMT_RUNNABLE_LOCK.wait(modeMsg.getTimeout());
-                    }
+                synchronized (XMT_RUNNABLE_LOCK) {
+                    XMT_RUNNABLE_LOCK.wait(modeMsg.getTimeout());
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // retain if needed later
@@ -235,10 +226,8 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
                 forwardToPort(modeMsg, null);
                 // wait for reply
                 try {
-                    if (XMT_RUNNABLE_LOCK != null) {
-                        synchronized (XMT_RUNNABLE_LOCK) {
-                            XMT_RUNNABLE_LOCK.wait(modeMsg.getTimeout());
-                        }
+                    synchronized (XMT_RUNNABLE_LOCK) {
+                        XMT_RUNNABLE_LOCK.wait(modeMsg.getTimeout());
                     }
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt(); // retain if needed later
@@ -274,10 +263,8 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
                         forwardToPort(modeMsg, null);
                         // wait for reply
                         try {
-                            if (XMT_RUNNABLE_LOCK != null) {
-                                synchronized (XMT_RUNNABLE_LOCK) {
-                                    XMT_RUNNABLE_LOCK.wait(modeMsg.getTimeout());
-                                }
+                            synchronized (XMT_RUNNABLE_LOCK) {
+                                XMT_RUNNABLE_LOCK.wait(modeMsg.getTimeout());
                             }
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later

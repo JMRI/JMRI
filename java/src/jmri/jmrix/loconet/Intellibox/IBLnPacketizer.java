@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet.Intellibox;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.jmrix.loconet.LnPacketizer;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetMessageException;
@@ -31,8 +30,6 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
  */
 public class IBLnPacketizer extends LnPacketizer {
 
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "Only used during system initialization")
     public IBLnPacketizer() {
         super(new LocoNetSystemConnectionMemo());
         echo = true;
@@ -50,8 +47,6 @@ public class IBLnPacketizer extends LnPacketizer {
          */
         LnPacketizer trafficController;
 
-        @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-                justification = "single threaded during init; will eventually be replaced for multi-connection support")
         public RcvHandler(LnPacketizer lt) {
             trafficController = lt;
         }
@@ -153,7 +148,7 @@ public class IBLnPacketizer extends LnPacketizer {
                     // message is complete, dispatch it !!
                     msg.setReceivedTime(System.nanoTime());
                     log.trace("message complete: {}", msg);
-                        
+
                     // check if this message was supposed to be ignored
                     // sentList will be empty if preference "LoconetUpdateSlotOnMessageCreation" is not activated
                     if(trafficController.getSentList().contains(msg)) {
@@ -169,7 +164,7 @@ public class IBLnPacketizer extends LnPacketizer {
                         Runnable r = new Runnable() {
                             LocoNetMessage msgForLater = thisMsg;
                             LnPacketizer myTc = thisTc;
-                            
+
                             @Override
                             public void run() {
                                 myTc.notify(msgForLater);

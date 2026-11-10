@@ -1,6 +1,7 @@
 package jmri.jmrit.simulation;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -29,6 +30,8 @@ final class TrackModels {
     static final double DEFAULT_LENGTH_MM = 300.0;
 
     private final Set<Object> warned = ConcurrentHashMap.newKeySet();
+    /** Real lengths that differ from the Blocks' own, set as faults. */
+    private final Map<Block, Double> trueLengths = new ConcurrentHashMap<>();
     private volatile TrackSnapshot snapshot = TrackSnapshot.empty();
 
     /**
@@ -65,6 +68,10 @@ final class TrackModels {
      * @return length in mm
      */
     double length(Block block, float pathLength) {
+        Double real = trueLengths.get(block);
+        if (real != null) {
+            return real;
+        }
         if (pathLength > 0) {
             return pathLength;
         }
@@ -77,6 +84,21 @@ final class TrackModels {
             log.warn("Block \"{}\" has no length; simulated trains take it as {} mm.", name, (int) DEFAULT_LENGTH_MM);
         }
         return DEFAULT_LENGTH_MM;
+    }
+
+    /**
+     * A Block's real length differs from its own, as a fault.
+     *
+     * @param block    the Block
+     * @param lengthMm its real length, mm, used for every way through it
+     */
+    void setTrueLength(Block block, double lengthMm) {
+        trueLengths.put(block, lengthMm);
+    }
+
+    /** Use the Blocks' own lengths again. */
+    void clearTrueLengths() {
+        trueLengths.clear();
     }
 
     /**

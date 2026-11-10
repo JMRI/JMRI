@@ -1318,10 +1318,8 @@ public abstract class AbstractMRTrafficController {
             forwardToPort(modeMsg, null);
             // wait for reply
             try {
-                if (XMT_RUNNABLE_LOCK != null) {
-                    synchronized (XMT_RUNNABLE_LOCK) {
-                        XMT_RUNNABLE_LOCK.wait(modeMsg.getTimeout());
-                    }
+                synchronized (XMT_RUNNABLE_LOCK) {
+                    XMT_RUNNABLE_LOCK.wait(modeMsg.getTimeout());
                 }
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt(); // retain if needed later
