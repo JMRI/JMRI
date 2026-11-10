@@ -2193,6 +2193,24 @@ public class TrackSegmentView extends LayoutTrackView {
     }
 
     /**
+     * The centre line of the track as drawn: a line, an arc or a Bezier
+     * curve.
+     *
+     * @return the shape, in panel coordinates
+     */
+    @Nonnull
+    public java.awt.Shape getCentreLine() {
+        if (isArc()) {
+            calculateTrackSegmentAngle();
+            return new Arc2D.Double(getCX(), getCY(), getCW(), getCH(), getStartAdj(), getTmpAngle(), Arc2D.OPEN);
+        } else if (isBezier()) {
+            return MathUtil.getBezierPath(getBezierPoints());
+        }
+        return new Line2D.Double(layoutEditor.getCoords(getConnect1(), getType1()),
+                layoutEditor.getCoords(getConnect2(), getType2()));
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
