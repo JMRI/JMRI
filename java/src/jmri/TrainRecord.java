@@ -81,6 +81,11 @@ public interface TrainRecord extends PropertyChangeProvider {
      */
     @Nonnull
     String getName();
+    /**
+     * Property name for a new entry in the history; the new value is the
+     * {@link Reason}.
+     */
+    String PROPERTY_HISTORY = "history"; // NOI18N
 
     /**
      * Rename the train.
@@ -334,7 +339,27 @@ public interface TrainRecord extends PropertyChangeProvider {
      * @throws IllegalStateException    if the record has been disposed
      */
     @InvokeOnLayoutThread
-    void place(@Nonnull List<Block> blocks, boolean frontKnown);
+    default void place(@Nonnull List<Block> blocks, boolean frontKnown) {
+        place(blocks, frontKnown, Reason.Rule.PLACED);
+    }
+
+    /**
+     * Say where the train is, and why: as {@link #place(List, boolean)}, with
+     * the rule that placed it kept as the reason.
+     *
+     * @param blocks     the Blocks, at least one, front first if the front
+     *                   is known
+     * @param frontKnown true if the first Block given holds the front of
+     *                   the train
+     * @param rule       {@link Reason.Rule#PLACED},
+     *                   {@link Reason.Rule#PLACED_BY_VALUE} or
+     *                   {@link Reason.Rule#PLACED_BY_DISPATCHER}
+     * @throws IllegalArgumentException if the list is empty or holds a
+     *                                  Block twice
+     * @throws IllegalStateException    if the record has been disposed
+     */
+    @InvokeOnLayoutThread
+    void place(@Nonnull List<Block> blocks, boolean frontKnown, @Nonnull Reason.Rule rule);
 
     /**
      * Forget where the train is, as when it is taken off the layout.
@@ -414,6 +439,38 @@ public interface TrainRecord extends PropertyChangeProvider {
     }
 
     /**
+     * What has happened to the train, most recent first: the last
+     * {@value #HISTORY_LENGTH} changes to the Blocks it is in or to how sure
+     * JMRI is of where it is, each with its reason.
+     *
+     * @return the history; a copy
+     */
+    @Nonnull
+    List<Reason> getHistory();
+
+    /** How many entries the history keeps. */
+    int HISTORY_LENGTH = 20;
+
+    /**
+     * Why the train is in a Block.
+     *
+     * @param block one of {@link #getBlocks()}
+     * @return the reason it was put there, or null if it isn't there
+     */
+    @CheckForNull
+    Reason getReason(@Nonnull Block block);
+
+    /**
+     * Why JMRI is as sure, or as unsure, of where the train is as
+     * {@link #getConfidence()} says.
+     *
+     * @return the reason for the present confidence, or null if the train
+     *         is not placed
+     */
+    @CheckForNull
+    Reason getConfidenceReason();
+
+    /**
      * A Block a train entered.
      */
     @Immutable
@@ -488,6 +545,141 @@ public interface TrainRecord extends PropertyChangeProvider {
         public String toString() {
             return "TrailEntry[" + block.getDisplayName() + " from "
                     + (from == null ? "nowhere" : from.getDisplayName()) + ", " + end + "]";
+        }
+    }
+
+    /**
+     * Why something about a train changed: the rule that applied and what
+     * set it off, held as references to things that already exist (a Block,
+     * a sensor, a time). It is put into words only when someone looks
+     * ({@code jmri.jmrit.trainrecord.TrainRecordReasons}).
+     */
+    @Immutable
+    final class Reason {
+
+        /**
+         * The rule that applied.
+         */
+        public enum Rule {
+            /** Placed in its Blocks, by code or a script. */
+            PLACED,
+            /** Placed where a Block's value names it. */
+            PLACED_BY_VALUE,
+            /** Placed in its start Block by Dispatcher. */
+            PLACED_BY_DISPATCHER,
+            /** No longer placed anywhere. */
+            UNPLACED,
+            /** Entered a Block next to one of its ends: its sensor went occupied. */
+            ENTERED,
+            /** Entered a Block through Blocks with no detector. */
+            ENTERED_THROUGH_DARK,
+            /** One of several trains that could have entered a Block. */
+            AMBIGUOUS,
+            /** The Block's value named it as the train that entered. */
+            SETTLED_BY_VALUE,
+            /** Another train was named as the one that entered: no longer in doubt. */
+            AMBIGUITY_CLEARED,
+            /** Left a Block at one of its ends: its sensor went unoccupied. */
+            LEFT,
+            /** Left the Blocks with no detector behind a Block it was seen to leave. */
+            LEFT_DARK_BEHIND,
+            /** A Block it is in went unoccupied, but it can't have left it. */
+            KEPT_AFTER_DROPOUT,
+            /** None of its Blocks with a detector shows it. */
+            NOT_SEEN,
+            /** A Block it is in went occupied again. */
+            SEEN_AGAIN
+        }
+
+        private final Rule rule;
+        private final Block block;
+        private final Block from;
+        private final Sensor sensor;
+        private final List<Block> through;
+        private final java.time.Instant time;
+
+        /**
+         * @param rule    the rule that applied
+         * @param block   the Block it is about, or null
+         * @param from    the Block it came from, or null
+         * @param sensor  the sensor whose change set it off, or null
+         * @param through Blocks with no detector passed through, in order;
+         *                empty if none
+         * @param time    when
+         */
+        public Reason(@Nonnull Rule rule, @CheckForNull Block block, @CheckForNull Block from,
+                @CheckForNull Sensor sensor, @Nonnull List<Block> through, @Nonnull java.time.Instant time) {
+            this.rule = Objects.requireNonNull(rule, "rule");
+            this.block = block;
+            this.from = from;
+            this.sensor = sensor;
+            this.through = Collections.unmodifiableList(new ArrayList<>(Objects.requireNonNull(through, "through")));
+            this.time = Objects.requireNonNull(time, "time");
+        }
+
+        /**
+         * A reason with no other Blocks or sensor, dated now.
+         *
+         * @param rule  the rule that applied
+         * @param block the Block it is about, or null
+         * @return the reason
+         */
+        @Nonnull
+        public static Reason of(@Nonnull Rule rule, @CheckForNull Block block) {
+            return new Reason(rule, block, null, null, List.of(), java.time.Instant.now());
+        }
+
+        /**
+         * @return the rule that applied
+         */
+        @Nonnull
+        public Rule getRule() {
+            return rule;
+        }
+
+        /**
+         * @return the Block it is about, or null
+         */
+        @CheckForNull
+        public Block getBlock() {
+            return block;
+        }
+
+        /**
+         * @return the Block the train came from, or null
+         */
+        @CheckForNull
+        public Block getFrom() {
+            return from;
+        }
+
+        /**
+         * @return the sensor whose change set it off, or null
+         */
+        @CheckForNull
+        public Sensor getSensor() {
+            return sensor;
+        }
+
+        /**
+         * @return the Blocks with no detector passed through, in order
+         */
+        @Nonnull
+        public List<Block> getThrough() {
+            return through;
+        }
+
+        /**
+         * @return when
+         */
+        @Nonnull
+        public java.time.Instant getTime() {
+            return time;
+        }
+
+        @Override
+        public String toString() {
+            return "Reason[" + rule + (block == null ? "" : " " + block.getDisplayName()) + "]";
         }
     }
 

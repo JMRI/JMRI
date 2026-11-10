@@ -38,6 +38,12 @@
         <authorinitials>PB</authorinitials>
         <revremark>Removed deprecated Approach aspect + corrected Speed Names as per latest JMRI usage</revremark>
     </revision>
+    <revision>
+        <revnumber>1.3</revnumber>
+        <date>2026-11-08</date>
+        <authorinitials>KB</authorinitials>
+        <revremark>Added the junction (feather) indicator aspects Zero to Six, which appearance-feather.xml already uses</revremark>
+    </revision>
 
 
     </revhistory>
@@ -115,6 +121,69 @@
       <reference>Section 2.1, 2.2, 2.7</reference>
       <speed>Stop</speed>
       <speed2>Stop</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Zero</name>
+      <indication>Junction indicator not lit</indication>
+      <description>No position of the junction (feather) indicator lit</description>
+      <comment>Junction indicator (feather) masts only. The speed is Normal, so that an indicator never lowers a speed.</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+    </aspect>
+
+    <aspect>
+      <name>One</name>
+      <indication>Junction indicator showing position 1: the route for position 1 is set</indication>
+      <description>Position 1 of the junction (feather) indicator lit</description>
+      <comment>Junction indicator (feather) masts only. The speed is Normal, so that an indicator never lowers a speed.</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Two</name>
+      <indication>Junction indicator showing position 2: the route for position 2 is set</indication>
+      <description>Position 2 of the junction (feather) indicator lit</description>
+      <comment>Junction indicator (feather) masts only. The speed is Normal, so that an indicator never lowers a speed.</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Three</name>
+      <indication>Junction indicator showing position 3: the route for position 3 is set</indication>
+      <description>Position 3 of the junction (feather) indicator lit</description>
+      <comment>Junction indicator (feather) masts only. The speed is Normal, so that an indicator never lowers a speed.</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Four</name>
+      <indication>Junction indicator showing position 4: the route for position 4 is set</indication>
+      <description>Position 4 of the junction (feather) indicator lit</description>
+      <comment>Junction indicator (feather) masts only. The speed is Normal, so that an indicator never lowers a speed.</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Five</name>
+      <indication>Junction indicator showing position 5: the route for position 5 is set</indication>
+      <description>Position 5 of the junction (feather) indicator lit</description>
+      <comment>Junction indicator (feather) masts only. The speed is Normal, so that an indicator never lowers a speed.</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+    </aspect>
+
+    <aspect>
+      <name>Six</name>
+      <indication>Junction indicator showing position 6: the route for position 6 is set</indication>
+      <description>Position 6 of the junction (feather) indicator lit</description>
+      <comment>Junction indicator (feather) masts only. The speed is Normal, so that an indicator never lowers a speed.</comment>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
     </aspect>
 
   </aspects>

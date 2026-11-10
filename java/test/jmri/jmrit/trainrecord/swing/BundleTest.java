@@ -27,6 +27,7 @@ public class BundleTest {
     @Test
     public void testGoodKeysMessageArg() {
         assertEquals("Train Tracking", Bundle.getMessage("MenuTrainTracking"));
+        assertEquals("Block LB4...", Bundle.getMessage("MenuItemBlockDialog", "LB4"));
         assertEquals("Block \"A\" has a path to Block \"B\", but \"B\" has none back to \"A\".",
                 Bundle.getMessage("CheckPathOneWay", "A", "B"), "from the parent package's bundle");
     }

@@ -32,6 +32,8 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
     private final List<DefaultTrainRecord> records = new ArrayList<>();
     private final TrainRecordWatcher watcher;
     private boolean disposed = false;
+    private final java.util.Map<Block, java.util.Deque<BlockEvent>> blockHistories = new java.util.HashMap<>();
+    private final java.beans.PropertyChangeListener historyListener = this::historyChanged;
 
     /**
      * Make the manager, which starts following the layout's Blocks: their
@@ -89,7 +91,7 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
             }
         }
         if (!r.isPlaced()) {
-            r.place(List.of(block), false);
+            r.place(List.of(block), false, TrainRecord.Reason.Rule.PLACED_BY_VALUE);
         }
     }
 
@@ -136,6 +138,7 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
             throw new IllegalArgumentException("a train record named " + n + " already exists");
         }
         DefaultTrainRecord r = new DefaultTrainRecord(n, registry);
+        r.addPropertyChangeListener(TrainRecord.PROPERTY_HISTORY, historyListener);
         records.add(r);
         firePropertyChange(PROPERTY_RECORDS, null, r);
         return r;
@@ -154,9 +157,42 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
         }
         DefaultTrainRecord r = (DefaultTrainRecord) record;
         records.remove(r);
+        r.removePropertyChangeListener(TrainRecord.PROPERTY_HISTORY, historyListener);
         r.dispose();
         watcher.placementChanged();
         firePropertyChange(PROPERTY_RECORDS, r, null);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @Nonnull
+    public List<BlockEvent> getHistory(@Nonnull Block block) {
+        java.util.Deque<BlockEvent> h = blockHistories.get(block);
+        return h == null ? new ArrayList<>() : new ArrayList<>(h);
+    }
+
+    private void historyChanged(java.beans.PropertyChangeEvent e) {
+        if (!(e.getSource() instanceof TrainRecord) || !(e.getNewValue() instanceof TrainRecord.Reason)) {
+            return;
+        }
+        TrainRecord.Reason reason = (TrainRecord.Reason) e.getNewValue();
+        String train = ((TrainRecord) e.getSource()).getName();
+        List<Block> blocks = new ArrayList<>();
+        if (reason.getBlock() != null) {
+            blocks.add(reason.getBlock());
+        }
+        for (Block b : reason.getThrough()) {
+            if (!blocks.contains(b)) {
+                blocks.add(b);
+            }
+        }
+        for (Block b : blocks) {
+            java.util.Deque<BlockEvent> h = blockHistories.computeIfAbsent(b, k -> new java.util.ArrayDeque<>());
+            h.addFirst(new BlockEvent(train, reason));
+            while (h.size() > BLOCK_HISTORY_LENGTH) {
+                h.removeLast();
+            }
+        }
     }
 
     /** {@inheritDoc} */

@@ -277,10 +277,10 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
                 } else {
                     JComboBox<String> opt = new JComboBox<>(adapter.getOptionChoices(i));
                     opt.setSelectedItem(adapter.getOptionState(i));
-                
+
                     // check that it worked
                     checkOptionValueValidity(i, opt);
-                
+
                     options.put(i, new Option(adapter.getOptionDisplayName(i), opt, adapter.isOptionAdvanced(i)));
                 }
             }
@@ -293,9 +293,9 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         if (adapter.getSystemConnectionMemo() != null) {
             systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
-            NUMOPTIONS = NUMOPTIONS + 2;
+            increaseNumOptions(2);
         }
-        NUMOPTIONS = NUMOPTIONS + options.size();
+        increaseNumOptions(options.size());
 
         hostNameField.setText(adapter.getHostName());
         hostNameFieldLabel = new JLabel(Bundle.getMessage("HostFieldLabel"));
@@ -379,7 +379,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         if (adapter.getSystemConnectionMemo() != null) {
             stdrows = stdrows + 2;
         }
-        if (stdrows == NUMOPTIONS) {
+        if (stdrows == getNumOptions()) {
             incAdvancedOptions = false;
         }
         _details.setLayout(gbLayout);
@@ -446,7 +446,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             i++;
         }
         cL.gridwidth = 2;
-        for (JComponent item : additionalItems) {
+        for (JComponent item : getAdditionalItems()) {
             cL.gridy = i;
             gbLayout.setConstraints(item, cL);
             _details.add(item);

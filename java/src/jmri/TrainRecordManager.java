@@ -88,4 +88,70 @@ public interface TrainRecordManager extends PropertyChangeProvider {
      */
     @CheckForNull
     TrainRecord getByValue(@CheckForNull Object value);
+
+    /**
+     * The trains a Block holds.
+     *
+     * @param block a Block
+     * @return the records placed in it, in the order of {@link #getRecords()}
+     */
+    @Nonnull
+    default List<TrainRecord> getRecordsIn(@Nonnull Block block) {
+        List<TrainRecord> list = new java.util.ArrayList<>();
+        for (TrainRecord r : getRecords()) {
+            if (!r.isDisposed() && r.getBlocks().contains(block)) {
+                list.add(r);
+            }
+        }
+        return list;
+    }
+
+    /**
+     * What has happened in a Block: the last {@value #BLOCK_HISTORY_LENGTH}
+     * changes to the trains in it, from every record, most recent first.
+     *
+     * @param block a Block
+     * @return the history; a copy
+     */
+    @Nonnull
+    List<BlockEvent> getHistory(@Nonnull Block block);
+
+    /** How many entries each Block's history keeps. */
+    int BLOCK_HISTORY_LENGTH = 20;
+
+    /**
+     * Something that happened in a Block: the train's name at the time, and
+     * what happened, with its reason.
+     */
+    @javax.annotation.concurrent.Immutable
+    final class BlockEvent {
+
+        private final String train;
+        private final TrainRecord.Reason reason;
+
+        /**
+         * @param train  the train's name at the time
+         * @param reason what happened, and why
+         */
+        public BlockEvent(@Nonnull String train, @Nonnull TrainRecord.Reason reason) {
+            this.train = java.util.Objects.requireNonNull(train, "train");
+            this.reason = java.util.Objects.requireNonNull(reason, "reason");
+        }
+
+        /**
+         * @return the train's name at the time
+         */
+        @Nonnull
+        public String getTrain() {
+            return train;
+        }
+
+        /**
+         * @return what happened, and why
+         */
+        @Nonnull
+        public TrainRecord.Reason getReason() {
+            return reason;
+        }
+    }
 }

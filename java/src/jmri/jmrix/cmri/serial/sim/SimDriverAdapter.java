@@ -15,8 +15,6 @@ import jmri.util.ImmediatePipedOutputStream;
  *
  * @author Bob Jacobsen Copyright (C) 2002, 2008, 2011
  */
-@SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-        justification = "Access to 'self' OK until multiple instance pattern installed")
 public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter {
 
     @Override

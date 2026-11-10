@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>JMRI: Train Tracking</title>
+  <meta name="author" content="Keith Bruce">
+  <meta name="keywords" content="JMRI help train tracking train record Block dialog train positions warnings">
+  <!--#include virtual="/help/en/parts/Style.shtml" -->
+</head>
+<body>
+  <!--#include virtual="/help/en/parts/Header.shtml" -->
+
+  <div id="mBody">
+    <div id="mainContent" class="no-sidebar">
+      <h1>JMRI: Train Tracking</h1>
+
+      <p>Train tracking follows each train from Block to Block, works out where it is between
+      detectors, and explains what it has found. It only watches: it doesn't set turnouts or
+      signals, hold Blocks, or stop trains, and Dispatcher, Warrants and throttles carry on as
+      they are.</p>
+
+      <h2>Which trains are followed</h2>
+
+      <p>A train is followed once it has been placed: when Dispatcher starts an Active Train in an
+      occupied Block, or when a Block's value is set to the train (its roster entry, ID tag or
+      name). From then on, each time a Block next to one
+      of the train's ends becomes occupied along a path that is set, the train has entered it;
+      when a Block at its rear becomes empty, it has left it. A Block with no occupancy sensor has
+      no detector: a train is followed through it when it is seen in the next detected Block.</p>
+
+      <p>For each train, train tracking records how sure it is of where the train is:</p>
+      <ul>
+        <li><strong>Confirmed</strong>: just seen by a detector, or placed.</li>
+        <li><strong>Position estimated</strong>: between detectors, or not seen since a detector
+        dropped out.</li>
+        <li><strong>Ambiguous</strong>: one of several trains that could have entered a
+        Block.</li>
+        <li><strong>Stalled</strong>: told to move, but not seen to reach the next Block in
+        time.</li>
+        <li><strong>Lost</strong>: expected to have reached the next Block, with nothing telling
+        it to stop.</li>
+      </ul>
+
+      <h2>The Block dialog</h2>
+
+      <p>On a Layout Editor panel in operating mode, right-click a Block's track and choose
+      <strong>Block ...</strong>; or right-click a Block Contents icon (its double-click still
+      edits the Block's value). The dialog shows the trains in the Block and how sure train
+      tracking is of each. <strong>Why</strong>
+      says how each train came to be there, and <strong>History</strong> lists the last 20
+      things that happened in the Block.</p>
+
+      <h2>The Block Table</h2>
+
+      <p>The Block Table has a <strong>Train</strong> column, showing the trains train tracking
+      has in each Block, and a <strong>Why?</strong> column, both hidden until chosen from the
+      column header's right-click menu. The Block's <strong>Value</strong> column is unchanged.</p>
+
+      <!--#include virtual="/help/en/parts/Footer.shtml" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+  <script src="/js/help.js"></script>
+</body>
+</html>

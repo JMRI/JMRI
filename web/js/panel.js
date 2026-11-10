@@ -588,7 +588,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 $widget['id'] = $widget.siblings[i];         // use id already set in sibling array
                                 $widget.name = $(item).attr('sensor');
                                 $widget['icon2'] = $(item).attr('url');
-                                if (i < actives.size() - 1) { //only save widget and make a new one if more than one active found
+                                if (i < actives.length - 1) { //only save widget and make a new one if more than one active found
                                     $preloadWidgetImages($widget); //start loading all images
                                     $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
                                     $widget["systemName"] = $widget.name;
@@ -1980,7 +1980,7 @@ var $setWidgetPosition = function(e) {
         // reposition on every icon load, as the icons can be different sizes.
         if (e.is("img") && ($widget.degrees !== 0 || $widget.scale != 1.0)) {
             e.unbind('load');
-            e.load(function() {
+            e.on('load', function() {
                 $setWidgetPosition($(this));
             });
         }

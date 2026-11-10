@@ -26,6 +26,11 @@
 
         <h4>CBUS</h4>
             <ul>
+                <li>For developers: a CBUS connection now reports the speed and
+                    direction commanded for each loco, from the command
+                    station's sessions on the bus, whichever cab sent them
+                    (<code>jmri.LocoSpeedSource</code>), and when a session
+                    ends. It only listens. Nothing users see changes.</li>
                 <li>CBUS throttles: when several throttles are asked for at
                     the same moment, for example by Dispatcher starting several
                     automatic trains, by opening a saved throttle layout or by
@@ -639,10 +644,21 @@
     <h3>Signals</h3>
         <a id="Signals" name="Signals"></a>
         <ul>
+            <li>A Signal Mast no longer keeps changing between clear and
+                danger when automatic signal mast generation is allowed for
+                one of its Signal Mast Logic pairs. The pair listed the mast
+                itself among the masts that must show danger, so the mast
+                put itself back to danger each time it cleared (seen since
+                5.17.5, with the turnouts set for that route).</li>
             <li></li>
         </ul>
         <h4>Signal Systems</h4>
             <ul>
+                <li>BR-2003 now defines the junction indicator (feather)
+                    aspects Zero to Six, which its feather masts already
+                    use. A feather mast's aspect now has a speed (Normal)
+                    and a description, where before the signal system
+                    didn't know it.</li>
                 <li></li>
             </ul>
 
@@ -768,6 +784,11 @@
                 Block Contents icon shows the value or, when there is none,
                 the allocated value, as a JMRI panel does. The JSON protocol
                 version is now 5.5.0.</li>
+            <li>Removed old JavaScript and CSS files from <code>web/js</code>
+                and <code>web/css</code> that no JMRI page uses anymore,
+                including jQuery 1.8.2, jQuery Mobile, and the unminified
+                Bootstrap files. If you have custom web pages that load any
+                of these directly, they'll need updating.</li>
         </ul>
 
     <h3>Where Used</h3>
@@ -812,6 +833,15 @@
                 feedback; and Blocks joined through Blocks with no detector by
                 more than one way. Each says what is wrong. The checks only
                 read, and change nothing.</li>
+            <li>Where a train has been placed in a Block (by Dispatcher, or by
+                setting a Block's value to the train), right-clicking the
+                Block's track on a Layout Editor panel in operating mode, or a
+                Block Contents icon, now offers "Block ...". It shows the
+                trains in the Block, how sure JMRI is of where each is, why,
+                and the last 20 things that happened there. The Block Table
+                has Train and "Why?" columns, which can be shown from the
+                column header's menu. A Block Contents icon's double-click
+                still edits the Block's value. Nothing on the layout changes.</li>
             <li>For developers: a new train record (<code>jmri.TrainRecord</code>,
                 from the <code>jmri.TrainRecordManager</code>) holds what is
                 known about a train from one run to the next: its name, the
@@ -827,5 +857,11 @@
                 do, they move on the layout's own track and set internal
                 sensors as they pass, with the time they passed. The sample
                 script SimulatedTrains.py shows two trains running.</li>
+            <li>For developers: tests and scripts can set faults on simulated
+                trains' layout: detector drop-outs, a sensor showing a train
+                that isn't there, swapped sensors, a Block longer or shorter
+                than JMRI has it, a stalled train and a train that parts. A
+                train whose turnout is moved under it now derails and stays
+                where it stopped.</li>
         </ul>
 

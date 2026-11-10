@@ -16,9 +16,6 @@ import jmri.util.swing.JmriJOptionPane;
  *
  * @author Daniel Bergqvist (C) 2024
  */
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="DMI_RANDOM_USED_ONLY_ONCE",
-    justification = "False positive. The Random instance is kept by the iterator.")
-
 public class DefaultUser implements User {
 
     private final String _username;
@@ -185,8 +182,6 @@ public class DefaultUser implements User {
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
-        justification="The text is from an exception")
     public void setPassword(String newPassword) {
         PermissionManager pMngr = InstanceManager.getDefault(PermissionManager.class);
 
