@@ -779,7 +779,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
         if (LnIPLImplementation.isIplUr92IdentityReportMessage(m) ||
                 LnIPLImplementation.isIplUr93IdentityReportMessage(m) ||
                 LnIPLImplementation.isIplLnwiIdentityReportMessage(m)) {
-            numUr92CompatibleType++;
+            ++numUr92CompatibleType;
             thisone.firePropertyChange(DPLX_PC_STAT_LN_UPDATE, " ", " ");
             thisone.firePropertyChange(DPLX_IPL_DEVICE_DETAILS, "", new BasicIPLDeviceInfo(m));
             waitingForIplReply = false;
