@@ -129,6 +129,11 @@
                         <a href="package/jmri/jmrit/beantable/BlockEdit.shtml">Edit Blocks </a>
                         <ul></ul>
                     </li>
+                      
+                    <li>
+                        <a href="package/jmri/jmrit/trainrecord/TrainTracking.shtml">Train Tracking </a>
+                        <ul></ul>
+                    </li>
                      
                 </ul>
             </li>
@@ -2120,6 +2125,11 @@
              
             <li>
                 <a href="package/jmri/jmrit/logix/Tracker.shtml">Train Trackers (Warrants) </a>
+                <ul></ul>
+            </li>
+             
+            <li>
+                <a href="package/jmri/jmrit/trainrecord/TrainTracking.shtml">Train Tracking </a>
                 <ul></ul>
             </li>
              

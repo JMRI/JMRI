@@ -842,6 +842,8 @@
                 has Train and "Why?" columns, which can be shown from the
                 column header's menu. A Block Contents icon's double-click
                 still edits the Block's value. Nothing on the layout changes.</li>
+            <li>The Train Tracking help page is now in the help's contents and
+                index, and the Blocks and Block Table help pages link to it.</li>
             <li>For developers: a new train record (<code>jmri.TrainRecord</code>,
                 from the <code>jmri.TrainRecordManager</code>) holds what is
                 known about a train from one run to the next: its name, the

@@ -909,6 +909,11 @@
                                 <a href="html/tools/Blocks.shtml#addBlock">Add/Edit Blocks </a>
                                 <ul></ul>
                             </li>
+                               
+                            <li>
+                                <a href="package/jmri/jmrit/trainrecord/TrainTracking.shtml">Train Tracking </a>
+                                <ul></ul>
+                            </li>
                               
                         </ul>
                     </li>
@@ -1571,6 +1576,11 @@
                       
                     <li>
                         <a href="html/tools/tracker/index.shtml">Tracker (Blocks) </a>
+                        <ul></ul>
+                    </li>
+                      
+                    <li>
+                        <a href="package/jmri/jmrit/trainrecord/TrainTracking.shtml">Train Tracking </a>
                         <ul></ul>
                     </li>
                       

@@ -43,6 +43,8 @@
 
   <indexitem text="Edit Blocks " target="package.jmri.jmrit.beantable.BlockEdit"/>
 
+  <indexitem text="Train Tracking " target="package.jmri.jmrit.trainrecord.TrainTracking"/>
+
  </indexitem>
  <indexitem text="Block Table " target="package.jmri.jmrit.beantable.BlockTable"/>
 
@@ -808,6 +810,8 @@
  <indexitem text="Train Throttle App (Windows Throttle) " target="html.apps.index_addapp"/>
 
  <indexitem text="Train Trackers (Warrants) " target="package.jmri.jmrit.logix.Tracker"/>
+
+ <indexitem text="Train Tracking " target="package.jmri.jmrit.trainrecord.TrainTracking"/>
 
  <indexitem text="TrainCrew " target="html.apps.index_addapp"/>
 

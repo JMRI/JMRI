@@ -26,6 +26,10 @@
       track almost always would be divided into Blocks. The main use of Blocks is to facilitate
       Signaling, but Blocks may be used for other layout control and animation functions.</p>
 
+      <p>JMRI can also follow trains from Block to Block, and show which trains are in each Block
+      and why; see <a href="../../package/jmri/jmrit/trainrecord/TrainTracking.shtml">Train
+      Tracking</a>.</p>
+
       <h2>How to setup Blocks</h2>
 
       <h3>Block Properties</h3>
