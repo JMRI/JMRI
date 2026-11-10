@@ -700,7 +700,7 @@ public abstract class AbstractMRTrafficController {
 
     protected boolean xmtException = false;
 
-    private synchronized boolean synchronizedPortReadyToSend(AbstractPortController p) {
+    protected synchronized boolean synchronizedPortReadyToSend(AbstractPortController p) {
         return portReadyToSend(p);
     }
 
