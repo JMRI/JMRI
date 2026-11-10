@@ -52,6 +52,11 @@
                     would: frames due at the same moment now arrive in the
                     order they were sent, where before they could arrive in
                     either order.</li>
+                <li>Simulated trains run on CAN Simulation connections: they
+                    obey the simulated command station, whichever cab drives
+                    them, and report on CBUS sensors as detectors on the bus
+                    would. The simulated command station handles requests to
+                    set a session's speed step mode (STMOD).</li>
             </ul>
 
         <h4>C/MRI</h4>

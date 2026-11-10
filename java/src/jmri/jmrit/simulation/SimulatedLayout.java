@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Queue;
+import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -109,6 +110,13 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
      * held.
      */
     private final Object watching = new Object();
+    /** Held while taking up the adapters' sources and outputs. */
+    private final Object adapting = new Object();
+    /** The sources and outputs taken from adapters, so those dropped can be removed. */
+    @GuardedBy("adapting")
+    private final List<SimulatedSpeedSource> adapterSources = new ArrayList<>();
+    @GuardedBy("adapting")
+    private final List<SimulatedDetectorOutput> adapterOutputs = new ArrayList<>();
     private final List<SimulatedDetectorOutput> outputs = new CopyOnWriteArrayList<>();
     /** Sensors already warned about as having no output. */
     @GuardedBy("this")
@@ -364,6 +372,7 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
     public void place(@Nonnull VirtualTrain train, @Nonnull Block block, @CheckForNull Block from,
             double frontMm) {
         checkCanPlace(train);
+        useAdapters();
         withFreshSnapshot(() -> {
             checkCanPlace(train);
             TrackEntry entry = models.entryInto(block, from);
@@ -387,6 +396,7 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
     @InvokeOnAnyThread
     public void placeBehind(@Nonnull VirtualTrain train, @Nonnull VirtualTrain ahead) {
         checkCanPlace(train);
+        useAdapters();
         withFreshSnapshot(() -> {
             checkCanPlace(train);
             TrainState other = trains.get(ahead);
@@ -553,6 +563,10 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
             }
             sources.clear();
         }
+        synchronized (adapting) {
+            adapterSources.clear();
+            adapterOutputs.clear();
+        }
     }
 
     private synchronized void watchConnections() {
@@ -579,7 +593,62 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
             }
         }
         deliver();
+        useAdapters();
         watchAddresses();
+    }
+
+    /**
+     * Take up the speed sources and detector outputs the systems' adapters
+     * offer now, and drop those they no longer offer. Not for a layout on a
+     * manual clock, whose tests give it their own sources and outputs.
+     * Called without this layout's lock.
+     */
+    private void useAdapters() {
+        if (manual) {
+            return;
+        }
+        List<SimulatedSpeedSource> offeredSources = new ArrayList<>();
+        List<SimulatedDetectorOutput> offeredOutputs = new ArrayList<>();
+        for (SimulationAdapter a : ServiceLoader.load(SimulationAdapter.class)) {
+            offeredSources.addAll(a.getSpeedSources());
+            offeredOutputs.addAll(a.getDetectorOutputs());
+        }
+        List<SimulatedSpeedSource> dropSources = new ArrayList<>();
+        List<SimulatedSpeedSource> newSources = new ArrayList<>();
+        List<SimulatedDetectorOutput> dropOutputs = new ArrayList<>();
+        List<SimulatedDetectorOutput> newOutputs = new ArrayList<>();
+        // only the bookkeeping under the lock: adding an output copies the configuration on the
+        // layout thread (Swing thread), which may itself be waiting to take up adapters
+        synchronized (adapting) {
+            for (SimulatedSpeedSource s : new ArrayList<>(adapterSources)) {
+                if (!offeredSources.contains(s)) {
+                    adapterSources.remove(s);
+                    dropSources.add(s);
+                }
+            }
+            for (SimulatedSpeedSource s : offeredSources) {
+                if (!adapterSources.contains(s)) {
+                    adapterSources.add(s);
+                    newSources.add(s);
+                }
+            }
+            for (SimulatedDetectorOutput o : new ArrayList<>(adapterOutputs)) {
+                if (!offeredOutputs.contains(o)) {
+                    adapterOutputs.remove(o);
+                    dropOutputs.add(o);
+                }
+            }
+            for (SimulatedDetectorOutput o : offeredOutputs) {
+                if (!adapterOutputs.contains(o)) {
+                    adapterOutputs.add(o);
+                    newOutputs.add(o);
+                }
+            }
+        }
+        dropSources.forEach(this::removeSpeedSource);
+        newSources.forEach(this::addSpeedSource);
+        dropOutputs.forEach(this::removeDetectorOutput);
+        newOutputs.forEach(this::addDetectorOutput);
     }
 
     // ---------------------------------------------------------------------
