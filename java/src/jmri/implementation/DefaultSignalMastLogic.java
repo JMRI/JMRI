@@ -2724,6 +2724,10 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
          * Generate auto signalmast for a given SML. Looks through all the other
          * logics to see if there are any blocks that are in common and thus
          * will add the other signal mast protecting that block.
+         * <p>
+         * The source mast of this logic is never added: it would have to show
+         * its danger aspect for its own route to clear, so on clearing it
+         * would put itself back to danger, and then clear again.
          *
          * @param sml       The Signal Mast Logic for which to set up
          *                  autoSignalMasts
@@ -2746,7 +2750,7 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             Hashtable<SignalMast, String> masts;
             if (sml != null) {
                 masts = autoMasts;
-                if (sml.areBlocksIncluded(allBlock)) {
+                if (sml.getSourceMast() != getSourceMast() && sml.areBlocksIncluded(allBlock)) {
                     SignalMast mast = sml.getSourceMast();
                     String danger = mast.getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER);
                     masts.put(mast, danger);
@@ -2757,7 +2761,8 @@ public class DefaultSignalMastLogic extends AbstractNamedBean implements SignalM
             } else {
                 masts = new Hashtable<>();
                 for (int i = 0; i < smlList.size(); i++) {
-                    if (smlList.get(i).areBlocksIncluded(allBlock)) {
+                    if (smlList.get(i).getSourceMast() != getSourceMast()
+                            && smlList.get(i).areBlocksIncluded(allBlock)) {
                         SignalMast mast = smlList.get(i).getSourceMast();
                         String danger = mast.getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER);
                         masts.put(mast, danger);
