@@ -320,25 +320,24 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
                         log.debug("setFnButtons(): can't parse button image size attribute ");
                     }
                 }
-                functionButtons[i].setButtonLabel( i<3 ? Bundle.getMessage(Throttle.getFunctionString(i)) : Throttle.getFunctionString(i) );
+                functionButtons[i].setDisplay(rosterEntry.getFunctionVisible(fn));
+                functionButtons[i].setButtonLabel( fn<3 ? Bundle.getMessage(Throttle.getFunctionString(fn)) : Throttle.getFunctionString(fn) );
                 String text = rosterEntry.getFunctionLabel(fn);
                 if (text != null) {
-                    functionButtons[i].setDisplay(rosterEntry.getFunctionVisible(fn));
                     functionButtons[i].setButtonLabel(text);
-                    if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
-                        functionButtons[i].setIconPath(rosterEntry.getFunctionImage(fn));
-                        functionButtons[i].setSelectedIconPath(rosterEntry.getFunctionSelectedImage(fn));
-                    } else {
-                        functionButtons[i].setIconPath(null);
-                        functionButtons[i].setSelectedIconPath(null);
-                    }
-                    functionButtons[i].setIsLockable(rosterEntry.getFunctionLockable(fn));
-                } else if (preferences.isUsingExThrottle()
-                        && preferences.isHidingUndefinedFuncButt()) {
-                    functionButtons[i].setDisplay(false);
+                }
+                functionButtons[i].setIsLockable(rosterEntry.getFunctionLockable(fn));
+                String fnImage = rosterEntry.getFunctionImage(fn);
+                String fnSelectedImage = rosterEntry.getFunctionSelectedImage(fn);
+                if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
+                    functionButtons[i].setIconPath(fnImage);
+                    functionButtons[i].setSelectedIconPath(fnSelectedImage);
                 } else {
-                    functionButtons[i].setDisplay(true);
-                    functionButtons[i].setButtonLabel( fn<3 ? Bundle.getMessage(Throttle.getFunctionString(fn)) : Throttle.getFunctionString(fn) );
+                    functionButtons[i].setIconPath(null);
+                    functionButtons[i].setSelectedIconPath(null);
+                }
+                if ((text == null || text.isEmpty()) && fnImage == null && fnSelectedImage == null && preferences.isUsingExThrottle() && preferences.isHidingUndefinedFuncButt()) {
+                    functionButtons[i].setDisplay(false);
                 }
                 String fontSize = rosterEntry.getAttribute("function"+fn+"_ThrottleFontSize");
                 if (fontSize != null) {
@@ -348,9 +347,9 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
                         log.debug("setFnButtons(): can't parse font size attribute ");
                     }
                 }
-                functionButtons[i].updateLnF();                
+                functionButtons[i].updateLnF();
             }
-        }        
+        }
     }
 
     private void resetFnButton(FunctionButton fb, int i) {

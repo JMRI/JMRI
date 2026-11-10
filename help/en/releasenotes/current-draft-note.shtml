@@ -732,7 +732,10 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Throttle function button visibility implementation less confusing, documentation and code updated</li>
+            <li>Due to a Java throttle code refactoring, in Jynstruments, for ThrottleFrame jynstruments, the expected 
+                context class is now jmri.jmrit.throttle.implementation.ThrottleFrame instead of jmri.jmrit.throttle.ThrottleFrame,
+                you can check released code in jython/Jynstruments/ThrottleFrame/Bell.jyn for instance.</li>
             <li>Code and scripts can now be told when each speed or direction
                 command from a throttle has actually been sent to the layout,
                 and when (<code>Throttle.addSpeedSentListener</code>). The time
