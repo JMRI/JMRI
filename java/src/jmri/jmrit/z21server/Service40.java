@@ -252,7 +252,6 @@ public class Service40 {
  * @param clientAddress - the sending client's InetAddress
  * @return a response packet to be sent to the client or null if nothing is to sent (yet).
  */
-    justification = "Messages can be of any length, null is used to indicate absence of message for caller")
     private static byte[] handleHeader43(byte[] data, InetAddress clientAddress) {
         // Get turnout status command
         int turnoutNumber = ((data[0] & 0xFF) << 8) + (data[1] & 0xFF);
