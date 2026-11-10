@@ -146,9 +146,6 @@
       that your copy of the code is up to date, and that the <a href="JUnit.shtml#run">unit
       tests</a> all work.</p>
 
-      <p>To test code that works with moving trains, such as Blocks, Dispatcher and Warrants,
-      see <a href="simulatedtrains.shtml">Writing Tests with Simulated Trains</a>.</p>
-
       <p>If you're contributing multiple changes, or working on a larger project, JMRI has tools
       and procedures that make it easy and reliable to connect your work to the rest of the JMRI
       community. Basically, you work in a local copy of the JMRI code repository, and you're
