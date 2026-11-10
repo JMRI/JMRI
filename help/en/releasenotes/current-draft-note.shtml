@@ -50,7 +50,15 @@
 
         <h4>C/MRI</h4>
             <ul>
-                <li></li>
+                <li>ESP32CPNode nodes now have 64 cards (the most a C/MRI node can have),
+                    numbered from 0 as in other C/MRI nodes: cards 0-15 are the MCP23017
+                    ports (0x20 A to 0x27 B), Output or Input; cards 16-31 are the PCA9685
+                    servo boards (0x40-0x47, two cards each); cards 32-63 are always Output
+                    and have no pins (bits 257-512 carry signal mast aspects for the node).
+                    Every card is always sent, so a turnout or sensor keeps its
+                    number when a board is added or a port is changed to Input.
+                    Node configurations saved with fewer cards get all 64 when they are
+                    loaded.</li>
             </ul>
 
         <h4>DCC++ and DCC-EX</h4>

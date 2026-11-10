@@ -287,6 +287,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             for (int j = 0; j < ctl.length(); j++) {
                 node.setCardTypeLocation(j, (ctl.charAt(j) - '0'));
             }
+            node.setEsp32FixedCards();   // an ESP32CPNode saved with fewer cards gets them all
 
             if (type == SerialNode.CPNODE || type == SerialNode.CPMEGA || type == SerialNode.ESP32NODE) {
                 // cpNode Options
