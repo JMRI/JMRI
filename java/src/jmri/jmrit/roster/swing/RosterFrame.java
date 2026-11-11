@@ -1248,6 +1248,12 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
 
     protected void showPopup(JmriMouseEvent e) {
         int row = rtable.getTable().rowAtPoint(e.getPoint());
+        RosterEntry popupEntry = null;
+        if (row >= 0) {
+            int modelRow = rtable.getTable().getRowSorter().convertRowIndexToModel(row);
+            String id = rtable.getModel().getValueAt(modelRow, RosterTableModel.IDCOL).toString();
+            popupEntry = Roster.getDefault().getEntryForId(id);
+        }
         if (!rtable.getTable().isRowSelected(row)) {
             rtable.getTable().changeSelection(row, 0, false, false);
         }
@@ -1348,8 +1354,8 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         popupMenu.add(menuItem);
         menuItem.setEnabled(this.getSelectedRosterEntries().length > 0);
 
-        menuItem = new JMenuItem(new jmri.jmrit.roster.swing.RosterEntryToGroupAction(Bundle.getMessage("AddToGroup"), re));
-        if (re == null) {
+        menuItem = new JMenuItem(new jmri.jmrit.roster.swing.RosterEntryToGroupAction(Bundle.getMessage("AddToGroup"), popupEntry));
+        if (popupEntry == null) {
             menuItem.setEnabled(false);
         }
         popupMenu.add(menuItem);
