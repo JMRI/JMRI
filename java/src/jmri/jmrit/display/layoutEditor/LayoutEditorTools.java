@@ -9943,8 +9943,6 @@ public final class LayoutEditorTools {
         if (obj instanceof Integer) {
             log.debug("Setting buffer mast");
             int VerticalOrientation = (int) obj;
-            int offsetx;
-            int offsety;
             int rotation;
 
             Point loc;
@@ -9967,19 +9965,10 @@ public final class LayoutEditorTools {
                     loc = eastToWest(p, icon, isRightSide, fromPoint);
                 }
             }
-            if (VerticalOrientation == LayoutTraverser.HORIZONTAL) {
-                offsetx = 0;
-                offsety = 0;
-                rotation = 0;
-            } else {
-                offsetx = 0;
-                offsety = 0;
-                rotation = 0;
-            }
-
+            rotation = 0;
             int cpx = (int) loc.getX();
             int cpy = (int) loc.getY();
-            setIconOnPanel(icon, rotation, cpx + offsetx, cpy + offsety);
+            setIconOnPanel(icon, rotation, cpx, cpy);
         }
     }
 
