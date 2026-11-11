@@ -566,6 +566,8 @@
   </tocitem>
   <tocitem text="Cab Signaling " target="package.jmri.jmrit.cabsignals.CabSignalPane"/>
 
+  <tocitem text="Simulated Trains " target="html.tools.simulatedtrains.index"/>
+
   <tocitem text="Speedometer " target="html.tools.speedometer.index"/>
 
   <tocitem text="Throttles " target="html.tools.throttle.ThrottleMain">
