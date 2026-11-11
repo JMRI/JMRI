@@ -4,10 +4,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -202,170 +199,168 @@ public class StoreAndCompare extends AbstractAction {
         return result;
     }
 
-    @SuppressFBWarnings(value = {"OS_OPEN_STREAM_EXCEPTION_PATH", "RV_DONT_JUST_NULL_CHECK_READLINE"},
-            justification =
-            "Open streams are not a problem during JMRI shutdown."
-            + "The line represents the end of a XML comment and is not relevant")
-    public static boolean checkFile(File inFile1, File inFile2) throws Exception {
+    @SuppressFBWarnings(value = {"RV_DONT_JUST_NULL_CHECK_READLINE"},
+            justification = "The line represents the end of a XML comment and is not relevant")
+    public static boolean checkFile(File inFile1, File inFile2)
+            throws FileNotFoundException, IOException {
+
         boolean result = false;
         // compare files, except for certain special lines
-        BufferedReader fileStream1 = new BufferedReader(
-                new InputStreamReader(new FileInputStream(inFile1)));
-        BufferedReader fileStream2 = new BufferedReader(
-                new InputStreamReader(new FileInputStream(inFile2)));
+        try (
+                BufferedReader fileStream1 = new BufferedReader(
+                        new InputStreamReader(new FileInputStream(inFile1)));
+                BufferedReader fileStream2 = new BufferedReader(
+                                new InputStreamReader(new FileInputStream(inFile2)))) {
 
-        String line1 = fileStream1.readLine();
-        String line2 = fileStream2.readLine();
+            String line1 = fileStream1.readLine();
+            String line2 = fileStream2.readLine();
+            int lineNumber1 = 0, lineNumber2 = 0;
+            String next1, next2;
+            while ((next1 = fileStream1.readLine()) != null && (next2 = fileStream2.readLine()) != null) {
+                lineNumber1++;
+                lineNumber2++;
 
-        int lineNumber1 = 0, lineNumber2 = 0;
-        String next1, next2;
-        while ((next1 = fileStream1.readLine()) != null && (next2 = fileStream2.readLine()) != null) {
-            lineNumber1++;
-            lineNumber2++;
+                // Do we have a multi line comment? Comments in the xml file is used by LogixNG.
+                // This only happens in the first file since store() will not store comments
+                if  (next1.startsWith("<!--")) {
+                    while ((next1 = fileStream1.readLine()) != null && !next1.endsWith("-->")) {
+                        lineNumber1++;
+                    }
 
-            // Do we have a multi line comment? Comments in the xml file is used by LogixNG.
-            // This only happens in the first file since store() will not store comments
-            if  (next1.startsWith("<!--")) {
-                while ((next1 = fileStream1.readLine()) != null && !next1.endsWith("-->")) {
+                    // If here, we either have a line that ends with --> or we have reached end of file
+                    if (fileStream1.readLine() == null) break;
+
+                    // If here, we have a line that ends with --> or we have reached end of file
+                    continue;
+                }
+
+                // where the (empty) entryexitpairs line ends up seems to be non-deterministic
+                // so if we see it in either file we just skip it
+                String entryexitpairs = "<entryexitpairs class=\"jmri.jmrit.signalling.configurexml.EntryExitPairsXml\" />";
+                if (line1.contains(entryexitpairs)) {
+                    line1 = next1;
+                    if ((next1 = fileStream1.readLine()) == null) {
+                        break;
+                    }
                     lineNumber1++;
                 }
+                if (line2.contains(entryexitpairs)) {
+                    line2 = next2;
+                    if ((next2 = fileStream2.readLine()) == null) {
+                        break;
+                    }
+                    lineNumber2++;
+                }
 
-                // If here, we either have a line that ends with --> or we have reached endf of file
-                if (fileStream1.readLine() == null) break;
+                // if we get to the file history...
+                String filehistory = "filehistory";
+                if (line1.contains(filehistory) && line2.contains(filehistory)) {
+                    break;  // we're done!
+                }
 
-                // If here, we have a line that ends with --> or we have reached end of file
-                continue;
-            }
+                boolean match = false;  // assume failure (pessimist!)
 
-            // where the (empty) entryexitpairs line ends up seems to be non-deterministic
-            // so if we see it in either file we just skip it
-            String entryexitpairs = "<entryexitpairs class=\"jmri.jmrit.signalling.configurexml.EntryExitPairsXml\" />";
-            if (line1.contains(entryexitpairs)) {
+                String[] startsWithStrings = {
+                    "  <!--Written by JMRI version",
+                    "    <test>",       // version changes over time
+                    "    <modifier",    // version changes over time
+                    "    <major",       // version changes over time
+                    "    <minor",       // version changes over time
+                    "<layout-config",   // Linux seems to put attributes in different order
+                    "<?xml-stylesheet", // Linux seems to put attributes in different order
+                    "    <memory systemName=\"IMCURRENTTIME\"", // time varies - old format
+                    "    <modifier>This line ignored</modifier>"
+                };
+                for (String startsWithString : startsWithStrings) {
+                    if (line1.startsWith(startsWithString) && line2.startsWith(startsWithString)) {
+                        match = true;
+                        break;
+                    }
+                }
+
+                // Memory variables have a value attribute for non-null values or no attribute.
+                if (!match) {
+                    var mem1 = line1.startsWith("    <memory value") || line1.startsWith("    <memory>");
+                    var mem2 = line2.startsWith("    <memory value") || line2.startsWith("    <memory>");
+                    if (mem1 && mem2) {
+                        match = true;
+                    }
+                }
+
+                // Screen size will vary when written out
+                if (!match) {
+                    if (line1.contains("  <LayoutEditor")) {
+                        // if either line contains a windowheight attribute
+                        String windowheight_regexe = "( windowheight=\"[^\"]*\")";
+                        line1 = filterLineUsingRegEx(line1, windowheight_regexe);
+                        line2 = filterLineUsingRegEx(line2, windowheight_regexe);
+                        // if either line contains a windowheight attribute
+                        String windowwidth_regexe = "( windowwidth=\"[^\"]*\")";
+                        line1 = filterLineUsingRegEx(line1, windowwidth_regexe);
+                        line2 = filterLineUsingRegEx(line2, windowwidth_regexe);
+                    }
+                }
+
+                // window positions will sometimes differ based on window decorations.
+                if (!match) {
+                    if (line1.contains("  <LayoutEditor") ||
+                            line1.contains(" <switchboardeditor")) {
+                        // if either line contains a y position attribute
+                        String yposition_regexe = "( y=\"[^\"]*\")";
+                        line1 = filterLineUsingRegEx(line1, yposition_regexe);
+                        line2 = filterLineUsingRegEx(line2, yposition_regexe);
+                        // if either line contains an x position attribute
+                        String xposition_regexe = "( x=\"[^\"]*\")";
+                        line1 = filterLineUsingRegEx(line1, xposition_regexe);
+                        line2 = filterLineUsingRegEx(line2, xposition_regexe);
+                    }
+                }
+
+                // Dates can vary when written out
+                String date_string = "<date>";
+                if (!match && line1.contains(date_string) && line2.contains(date_string)) {
+                    match = true;
+                }
+
+                if (!match) {
+                    // remove fontname and fontFamily attributes from comparison
+                    String fontname_regexe = "( fontname=\"[^\"]*\")";
+                    line1 = filterLineUsingRegEx(line1, fontname_regexe);
+                    line2 = filterLineUsingRegEx(line2, fontname_regexe);
+                    String fontFamily_regexe = "( fontFamily=\"[^\"]*\")";
+                    line1 = filterLineUsingRegEx(line1, fontFamily_regexe);
+                    line2 = filterLineUsingRegEx(line2, fontFamily_regexe);
+                }
+
+                // Check if timebase is ignored
+                if (!match && line1.startsWith("  <timebase") && line2.startsWith("  <timebase")) {
+                    if (_preferences.isIgnoreTimebaseEnabled()) {
+                        match = true;
+                    }
+                }
+
+                // Check if sensor icon label colors are ignored
+                if (!match
+                        && line1.startsWith("    <sensoricon") && line2.startsWith("    <sensoricon")
+                        && line1.contains("icon=\"no\"") && line2.contains("icon=\"no\"")
+                        && _preferences.isIgnoreSensorColorsEnabled()) {
+                    line1 = removeSensorColors(line1);
+                    line2 = removeSensorColors(line2);
+                }
+
+                if (!match && !line1.equals(line2)) {
+                    log.warn("Match failed in StoreAndCompare:");
+                    log.warn("    file1:line {}: \"{}\"", lineNumber1, line1);
+                    log.warn("    file2:line {}: \"{}\"", lineNumber2, line2);
+                    log.warn("  comparing file1:\"{}\"", inFile1.getPath());
+                    log.warn("         to file2:\"{}\"", inFile2.getPath());
+                    result = true;
+                    break;
+                }
                 line1 = next1;
-                if ((next1 = fileStream1.readLine()) == null) {
-                    break;
-                }
-                lineNumber1++;
-            }
-            if (line2.contains(entryexitpairs)) {
                 line2 = next2;
-                if ((next2 = fileStream2.readLine()) == null) {
-                    break;
-                }
-                lineNumber2++;
-            }
-
-            // if we get to the file history...
-            String filehistory = "filehistory";
-            if (line1.contains(filehistory) && line2.contains(filehistory)) {
-                break;  // we're done!
-            }
-
-            boolean match = false;  // assume failure (pessimist!)
-
-            String[] startsWithStrings = {
-                "  <!--Written by JMRI version",
-                "    <test>",       // version changes over time
-                "    <modifier",    // version changes over time
-                "    <major",       // version changes over time
-                "    <minor",       // version changes over time
-                "<layout-config",   // Linux seems to put attributes in different order
-                "<?xml-stylesheet", // Linux seems to put attributes in different order
-                "    <memory systemName=\"IMCURRENTTIME\"", // time varies - old format
-                "    <modifier>This line ignored</modifier>"
-            };
-            for (String startsWithString : startsWithStrings) {
-                if (line1.startsWith(startsWithString) && line2.startsWith(startsWithString)) {
-                    match = true;
-                    break;
-                }
-            }
-
-            // Memory variables have a value attribute for non-null values or no attribute.
-            if (!match) {
-                var mem1 = line1.startsWith("    <memory value") || line1.startsWith("    <memory>");
-                var mem2 = line2.startsWith("    <memory value") || line2.startsWith("    <memory>");
-                if (mem1 && mem2) {
-                    match = true;
-                }
-            }
-
-            // Screen size will vary when written out
-            if (!match) {
-                if (line1.contains("  <LayoutEditor")) {
-                    // if either line contains a windowheight attribute
-                    String windowheight_regexe = "( windowheight=\"[^\"]*\")";
-                    line1 = filterLineUsingRegEx(line1, windowheight_regexe);
-                    line2 = filterLineUsingRegEx(line2, windowheight_regexe);
-                    // if either line contains a windowheight attribute
-                    String windowwidth_regexe = "( windowwidth=\"[^\"]*\")";
-                    line1 = filterLineUsingRegEx(line1, windowwidth_regexe);
-                    line2 = filterLineUsingRegEx(line2, windowwidth_regexe);
-                }
-            }
-
-            // window positions will sometimes differ based on window decorations.
-            if (!match) {
-                if (line1.contains("  <LayoutEditor") ||
-                    line1.contains(" <switchboardeditor")) {
-                    // if either line contains a y position attribute
-                    String yposition_regexe = "( y=\"[^\"]*\")";
-                    line1 = filterLineUsingRegEx(line1, yposition_regexe);
-                    line2 = filterLineUsingRegEx(line2, yposition_regexe);
-                    // if either line contains an x position attribute
-                    String xposition_regexe = "( x=\"[^\"]*\")";
-                    line1 = filterLineUsingRegEx(line1, xposition_regexe);
-                    line2 = filterLineUsingRegEx(line2, xposition_regexe);
-                }
-            }
-
-            // Dates can vary when written out
-            String date_string = "<date>";
-            if (!match && line1.contains(date_string) && line2.contains(date_string)) {
-                match = true;
-            }
-
-            if (!match) {
-                // remove fontname and fontFamily attributes from comparison
-                String fontname_regexe = "( fontname=\"[^\"]*\")";
-                line1 = filterLineUsingRegEx(line1, fontname_regexe);
-                line2 = filterLineUsingRegEx(line2, fontname_regexe);
-                String fontFamily_regexe = "( fontFamily=\"[^\"]*\")";
-                line1 = filterLineUsingRegEx(line1, fontFamily_regexe);
-                line2 = filterLineUsingRegEx(line2, fontFamily_regexe);
-            }
-
-            // Check if timebase is ignored
-            if (!match && line1.startsWith("  <timebase") && line2.startsWith("  <timebase")) {
-                if (_preferences.isIgnoreTimebaseEnabled()) {
-                    match = true;
-                }
-            }
-
-            // Check if sensor icon label colors are ignored
-            if (!match
-                    && line1.startsWith("    <sensoricon") && line2.startsWith("    <sensoricon")
-                    && line1.contains("icon=\"no\"") && line2.contains("icon=\"no\"")
-                    && _preferences.isIgnoreSensorColorsEnabled()) {
-                line1 = removeSensorColors(line1);
-                line2 = removeSensorColors(line2);
-            }
-
-            if (!match && !line1.equals(line2)) {
-                log.warn("Match failed in StoreAndCompare:");
-                log.warn("    file1:line {}: \"{}\"", lineNumber1, line1);
-                log.warn("    file2:line {}: \"{}\"", lineNumber2, line2);
-                log.warn("  comparing file1:\"{}\"", inFile1.getPath());
-                log.warn("         to file2:\"{}\"", inFile2.getPath());
-                result = true;
-                break;
-            }
-            line1 = next1;
-            line2 = next2;
-        }   // while readLine() != null
-
-        fileStream1.close();
-        fileStream2.close();
+            }   // while readLine() != null
+        }
 
         return result;
     }
