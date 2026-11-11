@@ -4,6 +4,7 @@ import java.util.*;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.JmriUncheckedException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.AbstractDigitalExpression;
 
@@ -113,7 +114,7 @@ public class Sequence extends AbstractDigitalAction
 
     private void setExpressionSystemNames(List<Map.Entry<String, String>> systemNames) {
         if (!_expressionEntries.isEmpty()) {
-            throw new RuntimeException("expression system names cannot be set more than once");
+            throw new JmriUncheckedException("expression system names cannot be set more than once");
         }
 
         for (Map.Entry<String, String> entry : systemNames) {
@@ -127,7 +128,7 @@ public class Sequence extends AbstractDigitalAction
 
     private void setActionSystemNames(List<Map.Entry<String, String>> systemNames) {
         if (!_actionEntries.isEmpty()) {
-            throw new RuntimeException("action system names cannot be set more than once");
+            throw new JmriUncheckedException("action system names cannot be set more than once");
         }
 
         for (Map.Entry<String, String> entry : systemNames) {
@@ -653,7 +654,7 @@ public class Sequence extends AbstractDigitalAction
             }
         } catch (SocketAlreadyConnectedException ex) {
             // This shouldn't happen and is a runtime error if it does.
-            throw new RuntimeException("socket is already connected");
+            throw new JmriUncheckedException("socket is already connected");
         }
 
         disableCheckForUnconnectedSocket = false;

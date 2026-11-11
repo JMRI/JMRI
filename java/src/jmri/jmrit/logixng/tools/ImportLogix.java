@@ -46,7 +46,7 @@ public class ImportLogix {
                 counter++;
             }
 
-            if (logixNG == null) throw new RuntimeException("Cannot create new LogixNG with name: \"Logix: " + logix.getDisplayName()+"\"");
+            if (logixNG == null) throw new JmriUncheckedException("Cannot create new LogixNG with name: \"Logix: " + logix.getDisplayName()+"\"");
 
             logixNG.activate();
             logixNG.clearStartup();

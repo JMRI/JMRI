@@ -7,6 +7,8 @@ package jmri.jmrit.operations.setup.backup;
 import java.io.File;
 import java.time.*;
 
+import jmri.JmriUncheckedException;
+
 /**
  * Represents the set of Operations files that is considered a "Backup" of the
  * current Operations files.
@@ -55,14 +57,14 @@ public class BackupSet {
             if (f.isFile()) {
                 ok = f.delete();
                 if (!ok) {
-                    throw new RuntimeException("Failed to delete file: " + f.getAbsolutePath()); // NOI18N
+                    throw new JmriUncheckedException("Failed to delete file: " + f.getAbsolutePath()); // NOI18N
                 }
             }
         }
 
         ok = dir.delete();
         if (!ok) {
-            throw new RuntimeException("Failed to delete directory: " + dir.getAbsolutePath()); // NOI18N
+            throw new JmriUncheckedException("Failed to delete directory: " + dir.getAbsolutePath()); // NOI18N
         }
     }
 

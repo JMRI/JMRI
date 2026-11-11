@@ -203,7 +203,7 @@ public class DefaultUser implements User {
         } catch (NoSuchAlgorithmException e) {
             String msg = "MD5 algoritm doesn't exists";
             log.error(msg);
-            throw new RuntimeException(msg);
+            throw new JmriUncheckedException(msg);
         }
     }
 
@@ -247,7 +247,7 @@ public class DefaultUser implements User {
                 } catch (NoSuchAlgorithmException e) {
                     String msg = "MD5 algoritm doesn't exists";
                     log.error(msg);
-                    throw new RuntimeException(msg);
+                    throw new JmriUncheckedException(msg);
                 }
             }
         } else {
@@ -272,7 +272,7 @@ public class DefaultUser implements User {
         } catch (NoSuchAlgorithmException e) {
             String msg = "MD5 algoritm doesn't exists";
             log.error(msg);
-            throw new RuntimeException(msg);
+            throw new JmriUncheckedException(msg);
         }
     }
 

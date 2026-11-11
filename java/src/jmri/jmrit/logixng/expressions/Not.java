@@ -5,6 +5,7 @@ import java.util.Map;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.JmriUncheckedException;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.LogixNG_Category;
 import jmri.jmrit.logixng.FemaleSocket;
@@ -16,26 +17,26 @@ import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 
 /**
  * An Expression that negates the result of its child expression.
- * 
+ *
  * This expression returns False if the child returns True. It returns True
  * if the child returns False. It returns False if no child is connected.
- * 
+ *
  * @author Daniel Bergqvist Copyright 2021
  */
 public class Not extends AbstractDigitalExpression implements FemaleSocketListener {
 
     private String _socketSystemName;
     private final FemaleDigitalExpressionSocket _socket;
-    
+
     public Not(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
-        
+
         super(sys, user);
-        
+
         _socket = InstanceManager.getDefault(DigitalExpressionManager.class)
                 .createFemaleSocket(this, this, Bundle.getMessage("Not_SocketName"));
     }
-    
+
     @Override
     public Base getDeepCopy(Map<String, String> systemNames, Map<String, String> userNames) throws JmriException {
         DigitalExpressionManager manager = InstanceManager.getDefault(DigitalExpressionManager.class);
@@ -46,25 +47,25 @@ public class Not extends AbstractDigitalExpression implements FemaleSocketListen
         copy.setComment(getComment());
         return manager.registerExpression(copy).deepCopyChildren(this, systemNames, userNames);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public LogixNG_Category getCategory() {
         return LogixNG_Category.COMMON;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public boolean evaluate() throws JmriException {
         return !_socket.evaluate();
     }
-    
+
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         switch (index) {
             case 0:
                 return _socket;
-                
+
             default:
                 throw new IllegalArgumentException(
                         String.format("index has invalid value: %d", index));
@@ -75,7 +76,7 @@ public class Not extends AbstractDigitalExpression implements FemaleSocketListen
     public int getChildCount() {
         return 1;
     }
-    
+
     @Override
     public void connected(FemaleSocket socket) {
         if (socket == _socket) {
@@ -84,7 +85,7 @@ public class Not extends AbstractDigitalExpression implements FemaleSocketListen
             throw new IllegalArgumentException("unkown socket");
         }
     }
-    
+
     @Override
     public void disconnected(FemaleSocket socket) {
         if (socket == _socket) {
@@ -93,12 +94,12 @@ public class Not extends AbstractDigitalExpression implements FemaleSocketListen
             throw new IllegalArgumentException("unkown socket");
         }
     }
-    
+
     @Override
     public String getShortDescription(Locale locale) {
         return Bundle.getMessage(locale, "Not_Short");
     }
-    
+
     @Override
     public String getLongDescription(Locale locale) {
         return Bundle.getMessage(locale, "Not_Long");
@@ -119,7 +120,7 @@ public class Not extends AbstractDigitalExpression implements FemaleSocketListen
             if ( !_socket.isConnected()
                     || !_socket.getConnectedSocket().getSystemName()
                             .equals(_socketSystemName)) {
-                
+
                 String socketSystemName = _socketSystemName;
                 _socket.disconnect();
                 if (socketSystemName != null) {
@@ -139,7 +140,7 @@ public class Not extends AbstractDigitalExpression implements FemaleSocketListen
             }
         } catch (SocketAlreadyConnectedException ex) {
             // This shouldn't happen and is a runtime error if it does.
-            throw new RuntimeException("socket is already connected");
+            throw new JmriUncheckedException("socket is already connected");
         }
     }
 
@@ -154,7 +155,7 @@ public class Not extends AbstractDigitalExpression implements FemaleSocketListen
     public void unregisterListenersForThisClass() {
         // Do nothing
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {

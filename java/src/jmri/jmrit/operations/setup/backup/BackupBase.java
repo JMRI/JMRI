@@ -7,6 +7,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 import jmri.InstanceManagerAutoDefault;
+import jmri.JmriUncheckedException;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.OperationsXml;
@@ -31,7 +32,7 @@ public abstract class BackupBase extends PropertyChangeSupport implements Instan
     // Just for testing......
     // If this is not null, it will be thrown to simulate various IO exceptions
     // that are hard to reproduce when running tests..
-    public RuntimeException testException = null;
+//    public JmriUncheckedException testException = null;
 
     // The root directory for all Operations files, usually
     // "user / name / JMRI / operations"
@@ -81,7 +82,7 @@ public abstract class BackupBase extends PropertyChangeSupport implements Instan
         if (!getBackupRoot().exists()) {
             Boolean ok = getBackupRoot().mkdirs();
             if (!ok) {
-                throw new RuntimeException("Unable to make directory: " // NOI18N
+                throw new JmriUncheckedException("Unable to make directory: " // NOI18N
                         + getBackupRoot().getAbsolutePath());
             }
         }
@@ -281,10 +282,10 @@ public abstract class BackupBase extends PropertyChangeSupport implements Instan
         }
 
         // Throw a test exception, if we have one.
-        if (testException != null) {
-            testException.fillInStackTrace();
-            throw testException;
-        }
+//        if (testException != null) {
+//            testException.fillInStackTrace();
+//            throw testException;
+//        }
         firePropertyChange(COPY_FILES_CHANGED_PROPERTY, sourceDir, destDir);
     }
 
@@ -471,7 +472,7 @@ public abstract class BackupBase extends PropertyChangeSupport implements Instan
 
             Boolean ok = dst.setLastModified(src.lastModified());
             if (!ok) {
-                throw new RuntimeException(
+                throw new JmriUncheckedException(
                         "Failed to set modified time on file: " // NOI18N
                                 + dst.getAbsolutePath());
             }

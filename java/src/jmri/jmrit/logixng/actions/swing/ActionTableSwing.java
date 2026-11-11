@@ -300,7 +300,7 @@ public class ActionTableSwing extends AbstractDigitalActionSwing {
                 throw new IllegalArgumentException("_tabbedPaneVariableOperation has unknown selection");
             }
         } catch (ParserException e) {
-            throw new RuntimeException("ParserException: "+e.getMessage(), e);
+            throw new JmriUncheckedException("ParserException: "+e.getMessage(), e);
         }
 
         selectTableSwing.updateObject(action.getSelectTable());

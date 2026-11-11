@@ -4,6 +4,7 @@ import java.lang.reflect.*;
 import java.util.*;
 
 import jmri.JmriException;
+import jmri.JmriUncheckedException;
 import jmri.jmrit.logixng.SymbolTable;
 
 /**
@@ -120,7 +121,7 @@ public class ExpressionNodeMethod implements ExpressionNodeWithParameter {
             else if ((paramTypes[i] == Float.TYPE) && (params[i] instanceof Double)) newParam = (float)(double)params[i];
             else if ((paramTypes[i] == Double.TYPE) && (params[i] instanceof Double)) newParam = params[i];
 
-            else throw new RuntimeException(String.format("%s can not be assigned to %s", params[i].getClass().getName(), paramTypes[i].getName()));
+            else throw new JmriUncheckedException(String.format("%s can not be assigned to %s", params[i].getClass().getName(), paramTypes[i].getName()));
 
             newParams[i] = newParam;
         }
