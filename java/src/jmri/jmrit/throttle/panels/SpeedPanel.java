@@ -10,6 +10,7 @@ import jmri.LocoAddress;
 import jmri.Throttle;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.throttle.interfaces.AddressListener;
+import jmri.util.ThreadingUtil;
 
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -118,6 +119,11 @@ public class SpeedPanel extends JPanel implements java.beans.PropertyChangeListe
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
+        if (!ThreadingUtil.isGUIThread()) {
+            // throttles fire changes on the thread that made them: a Warrant, a script or a connection's own
+            ThreadingUtil.runOnGUIEventually(() -> propertyChange(e));
+            return;
+        }
         if (e.getPropertyName().equals(Throttle.SPEEDSETTING)) {
             currentThrottleVol = ((Float) e.getNewValue()).floatValue();
             scaleSpeedLabel.setText(updateSpeedLabel(useSpeedProfile, currentThrottleVol, currentIsForward));

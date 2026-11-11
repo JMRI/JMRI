@@ -22,6 +22,7 @@ import jmri.jmrit.throttle.preferences.ThrottlesPreferences;
 import jmri.util.FileUtil;
 import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.OptionallyTabbedPanel;
+import jmri.util.ThreadingUtil;
 
 import org.jdom2.Element;
 
@@ -394,6 +395,11 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
+        if (!ThreadingUtil.isGUIThread()) {
+            // throttles fire changes on the thread that made them: a Warrant, a script or a connection's own
+            ThreadingUtil.runOnGUIEventually(() -> propertyChange(e));
+            return;
+        }
         if (e == null) {
             return;
         }

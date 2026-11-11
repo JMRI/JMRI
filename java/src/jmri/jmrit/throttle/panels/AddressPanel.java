@@ -38,6 +38,7 @@ import jmri.jmrix.nce.consist.NceConsistRoster;
 import jmri.jmrix.nce.consist.NceConsistRosterEntry;
 import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.WrapLayout;
+import jmri.util.ThreadingUtil;
 
 import org.jdom2.Element;
 
@@ -836,6 +837,11 @@ public class AddressPanel extends JPanel implements ThrottleListener, PropertyCh
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        if (!ThreadingUtil.isGUIThread()) {
+            // throttles fire changes on the thread that made them: a Warrant, a script or a connection's own
+            ThreadingUtil.runOnGUIEventually(() -> propertyChange(evt));
+            return;
+        }
         if (evt == null) {
             return;
         }
