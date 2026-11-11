@@ -64,12 +64,9 @@
           worth the effort -->
 
      <Match>
-       <!-- Minor clarity issue -->
-       <Bug pattern="RI_REDUNDANT_INTERFACES" />
-     </Match>
-
-     <Match>
        <!-- Design issue -->
+       <!-- We prefer anonymous inner classes over static inner classes. -->
+       <!-- An anonymous inner classes cannot be static. -->
        <Bug pattern="SIC_INNER_SHOULD_BE_STATIC_ANON" />
      </Match>
 
