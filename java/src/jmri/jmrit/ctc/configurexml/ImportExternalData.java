@@ -1,16 +1,10 @@
 package jmri.jmrit.ctc.configurexml;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.beans.XMLDecoder;
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
+
 import jmri.*;
 import jmri.jmrit.ctc.*;
 import jmri.jmrit.ctc.editor.code.*;
@@ -101,20 +95,23 @@ public class ImportExternalData {
         return true;
     }
 
-    @SuppressFBWarnings(value = "OS_OPEN_STREAM_EXCEPTION_PATH", justification = "Low risk due to rare usage")
-    private static void convertClassNameReferences(String fileName) throws Exception {
+    private static void convertClassNameReferences(String fileName)
+            throws FileNotFoundException, IOException {
+
         String temporaryFilename = fileName + TEMPORARY_EXTENSION;
         int errors = 0;
         if (!CTCFiles.deleteFile(temporaryFilename)) errors++;   // Just delete it for safety before we start:
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(CTCFiles.getFullName(fileName)));
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(CTCFiles.getFullName(temporaryFilename)));
-        String aLine = null;
-        while ((aLine = bufferedReader.readLine()) != null) { // Not EOF:
-            aLine = aLine.replaceFirst("jmri.jmrit.ctc.ctcserialdata.", "jmri.jmrit.ctc.configurexml.Import");
-            writeLine(bufferedWriter, aLine);
+
+        try (
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(CTCFiles.getFullName(fileName)));
+                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(CTCFiles.getFullName(temporaryFilename)))) {
+
+            String aLine;
+            while ((aLine = bufferedReader.readLine()) != null) { // Not EOF:
+                aLine = aLine.replaceFirst("jmri.jmrit.ctc.ctcserialdata.", "jmri.jmrit.ctc.configurexml.Import");
+                writeLine(bufferedWriter, aLine);
+            }
         }
-        bufferedReader.close();
-        bufferedWriter.close();
         if (!CTCFiles.deleteFile(fileName)) errors++;   // Just delete it for safety before we start:
         if (!CTCFiles.renameFile(temporaryFilename, fileName, false)) errors++;   // Just delete it for safety before we start:
         log.debug("convertClassNameReferences: errors = {}", errors);
