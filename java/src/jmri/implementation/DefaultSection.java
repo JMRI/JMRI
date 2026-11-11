@@ -2690,6 +2690,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
     @Deprecated(since="5.19.1", forRemoval=true)
     public void setNameFromActiveBlock(Object value) {
         jmri.util.LoggingUtil.deprecationWarning(log, "Section.setNameFromActiveBlock");
+        log.debug("Test");
         boolean beenSet = false;
         if (value == null || getState() == FREE || getState() == UNKNOWN) {
             setNameInBlocks(value);
