@@ -87,7 +87,11 @@ public class PointDetailsTest {
         pd.setNXState(EntryExitPairs.NXBUTTONSELECTED);
         pd.cancelNXButtonTimeOut();
 
-        JUnitUtil.waitFor(() -> sensor.getKnownState() == Sensor.INACTIVE, "button set inactive");
+        // A sensor stores its new state before it tells its listeners, so wait for the listener
+        // to hear of the change, then let the layout thread finish handling it, before looking.
+        JUnitUtil.waitFor(() -> sensor.getKnownState() == Sensor.INACTIVE && !setOnLayoutThread.isEmpty(),
+                "button set inactive");
+        jmri.util.ThreadingUtil.runOnLayout(() -> { });
         sensor.removePropertyChangeListener("KnownState", l);
         // other NX activity on the test panels may also change the sensor; all of it on the layout thread
         assertTrue(setOnLayoutThread.contains(true), "button sensor set");
