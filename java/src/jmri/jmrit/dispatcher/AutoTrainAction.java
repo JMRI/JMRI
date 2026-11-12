@@ -633,6 +633,29 @@ public class AutoTrainAction {
     }
 
     /**
+     * Continue an action that a thread of its own has been waiting on: a
+     * delay, or the train stopping or starting. The waiting thread holds no
+     * lock; the action changes the train and may set sensors, so it continues
+     * on the layout thread (Swing thread), where the train's Block changes are
+     * handled under this object's lock. An action cleared while the step was
+     * waiting to run, which also interrupts its thread, is not continued.
+     *
+     * @param tsa  the action
+     * @param step what to do next for it
+     */
+    private void continueOnLayoutThread(TransitSectionAction tsa, Runnable step) {
+        jmri.util.ThreadingUtil.runOnLayoutEventually(() -> {
+            synchronized (this) {
+                if (_activeActionList.contains(tsa)) {
+                    step.run();
+                } else {
+                    log.trace("Action Code[{}] cleared before it could continue", tsa.getWhatCode());
+                }
+            }
+        });
+    }
+
+    /**
      * A runnable that implements delayed execution of a TransitSectionAction.
      */
     class TSActionDelay implements Runnable {
@@ -648,7 +671,7 @@ public class AutoTrainAction {
         public void run() {
             try {
                 Thread.sleep(_delay);
-                executeAction(_tsa);
+                continueOnLayoutThread(_tsa, () -> executeAction(_tsa));
             } catch (InterruptedException e) {
                 // interrupting this thread will cause it to terminate without executing the action.
             }
@@ -752,7 +775,7 @@ public class AutoTrainAction {
                                 Thread.sleep(_delay);
                             }
                         }
-                        checkDelay(_tsa);
+                        continueOnLayoutThread(_tsa, () -> checkDelay(_tsa));
                     } catch (InterruptedException e) {
                         // interrupting will cause termination without executing the action
                     }
@@ -786,7 +809,7 @@ public class AutoTrainAction {
                                 Thread.sleep(_delay);
                             }
                         }
-                        checkDelay(_tsa);
+                        continueOnLayoutThread(_tsa, () -> checkDelay(_tsa));
                     } catch (InterruptedException e) {
                         // interrupting will cause termination without executing the action
                     }
