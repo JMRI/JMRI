@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2004, 2005, 2007 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="ttjoerg@gmx.de" version="1" lastUpdated="20171230"/>
+  <version author="Ronald Kuhn" version="1.1" lastUpdated="20261005"/>
+  <decoder>
+    <family name="MoBa-Licht Roland Weber" mfg="Public-domain and DIY">
+      <model model="Interior lighting" numOuts="5" numFns="14" maxMotorCurrent="0.09 Amp per group" maxTotalCurrent="0.09 Amp">
+        <versionCV lowVersionID="3"/>
+        <output name="1" label="Pin6" />
+        <output name="2" label="Pin5" />
+        <output name="3" label="Pin3" />
+        <output name="4" label="fw"   />
+        <output name="5" label="rw"   />
+      </model>
+    </family>
+    <programming ops="yes" register="yes" paged="yes" direct="yes"/>
+
+    <variables>
+
+      <!-- CV7 / 8 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+
+      <!-- CV19 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+
+      <!-- CV29 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+
+      <!-- Functions -->
+      <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="FL(f) controls output 3" CV="33" mask="XXXXXVXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      
+      <variable item="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2" default="1" >
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+
+      <variable item="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" > 
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F1 controls output 4" CV="35" mask="XVXXXXXX" minOut="4" default="1" tooltip="F1 aktiv in Richtung fw">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F1 controls output 5" CV="35" mask="VXXXXXXX" minOut="5" default="1" tooltip="F1 aktiv in Richtung rw">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>   
+
+      <variable item="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F2 controls output 3" CV="36" mask="XXXXXVXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F2 controls output 4" CV="36" mask="XVXXXXXX" minOut="4" default="1" tooltip="F2 aktiv in Richtung fw">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F2 controls output 5" CV="36" mask="VXXXXXXX" minOut="5" default="1" tooltip="F2 aktiv in Richtung rw">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>   
+
+      <variable item="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F3 controls output 2" CV="37" mask="XXXXXXVX" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F3 controls output 4" CV="37" mask="XVXXXXXX" minOut="4" tooltip="F3 aktiv in Richtung fw">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F3 controls output 5" CV="37" mask="VXXXXXXX" minOut="5" tooltip="F3 aktiv in Richtung rw">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>   
+
+      <variable item="F4 controls output 1" CV="38" mask="XXXXXXXV" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F4 controls output 2" CV="38" mask="XXXXXXVX" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F4 controls output 3" CV="38" mask="XXXXXVXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F4 controls output 4" CV="38" mask="XVXXXXXX" minOut="4" tooltip="F4 aktiv in Richtung fw">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F4 controls output 5" CV="38" mask="VXXXXXXX" minOut="5" tooltip="F4 aktiv in Richtung rw">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>   
+
+      <variable item="F5 controls output 1" CV="39" mask="XXXXXXXV" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F5 controls output 2" CV="39" mask="XXXXXXVX" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F5 controls output 3" CV="39" mask="XXXXXVXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F5 controls output 4" CV="39" mask="XVXXXXXX" minOut="4" tooltip="F5 aktiv in Richtung fw">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F5 controls output 5" CV="39" mask="VXXXXXXX" minOut="5" tooltip="F5 aktiv in Richtung rw">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>   
+ 
+      <variable item="F6 controls output 1" CV="40" mask="XXXXXXXV" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F6 controls output 2" CV="40" mask="XXXXXXVX" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F6 controls output 3" CV="40" mask="XXXXXVXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F6 controls output 4" CV="40" mask="XVXXXXXX" minOut="4" tooltip="F6 aktiv in Richtung fw">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F6 controls output 5" CV="40" mask="VXXXXXXX" minOut="5" tooltip="F6 aktiv in Richtung rw">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>   
+
+      <variable item="F7 controls output 1" CV="41" mask="XXXXXXXV" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F7 controls output 2" CV="41" mask="XXXXXXVX" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F7 controls output 3" CV="41" mask="XXXXXVXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F7 controls output 4" CV="41" mask="XVXXXXXX" minOut="4" tooltip="F7 aktiv in Richtung fw">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F7 controls output 5" CV="41" mask="VXXXXXXX" minOut="5" tooltip="F7 aktiv in Richtung rw">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>   
+
+      <variable item="F8 controls output 1" CV="42" mask="XXXXXXXV" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F8 controls output 2" CV="42" mask="XXXXXXVX" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F8 controls output 3" CV="42" mask="XXXXXVXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F8 controls output 4" CV="42" mask="XVXXXXXX" minOut="4" tooltip="F8 aktiv in Richtung fw">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F8 controls output 5" CV="42" mask="VXXXXXXX" minOut="5" tooltip="F8 aktiv in Richtung rw">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>   
+
+      <variable item="F9 controls output 1" CV="43" mask="XXXXXXXV" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F9 controls output 2" CV="43" mask="XXXXXXVX" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F9 controls output 3" CV="43" mask="XXXXXVXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F9 controls output 4" CV="43" mask="XVXXXXXX" minOut="4" tooltip="F9 aktiv in Richtung fw">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F9 controls output 5" CV="43" mask="VXXXXXXX" minOut="5" tooltip="F9 aktiv in Richtung rw">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>   
+
+      <variable item="F10 controls output 1" CV="44" mask="XXXXXXXV" minOut="1" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F10 controls output 2" CV="44" mask="XXXXXXVX" minOut="2" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F10 controls output 3" CV="44" mask="XXXXXVXX" minOut="3" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F10 controls output 4" CV="44" mask="XVXXXXXX" minOut="4" default="1" tooltip="F10 aktiv in Richtung fw">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F10 controls output 5" CV="44" mask="VXXXXXXX" minOut="5" default="1" tooltip="F10 aktiv in Richtung rw">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>   
+
+      <variable item="F11 controls output 1" CV="45" mask="XXXXXXXV" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F11 controls output 2" CV="45" mask="XXXXXXVX" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F11 controls output 3" CV="45" mask="XXXXXVXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F11 controls output 4" CV="45" mask="XVXXXXXX" minOut="4" tooltip="F11 aktiv in Richtung fw">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F11 controls output 5" CV="45" mask="VXXXXXXX" minOut="5" tooltip="F11 aktiv in Richtung rw">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>   
+
+      <variable item="F12 controls output 1" CV="46" mask="XXXXXXXV" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F12 controls output 2" CV="46" mask="XXXXXXVX" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F12 controls output 3" CV="46" mask="XXXXXVXX" minOut="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F12 controls output 4" CV="46" mask="XVXXXXXX" minOut="4" tooltip="F12 aktiv in Richtung fw">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="F12 controls output 5" CV="46" mask="VXXXXXXX" minOut="5" tooltip="F12 aktiv in Richtung rw">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>   
+
+      <!-- Dimming -->
+      <variable item="Dimmung A1" CV="62" default="100" tooltip="CV62;  0=0% 255=100%">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable item="Dimmung A2" CV="63" default="100" tooltip="CV63;  0=0% 255=100%">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable item="Dimmung A3" CV="64" default="100" tooltip="CV64;  0=0% 255=100%">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable item="Komfortdimmung aktiv" CV="48" mask="XXXVXXXX" tooltip="CV48 bit5;  Komfortdimmung über Geschwind.regler + F8 aktiv">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+
+      <!-- Flashlight -->
+      <variable item="Blinken A1" CV="55" mask="XXXXXXXV" tooltip="CV55 bit1" >
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="Blinken A2" CV="55" mask="XXXXXXVX" tooltip="CV55 bit2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="Blinken A3" CV="55" mask="XXXXXVXX" tooltip="CV55 bit3" default="1" >
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="Blinken Zufallsgenerator" CV="55" tooltip="CV55 bit8" mask="VXXXXXXX" >
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="Blinken max. Einschaltdauer" CV="56" default="1" tooltip="CV56;  6 ca. 0,1 sec">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable item="Blinken max. Ausschaltdauer" CV="57" default="200" tooltip="CV57;  65 ca. 1 sec">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable item="Blinken Anzahl Impulse" CV="66" default="25" tooltip="CV66">
+        <decVal min="0" max="255"/>
+      </variable>
+
+      <!-- Reed contact -->
+      <variable item="Reed A1" CV="48" mask="XXXXXXXV" tooltip="CV48 bit1" >
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="Reed A2" CV="48" mask="XXXXXXVX" tooltip="CV48 bit2" >
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="Reed A3" CV="48" mask="XXXXXVXX" tooltip="CV48 bit3" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="Reed Abschaltung aktiv" CV="48" mask="VXXXXXXX" tooltip="CV48 bit8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+      <variable item="Reed mind Kontaktdauer" CV="49" default="50" tooltip="CV49; Wert in msec" >
+        <decVal min="0" max="255"/>
+      </variable>
+
+      <!-- Direction -->
+      <variable item="Global Richtungsabhaengig" CV="47" mask="XXXXXXXV" default="1" tooltip="CV47">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+      </variable>
+
+    </variables>
+  </decoder>
+
+  <xi:include href="http://jmri.org/xml/decoders/public_domain/Pane-Weber-Effects.xml"/>
+
+ </decoder-config>

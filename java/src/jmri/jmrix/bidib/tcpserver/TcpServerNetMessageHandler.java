@@ -2,6 +2,8 @@ package jmri.jmrix.bidib.tcpserver;
 
 import java.io.ByteArrayOutputStream;
 
+import jmri.JmriUncheckedException;
+
 import org.bidib.jbidibc.messages.MessageReceiver;
 import org.bidib.jbidibc.messages.utils.ByteUtils;
 import org.bidib.jbidibc.net.serialovertcp.*;
@@ -14,20 +16,20 @@ import org.slf4j.LoggerFactory;
  * This is the network message handler for both directions.
  * It receives the raw data from the TCP socket and forwards them
  * to the message receiver.
- * 
+ *
  * The send() message is called from the BiDiBMessageReceiver to send
  * data from tge BiDIB connection back to the TCP client. Data is encoded
  * with the serial encoder (i.e. add the Magic bytes etc.) and then sent
  * to the NetBidibPort, which then finally send the messages to all
  * connected clients.
- * 
+ *
  * @author Eckart Meyer Copyright (C) 2023
  *
  */
 public class TcpServerNetMessageHandler  implements NetMessageHandler {
-    
+
     private final MessageReceiver messageReceiverDelegate;
-    
+
     public TcpServerNetMessageHandler(MessageReceiver messageReceiverDelegate) {
         this.messageReceiverDelegate = messageReceiverDelegate;
     }
@@ -58,13 +60,13 @@ public class TcpServerNetMessageHandler  implements NetMessageHandler {
         }
         catch (Exception ex) {
             log.warn("Process messages failed.", ex);
-            throw new RuntimeException(ex);
+            throw new JmriUncheckedException(ex);
         }
     }
-    
+
     /**
      * Send serial encoded data (one or more messages) to the to the TCP port
-     * 
+     *
      * @param port
      *            the port
      * @param data
@@ -86,7 +88,7 @@ public class TcpServerNetMessageHandler  implements NetMessageHandler {
             log.warn("no data sent", e);
         }
     }
-    
+
     @Override
     public void acceptClient(String remoteHost) {
         log.info("Accept client with address: {}", remoteHost);

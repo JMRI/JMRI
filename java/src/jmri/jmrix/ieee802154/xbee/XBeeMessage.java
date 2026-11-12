@@ -7,7 +7,6 @@ import com.digi.xbee.api.packet.XBeeAPIPacket;
 import com.digi.xbee.api.packet.common.ATCommandPacket;
 import com.digi.xbee.api.packet.common.RemoteATCommandPacket;
 import com.digi.xbee.api.packet.common.TransmitPacket;
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.util.Arrays;
 
@@ -141,69 +140,77 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
 
     /**
      * Get an XBee Message requesting a digital output pin be turned on or off.
-     * @param address XBee Address of the node.  This can be either 
+     * @param address XBee Address of the node.  This can be either
      16 bit or 64 bit.
      * @param pin the DIO Pin on the XBee to use.
      * @param on boolean value stating whether the pin should be turned
      *        on (true) or off (false)
      * @return XBeeMessage with a message requesting a digital IO pin be turned on or off.
      */
-    @SuppressFBWarnings( value = {"BC_UNCONFIRMED_CAST"}, justification="The passed address must be either a 16 bit address or a 64 bit address, and we check to see if the address is a 16 bit address, so it is redundant to also check for a 64 bit address")
     public static XBeeMessage getRemoteDoutMessage(Object address, int pin, boolean on) {
         byte[] onValue = {0x5};
         byte[] offValue = {0x4};
         if (address instanceof XBee16BitAddress) {
             return new XBeeMessage(new RemoteATCommandPacket(XBeeAPIPacket.NO_FRAME_ID,XBee64BitAddress.COORDINATOR_ADDRESS,(XBee16BitAddress) address, XBeeTransmitOptions.NONE,"D" + pin, on ? onValue : offValue));
-        } else {
+        } else if (address instanceof XBee64BitAddress) {
             return new XBeeMessage(new RemoteATCommandPacket(XBeeAPIPacket.NO_FRAME_ID,(XBee64BitAddress) address,XBee16BitAddress.UNKNOWN_ADDRESS,XBeeTransmitOptions.NONE, "D" + pin, on ? onValue : offValue));
+        } else {
+            throw new IllegalArgumentException("address is neither a XBee16BitAddress nor a XBee64BitAddress: " +
+                    (address != null ? address.getClass().toString() : "null"));
         }
     }
 
     /**
      * Get an XBee Message requesting the status of a digital IO pin.
-     * @param address XBee Address of the node.  This can be either 
+     * @param address XBee Address of the node.  This can be either
      16 bit or 64 bit.
      * @param pin the DIO Pin on the XBee to use.
      * @return XBeeMessage with a digital IO pin status request.
      */
-    @SuppressFBWarnings( value = {"BC_UNCONFIRMED_CAST"}, justification="The passed address must be either a 16 bit address or a 64 bit address, and we check to see if the address is a 16 bit address, so it is redundant to also check for a 64 bit address")
     public static XBeeMessage getRemoteDoutMessage(Object address, int pin) {
         if (address instanceof com.digi.xbee.api.models.XBee16BitAddress) {
             return new XBeeMessage(new RemoteATCommandPacket(XBeeAPIPacket.NO_FRAME_ID,XBee64BitAddress.COORDINATOR_ADDRESS,(XBee16BitAddress) address,XBeeTransmitOptions.NONE,"D" + pin, ""));
-        } else {
+        } else if (address instanceof XBee64BitAddress) {
             return new XBeeMessage(new RemoteATCommandPacket(XBeeAPIPacket.NO_FRAME_ID,(XBee64BitAddress) address,XBee16BitAddress.UNKNOWN_ADDRESS,XBeeTransmitOptions.NONE,"D" + pin, ""));
+        } else {
+            throw new IllegalArgumentException("address is neither a XBee16BitAddress nor a XBee64BitAddress: " +
+                    (address != null ? address.getClass().toString() : "null"));
         }
     }
 
     /**
      * Get an XBee Message requesting an IO sample from the node.
-     * @param address XBee Address of the node.  This can be either 
+     * @param address XBee Address of the node.  This can be either
      * @return XBeeMessage with a force IO sample request.
      16 bit or 64 bit.
      */
-    @SuppressFBWarnings( value = {"BC_UNCONFIRMED_CAST"}, justification="The passed address must be either a 16 bit address or a 64 bit address, and we check to see if the address is a 16 bit address, so it is redundant to also check for a 64 bit address")
     public static XBeeMessage getForceSampleMessage(Object address) {
         if (address instanceof com.digi.xbee.api.models.XBee16BitAddress) {
             return new XBeeMessage(new RemoteATCommandPacket(XBeeAPIPacket.NO_FRAME_ID, XBee64BitAddress.COORDINATOR_ADDRESS, (XBee16BitAddress) address, XBeeTransmitOptions.NONE, "IS", ""));
-        } else {
+        } else if (address instanceof XBee64BitAddress) {
             return new XBeeMessage(new RemoteATCommandPacket(XBeeAPIPacket.NO_FRAME_ID, (XBee64BitAddress) address, XBee16BitAddress.UNKNOWN_ADDRESS, XBeeTransmitOptions.NONE, "IS", ""));
+        } else {
+            throw new IllegalArgumentException("address is neither a XBee16BitAddress nor a XBee64BitAddress: " +
+                    (address != null ? address.getClass().toString() : "null"));
         }
     }
 
     /**
      * Get an XBee Message requesting data be sent to the serial port
      * on a remote node.
-     * @param address XBee Address of the node.  This can be either 
+     * @param address XBee Address of the node.  This can be either
      16 bit or 64 bit.
      * @param payload An byte array containing the bytes to be transfered, as the low order word of the integer.
      * @return XBeeMessage with remote transmission request for the provided address containing the provided payload.
      */
-    @SuppressFBWarnings( value = {"BC_UNCONFIRMED_CAST"}, justification="The passed address must be either a 16 bit address or a 64 bit address, and we check to see if the address is a 16 bit address, so it is redundant to also check for a 64 bit address")
     public static XBeeMessage getRemoteTransmissionRequest(Object address, byte[] payload) {
         if (address instanceof com.digi.xbee.api.models.XBee16BitAddress) {
             return getRemoteTransmissionRequest((com.digi.xbee.api.models.XBee16BitAddress) address, payload);
-        } else {
+        } else if (address instanceof XBee64BitAddress) {
             return getRemoteTransmissionRequest((com.digi.xbee.api.models.XBee64BitAddress) address, payload);
+        } else {
+            throw new IllegalArgumentException("address is neither a XBee16BitAddress nor a XBee64BitAddress: " +
+                    (address != null ? address.getClass().toString() : "null"));
         }
     }
 
@@ -217,7 +224,7 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
     public static XBeeMessage getRemoteTransmissionRequest(XBee16BitAddress address, byte[] payload) {
         return new XBeeMessage(new TransmitPacket(XBeeAPIPacket.NO_FRAME_ID,XBee64BitAddress.COORDINATOR_ADDRESS,address,255,XBeeTransmitOptions.NONE,payload));
     }
- 
+
     /**
      * Get an XBee Message requesting data be sent to the serial port
      * on a remote node.

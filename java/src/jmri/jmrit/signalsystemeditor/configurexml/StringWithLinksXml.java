@@ -5,6 +5,7 @@ import java.util.List;
 import org.jdom2.Content;
 import org.jdom2.Element;
 
+import jmri.JmriUncheckedException;
 import jmri.jmrit.signalsystemeditor.StringWithLinks;
 
 /**
@@ -34,10 +35,10 @@ public class StringWithLinksXml {
                     }
                     _links.add(new StringWithLinks.Link(e.getText(), e.getAttributeValue("href")));
                 } else {
-                    throw new RuntimeException("Unkown tag: " + e.getName());
+                    throw new JmriUncheckedException("Unkown tag: " + e.getName());
                 }
             } else {
-                throw new RuntimeException("Unkown CType: " + content.getCType().name());
+                throw new JmriUncheckedException("Unkown CType: " + content.getCType().name());
             }
         }
 

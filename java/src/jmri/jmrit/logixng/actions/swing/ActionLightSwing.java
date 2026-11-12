@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.InstanceManager;
+import jmri.JmriUncheckedException;
 import jmri.Light;
 import jmri.LightManager;
 import jmri.jmrit.logixng.*;
@@ -258,7 +259,7 @@ public class ActionLightSwing extends AbstractDigitalActionSwing {
             }
 
         } catch (ParserException e) {
-            throw new RuntimeException("ParserException: "+e.getMessage(), e);
+            throw new JmriUncheckedException("ParserException: "+e.getMessage(), e);
         }
     }
 

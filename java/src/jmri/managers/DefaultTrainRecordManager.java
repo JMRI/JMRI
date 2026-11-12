@@ -17,6 +17,7 @@ import jmri.TrainRecord;
 import jmri.TrainRecordManager;
 import jmri.beans.PropertyChangeSupport;
 import jmri.implementation.DefaultTrainRecord;
+import jmri.implementation.TrainRecordSpeedWatcher;
 import jmri.implementation.TrainRecordWatcher;
 
 /**
@@ -31,11 +32,15 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
 
     private final List<DefaultTrainRecord> records = new ArrayList<>();
     private final TrainRecordWatcher watcher;
+    private final TrainRecordSpeedWatcher speedWatcher = new TrainRecordSpeedWatcher(() -> new ArrayList<>(records));
     private boolean disposed = false;
+    private final java.util.Map<Block, java.util.Deque<BlockEvent>> blockHistories = new java.util.HashMap<>();
+    private final java.beans.PropertyChangeListener historyListener = this::historyChanged;
 
     /**
      * Make the manager, which starts following the layout's Blocks: their
-     * values always, their sensors while any record is placed.
+     * values always, their sensors while any record is placed. It follows
+     * speed commands while any record has a loco address.
      */
     public DefaultTrainRecordManager() {
         watcher = new TrainRecordWatcher(() -> new ArrayList<>(records), new TrainRecordWatcher.Placer() {
@@ -60,6 +65,7 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
         if (!disposed) {
             disposed = true;
             watcher.dispose();
+            speedWatcher.dispose();
         }
     }
 
@@ -83,13 +89,13 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
             }
             r = newRecord(name);
             if (value instanceof BasicRosterEntry) {
-                r.setRosterEntry((BasicRosterEntry) value);
+                r.insertFirstRosterEntry((BasicRosterEntry) value);
             } else {
                 r.addIdTag((IdTag) value);
             }
         }
         if (!r.isPlaced()) {
-            r.place(List.of(block), false);
+            r.place(List.of(block), false, TrainRecord.Reason.Rule.PLACED_BY_VALUE);
         }
     }
 
@@ -117,6 +123,11 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
         }
 
         @Override
+        public void rosterEntriesChanged(@Nonnull TrainRecord record) {
+            speedWatcher.update();
+        }
+
+        @Override
         public void checkIdTag(@Nonnull TrainRecord record, @Nonnull IdTag tag) {
             TrainRecord other = getByIdTag(tag);
             if (other != null && other != record) {
@@ -136,6 +147,7 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
             throw new IllegalArgumentException("a train record named " + n + " already exists");
         }
         DefaultTrainRecord r = new DefaultTrainRecord(n, registry);
+        r.addPropertyChangeListener(TrainRecord.PROPERTY_HISTORY, historyListener);
         records.add(r);
         firePropertyChange(PROPERTY_RECORDS, null, r);
         return r;
@@ -146,7 +158,7 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
     @InvokeOnLayoutThread
     public void remove(@Nonnull TrainRecord record) {
         Objects.requireNonNull(record, "record");
-        if (record.isRemoved()) {
+        if (record.isDisposed()) {
             return;
         }
         if (!(record instanceof DefaultTrainRecord) || !records.contains(record)) {
@@ -154,9 +166,43 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
         }
         DefaultTrainRecord r = (DefaultTrainRecord) record;
         records.remove(r);
-        r.markRemoved();
+        r.removePropertyChangeListener(TrainRecord.PROPERTY_HISTORY, historyListener);
+        r.dispose();
         watcher.placementChanged();
+        speedWatcher.update();
         firePropertyChange(PROPERTY_RECORDS, r, null);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @Nonnull
+    public List<BlockEvent> getHistory(@Nonnull Block block) {
+        java.util.Deque<BlockEvent> h = blockHistories.get(block);
+        return h == null ? new ArrayList<>() : new ArrayList<>(h);
+    }
+
+    private void historyChanged(java.beans.PropertyChangeEvent e) {
+        if (!(e.getSource() instanceof TrainRecord) || !(e.getNewValue() instanceof TrainRecord.Reason)) {
+            return;
+        }
+        TrainRecord.Reason reason = (TrainRecord.Reason) e.getNewValue();
+        String train = ((TrainRecord) e.getSource()).getName();
+        List<Block> blocks = new ArrayList<>();
+        if (reason.getBlock() != null) {
+            blocks.add(reason.getBlock());
+        }
+        for (Block b : reason.getThrough()) {
+            if (!blocks.contains(b)) {
+                blocks.add(b);
+            }
+        }
+        for (Block b : blocks) {
+            java.util.Deque<BlockEvent> h = blockHistories.computeIfAbsent(b, k -> new java.util.ArrayDeque<>());
+            h.addFirst(new BlockEvent(train, reason));
+            while (h.size() > BLOCK_HISTORY_LENGTH) {
+                h.removeLast();
+            }
+        }
     }
 
     /** {@inheritDoc} */

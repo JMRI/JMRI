@@ -1,5 +1,7 @@
 package jmri.beans;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.beans.IndexedPropertyDescriptor;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
@@ -129,6 +131,8 @@ public class BeanUtil {
      * @param index The element to return.
      * @return the value at <i>index</i> or null
      */
+    @SuppressFBWarnings(value = {"THROWS_METHOD_THROWS_RUNTIMEEXCEPTION"},
+            justification = "We throw cause of exception if the cause is a runtime exception")
     public static Object getIntrospectedIndexedProperty(Object bean, String key, int index) {
         if (bean != null && key != null) {
             try {
@@ -452,7 +456,7 @@ public class BeanUtil {
      * it is wrapped by a PropertyChangeListenerProxy such that using
      * {@code Arrays.toList(getPropertyChangeListeners()).contains(needle) } may
      * return false when <i>needle</i> is listening to a specific property.
-     * 
+     *
      * @param listeners the array of listeners to search through
      * @param needle    the listener to search for
      * @return true if <i>needle</i> is in <i>listeners</i>; false otherwise

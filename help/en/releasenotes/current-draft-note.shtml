@@ -2,6 +2,11 @@
     <h3>Hardware Support</h3>
         <ul>
           <li></li>
+          <li>For developers: a test that closes a connection from another
+              thread no longer sometimes fails on an "Input Stream NULL when
+              reading" error from the connection's receive thread. JMRI itself
+              closes a connection only from that thread, so nothing changes in
+              use.</li>
         </ul>
 
         <h4>Acela CTI</h4>
@@ -21,11 +26,23 @@
 
         <h4><a href="http://bidib.org/index_e.html">BiDiB</a></h4>
             <ul>
-                <li></li>
+                <li>Global Programmer: Disable power-on check before programming
+                    since some hardware (e.g. Tams mc2) does not sent power state correctly.</li>
             </ul>
 
         <h4>CBUS</h4>
             <ul>
+                <li>For developers: a CBUS connection now reports the speed and
+                    direction commanded for each loco, from the command
+                    station's sessions on the bus, whichever cab sent them
+                    (<code>jmri.LocoSpeedSource</code>), and when a session
+                    ends. It only listens. Nothing users see changes.</li>
+                <li>CBUS throttles: when several throttles are asked for at
+                    the same moment, for example by Dispatcher starting several
+                    automatic trains, by opening a saved throttle layout or by
+                    a script, each now gets its throttle. Before, only the
+                    last request was answered and the others waited with no
+                    error. Each request now times out on its own.</li>
                 <li>CBUS sensors, turnouts and lights: each frame sent or
                     received is now passed only to the sensors, turnouts and
                     lights that use its event, instead of to every one on the
@@ -35,6 +52,11 @@
                     would: frames due at the same moment now arrive in the
                     order they were sent, where before they could arrive in
                     either order.</li>
+                <li>Simulated trains run on CAN Simulation connections: they
+                    obey the simulated command station, whichever cab drives
+                    them, and report on CBUS sensors as detectors on the bus
+                    would. The simulated command station handles requests to
+                    set a session's speed step mode (STMOD).</li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -94,7 +116,10 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>LocoNet sensors now give raw state listeners the time each
+                    report was received, taken as soon as the message is read
+                    from LocoNet, instead of when it reached the layout thread
+                    (Swing thread), on every kind of LocoNet connection.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -329,7 +354,7 @@
 
         <h4>Public Domain and DIY decoders</h4>
             <ul>
-                <li></li>
+                <li>added "MoBa-Licht Roland Weber" Interior lighting-Decoder</li>
             </ul>
 
         <h4>QSI</h4>
@@ -389,7 +414,8 @@
 
         <h4>Uhlenbrock</h4>
             <ul>
-                <li></li>
+                <li>IntelliSound 4 microModule added</li>
+                <li>IntelliSound 6 Module added</li>
             </ul>
 
         <h4>Umelec</h4>
@@ -409,7 +435,7 @@
 
         <h4>ZIMO</h4>
             <ul>
-                <li></li>
+                <li>A few minor fixes for the MN decoder</li>
             </ul>
 
         <h4>Miscellaneous</h4>
@@ -464,6 +490,14 @@
                  its speed profile, it reaches the end of the Section. A
                  warning naming the stop sensor is written to the System
                  Console.</li>
+             <li>Terminating an automatic train no longer freezes JMRI.
+                 Terminating waited until the train's speed read zero, and
+                 if Dispatcher gave the train another Section at that moment
+                 the train set its speed again, so the wait never ended. The
+                 same could leave that Section allocated to a train that no
+                 longer existed, so no other train could have it. A train is
+                 now stopped at once when it is terminated, and is given
+                 nothing more.</li>
              <li>For developers: each Active Train now refers to the record of
                  its train (<code>ActiveTrain.getTrainRecord()</code>), found by
                  its roster entry or name, which keeps its Train Detection and
@@ -477,7 +511,31 @@
                  it is. Dispatcher places an Active Train's record in its start
                  Block, and a record is placed where a Block's value names it.
                  It only watches: nothing on the layout changes.</li>
+             <li>With automatic allocation, an automatic train is no longer
+                 held for good in a passing loop or before one, waiting for
+                 another train that cannot pass or meet it there. Dispatcher
+                 now plans a meet only when the other train has a free track
+                 to take, and drops the plan when the train it waits for can
+                 no longer get there: the other track is occupied or held by
+                 another train, a train has taken the other's track, or a
+                 train is already past the meeting place. Allocating by hand
+                 was needed to free the train.</li>
              <li></li>
+             <li>A Section can have a stop point for each direction, set in
+                 the Section's Add/Edit window in mm or in inches (to the
+                 nearest 1/32): where the front of a train
+                 stops in it, which is where its stopping sensor is if it has
+                 one. An automatic train with a speed profile then slows over
+                 the distance to the stop point whenever it stops in the
+                 Section, at a signal or for want of the next Section as well
+                 as at the end of its trip, and stops on the stopping sensor,
+                 or at the stop point if there is none. Each Block the front of
+                 the train enters, and, for trains whose end is detected, each
+                 Block the end of the train leaves, corrects how far it has to
+                 go. A stop point beyond the end of its Section is refused
+                 there, reported by Validate All Sections, and stops an
+                 automatic train being started. Sections without a stop point
+                 work as before.</li>
              <li>A Block change that an automatic train handles just after
                  one of its Sections is released, or as the train is
                  terminated, no longer gives warnings such as "No next Block"
@@ -524,7 +582,7 @@
    <h3>Internationalization</h3>
         <a id="I18N" name="I18N"></a>
         <ul>
-            <li></li>
+            <li>Lots of work on the German translation.</li>
         </ul>
 
     <h3>Layout Editor</h3>
@@ -630,10 +688,21 @@
     <h3>Signals</h3>
         <a id="Signals" name="Signals"></a>
         <ul>
+            <li>A Signal Mast no longer keeps changing between clear and
+                danger when automatic signal mast generation is allowed for
+                one of its Signal Mast Logic pairs. The pair listed the mast
+                itself among the masts that must show danger, so the mast
+                put itself back to danger each time it cleared (seen since
+                5.17.5, with the turnouts set for that route).</li>
             <li></li>
         </ul>
         <h4>Signal Systems</h4>
             <ul>
+                <li>BR-2003 now defines the junction indicator (feather)
+                    aspects Zero to Six, which its feather masts already
+                    use. A feather mast's aspect now has a speed (Normal)
+                    and a description, where before the signal system
+                    didn't know it.</li>
                 <li></li>
             </ul>
 
@@ -682,7 +751,10 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li></li>
+            <li>Throttle function button visibility implementation less confusing, documentation and code updated</li>
+            <li>Due to a Java throttle code refactoring, in Jynstruments, for ThrottleFrame jynstruments, the expected 
+                context class is now jmri.jmrit.throttle.implementation.ThrottleFrame instead of jmri.jmrit.throttle.ThrottleFrame,
+                you can check released code in jython/Jynstruments/ThrottleFrame/Bell.jyn for instance.</li>
             <li>Code and scripts can now be told when each speed or direction
                 command from a throttle has actually been sent to the layout,
                 and when (<code>Throttle.addSpeedSentListener</code>). The time
@@ -692,6 +764,20 @@
                 CAN Simulation; <code>Throttle.reportsSpeedSent()</code> says
                 whether a throttle does. Nothing that listens to a throttle's
                 properties sees anything new.</li>
+            <li>For developers: each throttle manager now reports the speed
+                and direction set for each loco address JMRI holds a throttle
+                for, as they change, and when the address is released
+                (<code>jmri.LocoSpeedSource</code>). It sees every change,
+                whether from a throttle window, Dispatcher, a Warrant, a script,
+                a WiThrottle client, or the command station reporting another
+                throttle's command, and does not stop a throttle being
+                released. Nothing users see changes.</li>
+            <li>For developers: a train record now keeps the speed commands
+                for each of its locos, matched by the addresses of their roster
+                entries, from every throttle JMRI holds and from any connection
+                that sees other cabs' commands, each with the time it was
+                reported, and the release of each loco's address. It only
+                watches.</li>
         </ul>
 
     <h3>Timetable</h3>
@@ -717,6 +803,12 @@
             <li>The Turnout and Sensor tables can now add a sequential range of
                 up to 1000 items at once (was 100), e.g. a whole C/MRI node. The
                 confirmation for a large range is unchanged.</li>
+            <li>A Block's Edit window, on its Physical Details tab, has a
+                length for each way through the Block that differs from the
+                Block's own, and whether the Block is a braking section (ABC
+                or a cut-out) for trains leaving towards a neighbour. Both are saved with the
+                Block; nothing acts on them yet, and nothing changes for users
+                who leave them.</li>
             <li>When the user name of a sensor, turnout or other item is changed
                 from one name to another in any way, for example by a script,
                 the places that use it by that name now follow the change.
@@ -745,6 +837,11 @@
                 Block Contents icon shows the value or, when there is none,
                 the allocated value, as a JMRI panel does. The JSON protocol
                 version is now 5.5.0.</li>
+            <li>Removed old JavaScript and CSS files from <code>web/js</code>
+                and <code>web/css</code> that no JMRI page uses anymore,
+                including jQuery 1.8.2, jQuery Mobile, and the unminified
+                Bootstrap files. If you have custom web pages that load any
+                of these directly, they'll need updating.</li>
             <li>The web server's pages now use jQuery 3.7.1 instead of
                 2.2.4, and the 2.2.4 copy has been removed. If you have
                 custom web pages that load <code>jquery-2.2.4.min.js</code>,
@@ -793,6 +890,17 @@
                 feedback; and Blocks joined through Blocks with no detector by
                 more than one way. Each says what is wrong. The checks only
                 read, and change nothing.</li>
+            <li>Where a train has been placed in a Block (by Dispatcher, or by
+                setting a Block's value to the train), right-clicking the
+                Block's track on a Layout Editor panel in operating mode, or a
+                Block Contents icon, now offers "Block ...". It shows the
+                trains in the Block, how sure JMRI is of where each is, why,
+                and the last 20 things that happened there. The Block Table
+                has Train and "Why?" columns, which can be shown from the
+                column header's menu. A Block Contents icon's double-click
+                still edits the Block's value. Nothing on the layout changes.</li>
+            <li>The Train Tracking help page is now in the help's contents and
+                index, and the Blocks and Block Table help pages link to it.</li>
             <li>For developers: a new train record (<code>jmri.TrainRecord</code>,
                 from the <code>jmri.TrainRecordManager</code>) holds what is
                 known about a train from one run to the next: its name, the
@@ -800,6 +908,12 @@
                 split into or joined from, how it is detected, and its length
                 from each source. Nothing uses it yet, so nothing
                 changes for users.</li>
+            <li>For developers: a new page, <a href=
+                "https://www.jmri.org/help/en/html/doc/Technical/simulatedtrains.shtml">Writing
+                Tests with Simulated Trains</a>, explains how to write tests with simulated
+                trains: the test helper and the standard test layouts, why tests assert the
+                order of events and the ground truth rather than durations, truth offsets, and
+                the rule that the simulator never uses the logic it tests.</li>
             <li>In a profile whose connections are all simulators (the
                 Internal connection, CAN Simulation and the other simulator
                 connections), scripts and tests can now place simulated
@@ -808,5 +922,16 @@
                 do, they move on the layout's own track and set internal
                 sensors as they pass, with the time they passed. The sample
                 script SimulatedTrains.py shows two trains running.</li>
+            <li>For developers: tests and scripts can set faults on simulated
+                trains' layout: detector drop-outs, a sensor showing a train
+                that isn't there, swapped sensors, a Block longer or shorter
+                than JMRI has it, a stalled train and a train that parts. A
+                train whose turnout is moved under it now derails and stays
+                where it stopped.</li>
+            <li>A new help page, Tools: Simulated Trains, describes simulated
+                trains for users: where they can run, how they are driven
+                and seen, the track and trains they use, and how to place
+                them from a script. It is in the help's contents and index,
+                and linked from the Tools and Scripting examples pages.</li>
         </ul>
 

@@ -22,6 +22,7 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
 import jmri.InstanceManager;
+import jmri.JmriUncheckedException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -690,7 +691,7 @@ public class PositionableJPanel extends JPanel implements Positionable, JmriMous
         _logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
                 .getBySystemName(_logixNG_SystemName);
         if (_logixNG == null) {
-            throw new RuntimeException(String.format(
+            throw new JmriUncheckedException(String.format(
                     "LogixNG %s is not found for positional %s in panel %s",
                     _logixNG_SystemName, getNameString(), getEditor().getName()));
         }

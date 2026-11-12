@@ -16,6 +16,7 @@ import javax.swing.tree.TreePath;
 
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.InstanceManager;
+import jmri.JmriUncheckedException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.implementation.DefaultSymbolTable;
@@ -83,7 +84,7 @@ public final class ConditionalNGDebugger extends JmriJFrame implements PropertyC
                 MaleSocket maleSocket = femaleSocket.getConnectedSocket();
                 AbstractDebuggerMaleSocket debugMaleSocket =
                         (AbstractDebuggerMaleSocket) maleSocket.find(AbstractDebuggerMaleSocket.class);
-                if (debugMaleSocket == null) throw new RuntimeException("AbstractDebuggerMaleSocket is not found");
+                if (debugMaleSocket == null) throw new JmriUncheckedException("AbstractDebuggerMaleSocket is not found");
                 boolean breakpointBefore = debugMaleSocket.getBreakpointBefore();
                 boolean breakpointAfter = debugMaleSocket.getBreakpointAfter();
                 if (breakpointBefore || breakpointAfter) {
@@ -569,7 +570,7 @@ public final class ConditionalNGDebugger extends JmriJFrame implements PropertyC
                     MaleSocket maleSocket1 = _currentFemaleSocket.getConnectedSocket();
                     AbstractDebuggerMaleSocket debugMaleSocket1 =
                             (AbstractDebuggerMaleSocket) maleSocket1.find(AbstractDebuggerMaleSocket.class);
-                    if (debugMaleSocket1 == null) throw new RuntimeException("AbstractDebuggerMaleSocket is not found");
+                    if (debugMaleSocket1 == null) throw new JmriUncheckedException("AbstractDebuggerMaleSocket is not found");
                     // Invert breakpoint setting
                     debugMaleSocket1.setBreakpointBefore(!debugMaleSocket1.getBreakpointBefore());
                     for (TreeModelListener l : _currentTreePane.femaleSocketTreeModel.listeners) {
@@ -586,7 +587,7 @@ public final class ConditionalNGDebugger extends JmriJFrame implements PropertyC
                     MaleSocket maleSocket2 = _currentFemaleSocket.getConnectedSocket();
                     AbstractDebuggerMaleSocket debugMaleSocket2 =
                             (AbstractDebuggerMaleSocket) maleSocket2.find(AbstractDebuggerMaleSocket.class);
-                    if (debugMaleSocket2 == null) throw new RuntimeException("AbstractDebuggerMaleSocket is not found");
+                    if (debugMaleSocket2 == null) throw new JmriUncheckedException("AbstractDebuggerMaleSocket is not found");
                     // Invert breakpoint setting
                     debugMaleSocket2.setBreakpointAfter(!debugMaleSocket2.getBreakpointAfter());
                     for (TreeModelListener l : _currentTreePane.femaleSocketTreeModel.listeners) {

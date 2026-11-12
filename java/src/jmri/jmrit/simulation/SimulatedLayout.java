@@ -8,8 +8,10 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Queue;
+import java.util.ServiceLoader;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -89,6 +91,18 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
     private final List<SimulationTruth.Collision> collisions = new ArrayList<>();
     @GuardedBy("this")
     private final Map<Block, Integer> occupancy = new HashMap<>();
+    private final SimulatedFaults faults = new SimulatedFaults(this);
+    /** The Blocks whose sensors are shown occupied: occupancy as the detectors see it, faults included. */
+    @GuardedBy("this")
+    private final Set<Block> shown = new HashSet<>();
+    /** For each Block, the trains whose front is in a drop-out stretch of it, and in how many. */
+    @GuardedBy("this")
+    private final Map<Block, Map<TrainState, Integer>> dropping = new HashMap<>();
+    @GuardedBy("this")
+    private final List<SimulationTruth.DropOut> dropOutRecords = new ArrayList<>();
+    /** Random drop-out stretches decided for a train's way through a Block: {from, to} from its start, or none. */
+    @GuardedBy("this")
+    private final Map<List<Object>, double[]> randomStretches = new HashMap<>();
     private final List<SimulatedSpeedSource> sources = new CopyOnWriteArrayList<>();
     /**
      * Held while telling the speed sources which addresses to watch, so they
@@ -96,6 +110,13 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
      * held.
      */
     private final Object watching = new Object();
+    /** Held while taking up the adapters' sources and outputs. */
+    private final Object adapting = new Object();
+    /** The sources and outputs taken from adapters, so those dropped can be removed. */
+    @GuardedBy("adapting")
+    private final List<SimulatedSpeedSource> adapterSources = new ArrayList<>();
+    @GuardedBy("adapting")
+    private final List<SimulatedDetectorOutput> adapterOutputs = new ArrayList<>();
     private final List<SimulatedDetectorOutput> outputs = new CopyOnWriteArrayList<>();
     /** Sensors already warned about as having no output. */
     @GuardedBy("this")
@@ -148,6 +169,27 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
     @InvokeOnAnyThread
     public static SimulatedLayout getDefault() {
         return InstanceManager.getDefault(SimulatedLayout.class);
+    }
+
+    /**
+     * @return the faults that can be set on this layout; none is set unless
+     *         asked for
+     */
+    @Nonnull
+    @InvokeOnAnyThread
+    public SimulatedFaults getFaults() {
+        return faults;
+    }
+
+    TrackModels models() {
+        return models;
+    }
+
+    @GuardedBy("this")
+    void checkNoTrains() {
+        if (!trains.isEmpty()) {
+            throw new IllegalStateException(Bundle.getMessage("FaultBeforePlacing"));
+        }
     }
 
     /**
@@ -330,6 +372,7 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
     public void place(@Nonnull VirtualTrain train, @Nonnull Block block, @CheckForNull Block from,
             double frontMm) {
         checkCanPlace(train);
+        useAdapters();
         withFreshSnapshot(() -> {
             checkCanPlace(train);
             TrackEntry entry = models.entryInto(block, from);
@@ -353,6 +396,7 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
     @InvokeOnAnyThread
     public void placeBehind(@Nonnull VirtualTrain train, @Nonnull VirtualTrain ahead) {
         checkCanPlace(train);
+        useAdapters();
         withFreshSnapshot(() -> {
             checkCanPlace(train);
             TrainState other = trains.get(ahead);
@@ -458,9 +502,18 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
         for (TrainState.Membership m : new ArrayList<>(t.in)) {
             events.add(new Event(0.0, t, m, false));
         }
-        apply(events, now());
+        long when = now();
+        apply(events, when);
+        endDropOuts(t, when);
+        randomStretches.keySet().removeIf(k -> k.get(0) == t);
         if (trains.isEmpty()) {
+            for (Block b : new ArrayList<>(faults.phantoms)) {
+                faults.phantoms.remove(b);
+                detectionChanged(b, when);
+            }
             collisions.clear();
+            dropOutRecords.clear();
+            shown.clear();
             unwatchConnections();
             models.use(TrackSnapshot.empty()).dispose();
         } else {
@@ -510,6 +563,10 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
             }
             sources.clear();
         }
+        synchronized (adapting) {
+            adapterSources.clear();
+            adapterOutputs.clear();
+        }
     }
 
     private synchronized void watchConnections() {
@@ -536,7 +593,62 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
             }
         }
         deliver();
+        useAdapters();
         watchAddresses();
+    }
+
+    /**
+     * Take up the speed sources and detector outputs the systems' adapters
+     * offer now, and drop those they no longer offer. Not for a layout on a
+     * manual clock, whose tests give it their own sources and outputs.
+     * Called without this layout's lock.
+     */
+    private void useAdapters() {
+        if (manual) {
+            return;
+        }
+        List<SimulatedSpeedSource> offeredSources = new ArrayList<>();
+        List<SimulatedDetectorOutput> offeredOutputs = new ArrayList<>();
+        for (SimulationAdapter a : ServiceLoader.load(SimulationAdapter.class)) {
+            offeredSources.addAll(a.getSpeedSources());
+            offeredOutputs.addAll(a.getDetectorOutputs());
+        }
+        List<SimulatedSpeedSource> dropSources = new ArrayList<>();
+        List<SimulatedSpeedSource> newSources = new ArrayList<>();
+        List<SimulatedDetectorOutput> dropOutputs = new ArrayList<>();
+        List<SimulatedDetectorOutput> newOutputs = new ArrayList<>();
+        // only the bookkeeping under the lock: adding an output copies the configuration on the
+        // layout thread (Swing thread), which may itself be waiting to take up adapters
+        synchronized (adapting) {
+            for (SimulatedSpeedSource s : new ArrayList<>(adapterSources)) {
+                if (!offeredSources.contains(s)) {
+                    adapterSources.remove(s);
+                    dropSources.add(s);
+                }
+            }
+            for (SimulatedSpeedSource s : offeredSources) {
+                if (!adapterSources.contains(s)) {
+                    adapterSources.add(s);
+                    newSources.add(s);
+                }
+            }
+            for (SimulatedDetectorOutput o : new ArrayList<>(adapterOutputs)) {
+                if (!offeredOutputs.contains(o)) {
+                    adapterOutputs.remove(o);
+                    dropOutputs.add(o);
+                }
+            }
+            for (SimulatedDetectorOutput o : offeredOutputs) {
+                if (!adapterOutputs.contains(o)) {
+                    adapterOutputs.add(o);
+                    newOutputs.add(o);
+                }
+            }
+        }
+        dropSources.forEach(this::removeSpeedSource);
+        newSources.forEach(this::addSpeedSource);
+        dropOutputs.forEach(this::removeDetectorOutput);
+        newOutputs.forEach(this::addDetectorOutput);
     }
 
     // ---------------------------------------------------------------------
@@ -560,10 +672,11 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
             TrainState.Span front = t.spanAt(t.position);
             Message held = t.held;
             list.add(new SimulationTruth.TrainTruth(t.train, t.blocks(), t.position - front.start, t.speed,
-                    t.crashed, held == null ? null : held.text()));
+                    t.crashed, t.stalled, t.derailed, held == null ? null : held.text()));
         }
         long when = manual || thread == null || idle() ? now() : lastTick; // positions are as of the last step
-        return new SimulationTruth(when, list, new ArrayList<>(collisions));
+        return new SimulationTruth(when, list, new ArrayList<>(collisions), new ArrayList<>(dropOutRecords),
+                faults.describe());
     }
 
     // ---------------------------------------------------------------------
@@ -692,13 +805,28 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
 
         final double time;
         final TrainState train;
+        /** The detected stretch going into or out of a span, or null for a drop-out. */
+        @CheckForNull
         final TrainState.Membership membership;
+        /** For a drop-out: the Block. */
+        @CheckForNull
+        final Block dropBlock;
+        /** Into the span, or into the drop-out stretch. */
         final boolean enter;
 
         Event(double time, TrainState train, TrainState.Membership membership, boolean enter) {
             this.time = time;
             this.train = train;
             this.membership = membership;
+            this.dropBlock = null;
+            this.enter = enter;
+        }
+
+        Event(double time, TrainState train, Block dropBlock, boolean enter) {
+            this.time = time;
+            this.train = train;
+            this.membership = null;
+            this.dropBlock = dropBlock;
             this.enter = enter;
         }
     }
@@ -736,10 +864,12 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
             velocities.put(t, v);
             motions.put(t, Motion.of(v, t.position, t.rearLimit + t.length, t.frontLimit));
         }
+        stallPoints(list, motions);
         findCollisions(list, motions, start);
         List<Event> events = new ArrayList<>();
         for (TrainState t : list) {
             crossings(t, motions.get(t), events);
+            dropOutCrossings(t, motions.get(t), events);
         }
         events.sort((a, b) -> a.time != b.time ? Double.compare(a.time, b.time) : Boolean.compare(b.enter, a.enter));
         apply(events, start);
@@ -748,6 +878,7 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
             t.position = m.endPosition();
             t.speed = m.velocity(dt - 1e-9);
             noteHeld(t, velocities.get(t).after(dt - 1e-9));
+            forgetPassed(t);
             t.trim();
         }
     }
@@ -781,7 +912,12 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
 
     private void noteHeld(TrainState t, double pushing) {
         Message reason = null;
-        if (!t.crashed && pushing > 0 && t.position >= t.frontLimit) {
+        if (t.stalled || t.derailed) {
+            // it can't move at all: held by the fault for as long as its locos drive it
+            if (!t.crashed && t.drivenSpeed != 0.0) {
+                reason = t.faultReason;
+            }
+        } else if (!t.crashed && pushing > 0 && t.position >= t.frontLimit) {
             reason = t.frontReason;
         } else if (!t.crashed && pushing < 0 && t.rearPosition() <= t.rearLimit) {
             reason = t.rearReason;
@@ -869,28 +1005,420 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
      */
     private void apply(List<Event> events, long start) {
         for (Event e : events) {
-            Block block = e.membership.span.block();
+            long when = start + Math.round(e.time * 1e9);
+            TrainState.Membership member = e.membership;
+            if (member == null) {
+                dropOutChanged(Objects.requireNonNull(e.dropBlock), e.train, e.enter, when);
+                continue;
+            }
+            Block block = member.span.block();
             int count = occupancy.getOrDefault(block, 0);
             if (e.enter) {
-                if (!e.train.in.add(e.membership)) {
+                if (!e.train.in.add(member)) {
                     continue;
                 }
                 occupancy.put(block, count + 1);
-                if (count == 0) {
-                    report(block, Sensor.ACTIVE, start + Math.round(e.time * 1e9));
-                }
             } else {
-                if (!e.train.in.remove(e.membership)) {
+                if (!e.train.in.remove(member)) {
                     continue;
                 }
                 if (count <= 1) {
                     occupancy.remove(block);
-                    report(block, Sensor.INACTIVE, start + Math.round(e.time * 1e9));
                 } else {
                     occupancy.put(block, count - 1);
                 }
             }
+            detectionChanged(block, when);
         }
+    }
+
+    // ---------------------------------------------------------------------
+    // Detection as the detectors see it, with faults
+
+    /**
+     * Report a Block's sensor if what its detector sees has changed: a train
+     * detected there and not dropped out, or a phantom.
+     */
+    @GuardedBy("this")
+    private void detectionChanged(Block block, long when) {
+        boolean on = faults.phantoms.contains(block) || (occupancy.getOrDefault(block, 0) > 0 && !droppedOut(block));
+        if (on != shown.contains(block)) {
+            if (on) {
+                shown.add(block);
+            } else {
+                shown.remove(block);
+            }
+            report(block, on ? Sensor.ACTIVE : Sensor.INACTIVE, when);
+        }
+    }
+
+    /**
+     * Is every train detected in a Block one whose front is in a drop-out
+     * stretch of it?
+     */
+    @GuardedBy("this")
+    private boolean droppedOut(Block block) {
+        Map<TrainState, Integer> d = dropping.get(block);
+        if (d == null || d.isEmpty()) {
+            return false;
+        }
+        for (TrainState t : trains.values()) {
+            if (!d.containsKey(t)) {
+                for (TrainState.Membership m : t.in) {
+                    if (m.span.block() == block) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    @GuardedBy("this")
+    private void dropOutChanged(Block block, TrainState t, boolean into, long when) {
+        Map<TrainState, Integer> d = dropping.computeIfAbsent(block, b -> new HashMap<>());
+        boolean wasOut = droppedOut(block) && occupancy.getOrDefault(block, 0) > 0;
+        int n = d.getOrDefault(t, 0) + (into ? 1 : -1);
+        if (n > 0) {
+            d.put(t, n);
+        } else {
+            d.remove(t);
+        }
+        boolean isOut = droppedOut(block) && occupancy.getOrDefault(block, 0) > 0;
+        if (isOut && !wasOut) {
+            dropOutRecords.add(new SimulationTruth.DropOut(block, t.train, when, 0));
+        } else if (wasOut && !isOut) {
+            endDropOutRecord(block, when);
+        }
+        detectionChanged(block, when);
+    }
+
+    @GuardedBy("this")
+    private void endDropOutRecord(Block block, long when) {
+        for (int i = dropOutRecords.size() - 1; i >= 0; i--) {
+            SimulationTruth.DropOut r = dropOutRecords.get(i);
+            if (r.getBlock() == block && r.getEndNanos() == 0) {
+                dropOutRecords.set(i, r.ended(when));
+                return;
+            }
+        }
+    }
+
+    /** A train removed or replaced: its front is in no drop-out stretch. */
+    @GuardedBy("this")
+    private void endDropOuts(TrainState t, long when) {
+        for (Map.Entry<Block, Map<TrainState, Integer>> e : new ArrayList<>(dropping.entrySet())) {
+            Integer n = e.getValue().get(t);
+            for (int i = 0; n != null && i < n; i++) {
+                dropOutChanged(e.getKey(), t, false, when);
+            }
+        }
+    }
+
+    /** A Block's neighbour at the end of a span the train went into it from. */
+    @CheckForNull
+    private static Block startSide(TrainState.Span s) {
+        TrackEntry back = s.passage.entry.reverse();
+        return back == null ? null : back.getBlock();
+    }
+
+    /** A Block's neighbour at the end of a span the train goes on towards. */
+    @CheckForNull
+    private static Block endSide(TrainState.Span s) {
+        TrackEntry next = s.passage.next;
+        return next == null ? null : next.getBlock();
+    }
+
+    /**
+     * Where a stretch of a Block lies in a span through it, in the train's
+     * positions: {from, to}, or nothing if the span doesn't run from the end
+     * the stretch is measured from or to.
+     */
+    private static double[] place(TrainState.Span s, SimulatedFaults.Stretch st) {
+        if (st.from == startSide(s)) {
+            return new double[]{s.start + st.fromMm, s.start + st.toMm};
+        }
+        if (st.from == endSide(s)) {
+            return new double[]{s.end - st.toMm, s.end - st.fromMm};
+        }
+        return new double[0];
+    }
+
+    /** The drop-out stretches of a train's span, set or at random, in the train's positions. */
+    @GuardedBy("this")
+    private List<double[]> dropOutStretches(TrainState t, TrainState.Span s) {
+        List<double[]> list = new ArrayList<>();
+        for (SimulatedFaults.Stretch st : faults.dropOuts) {
+            if (st.block == s.block()) {
+                double[] p = place(s, st);
+                if (p.length == 2) {
+                    list.add(p);
+                }
+            }
+        }
+        java.util.Random random = faults.random;
+        if (random != null) {
+            List<Object> key = java.util.Arrays.asList(t, s.passage.entry);
+            double[] r = randomStretches.get(key);
+            if (r == null) {
+                if (random.nextDouble() < faults.randomProbability) {
+                    double room = Math.max(0.0, s.length() - faults.randomLengthMm);
+                    double from = random.nextDouble() * room;
+                    r = new double[]{from, Math.min(s.length(), from + faults.randomLengthMm)};
+                } else {
+                    r = new double[0];
+                }
+                randomStretches.put(key, r);
+            }
+            if (r.length == 2) {
+                list.add(new double[]{s.start + r[0], s.start + r[1]});
+            }
+        }
+        return list;
+    }
+
+    /** Drop the random stretches of the Blocks a train has wholly left behind. */
+    @GuardedBy("this")
+    private void forgetPassed(TrainState t) {
+        double r = t.rearPosition();
+        for (TrainState.Span s : t.spans) {
+            if (s.end <= r) {
+                randomStretches.remove(java.util.Arrays.asList(t, s.passage.entry));
+            }
+        }
+    }
+
+    /**
+     * The times in a step when the train's front goes into or out of a
+     * drop-out stretch.
+     */
+    @GuardedBy("this")
+    private void dropOutCrossings(TrainState t, Motion m, List<Event> out) {
+        double p0 = m.position(m.startTime());
+        Map<Block, Integer> insideAtStart = new HashMap<>();
+        Map<TrainState.Span, List<double[]>> all = new java.util.LinkedHashMap<>();
+        for (TrainState.Span s : t.spans) {
+            List<double[]> stretches = dropOutStretches(t, s);
+            all.put(s, stretches);
+            for (double[] st : stretches) {
+                if (p0 > st[0] && p0 < st[1]) {
+                    insideAtStart.merge(s.block(), 1, Integer::sum);
+                }
+            }
+        }
+        // bring the record into line with where the front is now: a train placed, or parted, in a stretch
+        java.util.Set<Block> blocks = new HashSet<>(insideAtStart.keySet());
+        for (Map.Entry<Block, Map<TrainState, Integer>> e : dropping.entrySet()) {
+            if (e.getValue().containsKey(t)) {
+                blocks.add(e.getKey());
+            }
+        }
+        for (Block b : blocks) {
+            Map<TrainState, Integer> d = dropping.get(b);
+            int recorded = (d == null) ? 0 : d.getOrDefault(t, 0);
+            int now = insideAtStart.getOrDefault(b, 0);
+            for (int i = recorded; i < now; i++) {
+                out.add(new Event(0.0, t, b, true));
+            }
+            for (int i = now; i < recorded; i++) {
+                out.add(new Event(0.0, t, b, false));
+            }
+        }
+        for (Map.Entry<TrainState.Span, List<double[]>> e : all.entrySet()) {
+            TrainState.Span s = e.getKey();
+            for (double[] st : e.getValue()) {
+                List<Motion.Crossing> ins = m.crossings(0.0, st[0], true);
+                List<Motion.Crossing> outs = m.crossings(0.0, st[1], false);
+                boolean aboveFrom = p0 > st[0];
+                boolean belowTo = p0 < st[1];
+                boolean inside = aboveFrom && belowTo;
+                int a = 0;
+                int b = 0;
+                while (a < ins.size() || b < outs.size()) {
+                    double time;
+                    if (b >= outs.size() || (a < ins.size() && ins.get(a).time <= outs.get(b).time)) {
+                        time = ins.get(a).time;
+                        aboveFrom = ins.get(a).inside;
+                        a++;
+                    } else {
+                        time = outs.get(b).time;
+                        belowTo = outs.get(b).inside;
+                        b++;
+                    }
+                    boolean now = aboveFrom && belowTo;
+                    if (now != inside) {
+                        out.add(new Event(time, t, s.block(), now));
+                        inside = now;
+                    }
+                }
+            }
+        }
+    }
+
+    /** Stop each train whose front reaches a stall point this step. */
+    @GuardedBy("this")
+    private void stallPoints(List<TrainState> list, Map<TrainState, Motion> motions) {
+        if (faults.stallPoints.isEmpty()) {
+            return;
+        }
+        for (TrainState t : list) {
+            if (t.stalled || t.unpowered) {
+                continue;
+            }
+            Motion m = motions.get(t);
+            double first = Double.POSITIVE_INFINITY;
+            Block where = null;
+            List<Object> whereKey = null;
+            for (TrainState.Span s : t.spans) {
+                for (SimulatedFaults.Stretch st : faults.stallPoints) {
+                    if (st.block != s.block()) {
+                        continue;
+                    }
+                    double[] p = place(s, st);
+                    List<Object> key = java.util.Arrays.asList(st, s.passage.entry);
+                    if (p.length != 2 || t.stallsPassed.contains(key)) {
+                        continue; // a train stalls once at a point on its way through a Block
+                    }
+                    for (Motion.Crossing c : m.crossings(0.0, p[0], true)) {
+                        if (c.inside && c.time < first) {
+                            first = c.time;
+                            where = s.block();
+                            whereKey = key;
+                        }
+                    }
+                }
+            }
+            if (where != null) {
+                motions.put(t, m.stoppedAt(first));
+                t.stallsPassed.add(whereKey);
+                t.stalled = true;
+                t.faultReason = models.message("StalledAt", models.name(where));
+            }
+        }
+    }
+
+    /**
+     * Set or clear a phantom: a Block's sensor shown occupied with no train.
+     *
+     * @param block the Block
+     * @param on    true to set, false to clear
+     */
+    void phantom(Block block, boolean on) {
+        synchronized (this) {
+            if (on && trains.isEmpty()) {
+                throw new IllegalStateException(Bundle.getMessage("FaultNeedsTrain"));
+            }
+            if (on) {
+                faults.phantoms.add(block);
+            } else {
+                faults.phantoms.remove(block);
+            }
+            if (!trains.isEmpty()) {
+                detectionChanged(block, now());
+            }
+        }
+        deliver();
+    }
+
+    /**
+     * Stall a train, or let it move again.
+     *
+     * @param train the train
+     * @param on    true to stall it, false to let it move
+     */
+    void stall(VirtualTrain train, boolean on) {
+        synchronized (this) {
+            TrainState t = placed(train);
+            t.stalled = on;
+            t.faultReason = on ? models.message("Stalled")
+                    : (t.derailed ? t.faultReason : null);
+            wake();
+        }
+    }
+
+    /**
+     * Put a derailed train back on the track.
+     *
+     * @param train the train
+     */
+    void rerail(VirtualTrain train) {
+        synchronized (this) {
+            TrainState t = placed(train);
+            t.derailed = false;
+            t.faultReason = t.stalled ? models.message("Stalled") : null;
+            wake();
+        }
+    }
+
+    @GuardedBy("this")
+    private TrainState placed(VirtualTrain train) {
+        TrainState t = trains.get(train);
+        if (t == null) {
+            throw new IllegalStateException(Bundle.getMessage("TrainNotPlaced", train.getName()));
+        }
+        return t;
+    }
+
+    /**
+     * Part a train: the front part runs on as the same train, the rear
+     * becomes stock of its own.
+     *
+     * @param train the train
+     * @param cut   where it parts, mm from its front
+     * @return the rear part
+     */
+    VirtualTrain breakaway(VirtualTrain train, double cut) {
+        VirtualTrain rear;
+        synchronized (this) {
+            TrainState t = placed(train);
+            if (cut <= 0 || cut >= t.length) {
+                throw new IllegalArgumentException(Bundle.getMessage("BreakawayOutsideTrain", t.length));
+            }
+            rear = VirtualTrain.stock(Bundle.getMessage("BreakawayRearName", train.getName()), t.length - cut);
+            TrainState f = new TrainState(t, train, 0.0, cut);
+            TrainState r = new TrainState(t, rear, cut, t.length);
+            f.crashed = t.crashed;
+            f.stalled = t.stalled;
+            f.derailed = t.derailed;
+            f.faultReason = t.faultReason;
+            r.crashed = t.crashed;
+            r.derailed = t.derailed;
+            r.faultReason = t.derailed ? t.faultReason : null;
+            long when = now();
+            List<Event> events = new ArrayList<>();
+            for (TrainState part : List.of(f, r)) {
+                for (int i = 0; i < part.markers.size(); i++) {
+                    double[] mk = part.markers.get(i);
+                    for (TrainState.Span s : part.spans) {
+                        if (memberAt(part.position, mk, s)) {
+                            events.add(new Event(0.0, part, new TrainState.Membership(i, s), true));
+                        }
+                    }
+                }
+            }
+            for (TrainState.Membership m : new ArrayList<>(t.in)) {
+                events.add(new Event(0.0, t, m, false)); // after the parts' entries, so no Block shows empty between
+            }
+            trains.remove(train);
+            trains.put(train, f);
+            trains.put(rear, r);
+            // the front part's front is where the whole train's was
+            for (Map<TrainState, Integer> d : dropping.values()) {
+                Integer n = d.remove(t);
+                if (n != null) {
+                    d.put(f, n);
+                }
+            }
+            randomStretches.keySet().removeIf(k -> k.get(0) == t);
+            apply(events, when);
+            f.trim();
+            r.trim();
+            startMover();
+            wake();
+        }
+        deliver();
+        log.debug("Train {} parted; its rear is {}", train.getName(), rear.getName());
+        return rear;
     }
 
     /**
@@ -898,8 +1426,9 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
      * released.
      */
     @GuardedBy("this")
-    private void report(Block block, int state, long timeNanos) {
+    private void report(Block shownBlock, int state, long timeNanos) {
         TrackSnapshot snap = models.snapshot();
+        Block block = faults.reportedOn(shownBlock); // a swapped sensor shows another Block's occupancy
         Sensor sensor = snap.sensor(block);
         if (sensor == null) {
             return; // a dark Block: reported to nobody, as on a real layout

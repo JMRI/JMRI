@@ -83,9 +83,22 @@ final class TrainState {
     /** The front position. */
     double position;
     boolean crashed;
+    /** No loco: stock left by a breakaway, which coasts to a stand. */
+    final boolean unpowered;
+    /** Stalled by a fault: does not move whatever its locos are told. */
+    boolean stalled;
+    /** Derailed: the points were moved under it. */
+    boolean derailed;
+    /** The stall points this train has stalled at, each on one way through a Block. */
+    final Set<Object> stallsPassed = new HashSet<>();
+    /** Why a stalled or derailed train doesn't move. */
+    @CheckForNull
+    Message faultReason;
     @CheckForNull
     Message held;
     double speed;
+    /** The speed its locos drive it at, mm/s, as of the last step, even if it can't move; 0 for stock. */
+    double drivenSpeed;
 
     // limits worked out for the current step
     double frontLimit;
@@ -100,12 +113,43 @@ final class TrainState {
         this.length = train.getTrueLengthMm();
         this.markers = train.getDetection().resolve(length, train.getLocos().get(0).getLengthMm());
         this.placedNanos = placedNanos;
+        this.unpowered = false;
         int n = train.getLocos().size();
         decoders = new DecoderModel[n];
         latched = new SimulatedSpeedSource.Command[n];
         for (int i = 0; i < n; i++) {
             decoders[i] = DecoderModel.of(train.getLocos().get(i), train.isAdjustmentAppliedOutsideConsist());
         }
+    }
+
+    /**
+     * One part of a train that has broken in two: the front part keeps the
+     * locos and their decoders; the rear part is unpowered stock.
+     *
+     * @param whole the train before it broke
+     * @param part  the part's train: the same train for the front part, new
+     *              stock for the rear
+     * @param from  where the part starts, mm from the whole train's front
+     * @param to    where it ends, mm from the whole train's front
+     */
+    TrainState(TrainState whole, VirtualTrain part, double from, double to) {
+        this.train = part;
+        this.length = to - from;
+        this.placedNanos = whole.placedNanos;
+        this.markers = new ArrayList<>();
+        for (double[] m : whole.markers) {
+            double a = Math.max(m[0], from);
+            double b = Math.min(m[0] + m[1], to);
+            if (b > a) {
+                markers.add(new double[]{a - from, b - a});
+            }
+        }
+        this.unpowered = from > 0;
+        this.decoders = unpowered ? new DecoderModel[0] : whole.decoders;
+        this.latched = unpowered ? new SimulatedSpeedSource.Command[0] : whole.latched;
+        this.position = whole.position - from;
+        this.speed = whole.speed;
+        this.spans.addAll(whole.spans);
     }
 
     Span front() {
@@ -172,10 +216,15 @@ final class TrainState {
             each.add(v);
             locoSpeeds[i] = v.after(dt);
         }
-        if (crashed) {
-            return Velocity.still(0.0, dt);
+        if (unpowered) {
+            drivenSpeed = 0.0;
+            return (crashed || stalled || derailed) ? Velocity.still(0.0, dt) : coasting(dt);
         }
         Velocity v = Velocity.slowest(each, 0.0, dt);
+        drivenSpeed = v.after(dt);
+        if (crashed || stalled || derailed) {
+            return Velocity.still(0.0, dt);
+        }
         double factor = 1.0 + train.getSpeedFactorPercent() / 100.0;
         return factor == 1.0 ? v : v.times(factor);
     }
@@ -188,7 +237,33 @@ final class TrainState {
      * @return true if every decoder is stopped and commanded to stay stopped,
      *         so the train can't move until a command changes
      */
+    /** How fast unpowered stock slows, mm/s each second. */
+    static final double COAST_DECELERATION = 200.0;
+
+    /**
+     * Unpowered stock coasting: slowing at {@link #COAST_DECELERATION} from
+     * its speed until it stands.
+     */
+    private Velocity coasting(double dt) {
+        if (speed == 0.0 || crashed) {
+            return Velocity.still(0.0, dt);
+        }
+        double stopAt = Math.abs(speed) / COAST_DECELERATION;
+        List<Velocity.Part> parts = new ArrayList<>();
+        if (stopAt >= dt) {
+            double end = speed - Math.signum(speed) * COAST_DECELERATION * dt;
+            parts.add(new Velocity.Part(0.0, dt, speed, end));
+        } else {
+            parts.add(new Velocity.Part(0.0, stopAt, speed, 0.0));
+            parts.add(new Velocity.Part(stopAt, dt, 0.0, 0.0));
+        }
+        return new Velocity(parts);
+    }
+
     boolean idle(SimulatedLayout layout) {
+        if (unpowered) {
+            return speed == 0.0;
+        }
         for (int i = 0; i < decoders.length; i++) {
             SimulatedSpeedSource.Command c = layout.commandFor(train.getLocos().get(i).getRespondingAddress());
             if (decoders[i].getSetting() != 0.0 || (c != null && c.getSetting() > 0)) {
@@ -271,16 +346,18 @@ final class TrainState {
         rearLimit = Double.NEGATIVE_INFINITY;
         frontReason = null;
         rearReason = null;
-        // a turnout moved under the train: it can't move either way
         double r = rearPosition();
+        // a turnout moved under the train: it derails, and can't move either way until put back
         for (Span s : spans) {
             if (s.start < position && s.end > r) {
                 Passage now = s.passage.entry.follow();
                 if (now.stop == Passage.Stop.BLOCKED || !now.route.sameAs(s.passage.route)) {
+                    derailed = true;
+                    faultReason = models.message("WayChangedUnderTrain", models.name(s.block()));
                     frontLimit = position;
                     rearLimit = r;
-                    frontReason = models.message("WayChangedUnderTrain", models.name(s.block()));
-                    rearReason = frontReason;
+                    frontReason = faultReason;
+                    rearReason = faultReason;
                     return;
                 }
             }
