@@ -1001,32 +1001,54 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
 
     /**
      * How long a window must stay where it is before its location and size are
-     * saved.
+     * saved again.
      */
     static final int WINDOW_DETAILS_SAVE_DELAY = 500; // milliseconds
 
     /**
-     * Saves the window's location and size once it has not moved or changed
-     * size for {@link #WINDOW_DETAILS_SAVE_DELAY}. Created on first use.
+     * Runs while the window is moving or changing size, and saves its location
+     * and size once it has stayed put for {@link #WINDOW_DETAILS_SAVE_DELAY}.
+     * Created on first use.
      */
     private transient Timer windowDetailsSave = null;
 
+    /** The location this window last saved, or null if none yet. */
+    private transient Point savedLocation = null;
+
+    /** The size this window last saved, or null if none yet. */
+    private transient Dimension savedSize = null;
+
     /**
-     * Save the window's location and size once it has stopped moving or
-     * changing size. Saving writes the user interface preferences file, so it
-     * is not done for each of the many events while a window is dragged.
+     * Save the window's location and size when it moves or changes size.
+     * <p>
+     * The first change after the window has been still is saved at once, as
+     * it always was, so a window that is opened and placed has saved where it
+     * is before anything else happens. Further changes while the window is
+     * dragged are not saved one by one: saving writes the user interface
+     * preferences file, and dragging fires dozens of events a second. Instead
+     * the window is saved once more when it has stopped.
+     * <p>
      * Called on the GUI thread.
      */
     private void saveWindowDetailsSoon() {
+        if (!isVisible()) {
+            return;
+        }
         if (windowDetailsSave == null) {
             windowDetailsSave = new Timer(WINDOW_DETAILS_SAVE_DELAY, e -> saveWindowDetails());
             windowDetailsSave.setRepeats(false);
         }
-        windowDetailsSave.restart();
+        if (windowDetailsSave.isRunning()) {
+            windowDetailsSave.restart(); // still moving: save once it stops
+            return;
+        }
+        saveWindowDetails();
+        windowDetailsSave.start(); // collect any further moves
     }
 
     /**
-     * Save the window's location and size, as far as it is set to reuse them.
+     * Save the window's location and size, as far as it is set to reuse them
+     * and they have changed since this window last saved them.
      */
     private void saveWindowDetails() {
         if (!isVisible()) {
@@ -1034,10 +1056,18 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         }
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent(p -> {
             if (reuseFrameSavedPosition) {
-                p.setWindowLocation(windowFrameRef, this.getLocation());
+                Point location = this.getLocation();
+                if (!location.equals(savedLocation)) {
+                    p.setWindowLocation(windowFrameRef, location);
+                    savedLocation = location;
+                }
             }
             if (reuseFrameSavedSized) {
-                saveWindowSize(p);
+                Dimension size = super.getSize();
+                if (!size.equals(savedSize)) {
+                    saveWindowSize(p);
+                    savedSize = size;
+                }
             }
         });
     }

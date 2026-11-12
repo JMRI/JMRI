@@ -30,8 +30,9 @@ public class JmriJFrameTest extends JmriJFrameTestBase {
 
 
     /**
-     * Moving a window saves its location once it has stopped moving, not
-     * for every move: each save writes the user interface preferences file.
+     * Dragging a window saves its location where it started moving and where
+     * it stopped, not at every step: each save writes the user interface
+     * preferences file.
      */
     @Test
     @DisabledIfHeadless
@@ -49,18 +50,53 @@ public class JmriJFrameTest extends JmriJFrameTestBase {
             f.setLocation(100, 100);
         });
         JUnitUtil.waitFor(() -> ThreadingUtil.runOnGUIwithReturn(() -> !saved.isEmpty()), "first location saved");
+        // let the window settle
+        JUnitUtil.waitFor(4 * JmriJFrame.WINDOW_DETAILS_SAVE_DELAY);
         ThreadingUtil.runOnGUI(saved::clear);
 
-        ThreadingUtil.runOnGUI(() -> {
-            f.setLocation(110, 110);
-            f.setLocation(120, 120);
-            f.setLocation(130, 130);
-        });
-        JUnitUtil.waitFor(() -> ThreadingUtil.runOnGUIwithReturn(() -> !saved.isEmpty()), "location saved");
+        // each step in its own event, as when dragged
+        ThreadingUtil.runOnGUI(() -> f.setLocation(110, 110));
+        ThreadingUtil.runOnGUI(() -> f.setLocation(120, 120));
+        ThreadingUtil.runOnGUI(() -> f.setLocation(130, 130));
+        JUnitUtil.waitFor(() -> ThreadingUtil.runOnGUIwithReturn(
+            () -> saved.contains(new Point(130, 130))), "location saved where the window stopped");
         // allow ten times the save delay for any further save
         JUnitUtil.waitFor(10 * JmriJFrame.WINDOW_DETAILS_SAVE_DELAY);
         List<Point> after = ThreadingUtil.runOnGUIwithReturn(() -> new ArrayList<>(saved));
-        Assertions.assertEquals(List.of(new Point(130, 130)), after, "saved once, where the window stopped");
+        Assertions.assertTrue(after.size() <= 2, () -> "saved at most twice: " + after);
+        Assertions.assertFalse(after.contains(new Point(120, 120)), () -> "not saved on the way: " + after);
+        Assertions.assertEquals(new Point(130, 130), after.get(after.size() - 1), "last saved where the window stopped");
+        JUnitUtil.dispose(f);
+    }
+
+    /**
+     * A window that is opened and placed saves its location at once, as it did
+     * before saves waited for a window to stop moving, so nothing is written
+     * later while another window is being opened.
+     */
+    @Test
+    @DisabledIfHeadless
+    public void testLocationSavedAtOnceWhenPlaced() {
+        List<Point> saved = new ArrayList<>(); // written and read on the GUI thread
+        InstanceManager.setDefault(UserPreferencesManager.class, new TestUserPreferencesManager() {
+            @Override
+            public void setWindowLocation(String strClass, Point location) {
+                saved.add(location);
+            }
+        });
+        JmriJFrame f = new JmriJFrame("JmriJFrame place test", false, true);
+        ThreadingUtil.runOnGUI(() -> {
+            f.setVisible(true);
+            f.setLocation(200, 200);
+        });
+        // well within the save delay
+        JUnitUtil.waitFor(() -> ThreadingUtil.runOnGUIwithReturn(() -> saved.contains(new Point(200, 200))),
+            "location saved at once");
+        ThreadingUtil.runOnGUI(saved::clear);
+        // the window stays put, so nothing more is written
+        JUnitUtil.waitFor(4 * JmriJFrame.WINDOW_DETAILS_SAVE_DELAY);
+        Assertions.assertEquals(List.of(), ThreadingUtil.runOnGUIwithReturn(() -> new ArrayList<>(saved)),
+            "not saved again when the window has not moved");
         JUnitUtil.dispose(f);
     }
 
