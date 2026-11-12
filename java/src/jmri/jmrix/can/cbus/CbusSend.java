@@ -79,6 +79,37 @@ public class CbusSend {
     }
 
     /**
+     * Queue a frame to arrive as received from the bus at a given time. The
+     * frame is given that received time, and is delivered in its place among
+     * the frames sent with {@link #sendWithDelay}: after every frame due before
+     * that time, and before every frame due after it. A time already past is
+     * delivered at once; a time to come, when it comes.
+     * <p>
+     * For simulations, which use it through
+     * {@link jmri.jmrix.can.cbus.simulator.CbusSimulatedSend#receiveAt}; it is
+     * here because it shares the queue of {@link #sendWithDelay}.
+     * @param r A CanReply Can Frame which will arrive as an incoming frame
+     * @param receivedNanos when it is received, on the {@link System#nanoTime()} scale
+     * @since 5.19.1
+     */
+    protected void queueReceivedAt(@Nonnull CanReply r, long receivedNanos) {
+        CbusMessage.setId(r, tc.getCanid() );
+        CbusMessage.setPri(r, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
+        DelayedFrames.Frame frame = DelayedFrames.addAt(tc, r, receivedNanos);
+        long wait = receivedNanos - System.nanoTime();
+        if (wait <= 0) {
+            DelayedFrames.deliverUpTo(frame);
+            return;
+        }
+        TimerUtil.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                DelayedFrames.deliverUpTo(frame);
+            }
+        }, TimeUnit.NANOSECONDS.toMillis(wait) + 1);
+    }
+
+    /**
      * Frames waiting for their delay to end, kept in the order a bus would
      * deliver them: by when they are due, then by the order they were sent.
      * <p>
@@ -103,15 +134,18 @@ public class CbusSend {
             private final CanReply reply;
             private final boolean sendReply;
             private final boolean sendMessage;
+            /** True if received at its due time exactly, as given to queueReceivedAt. */
+            private final boolean receivedWhenDue;
 
             private Frame(long due, long sequence, TrafficController tc, CanReply reply,
-                    boolean sendReply, boolean sendMessage) {
+                    boolean sendReply, boolean sendMessage, boolean receivedWhenDue) {
                 this.due = due;
                 this.sequence = sequence;
                 this.tc = tc;
                 this.reply = reply;
                 this.sendReply = sendReply;
                 this.sendMessage = sendMessage;
+                this.receivedWhenDue = receivedWhenDue;
             }
 
             @Override
@@ -138,7 +172,15 @@ public class CbusSend {
         static Frame add(TrafficController tc, CanReply reply, boolean sendReply, boolean sendMessage, int delay) {
             synchronized (waiting) {
                 Frame f = new Frame(System.nanoTime() + TimeUnit.MILLISECONDS.toNanos(delay), sent++,
-                    tc, reply, sendReply, sendMessage);
+                    tc, reply, sendReply, sendMessage, false);
+                waiting.add(f);
+                return f;
+            }
+        }
+
+        static Frame addAt(TrafficController tc, CanReply reply, long due) {
+            synchronized (waiting) {
+                Frame f = new Frame(due, sent++, tc, reply, true, false, true);
                 waiting.add(f);
                 return f;
             }
@@ -156,7 +198,7 @@ public class CbusSend {
                 while (!waiting.isEmpty() && waiting.peek().compareTo(last) <= 0) {
                     Frame f = waiting.poll();
                     if (f.sendReply) {
-                        f.reply.setReceivedTime(System.nanoTime());
+                        f.reply.setReceivedTime(f.receivedWhenDue ? f.due : System.nanoTime());
                     }
                     ThreadingUtil.runOnLayoutEventually( () -> {
                         if (f.sendReply) {

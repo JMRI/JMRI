@@ -55,7 +55,7 @@ public class DefaultFemaleGenericExpressionSocket
                 break;
 
             default:
-                throw new RuntimeException("_socketType has invalid value: "+socketType.name());
+                throw new JmriUncheckedException("_socketType has invalid value: "+socketType.name());
         }
     }
 
@@ -114,7 +114,7 @@ public class DefaultFemaleGenericExpressionSocket
                 break;
 
             default:
-                throw new RuntimeException("socketType has invalid value: "+socketType.name());
+                throw new JmriUncheckedException("socketType has invalid value: "+socketType.name());
         }
     }
 
@@ -150,7 +150,7 @@ public class DefaultFemaleGenericExpressionSocket
                             .evaluate();
 
                 default:
-                    throw new RuntimeException("_currentSocketType has invalid value: "+_currentSocketType.name());
+                    throw new JmriUncheckedException("_currentSocketType has invalid value: "+_currentSocketType.name());
             }
         } else {
             return null;

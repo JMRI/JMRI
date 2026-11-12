@@ -4,8 +4,6 @@ import java.io.DataInputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Calendar;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -56,10 +54,6 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
     public synchronized void removeDcc4PcListener(Dcc4PcListener l) {
         this.removeListener(l);
     }
-
-    /** Why this class locks the base class's XMT_RUNNABLE_LOCK, which SpotBugs flags as visible outside the class. */
-    private static final String XMT_LOCK = "The base class waits and notifies on XMT_RUNNABLE_LOCK, so the receive"
-            + " and transmit threads must synchronise on that same object to wake each other";
 
     public static final int RETRIEVINGDATA = 100;
 
@@ -419,7 +413,6 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
     }
 
     // Call with portLock held.
-    @SuppressFBWarnings(value = "USO_UNSAFE_OBJECT_SYNCHRONIZATION", justification = XMT_LOCK)
     private void writeToPort(AbstractMRMessage m) {
         if (xmtException) {
             // A write has failed and the port is being reopened, so the retry
@@ -661,7 +654,6 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
      *
      */
     @Override
-    @SuppressFBWarnings(value = "USO_UNSAFE_OBJECT_SYNCHRONIZATION", justification = XMT_LOCK)
     public void handleOneIncomingReply() throws java.io.IOException {
         // we sit in this until the message is complete, relying on
         // threading to let other stuff happen
@@ -976,7 +968,6 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
     boolean readingData = false;
 
     @Override
-    @SuppressFBWarnings(value = "USO_UNSAFE_OBJECT_SYNCHRONIZATION", justification = XMT_LOCK)
     protected void transmitWait(int waitTime, int state, String InterruptMessage) {
         // wait() can have spurious wakeup!
         // so we protect by making sure the entire timeout time is used

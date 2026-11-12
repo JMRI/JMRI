@@ -32,6 +32,8 @@ public class BiDiBProgrammer extends AbstractProgrammer {
     protected BiDiBTrafficController tc;
     protected Node progNode; //the BiDiB progNode to sent the MSG_CS_PROG message to
     private boolean isBoosterOn = false;
+    
+//    private final boolean checkBoosterPower = false; //True if booster power ON should be checked before. This is a constant for now.
 
 //    @SuppressWarnings("OverridableMethodCallInConstructor")
     public BiDiBProgrammer(BiDiBTrafficController tc) {
@@ -162,16 +164,19 @@ public class BiDiBProgrammer extends AbstractProgrammer {
         progNode = tc.getCurrentGlobalProgrammerNode(); //the global programmer progNode may have changed TODO: make the progNode user selectable!
         if (progNode != null) {
             log.debug(" using programmer node {}, isBoosterOn = {}", progNode, isBoosterOn);
-            if (isBoosterOn) {
-                startLongTimer();
+            // we observed that some hardware sends POWER OFF when set to PROG state (Tams mc2), which makes the check useless.
+//            if (isBoosterOn  ||  !checkBoosterPower) {
+                //startLongTimer();
+                startShortTimer();
                 tc.sendBiDiBMessage(message, progNode);
-            }
-            else {
-                // if the booster of OFF, return immediately without waiting for the timeout.
-                log.warn("BiDiB Booster is switched off!");
-                progState = NOTPROGRAMMING;
-                notifyProgListenerEnd(_val, jmri.ProgListener.NoAck);
-            }
+//            }
+// To satisfy the CI checks, we have to remove the following code
+//            else {
+//                // if the booster of OFF, return immediately without waiting for the timeout.
+//                log.warn("BiDiB Booster is switched off!");
+//                progState = NOTPROGRAMMING;
+//                notifyProgListenerEnd(_val, jmri.ProgListener.NoAck);
+//            }
         }
         else {
             log.warn("no prog node available!");
@@ -280,7 +285,9 @@ public class BiDiBProgrammer extends AbstractProgrammer {
                 Node node = tc.getNodeByAddr(address);
                 log.debug("BOOSTER STATE was signalled: {}, control: {}", state, control);
                 if (node != null  &&  node == progNode) {
-                    isBoosterOn = ((state.getType() & 0x80) == 0x80);
+                    isBoosterOn = ((state.getType() & 0x80) == 0x80  ||  state.getType() == 0x06);// Either ON or OFF_NO_DCC
+                    log.debug("booster node is progNode, isBoosterOn = {}", isBoosterOn);
+                    //isBoosterOn = true;//**************** TEST ****************
                 }
             }
         };
@@ -297,7 +304,7 @@ public class BiDiBProgrammer extends AbstractProgrammer {
         if (progState != NOTPROGRAMMING) {
             // we're programming, time to stop
             if (log.isDebugEnabled()) {
-                log.debug("timeout!");
+                log.debug("Programmer timeout!");
             }
             // perhaps no loco present? Fail back to end of programming
             progState = NOTPROGRAMMING;

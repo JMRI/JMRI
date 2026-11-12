@@ -654,7 +654,7 @@ abstract public class LayoutTrackView implements InlineLogixNG {
         _logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
                 .getBySystemName(_logixNG_SystemName);
         if (_logixNG == null) {
-            throw new RuntimeException(String.format(
+            throw new JmriUncheckedException(String.format(
                     "LogixNG %s is not found for LayoutTrackView %s in panel %s",
                     _logixNG_SystemName, getName(), layoutEditor.getName()));
         }

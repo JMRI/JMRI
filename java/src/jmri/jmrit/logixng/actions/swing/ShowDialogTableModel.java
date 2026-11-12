@@ -10,13 +10,14 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 
+import jmri.JmriUncheckedException;
 import jmri.jmrit.logixng.actions.ShowDialog;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.JComboBoxUtil;
 
 /**
  * Table model for ShowDialog
- * 
+ *
  * @author Daniel Bergqvist Copyright 2021
  */
 public class ShowDialogTableModel extends AbstractTableModel {
@@ -27,14 +28,14 @@ public class ShowDialogTableModel extends AbstractTableModel {
     public static final int COLUMN_DATA = 1;
     public static final int COLUMN_DELETE = 2;
     public static final int COLUMN_DUMMY = 3;
-    
+
     private final List<ShowDialog.Data> _dataList = new ArrayList<>();
-    
-    
+
+
     public ShowDialogTableModel(Collection<ShowDialog.Data> namedBeanReference) {
         if (namedBeanReference != null) _dataList.addAll(namedBeanReference);
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public int getRowCount() {
@@ -91,7 +92,7 @@ public class ShowDialogTableModel extends AbstractTableModel {
     @Override
     public void setValueAt(Object value, int rowIndex, int columnIndex) {
         ShowDialog.Data ref = _dataList.get(rowIndex);
-        
+
         switch (columnIndex) {
             case COLUMN_TYPE:
                 ShowDialog.DataType oldType = ref.getDataType();
@@ -108,14 +109,14 @@ public class ShowDialogTableModel extends AbstractTableModel {
                 break;
             default:
                 throw new IllegalArgumentException("Invalid column");
-        }      
+        }
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         if (rowIndex >= _dataList.size()) throw new IllegalArgumentException("Invalid row");
-        
+
         switch (columnIndex) {
             case COLUMN_TYPE:
                 return _dataList.get(rowIndex).getDataType();
@@ -129,88 +130,88 @@ public class ShowDialogTableModel extends AbstractTableModel {
                 throw new IllegalArgumentException("Invalid column");
         }
     }
-    
+
     public void setColumnsForComboBoxes(JTable table) {
         JComboBox<ShowDialog.DataType> beanTypeComboBox = new JComboBox<>();
         table.setRowHeight(beanTypeComboBox.getPreferredSize().height);
         table.getColumnModel().getColumn(COLUMN_TYPE)
                 .setPreferredWidth((beanTypeComboBox.getPreferredSize().width) + 4);
     }
-    
+
     public void add() {
         int row = _dataList.size();
         try {
             _dataList.add(new ShowDialog.Data(ShowDialog.DataType.LocalVariable, ""));
         } catch (ParserException e) {
-            throw new RuntimeException(e);  // This should never happen
+            throw new JmriUncheckedException(e);  // This should never happen
         }
         fireTableRowsInserted(row, row);
     }
-    
+
     private void delete(int row) {
         _dataList.remove(row);
         fireTableRowsDeleted(row, row);
     }
-    
+
     public List<ShowDialog.Data> getDataList() {
         return _dataList;
     }
-    
-    
+
+
     public static class CellRenderer extends DefaultTableCellRenderer {
 
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value,
                 boolean isSelected, boolean hasFocus, int row, int column) {
-            
+
             if (column == COLUMN_TYPE) {
                 if (value == null) value = ShowDialog.DataType.LocalVariable;
-                
+
                 if (! (value instanceof ShowDialog.DataType)) {
                     throw new IllegalArgumentException("value is not an ShowDialog.DataType: " + value.getClass().getName());
                 }
                 setText(((ShowDialog.DataType) value).toString());
             } else {
-                throw new RuntimeException("Unknown column: "+Integer.toString(column));
+                throw new JmriUncheckedException("Unknown column: "+Integer.toString(column));
             }
             return this;
         }
     }
-    
-    
+
+
     public static class DataTypeCellEditor extends AbstractCellEditor
             implements TableCellEditor, ActionListener {
-        
+
         private ShowDialog.DataType _beanType;
-        
+
         @Override
         public Object getCellEditorValue() {
             return this._beanType;
         }
-        
+
         @Override
         public Component getTableCellEditorComponent(JTable table, Object value,
                 boolean isSelected, int row, int column) {
-            
+
             if (value == null) value = ShowDialog.DataType.LocalVariable;
-            
+
             if (! (value instanceof ShowDialog.DataType)) {
                 throw new IllegalArgumentException("value is not an ShowDialog.DataType: " + value.getClass().getName());
             }
-            
+
             JComboBox<ShowDialog.DataType> returnValueTypeComboBox = new JComboBox<>();
-            
+
             for (ShowDialog.DataType type : ShowDialog.DataType.values()) {
                 returnValueTypeComboBox.addItem(type);
             }
             JComboBoxUtil.setupComboBoxMaxRows(returnValueTypeComboBox);
-            
+
             returnValueTypeComboBox.setSelectedItem(value);
             returnValueTypeComboBox.addActionListener(this);
-            
+
             return returnValueTypeComboBox;
         }
-        
+
         @Override
         @SuppressWarnings("unchecked")  // Not possible to check that event.getSource() is instanceof JComboBox<ShowDialog.DataType>
         public void actionPerformed(ActionEvent event) {
@@ -220,45 +221,45 @@ public class ShowDialogTableModel extends AbstractTableModel {
             JComboBox<ShowDialog.DataType> returnValueTypeComboBox =
                     (JComboBox<ShowDialog.DataType>) event.getSource();
             _beanType = returnValueTypeComboBox.getItemAt(returnValueTypeComboBox.getSelectedIndex());
-            
+
         }
-        
+
     }
-    
-/*    
+
+/*
     public NamedBeanCellEditor getNamedBeanCellEditor() {
         return new NamedBeanCellEditor();
     }
-    
-    
+
+
     public class NamedBeanCellEditor extends AbstractCellEditor
             implements TableCellEditor, ActionListener {
-        
+
         private String _namedBean;
-        
+
         @Override
         public Object getCellEditorValue() {
             return this._namedBean;
         }
-        
+
         @Override
         public Component getTableCellEditorComponent(JTable table, Object value,
                 boolean isSelected, int row, int column) {
-            
+
             if ((value != null) && (! (value instanceof String))) {
                 throw new IllegalArgumentException("value is not a String: " + value.getClass().getName());
             }
-            
+
             JComboBox<String> namedBeanComboBox = new JComboBox<>();
             SortedSet<? extends NamedBean> set =
                     _dataList.get(row).getDataType().getManager().getNamedBeanSet();
-            
+
             String name = _dataList.get(row).getData();
-            
+
             if (!set.isEmpty()) {
                 for (NamedBean bean : set) {
                     namedBeanComboBox.addItem(bean.getDisplayName());
-                    
+
                     if (name != null) {
                         if (name.equals(bean.getUserName()) || name.equals(bean.getSystemName())) {
                             namedBeanComboBox.setSelectedItem(bean.getDisplayName());
@@ -269,13 +270,13 @@ public class ShowDialogTableModel extends AbstractTableModel {
             } else {
                 namedBeanComboBox.addItem("");
             }
-            
+
 //            namedBeanComboBox.setSelectedItem(value);
             namedBeanComboBox.addActionListener(this);
-            
+
             return namedBeanComboBox;
         }
-        
+
         @Override
         @SuppressWarnings("unchecked")  // Not possible to check that event.getSource() is instanceof JComboBox<ShowDialog.DataType>
         public void actionPerformed(ActionEvent event) {
@@ -286,7 +287,7 @@ public class ShowDialogTableModel extends AbstractTableModel {
             int index = namedBeanComboBox.getSelectedIndex();
             _namedBean = (index != -1) ? namedBeanComboBox.getItemAt(index) : null;
         }
-        
+
     }
-*/    
+*/
 }

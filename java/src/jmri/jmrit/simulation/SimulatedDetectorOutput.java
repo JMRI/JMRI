@@ -28,13 +28,14 @@ public interface SimulatedDetectorOutput {
     boolean reports(@Nonnull Sensor sensor);
 
     /**
-     * Report a change. Called on the simulator's own thread, or on the thread
-     * that placed or removed a train, in time order, and never while the
-     * simulator holds its lock. The output passes the change to the layout as
-     * that system would. It must not wait for the layout thread (Swing
-     * thread), for example with {@code ThreadingUtil.runOnLayout}: hand the
-     * change over with {@code ThreadingUtil.runOnLayoutEventually} or the
-     * system's own queue instead.
+     * Report a change of a sensor this output {@link #reports reports}. Called
+     * on the simulator's own thread, or on the thread that placed or removed a
+     * train, in time order, and never while the simulator holds its lock.
+     * The output passes the change to the layout as that system would. It
+     * must not wait for the layout thread (Swing thread), for example with
+     * {@code ThreadingUtil.runOnLayout}: hand the change over with
+     * {@code ThreadingUtil.runOnLayoutEventually} or the system's own queue
+     * instead.
      *
      * @param sensor    the sensor
      * @param state     {@link Sensor#ACTIVE} or {@link Sensor#INACTIVE}

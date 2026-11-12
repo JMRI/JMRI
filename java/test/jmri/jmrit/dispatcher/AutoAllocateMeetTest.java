@@ -43,7 +43,7 @@ public class AutoAllocateMeetTest {
     private final List<AllocationRequest> requests = new ArrayList<>();
     private final Map<Section, Integer> occupancy = new HashMap<>();
     private final AtomicInteger scansDone = new AtomicInteger();
-    private Section s1, s2, l1, l2, s4, s5;
+    private Section s0, s1, s2, l1, l2, s4, s5;
 
     private Section section(String name) {
         Section s = mock(Section.class);
@@ -290,6 +290,127 @@ public class AutoAllocateMeetTest {
         scan(aToS2);
         verify(df).allocateSection(aToS2, null);
         verify(engineer, never()).setHalt(anyBoolean());
+    }
+
+    /*
+     * Two trains running the same way along S0 - S1 - S2 - (L1 or L2) - S5 - S6,
+     * B behind A with the higher priority, so A is to wait in the loop for B to
+     * pass. Returns A and B, A in S1 and B in S0.
+     */
+    private ActiveTrain[] passingTrains() {
+        s0 = section("S0");
+        s1 = section("S1");
+        s2 = section("S2");
+        l1 = section("L1");
+        l2 = section("L2");
+        s5 = section("S5");
+        Section s6 = section("S6");
+        Transit east = new DefaultTransit("East");
+        east.addTransitSection(new TransitSection(s0, 1, Section.FORWARD));
+        east.addTransitSection(new TransitSection(s1, 2, Section.FORWARD));
+        east.addTransitSection(new TransitSection(s2, 3, Section.FORWARD));
+        east.addTransitSection(new TransitSection(l1, 4, Section.FORWARD));
+        east.addTransitSection(new TransitSection(l2, 4, Section.FORWARD, true));
+        east.addTransitSection(new TransitSection(s5, 5, Section.FORWARD));
+        east.addTransitSection(new TransitSection(s6, 6, Section.FORWARD));
+        ActiveTrain a = train("A", east, ActiveTrain.DISPATCHED);
+        ActiveTrain b = train("B", east, ActiveTrain.DISPATCHED);
+        when(a.getPriority()).thenReturn(1);
+        when(b.getPriority()).thenReturn(5);
+        at(a, s1, 2);
+        at(b, s0, 1);
+        return new ActiveTrain[]{a, b};
+    }
+
+    /*
+     * A goes into the loop on L2 and asks to leave it.
+     */
+    private AllocationRequest aInLoopAsksToLeave(ActiveTrain a) {
+        AllocationRequest aToS2 = request(a, s2, 3);
+        scan(aToS2);
+        verify(df).allocateSection(aToS2, null);
+        occupancy.put(s1, Section.UNOCCUPIED);
+        at(a, l2, 4);
+        AllocationRequest aToS5 = request(a, s5, 5);
+        scan(aToS5);
+        return aToS5;
+    }
+
+    @Test
+    public void testLeadingTrainWaitsInLoopForFasterTrain() {
+        ActiveTrain[] t = passingTrains();
+        AllocationRequest aToS5 = aInLoopAsksToLeave(t[0]);
+        // B can pass by L1, so A waits in the loop
+        verify(df, never()).allocateSection(aToS5, null);
+    }
+
+    @Test
+    public void testNoPassingMeetWhenPassingRoadIsOccupied() {
+        ActiveTrain[] t = passingTrains();
+        // a train Dispatcher isn't running stands on L1, so B can't pass A in the loop
+        occupancy.put(l1, Section.OCCUPIED);
+        AllocationRequest aToS5 = aInLoopAsksToLeave(t[0]);
+        verify(df).allocateSection(aToS5, null);
+    }
+
+    @Test
+    public void testPassingMeetIsDroppedWhenPassingRoadBecomesOccupied() {
+        ActiveTrain[] t = passingTrains();
+        AllocationRequest aToS5 = aInLoopAsksToLeave(t[0]);
+        verify(df, never()).allocateSection(aToS5, null);
+
+        // another train stops on L1 before B gets there: A must not wait for ever
+        occupancy.put(l1, Section.OCCUPIED);
+        scan(aToS5);
+        verify(df).allocateSection(aToS5, null);
+    }
+
+    @Test
+    public void testPassingMeetIsDroppedWhenFasterTrainTakesTheWaitingTrack() {
+        ActiveTrain[] t = passingTrains();
+        ActiveTrain a = t[0];
+        ActiveTrain b = t[1];
+        AllocationRequest aToS2 = request(a, s2, 3);
+        scan(aToS2);
+        verify(df).allocateSection(aToS2, null);
+        List<Section> loop = new ArrayList<>();
+        loop.add(l1);
+        loop.add(l2);
+        assertSame(l2, aa.autoNextSectionChoice(loop, request(a, l1, 4), 4), "A is planned to wait on L2");
+
+        // A is still in S2 when B reaches the loop on L2, the track A was to wait on
+        occupancy.put(s1, Section.UNOCCUPIED);
+        at(a, s2, 3);
+        occupancy.put(s0, Section.UNOCCUPIED);
+        at(b, l2, 4);
+        scan(request(a, l1, 4));
+        assertSame(l1, aa.autoNextSectionChoice(loop, request(a, l1, 4), 4),
+                "A is no longer steered to the track B is in");
+    }
+
+    @Test
+    public void testMeetIsDroppedWhenTrainTakesTheOtherTrack() {
+        ActiveTrain[] t = meetTrains();
+        ActiveTrain a = t[0];
+        ActiveTrain b = t[1];
+        at(a, s1, 1);
+        at(b, s5, 1);
+        AllocationRequest aToS2 = request(a, s2, 2);
+        scan(aToS2);
+        verify(df).allocateSection(aToS2, null);
+        List<Section> loop = new ArrayList<>();
+        loop.add(l1);
+        loop.add(l2);
+        assertSame(l2, aa.autoNextSectionChoice(loop, request(a, l1, 3), 3), "A is planned to take L2");
+
+        // B reaches the loop first and takes L2, the track planned for A
+        occupancy.put(s1, Section.UNOCCUPIED);
+        at(a, s2, 2);
+        occupancy.put(s5, Section.UNOCCUPIED);
+        at(b, l2, 3);
+        scan(request(a, l1, 3));
+        assertSame(l1, aa.autoNextSectionChoice(loop, request(a, l1, 3), 3),
+                "A is no longer steered to the track B is in");
     }
 
     @BeforeEach

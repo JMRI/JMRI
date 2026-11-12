@@ -189,7 +189,7 @@ public class BlockContentsIconTest extends PositionableLabelTest {
         new QueueTool().waitEmpty();
 
         // no Active Train for it: the roster entry's own items
-        assertEquals(java.util.List.of("Open Throttle", Bundle.getMessage("MenuNewTrain")), menuItems(),
+        assertEquals(java.util.List.of("Open Throttle", Bundle.getMessage("MenuNewTrain"), BLOCK_ITEM), menuItems(),
             "a throttle or a new train for the allocated loco");
         org.mockito.Mockito.verify(df).getActiveTrainForRoster(entry);
 
@@ -197,9 +197,49 @@ public class BlockContentsIconTest extends PositionableLabelTest {
         jmri.jmrit.dispatcher.ActiveTrain at = org.mockito.Mockito.mock(jmri.jmrit.dispatcher.ActiveTrain.class);
         org.mockito.Mockito.when(df.getActiveTrainForRoster(entry)).thenReturn(at);
         org.mockito.Mockito.when(at.getStatus()).thenReturn(jmri.jmrit.dispatcher.ActiveTrain.RUNNING);
-        assertEquals(java.util.List.of(Bundle.getMessage("MenuTerminateTrain"), Bundle.getMessage("MenuAllocateExtra")),
-            menuItems(), "the train found by its roster entry");
+        assertEquals(java.util.List.of(Bundle.getMessage("MenuTerminateTrain"), Bundle.getMessage("MenuAllocateExtra"),
+            BLOCK_ITEM), menuItems(), "the train found by its roster entry");
         jmri.InstanceManager.deregister(df, jmri.jmrit.dispatcher.DispatcherFrame.class);
+    }
+
+    private static final String BLOCK_ITEM = "Block IB1...";
+
+    @Test
+    public void testBlockDialogItemLastInMenu() {
+        to.setEditable(false);
+        javax.swing.JPopupMenu popup = new javax.swing.JPopupMenu();
+        org.junit.jupiter.api.Assertions.assertTrue(((BlockContentsIcon) to).showPopUp(popup), "a menu");
+        assertEquals(1, popup.getComponentCount(), "no train shown: only the Block dialog's item, with no separator");
+        assertEquals(java.util.List.of(BLOCK_ITEM), menuItems());
+        ((javax.swing.JMenuItem) popup.getComponent(popup.getComponentCount() - 1)).doClick();
+        jmri.jmrit.trainrecord.swing.BlockDialog d = jmri.util.JmriJFrame.getFrameList(
+                jmri.jmrit.trainrecord.swing.BlockDialog.class).stream().findFirst().orElse(null);
+        org.junit.jupiter.api.Assertions.assertNotNull(d, "choosing it opens the Block dialog");
+        org.junit.jupiter.api.Assertions.assertSame(((BlockContentsIcon) to).getBlock(), d.getBlock());
+        d.dispose();
+
+        jmri.jmrit.dispatcher.DispatcherFrame df = org.mockito.Mockito.mock(jmri.jmrit.dispatcher.DispatcherFrame.class);
+        jmri.jmrit.dispatcher.ActiveTrain at = org.mockito.Mockito.mock(jmri.jmrit.dispatcher.ActiveTrain.class);
+        org.mockito.Mockito.when(df.getActiveTrainForName("Train A")).thenReturn(at);
+        org.mockito.Mockito.when(at.getStatus()).thenReturn(jmri.jmrit.dispatcher.ActiveTrain.RUNNING);
+        jmri.InstanceManager.store(df, jmri.jmrit.dispatcher.DispatcherFrame.class);
+        jmri.InstanceManager.getDefault(BlockManager.class).provideBlock("IB1").setValue("Train A");
+        new QueueTool().waitEmpty();
+        popup = new javax.swing.JPopupMenu();
+        ((BlockContentsIcon) to).showPopUp(popup);
+        java.awt.Component[] c = popup.getComponents();
+        org.junit.jupiter.api.Assertions.assertTrue(c[c.length - 2] instanceof javax.swing.JPopupMenu.Separator,
+            "a separator after the Dispatcher items");
+        assertEquals(BLOCK_ITEM, ((javax.swing.JMenuItem) c[c.length - 1]).getText(), "the Block dialog's item last");
+        jmri.InstanceManager.deregister(df, jmri.jmrit.dispatcher.DispatcherFrame.class);
+
+        to.setEditable(true);
+        popup = new javax.swing.JPopupMenu();
+        ((BlockContentsIcon) to).showPopUp(popup);
+        for (java.awt.Component m : popup.getComponents()) {
+            org.junit.jupiter.api.Assertions.assertFalse(m instanceof javax.swing.JMenuItem
+                && BLOCK_ITEM.equals(((javax.swing.JMenuItem) m).getText()), "not in edit mode");
+        }
     }
 
     private java.util.List<String> menuItems() {
@@ -235,8 +275,8 @@ public class BlockContentsIconTest extends PositionableLabelTest {
                 items.add(((javax.swing.JMenuItem) c).getText());
             }
         }
-        assertEquals(java.util.List.of(Bundle.getMessage("MenuTerminateTrain"), Bundle.getMessage("MenuAllocateExtra")),
-            items, "Terminate Train and Allocate Extra Sections for the allocated train");
+        assertEquals(java.util.List.of(Bundle.getMessage("MenuTerminateTrain"), Bundle.getMessage("MenuAllocateExtra"),
+            BLOCK_ITEM), items, "Terminate Train and Allocate Extra Sections for the allocated train, then the Block dialog");
         jmri.InstanceManager.deregister(df, jmri.jmrit.dispatcher.DispatcherFrame.class);
     }
 

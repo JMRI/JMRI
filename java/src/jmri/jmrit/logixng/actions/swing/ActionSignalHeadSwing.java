@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 
 import jmri.InstanceManager;
+import jmri.JmriUncheckedException;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.SignalHead;
@@ -406,7 +407,7 @@ public class ActionSignalHeadSwing extends AbstractDigitalActionSwing {
                 throw new IllegalArgumentException("_tabbedPaneAppearanceType has unknown selection");
             }
         } catch (ParserException e) {
-            throw new RuntimeException("ParserException: "+e.getMessage(), e);
+            throw new JmriUncheckedException("ParserException: "+e.getMessage(), e);
         }
     }
 

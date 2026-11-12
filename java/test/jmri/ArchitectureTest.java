@@ -599,7 +599,8 @@ public class ArchitectureTest {
      * takes that system's commands to simulated trains and reports their
      * detection in that system's messages, is added here with its package.
      */
-    private static final String[] SIMULATION_USERS = {"jmri.jmrit.simulation.."};
+    private static final String[] SIMULATION_USERS = {"jmri.jmrit.simulation..",
+        "jmri.jmrix.can.cbus.simulator.."}; // CBUS on CAN Simulation
 
     /**
      * Only the simulator and the packages in {@code SIMULATION_USERS} use

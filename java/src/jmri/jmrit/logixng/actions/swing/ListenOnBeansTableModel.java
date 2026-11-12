@@ -10,6 +10,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 
+import jmri.JmriUncheckedException;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.NamedBeanType;
@@ -188,7 +189,7 @@ public class ListenOnBeansTableModel extends AbstractTableModel {
                 }
                 setText(((NamedBeanType) value).toString());
             } else {
-                throw new RuntimeException("Unknown column: "+Integer.toString(column));
+                throw new JmriUncheckedException("Unknown column: "+Integer.toString(column));
             }
             return this;
         }

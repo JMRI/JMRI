@@ -75,12 +75,23 @@ public interface TrainRecord extends PropertyChangeProvider {
     String PROPERTY_CONFIDENCE = "confidence"; // NOI18N
     /** Property name for a change of the leading end or of whether the front is known. */
     String PROPERTY_DIRECTION = "direction"; // NOI18N
+    /**
+     * Property name for a new speed command for one of the train's locos, or
+     * its release; the new value is the command, the old value the last
+     * command for the same loco, or null.
+     */
+    String PROPERTY_COMMAND = "command"; // NOI18N
 
     /**
      * @return the train's name, unique among the records
      */
     @Nonnull
     String getName();
+    /**
+     * Property name for a new entry in the history; the new value is the
+     * {@link Reason}.
+     */
+    String PROPERTY_HISTORY = "history"; // NOI18N
 
     /**
      * Rename the train.
@@ -334,7 +345,27 @@ public interface TrainRecord extends PropertyChangeProvider {
      * @throws IllegalStateException    if the record has been disposed
      */
     @InvokeOnLayoutThread
-    void place(@Nonnull List<Block> blocks, boolean frontKnown);
+    default void place(@Nonnull List<Block> blocks, boolean frontKnown) {
+        place(blocks, frontKnown, Reason.Rule.PLACED);
+    }
+
+    /**
+     * Say where the train is, and why: as {@link #place(List, boolean)}, with
+     * the rule that placed it kept as the reason.
+     *
+     * @param blocks     the Blocks, at least one, front first if the front
+     *                   is known
+     * @param frontKnown true if the first Block given holds the front of
+     *                   the train
+     * @param rule       {@link Reason.Rule#PLACED},
+     *                   {@link Reason.Rule#PLACED_BY_VALUE} or
+     *                   {@link Reason.Rule#PLACED_BY_DISPATCHER}
+     * @throws IllegalArgumentException if the list is empty or holds a
+     *                                  Block twice
+     * @throws IllegalStateException    if the record has been disposed
+     */
+    @InvokeOnLayoutThread
+    void place(@Nonnull List<Block> blocks, boolean frontKnown, @Nonnull Reason.Rule rule);
 
     /**
      * Forget where the train is, as when it is taken off the layout.
@@ -388,6 +419,173 @@ public interface TrainRecord extends PropertyChangeProvider {
     Confidence getConfidence();
 
     /**
+     * The addresses of the train's locos, from their roster entries, lead
+     * loco first. Speed commands for each of these addresses, from any
+     * {@link LocoSpeedSource}, are kept with the record.
+     *
+     * @return the addresses, lead loco first, possibly empty; a copy
+     */
+    @Nonnull
+    List<LocoAddress> getLocoAddresses();
+
+    /**
+     * The speed commands for the train's locos, oldest first: the most recent
+     * {@value #COMMANDS_LENGTH}, for all of its locos together. A command
+     * repeating the speed and direction of the one before it for the same
+     * loco is not kept: when several sources see the same command, the first
+     * to report it is kept.
+     *
+     * @return the commands; a copy
+     */
+    @Nonnull
+    List<SpeedCommand> getCommands();
+
+    /**
+     * The speed commands kept for one of the train's locos, oldest first.
+     *
+     * @param address the loco's address
+     * @return the commands for that address; a copy, empty if there are none
+     */
+    @Nonnull
+    List<SpeedCommand> getCommands(@Nonnull LocoAddress address);
+
+    /** How many speed commands a record keeps, for all of its locos. */
+    int COMMANDS_LENGTH = 256;
+
+    /**
+     * @return the most recent speed command for any of the train's locos, or
+     *         null if none has been seen
+     */
+    @CheckForNull
+    SpeedCommand getLastCommand();
+
+    /**
+     * @param address the address of one of the train's locos
+     * @return the most recent speed command for that loco, or null if none
+     *         has been seen
+     */
+    @CheckForNull
+    SpeedCommand getLastCommand(@Nonnull LocoAddress address);
+
+    /**
+     * A speed and direction commanded for one of a train's locos, or the
+     * release of its address.
+     */
+    @Immutable
+    final class SpeedCommand {
+
+        private final LocoAddress address;
+        private final float speedSetting;
+        private final boolean forward;
+        private final boolean release;
+        private final long timeNanos;
+        private final java.time.Instant time;
+
+        /**
+         * @param address      the loco's address
+         * @param speedSetting the speed setting, as
+         *                     {@link Throttle#getSpeedSetting()} gives it: 0
+         *                     to 1, or less than 0 for an emergency stop
+         * @param forward      true if the direction is forward
+         * @param release      true if this is the release of the loco's
+         *                     address, which leaves it at the speed and
+         *                     direction given
+         * @param timeNanos    when, on the {@link System#nanoTime()} scale
+         * @param time         when, as a wall-clock time
+         */
+        public SpeedCommand(@Nonnull LocoAddress address, float speedSetting, boolean forward, boolean release,
+                long timeNanos, @Nonnull java.time.Instant time) {
+            this.address = Objects.requireNonNull(address, "address");
+            this.speedSetting = speedSetting;
+            this.forward = forward;
+            this.release = release;
+            this.timeNanos = timeNanos;
+            this.time = Objects.requireNonNull(time, "time");
+        }
+
+        /**
+         * @return the address of the loco this was commanded for
+         */
+        @Nonnull
+        public LocoAddress getAddress() {
+            return address;
+        }
+
+        /**
+         * Loco addresses are the same if their numbers and protocols are: a
+         * short and a long address with the same number are different locos.
+         *
+         * @param other a loco address
+         * @return true if this was commanded for that address
+         */
+        public boolean isFor(@Nonnull LocoAddress other) {
+            return address.getNumber() == other.getNumber() && address.getProtocol() == other.getProtocol();
+        }
+
+        /**
+         * @return the speed setting: 0 to 1, or less than 0 for an emergency
+         *         stop
+         */
+        public float getSpeedSetting() {
+            return speedSetting;
+        }
+
+        /**
+         * @return true for an emergency stop
+         */
+        public boolean isEmergencyStop() {
+            return speedSetting < 0;
+        }
+
+        /**
+         * @return true if the direction is forward
+         */
+        public boolean isForward() {
+            return forward;
+        }
+
+        /**
+         * @return true if this is the release of the loco's address: nothing
+         *         was commanded, and the loco is left at the speed and
+         *         direction given
+         */
+        public boolean isRelease() {
+            return release;
+        }
+
+        /**
+         * @param other the other command
+         * @return true if this commands the same speed and direction as the
+         *         other
+         */
+        public boolean sameSpeedAs(@Nonnull SpeedCommand other) {
+            return Float.compare(speedSetting, other.speedSetting) == 0 && forward == other.forward;
+        }
+
+        /**
+         * @return when, on the {@link System#nanoTime()} scale: when the
+         *         source reported it
+         */
+        public long getTimeNanos() {
+            return timeNanos;
+        }
+
+        /**
+         * @return when, as a wall-clock time
+         */
+        @Nonnull
+        public java.time.Instant getTime() {
+            return time;
+        }
+
+        @Override
+        public String toString() {
+            return "SpeedCommand[" + address + ", " + (release ? "released at " : "") + speedSetting
+                    + (forward ? " forward]" : " reverse]");
+        }
+    }
+
+    /**
      * An end of a train.
      */
     enum End {
@@ -412,6 +610,38 @@ public interface TrainRecord extends PropertyChangeProvider {
         /** Expected somewhere and not found. */
         LOST
     }
+
+    /**
+     * What has happened to the train, most recent first: the last
+     * {@value #HISTORY_LENGTH} changes to the Blocks it is in or to how sure
+     * JMRI is of where it is, each with its reason.
+     *
+     * @return the history; a copy
+     */
+    @Nonnull
+    List<Reason> getHistory();
+
+    /** How many entries the history keeps. */
+    int HISTORY_LENGTH = 20;
+
+    /**
+     * Why the train is in a Block.
+     *
+     * @param block one of {@link #getBlocks()}
+     * @return the reason it was put there, or null if it isn't there
+     */
+    @CheckForNull
+    Reason getReason(@Nonnull Block block);
+
+    /**
+     * Why JMRI is as sure, or as unsure, of where the train is as
+     * {@link #getConfidence()} says.
+     *
+     * @return the reason for the present confidence, or null if the train
+     *         is not placed
+     */
+    @CheckForNull
+    Reason getConfidenceReason();
 
     /**
      * A Block a train entered.
@@ -488,6 +718,141 @@ public interface TrainRecord extends PropertyChangeProvider {
         public String toString() {
             return "TrailEntry[" + block.getDisplayName() + " from "
                     + (from == null ? "nowhere" : from.getDisplayName()) + ", " + end + "]";
+        }
+    }
+
+    /**
+     * Why something about a train changed: the rule that applied and what
+     * set it off, held as references to things that already exist (a Block,
+     * a sensor, a time). It is put into words only when someone looks
+     * ({@code jmri.jmrit.trainrecord.TrainRecordReasons}).
+     */
+    @Immutable
+    final class Reason {
+
+        /**
+         * The rule that applied.
+         */
+        public enum Rule {
+            /** Placed in its Blocks, by code or a script. */
+            PLACED,
+            /** Placed where a Block's value names it. */
+            PLACED_BY_VALUE,
+            /** Placed in its start Block by Dispatcher. */
+            PLACED_BY_DISPATCHER,
+            /** No longer placed anywhere. */
+            UNPLACED,
+            /** Entered a Block next to one of its ends: its sensor went occupied. */
+            ENTERED,
+            /** Entered a Block through Blocks with no detector. */
+            ENTERED_THROUGH_DARK,
+            /** One of several trains that could have entered a Block. */
+            AMBIGUOUS,
+            /** The Block's value named it as the train that entered. */
+            SETTLED_BY_VALUE,
+            /** Another train was named as the one that entered: no longer in doubt. */
+            AMBIGUITY_CLEARED,
+            /** Left a Block at one of its ends: its sensor went unoccupied. */
+            LEFT,
+            /** Left the Blocks with no detector behind a Block it was seen to leave. */
+            LEFT_DARK_BEHIND,
+            /** A Block it is in went unoccupied, but it can't have left it. */
+            KEPT_AFTER_DROPOUT,
+            /** None of its Blocks with a detector shows it. */
+            NOT_SEEN,
+            /** A Block it is in went occupied again. */
+            SEEN_AGAIN
+        }
+
+        private final Rule rule;
+        private final Block block;
+        private final Block from;
+        private final Sensor sensor;
+        private final List<Block> through;
+        private final java.time.Instant time;
+
+        /**
+         * @param rule    the rule that applied
+         * @param block   the Block it is about, or null
+         * @param from    the Block it came from, or null
+         * @param sensor  the sensor whose change set it off, or null
+         * @param through Blocks with no detector passed through, in order;
+         *                empty if none
+         * @param time    when
+         */
+        public Reason(@Nonnull Rule rule, @CheckForNull Block block, @CheckForNull Block from,
+                @CheckForNull Sensor sensor, @Nonnull List<Block> through, @Nonnull java.time.Instant time) {
+            this.rule = Objects.requireNonNull(rule, "rule");
+            this.block = block;
+            this.from = from;
+            this.sensor = sensor;
+            this.through = Collections.unmodifiableList(new ArrayList<>(Objects.requireNonNull(through, "through")));
+            this.time = Objects.requireNonNull(time, "time");
+        }
+
+        /**
+         * A reason with no other Blocks or sensor, dated now.
+         *
+         * @param rule  the rule that applied
+         * @param block the Block it is about, or null
+         * @return the reason
+         */
+        @Nonnull
+        public static Reason of(@Nonnull Rule rule, @CheckForNull Block block) {
+            return new Reason(rule, block, null, null, List.of(), java.time.Instant.now());
+        }
+
+        /**
+         * @return the rule that applied
+         */
+        @Nonnull
+        public Rule getRule() {
+            return rule;
+        }
+
+        /**
+         * @return the Block it is about, or null
+         */
+        @CheckForNull
+        public Block getBlock() {
+            return block;
+        }
+
+        /**
+         * @return the Block the train came from, or null
+         */
+        @CheckForNull
+        public Block getFrom() {
+            return from;
+        }
+
+        /**
+         * @return the sensor whose change set it off, or null
+         */
+        @CheckForNull
+        public Sensor getSensor() {
+            return sensor;
+        }
+
+        /**
+         * @return the Blocks with no detector passed through, in order
+         */
+        @Nonnull
+        public List<Block> getThrough() {
+            return through;
+        }
+
+        /**
+         * @return when
+         */
+        @Nonnull
+        public java.time.Instant getTime() {
+            return time;
+        }
+
+        @Override
+        public String toString() {
+            return "Reason[" + rule + (block == null ? "" : " " + block.getDisplayName()) + "]";
         }
     }
 

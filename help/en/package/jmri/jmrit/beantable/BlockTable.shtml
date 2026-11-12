@@ -221,6 +221,13 @@
           used for both halves of crossovers.  A ghost block could be used for the recommended
           third block for double crossovers.</p>
         </li>
+
+        <li>
+          <p><strong>Train</strong> and <strong>Why?</strong><span class="since">since
+          5.19.1</span> The trains train tracking has in the Block, and how each came to be there.
+          Both columns are hidden until chosen from the column header's right-click menu. See <a href=
+          "../trainrecord/TrainTracking.shtml#blockTable">Train Tracking</a>.</p>
+        </li>
       </ul>
 
       <h2>Block Table Controls</h2>

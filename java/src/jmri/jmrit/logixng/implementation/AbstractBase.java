@@ -297,7 +297,7 @@ public abstract class AbstractBase
 
     public void assertListenersAreNotRegistered(Logger log, String method) {
         if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException(method + " must not be called when listeners are registered");
+            JmriUncheckedException e = new JmriUncheckedException(method + " must not be called when listeners are registered");
             log.error("{} must not be called when listeners are registered", method, e);
             throw e;
         }

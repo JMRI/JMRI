@@ -44,7 +44,7 @@ final class ActiveTrainRecords {
         at.setTrainRecord(record);
         Block start = at.getStartBlock();
         if (start != null && start.getState() == Block.OCCUPIED && !record.getBlocks().contains(start)) {
-            record.place(List.of(start), false);
+            record.place(List.of(start), false, TrainRecord.Reason.Rule.PLACED_BY_DISPATCHER);
         }
         return record;
     }

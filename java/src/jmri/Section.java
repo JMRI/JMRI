@@ -174,6 +174,57 @@ public interface Section extends NamedBean {
     Sensor getReverseStoppingSensor();
 
     /**
+     * Key of the property holding the stop point for trains running through
+     * the Section in the forward direction.
+     */
+    String STOP_POINT_FORWARD = "StopPointForward"; // NOI18N
+
+    /**
+     * Key of the property holding the stop point for trains running through
+     * the Section in the reverse direction.
+     */
+    String STOP_POINT_REVERSE = "StopPointReverse"; // NOI18N
+
+    /**
+     * Get the stop point for trains running through the Section in a
+     * direction: how far from the end of the Section where they enter the
+     * head of a train is when it stops in the Section. Where the Section has a
+     * stopping sensor for that direction, this is where the sensor is.
+     * <p>
+     * Kept as a property of the Section, so it is saved with the Section's
+     * other properties.
+     *
+     * @param direction {@link #FORWARD} or {@link #REVERSE}
+     * @return the distance in mm, or 0 if no stop point is set
+     */
+    default float getStopPointMm(int direction) {
+        Object value = getProperty(direction == REVERSE ? STOP_POINT_REVERSE : STOP_POINT_FORWARD);
+        if (value instanceof Number) {
+            float mm = ((Number) value).floatValue();
+            return mm > 0.0f ? mm : 0.0f;
+        }
+        return 0.0f;
+    }
+
+    /**
+     * Set the stop point for trains running through the Section in a
+     * direction.
+     *
+     * @param direction {@link #FORWARD} or {@link #REVERSE}
+     * @param mm        the distance in mm from the end of the Section where
+     *                  trains enter; 0 or less for none
+     * @see #getStopPointMm(int)
+     */
+    default void setStopPointMm(int direction, float mm) {
+        String key = direction == REVERSE ? STOP_POINT_REVERSE : STOP_POINT_FORWARD;
+        if (mm > 0.0f) {
+            setProperty(key, mm);
+        } else {
+            removeProperty(key);
+        }
+    }
+
+    /**
      * Add a Block to the Section. Block and sequence number must be unique
      * within the Section. Block sequence numbers are set automatically as
      * blocks are added.

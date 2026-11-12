@@ -13,8 +13,6 @@ import jmri.*;
 import jmri.jmrix.openlcb.*;
 import jmri.jmrix.openlcb.swing.eventtable.configurexml.*;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
@@ -25,7 +23,7 @@ import org.openlcb.implementations.*;
 /**
  * DataModel for the table in the EventTablePane
  * <p>
- * Persistence is handled via the 
+ * Persistence is handled via the
  * {@link jmri.jmrix.openlcb.swing.eventtable.configurexml} package.  Note that
  * this class explicitly invokes persistence in the constructor and at shutdown;
  * the general mechanism to store in panel files is not used here intentionally.
@@ -44,12 +42,12 @@ public class EventTableDataModel extends AbstractTableModel {
         stdEventTable.addPropertyChangeListener(eventInfoListener);
         // load stored contents
         loadNameStoreEventIDs();
-        
+
         loadModelData();
-        
+
         // arrange to store the current contents at shutdown
         initShutdownTask();
-        
+
     }
 
     public static final int COL_EVENTID = 0;
@@ -73,17 +71,17 @@ public class EventTableDataModel extends AbstractTableModel {
     PropertyChangeListener eventInfoListener = (java.beans.PropertyChangeEvent e) -> {
             eventInfoChanged(e);
         };
-    
+
     PropertyChangeListener eventHandleListener = (java.beans.PropertyChangeEvent e) -> {
             handleDescriptionChanged(e);
         };
-        
+
     // static so the data remains available through a window close-open cycle
     // public to allow access for testing; clean that up sometime with subclassing
     static final ArrayList<TripleMemo> memos = new ArrayList<>();
 
     public static List<TripleMemo> getMemos() { return memos; }  // public for testing
-    
+
     TripleMemo getTripleMemo(int row) {
         if (row >= memos.size()) {
             return null;
@@ -95,15 +93,15 @@ public class EventTableDataModel extends AbstractTableModel {
         // to be only used for testing, this clears all class-static information
         nameToNodeId.clear();
         nodeIdToName.clear();
-        
+
         eventToDescriptions.clear();
         memos.clear();
     }
-    
+
     // ********************************
     // Store for node name<->ID mapping
     // ********************************
- 
+
     private static final Map<String, NodeID> nameToNodeId = new HashMap<>();
     private static final Map<NodeID, String> nodeIdToName = new HashMap<>();
 
@@ -117,7 +115,7 @@ public class EventTableDataModel extends AbstractTableModel {
         if (name == null || name.isEmpty()) return nodeID.toString();
         return name;
     }
-    
+
     /**
      * @param nodeID The NodeID being searched for
      * @return true if there is an associated name
@@ -142,7 +140,7 @@ public class EventTableDataModel extends AbstractTableModel {
                 return null;
             }
         }
-        return nid;    
+        return nid;
     }
 
     /**
@@ -152,7 +150,7 @@ public class EventTableDataModel extends AbstractTableModel {
     public boolean hasNodeID(String name) {
         var nid = nameToNodeId.get(name);
         if (nid == null) return false;
-        return true;    
+        return true;
     }
 
     /**
@@ -176,7 +174,7 @@ public class EventTableDataModel extends AbstractTableModel {
      * @return Set of all available NodeIDs
      */
     public java.util.Set<NodeID> getNodeIDMatches() {
-        return nodeIdToName.keySet();        
+        return nodeIdToName.keySet();
     }
 
     // ********************************
@@ -205,7 +203,7 @@ public class EventTableDataModel extends AbstractTableModel {
         }
         list.add(description);
     }
-    
+
     public Set<String> getAuxiliaryInformation(EventID event) {
         var retval = eventToDescriptions.get(event);
         if (retval == null) {
@@ -218,7 +216,7 @@ public class EventTableDataModel extends AbstractTableModel {
     public Set<EventID> getAuxiliaryKnownEvents() {
         return eventToDescriptions.keySet();
     }
-    
+
     // ********************************
 
     // invoked when EventTable.addEvent is called to add an eventID and description
@@ -237,7 +235,7 @@ public class EventTableDataModel extends AbstractTableModel {
     }
 
     // invoked from EventTable when EventInfo has a description added or deleted,
-    // or a description is updated through the EventTableEntry 
+    // or a description is updated through the EventTableEntry
     protected void handleDescriptionChanged(PropertyChangeEvent e) {
         switch (e.getPropertyName()) {
             case EventTable.DESCRIPTION_ADDED :
@@ -249,31 +247,31 @@ public class EventTableDataModel extends AbstractTableModel {
             case EventTable.DESCRIPTION_UPDATED :
                 handleDescriptionUpdated(e);
                 break;
-            
-            
+
+
             default: // we ignore other notifications
                 break;
         }
     }
-        
+
     void handleDescriptionAdded(PropertyChangeEvent e){
         log.debug("handleDescriptionAdded: {}", e.getPropertyName());
         var info = (EventTable.EventInfo)e.getNewValue();
-        updateAuxiliaryInformation(info.getEventId());        
+        updateAuxiliaryInformation(info.getEventId());
     }
-    
+
     void handleDescriptionErased(PropertyChangeEvent e){
         log.debug("handleDescriptionErased: {}", e.getPropertyName());
         var info = (EventTable.EventInfo)e.getNewValue();
-        updateAuxiliaryInformation(info.getEventId());        
+        updateAuxiliaryInformation(info.getEventId());
     }
-    
+
     void handleDescriptionUpdated(PropertyChangeEvent e){
         log.debug("handleDescriptionUpdated: {}", e.getPropertyName());
         var info = (EventTable.EventInfo)e.getNewValue();
-        updateAuxiliaryInformation(info.getEventId());        
+        updateAuxiliaryInformation(info.getEventId());
     }
-    
+
     protected void loadNameStoreEventIDs() {
         // are there events in the Name Store? If so, add them
         log.debug("loadNameStoreEventIDs with {}", nameStore.getMatches().size());
@@ -312,7 +310,7 @@ public class EventTableDataModel extends AbstractTableModel {
         }
         var memo = memos.get(row);
         switch (col) {
-            case COL_EVENTID: 
+            case COL_EVENTID:
                 String retval = memo.eventID.toShortString();
                 if (!memo.rangeSuffix.isEmpty()) retval += " - "+memo.rangeSuffix;
                 return retval;
@@ -322,7 +320,7 @@ public class EventTableDataModel extends AbstractTableModel {
                 } else {
                     return "";
                 }
-                
+
             case COL_TRIGGER:
                 return Bundle.getMessage("TableColTrigger");
             case COL_PRODUCER_NODE:
@@ -353,7 +351,7 @@ public class EventTableDataModel extends AbstractTableModel {
                 String interp = memo.eventID.parse();
                 if (interp != null && !interp.isEmpty()) {
                     height += lineIncrement;
-                    result.append(interp);                        
+                    result.append(interp);
                     first = false;
                 }
 
@@ -382,7 +380,7 @@ public class EventTableDataModel extends AbstractTableModel {
         }
     }
 
-    int lineIncrement = -1; // cache the line spacing for multi-line cells; 
+    int lineIncrement = -1; // cache the line spacing for multi-line cells;
                             // this gets the value before any adjustments done
 
     @Override
@@ -402,7 +400,7 @@ public class EventTableDataModel extends AbstractTableModel {
             var srcNodeID = sysMemo.get(org.openlcb.NodeID.class);
             Message m = new ProducerConsumerEventReportMessage(srcNodeID, nodeMemo.eventID);
             connection.put(m, null);
-            
+
         }
     }
 
@@ -446,18 +444,8 @@ public class EventTableDataModel extends AbstractTableModel {
     }
 
     /**
-     * Remove all existing data, generally just in advance of an update
-     */
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD") // Swing thread deconflicts
-    void clear() {
-        memos.clear();
-        fireTableDataChanged();  // don't queue this one, must be immediate
-    }
-
-    /**
      * Remove all existing data from currently-present nodes, generally just in advance of an update
      */
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD") // Swing thread deconflicts
     void clearAllPresentNodes() {
         var presentNodeIDs = new HashSet<NodeID>();
         for (var nodeMemo : store.getNodeMemos()) {
@@ -481,7 +469,7 @@ public class EventTableDataModel extends AbstractTableModel {
         for (var tripleMemo : memosToRemove) {
             memos.remove(tripleMemo);
         }
-        
+
         fireTableDataChanged();  // don't queue this one, must be immediate
     }
 
@@ -495,7 +483,7 @@ public class EventTableDataModel extends AbstractTableModel {
         if (log.isTraceEnabled()) { // check logging level to avoid processing irrelevant traceback
             log.trace("handleTableUpdated", jmri.util.LoggingUtil.shortenStacktrace(new Exception("traceback")));
         }
-        
+
         final int DELAY = 500;
 
         if (!pending) {
@@ -521,7 +509,7 @@ public class EventTableDataModel extends AbstractTableModel {
                     name = ident.getUserName();
                     // and remember this name for later
                     addMatch(nodeID, name);
-                    
+
                 }
         }
         // otherwise  if node name already encountered
@@ -580,7 +568,7 @@ public class EventTableDataModel extends AbstractTableModel {
                     // We also disable it if this call was from a PCER message,
                     // as those are routine and should have been preceeded
                     // by a Producer Identified. Leaving this in results in
-                    // excessive refreshes and e.g. frustrating loss of 
+                    // excessive refreshes and e.g. frustrating loss of
                     // cell selections.
                     //
                     if (! (popcornModeActive | pcer) ) {
@@ -830,7 +818,7 @@ public class EventTableDataModel extends AbstractTableModel {
     void csvWriteOperation(File file) {
         try (CSVPrinter str = new CSVPrinter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8), CSVFormat.DEFAULT)) {
             str.printRecord("Event ID", "Event Name", "Producer Node", "Producer Node Name",
-                            "Consumer Node", "Consumer Node Name", "Paths");                
+                            "Consumer Node", "Consumer Node Name", "Paths");
             for (int i = 0; i < getRowCount(); i++) {
 
                 str.print(getValueAt(i, COL_EVENTID));
@@ -844,7 +832,7 @@ public class EventTableDataModel extends AbstractTableModel {
                 for (String context : contexts) {
                     str.print(context);
                 }
-                
+
                 str.println();
             }
             str.flush();
@@ -857,14 +845,14 @@ public class EventTableDataModel extends AbstractTableModel {
         try (Reader in = new FileReader(file)) {
             boolean first = true;
             Iterable<CSVRecord> records = CSVFormat.RFC4180.parse(in);
-            
+
             for (CSVRecord record : records) {
                 // skip the first record, as it's the column titles
                 if (first) {
                     first = false;
                     continue;
                 }
-                
+
                 String eventIDname = record.get(0);
                  // Is the 1st column really an event ID
                 EventID eid;
@@ -879,12 +867,12 @@ public class EventTableDataModel extends AbstractTableModel {
                 if (! nameStore.hasEventName(eid)) {
                     String eventName = record.get(1);
                     nameStore.addMatch(eid, eventName);
-                }         
+                }
             }
             log.debug("File reading complete");
             // cause the table to update
             fireTableDataChanged();
-            
+
         } catch (IOException ex) {
             log.error("Error reading file", ex);
         }
@@ -899,7 +887,7 @@ public class EventTableDataModel extends AbstractTableModel {
     private Runnable shutDownTask = null;
 
     public void dispose() {
-        // this does _not_ deregister the shutdown task, 
+        // this does _not_ deregister the shutdown task,
         // as that needs to happen at end of run to write
         // any changes after this is closed.
         //
@@ -910,13 +898,13 @@ public class EventTableDataModel extends AbstractTableModel {
         } catch (java.io.IOException ioe) {
             log.error("Exception writing event table data in dispose", ioe);
         }
-        
+
         // drop the external listeners
         stdEventTable.removePropertyChangeListener(eventInfoListener);
-        
+
     }
-    
-    
+
+
     protected void initShutdownTask(){
         // Create shutdown task to save
         log.debug("Register ShutDown task");

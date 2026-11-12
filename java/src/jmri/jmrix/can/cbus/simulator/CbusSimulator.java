@@ -3,6 +3,7 @@ package jmri.jmrix.can.cbus.simulator;
 import javax.annotation.Nonnull;
 
 import java.util.ArrayList;
+import java.util.List;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
 import org.slf4j.Logger;
@@ -81,6 +82,59 @@ public class CbusSimulator implements jmri.Disposable {
         return _evResponseArr.get(id);
     }
     
+    /**
+     * @return the simulated command stations, in the order made
+     * @since 5.19.1
+     */
+    @Nonnull
+    public List<CbusDummyCS> getCommandStations() {
+        return new ArrayList<>(_csArr);
+    }
+
+    /**
+     * Is this the simulator of a CAN Simulation connection, with no real bus?
+     * Only then may simulated trains use it.
+     *
+     * @return true if the connection's traffic controller is CAN Simulation's
+     * @since 5.19.1
+     */
+    public boolean isOnCanSimulation() {
+        return memo.getTrafficController() instanceof jmri.jmrix.can.adapters.loopback.LoopbackTrafficController;
+    }
+
+    /**
+     * Speed commands for simulated trains, from this simulator's command
+     * stations. Made when first asked for, and kept until disposed.
+     *
+     * @return the speed source
+     * @since 5.19.1
+     */
+    @Nonnull
+    public synchronized CbusSimulatedSpeedSource getSimulatedSpeedSource() {
+        if (speedSource == null) {
+            speedSource = new CbusSimulatedSpeedSource(this);
+        }
+        return speedSource;
+    }
+
+    /**
+     * Where simulated trains report detection on this connection's CBUS
+     * sensors. Made when first asked for, and kept until disposed.
+     *
+     * @return the output
+     * @since 5.19.1
+     */
+    @Nonnull
+    public synchronized CbusSimulatedSensorOutput getSimulatedSensorOutput() {
+        if (sensorOutput == null) {
+            sensorOutput = new CbusSimulatedSensorOutput(memo);
+        }
+        return sensorOutput;
+    }
+
+    private CbusSimulatedSpeedSource speedSource;
+    private CbusSimulatedSensorOutput sensorOutput;
+
     public CbusDummyCS getNewCS(){
         CbusDummyCS newcs = new CbusDummyCS(memo);
         _csArr.add(newcs);
@@ -100,6 +154,14 @@ public class CbusSimulator implements jmri.Disposable {
      */
     @Override
     public void dispose() {
+        synchronized (this) {
+            if (speedSource != null) {
+                speedSource.dispose();
+            }
+            if (sensorOutput != null) {
+                sensorOutput.dispose();
+            }
+        }
         log.info("Stopping {} Simulations",_csArr.size()+_ndArr.size()+_evResponseArr.size());
         for ( CbusDummyCS cs : _csArr ) {
             cs.dispose();

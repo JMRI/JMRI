@@ -11,11 +11,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     # see https://github.com/marketplace/actions/typescript-compiler
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v7
     - name: install node v24
       uses: actions/setup-node@v6
       with:
         node-version: 24
+        # problem-matcher=false disable annotations viewing PRs
+        problem-matcher: false
     - name: yarn install
       run:
         yarn install

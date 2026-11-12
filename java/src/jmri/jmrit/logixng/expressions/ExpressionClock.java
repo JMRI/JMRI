@@ -170,7 +170,7 @@ public class ExpressionClock extends AbstractDigitalExpression implements Proper
                         ExpressionClock.formatTime(_endTime));
 
             default:
-                throw new RuntimeException("Unknown value of _timerType: "+_type.name());
+                throw new JmriUncheckedException("Unknown value of _timerType: "+_type.name());
         }
     }
 

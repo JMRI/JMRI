@@ -14,6 +14,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.tree.*;
 
 import jmri.InstanceManager;
+import jmri.JmriUncheckedException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.SymbolTable.VariableData;
 import jmri.util.FileUtil;
@@ -118,7 +119,7 @@ public class TreePane extends JPanel implements PropertyChangeListener {
         if (Base.PROPERTY_CHILD_COUNT.equals(evt.getPropertyName())) {
             // Remove myself as listener from sockets that has been removed
             if (evt.getOldValue() != null) {
-                if (! (evt.getOldValue() instanceof List)) throw new RuntimeException("Old value is not a list");
+                if (! (evt.getOldValue() instanceof List)) throw new JmriUncheckedException("Old value is not a list");
                 for (FemaleSocket socket : (List<FemaleSocket>)evt.getOldValue()) {
                     socket.removePropertyChangeListener(this);
                 }
@@ -126,7 +127,7 @@ public class TreePane extends JPanel implements PropertyChangeListener {
 
             // Add myself as listener to sockets that has been added
             if (evt.getNewValue() != null) {
-                if (! (evt.getNewValue() instanceof List)) throw new RuntimeException("New value is not a list");
+                if (! (evt.getNewValue() instanceof List)) throw new JmriUncheckedException("New value is not a list");
                 for (FemaleSocket socket : (List<FemaleSocket>)evt.getNewValue()) {
                     socket.addPropertyChangeListener(this);
                 }
@@ -147,7 +148,7 @@ public class TreePane extends JPanel implements PropertyChangeListener {
 
         if (Base.PROPERTY_CHILD_REORDER.equals(evt.getPropertyName())) {
 
-            if (! (evt.getNewValue() instanceof List)) throw new RuntimeException("New value is not a list");
+            if (! (evt.getNewValue() instanceof List)) throw new JmriUncheckedException("New value is not a list");
             for (FemaleSocket socket : (List<FemaleSocket>)evt.getNewValue()) {
                 // Update the tree
                 List<FemaleSocket> list = new ArrayList<>();

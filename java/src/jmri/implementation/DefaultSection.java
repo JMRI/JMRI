@@ -2532,6 +2532,40 @@ public class DefaultSection extends AbstractNamedBean implements Section {
                 }
             }
         }
+        return validateStopPoints();
+    }
+
+    /**
+     * Check each stop point is within the Section. A stop point in a Section
+     * where a Block has no length can't be checked: that is logged as a
+     * warning, not returned as an error.
+     *
+     * @return an error description or empty string if there are no errors
+     */
+    String validateStopPoints() {
+        float forward = getStopPointMm(FORWARD);
+        float reverse = getStopPointMm(REVERSE);
+        if (forward <= 0.0f && reverse <= 0.0f) {
+            return "";
+        }
+        float length = 0.0f;
+        for (Block b : mBlockEntries) {
+            if (!(b.getLengthMm() > 0.0f)) {
+                log.warn("Section {} has a stop point, but its Block {} has no length: it can't be checked,"
+                        + " and trains can't stop by distance in it.", getDisplayName(USERSYS),
+                        b.getDisplayName(USERSYS));
+                return "";
+            }
+            length += b.getLengthMm();
+        }
+        for (int direction : new int[]{FORWARD, REVERSE}) {
+            float mm = getStopPointMm(direction);
+            if (mm > length + 0.5f) {
+                return (direction == FORWARD ? "Forward" : "Reverse") + " stop point " + Math.round(mm)
+                        + "mm is beyond the end of Section " + getDisplayName(USERSYS) + ", whose Blocks are "
+                        + Math.round(length) + "mm long.";
+            }
+        }
         return "";
     }
 

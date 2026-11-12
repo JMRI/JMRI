@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 
 // This is generated code.  DO NOT ATTEMPT TO FIX ANY FINDBUGS WARNINGS
 @edu.umd.cs.findbugs.annotations.SuppressFBWarnings({
-    "NM_METHOD_NAMING_CONVENTION","SLF4J_FORMAT_SHOULD_BE_CONST"})
+    "NM_METHOD_NAMING_CONVENTION","SLF4J_FORMAT_SHOULD_BE_CONST","THROWS_METHOD_THROWS_RUNTIMEEXCEPTION"})
 
 public class JmriServerParser {
 
