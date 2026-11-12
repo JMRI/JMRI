@@ -1,8 +1,10 @@
 package jmri.jmrit.entryexit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -67,6 +69,30 @@ public class PointDetailsTest {
         pd.setNXState(EntryExitPairs.NXBUTTONINACTIVE);
         int nxState = pd.getNXState();
         assertEquals(EntryExitPairs.NXBUTTONINACTIVE, nxState, "Button is active");
+    }
+
+    @Test
+    public void testButtonTimeOutSetsSensorOnLayoutThread() {
+        PointDetails pd = tools.getPoint(sm.getSensor("NX-AW-Main"), panels.get("Alpha"), eep);  // NOI18N
+        assertNotNull(pd, "PointDetails fetch failed");
+        Sensor sensor = pd.getSensor();
+        // set the button, and its sensor, active as NX does, not as a click on the button
+        pd.setNXButtonState(EntryExitPairs.NXBUTTONACTIVE);
+        assertEquals(Sensor.ACTIVE, sensor.getKnownState(), "button sensor active");
+        List<Boolean> setOnLayoutThread = java.util.Collections.synchronizedList(new ArrayList<>());
+        java.beans.PropertyChangeListener l = e -> setOnLayoutThread.add(jmri.util.ThreadingUtil.isLayoutThread());
+        sensor.addPropertyChangeListener("KnownState", l);
+
+        // the button is pressed, starting its time out, which ends when cancelled
+        pd.setNXState(EntryExitPairs.NXBUTTONSELECTED);
+        pd.cancelNXButtonTimeOut();
+
+        JUnitUtil.waitFor(() -> sensor.getKnownState() == Sensor.INACTIVE, "button set inactive");
+        sensor.removePropertyChangeListener("KnownState", l);
+        // other NX activity on the test panels may also change the sensor; all of it on the layout thread
+        assertTrue(setOnLayoutThread.contains(true), "button sensor set");
+        assertFalse(setOnLayoutThread.contains(false), "button sensor set on the layout thread");
+        assertEquals(EntryExitPairs.NXBUTTONINACTIVE, pd.getNXState(), "button inactive");
     }
 
     @BeforeAll
