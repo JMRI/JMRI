@@ -248,7 +248,7 @@
 
       <h3 id="jquery3">Updating Custom Pages to jQuery 3</h3>
 
-      <p>As of JMRI 5.17.5, the web server's pages use jQuery 3.7.1, and the older copies of
+      <p>As of JMRI 5.19.1, the web server's pages use jQuery 3.7.1, and the older copies of
       jQuery (1.11.2, 2.0.3 and 2.2.4) are no longer included. If you have your own web pages that load
       jQuery, or edited copies of JMRI files like <code>panel.js</code> or
       <code>webThrottle.js</code> in a <code>web/js</code> directory under your User Files,
