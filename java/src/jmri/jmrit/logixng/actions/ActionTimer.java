@@ -6,6 +6,7 @@ import java.util.*;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.JmriUncheckedException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.ProtectedTimerTask;
 import jmri.util.TimerUtil;
@@ -91,7 +92,7 @@ public class ActionTimer extends AbstractDigitalAction
 
     private void setActionData(List<ActionData> actionDataList) {
         if (!_actionEntries.isEmpty()) {
-            throw new RuntimeException("action system names cannot be set more than once");
+            throw new JmriUncheckedException("action system names cannot be set more than once");
         }
 
         for (ActionData data : actionDataList) {
@@ -579,7 +580,7 @@ public class ActionTimer extends AbstractDigitalAction
             }
         } catch (SocketAlreadyConnectedException ex) {
             // This shouldn't happen and is a runtime error if it does.
-            throw new RuntimeException("socket is already connected");
+            throw new JmriUncheckedException("socket is already connected");
         }
     }
 

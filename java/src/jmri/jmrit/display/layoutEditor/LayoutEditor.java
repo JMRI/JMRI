@@ -3527,6 +3527,11 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
                 delayedPopupTrigger = true;
                 log.debug("mousePressed: ++ Window/Linux mast popup delay");
              }
+
+            // not in edit mode - the popup for the Block of the track is shown when the button is released
+            if (event.isPopupTrigger() && blockOfTrackAt(dLoc) != null) {
+                delayedPopupTrigger = true;
+            }
             if (selectedObject == null) {
                     selectedObject = checkBlockContentsPopUps(dLoc);
                     if (selectedObject != null) {
@@ -3549,6 +3554,11 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
                 delayedPopupTrigger = true;
                 log.debug("mousePressed: ++ MAC mast popup delay");
              }
+
+            // not in edit mode - the popup for the Block of the track is shown when the button is released
+            if (event.isPopupTrigger() && blockOfTrackAt(dLoc) != null) {
+                delayedPopupTrigger = true;
+            }
 
         }
 
@@ -3683,6 +3693,47 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
             result = true;
         }
         return result;
+    }
+
+    /**
+     * In operating mode, a popup menu for the Block of the track at a point,
+     * if there is one: it opens the Block dialog.
+     *
+     * @param loc   the point, in panel coordinates
+     * @param event the mouse event
+     */
+    private void showTrackBlockPopUp(@Nonnull Point2D loc, @Nonnull JmriMouseEvent event) {
+        jmri.Block block = blockOfTrackAt(loc);
+        if (block == null) {
+            return;
+        }
+        JPopupMenu popup = new JPopupMenu();
+        JMenuItem header = new JMenuItem(block.getDisplayName());
+        header.setEnabled(false);
+        popup.add(header);
+        popup.add(new AbstractAction(jmri.jmrit.trainrecord.swing.BlockDialog.menuItemText(block)) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jmri.jmrit.trainrecord.swing.BlockDialog.open(block, true);
+            }
+        });
+        popup.show(event.getComponent(), event.getX(), event.getY());
+    }
+
+    /**
+     * @param loc a point, in panel coordinates
+     * @return the Block of the track drawn there, or null
+     */
+    @CheckForNull
+    jmri.Block blockOfTrackAt(@Nonnull Point2D loc) {
+        java.awt.Stroke hit = new java.awt.BasicStroke((float) (2 * SIZE * getTurnoutCircleSize()));
+        for (TrackSegmentView tsv : getTrackSegmentViews()) {
+            if (hit.createStrokedShape(tsv.getCentreLine()).contains(loc)) {
+                LayoutBlock lb = tsv.getTrackSegment().getLayoutBlock();
+                return lb == null ? null : lb.getBlock();
+            }
+        }
+        return null;
     }
 
     private TrackSegment checkTrackSegmentPopUps(@Nonnull Point2D loc) {
@@ -4274,6 +4325,9 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
                         PositionableLabel im = checkLabelImagePopUps(dLoc);
                         if (im != null) {
                             showPopUp(im, event);
+                        } else if (foundHitPointType == HitPointType.NONE || foundHitPointType == HitPointType.TRACK) {
+                            // nothing else here, or the track itself: the Block of the track
+                            showTrackBlockPopUp(dLoc, event);
                         }
                     }
                 }

@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.rollingstock.cars.gui;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.awt.GridBagLayout;
 import java.text.*;
@@ -41,7 +40,7 @@ public class CarEditFrame extends RollingStockEditFrame {
     JCheckBox utilityCheckBox = new JCheckBox(Bundle.getMessage("Utility"));
     JCheckBox hazardousCheckBox = new JCheckBox(Bundle.getMessage("Hazardous"));
     JCheckBox autoWeightCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
-    
+
     JComboBox<String> loadComboBox = InstanceManager.getDefault(CarLoads.class).getComboBox(null);
 
     CarLoadEditFrame carLoadEditFrame;
@@ -50,7 +49,6 @@ public class CarEditFrame extends RollingStockEditFrame {
         super(Bundle.getMessage("TitleCarAdd"));
     }
 
-    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Checks for null")
     @Override
     public void initComponents() {
 
@@ -88,7 +86,7 @@ public class CarEditFrame extends RollingStockEditFrame {
                 Bundle.getMessage("load"))); // initial caps for some languages i.e. German
         editGroupButton.setToolTipText(Bundle.getMessage("TipAddDeleteReplace",
                 Bundle.getMessage("Kernel").toLowerCase()));
-        
+
         deleteButton.setToolTipText(Bundle.getMessage("TipDeleteButton"));
         addButton.setToolTipText(Bundle.getMessage("TipAddButton"));
         saveButton.setToolTipText(Bundle.getMessage("TipSaveButton"));
@@ -106,7 +104,7 @@ public class CarEditFrame extends RollingStockEditFrame {
         addItem(pLoad, loadComboBox, 1, 0);
         addItem(pLoad, editLoadButton, 2, 0);
         pLoad.setVisible(true);
-        
+
         // select first item so load combobox will update
         typeComboBox.setSelectedIndex(0);
 
@@ -120,7 +118,7 @@ public class CarEditFrame extends RollingStockEditFrame {
         addCheckBoxAction(cabooseCheckBox);
         addCheckBoxAction(fredCheckBox);
         addCheckBoxAction(passengerCheckBox);
-        
+
         addHelpMenu("package.jmri.jmrit.operations.Operations_CarsEdit", true); // NOI18N
     }
 
@@ -162,7 +160,7 @@ public class CarEditFrame extends RollingStockEditFrame {
         }
         InstanceManager.getDefault(CarLoads.class).updateComboBox(car.getTypeName(), loadComboBox);
         loadComboBox.setSelectedItem(car.getLoadName());
-        
+
         // listen for changes in car load
         car.addPropertyChangeListener(this);
 
@@ -279,7 +277,7 @@ public class CarEditFrame extends RollingStockEditFrame {
         }
         Car car = (Car) _rs;
 
-        // ask if all cars of this type should be passenger 
+        // ask if all cars of this type should be passenger
         if (isSave && car.isPassenger() ^ passengerCheckBox.isSelected()) {
             if (JmriJOptionPane.showConfirmDialog(this, MessageFormat.format(passengerCheckBox.isSelected() ? Bundle
                     .getMessage("carModifyTypePassenger") : Bundle.getMessage("carRemoveTypePassenger"),
@@ -407,7 +405,7 @@ public class CarEditFrame extends RollingStockEditFrame {
                 }
             }
         }
-        
+
         // place car on track after setting load name
         checkAndSetLocationAndTrack(car);
 
@@ -441,7 +439,7 @@ public class CarEditFrame extends RollingStockEditFrame {
             }
         }
     }
-    
+
     @Override
     protected void delete() {
         Car car = carManager.getByRoadAndNumber((String) roadComboBox.getSelectedItem(), roadNumberTextField
@@ -502,7 +500,7 @@ public class CarEditFrame extends RollingStockEditFrame {
         }
         super.removePropertyChangeListeners();
     }
-    
+
     @Override
     public void dispose() {
         if (carLoadEditFrame != null) {
@@ -521,7 +519,7 @@ public class CarEditFrame extends RollingStockEditFrame {
                 .getNewValue());
         //        }
         super.propertyChange(e);
-        
+
         if (e.getPropertyName().equals(CarLengths.CARLENGTHS_CHANGED_PROPERTY)) {
             InstanceManager.getDefault(CarLengths.class).updateComboBox(lengthComboBox);
             if (_rs != null) {

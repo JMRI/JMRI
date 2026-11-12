@@ -2,6 +2,8 @@ package jmri.jmrit.logixng.util;
 
 import java.util.TimerTask;
 
+import jmri.JmriUncheckedException;
+
 /**
  * A timer task that can be stopped, and there the stop method waits until the
  * task is finished.
@@ -19,24 +21,24 @@ public abstract class ProtectedTimerTask extends TimerTask {
     private final Object _lock = new Object();
     private boolean _timerIsRunning = false;
     private boolean _stopTimer = false;
-    
+
     public abstract void execute();
-    
+
     @Override
     public final void run() {
         synchronized(_lock) {
             if (_stopTimer) return;
             _timerIsRunning = true;
         }
-        
+
         // Execute the task
         execute();
-        
+
         synchronized(_lock) {
             _timerIsRunning = false;
         }
     }
-    
+
     /**
      * Stop the timer.
      * This method will not return until the timer task is cancelled and stopped.
@@ -67,7 +69,7 @@ public abstract class ProtectedTimerTask extends TimerTask {
                 Thread.currentThread().interrupt();
             }
         }
-        throw new RuntimeException("Cannot stop timer");
+        throw new JmriUncheckedException("Cannot stop timer");
     }
 
 }

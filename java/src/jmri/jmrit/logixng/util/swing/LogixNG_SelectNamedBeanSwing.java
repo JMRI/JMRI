@@ -203,7 +203,7 @@ public class LogixNG_SelectNamedBeanSwing<E extends NamedBean> {
                     throw new IllegalArgumentException("unknown addressing: "+addressing.name());
             }
         } catch (ParserException e) {
-            throw new RuntimeException("ParserException: "+e.getMessage(), e);
+            throw new JmriUncheckedException("ParserException: "+e.getMessage(), e);
         }
 
         _selectTableSwing.updateObject(selectNamedBean.getSelectTable());

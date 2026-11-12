@@ -144,8 +144,33 @@ public class BlockContentsIcon extends MemoryIcon {
         return name;
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * In operating mode, after the Dispatcher items for the train the icon
+     * shows, a last item opens the Block dialog: the trains the Block holds,
+     * why, and what has happened there.
+     */
     @Override
     public boolean showPopUp(JPopupMenu popup) {
+        boolean added = showTrainPopUp(popup);
+        Block block = getBlock();
+        if (!isEditable() && block != null) {
+            if (popup.getComponentCount() > 0) {
+                popup.addSeparator();
+            }
+            popup.add(new AbstractAction(jmri.jmrit.trainrecord.swing.BlockDialog.menuItemText(block)) {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    jmri.jmrit.trainrecord.swing.BlockDialog.open(block, !isValueEditDisabled());
+                }
+            });
+            return true;
+        }
+        return added;
+    }
+
+    private boolean showTrainPopUp(JPopupMenu popup) {
         if (isEditable() && selectable) {
             popup.add(new JSeparator());
 

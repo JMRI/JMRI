@@ -71,7 +71,7 @@ public class DispatcherTrainRecordTest {
         assertTrue(d.getActiveTrainsList().isEmpty());
         JUnitUtil.waitFor(() -> d.getAllocatedSectionsList().isEmpty(), "the first run's Sections released");
         assertSame(record, records.getByName(first.getTrainName()), "the record outlives the run");
-        assertFalse(record.isRemoved());
+        assertFalse(record.isDisposed());
 
         info.setTrainDetection(TrainDetection.TRAINDETECTION_HEADANDTAIL);
         assertEquals(0, d.loadTrainFromTrainInfo(info));

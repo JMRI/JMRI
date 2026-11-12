@@ -37,10 +37,10 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
             _femaleSocket.connect(new MaleRootSocket(new MaleRootManager()));
         } catch (SocketAlreadyConnectedException ex) {
             // This should never happen
-            throw new RuntimeException("Program error", ex);
+            throw new JmriUncheckedException("Program error", ex);
         }
         if (!_femaleSocket.setParentForAllChildren(new ArrayList<>())) {
-            throw new RuntimeException("Failed to set parent for all children");
+            throw new JmriUncheckedException("Failed to set parent for all children");
         }
         _clipboardItems.setParent(_femaleSocket.getConnectedSocket());
     }
@@ -57,7 +57,7 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
             _clipboardItems.getChild(0).connect(maleSocket);
             return _clipboardItems.setParentForAllChildren(errors);
         } catch (SocketAlreadyConnectedException ex) {
-            throw new RuntimeException("Cannot add socket", ex);
+            throw new JmriUncheckedException("Cannot add socket", ex);
         }
     }
 
@@ -116,7 +116,7 @@ public class DefaultClipboard extends AbstractBase implements Clipboard {
             _femaleSocket.connect(new MaleRootSocket(new MaleRootManager()));
         } catch (SocketAlreadyConnectedException ex) {
             // This should never happen
-            throw new RuntimeException("Program error", ex);
+            throw new JmriUncheckedException("Program error", ex);
         }
         boolean result = _femaleSocket.setParentForAllChildren(errors);
         _clipboardItems.setParent(_femaleSocket.getConnectedSocket());

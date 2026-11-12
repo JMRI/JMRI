@@ -284,6 +284,7 @@ public class TrainRecordWatcherTest {
         ThreadingUtil.runOnLayout(() -> b[0].setValue(e));
         TrainRecord r = Objects.requireNonNull(manager.getByRosterEntry(e), "a roster entry value makes a record");
         assertEquals("Class 43", r.getName());
+        assertEquals(List.of(e), r.getRosterEntries(), "with the entry as its first and only loco");
         assertEquals(List.of(b[0]), r.getBlocks(), "placed where the value was set");
 
         IdTag tag = InstanceManager.getDefault(IdTagManager.class).provideIdTag("ID1234");
@@ -444,8 +445,8 @@ public class TrainRecordWatcherTest {
         assertTrue(names.contains(TrainRecord.PROPERTY_CONFIDENCE));
         names.clear();
         occupy(b[1]);
-        assertEquals(List.of(TrainRecord.PROPERTY_DIRECTION, TrainRecord.PROPERTY_BLOCKS, TrainRecord.PROPERTY_TRAIL),
-                names);
+        assertEquals(List.of(TrainRecord.PROPERTY_DIRECTION, TrainRecord.PROPERTY_BLOCKS, TrainRecord.PROPERTY_TRAIL,
+                TrainRecord.PROPERTY_HISTORY), names, "the history entry last");
     }
 
     @Test

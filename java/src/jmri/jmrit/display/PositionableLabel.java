@@ -27,6 +27,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 
 import jmri.InstanceManager;
+import jmri.JmriUncheckedException;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.IconItemPanel;
 import jmri.jmrit.display.palette.ItemPanel;
@@ -1371,7 +1372,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         _logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
                 .getBySystemName(_logixNG_SystemName);
         if (_logixNG == null) {
-            throw new RuntimeException(String.format(
+            throw new JmriUncheckedException(String.format(
                     "LogixNG %s is not found for positional %s in panel %s",
                     _logixNG_SystemName, getNameString(), getEditor().getName()));
         }

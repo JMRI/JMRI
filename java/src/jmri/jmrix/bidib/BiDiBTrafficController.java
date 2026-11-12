@@ -80,7 +80,8 @@ public class BiDiBTrafficController implements CommandStation {
     private final AtomicBoolean mIsProgMode = new AtomicBoolean();
     volatile protected CommandStationState mSavedMode;
     private Node currentGlobalProgrammerNode = null;
-    private final javax.swing.Timer progTimer = new javax.swing.Timer(200, e -> progTimeout());
+    //private final javax.swing.Timer progTimer = new javax.swing.Timer(200, e -> progTimeout());
+    private final javax.swing.Timer progTimer = new javax.swing.Timer(5000, e -> progTimeout());
     private final javax.swing.Timer localPingTimer = new javax.swing.Timer(4000, e -> localPingTimeout());
     private final javax.swing.Timer delayedCloseTimer;
 
@@ -1549,7 +1550,7 @@ public class BiDiBTrafficController implements CommandStation {
      * @return 0 if nothing to do, 1 if state has been changed, -1 on error
      */
     public synchronized int checkProgMode(boolean needProgMode, Node node) {
-        log.trace("checkProgMode: needProgMode: {}, node: {}", needProgMode, node);
+        log.trace("checkProgMode: needProgMode: {}, node: {}, saved mode: {}", needProgMode, node, mSavedMode);
         int hasChanged = 0;
         CommandStationState neededMode = needProgMode ? CommandStationState.PROG : mSavedMode;
         if (needProgMode != mIsProgMode.get()) {
@@ -1564,7 +1565,7 @@ public class BiDiBTrafficController implements CommandStation {
                     hasChanged = -1;
                 }
                 else {
-                    log.debug("change command station mode to PROG? {}", needProgMode);
+                    log.debug("change command station mode to PROG? {}, progCsNode: {}", needProgMode, progCsNode);
                     if (needProgMode) {
                         if (node == csNode) {
                             // if we have to switch to prog mode, disable watchdog timer - but only, if we switch the command station
@@ -1572,7 +1573,16 @@ public class BiDiBTrafficController implements CommandStation {
                         }
                     }
                     try {
+//                        synchronized (mIsProgMode) {
+//                            mSavedMode = progCsNode.queryState(); //does not work correctlty - must be investigated...
+//                        }
+                        log.trace("Current mode: {}", mSavedMode);
+                        if (needProgMode  &&  mSavedMode != CommandStationState.GO) {
+                            log.trace("Switch progCsNode to GO before setting to PROG");
+                            progCsNode.setState(CommandStationState.GO);
+                        }
                         CommandStationState CurrentMode = progCsNode.setState(neededMode); //send and wait for response
+                        log.trace(" returned from setting state {}. CurrentMode: {}, on progCsNode", neededMode, CurrentMode);
                         synchronized (mIsProgMode) {
                             if (!needProgMode) {
                                 mSavedMode = CurrentMode;
@@ -1604,7 +1614,7 @@ public class BiDiBTrafficController implements CommandStation {
     }
         
     private void progTimeout() {
-        log.trace("timeout - stop global programmer PROG mode - reset to {}", mSavedMode);
+        log.trace("prog mode timeout - stop global programmer PROG mode - reset to {}", mSavedMode);
         checkProgMode(false, getCurrentGlobalProgrammerNode());
     }
 

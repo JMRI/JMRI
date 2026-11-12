@@ -44,6 +44,41 @@ public final class VirtualTrain {
     }
 
     /**
+     * Unpowered stock: the part of a train left behind by a breakaway, with no
+     * loco. Made only by {@link SimulatedFaults#breakaway}.
+     *
+     * @param name     its name
+     * @param lengthMm its length, mm
+     */
+    private VirtualTrain(String name, double lengthMm) {
+        this.name = name;
+        locos = Collections.emptyList();
+        this.lengthMm = lengthMm;
+        detection = Detection.entireTrain();
+        speedFactorPercent = 0;
+        lengthOffsetMm = 0;
+        adjustmentOutsideConsist = false;
+    }
+
+    /**
+     * @param name     its name
+     * @param lengthMm its length, mm
+     * @return unpowered stock
+     */
+    static VirtualTrain stock(String name, double lengthMm) {
+        return new VirtualTrain(name, lengthMm);
+    }
+
+    /**
+     * @return true for unpowered stock, which has no loco: the rear of a
+     *         train after a breakaway
+     */
+    @InvokeOnAnyThread
+    public boolean isStock() {
+        return locos.isEmpty();
+    }
+
+    /**
      * @param name the train's name, for messages and ground truth
      * @return a builder
      */
@@ -172,7 +207,7 @@ public final class VirtualTrain {
     }
 
     /**
-     * @return the train's locos, the first at the front
+     * @return the train's locos, the first at the front; none for stock
      */
     @Nonnull
     @InvokeOnAnyThread
