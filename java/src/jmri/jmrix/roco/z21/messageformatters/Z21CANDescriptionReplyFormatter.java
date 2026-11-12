@@ -1,5 +1,7 @@
 package jmri.jmrix.roco.z21.messageformatters;
 
+import java.nio.charset.StandardCharsets;
+
 import jmri.jmrix.Message;
 import jmri.jmrix.roco.z21.Z21MessageFormatter;
 import jmri.jmrix.roco.z21.Z21Reply;
@@ -25,7 +27,7 @@ public class Z21CANDescriptionReplyFormatter implements Z21MessageFormatter {
             description[i] = (byte) m.getElement(6 + i);
         }
         String hexAddress= Integer.toHexString(networkID);
-        String descString = new String(description).trim();
+        String descString = new String(description, StandardCharsets.ISO_8859_1).trim();
         return Bundle.getMessage("Z21CANDescriptionReply", hexAddress, descString);
     }
 }

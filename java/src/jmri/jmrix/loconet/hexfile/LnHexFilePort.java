@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet.hexfile;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
@@ -70,7 +71,8 @@ public class LnHexFilePort extends LnPortController implements Runnable {
         // create the pipe stream for output, also store as the input stream if somebody wants to send
         // (This will emulate the LocoNet echo)
         try {
-            sFile = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+            sFile = new BufferedReader(new InputStreamReader(
+                    new FileInputStream(file), StandardCharsets.ISO_8859_1));
         } catch (Exception e) {
             log.error("load (pipe): Exception: {}", e.toString()); // NOI18N
         }

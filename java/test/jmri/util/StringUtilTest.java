@@ -1,5 +1,6 @@
 package jmri.util;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import org.junit.jupiter.api.*;
@@ -166,7 +167,7 @@ public class StringUtilTest {
         assertEquals("80", StringUtil.appendTwoHexFromInt((byte) 0x80, ""));
         assertEquals("FF", StringUtil.appendTwoHexFromInt((byte) 0xFF, ""));
     }
-    
+
     @Test
     public void testParseStringNull() {
         byte[] b = StringUtil.bytesFromHexString("");
@@ -407,8 +408,8 @@ public class StringUtilTest {
 
     @Test
     public void testFullTextToHexArray() {
-        
-        byte[] b = StringUtil.fullTextToHexArray("PAN",7);
+
+        byte[] b = StringUtil.fullTextToHexArray("PAN",7,StandardCharsets.ISO_8859_1);
         assertEquals( 7, b.length, "array length");
         assertEquals( 0x50, b[0] & 0xFF, "0th byte");
         assertEquals( 0x41, b[1] & 0xFF, "1st byte");
@@ -417,13 +418,13 @@ public class StringUtilTest {
         assertEquals( 0x20, b[4] & 0xFF, "4th byte");
         assertEquals( 0x20, b[5] & 0xFF, "5th byte");
         assertEquals( 0x20, b[6] & 0xFF, "6th byte");
-        
-        b = StringUtil.fullTextToHexArray("CATjhgkjhg jkhg kjhg kjhg jhg ",2);
+
+        b = StringUtil.fullTextToHexArray("CATjhgkjhg jkhg kjhg kjhg jhg ",2,StandardCharsets.UTF_8);
         assertEquals( 2, b.length, "array length");
         assertEquals( 0x43, b[0] & 0xFF, "0th byte");
         assertEquals( 0x41, b[1] & 0xFF, "1st byte");
 
-        b = StringUtil.fullTextToHexArray("My FroG",8);
+        b = StringUtil.fullTextToHexArray("My FroG",8,StandardCharsets.US_ASCII);
         assertEquals( 8, b.length, "array length");
         assertEquals( 0x4d, b[0] & 0xFF, "0th byte");
         assertEquals( 0x79, b[1] & 0xFF, "1st byte");
@@ -552,5 +553,5 @@ public class StringUtilTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-    
+
 }

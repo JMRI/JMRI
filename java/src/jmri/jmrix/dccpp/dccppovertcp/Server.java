@@ -8,15 +8,18 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.Properties;
 import java.util.Set;
+
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.jmrix.dccpp.DCCppConstants;
 import jmri.util.FileUtil;
 import jmri.util.zeroconf.ZeroConfService;
+
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,7 +87,8 @@ public class Server {
         log.debug("Server: saving settings file {}", settingsFileName);
 
         try ( OutputStream outStream = new FileOutputStream(settingsFileName);
-            PrintStream settingsStream = new PrintStream(outStream); ) {
+            PrintStream settingsStream =
+                    new PrintStream(outStream, false, StandardCharsets.ISO_8859_1); ) {
 
             settingsStream.println("# DCCppOverTcp Configuration Settings");
             settingsStream.println(AUTO_START_KEY + " = " + (autoStart ? "1" : "0"));

@@ -1,5 +1,6 @@
 package jmri.util;
 
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -208,7 +209,7 @@ public class StringUtil {
         }
         return sb.toString();
     }
-    
+
     /**
      * Convert an array of integers into a single spaced hex. string.
      * Each int value will receive 2 hex characters.
@@ -280,7 +281,7 @@ public class StringUtil {
         }
         return b;
     }
-    
+
     /**
      * Create an int[] from a String containing paired hexadecimal values.
      * <p>
@@ -291,7 +292,7 @@ public class StringUtil {
      * eg. ("01020AB121",false) returns int[1, 2, 10, 177, 33]
      *
      * @param s String of hex value pairs, eg "01020AB121".
-     * @param headerTotal if true, adds index [0] with total of pairs found 
+     * @param headerTotal if true, adds index [0] with total of pairs found
      * @return int array, with one field for each pair.
      *
      */
@@ -318,7 +319,7 @@ public class StringUtil {
             return new int[]{0};
         }
     }
-    
+
     /**
      * Get a single hex digit from a String.
      * <p>
@@ -342,12 +343,12 @@ public class StringUtil {
         }
         return (byte) b;
     }
-    
+
     /**
      * Get a single hex data byte from a string
      * <p>
      * eg. getByte(2,"0102030405") returns 3
-     * 
+     *
      * @param b The byte offset, 0 is byte 1
      * @param byteString the whole string, eg "01AB2CD9"
      * @return The value, else 0
@@ -372,16 +373,36 @@ public class StringUtil {
      * @param s String, eg "Test", value is trimmed to max byte length
      * @param numBytes Number of bytes expected in return ( eg. to match max. message size )
      * @return hex byte array, with one byte for each character. Right padded with empty spaces (0x20)
+     * @deprecated As of 5.19.1, use {@ link #fullTextToHexArray(String,int,Charset)} instead
+     */
+    @CheckReturnValue
+    @Nonnull
+    @Deprecated(since="5.19.1")
+    public static byte[] fullTextToHexArray(@Nonnull String s, int numBytes) {
+        jmri.util.LoggingUtil.deprecationWarning(log, "fullTextToHexArray");
+        return fullTextToHexArray(s, numBytes, Charset.defaultCharset());
+    }
+
+    /**
+     * Create a hex byte[] of Unicode character values from a String containing full text (non hex) values.
+     * <p>
+     * eg fullTextToHexArray("My FroG",8,StandardCharsets.UTF_8) would return
+     * byte[0x4d,0x79,0x20,0x46,0x72,0x6f,0x47,0x20]
+     *
+     * @param s String, eg "Test", value is trimmed to max byte length
+     * @param numBytes Number of bytes expected in return ( eg. to match max. message size )
+     * @param charset  The charset
+     * @return hex byte array, with one byte for each character. Right padded with empty spaces (0x20)
      *
      */
     @CheckReturnValue
     @Nonnull
-    public static byte[] fullTextToHexArray(@Nonnull String s, int numBytes) {
+    public static byte[] fullTextToHexArray(@Nonnull String s, int numBytes, Charset charset) {
         byte[] b = new byte[numBytes];
         java.util.Arrays.fill(b, (byte) 0x20);
         s = s.substring(0, Math.min(s.length(), numBytes));
-        String convrtedNoSpaces = String.format( "%x", 
-            new java.math.BigInteger(1, s.getBytes(/*YOUR_CHARSET?*/) ) );
+        String convrtedNoSpaces = String.format( "%x",
+            new java.math.BigInteger(1, s.getBytes(charset) ) );
         int byteNum=0;
         for (int i = 0; i < convrtedNoSpaces.length(); i+=2) {
             b[byteNum] = (byte) Integer.parseInt(convrtedNoSpaces.substring(i, i + 2), 16);
@@ -643,7 +664,7 @@ public class StringUtil {
             }
         }
         if ( sb.length() > 0 ) {
-            return (Integer.parseInt(sb.toString()));  
+            return (Integer.parseInt(sb.toString()));
         }
         return -1;
     }
@@ -676,11 +697,11 @@ public class StringUtil {
             }
         }
         if ( sb.length() > 0 ) {
-            return (Integer.parseInt(sb.toString()));  
+            return (Integer.parseInt(sb.toString()));
         }
         return -1;
     }
-    
+
     /**
      * Increment the last number found in a string.
      * @param str Initial string to increment.

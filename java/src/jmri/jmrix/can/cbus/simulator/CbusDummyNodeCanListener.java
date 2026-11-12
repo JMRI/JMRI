@@ -1,5 +1,7 @@
 package jmri.jmrix.can.cbus.simulator;
 
+import java.nio.charset.Charset;
+
 import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -16,7 +18,7 @@ import jmri.jmrix.can.cbus.CbusConstants;
 public class CbusDummyNodeCanListener extends CbusSimCanListener {
 
     private final CbusDummyNode _dummyNode;
-    
+
     /**
      * Create a new CbusDummyNodeCanListener
      *
@@ -28,7 +30,7 @@ public class CbusDummyNodeCanListener extends CbusSimCanListener {
         _dummyNode = node;
         setDelay (40);
     }
-    
+
     @Override
     protected void startProcessFrame(AbstractMessage m) {
         // extended or module type unset
@@ -51,7 +53,7 @@ public class CbusDummyNodeCanListener extends CbusSimCanListener {
             }
         }
     }
-    
+
     private void processDummyCanFLimMode(AbstractMessage m){
         switch (m.getElement(0)) {
             case CbusConstants.CBUS_NNULN:
@@ -78,9 +80,9 @@ public class CbusDummyNodeCanListener extends CbusSimCanListener {
                 processDummyCanFLimModeEventStuff(m);
         }
     }
-    
+
     private void processDummyCanFLimModeEventStuff(AbstractMessage m){
-        switch (m.getElement(0)) {    
+        switch (m.getElement(0)) {
             case CbusConstants.CBUS_RQEVN:
                 // Request number of events
                 _dummyNode.sendNUMEV();
@@ -97,9 +99,9 @@ public class CbusDummyNodeCanListener extends CbusSimCanListener {
                 break;
         }
     }
-    
+
     private void processDummyCanSetupMode(AbstractMessage m){
-        
+
         switch (m.getElement(0)) {
             case CbusConstants.CBUS_RQNP:
                 // Request Node Parameters
@@ -112,7 +114,8 @@ public class CbusDummyNodeCanListener extends CbusSimCanListener {
             case CbusConstants.CBUS_RQMN:
                 // Request Module Name
 
-                byte[] byteArr = jmri.util.StringUtil.fullTextToHexArray( _dummyNode.getNodeNameFromName(),7 );
+                byte[] byteArr = jmri.util.StringUtil.fullTextToHexArray(
+                        _dummyNode.getNodeNameFromName(), 7, Charset.defaultCharset() );
                 CanReply r = new CanReply(8);
                 r.setElement(0, CbusConstants.CBUS_NAME);
                 r.setElement(1, byteArr[0] & 0xff);
@@ -127,9 +130,9 @@ public class CbusDummyNodeCanListener extends CbusSimCanListener {
             default:
                 break;
         }
-        
+
     }
-    
+
     private void processDummyCanLearnMode(AbstractMessage m){
         switch (m.getElement(0)) {
             case CbusConstants.CBUS_EVLRN:
@@ -155,9 +158,9 @@ public class CbusDummyNodeCanListener extends CbusSimCanListener {
                 break;
         }
     }
-    
+
     private void evLearn(int nn, int en, int index, int val){
-        
+
         if ( val < 0 || val > 255 ) {
             _dummyNode.sendCMDERR(11);
             return;
@@ -175,5 +178,5 @@ public class CbusDummyNodeCanListener extends CbusSimCanListener {
     }
 
     // private static final Logger log = LoggerFactory.getLogger(CbusDummyNodeCanListener.class);
-    
+
 }

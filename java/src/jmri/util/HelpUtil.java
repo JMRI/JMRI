@@ -6,6 +6,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.ServiceLoader;
 
@@ -73,7 +74,7 @@ public class HelpUtil {
 
     public static JMenuItem makeHelpMenuItem(String ref) {
         if (ref == null) return null;
-        
+
         JMenuItem menuItem = new JMenuItem(Bundle.getMessage("MenuItemWindowHelp"));
 
         menuItem.addActionListener((ignore) -> displayHelpRef(ref));
@@ -206,7 +207,7 @@ public class HelpUtil {
         String contents = template.replace("<!--HELP_KEY-->", htmlLocation + "index.html#" + helpKey);
         contents = contents.replace("<!--URL_HELP_KEY-->", expandedHelpKey);
 
-        PrintWriter printWriter = new PrintWriter(stubLocation + "stub.html");
+        PrintWriter printWriter = new PrintWriter(stubLocation + "stub.html", StandardCharsets.UTF_8);
         printWriter.print(contents);
         printWriter.close();
         return stubLocation + "stub.html";

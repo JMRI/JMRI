@@ -11,7 +11,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,7 +83,8 @@ public class JmriInsets {
                 && !OS_NAME.toLowerCase().startsWith("mac")) { // NOI18N
             try {
                 Process p = Runtime.getRuntime().exec(new String[]{"ps","ax"}); // NOI18N
-                BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
+                BufferedReader r = new BufferedReader(new InputStreamReader(
+                        p.getInputStream(), StandardCharsets.ISO_8859_1));
 
                 try {
                     java.util.List<String> desktopList = Arrays.asList(DESKTOP_ENVIRONMENTS.split("\\|")); // NOI18N

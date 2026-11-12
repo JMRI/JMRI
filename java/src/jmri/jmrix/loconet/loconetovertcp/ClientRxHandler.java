@@ -168,7 +168,7 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
             try {
                 outBuf = new StringBuffer("VERSION JMRI Server ");
                 outBuf.append(jmri.Version.name()).append("\r\n");
-                outStream.write(outBuf.toString().getBytes());
+                outStream.write(outBuf.toString().getBytes(StandardCharsets.ISO_8859_1));
 
                 while (!isInterrupted()) {
                     msg = null;
