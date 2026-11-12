@@ -2822,7 +2822,9 @@ public class AutoActiveTrain implements ThrottleListener {
                         Thread.sleep(_delay);
                     }
                 }
-                runStopTasks(this);
+                // the stop tasks change the train, its Sections and sensors: do them on the layout
+                // thread (Swing thread), where the train's events are handled under the same lock
+                jmri.util.ThreadingUtil.runOnLayoutEventually(() -> runStopTasks(this));
             } catch (InterruptedException e) {
                 log.warn("Waiting for train to stop interrupted - stop tasks not executing");
             } catch (Exception e) {
@@ -2849,14 +2851,22 @@ public class AutoActiveTrain implements ThrottleListener {
             _fastMinutes = fastMinutes;
         }
 
+        /**
+         * Waits on this thread, holding no lock. The train's own work, stopping
+         * it, setting its status and starting it again, is done on the layout
+         * thread (Swing thread), where the train's sensor and Block events are
+         * handled under the same lock.
+         */
         @Override
         public void run() {
             // set to pause at a fast ramp rate
             _pausingActive = true;
-            // TODO: use stop in section or block?
-            _savedRampRate = getRampRate();
-            setCurrentRampRate(RAMP_FAST);
-            stopInCurrentSection(NO_TASK);
+            jmri.util.ThreadingUtil.runOnLayout(() -> {
+                // TODO: use stop in section or block?
+                _savedRampRate = getRampRate();
+                setCurrentRampRate(RAMP_FAST);
+                stopInCurrentSection(NO_TASK);
+            });
             // wait for train to stop
             boolean waitNow = true;
             boolean keepGoing = true;
@@ -2876,7 +2886,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     keepGoing = false;
                 }
             }
-            _activeTrain.setStatus(ActiveTrain.PAUSED);
+            jmri.util.ThreadingUtil.runOnLayout(() -> _activeTrain.setStatus(ActiveTrain.PAUSED));
             if (keepGoing) {
                 // wait for specified fast clock time
                 Timebase _clock = InstanceManager.getDefault(jmri.Timebase.class);
@@ -2899,16 +2909,19 @@ public class AutoActiveTrain implements ThrottleListener {
                 }
                 _clock.removeMinuteChangeListener(_clockListener);
             }
-            _pausingActive = false;
-            if (keepGoing) {
-                // this thread was not interrupted
-                //   resume running - restore speed, status, and ramp rate
-                setCurrentRampRate(_savedRampRate);
-                // Set speed by signal also works if signal missing
-                // so we dont need to restore a previous value.
-                _activeTrain.setStatus(ActiveTrain.RUNNING);
-                setSpeedBySignal();
-            }
+            final boolean resume = keepGoing;
+            jmri.util.ThreadingUtil.runOnLayoutEventually(() -> {
+                _pausingActive = false;
+                if (resume) {
+                    // this thread was not interrupted
+                    //   resume running - restore speed, status, and ramp rate
+                    setCurrentRampRate(_savedRampRate);
+                    // Set speed by signal also works if signal missing
+                    // so we dont need to restore a previous value.
+                    _activeTrain.setStatus(ActiveTrain.RUNNING);
+                    setSpeedBySignal();
+                }
+            });
         }
         private int _fastMinutes = 0;
         private int _savedRampRate = RAMP_NONE;
