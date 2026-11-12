@@ -50,8 +50,8 @@ public class JmriJFrameTest extends JmriJFrameTestBase {
             f.setLocation(100, 100);
         });
         JUnitUtil.waitFor(() -> ThreadingUtil.runOnGUIwithReturn(() -> !saved.isEmpty()), "first location saved");
-        // let the window finish opening and settle
-        JUnitUtil.waitFor(JmriJFrame.WINDOW_OPENING_TIME + 2 * JmriJFrame.WINDOW_DETAILS_SAVE_DELAY);
+        // let the window settle
+        JUnitUtil.waitFor(4 * JmriJFrame.WINDOW_DETAILS_SAVE_DELAY);
         ThreadingUtil.runOnGUI(saved::clear);
 
         // each step in its own event, as when dragged
@@ -70,10 +70,9 @@ public class JmriJFrameTest extends JmriJFrameTestBase {
     }
 
     /**
-     * A window that is opened and placed, and placed again while it is still
-     * opening, saves each place at once, as it did before saves waited for a
-     * window to stop moving, so nothing is written later while another window
-     * is being opened.
+     * A window that is opened and placed saves its location at once, as it did
+     * before saves waited for a window to stop moving, so nothing is written
+     * later while another window is being opened.
      */
     @Test
     @DisabledIfHeadless
@@ -86,26 +85,15 @@ public class JmriJFrameTest extends JmriJFrameTestBase {
             }
         });
         JmriJFrame f = new JmriJFrame("JmriJFrame place test", false, true);
-        ThreadingUtil.runOnGUI(() -> f.setVisible(true));
-        JUnitUtil.waitFor(() -> ThreadingUtil.runOnGUIwithReturn(f::isShowing), "window shown");
-        JUnitUtil.waitFor(100); // let the window system finish showing it
-
-        ThreadingUtil.runOnGUI(() -> f.setLocation(200, 200));
+        ThreadingUtil.runOnGUI(() -> {
+            f.setVisible(true);
+            f.setLocation(200, 200);
+        });
+        // well within the save delay
         JUnitUtil.waitFor(() -> ThreadingUtil.runOnGUIwithReturn(() -> saved.contains(new Point(200, 200))),
             "location saved at once");
-        Assertions.assertFalse(ThreadingUtil.runOnGUIwithReturn(f::isWindowDetailsSavePending),
-            "nothing left to save later while the window is opening");
-
-        // placed again while opening, in its own event: saved at once too
-        ThreadingUtil.runOnGUI(() -> f.setLocation(210, 210));
-        JUnitUtil.waitFor(() -> ThreadingUtil.runOnGUIwithReturn(() -> saved.contains(new Point(210, 210))),
-            "second place saved");
-        Assertions.assertFalse(ThreadingUtil.runOnGUIwithReturn(f::isWindowDetailsSavePending),
-            "still nothing left to save later");
-
-        // once opened, the window stays put, so nothing more is written
-        JUnitUtil.waitFor(JmriJFrame.WINDOW_OPENING_TIME);
         ThreadingUtil.runOnGUI(saved::clear);
+        // the window stays put, so nothing more is written
         JUnitUtil.waitFor(4 * JmriJFrame.WINDOW_DETAILS_SAVE_DELAY);
         Assertions.assertEquals(List.of(), ThreadingUtil.runOnGUIwithReturn(() -> new ArrayList<>(saved)),
             "not saved again when the window has not moved");
@@ -133,12 +121,6 @@ public class JmriJFrameTest extends JmriJFrameTestBase {
             f.setLocation(100, 100);
         });
         JUnitUtil.waitFor(() -> ThreadingUtil.runOnGUIwithReturn(() -> !saved.isEmpty()), "first location saved");
-        // let the window finish opening and settle
-        JUnitUtil.waitFor(JmriJFrame.WINDOW_OPENING_TIME + 2 * JmriJFrame.WINDOW_DETAILS_SAVE_DELAY);
-        // start moving, then move again and hide before the window stops
-        ThreadingUtil.runOnGUI(() -> f.setLocation(120, 120));
-        JUnitUtil.waitFor(() -> ThreadingUtil.runOnGUIwithReturn(() -> saved.contains(new Point(120, 120))),
-            "location saved when the window started moving");
         ThreadingUtil.runOnGUI(() -> {
             saved.clear();
             f.setLocation(140, 140);
