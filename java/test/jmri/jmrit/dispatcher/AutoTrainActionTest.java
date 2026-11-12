@@ -64,7 +64,11 @@ public class AutoTrainActionTest {
 
         newAction().addTransitSection(sectionWithDelayedSensorSet(20));
 
-        JUnitUtil.waitFor(() -> sensor.getKnownState() == Sensor.ACTIVE, "sensor set by the action");
+        // A sensor stores its new state before it tells its listeners, so wait for the listener
+        // to hear of the change, then let the layout thread finish handling it, before looking.
+        JUnitUtil.waitFor(() -> sensor.getKnownState() == Sensor.ACTIVE && !setOnLayoutThread.isEmpty(),
+                "sensor set by the action");
+        ThreadingUtil.runOnLayout(() -> { });
         Assertions.assertEquals(List.of(true), setOnLayoutThread,
                 "the delayed action set the sensor on the layout thread");
     }
