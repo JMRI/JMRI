@@ -373,7 +373,7 @@ public class StringUtil {
      * @param s String, eg "Test", value is trimmed to max byte length
      * @param numBytes Number of bytes expected in return ( eg. to match max. message size )
      * @return hex byte array, with one byte for each character. Right padded with empty spaces (0x20)
-     * @deprecated As of 5.19.1, use {@ link #fullTextToHexArray(String,int,Charset)} instead
+     * @deprecated As of 5.19.1, use {@link #fullTextToHexArray(String,int,Charset)} instead
      */
     @CheckReturnValue
     @Nonnull
