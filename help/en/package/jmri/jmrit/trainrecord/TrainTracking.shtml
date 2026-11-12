@@ -18,7 +18,7 @@
       signals, hold Blocks, or stop trains, and Dispatcher, Warrants and throttles carry on as
       they are.</p>
 
-      <h2>Which trains are followed</h2>
+      <h2 id="followed">Which trains are followed</h2>
 
       <p>A train is followed once it has been placed: when Dispatcher starts an Active Train in an
       occupied Block, or when a Block's value is set to the train (its roster entry, ID tag or
@@ -40,7 +40,7 @@
         it to stop.</li>
       </ul>
 
-      <h2>The Block dialog</h2>
+      <h2 id="blockDialog">The Block dialog</h2>
 
       <p>On a Layout Editor panel in operating mode, right-click a Block's track and choose
       <strong>Block ...</strong>; or right-click a Block Contents icon (its double-click still
@@ -49,7 +49,7 @@
       says how each train came to be there, and <strong>History</strong> lists the last 20
       things that happened in the Block.</p>
 
-      <h2>The Block Table</h2>
+      <h2 id="blockTable">The Block Table</h2>
 
       <p>The Block Table has a <strong>Train</strong> column, showing the trains train tracking
       has in each Block, and a <strong>Why?</strong> column, both hidden until chosen from the
