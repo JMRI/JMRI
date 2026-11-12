@@ -5,11 +5,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
+
 import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +48,8 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
     public void run() {
 
         try {
-            inStream = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            inStream = new BufferedReader(new InputStreamReader(
+                    clientSocket.getInputStream(), StandardCharsets.ISO_8859_1));
             outStream = clientSocket.getOutputStream();
 
             tc.addLocoNetListener(~0, this);
@@ -191,7 +195,7 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
                             lastSentMessage = null;
                             outBuf.append("SENT OK\r\n");
                         }
-                        outStream.write(outBuf.toString().getBytes());
+                        outStream.write(outBuf.toString().getBytes(StandardCharsets.ISO_8859_1));
                         outStream.flush();
                     }
                 }

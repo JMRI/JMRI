@@ -2,9 +2,11 @@ package jmri.jmris.srcp;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 
 import jmri.PowerManager;
 import jmri.jmris.AbstractPowerServer;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,18 +32,18 @@ public class JmriSRCPPowerServer extends AbstractPowerServer {
     @Override
     public void sendStatus(int Status) throws IOException {
         if (Status == PowerManager.ON) {
-            output.write("100 INFO 0 POWER ON\n\r".getBytes());
+            output.write("100 INFO 0 POWER ON\n\r".getBytes(StandardCharsets.ISO_8859_1));
         } else if (Status == PowerManager.OFF) {
-            output.write("100 INFO 0 POWER OFF\n\r".getBytes());
+            output.write("100 INFO 0 POWER OFF\n\r".getBytes(StandardCharsets.ISO_8859_1));
         } else {
             // power unknown
-            output.write("411 ERROR unknown value\n\r".getBytes());
+            output.write("411 ERROR unknown value\n\r".getBytes(StandardCharsets.ISO_8859_1));
         }
     }
 
     @Override
     public void sendErrorStatus() throws IOException {
-        output.write("499 ERROR unspecified error\n\r".getBytes());
+        output.write("499 ERROR unspecified error\n\r".getBytes(StandardCharsets.ISO_8859_1));
     }
 
     @Override

@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -50,7 +51,7 @@ class OpSessionLog {
         }
 
         try {
-            _outBuff = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file)));
+            _outBuff = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.ISO_8859_1));
             writeHeader(fileName);
         } catch (FileNotFoundException fnfe) {
             JmriJOptionPane.showMessageDialog(parent, fnfe.getMessage(),

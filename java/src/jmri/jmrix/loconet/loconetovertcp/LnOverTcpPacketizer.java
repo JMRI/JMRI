@@ -1,11 +1,14 @@
 package jmri.jmrix.loconet.loconetovertcp;
 
+import java.nio.charset.StandardCharsets;
 import java.util.StringTokenizer;
+
 import jmri.jmrix.loconet.LnNetworkPortController;
 import jmri.jmrix.loconet.LnPacketizer;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetMessageException;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -189,7 +192,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                         // message is complete, dispatch it !!
                         msg.setReceivedTime(System.nanoTime());
                         log.trace("message complete: {}", msg);
-                        
+
                         // check if this message was supposed to be ignored
                         // sentList will be empty if preference "LoconetUpdateSlotOnMessageCreation" is not activated
                         if(trafficController.getSentList().contains(msg)) {
@@ -205,7 +208,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                             Runnable r = new Runnable() {
                                 LocoNetMessage msgForLater = thisMsg;
                                 LnPacketizer myTc = thisTc;
-                                
+
                                 @Override
                                 public void run() {
                                     myTc.notify(msgForLater);
@@ -271,7 +274,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                             }
                             log.debug("Write to LbServer: {}", packet.toString());
                             packet.append("\r\n");
-                            ostream.write(packet.toString().getBytes());
+                            ostream.write(packet.toString().getBytes(StandardCharsets.ISO_8859_1));
                             ostream.flush();
                             log.debug("end write to stream");
                         } else {

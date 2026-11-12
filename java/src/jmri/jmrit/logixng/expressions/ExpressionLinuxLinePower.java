@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.expressions;
 
 import java.beans.*;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import jmri.*;
@@ -65,7 +66,8 @@ public class ExpressionLinuxLinePower extends AbstractDigitalExpression
         List<String> powerSupplies = new ArrayList<>();
 
         Process process = Runtime.getRuntime().exec(new String[]{"upower","-e"});
-        try (BufferedReader buffer = new BufferedReader(new InputStreamReader(process.getInputStream())))  {
+        try (BufferedReader buffer = new BufferedReader(
+                new InputStreamReader(process.getInputStream(), StandardCharsets.ISO_8859_1)))  {
             String line;
             while ((line = buffer.readLine()) != null) {
                 powerSupplies.add(line);
@@ -84,7 +86,8 @@ public class ExpressionLinuxLinePower extends AbstractDigitalExpression
 
         for (String powerSupply : getLinuxPowerSupplies()) {
             Process process = Runtime.getRuntime().exec(new String[]{"upower", "-i", powerSupply});
-            try (BufferedReader buffer = new BufferedReader(new InputStreamReader(process.getInputStream())))  {
+            try (BufferedReader buffer = new BufferedReader(
+                    new InputStreamReader(process.getInputStream(), StandardCharsets.ISO_8859_1)))  {
                 String line;
                 boolean linePowerFound = false;
                 while ((line = buffer.readLine()) != null) {

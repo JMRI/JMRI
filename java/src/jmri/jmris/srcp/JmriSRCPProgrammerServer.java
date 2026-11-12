@@ -2,9 +2,11 @@ package jmri.jmris.srcp;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 
 import jmri.ProgListener;
 import jmri.jmris.AbstractProgrammerServer;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,15 +34,16 @@ public class JmriSRCPProgrammerServer extends AbstractProgrammerServer {
             log.debug("sendStatus called for CV {} with value {} and status {}",CV,value,status);
         }
         if (status == ProgListener.OK) {
-            output.write(("100 INFO 1 SM " + CV + " CV " + value + "\n\r").getBytes());
+            output.write(("100 INFO 1 SM " + CV + " CV " + value + "\n\r")
+                    .getBytes(StandardCharsets.ISO_8859_1));
         } else {
-            output.write(Bundle.getMessage("Error416").getBytes());
+            output.write(Bundle.getMessage("Error416").getBytes(StandardCharsets.ISO_8859_1));
         }
     }
 
     @Override
     public void sendNotAvailableStatus() throws IOException {
-        output.write(Bundle.getMessage("Error499").getBytes());
+        output.write(Bundle.getMessage("Error499").getBytes(StandardCharsets.ISO_8859_1));
     }
 
     @Override
