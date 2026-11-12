@@ -121,9 +121,24 @@ public class SpeedPanel extends JPanel implements java.beans.PropertyChangeListe
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (!ThreadingUtil.isGUIThread()) {
             // throttles fire changes on the thread that made them: a Warrant, a script or a connection's own
-            ThreadingUtil.runOnGUIEventually(() -> propertyChange(e));
+            ThreadingUtil.runOnGUIEventually(() -> throttlePropertyChange(e));
             return;
         }
+        throttlePropertyChange(e);
+    }
+
+    /**
+     * Update this panel for a change of its throttle, on the GUI thread (Swing
+     * thread).
+     * <p>
+     * Kept apart from {@link #propertyChange}, which a subclass may override
+     * to act on the change itself before calling it (as the Warrant learn
+     * panels record it). A change passed to the GUI thread comes here, so the
+     * subclass does not act on it a second time.
+     *
+     * @param e the change
+     */
+    private void throttlePropertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals(Throttle.SPEEDSETTING)) {
             currentThrottleVol = ((Float) e.getNewValue()).floatValue();
             scaleSpeedLabel.setText(updateSpeedLabel(useSpeedProfile, currentThrottleVol, currentIsForward));
