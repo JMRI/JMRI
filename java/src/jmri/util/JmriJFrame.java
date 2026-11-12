@@ -1006,6 +1006,36 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     static final int WINDOW_DETAILS_SAVE_DELAY = 500; // milliseconds
 
     /**
+     * How long after a window is shown each move or change of size is saved at
+     * once, while the window is being opened, placed and laid out.
+     */
+    static final int WINDOW_OPENING_TIME = 2 * WINDOW_DETAILS_SAVE_DELAY; // milliseconds
+
+    /** When this window was last shown, from System.nanoTime(). */
+    private transient long shownAt = 0;
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Notes when the window is shown, see saveWindowDetailsSoon().
+     */
+    @Override
+    public void setVisible(boolean visible) {
+        if (visible && !isVisible()) {
+            shownAt = System.nanoTime();
+        }
+        super.setVisible(visible);
+    }
+
+    /**
+     * @return true if this window was shown less than
+     *         {@link #WINDOW_OPENING_TIME} ago
+     */
+    private boolean isOpening() {
+        return System.nanoTime() - shownAt < WINDOW_OPENING_TIME * 1_000_000L;
+    }
+
+    /**
      * Runs while the window is moving or changing size, and saves its location
      * and size once it has stayed put for {@link #WINDOW_DETAILS_SAVE_DELAY}.
      * Created on first use.
@@ -1021,17 +1051,29 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     /**
      * Save the window's location and size when it moves or changes size.
      * <p>
-     * The first change after the window has been still is saved at once, as
-     * it always was, so a window that is opened and placed has saved where it
-     * is before anything else happens. Further changes while the window is
-     * dragged are not saved one by one: saving writes the user interface
-     * preferences file, and dragging fires dozens of events a second. Instead
-     * the window is saved once more when it has stopped.
+     * While the window is being opened, placed and laid out, for
+     * {@link #WINDOW_OPENING_TIME} after it is shown, each change is saved at
+     * once, as it always was. Nothing is then left to save later, when another
+     * window may be opening: on Windows, a save left until then was seen to
+     * stop the other window becoming the active one.
+     * <p>
+     * After that, the first change after the window has been still is saved at
+     * once, as it always was. Further changes while the window is dragged are
+     * not saved one by one: saving writes the user interface preferences file,
+     * and dragging fires dozens of events a second. Instead the window is
+     * saved once more when it has stopped.
      * <p>
      * Called on the GUI thread.
      */
     private void saveWindowDetailsSoon() {
         if (!isVisible()) {
+            return;
+        }
+        if (isOpening()) {
+            if (windowDetailsSave != null) {
+                windowDetailsSave.stop(); // saved now instead
+            }
+            saveWindowDetails();
             return;
         }
         if (windowDetailsSave == null) {
@@ -1044,6 +1086,14 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         }
         saveWindowDetails();
         windowDetailsSave.start(); // collect any further moves
+    }
+
+    /**
+     * @return true if this window has a save of its location and size waiting
+     *         for it to stop moving; for tests
+     */
+    boolean isWindowDetailsSavePending() {
+        return windowDetailsSave != null && windowDetailsSave.isRunning();
     }
 
     /**
