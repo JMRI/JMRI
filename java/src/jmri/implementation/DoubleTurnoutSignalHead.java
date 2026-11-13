@@ -103,6 +103,9 @@ public class DoubleTurnoutSignalHead extends DefaultSignalHead {
         if (mGreen != null) {
             mGreen.getBean().removePropertyChangeListener(turnoutChangeListener);
         }
+        if (readUpdateTimer != null) {
+            readUpdateTimer.stop();
+        }
         mRed = null;
         mGreen = null;
         super.dispose();
