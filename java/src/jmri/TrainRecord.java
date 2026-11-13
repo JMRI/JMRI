@@ -379,7 +379,9 @@ public interface TrainRecord extends PropertyChangeProvider {
     /**
      * The Blocks the train is known to be in, as detection has shown them:
      * for a train detected only in part, the Blocks its detected parts are
-     * in.
+     * in. They include Blocks with no detector that it has been seen to pass
+     * into, by reaching a detected Block beyond them, until it is seen to
+     * have left them.
      *
      * @return the Blocks, front first if the front is known; empty if the
      *         record is not placed; a copy
