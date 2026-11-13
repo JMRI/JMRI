@@ -515,6 +515,14 @@
                  Block, and a record is placed where a Block's value names it.
                  It only watches: nothing on the layout changes.</li>
              <li>With automatic allocation, an automatic train is no longer
+                 held for good by a meet planned after it had already been given
+                 the road beyond its meeting place. Two trains running the same
+                 way round a circuit could be taken for trains coming towards
+                 each other; one was then told to wait in a station for the
+                 other, which needed track the waiting train already held.
+                 Dispatcher now drops such a meet, as it does when a train is
+                 already past the meeting place.</li>
+             <li>With automatic allocation, an automatic train is no longer
                  held for good in a passing loop or before one, waiting for
                  another train that cannot pass or meet it there. Dispatcher
                  now plans a meet only when the other train has a free track
