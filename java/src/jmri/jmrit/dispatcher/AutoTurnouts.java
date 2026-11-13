@@ -489,7 +489,11 @@ public class AutoTurnouts {
             jmri.util.LoggingUtil.warnOnce(log, "{}: turnout {} in {}, where the train is standing, is not set {} for its route;"
                     + " set it by hand to let the train go", at.getTrainName(), to.getDisplayName(USERSYS),
                     curBlock.getDisplayName(USERSYS), (needed == Turnout.CLOSED ? closedText : thrownText));
-            retryWhenChanged(to, at);
+            String neededText = (needed == Turnout.CLOSED ? closedText : thrownText);
+            at.setWaitingFor(Bundle.getMessage("WaitingForTurnout", to.getDisplayName()));
+            if (retryWhenChanged(to, at)) {
+                tellDispatcher(at, to, curBlock, neededText);
+            }
             ok = false;
         }
         return ok;
@@ -506,8 +510,10 @@ public class AutoTurnouts {
      *
      * @param to the turnout
      * @param at the train waiting for it
+     * @return true if the train has just started waiting for the turnout,
+     *         false if it was waiting for it already
      */
-    private void retryWhenChanged(Turnout to, ActiveTrain at) {
+    private boolean retryWhenChanged(Turnout to, ActiveTrain at) {
         synchronized (awaitedTurnouts) {
             java.util.Set<ActiveTrain> trains = awaitedTurnouts.get(to);
             if (trains == null) {
@@ -515,8 +521,30 @@ public class AutoTurnouts {
                 awaitedTurnouts.put(to, trains);
                 to.addPropertyChangeListener("KnownState", awaitedTurnoutListener);
             }
-            trains.add(at);
+            return trains.add(at);
         }
+    }
+
+    /**
+     * Tell whoever is at the Dispatcher window that a train can't start
+     * until a turnout is set by hand. The window doesn't wait for an answer,
+     * so allocation carries on for the other trains. Nothing is shown where
+     * there is no display.
+     *
+     * @param at         the train
+     * @param to         the turnout it is waiting for
+     * @param curBlock   the Block it is standing in
+     * @param neededText the state the turnout is needed in, in words
+     */
+    private void tellDispatcher(ActiveTrain at, Turnout to, Block curBlock, String neededText) {
+        if (java.awt.GraphicsEnvironment.isHeadless()) {
+            return;
+        }
+        String message = Bundle.getMessage("TurnoutUnderTrainMessage", at.getTrainName(), to.getDisplayName(),
+                curBlock.getDisplayName(), neededText);
+        jmri.util.ThreadingUtil.runOnGUIEventually(() -> jmri.util.swing.JmriJOptionPane.showMessageDialogNonModal(
+                _dispatcher, message, Bundle.getMessage("TurnoutUnderTrainTitle"),
+                jmri.util.swing.JmriJOptionPane.WARNING_MESSAGE, null));
     }
 
     private void awaitedTurnoutChanged(java.beans.PropertyChangeEvent e) {
@@ -530,6 +558,7 @@ public class AutoTurnouts {
             return;
         }
         for (ActiveTrain at : trains) {
+            at.setWaitingFor(null); // said again if the turnout is still not right for it
             if (!_dispatcher.getActiveTrainsList().contains(at)) {
                 continue; // terminated while waiting
             }

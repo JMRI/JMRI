@@ -20,6 +20,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockingDetails;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -93,7 +96,53 @@ public class AutoTurnoutsTest {
         a.setCommandedState(Turnout.CLOSED);
         assertFalse(t.standingBlockTurnoutOK(tes, Turnout.THROWN, false, s, blk, at, false), "check only: not set");
         JUnitAppender.assertWarnMessageStartingWith("T1: turnout IT1 in Points Block (IB1), where the train is standing");
+        closeWaitingWindow();
         assertEquals(Turnout.CLOSED, a.getCommandedState(), "check only: not moved");
+    }
+
+    @Test
+    @jmri.util.junit.annotations.DisabledIfHeadless
+    public void testWaitingForATurnoutIsSaidAndForgottenWhenItChanges() {
+        Turnout a = InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
+        LayoutTurnout lt = mock(LayoutTurnout.class);
+        when(lt.getTurnout()).thenReturn(a);
+        LayoutTrackExpectedState<LayoutTurnout> tes = new LayoutTrackExpectedState<>(lt, Turnout.THROWN);
+        ActiveTrain at = mock(ActiveTrain.class);
+        when(at.getTrainName()).thenReturn("T1");
+        Block blk = new Block("IB1", "Points Block");
+        Section s = mock(Section.class);
+        // the options the Dispatcher reads when it is created
+        OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/dispatcheroptions.xml");
+        DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
+        AutoTurnouts t = new AutoTurnouts(d); // the train is not one of its Active Trains: as if it had ended
+
+        a.setCommandedState(Turnout.CLOSED);
+        assertFalse(t.standingBlockTurnoutOK(tes, Turnout.THROWN, false, s, blk, at, false), "check only: not set");
+        JUnitAppender.assertWarnMessageStartingWith("T1: turnout IT1 in Points Block (IB1), where the train is standing");
+        verify(at).setWaitingFor("turnout IT1");
+        closeWaitingWindow();
+
+        // checked again while still waiting: said again, but no second window
+        assertFalse(t.standingBlockTurnoutOK(tes, Turnout.THROWN, false, s, blk, at, false));
+        verify(at, times(2)).setWaitingFor("turnout IT1");
+
+        // the turnout changes: what it was waiting for is forgotten, whatever happens next
+        a.setCommandedState(Turnout.THROWN);
+        JUnitUtil.waitFor(() -> mockingDetails(at).getInvocations().stream()
+                .anyMatch(i -> i.getMethod().getName().equals("setWaitingFor") && i.getArgument(0) == null),
+                "no longer waiting for the turnout");
+        JUnitUtil.dispose(d);
+    }
+
+    /** The window telling whoever is at Dispatcher which turnout to set, when there is a display. */
+    private static void closeWaitingWindow() {
+        if (java.awt.GraphicsEnvironment.isHeadless()) {
+            return;
+        }
+        org.netbeans.jemmy.operators.JDialogOperator window
+                = new org.netbeans.jemmy.operators.JDialogOperator(Bundle.getMessage("TurnoutUnderTrainTitle"));
+        new org.netbeans.jemmy.operators.JButtonOperator(window, 0).doClick();
+        window.waitClosed();
     }
 
     @BeforeEach
@@ -106,6 +155,7 @@ public class AutoTurnoutsTest {
 
     @AfterEach
     public void tearDown() {
+        JUnitUtil.resetWindows(false, false);
         JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }

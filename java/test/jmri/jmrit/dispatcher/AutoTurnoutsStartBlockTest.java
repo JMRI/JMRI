@@ -58,9 +58,14 @@ public class AutoTurnoutsStartBlockTest {
         waitForWarning();
         assertTrue(d.getAllocatedSectionsList().isEmpty(), "nothing allocated while the turnout is set against the train");
         assertEquals(otherState(stateTo(northPlatform)), stationWestEnd.getKnownState(), "turnout under the train not moved");
+        ActiveTrain at = d.getActiveTrainsList().get(0);
+        assertEquals("WAITING: turnout Station West End", at.getStatusText(), "its status says what it is waiting for");
 
         // set by hand: the train is given its Section
         stationWestEnd.setCommandedState(stateTo(northPlatform));
+        JUnitUtil.waitFor(() -> allocated(sw), "Section allocated once the turnout is set");
+        assertNull(at.getWaitingFor(), "no longer waiting for the turnout");
+        assertFalse(at.getStatusText().contains("Station West End"), "nor does its status say so: " + at.getStatusText());
     }
 
     @Test
@@ -219,6 +224,37 @@ public class AutoTurnoutsStartBlockTest {
         JUnitUtil.waitFor(() -> JUnitAppender.getBacklog().stream()
             .anyMatch(e -> text.equals(e.getMessage().getFormattedMessage())), "warning: " + text);
         JUnitAppender.assertWarnMessage(text);
+        closeWaitingWindow();
+    }
+
+    private static javax.swing.JOptionPane optionPane(java.awt.Container c) {
+        for (java.awt.Component child : c.getComponents()) {
+            if (child instanceof javax.swing.JOptionPane) {
+                return (javax.swing.JOptionPane) child;
+            }
+            if (child instanceof java.awt.Container) {
+                javax.swing.JOptionPane found = optionPane((java.awt.Container) child);
+                if (found != null) {
+                    return found;
+                }
+            }
+        }
+        return null;
+    }
+
+    /** The window that tells whoever is at Dispatcher which turnout to set: check what it says, and close it. */
+    private void closeWaitingWindow() {
+        String state = stateTo(northPlatform) == Turnout.CLOSED
+            ? InstanceManager.turnoutManagerInstance().getClosedText()
+            : InstanceManager.turnoutManagerInstance().getThrownText();
+        org.netbeans.jemmy.operators.JDialogOperator window
+            = new org.netbeans.jemmy.operators.JDialogOperator(Bundle.getMessage("TurnoutUnderTrainTitle"));
+        assertFalse(window.isModal(), "it doesn't hold Dispatcher up");
+        String said = String.valueOf(optionPane(window.getContentPane()).getMessage());
+        assertEquals("T1 can't leave West Platform Switch: turnout Station West End is not set " + state
+            + " for its route.\nSet it by hand and the train will go.", said);
+        new org.netbeans.jemmy.operators.JButtonOperator(window, 0).doClick();
+        window.waitClosed();
     }
 
     private boolean allocated(Section s) {

@@ -463,8 +463,11 @@
                  Dispatcher now checks that the turnouts it needs to leave the
                  Block are set for its route. It does not move them, as the
                  train may be standing on them: if one is set the other way,
-                 the train is not given its first Section, a warning names the
-                 turnout, and the train goes as soon as the turnout is set.
+                 the train is not given its first Section, and the train goes as
+                 soon as the turnout is set. A window names the train, the
+                 turnout and the way to set it, without holding up other
+                 trains, and the Active Trains table shows the train as
+                 "WAITING: turnout ..." until then.
                  Before, the turnouts in a train's starting Block were neither
                  checked nor set, so a train could leave the wrong way.</li>
              <li><strong>Place train name in allocated Blocks</strong> no longer writes the
