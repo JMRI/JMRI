@@ -2661,10 +2661,10 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      * @param name the value to set all blocks to
      */
     @Override
+    @Deprecated(since="5.19.1", forRemoval=true)
     public void setNameInBlocks(String name) {
-        for (Block b : mBlockEntries) {
-            b.setValue(name);
-        }
+        jmri.util.LoggingUtil.deprecationWarning(log, "Section.setNameInBlocks");
+        setValueInBlocks(name);
     }
 
     /**
@@ -2673,7 +2673,13 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      * @param value the name to set block values to
      */
     @Override
+    @Deprecated(since="5.19.1", forRemoval=true)
     public void setNameInBlocks(Object value) {
+        jmri.util.LoggingUtil.deprecationWarning(log, "Section.setNameInBlocks");
+        setValueInBlocks(value);
+    }
+
+    private void setValueInBlocks(Object value) {
         for (Block b : mBlockEntries) {
             b.setValue(value);
         }
@@ -2692,7 +2698,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
         jmri.util.LoggingUtil.deprecationWarning(log, "Section.setNameFromActiveBlock");
         boolean beenSet = false;
         if (value == null || getState() == FREE || getState() == UNKNOWN) {
-            setNameInBlocks(value);
+            setValueInBlocks(value);
         } else if (getState() == FORWARD) {
             for (Block b : mBlockEntries) {
                 if (b.getState() == Block.OCCUPIED) {
@@ -2715,7 +2721,17 @@ public class DefaultSection extends AbstractNamedBean implements Section {
             }
         }
         if (!beenSet) {
-            setNameInBlocks(value);
+            setValueInBlocks(value);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setAllocatedValue(@CheckForNull Object value) {
+        for (Block b : mBlockEntries) {
+            b.setAllocatedValue(value);
         }
     }
 
