@@ -469,7 +469,10 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Fixed some problems with selecting entries
+                when adding an entry to a roster group.</li>
+            <li>Improved the button language when adding
+                an entry to a roster group.</li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -670,7 +673,10 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li></li>
+            <li>Fixed some problems with selecting entries
+                when adding an entry to a roster group.</li>
+            <li>Improved the button language when adding
+                an entry to a roster group.</li>
         </ul>
 
     <h3>Routes</h3>
@@ -778,6 +784,13 @@
                 that sees other cabs' commands, each with the time it was
                 reported, and the release of each loco's address. It only
                 watches.</li>
+            <li>For developers: where a train's leading end is can now be
+                estimated, as a range of distances into the Block it last
+                entered, from the time it entered, the speed commands for its
+                lead loco since, that loco's speed profile and its decoder's
+                momentum (CV3 and CV4)
+                (<code>jmri.jmrit.trainrecord.TrainPositionEstimator</code>).
+                Nothing uses it yet.</li>
         </ul>
 
     <h3>Timetable</h3>
@@ -904,6 +917,15 @@
                 split into or joined from, how it is detected, and its length
                 from each source. Nothing uses it yet, so nothing
                 changes for users.</li>
+            <li>The operator can now tell train tracking where trains are: in the
+                Block dialog, choose the train in "Train here" and press
+                Confirm, or press Clear Block when no train is there; on a
+                Layout Editor panel in operating mode, drag a loco marker onto
+                a Block's track. This changes only train tracking's record of
+                the train, not Dispatcher or Warrants. Panels whose items don't
+                control the layout show the dialog without these. JMRI's
+                permissions can limit who may do it (Train tracking: Correct
+                where trains are); everyone may by default.</li>
             <li>For developers: a new page, <a href=
                 "https://www.jmri.org/help/en/html/doc/Technical/simulatedtrains.shtml">Writing
                 Tests with Simulated Trains</a>, explains how to write tests with simulated
@@ -918,6 +940,10 @@
                 do, they move on the layout's own track and set internal
                 sensors as they pass, with the time they passed. The sample
                 script SimulatedTrains.py shows two trains running.</li>
+            <li>For developers: simulated trains can carry an ID tag, read by
+                the reporters of the Blocks they come into, on internal
+                reporters and on CBUS reporters of CAN Simulation
+                connections.</li>
             <li>For developers: tests and scripts can set faults on simulated
                 trains' layout: detector drop-outs, a sensor showing a train
                 that isn't there, swapped sensors, a Block longer or shorter

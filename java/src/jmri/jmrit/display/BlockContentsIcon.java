@@ -162,7 +162,8 @@ public class BlockContentsIcon extends MemoryIcon {
             popup.add(new AbstractAction(jmri.jmrit.trainrecord.swing.BlockDialog.menuItemText(block)) {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    jmri.jmrit.trainrecord.swing.BlockDialog.open(block, !isValueEditDisabled());
+                    jmri.jmrit.trainrecord.swing.BlockDialog.open(block, !isValueEditDisabled(),
+                            isControlling() && getEditor().allControlling());
                 }
             });
             return true;

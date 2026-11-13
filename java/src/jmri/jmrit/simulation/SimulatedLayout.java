@@ -117,7 +117,13 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
     private final List<SimulatedSpeedSource> adapterSources = new ArrayList<>();
     @GuardedBy("adapting")
     private final List<SimulatedDetectorOutput> adapterOutputs = new ArrayList<>();
+    @GuardedBy("adapting")
+    private final List<SimulatedReporterOutput> adapterReporters = new ArrayList<>();
     private final List<SimulatedDetectorOutput> outputs = new CopyOnWriteArrayList<>();
+    private final List<SimulatedReporterOutput> reporterOutputs = new CopyOnWriteArrayList<>();
+    /** For each Block, the trains with an ID tag in it, in the order they came in. */
+    @GuardedBy("this")
+    private final Map<Block, List<TrainState>> taggedIn = new HashMap<>();
     /** Sensors already warned about as having no output. */
     @GuardedBy("this")
     private final Set<Sensor> warnedNotReported = new HashSet<>();
@@ -161,6 +167,7 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
         this.manual = manual;
         this.manualClock = System.nanoTime();
         outputs.add(new InternalSensorOutput());
+        reporterOutputs.add(new InternalReporterOutput());
     }
 
     /**
@@ -273,6 +280,26 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
     }
 
     /**
+     * @param output a reporter output for the reporters it reports to
+     * @since 5.19.1
+     */
+    @InvokeOnAnyThread
+    public void addReporterOutput(@Nonnull SimulatedReporterOutput output) {
+        reporterOutputs.add(0, output);
+        refreshSnapshot();
+    }
+
+    /**
+     * @param output a reporter output to stop using
+     * @since 5.19.1
+     */
+    @InvokeOnAnyThread
+    public void removeReporterOutput(@Nonnull SimulatedReporterOutput output) {
+        reporterOutputs.remove(output);
+        refreshSnapshot();
+    }
+
+    /**
      * Copy the layout's configuration again, while trains are placed, so the
      * sensors' outputs are chosen again. Copied on the layout thread (Swing
      * thread), without holding this layout's lock.
@@ -283,7 +310,7 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
                 return;
             }
         }
-        TrackSnapshot fresh = TrackSnapshot.take(new ArrayList<>(outputs));
+        TrackSnapshot fresh = TrackSnapshot.take(new ArrayList<>(outputs), new ArrayList<>(reporterOutputs));
         TrackSnapshot old;
         synchronized (this) {
             if (trains.isEmpty()) {
@@ -304,7 +331,7 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
      * @param placing the placement, run under this layout's lock
      */
     private void withFreshSnapshot(Runnable placing) {
-        TrackSnapshot fresh = TrackSnapshot.take(new ArrayList<>(outputs));
+        TrackSnapshot fresh = TrackSnapshot.take(new ArrayList<>(outputs), new ArrayList<>(reporterOutputs));
         TrackSnapshot old;
         synchronized (this) {
             old = models.use(fresh);
@@ -514,6 +541,7 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
             collisions.clear();
             dropOutRecords.clear();
             shown.clear();
+            taggedIn.clear();
             unwatchConnections();
             models.use(TrackSnapshot.empty()).dispose();
         } else {
@@ -566,6 +594,7 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
         synchronized (adapting) {
             adapterSources.clear();
             adapterOutputs.clear();
+            adapterReporters.clear();
         }
     }
 
@@ -609,9 +638,11 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
         }
         List<SimulatedSpeedSource> offeredSources = new ArrayList<>();
         List<SimulatedDetectorOutput> offeredOutputs = new ArrayList<>();
+        List<SimulatedReporterOutput> offeredReporters = new ArrayList<>();
         for (SimulationAdapter a : ServiceLoader.load(SimulationAdapter.class)) {
             offeredSources.addAll(a.getSpeedSources());
             offeredOutputs.addAll(a.getDetectorOutputs());
+            offeredReporters.addAll(a.getReporterOutputs());
         }
         List<SimulatedSpeedSource> dropSources = new ArrayList<>();
         List<SimulatedSpeedSource> newSources = new ArrayList<>();
@@ -645,10 +676,28 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
                 }
             }
         }
+        List<SimulatedReporterOutput> dropReporters = new ArrayList<>();
+        List<SimulatedReporterOutput> newReporters = new ArrayList<>();
+        synchronized (adapting) {
+            for (SimulatedReporterOutput o : new ArrayList<>(adapterReporters)) {
+                if (!offeredReporters.contains(o)) {
+                    adapterReporters.remove(o);
+                    dropReporters.add(o);
+                }
+            }
+            for (SimulatedReporterOutput o : offeredReporters) {
+                if (!adapterReporters.contains(o)) {
+                    adapterReporters.add(o);
+                    newReporters.add(o);
+                }
+            }
+        }
         dropSources.forEach(this::removeSpeedSource);
         newSources.forEach(this::addSpeedSource);
         dropOutputs.forEach(this::removeDetectorOutput);
         newOutputs.forEach(this::addDetectorOutput);
+        dropReporters.forEach(this::removeReporterOutput);
+        newReporters.forEach(this::addReporterOutput);
     }
 
     // ---------------------------------------------------------------------
@@ -1013,6 +1062,7 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
             }
             Block block = member.span.block();
             int count = occupancy.getOrDefault(block, 0);
+            boolean wasIn = isIn(e.train, block);
             if (e.enter) {
                 if (!e.train.in.add(member)) {
                     continue;
@@ -1029,6 +1079,63 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
                 }
             }
             detectionChanged(block, when);
+            boolean nowIn = isIn(e.train, block);
+            if (nowIn != wasIn) {
+                trainInBlockChanged(block, e.train, nowIn, when);
+            }
+        }
+    }
+
+    // ---------------------------------------------------------------------
+    // Who is in a Block, as its reporter reads it
+
+    private static boolean isIn(TrainState t, Block block) {
+        for (TrainState.Membership m : t.in) {
+            if (m.span.block() == block) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * A train with an ID tag has come into a Block, or left it: report the
+     * tag of the train that came in, or when it leaves, of the one that came
+     * in last of those still there, or none.
+     */
+    @GuardedBy("this")
+    private void trainInBlockChanged(Block block, TrainState t, boolean in, long when) {
+        if (t.train.getIdTag() == null) {
+            return;
+        }
+        List<TrainState> list = taggedIn.computeIfAbsent(block, b -> new ArrayList<>());
+        // a train that has parted is there already, as its front part: not read again
+        boolean already = list.stream().anyMatch(x -> x.train == t.train);
+        if (in) {
+            list.add(t);
+            if (!already) {
+                reportTag(block, t.train.getIdTag(), when);
+            }
+        } else {
+            boolean last = !list.isEmpty() && list.get(list.size() - 1) == t;
+            list.remove(t);
+            boolean stillThere = list.stream().anyMatch(x -> x.train == t.train);
+            if (last && !stillThere) {
+                reportTag(block, list.isEmpty() ? null : list.get(list.size() - 1).train.getIdTag(), when);
+            }
+            if (list.isEmpty()) {
+                taggedIn.remove(block);
+            }
+        }
+    }
+
+    @GuardedBy("this")
+    private void reportTag(Block block, @CheckForNull String tagId, long when) {
+        TrackSnapshot snap = models.snapshot();
+        jmri.Reporter r = snap.reportedReporter(block);
+        SimulatedReporterOutput o = snap.reporterOutput(block);
+        if (r != null && o != null) {
+            reports.add(() -> o.report(r, tagId, when));
         }
     }
 

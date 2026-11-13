@@ -132,8 +132,24 @@ public class CbusSimulator implements jmri.Disposable {
         return sensorOutput;
     }
 
+    /**
+     * Where simulated trains report their ID tags on this connection's CBUS
+     * reporters. Made when first asked for, and kept until disposed.
+     *
+     * @return the output
+     * @since 5.19.1
+     */
+    @Nonnull
+    public synchronized CbusSimulatedReporterOutput getSimulatedReporterOutput() {
+        if (reporterOutput == null) {
+            reporterOutput = new CbusSimulatedReporterOutput(memo);
+        }
+        return reporterOutput;
+    }
+
     private CbusSimulatedSpeedSource speedSource;
     private CbusSimulatedSensorOutput sensorOutput;
+    private CbusSimulatedReporterOutput reporterOutput;
 
     public CbusDummyCS getNewCS(){
         CbusDummyCS newcs = new CbusDummyCS(memo);
@@ -160,6 +176,9 @@ public class CbusSimulator implements jmri.Disposable {
             }
             if (sensorOutput != null) {
                 sensorOutput.dispose();
+            }
+            if (reporterOutput != null) {
+                reporterOutput.dispose();
             }
         }
         log.info("Stopping {} Simulations",_csArr.size()+_ndArr.size()+_evResponseArr.size());

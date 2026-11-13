@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import jmri.InvokeOnAnyThread;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 /**
@@ -32,6 +33,8 @@ public final class VirtualTrain {
     private final double speedFactorPercent;
     private final double lengthOffsetMm;
     private final boolean adjustmentOutsideConsist;
+    @CheckForNull
+    private final String idTag;
 
     private VirtualTrain(Builder b) {
         name = b.name;
@@ -41,6 +44,7 @@ public final class VirtualTrain {
         speedFactorPercent = b.speedFactorPercent;
         lengthOffsetMm = b.lengthOffsetMm;
         adjustmentOutsideConsist = b.adjustmentOutsideConsist;
+        idTag = b.idTag;
     }
 
     /**
@@ -58,6 +62,7 @@ public final class VirtualTrain {
         speedFactorPercent = 0;
         lengthOffsetMm = 0;
         adjustmentOutsideConsist = false;
+        idTag = null;
     }
 
     /**
@@ -92,6 +97,8 @@ public final class VirtualTrain {
 
         private final String name;
         private final List<SimulatedLoco> locos = new ArrayList<>();
+        @CheckForNull
+        private String idTag;
         private double lengthMm;
         private Detection detection = Detection.entireTrain();
         private double speedFactorPercent;
@@ -168,6 +175,18 @@ public final class VirtualTrain {
         @InvokeOnAnyThread
         public Builder appliesAdjustmentOutsideConsist(boolean applies) {
             adjustmentOutsideConsist = applies;
+            return this;
+        }
+
+        /**
+         * @param tagId the ID tag the train's front carries, such as an RFID
+         *              tag's 10 hex digits or a RailCom address, read by the
+         *              Blocks' reporters as it comes in; none unless set
+         * @return this builder
+         */
+        @InvokeOnAnyThread
+        public Builder idTag(@CheckForNull String tagId) {
+            this.idTag = tagId;
             return this;
         }
 
@@ -265,6 +284,16 @@ public final class VirtualTrain {
     @InvokeOnAnyThread
     public boolean isAdjustmentAppliedOutsideConsist() {
         return adjustmentOutsideConsist;
+    }
+
+    /**
+     * @return the ID tag the train's front carries, which Blocks' reporters
+     *         read as it comes in, or null if it carries none
+     */
+    @CheckForNull
+    @InvokeOnAnyThread
+    public String getIdTag() {
+        return idTag;
     }
 
     /**
