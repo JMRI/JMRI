@@ -446,18 +446,24 @@ abstract public class AbstractThrottleManager implements ThrottleManager, LocoSp
      * @param address The Loco Address that the request failed on.
      * @param reason  A text string passed by the ThrottleManager as to why
      */
-    public synchronized void failedThrottleRequest(LocoAddress address, String reason) {
-        ArrayList<WaitingThrottle> a = throttleListeners.get(address);
+    public void failedThrottleRequest(LocoAddress address, String reason) {
+        // Take the waiting listeners out under the lock, but tell them
+        // outside it: a listener may wait for the user (a throttle window
+        // shows a dialog), and the GUI thread may need this manager meanwhile.
+        ArrayList<WaitingThrottle> a;
+        ArrayList<WaitingThrottle> p;
+        synchronized (this) {
+            a = throttleListeners.remove(address);
+            p = listenerOnly.remove(address);
+        }
         if (a == null) {
             log.warn("failedThrottleRequest with zero-length listeners: {}", address);
         } else {
-            for (WaitingThrottle waitingThrottle : new ArrayList<>(a)) {
+            for (WaitingThrottle waitingThrottle : a) {
                 ThrottleListener l = waitingThrottle.getListener();
                 l.notifyFailedThrottleRequest(address, reason);
             }
         }
-        throttleListeners.remove(address);
-        ArrayList<WaitingThrottle> p = listenerOnly.get(address);
         if (p == null) {
             log.debug("failedThrottleRequest with zero-length PropertyChange listeners: {}", address);
         } else {
@@ -466,7 +472,6 @@ abstract public class AbstractThrottleManager implements ThrottleManager, LocoSp
                 l.propertyChange(new PropertyChangeEvent(this, "attachFailed", address, null));
             }
         }
-        listenerOnly.remove(address);
     }
 
     /**

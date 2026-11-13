@@ -803,6 +803,10 @@
                 momentum (CV3 and CV4)
                 (<code>jmri.jmrit.trainrecord.TrainPositionEstimator</code>).
                 Nothing uses it yet.</li>
+            <li>JMRI no longer freezes when a throttle window shows that a
+                loco couldn't be acquired (for example a LocoNet slot refused
+                or timed out) while another throttle request is answered or a
+                throttle window is opened or closed.</li>
         </ul>
 
     <h3>Timetable</h3>
