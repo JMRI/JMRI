@@ -842,6 +842,9 @@
                 including jQuery 1.8.2, jQuery Mobile, and the unminified
                 Bootstrap files. If you have custom web pages that load any
                 of these directly, they'll need updating.</li>
+            <li>The web server's pages now use Bootstrap 3.4.1 instead of
+                3.3.2. It's a drop-in update with security fixes, so pages
+                look and work the same.</li>
         </ul>
 
     <h3>Where Used</h3>
