@@ -820,6 +820,8 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
+            <li>With a debounce set, a sensor state the hardware reports
+                twice no longer skips the debounce.</li>
             <li>Sensors have a new setting, Detects: what the sensor's detector
                 sees of a train, its wheels (the default), the vehicle body, or
                 a tag or magnet. It is in the sensor's Edit dialog and in a

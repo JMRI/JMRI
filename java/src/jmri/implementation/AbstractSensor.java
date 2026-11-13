@@ -249,6 +249,8 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
                 _rawState = s;
                 fireRawStateChanged(oldRawState, s, timeNanos);
             }
+        } else if (debouncePending) {
+            return; // the same state reported again: the debounce still decides
         }
         if (_knownState != s) {
             int oldState = _knownState;
