@@ -469,7 +469,10 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li></li>
+            <li>Fixed some problems with selecting entries
+                when adding an entry to a roster group.</li>
+            <li>Improved the button language when adding
+                an entry to a roster group.</li>
         </ul>
 
    <h3>Dispatcher</h3>
@@ -670,7 +673,10 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li></li>
+            <li>Fixed some problems with selecting entries
+                when adding an entry to a roster group.</li>
+            <li>Improved the button language when adding
+                an entry to a roster group.</li>
         </ul>
 
     <h3>Routes</h3>
