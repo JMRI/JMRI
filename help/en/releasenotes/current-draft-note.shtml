@@ -7,6 +7,9 @@
               reading" error from the connection's receive thread. JMRI itself
               closes a connection only from that thread, so nothing changes in
               use.</li>
+          <li>XpressNet, Roco Z21 and DCC4PC: a "busy" answer during a
+              burst of commands no longer leaves messages and their
+              replies out of step until JMRI is restarted.</li>
         </ul>
 
         <h4>Acela CTI</h4>
