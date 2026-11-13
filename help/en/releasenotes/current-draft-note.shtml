@@ -904,6 +904,8 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
+            <li>Consists: a failed CV19 write for an advanced consist is
+                now shown as an error, for its loco, not as success.</li>
             <li>For developers: a train record now follows its train through
                 Blocks with no detector: when the train reaches the next
                 detected Block through a run of them, along paths that are
