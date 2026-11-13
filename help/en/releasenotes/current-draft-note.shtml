@@ -485,6 +485,10 @@
                  dispatcher can see which trains are really in their Blocks.
                  Web panels show it the same way. Icons that use an icon for
                  each value, and Layout Block memories, are unchanged.</li>
+             <li>Dispatcher's Options now offer the CUSTOM layout scale,
+                 with its ratio in a box beside the scale list, for a
+                 layout whose scale isn't in the list. There is one CUSTOM
+                 scale, shared with the Timetable.</li>
              <li>An automatic train waiting for a stop sensor that never goes
                  active no longer runs on out of its Section at its stopping
                  speed. It is stopped as soon as it enters a free Block beyond
@@ -589,6 +593,7 @@
              <li><code>Section.setNameInBlocks</code> is no longer used
                  either; it still works, but logs a warning the first time it
                  is used, and will be removed.</li>
+             <li>x</li>
         </ul>
 
     <h3>Dispatcher System</h3>
