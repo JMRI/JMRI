@@ -51,9 +51,7 @@ public class FirstTimeStartUpWizard implements Thread.UncaughtExceptionHandler {
         this.parent = parent;
         this.app = app;
         mainWizardPanel.setLayout(new BorderLayout());
-        
-        localeNames = new String[Locale.getAvailableLocales().length];
-        
+
         mainWizardPanel.add(createTopBanner(), BorderLayout.NORTH);
 
         mainWizardPanel.add(createHelpPanel(), BorderLayout.WEST);
@@ -337,37 +335,47 @@ public class FirstTimeStartUpWizard implements Thread.UncaughtExceptionHandler {
         }
     }
 
+    /**
+     * The language choice. The list of languages is found on a thread of its
+     * own, as it can take a while, into a list of its own, and handed to the
+     * GUI thread (Swing thread) when complete, so a second call, or a slow
+     * machine, can't change a list while it is being sorted or shown.
+     *
+     * @return a panel with the language choice
+     */
     public JPanel doLocale() {
         JPanel panel = new JPanel();
         // add JComboBoxen for language and country
         panel.setLayout(new FlowLayout());
-        localeBox = new JComboBox<>(new String[]{
+        JComboBox<String> box = new JComboBox<>(new String[]{
             Locale.getDefault().getDisplayName(),
             "(Please Wait)"});
-        panel.add(localeBox);
+        localeBox = box;
+        panel.add(box);
 
         // create object to find locales in new Thread
         Runnable r = () -> {
             Locale[] locales = Locale.getAvailableLocales();
-            locale = new HashMap<>();
+            HashMap<String, Locale> found = new HashMap<>();
+            String[] names = new String[locales.length];
             for (int i = 0; i < locales.length; i++) {
-                locale.put(locales[i].getDisplayName(), locales[i]);
-                localeNames[i] = locales[i].getDisplayName();
+                found.put(locales[i].getDisplayName(), locales[i]);
+                names[i] = locales[i].getDisplayName();
             }
-            java.util.Arrays.sort(localeNames);
-            Runnable update = () -> {
-                localeBox.setModel(new javax.swing.DefaultComboBoxModel<>(localeNames));
-                localeBox.setSelectedItem(Locale.getDefault().getDisplayName());
-            };
-            javax.swing.SwingUtilities.invokeLater(update);
+            java.util.Arrays.sort(names);
+            javax.swing.SwingUtilities.invokeLater(() -> {
+                locale = found;
+                box.setModel(new javax.swing.DefaultComboBoxModel<>(names));
+                box.setSelectedItem(Locale.getDefault().getDisplayName());
+            });
         };
-        new Thread(r).start();
+        new Thread(r, "Start-Up Wizard languages").start();
 
-        localeBox.addActionListener((ActionEvent a) -> {
-            if (localeBox == null || locale == null) {
+        box.addActionListener((ActionEvent a) -> {
+            if (locale == null) {
                 return;
             }
-            String desired = (String) localeBox.getSelectedItem();
+            String desired = (String) box.getSelectedItem();
             Locale.setDefault(locale.get(desired));
         });
 
@@ -385,7 +393,6 @@ public class FirstTimeStartUpWizard implements Thread.UncaughtExceptionHandler {
 
     JComboBox<String> localeBox;
     HashMap<String, Locale> locale;
-    final String[] localeNames;
 
     JPanel mainWizardPanel = new JPanel();
 
