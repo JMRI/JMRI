@@ -32,6 +32,8 @@
 
         <h4>CBUS</h4>
             <ul>
+                <li>CBUS Console: with event highlighting on, the console
+                    no longer slows down the longer it is open.</li>
                 <li>For developers: a CBUS connection now reports the speed and
                     direction commanded for each loco, from the command
                     station's sessions on the bus, whichever cab sent them
