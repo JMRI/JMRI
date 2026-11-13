@@ -2,6 +2,10 @@
     <h3>Hardware Support</h3>
         <ul>
           <li></li>
+          <li>Connections (NCE, C/MRI, CAN, XpressNet and others): after a
+              connection recovers from a failure, messages are no longer
+              sent out of turn or their replies given to the wrong
+              listener.</li>
           <li>For developers: a test that closes a connection from another
               thread no longer sometimes fails on an "Input Stream NULL when
               reading" error from the connection's receive thread. JMRI itself
