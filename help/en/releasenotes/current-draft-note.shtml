@@ -658,6 +658,11 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
+            <li>Moving or resizing a window no longer rewrites the user
+                interface preferences file for every step of the drag,
+                which made JMRI stutter. The window's place and size are
+                saved when it starts moving, once it stops, and when it
+                closes.</li>
             <li></li>
         </ul>
 
