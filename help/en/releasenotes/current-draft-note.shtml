@@ -478,6 +478,11 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
+             <li>Tools &gt; Train Tracking &gt; Set-up Checks now says when
+                 Dispatcher's Layout Scale, in its Options, is not the
+                 Layout Scale in Preferences &gt; Warrants. Speed profiles
+                 give scale speeds at the Warrants scale, while Dispatcher
+                 works out scale lengths and speeds at its own.</li>
              <li>With "Place train name in allocated Blocks" on, a Block
                  Contents icon now shows the train a Block is allocated to in
                  italics after an arrow, for example <em>&rarr; 47012</em>,
