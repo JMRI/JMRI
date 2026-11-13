@@ -1,15 +1,29 @@
 package jmri.jmrix.loconet;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jmri.*;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  *
  * This test class is adapted from LnThrottleManagerTest
  * for tests which require both LnThrottleManager AND LnPredefinedMeters.
  * LnPredefinedMeters is disabled in LnThrottleManagerTest for test reliability.
+ * <p>
+ * LnPredefinedMeters sends one query of its own, {@code BB 79 01 00}, a
+ * little after it is created. That can be before, among or after the
+ * throttle's messages, so the tests look at the throttle's messages without it
+ * and check separately that it was sent.
+ * <p>
+ * The test connection does not echo what is sent, so each test hands the
+ * messages that release the slot back to the listeners, as LocoNet would. The
+ * slot is read again when the SlotManager sees a slot made common.
  * @author Paul Bender, Copyright (C) 2017
  * @author B. Milhaupt, Copyright (C) 2018
  * @author Steve Young, Copyright (C) 2025
@@ -19,6 +33,58 @@ public class LnThrottleManagerWithLnPredefinedMetersTest {
     private LocoNetInterfaceScaffold lnis;
     private LocoNetSystemConnectionMemo memo;
     private ThrottleManager tm;
+
+    /** The query LnPredefinedMeters sends once at start up. */
+    private static final String METERS_QUERY = "BB 79 01 00";
+    private static final String SLOT_COMMON = "B5 09 10 00";
+    private static final String SLOT_DISPATCH = "BA 09 00 00";
+    private static final String SLOT_READ = "BB 09 00 00";
+
+    /**
+     * The messages sent from a place in the outbound list onwards, without
+     * the meters' query.
+     * @param from index of the first message to include
+     * @return the messages as text, in the order sent
+     */
+    private List<String> sentSince(int from) {
+        List<String> sent = new ArrayList<>();
+        Object[] all = lnis.outbound.toArray();
+        for (int i = from; i < all.length; i++) {
+            String text = all[i].toString();
+            if (!METERS_QUERY.equals(text)) {
+                sent.add(text);
+            }
+        }
+        return sent;
+    }
+
+    /**
+     * Hand messages already sent back to the listeners, as LocoNet echoes them.
+     * @param from index in the outbound list of the first message to echo
+     * @param count how many of the throttle's messages to echo
+     */
+    private void echoSince(int from, int count) {
+        Object[] all = lnis.outbound.toArray();
+        int echoed = 0;
+        for (int i = from; i < all.length && echoed < count; i++) {
+            LocoNetMessage m = (LocoNetMessage) all[i];
+            if (!METERS_QUERY.equals(m.toString())) {
+                lnis.sendTestMessage(m);
+                echoed++;
+            }
+        }
+    }
+
+    private void waitForMetersQuery() {
+        JUnitUtil.waitFor(() -> {
+            for (Object m : lnis.outbound.toArray()) {
+                if (METERS_QUERY.equals(m.toString())) {
+                    return true;
+                }
+            }
+            return false;
+        }, "LnPredefinedMeters sent its query");
+    }
 
     /**
      * See LnThrottleManagerTest testShareSingleLnThrottleScenario1.
@@ -64,20 +130,20 @@ public class LnThrottleManagerWithLnPredefinedMetersTest {
         JUnitUtil.waitFor(() -> throtListen.getThrottle() != null, "wait for throttle found");
         throtListen.getThrottle().setSpeedSetting(0.5f);
 
-        lnis.outbound.clear();
+        int start = lnis.outbound.size();
         tm.releaseThrottle(throtListen2.getThrottle(), throtListen2);
         tm.releaseThrottle(throtListen.getThrottle(), throtListen);
 
-        // Wait for 2 messages, the set slot common and then the get slot refresh
-        JUnitUtil.waitFor(() -> {
-            return !lnis.outbound.isEmpty();
-        },"wait for message");
-        JUnitUtil.waitFor(() -> {
-            return !lnis.outbound.elementAt(lnis.outbound.size() -1).toString().equals("B5 09 10 00");
-        }, "COMMON");
-        JUnitUtil.waitFor(() -> {
-            return !lnis.outbound.elementAt(lnis.outbound.size() -1).toString().equals("BB 09 00 00");
-        }, "Slot read");
+        // the slot is set to common
+        JUnitUtil.waitFor(() -> !sentSince(start).isEmpty(), "wait for message");
+        assertEquals(List.of(SLOT_COMMON), sentSince(start), "COMMON");
+
+        // LocoNet echoes it, and the slot is then read
+        echoSince(start, 1);
+        JUnitUtil.waitFor(() -> sentSince(start).size() >= 2, "Slot read");
+        assertEquals(List.of(SLOT_COMMON, SLOT_READ), sentSince(start), "COMMON then Slot read");
+
+        waitForMetersQuery();
     }
 
     /**
@@ -119,24 +185,22 @@ public class LnThrottleManagerWithLnPredefinedMetersTest {
         tm.dispatchThrottle(throtListen2.getThrottle(), throtListen2); // this fails as loco is in use on multiple throttles
         tm.releaseThrottle(throtListen.getThrottle(), throtListen);
 
-        //reset outbound.
-        lnis.outbound.clear();
+        int start = lnis.outbound.size();
         tm.dispatchThrottle(throtListen2.getThrottle(), throtListen2);
 
-        // Wait for 3 messages, the set slot common and then the get slot refresh
-        JUnitUtil.waitFor(() -> {
-            return !lnis.outbound.isEmpty();
-        },"wait for message");
-        JUnitUtil.waitFor(() -> {
-            return !lnis.outbound.elementAt(lnis.outbound.size() -1).toString().equals("B5 09 10 00");
-        }, "COMMON");
-        JUnitUtil.waitFor(() -> {
-            return !lnis.outbound.elementAt(lnis.outbound.size() -1).toString().equals("BA 09 00 00");
-        }, "DISPATCH");
-        JUnitUtil.waitFor(() -> {
-            return !lnis.outbound.elementAt(lnis.outbound.size() -1).toString().equals("BB 09 00 00");
-        }, "Slot read");
+        // the slot is set to common, dispatched, and set to common again
+        JUnitUtil.waitFor(() -> sentSince(start).size() >= 3, "wait for 3 messages");
+        assertEquals(List.of(SLOT_COMMON, SLOT_DISPATCH, SLOT_COMMON), sentSince(start),
+            "COMMON, DISPATCH, COMMON");
 
+        // LocoNet echoes them, and the slot is then read once for each time
+        // it was set to common
+        echoSince(start, 3);
+        JUnitUtil.waitFor(() -> sentSince(start).size() >= 5, "Slot reads");
+        assertEquals(List.of(SLOT_COMMON, SLOT_DISPATCH, SLOT_COMMON, SLOT_READ, SLOT_READ),
+            sentSince(start), "COMMON, DISPATCH, COMMON then two Slot reads");
+
+        waitForMetersQuery();
     }
 
     private class ThrottleListen implements ThrottleListener {
