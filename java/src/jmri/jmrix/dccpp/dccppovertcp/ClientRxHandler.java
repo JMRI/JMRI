@@ -185,7 +185,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
                         outBuf.append(">");
                         log.debug("ClientTxHandler: Send: {}", outBuf);
                         outBuf.append("\r\n");
-                        outStream.write(outBuf.toString().getBytes(StandardCharsets.ISO_8859_1));
+                        outStream.write(outBuf.toString().getBytes(StandardCharsets.UTF_8));
                         outStream.flush();
                     }
                 }

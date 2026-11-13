@@ -58,7 +58,7 @@ public class JmriSRCPServer extends JmriServer {
         sh.setThrottleServer(new JmriSRCPThrottleServer(inStream,outputStream));
 
         // Start by sending a welcome message
-        outputStream.write( "SRCP 0.8.3\n\r".getBytes(StandardCharsets.ISO_8859_1));
+        outputStream.write( "SRCP 0.8.3\n\r".getBytes(StandardCharsets.UTF_8));
 
         while (true) {
             // Read the command from the client
@@ -77,7 +77,7 @@ public class JmriSRCPServer extends JmriServer {
                     // need to send the message out.
                     if (v.getOutputString() != null) {
                         outputStream.write((v.getOutputString() + "\n\r")
-                                .getBytes(StandardCharsets.ISO_8859_1));
+                                .getBytes(StandardCharsets.UTF_8));
                     }
                 } catch (ParseException pe) {
                     log.debug("Parse Exception", pe);
@@ -92,7 +92,7 @@ public class JmriSRCPServer extends JmriServer {
                         return;
                     }
                     outputStream.write("425 ERROR not supported\n\r"
-                            .getBytes(StandardCharsets.ISO_8859_1));
+                            .getBytes(StandardCharsets.UTF_8));
                     // recover by consuming tokens in the token stream
                     // until we reach the end of the line.
                     while (t.kind != jmri.jmris.srcp.parser.SRCPParserConstants.EOL) {
@@ -113,7 +113,7 @@ public class JmriSRCPServer extends JmriServer {
                     // need to send the message out.
                     if (v.getOutputString() != null) {
                         outputStream.write((v.getOutputString() + "\n\r")
-                                .getBytes(StandardCharsets.ISO_8859_1));
+                                .getBytes(StandardCharsets.UTF_8));
                     }
                 } catch (ParseException pe) {
                     log.debug("Parse Exception", pe);
@@ -131,7 +131,7 @@ public class JmriSRCPServer extends JmriServer {
                         return;
                     }
                     outputStream.write(("425 ERROR not supported\n\r")
-                            .getBytes(StandardCharsets.ISO_8859_1));
+                            .getBytes(StandardCharsets.UTF_8));
                     // recover by consuming tokens in the token stream
                     // until we reach the end of the line.
                     while (t.kind != jmri.jmris.srcp.parser.SRCPParserConstants.EOL) {
@@ -140,7 +140,7 @@ public class JmriSRCPServer extends JmriServer {
                 } catch (TokenMgrError tme) {
                     log.debug("Token Manager Exception", tme);
                     outputStream.write("410 ERROR unknown command\n\r"
-                            .getBytes(StandardCharsets.ISO_8859_1));
+                            .getBytes(StandardCharsets.UTF_8));
                 }
             } else if (!sh.isCommandMode()) {
                 BufferedReader d  = new BufferedReader(new InputStreamReader(inStream,
@@ -159,7 +159,7 @@ public class JmriSRCPServer extends JmriServer {
                     // we don't care if there is an error on input.
                 }
             } else {
-                outputStream.write("500 ERROR out of resources\n\r".getBytes(StandardCharsets.ISO_8859_1));
+                outputStream.write("500 ERROR out of resources\n\r".getBytes(StandardCharsets.UTF_8));
                 outputStream.close();
                 inStream.close();
                 return;

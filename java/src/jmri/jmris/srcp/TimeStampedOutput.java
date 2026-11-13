@@ -35,7 +35,7 @@ public class TimeStampedOutput extends OutputStream {
         String timeString = String.format("%s.%s ",time/1000,time%1000);
         byte[] outputBytes = new byte[timeString.length() + bytes.length];
         System.arraycopy(
-                timeString.getBytes(StandardCharsets.ISO_8859_1), 0,
+                timeString.getBytes(StandardCharsets.UTF_8), 0,
                 outputBytes, 0, timeString.length());
         System.arraycopy(bytes,0, outputBytes,timeString.length(),bytes.length);
         outputStream.write(outputBytes);

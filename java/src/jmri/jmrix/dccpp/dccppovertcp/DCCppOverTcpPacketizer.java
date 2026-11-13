@@ -330,7 +330,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                                 log.debug("Write to LbServer: {}", packet.toString());
                             }
                             packet.append("\r\n");
-                            ostream.write(packet.toString().getBytes(StandardCharsets.ISO_8859_1));
+                            ostream.write(packet.toString().getBytes(StandardCharsets.UTF_8));
                             ostream.flush();
                             log.debug("end write to stream");
                         } else {

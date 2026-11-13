@@ -51,19 +51,19 @@ public class JmriSRCPSensorServer extends AbstractSensorServer implements Proper
         }
 
         if (bus > list.size()) {
-            output.write(Bundle.getMessage(ERROR).getBytes(StandardCharsets.ISO_8859_1));
+            output.write(Bundle.getMessage(ERROR).getBytes(StandardCharsets.UTF_8));
             return;
         }
 
         if (Status == Sensor.ACTIVE) {
             output.write(( "100 INFO " + bus + " FB " + address + " 1\n\r")
-                    .getBytes(StandardCharsets.ISO_8859_1));
+                    .getBytes(StandardCharsets.UTF_8));
         } else if (Status == Sensor.INACTIVE) {
             output.write(("100 INFO " + bus + " FB " + address + " 0\n\r")
-                    .getBytes(StandardCharsets.ISO_8859_1));
+                    .getBytes(StandardCharsets.UTF_8));
         } else {
             //  unknown state
-            output.write( Bundle.getMessage("Error411").getBytes(StandardCharsets.ISO_8859_1));
+            output.write( Bundle.getMessage("Error411").getBytes(StandardCharsets.UTF_8));
         }
 
     }
@@ -75,7 +75,7 @@ public class JmriSRCPSensorServer extends AbstractSensorServer implements Proper
         try {
             memo = list.get(bus);
         } catch (java.lang.IndexOutOfBoundsException obe) {
-            output.write(Bundle.getMessage("Error412").getBytes(StandardCharsets.ISO_8859_1));
+            output.write(Bundle.getMessage("Error412").getBytes(StandardCharsets.UTF_8));
             return;
         }
         String sensorName = memo.getSystemPrefix()
@@ -84,13 +84,13 @@ public class JmriSRCPSensorServer extends AbstractSensorServer implements Proper
             int Status = InstanceManager.getDefault(SensorManager.class).provideSensor(sensorName).getKnownState();
             if (Status == Sensor.ACTIVE) {
                 output.write(("100 INFO " + bus + " FB " + address + " 1\n\r")
-                        .getBytes(StandardCharsets.ISO_8859_1));
+                        .getBytes(StandardCharsets.UTF_8));
             } else if (Status == Sensor.INACTIVE) {
                 output.write(("100 INFO " + bus + " FB " + address + " 0\n\r")
-                        .getBytes(StandardCharsets.ISO_8859_1));
+                        .getBytes(StandardCharsets.UTF_8));
             } else {
                 //  unknown state
-                output.write(Bundle.getMessage("Error411").getBytes(StandardCharsets.ISO_8859_1));
+                output.write(Bundle.getMessage("Error411").getBytes(StandardCharsets.UTF_8));
             }
         } catch (IllegalArgumentException ex) {
             log.warn("Failed to provide Sensor \"{}\" in sendStatus", sensorName);
@@ -99,12 +99,12 @@ public class JmriSRCPSensorServer extends AbstractSensorServer implements Proper
 
     @Override
     public void sendErrorStatus(String sensorName) throws IOException {
-        output.write(Bundle.getMessage(ERROR).getBytes(StandardCharsets.ISO_8859_1));
+        output.write(Bundle.getMessage(ERROR).getBytes(StandardCharsets.UTF_8));
     }
 
     @Override
     public void parseStatus(String statusString) throws jmri.JmriException, java.io.IOException {
-        output.write(Bundle.getMessage(ERROR).getBytes(StandardCharsets.ISO_8859_1));
+        output.write(Bundle.getMessage(ERROR).getBytes(StandardCharsets.UTF_8));
     }
 
     /*
@@ -118,7 +118,7 @@ public class JmriSRCPSensorServer extends AbstractSensorServer implements Proper
         try {
             memo = list.get(bus - 1);
         } catch (java.lang.IndexOutOfBoundsException obe) {
-            output.write("412 ERROR wrong value\n\r".getBytes(StandardCharsets.ISO_8859_1));
+            output.write("412 ERROR wrong value\n\r".getBytes(StandardCharsets.UTF_8));
             return;
         }
         String sensorName = memo.getSystemPrefix()

@@ -35,15 +35,15 @@ public class JmriSRCPProgrammerServer extends AbstractProgrammerServer {
         }
         if (status == ProgListener.OK) {
             output.write(("100 INFO 1 SM " + CV + " CV " + value + "\n\r")
-                    .getBytes(StandardCharsets.ISO_8859_1));
+                    .getBytes(StandardCharsets.UTF_8));
         } else {
-            output.write(Bundle.getMessage("Error416").getBytes(StandardCharsets.ISO_8859_1));
+            output.write(Bundle.getMessage("Error416").getBytes(StandardCharsets.UTF_8));
         }
     }
 
     @Override
     public void sendNotAvailableStatus() throws IOException {
-        output.write(Bundle.getMessage("Error499").getBytes(StandardCharsets.ISO_8859_1));
+        output.write(Bundle.getMessage("Error499").getBytes(StandardCharsets.UTF_8));
     }
 
     @Override

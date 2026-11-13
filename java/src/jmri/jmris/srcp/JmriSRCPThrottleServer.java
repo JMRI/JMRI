@@ -41,7 +41,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
      */
     @Override
     public void sendStatus(LocoAddress l) throws IOException {
-        output.write( Bundle.getMessage("Error499").getBytes(StandardCharsets.ISO_8859_1));
+        output.write( Bundle.getMessage("Error499").getBytes(StandardCharsets.UTF_8));
     }
 
     /*
@@ -58,7 +58,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
         try {
             memo = list.get(bus - 1);
         } catch (java.lang.IndexOutOfBoundsException obe) {
-            output.write(Bundle.getMessage("Error412").getBytes(StandardCharsets.ISO_8859_1));
+            output.write(Bundle.getMessage("Error412").getBytes(StandardCharsets.UTF_8));
             return;
         }
 
@@ -151,15 +151,15 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
             StatusString += f27 ? " 1" : " 0";
             StatusString += f28 ? " 1" : " 0";
             StatusString += "\n\r";
-            output.write(StatusString.getBytes(StandardCharsets.ISO_8859_1));
+            output.write(StatusString.getBytes(StandardCharsets.UTF_8));
         } else {
-            output.write(Bundle.getMessage("Error412").getBytes(StandardCharsets.ISO_8859_1));
+            output.write(Bundle.getMessage("Error412").getBytes(StandardCharsets.UTF_8));
         }
     }
 
     @Override
     public void sendErrorStatus() throws IOException {
-        output.write(Bundle.getMessage("Error499").getBytes(StandardCharsets.ISO_8859_1));
+        output.write(Bundle.getMessage("Error499").getBytes(StandardCharsets.UTF_8));
     }
 
     @Override
@@ -180,7 +180,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
         String StatusString = "101 INFO " + bus + " GL " + address.getNumber() + " "; // assume DCC for now.
         StatusString += address.getProtocol() == jmri.LocoAddress.Protocol.DCC_SHORT ? "N 1 28" : "N 2 28";
         StatusString += "\n\r";
-        output.write(StatusString.getBytes(StandardCharsets.ISO_8859_1));
+        output.write(StatusString.getBytes(StandardCharsets.UTF_8));
     }
 
     @Override
@@ -197,7 +197,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
         String StatusString = "102 INFO " + bus + " GL " + address.getNumber(); // assume DCC for now.
         StatusString += address.getProtocol() == jmri.LocoAddress.Protocol.DCC_SHORT ? "N 1 28" : "N 2 28";
         StatusString += "\n\r";
-        output.write(StatusString.getBytes(StandardCharsets.ISO_8859_1));
+        output.write(StatusString.getBytes(StandardCharsets.UTF_8));
     }
 
     public void initThrottle(int bus, int address, boolean isLong,
@@ -210,7 +210,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
         try {
             memo = list.get(bus - 1);
         } catch (java.lang.IndexOutOfBoundsException obe) {
-            output.write(Bundle.getMessage("Error412").getBytes(StandardCharsets.ISO_8859_1));
+            output.write(Bundle.getMessage("Error412").getBytes(StandardCharsets.UTF_8));
             return;
         }
 
@@ -236,7 +236,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
         try {
             memo = list.get(bus - 1);
         } catch (java.lang.IndexOutOfBoundsException obe) {
-            output.write(Bundle.getMessage("Error412").getBytes(StandardCharsets.ISO_8859_1));
+            output.write(Bundle.getMessage("Error412").getBytes(StandardCharsets.UTF_8));
             return;
         }
 
@@ -270,7 +270,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
             memo = list.get(bus - 1);
         } catch (java.lang.IndexOutOfBoundsException obe) {
             try {
-                output.write(Bundle.getMessage("Error412").getBytes(StandardCharsets.ISO_8859_1));
+                output.write(Bundle.getMessage("Error412").getBytes(StandardCharsets.UTF_8));
             } catch (IOException ioe) {
                 log.error("Error writing to network port");
             }
@@ -313,7 +313,7 @@ public class JmriSRCPThrottleServer extends AbstractThrottleServer {
             memo = list.get(bus - 1);
         } catch (java.lang.IndexOutOfBoundsException obe) {
             try {
-                output.write(Bundle.getMessage("Error412").getBytes(StandardCharsets.ISO_8859_1));
+                output.write(Bundle.getMessage("Error412").getBytes(StandardCharsets.UTF_8));
             } catch (IOException ioe) {
                 log.error("Error writing to network port");
             }

@@ -39,13 +39,13 @@ public class JmriSRCPTimeServer extends AbstractTimeServer {
         cal.setTime(timebase.getTime());
         long day = jmri.util.DateUtil.julianDayFromCalendar(cal);
         output.write(("100 INFO 0 TIME " + day + " " + sdf.format(timebase.getTime()) + "\n\r")
-                .getBytes(StandardCharsets.ISO_8859_1));
+                .getBytes(StandardCharsets.UTF_8));
     }
 
     @Override
     public void sendRate() throws IOException {
         output.write(("101 INFO 0 TIME " + modelrate + " " + realrate + "\n\r")
-                .getBytes(StandardCharsets.ISO_8859_1));
+                .getBytes(StandardCharsets.UTF_8));
     }
 
     @Override
@@ -124,7 +124,7 @@ public class JmriSRCPTimeServer extends AbstractTimeServer {
             // and start the timeListener.
             listenToTimebase(true);
             try {
-                output.write("200 Ok\n\r".getBytes(StandardCharsets.ISO_8859_1));
+                output.write("200 Ok\n\r".getBytes(StandardCharsets.UTF_8));
             } catch (IOException ie) {
                 log.warn("Unable to send message to client: {}", ie.getMessage());
             }
