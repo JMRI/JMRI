@@ -230,21 +230,22 @@ public class TrainRecordWatcher {
             }
             Block first = blocks.get(0);
             Block last = blocks.get(blocks.size() - 1);
-            if (joinedBySetPath(first, block)) {
-                candidates.add(new Candidate(r, true, timeNanos, time));
-            }
-            if (last != first && joinedBySetPath(last, block)) {
-                candidates.add(new Candidate(r, false, timeNanos, time));
+            boolean atFirst = joinedBySetPath(first, block);
+            boolean atLast = last != first && joinedBySetPath(last, block);
+            if (atFirst || atLast) {
+                candidates.add(new Candidate(r, atFirst, atLast, timeNanos, time));
             }
         }
-        if (candidates.size() == 1) {
+        if (candidates.size() == 1 && candidates.get(0).end() != null) {
             enter(block, candidates.get(0), false);
-        } else if (candidates.size() > 1) {
+        } else if (!candidates.isEmpty()) {
+            // one train alone here is next to both of its ends, and which leads isn't known
+            Reason.Rule rule = candidates.size() == 1 ? Reason.Rule.ENTERED_END_UNKNOWN : Reason.Rule.AMBIGUOUS;
             for (Candidate c : candidates) {
                 if (!beforeAmbiguity.containsKey(c.record)) {
                     beforeAmbiguity.put(c.record, c.record.getConfidence());
                 }
-                c.record.setConfidence(Confidence.AMBIGUOUS, reason(Reason.Rule.AMBIGUOUS, block, time));
+                c.record.setConfidence(Confidence.AMBIGUOUS, reason(rule, block, time));
             }
             ambiguous.put(block, candidates);
             settleByValue(block, block.getValue());
@@ -252,7 +253,11 @@ public class TrainRecordWatcher {
     }
 
     private void enter(Block block, Candidate c, boolean settled) {
-        c.record.entered(block, c.atFirst, c.timeNanos, c.time, settled);
+        enter(block, c, Objects.requireNonNull(c.end(), "end"), settled);
+    }
+
+    private void enter(Block block, Candidate c, boolean atFirst, boolean settled) {
+        c.record.entered(block, atFirst, c.timeNanos, c.time, settled);
         beforeAmbiguity.remove(c.record);
         leaveEmptyFarEnd(c.record);
     }
@@ -285,7 +290,9 @@ public class TrainRecordWatcher {
 
     /**
      * The Block's value names one of the trains that could have entered it:
-     * that train entered it.
+     * that train entered it. If it could have entered at either of its ends
+     * and its leading end isn't known, the others are cleared and it waits
+     * until it leaves one end, which shows it entered at the other.
      */
     private void settleByValue(Block block, Object value) {
         List<Candidate> candidates = ambiguous.get(block);
@@ -303,25 +310,60 @@ public class TrainRecordWatcher {
         if (chosen == null) {
             return;
         }
-        ambiguous.remove(block);
-        for (Candidate c : candidates) {
-            if (c.record != chosen.record && !isAmbiguousElsewhere(c.record)) {
-                Confidence before = beforeAmbiguity.remove(c.record);
-                c.record.setConfidence(before, reason(Reason.Rule.AMBIGUITY_CLEARED, block, Instant.now()));
+        if (chosen.end() == null) {
+            if (candidates.size() > 1) {
+                candidates.remove(chosen);
+                restore(block, candidates);
+                ambiguous.put(block, new ArrayList<>(List.of(chosen)));
+                chosen.record.setConfidence(Confidence.AMBIGUOUS,
+                        reason(Reason.Rule.ENTERED_END_UNKNOWN, block, chosen.time));
             }
+            return;
         }
+        ambiguous.remove(block);
+        candidates.remove(chosen);
+        restore(block, candidates);
         enter(block, chosen, true);
     }
 
-    private boolean isAmbiguousElsewhere(DefaultTrainRecord r) {
-        for (List<Candidate> list : ambiguous.values()) {
-            for (Candidate c : list) {
-                if (c.record == r) {
-                    return true;
+    /**
+     * Put back the confidence each of these records had before it became
+     * ambiguous, unless it is still ambiguous at another Block.
+     */
+    private void restore(Block block, List<Candidate> candidates) {
+        for (Candidate c : candidates) {
+            if (!isAmbiguousElsewhere(block, c.record)) {
+                Confidence before = beforeAmbiguity.remove(c.record);
+                if (before != null) {
+                    c.record.setConfidence(before, reason(Reason.Rule.AMBIGUITY_CLEARED, block, Instant.now()));
                 }
             }
         }
-        return false;
+    }
+
+    private boolean isAmbiguousElsewhere(Block block, DefaultTrainRecord r) {
+        return ambiguousElsewhere(block, r) != null;
+    }
+
+    /**
+     * @param block a Block
+     * @param r     a train
+     * @return another Block the train could have entered, with its entry
+     *         there, or null if there is none
+     */
+    @CheckForNull
+    private Map.Entry<Block, Candidate> ambiguousElsewhere(Block block, DefaultTrainRecord r) {
+        for (Map.Entry<Block, List<Candidate>> e : ambiguous.entrySet()) {
+            if (e.getKey() == block) {
+                continue;
+            }
+            for (Candidate c : e.getValue()) {
+                if (c.record == r) {
+                    return Map.entry(e.getKey(), c);
+                }
+            }
+        }
+        return null;
     }
 
     /**
@@ -330,12 +372,7 @@ public class TrainRecordWatcher {
     private void unoccupied(Block block) {
         List<Candidate> pending = ambiguous.remove(block);
         if (pending != null) {
-            for (Candidate c : pending) {
-                if (!isAmbiguousElsewhere(c.record)) {
-                    Confidence before = beforeAmbiguity.remove(c.record);
-                    c.record.setConfidence(before, reason(Reason.Rule.AMBIGUITY_CLEARED, block, Instant.now()));
-                }
-            }
+            restore(block, pending);
         }
         for (DefaultTrainRecord r : records.get()) {
             if (!r.isPlaced() || r.isDisposed()) {
@@ -348,10 +385,37 @@ public class TrainRecordWatcher {
             }
             boolean atEnd = (i == 0 || i == blocks.size() - 1);
             if (blocks.size() > 1 && atEnd) {
+                enterAtOtherEnd(r, i == 0);
                 r.left(block, Reason.Rule.LEFT);
             } else if (r.getConfidence() == Confidence.CONFIRMED) {
                 // it can't have left: a drop-out, or a train gone onto undetected track
                 r.setConfidence(Confidence.ESTIMATED, reason(Reason.Rule.KEPT_AFTER_DROPOUT, block, Instant.now()));
+            }
+        }
+    }
+
+    /**
+     * A train has left the Block at one of its ends. If it alone could have
+     * entered a Block next to both its ends, it entered that Block at the
+     * other end, the one it moved towards.
+     *
+     * @param r         the train
+     * @param leftFirst true if it left the first of its Blocks
+     */
+    private void enterAtOtherEnd(DefaultTrainRecord r, boolean leftFirst) {
+        for (Map.Entry<Block, List<Candidate>> e : new ArrayList<>(ambiguous.entrySet())) {
+            List<Candidate> list = e.getValue();
+            if (list.size() == 1 && list.get(0).record == r && list.get(0).atFirst && list.get(0).atLast) {
+                ambiguous.remove(e.getKey());
+                Confidence before = beforeAmbiguity.get(r);
+                enter(e.getKey(), list.get(0), !leftFirst, false);
+                Map.Entry<Block, Candidate> still = ambiguousElsewhere(e.getKey(), r);
+                if (still != null) {
+                    beforeAmbiguity.put(r, before);
+                    r.setConfidence(Confidence.AMBIGUOUS,
+                            reason(Reason.Rule.AMBIGUOUS, still.getKey(), still.getValue().time));
+                }
+                return;
             }
         }
     }
@@ -376,20 +440,39 @@ public class TrainRecordWatcher {
     }
 
     /**
-     * A train that could have entered a Block, at one end.
+     * A train that could have entered a Block, at one or both of its ends.
      */
     private static final class Candidate {
 
         final DefaultTrainRecord record;
         final boolean atFirst;
+        final boolean atLast;
         final long timeNanos;
         final Instant time;
 
-        Candidate(DefaultTrainRecord record, boolean atFirst, long timeNanos, Instant time) {
+        Candidate(DefaultTrainRecord record, boolean atFirst, boolean atLast, long timeNanos, Instant time) {
             this.record = record;
             this.atFirst = atFirst;
+            this.atLast = atLast;
             this.timeNanos = timeNanos;
             this.time = time;
+        }
+
+        /**
+         * @return true if entered at the first of the train's Blocks, false
+         *         if at the last, null if it is next to both and the train's
+         *         leading end isn't known
+         */
+        @CheckForNull
+        Boolean end() {
+            if (atFirst != atLast) {
+                return atFirst;
+            }
+            TrainRecord.End leading = record.isFrontKnown() ? record.getLeadingEnd() : null;
+            if (leading == null) {
+                return null;
+            }
+            return leading == TrainRecord.End.FRONT;
         }
     }
 

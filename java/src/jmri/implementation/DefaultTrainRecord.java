@@ -711,13 +711,21 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
      *
      * @param c      the confidence, or null when not placed
      * @param reason why; kept in the history unless it is the reason for a
-     *               change of Blocks, which keeps it itself
+     *               change of Blocks, which keeps it itself. If the
+     *               confidence is unchanged, it still becomes the reason
+     *               for it when it is a newer fix, or a different rule
      */
     @InvokeOnLayoutThread
     void setConfidence(@CheckForNull Confidence c, @CheckForNull Reason reason) {
         if (c == confidence) {
-            if (c != null && reason != null && PLACING_OR_MOVING.contains(reason.getRule())) {
+            if (c == null || reason == null) {
+                return;
+            }
+            if (PLACING_OR_MOVING.contains(reason.getRule())) {
                 confidenceReason = reason; // as sure as before, from a newer fix
+            } else if (confidenceReason == null || confidenceReason.getRule() != reason.getRule()) {
+                confidenceReason = reason; // as sure as before, for a different reason
+                addToHistory(reason);
             }
             return;
         }
