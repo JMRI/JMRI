@@ -855,6 +855,11 @@
                 including jQuery 1.8.2, jQuery Mobile, and the unminified
                 Bootstrap files. If you have custom web pages that load any
                 of these directly, they'll need updating.</li>
+            <li>The web server's pages now use jQuery 3.7.1 instead of
+                2.2.4, and the 2.2.4 copy has been removed. If you have
+                custom web pages or edited copies of JMRI's web files, see
+                <a href="https://www.jmri.org/help/en/html/web/index.shtml#jquery3">Updating Custom
+                Pages to jQuery 3</a>.</li>
         </ul>
 
     <h3>Where Used</h3>
