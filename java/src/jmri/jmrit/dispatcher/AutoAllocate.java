@@ -973,15 +973,23 @@ public class AutoAllocate implements Runnable {
     }
 
     /**
-     * Allocate the requested Section to the train, unless it is a Section the
-     * train can't stop in.
+     * Allocate the requested Section to the train. With the option "Wait Where
+     * Trains Can Stop", a Section the train can't stop in is allocated only
+     * with the Sections beyond it, as far as one the train can stop in.
      * <p>
      * An automatic train held at the far end of a Section it can't stop in (one
-     * shorter than the train, with no stopping sensor) is stopped at once and
-     * may run on into the next Section, which is not its own. So such a Section
-     * is allocated only when a Section beyond it is free, and then both are,
-     * the beyond one being chosen as the next Section so that the turnouts are
-     * set for it. Otherwise neither is, and the train waits where it can stop.
+     * shorter than the train, with no stopping sensor) is stopped at once on
+     * entering it. Its momentum may carry it on into the next Section, which is
+     * not its own. With the option on, and the train waiting in a Section it
+     * can stop in, such a Section is allocated only when the train has a free
+     * run beyond it to a Section it can stop in, or to the end of its Transit.
+     * Then the whole run is allocated, each Section of it being chosen as the
+     * next of the one before so that the turnouts are set for it. Otherwise
+     * none of it is, and the train goes on waiting where it can stop.
+     * <p>
+     * A train that has no Section yet, or that waits in a Section it can't stop
+     * in either, gains nothing by being kept back, so its request is allocated
+     * as it is with the option off.
      *
      * @param ar the request
      * @return true if the Section was allocated
@@ -989,48 +997,96 @@ public class AutoAllocate implements Runnable {
     private boolean allocate(AllocationRequest ar) {
         ActiveTrain at = ar.getActiveTrain();
         AutoActiveTrain aat = at.getAutoActiveTrain();
-        if (aat == null || aat.canStopIn(ar.getSection(), ar.getSectionDirection())) {
+        int seq = ar.getSectionSeqNumber();
+        if (!_dispatcher.getWaitWhereTrainsCanStop() || aat == null
+                || aat.canStopIn(ar.getSection(), ar.getSectionDirection())
+                || !waitsWhereItCanStop(at, aat)
+                || nextSequence(at, seq) == 0) {  // the end of the Transit: what follows is decided there
             return _dispatcher.allocateSection(ar, null) != null;
         }
-        int nextSeq = nextSequence(at, ar.getSectionSeqNumber());
-        List<Section> beyondList = nextSeq > 0 ? at.getTransit().getSectionListBySeq(nextSeq) : new ArrayList<>();
-        if (beyondList.isEmpty()) {
-            // the end of the Transit: what follows is decided when the train gets there
-            return _dispatcher.allocateSection(ar, null) != null;
-        }
-        Section beyond = null;
-        for (Section s : beyondList) {
-            if (isFree(s, ar)) {
-                beyond = s;
-                break;
-            }
-        }
-        if (beyond == null) {
-            log.debug("{}: [{}] not allocated, the train can't stop in it and no Section beyond it is free",
+        List<Section> run = freeRunBeyond(at, aat, ar);
+        if (run.isEmpty()) {
+            log.debug("{}: [{}] not allocated, the train can't stop in it and has no free run beyond it to where it can",
                     at.getTrainName(), ar.getSection().getDisplayName(USERSYS));
             return false;
         }
-        savedAR = ar;
-        savedSection = beyond;
-        AllocatedSection as;
-        try {
-            as = _dispatcher.allocateSection(ar, null);
-        } finally {
-            savedAR = null;
-            savedSection = null;
-        }
-        if (as == null) {
-            return false;
-        }
-        if (as.getNextSection() == beyond) {
-            AllocationRequest next = _dispatcher.findAllocationRequestInQueue(beyond, nextSeq,
-                    at.getAllocationDirectionFromSectionAndSeq(beyond, nextSeq), at);
-            if (next == null || !allocate(next)) {
-                log.debug("{}: [{}] was free but is not allocated with [{}]", at.getTrainName(),
-                        beyond.getDisplayName(USERSYS), ar.getSection().getDisplayName(USERSYS));
+        AllocationRequest request = ar;
+        boolean allocated = false;
+        for (Section beyond : run) {
+            AllocatedSection as;
+            savedAR = request;
+            savedSection = beyond;
+            try {
+                as = _dispatcher.allocateSection(request, null);
+            } finally {
+                savedAR = null;
+                savedSection = null;
+            }
+            if (as == null) {
+                return allocated;
+            }
+            allocated = true;
+            seq = nextSequence(at, seq);
+            request = (as.getNextSection() != beyond) ? null : _dispatcher.findAllocationRequestInQueue(beyond, seq,
+                    at.getAllocationDirectionFromSectionAndSeq(beyond, seq), at);
+            if (request == null) {
+                log.debug("{}: [{}] was free but is not allocated with the Section before it", at.getTrainName(),
+                        beyond.getDisplayName(USERSYS));
+                return true;
             }
         }
+        // the end of the run: a Section the train can stop in, or the last of its Transit
+        if (_dispatcher.allocateSection(request, null) == null) {
+            log.debug("{}: the end of its free run was not allocated", at.getTrainName());
+        }
         return true;
+    }
+
+    /*
+     * The Sections beyond the requested one that the train would run through
+     * to reach a Section it can stop in, that one last, if every one of them
+     * could be allocated now. Where a Transit has alternates, a free one the
+     * train can stop in is taken before a free one it can't. The run also ends
+     * at the last Section of the Transit. Empty if there is no such free run.
+     */
+    private List<Section> freeRunBeyond(ActiveTrain at, AutoActiveTrain aat, AllocationRequest ar) {
+        List<Section> run = new ArrayList<>();
+        for (int seq = nextSequence(at, ar.getSectionSeqNumber()); seq > 0; seq = nextSequence(at, seq)) {
+            Section free = null;
+            boolean canStop = false;
+            for (Section s : at.getTransit().getSectionListBySeq(seq)) {
+                if (isFree(s, ar)) {
+                    canStop = aat.canStopIn(s, at.getAllocationDirectionFromSectionAndSeq(s, seq));
+                    if (free == null || canStop) {
+                        free = s;
+                    }
+                    if (canStop) {
+                        break;
+                    }
+                }
+            }
+            if (free == null) {
+                return new ArrayList<>();
+            }
+            run.add(free);
+            if (canStop) {
+                break;
+            }
+        }
+        return run;
+    }
+
+    /*
+     * Check that the train, kept waiting for its next Section, waits in a
+     * Section it can stop in: the last one allocated to it.
+     */
+    private static boolean waitsWhereItCanStop(ActiveTrain at, AutoActiveTrain aat) {
+        List<AllocatedSection> held = at.getAllocatedSectionList();
+        if (held.isEmpty()) {
+            return false;
+        }
+        AllocatedSection last = held.get(held.size() - 1);
+        return aat.canStopIn(last.getSection(), last.getDirection());
     }
 
     /*

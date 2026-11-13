@@ -12,8 +12,10 @@ import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import jmri.InstanceManager;
@@ -28,8 +30,11 @@ import jmri.util.ThreadingUtil;
 import org.junit.jupiter.api.*;
 
 /**
- * Tests that {@link AutoAllocate} does not give an automatic train a Section
- * it can't stop in unless a Section beyond it can be given with it.
+ * Tests that {@link AutoAllocate}, with the option "Wait Where Trains Can
+ * Stop", does not give an automatic train a Section it can't stop in unless
+ * the Sections beyond it, as far as one it can stop in, can be given with it,
+ * and that it allocates as usual with the option off or when keeping the
+ * train back would gain nothing.
  * <p>
  * The layout is S1 - T - (L1 or L2) - S4, where T is a short turnout Section
  * the train can't stop in. Train A runs from S1 to S4.
@@ -44,6 +49,8 @@ public class AutoAllocateStoppingPlaceTest {
     private final Map<Section, Integer> occupancy = new HashMap<>();
     private final Map<ActiveTrain, List<AllocatedSection>> allocated = new HashMap<>();
     private final AtomicInteger scansDone = new AtomicInteger();
+    // the Sections the train can't stop in
+    private final Set<Section> noStop = new HashSet<>();
     private Section s1, t, l1, l2, s4;
     private ActiveTrain a;
 
@@ -72,8 +79,7 @@ public class AutoAllocateStoppingPlaceTest {
         when(at.getAllocatedSectionList()).thenAnswer(invocation -> new ArrayList<>(allocated.get(at)));
         AutoActiveTrain aat = mock(AutoActiveTrain.class);
         when(aat.getAutoEngineer()).thenReturn(mock(AutoActiveTrain.AutoEngineer.class));
-        // the train can stop in every Section but T
-        when(aat.canStopIn(any(), anyInt())).thenAnswer(invocation -> invocation.getArgument(0) != t);
+        when(aat.canStopIn(any(), anyInt())).thenAnswer(invocation -> !noStop.contains(invocation.getArgument(0)));
         when(at.getAutoActiveTrain()).thenReturn(aat);
         trains.add(at);
         return at;
@@ -162,6 +168,93 @@ public class AutoAllocateStoppingPlaceTest {
     }
 
     @Test
+    public void testShortSectionWaitsWhileTheRunToAStoppingPlaceIsNotFree() {
+        // L2 is short as well and S4 beyond it is taken: neither T nor L2 is given
+        noStop.add(l2);
+        occupancy.put(l1, Section.OCCUPIED);
+        occupancy.put(s4, Section.OCCUPIED);
+        AllocationRequest aToT = request(a, t, 2);
+        scan(aToT);
+        verify(df, never()).allocateSection(eq(aToT), any());
+    }
+
+    @Test
+    public void testWholeRunToAStoppingPlaceIsAllocatedTogether() {
+        // L2 is short as well and S4 beyond it is free: T, L2 and S4 are given together
+        noStop.add(l2);
+        occupancy.put(l1, Section.OCCUPIED);
+        AllocationRequest aToT = request(a, t, 2);
+        AllocationRequest aToL2 = request(a, l2, 3);
+        AllocationRequest aToS4 = request(a, s4, 4);
+        List<Section> roads = new ArrayList<>();
+        roads.add(l1);
+        roads.add(l2);
+        List<Section> last = new ArrayList<>();
+        last.add(s4);
+        when(df.allocateSection(aToT, null)).thenAnswer(invocation ->
+                allocatedSection(a, t, 2, aa.autoNextSectionChoice(roads, aToT, 3)));
+        when(df.allocateSection(aToL2, null)).thenAnswer(invocation ->
+                allocatedSection(a, l2, 3, aa.autoNextSectionChoice(last, aToL2, 4)));
+        when(df.findAllocationRequestInQueue(l2, 3, Section.FORWARD, a)).thenReturn(aToL2);
+        when(df.findAllocationRequestInQueue(s4, 4, Section.FORWARD, a)).thenReturn(aToS4);
+        scan(aToT);
+        verify(df).allocateSection(aToT, null);
+        verify(df).allocateSection(aToL2, null);
+        verify(df).allocateSection(aToS4, null);
+    }
+
+    @Test
+    public void testFreeRoadTheTrainCanStopInIsTakenBeforeOneItCantStopIn() {
+        // both roads are free, but the train can't stop in L1, the primary, and S4 is taken: L2 is chosen
+        noStop.add(l1);
+        occupancy.put(s4, Section.OCCUPIED);
+        AllocationRequest aToT = request(a, t, 2);
+        AllocationRequest aToL2 = request(a, l2, 3);
+        List<Section> roads = new ArrayList<>();
+        roads.add(l1);
+        roads.add(l2);
+        when(df.allocateSection(aToT, null)).thenAnswer(invocation ->
+                allocatedSection(a, t, 2, aa.autoNextSectionChoice(roads, aToT, 3)));
+        when(df.findAllocationRequestInQueue(l2, 3, Section.FORWARD, a)).thenReturn(aToL2);
+        scan(aToT);
+        verify(df).allocateSection(aToT, null);
+        verify(df).allocateSection(aToL2, null);
+    }
+
+    @Test
+    public void testOptionOffAllocatesTheShortSectionAlone() {
+        // the default: T is given although neither road beyond it is free
+        when(df.getWaitWhereTrainsCanStop()).thenReturn(false);
+        occupancy.put(l1, Section.OCCUPIED);
+        occupancy.put(l2, Section.OCCUPIED);
+        AllocationRequest aToT = request(a, t, 2);
+        scan(aToT);
+        verify(df).allocateSection(aToT, null);
+    }
+
+    @Test
+    public void testTrainWaitingWhereItCantStopIsNotKeptBack() {
+        // A can't stop in S1 either: keeping it there gains nothing, so T is given
+        noStop.add(s1);
+        occupancy.put(l1, Section.OCCUPIED);
+        occupancy.put(l2, Section.OCCUPIED);
+        AllocationRequest aToT = request(a, t, 2);
+        scan(aToT);
+        verify(df).allocateSection(aToT, null);
+    }
+
+    @Test
+    public void testTrainWithNoSectionYetIsNotKeptBack() {
+        // A has not been given a Section: it stands where it is, so T is given
+        allocated.get(a).clear();
+        occupancy.put(l1, Section.OCCUPIED);
+        occupancy.put(l2, Section.OCCUPIED);
+        AllocationRequest aToT = request(a, t, 2);
+        scan(aToT);
+        verify(df).allocateSection(aToT, null);
+    }
+
+    @Test
     public void testSectionTheTrainCanStopInIsAllocatedAlone() {
         // S4 is long enough: it is allocated whatever lies beyond it
         AllocationRequest aToS4 = request(a, s4, 4);
@@ -184,7 +277,10 @@ public class AutoAllocateStoppingPlaceTest {
         east.addTransitSection(new TransitSection(l2, 3, Section.FORWARD, true));
         east.addTransitSection(new TransitSection(s4, 4, Section.FORWARD));
 
+        noStop.add(t);  // the short turnout Section
+
         df = mock(DispatcherFrame.class);
+        when(df.getWaitWhereTrainsCanStop()).thenReturn(true);
         when(df.getActiveTrainsList()).thenReturn(trains);
         when(df.getAllocatedSectionsList()).thenAnswer(invocation -> {
             List<AllocatedSection> list = new ArrayList<>();
