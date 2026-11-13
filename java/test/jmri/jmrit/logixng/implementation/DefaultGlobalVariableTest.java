@@ -1,11 +1,6 @@
 package jmri.jmrit.logixng.implementation;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -76,7 +71,7 @@ public class DefaultGlobalVariableTest {
         Object value = getVariableValue(InitialValueType.LogixNG_Table, csvTable.getSystemName());
         assertNotNull(value);
         assertEquals("java.util.concurrent.ConcurrentHashMap", value.getClass().getName());
-        Map<String,Map<String,String>> map = (Map)value;
+        Map<String,Map<String,String>> map = (Map<String, Map<String, String>>)value;
         assertEquals("Left turnout", map.get("Left").get("Turnouts"));
         assertEquals("Right turnout", map.get("Right").get("Turnouts"));
         assertEquals("IT15", map.get("First siding").get("Turnouts"));

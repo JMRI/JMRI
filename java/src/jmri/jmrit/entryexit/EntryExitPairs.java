@@ -44,13 +44,10 @@ import jmri.util.swing.JmriJOptionPane;
 public class EntryExitPairs extends VetoableChangeSupport implements Manager<DestinationPoints>, jmri.InstanceManagerAutoDefault,
         PropertyChangeListener {
 
-    public LayoutBlockConnectivityTools.Metric routingMethod = LayoutBlockConnectivityTools.Metric.METRIC;
-
     public static final int NXBUTTONSELECTED = 0x08;
     public static final int NXBUTTONACTIVE = Sensor.ACTIVE;
     public static final int NXBUTTONINACTIVE = Sensor.INACTIVE;
     private final SystemConnectionMemo memo;
-    private final Map<String, Boolean> silencedProperties = new HashMap<>();
 
     private int settingTimer = 2000;
 
@@ -134,6 +131,9 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
      * Constructor for creating an EntryExitPairs object and create a transparent JPanel for it.
      */
     public EntryExitPairs() {
+        // EntryExitPairs needs the SignalMastLogicManager initialized so load it here.
+        InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
+
         memo = InstanceManager.getDefault(InternalSystemConnectionMemo.class);
         InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent(cm -> cm.registerUser(this));
         InstanceManager.getDefault(LayoutBlockManager.class).addPropertyChangeListener(propertyBlockManagerListener);
@@ -1291,8 +1291,6 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
 
     }
 
-    jmri.SignalMastLogicManager smlm = InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
-
     public static final int CANCELROUTE = 0;
     public static final int CLEARROUTE = 1;
     public static final int EXITROUTE = 2;
@@ -1599,7 +1597,6 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
         if (!Manager.PROPERTY_BEANS.equals(propertyName)) {
             throw new IllegalArgumentException("Property " + propertyName + " cannot be silenced.");
         }
-        silencedProperties.put(propertyName, silenced);
         if (propertyName.equals(Manager.PROPERTY_BEANS) && !silenced) {
             fireIndexedPropertyChange(Manager.PROPERTY_BEANS, getNamedBeanSet().size(), null, null);
         }

@@ -1,8 +1,14 @@
 package jmri.jmrix.loconet;
 
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
+
+import javax.swing.SwingUtilities;
 
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -103,53 +109,56 @@ public class SE8cSignalHeadTest {
 
         sh1.setLit(true);
         Assert.assertEquals("now three transmitted message", 3, lnis.outbound.size());
-        sh1.setAppearance(jmri.SignalHead.FLASHGREEN);
-        Assert.assertEquals("appearance was changed", jmri.SignalHead.FLASHGREEN, sh1.getAppearance());
-        Assert.assertEquals("now four transmitted message", 4, lnis.outbound.size());
-        Assert.assertEquals("transmit message OpCode", LnConstants.OPC_SW_REQ, lnis.outbound.get(3).getOpCode());
-        Assert.assertEquals("transmit message byte 1", 0x0F, lnis.outbound.get(3).getElement(1));
-        Assert.assertEquals("transmit message Byte 2", 0x30, lnis.outbound.get(3).getElement(2));
 
-        // the flash timer sends each flash message after DefaultSignalHead.masterDelay (750 ms),
-        // too close to fasterWaitFor's 1 second limit on a busy machine
-        JUnitUtil.waitFor(() -> lnis.outbound.size() >= 5, "flash message 5 received");
+        // While the head flashes, its timer sends a message on the GUI thread (Swing thread)
+        // every DefaultSignalHead.masterDelay (750 ms), and what a change of appearance sends
+        // depends on whether the head is then in the lit or the dark half of a flash. So each
+        // change below is made on the GUI thread just after the timer's next flash message,
+        // before the timer can send another, however long this thread is held up.
+        SE8cSignalHead head = sh1;
+        AfterFlash toDark = new AfterFlash(head, jmri.SignalHead.DARK, null);
+        AfterFlash toFlashYellow = new AfterFlash(head, jmri.SignalHead.FLASHYELLOW, toDark);
+        AfterFlash toFlashRed = new AfterFlash(head, jmri.SignalHead.FLASHRED, toFlashYellow);
+        AfterFlash toFlashGreen = new AfterFlash(head, jmri.SignalHead.FLASHGREEN, toFlashRed);
+        ThreadingUtil.runOnGUI(toFlashGreen::run); // not after a flash: the head isn't flashing yet
+        Assert.assertEquals("appearance was changed", jmri.SignalHead.FLASHGREEN, toFlashGreen.appearanceAfter);
+        Assert.assertEquals("now four transmitted message", 4, toFlashGreen.after.size());
+        Assert.assertEquals("transmit message OpCode", LnConstants.OPC_SW_REQ, toFlashGreen.after.get(3).getOpCode());
+        Assert.assertEquals("transmit message byte 1", 0x0F, toFlashGreen.after.get(3).getElement(1));
+        Assert.assertEquals("transmit message Byte 2", 0x30, toFlashGreen.after.get(3).getElement(2));
 
-        Assert.assertEquals("now five transmitted message", 5, lnis.outbound.size());
-        Assert.assertEquals("transmit message byte 1", 0x10, lnis.outbound.get(4).getElement(1));
-        Assert.assertEquals("transmit message Byte 2", 0x30, lnis.outbound.get(4).getElement(2));
+        toFlashRed.waitDone();
+        Assert.assertEquals("now five transmitted message", 5, toFlashRed.before.size());
+        Assert.assertEquals("transmit message byte 1", 0x10, toFlashRed.before.get(4).getElement(1));
+        Assert.assertEquals("transmit message Byte 2", 0x30, toFlashRed.before.get(4).getElement(2));
 
-        sh1.setAppearance(jmri.SignalHead.FLASHRED);
-        Assert.assertEquals("appearance was changed", jmri.SignalHead.FLASHRED, sh1.getAppearance());
-        Assert.assertEquals("now six transmitted message", 6, lnis.outbound.size());
-        Assert.assertEquals("transmit message OpCode", LnConstants.OPC_SW_REQ, lnis.outbound.get(5).getOpCode());
-        Assert.assertEquals("transmit message byte 1", 0x10, lnis.outbound.get(5).getElement(1));
-        Assert.assertEquals("transmit message Byte 2", 0x30, lnis.outbound.get(5).getElement(2));
+        Assert.assertEquals("appearance was changed", jmri.SignalHead.FLASHRED, toFlashRed.appearanceAfter);
+        Assert.assertEquals("now six transmitted message", 6, toFlashRed.after.size());
+        Assert.assertEquals("transmit message OpCode", LnConstants.OPC_SW_REQ, toFlashRed.after.get(5).getOpCode());
+        Assert.assertEquals("transmit message byte 1", 0x10, toFlashRed.after.get(5).getElement(1));
+        Assert.assertEquals("transmit message Byte 2", 0x30, toFlashRed.after.get(5).getElement(2));
 
-        JUnitUtil.waitFor(() -> lnis.outbound.size() >= 7, "flash message 7 received");
+        toFlashYellow.waitDone();
+        Assert.assertEquals("now seven transmitted message", 7, toFlashYellow.before.size());
+        Assert.assertEquals("transmit message byte 1", 0x0f, toFlashYellow.before.get(6).getElement(1));
+        Assert.assertEquals("transmit message Byte 2", 0x10, toFlashYellow.before.get(6).getElement(2));
 
-        Assert.assertEquals("now seven transmitted message", 7, lnis.outbound.size());
-        Assert.assertEquals("transmit message byte 1", 0x0f, lnis.outbound.get(6).getElement(1));
-        Assert.assertEquals("transmit message Byte 2", 0x10, lnis.outbound.get(6).getElement(2));
+        Assert.assertEquals("appearance was changed", jmri.SignalHead.FLASHYELLOW, toFlashYellow.appearanceAfter);
+        Assert.assertEquals("now eight transmitted message", 8, toFlashYellow.after.size());
+        Assert.assertEquals("transmit message OpCode", LnConstants.OPC_SW_REQ, toFlashYellow.after.get(7).getOpCode());
+        Assert.assertEquals("transmit message byte 1", 0x10, toFlashYellow.after.get(7).getElement(1));
+        Assert.assertEquals("transmit message Byte 2", 0x10, toFlashYellow.after.get(7).getElement(2));
 
-        sh1.setAppearance(jmri.SignalHead.FLASHYELLOW);
-        Assert.assertEquals("appearance was changed", jmri.SignalHead.FLASHYELLOW, sh1.getAppearance());
-        Assert.assertEquals("now eight transmitted message", 8, lnis.outbound.size());
-        Assert.assertEquals("transmit message OpCode", LnConstants.OPC_SW_REQ, lnis.outbound.get(7).getOpCode());
-        Assert.assertEquals("transmit message byte 1", 0x10, lnis.outbound.get(7).getElement(1));
-        Assert.assertEquals("transmit message Byte 2", 0x10, lnis.outbound.get(7).getElement(2));
+        toDark.waitDone();
+        Assert.assertEquals("now nine transmitted message", 9, toDark.before.size());
+        Assert.assertEquals("transmit message byte 1", 0x10, toDark.before.get(8).getElement(1));
+        Assert.assertEquals("transmit message Byte 2", 0x30, toDark.before.get(8).getElement(2));
 
-        JUnitUtil.waitFor(() -> lnis.outbound.size() >= 9, "flash message 9 received");
-
-        Assert.assertEquals("now nine transmitted message", 9, lnis.outbound.size());
-        Assert.assertEquals("transmit message byte 1", 0x10, lnis.outbound.get(8).getElement(1));
-        Assert.assertEquals("transmit message Byte 2", 0x30, lnis.outbound.get(8).getElement(2));
-
-        sh1.setAppearance(jmri.SignalHead.DARK);
-        Assert.assertEquals("appearance was changed", jmri.SignalHead.DARK, sh1.getAppearance());
-        Assert.assertEquals("now ten transmitted message", 10, lnis.outbound.size());
-        Assert.assertEquals("transmit message OpCode", LnConstants.OPC_SW_REQ, lnis.outbound.get(9).getOpCode());
-        Assert.assertEquals("transmit message byte 1", 0x10, lnis.outbound.get(9).getElement(1));
-        Assert.assertEquals("transmit message Byte 2", 0x30, lnis.outbound.get(9).getElement(2));
+        Assert.assertEquals("appearance was changed", jmri.SignalHead.DARK, toDark.appearanceAfter);
+        Assert.assertEquals("now ten transmitted message", 10, toDark.after.size());
+        Assert.assertEquals("transmit message OpCode", LnConstants.OPC_SW_REQ, toDark.after.get(9).getOpCode());
+        Assert.assertEquals("transmit message byte 1", 0x10, toDark.after.get(9).getElement(1));
+        Assert.assertEquals("transmit message Byte 2", 0x30, toDark.after.get(9).getElement(2));
 
         sh1.message(lnis.outbound.get(0));
         Assert.assertEquals("receive message", jmri.SignalHead.RED, sh1.getAppearance());
@@ -236,6 +245,49 @@ public class SE8cSignalHeadTest {
 
     }
 
+    /**
+     * A change of appearance made on the GUI thread (Swing thread), for a flashing
+     * head just after its flash timer's next message, before the timer can send
+     * another. Records the messages sent before and after the change, and then
+     * sets up the next change, if any, to follow the next flash message.
+     */
+    private class AfterFlash implements Runnable {
+
+        private final SE8cSignalHead head;
+        private final int appearance;
+        private final AfterFlash next;
+        private volatile boolean done = false;
+        // written on the GUI thread before done is set, read on the test thread after
+        List<LocoNetMessage> before;
+        List<LocoNetMessage> after;
+        int appearanceAfter;
+
+        AfterFlash(SE8cSignalHead head, int appearance, AfterFlash next) {
+            this.head = head;
+            this.appearance = appearance;
+            this.next = next;
+        }
+
+        @Override
+        public void run() {
+            before = new ArrayList<>(lnis.outbound);
+            head.setAppearance(appearance);
+            appearanceAfter = head.getAppearance();
+            after = new ArrayList<>(lnis.outbound);
+            if (next != null) {
+                afterNextFlash.set(next);
+            }
+            done = true;
+        }
+
+        void waitDone() {
+            JUnitUtil.waitFor(() -> done, "flash message sent and the change after it made");
+        }
+    }
+
+    /** The change to make on the GUI thread after the next message sent, if any. */
+    private final AtomicReference<AfterFlash> afterNextFlash = new AtomicReference<>();
+
     jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis;
     LocoNetSystemConnectionMemo memo;
     boolean propChangeFlag;
@@ -247,7 +299,17 @@ public class SE8cSignalHeadTest {
         JUnitUtil.resetProfileManager();
 
         memo = new jmri.jmrix.loconet.LocoNetSystemConnectionMemo();
-        lnis = new LocoNetInterfaceScaffold(memo);
+        lnis = new LocoNetInterfaceScaffold(memo) {
+            @Override
+            public void sendLocoNetMessage(LocoNetMessage m, boolean requestIgnoreEcho) {
+                super.sendLocoNetMessage(m, requestIgnoreEcho);
+                // the flash timer sends on the GUI thread; a change queued now runs before its next message
+                AfterFlash change = afterNextFlash.getAndSet(null);
+                if (change != null) {
+                    SwingUtilities.invokeLater(change);
+                }
+            }
+        };
         memo.setLnTrafficController(lnis);
         jmri.InstanceManager.store(lnis, jmri.jmrix.loconet.LnTrafficController.class);
         jmri.InstanceManager.setDefault(jmri.jmrix.loconet.LnTrafficController.class, lnis);

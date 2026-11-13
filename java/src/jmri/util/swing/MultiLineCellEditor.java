@@ -31,6 +31,7 @@ public class MultiLineCellEditor  extends AbstractCellEditor implements TableCel
 
     JTextArea textArea;
     
+    @Override
     public Component getTableCellEditorComponent(JTable table,
                                                  Object value,
                                                  boolean isSelected,
@@ -104,6 +105,7 @@ public class MultiLineCellEditor  extends AbstractCellEditor implements TableCel
         return textArea;
     }
   
+    @Override
     public Object getCellEditorValue() {
         return textArea.getText();
     }

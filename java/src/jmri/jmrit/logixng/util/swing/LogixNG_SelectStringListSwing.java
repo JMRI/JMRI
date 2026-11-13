@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.table.*;
 
+import jmri.JmriUncheckedException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.LogixNG_SelectStringList;
 import jmri.jmrit.logixng.util.parser.ParserException;
@@ -166,7 +167,7 @@ public class LogixNG_SelectStringListSwing {
                 throw new IllegalArgumentException("_tabbedPaneEnum has unknown selection");
             }
         } catch (ParserException e) {
-            throw new RuntimeException("ParserException: "+e.getMessage(), e);
+            throw new JmriUncheckedException("ParserException: "+e.getMessage(), e);
         }
     }
 

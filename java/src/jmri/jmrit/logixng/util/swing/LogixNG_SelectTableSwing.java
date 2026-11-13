@@ -498,7 +498,7 @@ public class LogixNG_SelectTableSwing {
                 default: throw new IllegalArgumentException("invalid _tableColumnAddressing: " + _tableColumnAddressing.name());
             }
         } catch (ParserException e) {
-            throw new RuntimeException("ParserException: "+e.getMessage(), e);
+            throw new JmriUncheckedException("ParserException: "+e.getMessage(), e);
         }
     }
 

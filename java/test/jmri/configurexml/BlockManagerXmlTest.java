@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
+import org.jdom2.Element;
+
 import jmri.*;
 import jmri.implementation.AbstractSensor;
 import jmri.util.JUnitUtil;
@@ -431,6 +433,47 @@ public class BlockManagerXmlTest {
         assertEquals( "Stop", m6.getAspect(), "Signal 6");
         assertEquals( "Stop", m7.getAspect(), "Signal 7");
 
+    }
+
+    @Test
+    public void testRouteLengthsAndBrakingStoredAndLoaded() throws JmriException {
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalSensorManager();
+        BlockManager bm = InstanceManager.getDefault(BlockManager.class);
+        Block a = bm.provideBlock("IB1");
+        Block b = bm.provideBlock("IB2");
+        Block c = bm.provideBlock("IB3");
+        bm.provideBlock("IB4"); // left alone
+        b.setLength(500f);
+        b.addPath(new Path(a, Path.NONE, Path.NONE));
+        b.addPath(new Path(c, Path.NONE, Path.NONE));
+        b.setRouteLengthMm(a, c, 612.5f);
+        b.setBrakingTowards(c, true);
+        Element stored = new BlockManagerXml().store(bm);
+        assertNotNull(stored);
+        for (Element e : stored.getChildren("block")) {
+            if (!"IB2".equals(e.getAttributeValue("systemName"))) {
+                assertNull(e.getChild("properties"), "nothing stored for a Block with no route length or braking section");
+            }
+        }
+
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalSensorManager();
+        new BlockManagerXml().load(stored, null);
+        BlockManager loaded = InstanceManager.getDefault(BlockManager.class);
+        Block la = java.util.Objects.requireNonNull(loaded.getBlock("IB1"));
+        Block lb = java.util.Objects.requireNonNull(loaded.getBlock("IB2"));
+        Block lc = java.util.Objects.requireNonNull(loaded.getBlock("IB3"));
+        assertTrue(lb != b, "a new Block");
+        assertEquals(List.of(new Block.WayThrough(la, lc)), lb.getWaysThrough());
+        assertEquals(612.5f, lb.getRouteLengthMm(lc, la));
+        assertTrue(lb.isBrakingTowards(lc));
+        assertEquals(List.of(lc), lb.getBrakingTowards());
+        assertEquals(500f, lb.getLengthMm());
     }
 
     @BeforeEach

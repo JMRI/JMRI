@@ -499,15 +499,20 @@ public class CbusLightTest extends jmri.implementation.AbstractLightTestBase {
     }
     
     @Test
-    public void testAddRemoveListener() {    
-        int testnum = numListeners();
+    public void testAddRemoveListener() {
+        // lights get their frames through the connection's one dispatcher,
+        // which counts the beans it delivers to
+        CbusBeanDispatcher dispatcher = CbusBeanDispatcher.forTrafficController(tcis);
+        Assertions.assertNotNull(dispatcher);
+        int testnum = dispatcher.numBeans();
         CbusLight t2 = new CbusLight("ML", "+N777E8321",tcis);
-        int testnum2 = numListeners();
+        int testnum2 = dispatcher.numBeans();
         Assert.assertEquals("number increased",testnum , testnum2-1 );
+        Assert.assertEquals("one listener for the connection", 1, numListeners());
         t2.dispose();
-        int testnum3 = numListeners();
+        int testnum3 = dispatcher.numBeans();
         Assert.assertEquals("number decreased",testnum , testnum3 );
-        
+
     }
 
     @Disabled("CbusLight doesn't extend AbstractVariableLight. Rewrite test? / Daniel Bergqvist (danielb987) June 17, 2020")

@@ -1,6 +1,8 @@
 package jmri.jmrit.dispatcher;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -25,7 +27,12 @@ public class AutoActiveTrainStopByBlockTest {
     private final List<AllocatedSection> allocated = new ArrayList<>();
 
     private Block block(String name, boolean occupied) {
+        return block(name, occupied, 0.0f);
+    }
+
+    private Block block(String name, boolean occupied, float lengthMm) {
         Block b = mock(Block.class);
+        when(b.getLengthMm()).thenReturn(lengthMm);
         when(b.getDisplayName()).thenReturn(name);
         when(b.getState()).thenReturn(occupied ? Block.OCCUPIED : Block.UNOCCUPIED);
         return b;
@@ -99,6 +106,32 @@ public class AutoActiveTrainStopByBlockTest {
         Block x = block("X", true);
         section(Section.FORWARD, x);
         assertFalse(AutoActiveTrain.hasOccupiedBlockBehind(block("Other", false), allocated));
+    }
+
+    /**
+     * How far the far end of a Block is from the start of the Section a train
+     * is stopping in, {@link AutoActiveTrain#farEndFromSectionStart}, for
+     * the tail fix.
+     */
+    @Test
+    public void testFarEndFromSectionStart() {
+        Block a1 = block("A1", false, 100.0f);
+        Block a2 = block("A2", false, 200.0f);
+        Block b1 = block("B1", false, 300.0f);
+        Block b2 = block("B2", false, 400.0f);
+        Block c1 = block("C1", false, 500.0f);
+        section(Section.REVERSE, a1, a2);   // run A2 then A1
+        section(Section.FORWARD, b1, b2);
+        section(Section.FORWARD, c1);
+        AllocatedSection stopping = allocated.get(1);
+        assertEquals(Float.valueOf(0.0f), AutoActiveTrain.farEndFromSectionStart(a1, stopping, allocated), "A1 is next to B");
+        assertEquals(Float.valueOf(-100.0f), AutoActiveTrain.farEndFromSectionStart(a2, stopping, allocated), "A1 lies between");
+        assertEquals(Float.valueOf(300.0f), AutoActiveTrain.farEndFromSectionStart(b1, stopping, allocated));
+        assertEquals(Float.valueOf(700.0f), AutoActiveTrain.farEndFromSectionStart(b2, stopping, allocated));
+        assertNull(AutoActiveTrain.farEndFromSectionStart(c1, stopping, allocated), "beyond the Section");
+        assertNull(AutoActiveTrain.farEndFromSectionStart(block("Other", false, 1.0f), stopping, allocated));
+        when(a1.getLengthMm()).thenReturn(0.0f);
+        assertNull(AutoActiveTrain.farEndFromSectionStart(a2, stopping, allocated), "A1 has no length");
     }
 
     @BeforeEach

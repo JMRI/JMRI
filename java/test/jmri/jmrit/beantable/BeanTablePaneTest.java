@@ -2,7 +2,8 @@ package jmri.jmrit.beantable;
 
 import jmri.util.JUnitUtil;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 /**
  *
@@ -17,7 +18,7 @@ public class BeanTablePaneTest extends jmri.util.swing.JmriPanelTest {
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.resetProfileManager();
 
-        panel = new BeanTablePane();
+        panel = new BeanTablePane<>();
         helpTarget="package.jmri.jmrit.beantable.BeanTablePane";
     }
 

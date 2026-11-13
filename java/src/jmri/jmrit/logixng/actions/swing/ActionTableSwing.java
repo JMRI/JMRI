@@ -12,6 +12,7 @@ import jmri.jmrit.logixng.actions.ActionTable;
 import jmri.jmrit.logixng.actions.ActionTable.ConstantType;
 import jmri.jmrit.logixng.actions.ActionTable.VariableOperation;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
+import jmri.jmrit.logixng.util.BlockValueType;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectTableSwing;
 import jmri.util.swing.BeanSelectPanel;
@@ -31,6 +32,7 @@ public class ActionTableSwing extends AbstractDigitalActionSwing {
     private JCheckBox _listenOnMemory;
     private BeanSelectPanel<Block> _copyBlockBeanPanel;
     private JCheckBox _listenOnBlock;
+    private JComboBox<BlockValueType> _copyBlockValueComboBox;
     private BeanSelectPanel<Reporter> _copyReporterBeanPanel;
     private JCheckBox _listenOnReporter;
     private JPanel _setToNull;
@@ -117,7 +119,10 @@ public class ActionTableSwing extends AbstractDigitalActionSwing {
 
         _copyBlockBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(BlockManager.class), null);
         _listenOnBlock = new JCheckBox(Bundle.getMessage("ActionTable_ListenOnBlock"));
+        _copyBlockValueComboBox = new JComboBox<>(BlockValueType.values());
+        JComboBoxUtil.setupComboBoxMaxRows(_copyBlockValueComboBox);
         _copyBlock.add(_copyBlockBeanPanel);
+        _copyBlock.add(_copyBlockValueComboBox);
         _copyBlock.add(_listenOnBlock);
 
         _copyReporterBeanPanel = new BeanSelectPanel<>(InstanceManager.getDefault(ReporterManager.class), null);
@@ -165,6 +170,7 @@ public class ActionTableSwing extends AbstractDigitalActionSwing {
 
             _listenOnMemory.setSelected(action.getListenToMemory());
             _listenOnBlock.setSelected(action.getListenToBlock());
+            _copyBlockValueComboBox.setSelectedItem(action.getBlockValueType());
             _listenOnReporter.setSelected(action.getListenToReporter());
         }
 
@@ -300,13 +306,14 @@ public class ActionTableSwing extends AbstractDigitalActionSwing {
                 throw new IllegalArgumentException("_tabbedPaneVariableOperation has unknown selection");
             }
         } catch (ParserException e) {
-            throw new RuntimeException("ParserException: "+e.getMessage(), e);
+            throw new JmriUncheckedException("ParserException: "+e.getMessage(), e);
         }
 
         selectTableSwing.updateObject(action.getSelectTable());
 
         action.setListenToMemory(_listenOnMemory.isSelected());
         action.setListenToBlock(_listenOnBlock.isSelected());
+        action.setBlockValueType(_copyBlockValueComboBox.getItemAt(_copyBlockValueComboBox.getSelectedIndex()));
         action.setListenToReporter(_listenOnReporter.isSelected());
     }
 
