@@ -40,6 +40,7 @@ final class ActiveTrainRecords {
     @Nonnull
     @InvokeOnLayoutThread
     static TrainRecord link(@Nonnull ActiveTrain at) {
+        InstanceManager.getDefault(jmri.jmrit.trainrecord.TrainTrackingMeasurements.class); // measure trains as they run
         TrainRecord record = find(at);
         at.setTrainRecord(record);
         Block start = at.getStartBlock();
