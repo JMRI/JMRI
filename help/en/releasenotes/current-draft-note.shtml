@@ -535,6 +535,17 @@
                  free as far as one the train can stop in, and then gives it
                  all of them together; until then the train waits in the
                  Section before, if that is one it can stop in.</li>
+             <li>With automatic allocation, Active Trains can no longer end up
+                 waiting for each other for good, such as two trains each
+                 holding half of a single line. A train is now given track from
+                 one place it can stop to the next, all at once, and only where
+                 every Active Train can still run its Transit. A train waiting
+                 for track gains a step of priority for each minute it waits.
+                 Trains started where they can't all run their Transits are
+                 named in a warning. The new option
+                 <a href="https://www.jmri.org/help/en/package/jmri/jmrit/dispatcher/Options.shtml#PreventDeadlock">Prevent
+                 Deadlock</a>, on unless unchecked, can be unchecked to allocate
+                 as before.</li>
              <li></li>
              <li>A Section can have a stop point for each direction, set in
                  the Section's Add/Edit window in mm or in inches (to the
