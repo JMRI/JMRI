@@ -952,6 +952,13 @@
                 control the layout show the dialog without these. JMRI's
                 permissions can limit who may do it (Train tracking: Correct
                 where trains are); everyone may by default.</li>
+            <li>Tools &gt; Train Tracking &gt; Measurements lists, for each Block
+                and way through it, how many times trains have crossed it this
+                session, their average speed, how that compares with their
+                lead locos' speed profiles, and how often its detector dropped
+                out under a train. A Block whose occupancy sensor is an
+                internal sensor is followed but not measured, except with
+                simulated trains. Nothing uses the measurements yet.</li>
             <li>For developers: a new page, <a href=
                 "https://www.jmri.org/help/en/html/doc/Technical/simulatedtrains.shtml">Writing
                 Tests with Simulated Trains</a>, explains how to write tests with simulated
