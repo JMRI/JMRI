@@ -422,6 +422,9 @@ public abstract class AbstractMRTrafficController {
                             forwardToPort(modeMsg, null);
                             // wait for reply
                             transmitWait(m.getTimeout(), WAITREPLYINPROGMODESTATE, "enter programming mode interrupted");
+                            if (threadStopRequest) {
+                                return; // disconnected while waiting for the reply
+                            }
                         }
                     } else {
                         // change state to normal and send message
@@ -432,6 +435,9 @@ public abstract class AbstractMRTrafficController {
                             forwardToPort(modeMsg, null);
                             // wait for reply
                             transmitWait(m.getTimeout(), WAITREPLYINNORMMODESTATE, "enter normal mode interrupted");
+                            if (threadStopRequest) {
+                                return; // disconnected while waiting for the reply
+                            }
                         }
                     }
                     if (modeMsg != null) {
@@ -453,6 +459,9 @@ public abstract class AbstractMRTrafficController {
                     log.debug("reply expected is true for message {}",m);
                     // wait for a reply, or eventually timeout
                     transmitWait(m.getTimeout(), WAITMSGREPLYSTATE, "transmitLoop interrupted");
+                    if (threadStopRequest) {
+                        return; // disconnected while waiting for the reply
+                    }
                     checkReplyInDispatch();
                     if (mCurrentState == WAITMSGREPLYSTATE) {
                         handleTimeout(m, l);
@@ -514,6 +523,9 @@ public abstract class AbstractMRTrafficController {
                         forwardToPort(msg, null);
                         // wait for reply
                         transmitWait(msg.getTimeout(), WAITREPLYINNORMMODESTATE, "interrupted while leaving programming mode");
+                        if (threadStopRequest) {
+                            return; // disconnected while waiting for the reply
+                        }
                         checkReplyInDispatch();
                         // exit program mode timeout?
                         if (mCurrentState == WAITREPLYINNORMMODESTATE) {
@@ -534,6 +546,9 @@ public abstract class AbstractMRTrafficController {
                         // wait for reply
                         log.debug("Still waiting for reply");
                         transmitWait(msg.getTimeout(), WAITMSGREPLYSTATE, "interrupted while waiting poll reply");
+                        if (threadStopRequest) {
+                            return; // disconnected while waiting for the reply
+                        }
                         checkReplyInDispatch();
                         // and go around again
                         if (mCurrentState == WAITMSGREPLYSTATE) {
@@ -559,6 +574,9 @@ public abstract class AbstractMRTrafficController {
         long endTime = currentTime + waitTime;
         while (endTime > (currentTime = Calendar.getInstance().getTimeInMillis())) {
             long wait = endTime - currentTime;
+            if (threadStopRequest) {
+                return;
+            }
             try {
                 synchronized (XMT_RUNNABLE_LOCK) {
                     // Do not wait if the current state has changed since we
@@ -767,6 +785,9 @@ public abstract class AbstractMRTrafficController {
                         messageSent(m, System.nanoTime());
                         log.debug("written, msg timeout: {} mSec", m.getTimeout());
                         break;
+                    } else if (threadStopRequest && controller == null) {
+                        log.debug("port disconnected, message not sent: {}", m);
+                        break; // the connection failed: leave for the transmit thread that recovery starts
                     } else if (m.getRetries() >= 0) {
                         log.debug("Retry message: {} attempts remaining: {}", m, m.getRetries());
                         m.setRetries(m.getRetries() - 1);
@@ -856,6 +877,7 @@ public abstract class AbstractMRTrafficController {
      * @param p the PortController
      */
     public void connectPort(AbstractPortController p) {
+        stopTransmitThread();
         rcvException = false;
         connectionError = false;
         xmtException = false;
@@ -948,6 +970,40 @@ public abstract class AbstractMRTrafficController {
         }
         controller = null;
     }
+
+    /**
+     * Wake the transmit thread from any wait, so that it sees a stop request.
+     */
+    private void wakeTransmitThread() {
+        synchronized (XMT_RUNNABLE_LOCK) {
+            XMT_RUNNABLE_LOCK.notifyAll();
+        }
+    }
+
+    /**
+     * Before connecting again after a failure, make sure the transmit thread
+     * of the earlier connection has ended, so that only one thread takes
+     * messages from the queue. It may be waiting for a reply that will never
+     * come; it is woken and left to finish.
+     */
+    private void stopTransmitThread() {
+        Thread old = xmtThread;
+        if (old == null || !old.isAlive() || old == Thread.currentThread()) {
+            return;
+        }
+        threadStopRequest = true;
+        wakeTransmitThread();
+        try {
+            old.join(OLD_TRANSMIT_THREAD_WAIT);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        if (old.isAlive()) {
+            log.error("Transmit thread {} of the earlier connection has not ended", old.getName());
+        }
+    }
+
+    private static final int OLD_TRANSMIT_THREAD_WAIT = 5000; // ms; it ends as soon as it is woken
 
     /**
      * Check if PortController object can be sent to.
