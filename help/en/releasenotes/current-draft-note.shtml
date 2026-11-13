@@ -910,6 +910,9 @@
                 set, they are added to the Blocks it is in, and they are left
                 when it is seen to leave a detected Block in front of them. It
                 only watches.</li>
+            <li>A fault in one of JMRI's timed tasks no longer stops every
+                later delayed action until JMRI is restarted: JMRI now starts
+                its common timer again, and logs an error saying so.</li>
             <li></li>
             <li>Quitting JMRI, and closing the CBUS or LCC Hub window, no
                 longer wait about 2 seconds for each network address while
