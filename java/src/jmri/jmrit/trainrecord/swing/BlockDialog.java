@@ -62,6 +62,7 @@ public class BlockDialog extends JmriJFrame {
     private final JButton clear = new JButton(Bundle.getMessage("BlockDialogClear"));
     private final JPanel holds = new JPanel();
     private final JTextArea why = new JTextArea(4, 40);
+    private final JButton trustAgain = new JButton(Bundle.getMessage("WarningsTrustAgain"));
     private final HistoryModel historyModel = new HistoryModel();
     private final List<TrainRecord> listenedTo = new ArrayList<>();
     private final PropertyChangeListener changed = e -> refresh();
@@ -191,6 +192,9 @@ public class BlockDialog extends JmriJFrame {
         edit.addActionListener(e -> editValue());
         JButton close = new JButton(Bundle.getMessage("BlockDialogClose"));
         close.addActionListener(e -> dispose());
+        trustAgain.setToolTipText(Bundle.getMessage("WarningsTrustAgainHint"));
+        trustAgain.addActionListener(e -> InstanceManager.getDefault(TrainRecordManager.class).setUntrusted(block, false));
+        buttons.add(trustAgain);
         buttons.add(edit);
         buttons.add(close);
 
@@ -201,8 +205,10 @@ public class BlockDialog extends JmriJFrame {
 
         block.addPropertyChangeListener(changed);
         if (InstanceManager.containsDefault(TrainRecordManager.class)) {
-            InstanceManager.getDefault(TrainRecordManager.class)
-                    .addPropertyChangeListener(TrainRecordManager.PROPERTY_RECORDS, recordsChanged);
+            TrainRecordManager m = InstanceManager.getDefault(TrainRecordManager.class);
+            m.addPropertyChangeListener(TrainRecordManager.PROPERTY_RECORDS, recordsChanged);
+            m.addPropertyChangeListener(TrainRecordManager.PROPERTY_UNEXPLAINED, recordsChanged);
+            m.addPropertyChangeListener(TrainRecordManager.PROPERTY_UNTRUSTED, recordsChanged);
         }
         refresh();
     }
@@ -251,8 +257,11 @@ public class BlockDialog extends JmriJFrame {
         StringBuilder whyText = new StringBuilder();
         if (trains.isEmpty()) {
             holds.add(new JLabel(Bundle.getMessage("BlockDialogNoTrain")));
-            whyText.append(Bundle.getMessage("BlockDialogNoTrainWhy"));
+            whyText.append(Bundle.getMessage(manager.getUnexplained().contains(block) ? "BlockDialogUnexplained"
+                    : "BlockDialogNoTrainWhy"));
         }
+        boolean untrusted = manager.isUntrusted(block);
+        trustAgain.setVisible(untrusted);
         for (TrainRecord r : trains) {
             JLabel name = new JLabel(r.getName() + "    "
                     + TrainRecordReasons.describe(r.getConfidence()));
@@ -266,6 +275,9 @@ public class BlockDialog extends JmriJFrame {
                 whyText.append("\n");
             }
             whyText.append(TrainRecordReasons.why(r, block));
+        }
+        if (untrusted) {
+            whyText.append("\n").append(Bundle.getMessage("BlockDialogUntrusted"));
         }
         why.setText(whyText.toString());
         why.setCaretPosition(0);
@@ -346,8 +358,10 @@ public class BlockDialog extends JmriJFrame {
         }
         listenedTo.clear();
         if (InstanceManager.containsDefault(TrainRecordManager.class)) {
-            InstanceManager.getDefault(TrainRecordManager.class)
-                    .removePropertyChangeListener(TrainRecordManager.PROPERTY_RECORDS, recordsChanged);
+            TrainRecordManager m = InstanceManager.getDefault(TrainRecordManager.class);
+            m.removePropertyChangeListener(TrainRecordManager.PROPERTY_RECORDS, recordsChanged);
+            m.removePropertyChangeListener(TrainRecordManager.PROPERTY_UNEXPLAINED, recordsChanged);
+            m.removePropertyChangeListener(TrainRecordManager.PROPERTY_UNTRUSTED, recordsChanged);
         }
         super.dispose();
     }

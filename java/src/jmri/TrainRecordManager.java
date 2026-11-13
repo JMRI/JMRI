@@ -28,6 +28,20 @@ public interface TrainRecordManager extends PropertyChangeProvider {
     String PROPERTY_RECORDS = "records"; // NOI18N
 
     /**
+     * Property name for a Block whose occupancy no train explains, or that is
+     * no longer such a Block; the new value is the Block added, the old value
+     * the Block removed.
+     */
+    String PROPERTY_UNEXPLAINED = "unexplained"; // NOI18N
+
+    /**
+     * Property name for a Block whose detector is, or is no longer, marked
+     * untrusted; the new value is the Block marked, the old value the Block
+     * no longer marked.
+     */
+    String PROPERTY_UNTRUSTED = "untrusted"; // NOI18N
+
+    /**
      * Create a record for a train. It is one component with no length,
      * detected as Entire Train, with no roster entries and no ID tags.
      *
@@ -115,6 +129,56 @@ public interface TrainRecordManager extends PropertyChangeProvider {
      */
     @Nonnull
     List<BlockEvent> getHistory(@Nonnull Block block);
+
+    /**
+     * The Blocks whose detector shows them occupied when no train could have
+     * entered them, while train records are being followed. A Block is no
+     * longer listed when it goes empty, when a train is placed in it, or when
+     * its detector is marked untrusted.
+     *
+     * @return the Blocks, in the order found; a copy
+     */
+    @Nonnull
+    List<Block> getUnexplained();
+
+    /**
+     * @param block a Block
+     * @return true if its detector is marked untrusted
+     */
+    boolean isUntrusted(@Nonnull Block block);
+
+    /**
+     * Mark a Block's detector untrusted, as when it is stuck on, or trust it
+     * again. While it is untrusted, train records take no notice of it: no
+     * train is seen to enter or leave the Block by it, and its occupancy is
+     * not reported as unexplained. Nothing else that uses the sensor
+     * changes.
+     *
+     * @param block     the Block
+     * @param untrusted true to mark it untrusted, false to trust it again
+     */
+    @InvokeOnLayoutThread
+    void setUntrusted(@Nonnull Block block, boolean untrusted);
+
+    /**
+     * @return the Blocks whose detector is marked untrusted; a copy
+     */
+    @Nonnull
+    List<Block> getUntrusted();
+
+    /**
+     * Report that a train has not been seen to reach the next Block by the
+     * time even its slowest estimate had passed the end of the Block it is
+     * in: it is {@link TrainRecord.Confidence#STALLED} if a command to move
+     * is in force, otherwise {@link TrainRecord.Confidence#LOST}. A train is
+     * found again when it is placed, or seen to enter a Block.
+     *
+     * @param record    the train's record, placed
+     * @param block     the Block it should have left
+     * @param commanded true if a command to move is in force
+     */
+    @InvokeOnLayoutThread
+    void reportOverdue(@Nonnull TrainRecord record, @Nonnull Block block, boolean commanded);
 
     /** How many entries each Block's history keeps. */
     int BLOCK_HISTORY_LENGTH = 20;

@@ -86,7 +86,12 @@ public class SetUpChecksFrameTest {
             }
         }
         javax.swing.JMenu found = java.util.Objects.requireNonNull(trainTracking, "a Train Tracking submenu");
-        assertEquals(Bundle.getMessage("MenuItemSetUpChecks"), found.getItem(0).getText());
+        java.util.List<String> items = new java.util.ArrayList<>();
+        for (int i = 0; i < found.getItemCount(); i++) {
+            items.add(found.getItem(i).getText());
+        }
+        assertTrue(items.contains(Bundle.getMessage("MenuItemSetUpChecks")), "Set-up Checks is in it: " + items);
+        assertTrue(items.contains(Bundle.getMessage("MenuItemWarnings")), "Warnings is in it: " + items);
     }
 
     @BeforeEach

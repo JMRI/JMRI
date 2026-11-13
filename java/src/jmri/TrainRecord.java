@@ -772,7 +772,18 @@ public interface TrainRecord extends PropertyChangeProvider {
             /** None of its Blocks with a detector shows it. */
             NOT_SEEN,
             /** A Block it is in went occupied again. */
-            SEEN_AGAIN
+            SEEN_AGAIN,
+            /**
+             * Told to move, but not seen to reach the next Block by the time
+             * even its slowest estimate had passed the end of the Block.
+             */
+            STALLED,
+            /**
+             * Not seen to reach the next Block by the time even its slowest
+             * estimate had passed the end of the Block, with no command to
+             * move in force.
+             */
+            LOST
         }
 
         private final Rule rule;

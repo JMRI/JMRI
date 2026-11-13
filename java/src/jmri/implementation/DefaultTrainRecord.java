@@ -757,6 +757,24 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
         firePropertyChange(PROPERTY_CONFIDENCE, old, c);
     }
 
+    /**
+     * The train has not been seen to reach the next Block in time: stalled
+     * if a command to move is in force, otherwise lost. Called by its
+     * manager.
+     *
+     * @param block     the Block it should have left
+     * @param commanded true if a command to move is in force
+     */
+    @InvokeOnLayoutThread
+    public void overdue(@Nonnull Block block, boolean commanded) {
+        if (disposed || !blocks.contains(block)) {
+            return;
+        }
+        Reason.Rule rule = commanded ? Reason.Rule.STALLED : Reason.Rule.LOST;
+        setConfidence(commanded ? Confidence.STALLED : Confidence.LOST,
+                new Reason(rule, block, null, block.getSensor(), List.of(), Instant.now()));
+    }
+
     private static final Set<Reason.Rule> PLACING_OR_MOVING = EnumSet.of(Reason.Rule.PLACED,
             Reason.Rule.PLACED_BY_VALUE, Reason.Rule.PLACED_BY_DISPATCHER, Reason.Rule.PLACED_BY_OPERATOR,
             Reason.Rule.UNPLACED,
