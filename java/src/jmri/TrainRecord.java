@@ -358,8 +358,9 @@ public interface TrainRecord extends PropertyChangeProvider {
      * @param frontKnown true if the first Block given holds the front of
      *                   the train
      * @param rule       {@link Reason.Rule#PLACED},
-     *                   {@link Reason.Rule#PLACED_BY_VALUE} or
-     *                   {@link Reason.Rule#PLACED_BY_DISPATCHER}
+     *                   {@link Reason.Rule#PLACED_BY_VALUE},
+     *                   {@link Reason.Rule#PLACED_BY_DISPATCHER} or
+     *                   {@link Reason.Rule#PLACED_BY_OPERATOR}
      * @throws IllegalArgumentException if the list is empty or holds a
      *                                  Block twice
      * @throws IllegalStateException    if the record has been disposed
@@ -740,6 +741,8 @@ public interface TrainRecord extends PropertyChangeProvider {
             PLACED_BY_VALUE,
             /** Placed in its start Block by Dispatcher. */
             PLACED_BY_DISPATCHER,
+            /** Placed by the operator: "train is here". */
+            PLACED_BY_OPERATOR,
             /** No longer placed anywhere. */
             UNPLACED,
             /** Entered a Block next to one of its ends: its sensor went occupied. */

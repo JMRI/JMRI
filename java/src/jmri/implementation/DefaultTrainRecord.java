@@ -464,7 +464,7 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
         Objects.requireNonNull(blocks, "blocks");
         Objects.requireNonNull(rule, "rule");
         if (rule != Reason.Rule.PLACED && rule != Reason.Rule.PLACED_BY_VALUE
-                && rule != Reason.Rule.PLACED_BY_DISPATCHER) {
+                && rule != Reason.Rule.PLACED_BY_DISPATCHER && rule != Reason.Rule.PLACED_BY_OPERATOR) {
             throw new IllegalArgumentException("not a rule that places: " + rule);
         }
         checkNotDisposed();
@@ -739,7 +739,8 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     }
 
     private static final Set<Reason.Rule> PLACING_OR_MOVING = EnumSet.of(Reason.Rule.PLACED,
-            Reason.Rule.PLACED_BY_VALUE, Reason.Rule.PLACED_BY_DISPATCHER, Reason.Rule.UNPLACED,
+            Reason.Rule.PLACED_BY_VALUE, Reason.Rule.PLACED_BY_DISPATCHER, Reason.Rule.PLACED_BY_OPERATOR,
+            Reason.Rule.UNPLACED,
             Reason.Rule.ENTERED, Reason.Rule.ENTERED_THROUGH_DARK, Reason.Rule.SETTLED_BY_VALUE);
 
     private void addToHistory(@CheckForNull Reason reason) {
