@@ -154,7 +154,7 @@
             var loadRoster = function() {   //Retrieve roster
                 var roster = null;
                 $.ajax({
-                    url: '/roster?format=xml',
+                    url: '/roster/?format=xml',
                     async: false,
                     cache: false,
                     type: 'GET',

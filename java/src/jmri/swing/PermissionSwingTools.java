@@ -1,5 +1,6 @@
 package jmri.swing;
 
+import jmri.JmriUncheckedException;
 import jmri.Permission;
 
 /**
@@ -56,7 +57,7 @@ public final class PermissionSwingTools {
         } else {
             // No last dot found! This should not be possible in Java.
             log.error("No package name found, which is not yet handled!");
-            throw new RuntimeException("No package name found, which is not yet handled!");
+            throw new JmriUncheckedException("No package name found, which is not yet handled!");
         }
     }
 

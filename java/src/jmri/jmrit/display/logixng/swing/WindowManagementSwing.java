@@ -9,6 +9,7 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.InstanceManager;
+import jmri.JmriUncheckedException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.display.logixng.WindowManagement;
 import jmri.jmrit.display.logixng.WindowManagement.HideOrShow;
@@ -236,7 +237,7 @@ public class WindowManagementSwing extends AbstractDigitalActionSwing {
                 throw new IllegalArgumentException("_tabbedPaneJmriJFrame has unknown selection");
             }
         } catch (ParserException e) {
-            throw new RuntimeException("ParserException: "+e.getMessage(), e);
+            throw new JmriUncheckedException("ParserException: "+e.getMessage(), e);
         }
 
         action.setIgnoreWindowNotFound(_ignoreWindowNotFoundCheckBox.isSelected());

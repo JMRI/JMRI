@@ -65,15 +65,10 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
         super(prog);
         log.debug("Constructing AccessoryOpsModeProgrammerFacade");
         this._usingProgrammer = null;
-        this.mode = prog.getMode();
-        this.aprog = prog;
-        this._addrType = (addrType == null) ? "" : addrType.toLowerCase(); // NOI18N
+        this._addrType = addrType.toLowerCase();
         this._delay = delay;
         this._baseProg = baseProg;
     }
-
-    // ops accessory mode can't read locally
-    ProgrammingMode mode;
 
     @Override
     @Nonnull
@@ -95,8 +90,6 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
     @Override
     public void setMode(ProgrammingMode p) {
     }
-
-    Programmer aprog;
 
     @Override
     public boolean getCanRead() {

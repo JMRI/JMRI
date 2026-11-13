@@ -198,7 +198,7 @@ public class ExpressionAudioSwing extends AbstractDigitalExpressionSwing {
                 throw new IllegalArgumentException("_tabbedPaneAudioState has unknown selection");
             }
         } catch (ParserException e) {
-            throw new RuntimeException("ParserException: "+e.getMessage(), e);
+            throw new JmriUncheckedException("ParserException: "+e.getMessage(), e);
         }
 
         expression.setCheckOnlyOnChange(_checkOnlyOnChangeCheckBox.isSelected());

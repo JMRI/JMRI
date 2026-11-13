@@ -128,9 +128,9 @@ public class AbstractAutomaton implements Runnable {
 
     /**
      * Is the thread in this object currently running?
-     * 
+     *
      * @return true from the time the {@link #start} method is called
-     *          until the thread has completed running after 
+     *          until the thread has completed running after
      *          the {@link #stop} method is called.
      */
     public boolean isRunning() {
@@ -168,7 +168,7 @@ public class AbstractAutomaton implements Runnable {
             log.trace("setting currentThread to null");
             currentThread = null;
             threadIsStopped = false;
-            
+
             done();
         }
         log.trace("setting running to false");
@@ -178,11 +178,11 @@ public class AbstractAutomaton implements Runnable {
     /**
      * Stop the thread as soon as possible.
      * <p>
-     * This interrupts the thread, which will cause it to 
+     * This interrupts the thread, which will cause it to
      * terminate soon.  There's no guarantee as to how long that will
      * take. It should be just a few milliseconds.
      * <p>
-     * To see if the thread has terminated, check the 
+     * To see if the thread has terminated, check the
      * {@link #isRunning} status method.
      * <p>
      * Once the thread has terminated, it can be started again.
@@ -245,7 +245,7 @@ public class AbstractAutomaton implements Runnable {
      * Update the name of this object.
      * <p>
      * name is not a bound parameter, so changes are not notified to listeners.
-     * <p> 
+     * <p>
      * If you're going to use this, it should generally be called
      * before calling {@link #start()}.
      *
@@ -1258,9 +1258,6 @@ public class AbstractAutomaton implements Runnable {
 
         return true;
     }
-
-    JFrame messageFrame = null;
-    String message = null;
 
     /**
      * Internal class to show a Frame

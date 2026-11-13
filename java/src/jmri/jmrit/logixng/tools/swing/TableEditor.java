@@ -19,6 +19,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.JTableHeader;
 
 import jmri.InstanceManager;
+import jmri.JmriUncheckedException;
 import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.*;
@@ -137,7 +138,7 @@ import jmri.util.JmriJFrame;
                 } else if (csvType.equals(Table.CsvType.SEMICOLON)) {
                     csvTypeLabel.setText(Table.CsvType.SEMICOLON.toString());
                 } else {
-                    throw new RuntimeException("unrecognized csvType");
+                    throw new JmriUncheckedException("unrecognized csvType");
                 }
 
                 csvTypePanel.add(csvTypeLabel);

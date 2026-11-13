@@ -53,7 +53,7 @@ public class ActionRequestUpdateAllSensors extends AbstractDigitalAction {
             if (_memo.provides(SensorManager.class)) {
                 _memo.get(SensorManager.class).updateAll();
             } else {
-                throw new RuntimeException("_memo doesn't provide a sensor manager");
+                throw new JmriUncheckedException("_memo doesn't provide a sensor manager");
             }
         } else {
             InstanceManager.getDefault(SensorManager.class).updateAll();

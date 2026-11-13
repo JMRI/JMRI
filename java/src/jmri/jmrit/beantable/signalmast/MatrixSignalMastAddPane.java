@@ -282,6 +282,8 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         }
 
         currentMast.setBitNum(bitNum); // store number of columns in aspect - outputs matrix in mast
+        // on Edit, clear this mast's old output comments so outputs no longer used lose them
+        jmri.jmrit.beantable.BeanTableDataModel.clearTurnoutComments(newMastName + ":output");
 
         // store outputs from turnoutBoxes; see method MatrixSignalMast#setOutput(colname, turnoutname) line 357
         log.debug("newMastName = {}", newMastName);

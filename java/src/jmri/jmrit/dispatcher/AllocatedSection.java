@@ -65,6 +65,7 @@ public class AllocatedSection {
         mSequence = seq;
         mNextSection = next;
         mNextSectionSequence = nextSeqNo;
+        mDirection = mSection.getState();
         if (mSection.getOccupancy() == Section.OCCUPIED) {
             mEntered = true;
         }
@@ -96,6 +97,8 @@ public class AllocatedSection {
     private Section mNextSection = null;
     private int mNextSectionSequence = 0;
     private PropertyChangeListener mSectionListener = null;
+    // the direction the Section is allocated in, kept after it is released
+    private volatile int mDirection;
     private boolean mEntered = false;
     private boolean mExited = false;
     private int mAllocationNumber = 0;     // used to keep track of allocation order
@@ -261,7 +264,24 @@ public class AllocatedSection {
         return mActiveTrain.getTransit().getTransitSectionFromSectionAndSeq(mSection, mSequence);
     }
 
+    /**
+     * Get the direction the Section is allocated in: FORWARD or REVERSE,
+     * following any change of direction while it is allocated, for example
+     * when the train reverses.
+     * <p>
+     * Once the Section has been released, this is still the direction it was
+     * allocated in, not the Section's state then, so that a Block change in it
+     * that is still being handled finds the next Block the way the train was
+     * going.
+     *
+     * @return Section.FORWARD or Section.REVERSE, or the Section's state if it
+     *         has not yet been given a direction
+     */
     public int getDirection() {
+        int direction = mDirection;
+        if (direction == Section.FORWARD || direction == Section.REVERSE) {
+            return direction;
+        }
         return mSection.getState();
     }
 
@@ -278,6 +298,13 @@ public class AllocatedSection {
     }
 
     private synchronized void handleSectionChange(PropertyChangeEvent e) {
+        if ("state".equals(e.getPropertyName())) {
+            int state = mSection.getState();
+            if (state == Section.FORWARD || state == Section.REVERSE) {
+                // set free on release: keep the direction it was allocated in
+                mDirection = state;
+            }
+        }
         log.trace("{}:AllocatedSection[{}]:handleSectionChange Property Name[{}] old[{}] New[{}]",
                 mActiveTrain.getActiveTrainName(), mSection.getDisplayName(),
                 e.getPropertyName(), e.getOldValue(), e.getNewValue());
@@ -418,8 +445,8 @@ public class AllocatedSection {
             // The forced delay has been removed. The delay can be controlled by the debounce
             // values in the sensor table. The use of an additional fixed 250 milliseconds
             // caused it to always fail when crossing small blocks at speed.
-            if (mActiveTrain.getMode() == ActiveTrain.TERMINATED) {
-                // the train was terminated while this change was waiting to be handled
+            if (mActiveTrain.isTerminating()) {
+                // the train is being terminated, or was while this change was waiting to be handled
                 return;
             }
             if (mActiveTrain.getAutoActiveTrain() != null) {

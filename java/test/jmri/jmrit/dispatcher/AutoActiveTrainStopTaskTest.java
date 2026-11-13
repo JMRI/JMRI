@@ -1,5 +1,6 @@
 package jmri.jmrit.dispatcher;
 
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.timeout;
@@ -8,6 +9,8 @@ import static org.mockito.Mockito.when;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 import jmri.DccThrottle;
 import jmri.InstanceManager;
@@ -16,6 +19,7 @@ import jmri.Transit;
 import jmri.TransitSection;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 
 import org.junit.jupiter.api.*;
 
@@ -86,6 +90,56 @@ public class AutoActiveTrainStopTaskTest {
         aat.terminate();
         JUnitUtil.waitFor(() -> !isWaitForStopRunning(), "wait for stop ended when the train was terminated");
         verify(dispatcher, never()).queueReleaseOfCompletedAllocations();
+    }
+
+    /**
+     * The stop task changes the train, its Sections and sensors, so it runs on
+     * the layout thread (Swing thread), where the train's sensor and Block
+     * events are handled under the same lock, not on the thread that waits for
+     * the train to stop.
+     *
+     * @throws ReflectiveOperationException if the test cannot reach the stop task
+     */
+    @Test
+    public void testStopTaskRunsOnLayoutThread() throws ReflectiveOperationException {
+        List<Boolean> onLayoutThread = new ArrayList<>();
+        doAnswer(i -> {
+            synchronized (onLayoutThread) {
+                onLayoutThread.add(ThreadingUtil.isLayoutThread());
+            }
+            return null;
+        }).when(dispatcher).queueReleaseOfCompletedAllocations();
+        stopInCurrentSection();
+        throttleSpeed = 0.0f;
+        JUnitUtil.waitFor(() -> { synchronized (onLayoutThread) { return !onLayoutThread.isEmpty(); } }, "stop task run");
+        synchronized (onLayoutThread) {
+            Assertions.assertEquals(List.of(true), onLayoutThread, "stop task run once, on the layout thread");
+        }
+    }
+
+    /**
+     * A pause stops the train and starts it again from the layout thread
+     * (Swing thread); the pause's own thread only waits.
+     */
+    @Test
+    public void testPauseChangesTrainOnLayoutThread() {
+        List<String> changes = new ArrayList<>();
+        aat.getActiveTrain().addPropertyChangeListener(e -> {
+            if (ActiveTrain.PROPERTY_STATUS.equals(e.getPropertyName())) {
+                synchronized (changes) {
+                    changes.add(e.getNewValue() + (ThreadingUtil.isLayoutThread() ? " on layout thread" : " off layout thread"));
+                }
+            }
+        });
+        Thread pause = aat.pauseTrain(0);
+        Assertions.assertNotNull(pause, "pause started");
+        throttleSpeed = 0.0f; // the train stops
+        JUnitUtil.waitFor(() -> { synchronized (changes) { return changes.size() >= 2; } }, "train paused and started again");
+        JUnitUtil.waitFor(() -> !pause.isAlive(), "pause thread ended");
+        synchronized (changes) {
+            Assertions.assertEquals(List.of(ActiveTrain.PAUSED + " on layout thread", ActiveTrain.RUNNING + " on layout thread"),
+                changes, "paused and started again on the layout thread");
+        }
     }
 
     private boolean isWaitForStopRunning() {

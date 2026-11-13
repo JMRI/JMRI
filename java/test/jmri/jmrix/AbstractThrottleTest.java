@@ -81,6 +81,42 @@ public class AbstractThrottleTest {
     }
 
     /**
+     * Speed sent listeners: each is told, one that throws doesn't stop the
+     * others, and a removed one is not told.
+     */
+    @Test
+    public void testSpeedSentListeners() {
+        java.util.List<String> told = new java.util.ArrayList<>();
+        jmri.Throttle.SpeedSentListener first = (t, speed, forward, timeNanos) -> {
+            Assertions.assertSame(instance, t, "told which throttle");
+            told.add("first " + speed + " " + forward + " " + timeNanos);
+        };
+        jmri.Throttle.SpeedSentListener failing = (t, speed, forward, timeNanos) -> {
+            throw new IllegalStateException("test: listener fails");
+        };
+        jmri.Throttle.SpeedSentListener last = (t, speed, forward, timeNanos) -> told.add("last");
+
+        Assertions.assertFalse(instance.hasSpeedSentListeners(), "none at first");
+        instance.addSpeedSentListener(first);
+        instance.addSpeedSentListener(failing);
+        instance.addSpeedSentListener(last);
+        Assertions.assertTrue(instance.hasSpeedSentListeners(), "listeners added");
+
+        instance.fireSpeedSent(0.5f, true, 1234L);
+        JUnitAppender.assertErrorMessageStartsWith("Speed sent listener of throttle");
+        Assertions.assertEquals(java.util.List.of("first 0.5 true 1234", "last"), told,
+                "each told, in spite of one failing");
+
+        told.clear();
+        instance.removeSpeedSentListener(first);
+        instance.removeSpeedSentListener(failing);
+        instance.fireSpeedSent(-1f, false, 5678L);
+        Assertions.assertEquals(java.util.List.of("last"), told, "removed listeners not told");
+        instance.removeSpeedSentListener(last);
+        Assertions.assertFalse(instance.hasSpeedSentListeners(), "all removed");
+    }
+
+    /**
      * Test of getSpeedSetting method, of class AbstractThrottle.
      */
     @Test

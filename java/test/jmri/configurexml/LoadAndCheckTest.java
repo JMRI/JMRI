@@ -1,8 +1,6 @@
 package jmri.configurexml;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
 
@@ -26,7 +24,7 @@ public class LoadAndCheckTest {
 
     /**
      * Test a file with current schema.
-     * @throws jmri.JmriException
+     * @throws jmri.JmriException exception
      */
     @Test
     public void testLoadFileTest() throws JmriException {
