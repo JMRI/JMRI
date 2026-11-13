@@ -105,4 +105,47 @@ public class AutoActiveTrainTest {
 
     // private static final Logger log = LoggerFactory.getLogger(AutoActiveTrainTest.class);
 
+
+    @DisabledIfSystemProperty(named = "java.awt.headless", matches = "true")
+    @Test
+    public void testCanStopIn() {
+        DispatcherFrame df = Mockito.mock(DispatcherFrame.class);
+        InstanceManager.setDefault(DispatcherFrame.class, df);
+        Transit transit = new jmri.implementation.DefaultTransit("TT1");
+        ActiveTrain at = new ActiveTrain(transit, "Train", ActiveTrain.USER);
+        at.setUseStopSensor(true);
+        AutoActiveTrain t = new AutoActiveTrain(at);
+        t.setMaxTrainLength(1.0, 1.0); // 1000 mm
+
+        jmri.Section shortSection = Mockito.mock(jmri.Section.class);
+        Mockito.when(shortSection.getActualLength()).thenReturn(160);
+        Assertions.assertFalse(t.canStopIn(shortSection, jmri.Section.FORWARD),
+                "shorter than the train, no stopping sensor");
+
+        jmri.Section longSection = Mockito.mock(jmri.Section.class);
+        Mockito.when(longSection.getActualLength()).thenReturn(1230);
+        Assertions.assertTrue(t.canStopIn(longSection, jmri.Section.FORWARD), "the train fits");
+
+        jmri.Section unknownLength = Mockito.mock(jmri.Section.class);
+        Assertions.assertTrue(t.canStopIn(unknownLength, jmri.Section.FORWARD), "length not known");
+
+        jmri.Sensor stop = Mockito.mock(jmri.Sensor.class);
+        Mockito.when(shortSection.getReverseStoppingSensor()).thenReturn(stop);
+        Assertions.assertTrue(t.canStopIn(shortSection, jmri.Section.REVERSE),
+                "stopped by the stopping sensor for its direction");
+        Assertions.assertFalse(t.canStopIn(shortSection, jmri.Section.FORWARD),
+                "the other direction's sensor does not help");
+        at.setUseStopSensor(false);
+        Assertions.assertFalse(t.canStopIn(shortSection, jmri.Section.REVERSE),
+                "stopping sensors not used by this train");
+
+        t.setUseSpeedProfile(true);
+        t.setStopBySpeedProfile(true);
+        Assertions.assertTrue(t.canStopIn(shortSection, jmri.Section.FORWARD), "stopped by speed profile");
+
+        t.setUseSpeedProfile(false);
+        t.setMaxTrainLength(0.0, 1.0);
+        Assertions.assertTrue(t.canStopIn(shortSection, jmri.Section.FORWARD), "train length not known");
+    }
+
 }
