@@ -2692,6 +2692,16 @@ public class DefaultSection extends AbstractNamedBean implements Section {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setAllocatedValue(@CheckForNull Object value) {
+        for (Block b : mBlockEntries) {
+            b.setAllocatedValue(value);
+        }
+    }
+
+    /**
      * Clear the block values for blocks in this Section.
      */
     @Override

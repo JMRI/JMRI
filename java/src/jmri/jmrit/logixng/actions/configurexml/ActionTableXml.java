@@ -57,7 +57,7 @@ public class ActionTableXml extends jmri.managers.configurexml.AbstractNamedBean
         element.addContent(new Element("listenToBlock").addContent(p.getListenToBlock() ? "yes" : "no"));
         if (p.getBlockValueType() != BlockValueType.Value) {
             // only when chosen, so files with the Block's value are stored as before
-            element.addContent(new Element("blockValue").addContent(p.getBlockValueType().name()));
+            element.addContent(new Element("blockValueType").addContent(p.getBlockValueType().name()));
         }
 
         element.addContent(selectReporterNamedBeanXml.store(p.getSelectReporterNamedBean(), "reporterNamedBean"));
@@ -106,12 +106,12 @@ public class ActionTableXml extends jmri.managers.configurexml.AbstractNamedBean
             h.setListenToBlock("yes".equals(listenToBlockElem.getTextTrim()));
         }
 
-        Element blockValueElem = shared.getChild("blockValue");
-        if (blockValueElem != null) {
+        Element blockValueTypeElem = shared.getChild("blockValueType");
+        if (blockValueTypeElem != null) {
             try {
-                h.setBlockValueType(BlockValueType.valueOf(blockValueElem.getTextTrim()));
+                h.setBlockValueType(BlockValueType.valueOf(blockValueTypeElem.getTextTrim()));
             } catch (IllegalArgumentException e) {
-                log.error("cannot set block value type: {}", blockValueElem.getTextTrim(), e);
+                log.error("cannot set block value type: {}", blockValueTypeElem.getTextTrim(), e);
             }
         }
 

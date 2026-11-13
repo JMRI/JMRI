@@ -48,15 +48,7 @@
 
               <xs:element name="blockNamedBean" type="LogixNG_SelectNamedBeanType" minOccurs="0" maxOccurs="1" />
               <xs:element name="listenToBlock" type="yesNoType" minOccurs="0" maxOccurs="1"/>
-              <xs:element name="blockValue" minOccurs="0" maxOccurs="1">
-                <xs:simpleType>
-                  <xs:restriction base="xs:token">
-                    <xs:enumeration value="Value"/>
-                    <xs:enumeration value="AllocatedValue"/>
-                    <xs:enumeration value="DisplayValue"/>
-                  </xs:restriction>
-                </xs:simpleType>
-              </xs:element>
+              <xs:element name="blockValueType" type="LogixNG_BlockValueType_Type" minOccurs="0" maxOccurs="1"/>
 
               <xs:element name="reporterNamedBean" type="LogixNG_SelectNamedBeanType" minOccurs="0" maxOccurs="1" />
               <xs:element name="listenToReporter" type="yesNoType" minOccurs="0" maxOccurs="1"/>

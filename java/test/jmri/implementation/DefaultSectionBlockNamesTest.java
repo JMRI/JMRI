@@ -49,6 +49,21 @@ public class DefaultSectionBlockNamesTest {
     }
 
     @Test
+    public void testSetAllocatedValue() {
+        section.setAllocatedValue("Train");
+        for (Block b : new Block[]{b1, b2, b3}) {
+            assertEquals("Train", b.getAllocatedValue(), b.getUserName());
+            assertNull(b.getValue(), b.getUserName() + ": its value is left to Block tracking");
+            assertEquals("Train", b.getDisplayValue(), b.getUserName());
+        }
+        section.setAllocatedValue(null);
+        for (Block b : new Block[]{b1, b2, b3}) {
+            assertNull(b.getAllocatedValue(), b.getUserName() + " released");
+        }
+        // not deprecated: an unexpected warning fails the test
+    }
+
+    @Test
     public void testForward() {
         section.setState(Section.FORWARD);
         section.setNameFromActiveBlock("Train");
