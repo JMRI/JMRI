@@ -5,6 +5,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.StringTokenizer;
 
+import jmri.JmriUncheckedException;
 import jmri.jmrit.XmlFile;
 import jmri.jmrix.AbstractSerialConnectionConfig;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
@@ -74,7 +75,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                 XMLUtil.write(doc, os, StandardCharsets.UTF_8.name());
             }
         } catch (IOException | JDOMException e) {
-            throw new RuntimeException(e);
+            throw new JmriUncheckedException(e);
         }
     }
 
@@ -192,7 +193,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             Element config = root.getChild("config");
             loadConfig(config);
         } catch (IOException | JDOMException e) {
-            throw new RuntimeException(e);
+            throw new JmriUncheckedException(e);
         }
     }
 

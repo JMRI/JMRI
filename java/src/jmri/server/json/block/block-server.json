@@ -58,6 +58,14 @@
             ],
             "description": "The block's value, can be idTag, Reporter, or text"
         },
+        "allocatedValue": {
+            "type": [
+                "string",
+                "object",
+                "null"
+            ],
+            "description": "The train the block is allocated to, for example by Dispatcher, which may not have reached it yet or may have left it: a roster entry, idTag or Reporter as an object, other values as text, or null if the block is not allocated or no value was given"
+        },
         "sensor": {
             "type": [
                 "string",
@@ -121,6 +129,7 @@
         "sensor",
         "reporter",
         "value",
+        "allocatedValue",
         "speed",
         "curvature",
         "direction",

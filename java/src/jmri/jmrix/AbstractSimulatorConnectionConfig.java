@@ -85,7 +85,6 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         }
     }
 
-    protected String[] baudList;
     protected jmri.jmrix.SerialPortAdapter adapter;
 
     /**
@@ -135,7 +134,7 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
             systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
         }
-        NUMOPTIONS = NUMOPTIONS + options.size();
+        increaseNumOptions(options.size());
 
         showAdvanced.setFont(showAdvanced.getFont().deriveFont(9f));
         showAdvanced.setForeground(Color.blue);
@@ -182,7 +181,7 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
             }
         }
         cL.gridwidth = 2;
-        for (JComponent item : additionalItems) {
+        for (JComponent item : getAdditionalItems()) {
             cL.gridy = i;
             gbLayout.setConstraints(item, cL);
             _details.add(item);
@@ -214,6 +213,16 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         } else {
             return null;
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * A simulator connection drives no real hardware.
+     */
+    @Override
+    public boolean isSimulator() {
+        return true;
     }
 
     @Override

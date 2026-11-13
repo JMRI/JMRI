@@ -198,7 +198,7 @@ public class LogixNGIcon extends PositionableLabel {
 
             javax.imageio.ImageIO.write(bi, "gif", new java.io.File(jmri.util.FileUtil.getExternalFilename("resources/icons/logixng/logixng_icon.gif")));
         } catch (java.io.IOException ie) {
-            throw new RuntimeException(ie);
+            throw new JmriUncheckedException(ie);
         }
     }
 */

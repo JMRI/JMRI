@@ -1157,6 +1157,28 @@ public class JUnitUtil {
     }
 
     /**
+     * Remove and dispose of every Signal Mast Logic, so that none is left to
+     * act on a job it scheduled after the Signal Mast Logic delay.
+     * <p>
+     * Disposing of the Signal Mast Logic Manager, as resetting the
+     * InstanceManager does, leaves its logics in place. One still listening
+     * to its masts can schedule a job that runs after the next test has
+     * reset the InstanceManager, creating managers there before that test is
+     * set up (see issue #7898). Done on the layout thread (Swing thread), so
+     * that no job runs part way through.
+     */
+    public static void clearSignalMastLogic() {
+        if (InstanceManager.containsDefault(SignalMastLogicManager.class)) {
+            SignalMastLogicManager smlm = InstanceManager.getDefault(SignalMastLogicManager.class);
+            ThreadingUtil.runOnLayout(() -> {
+                for (SignalMastLogic sml : new ArrayList<>(smlm.getSignalMastLogicList())) {
+                    smlm.removeSignalMastLogic(sml);
+                }
+            });
+        }
+    }
+
+    /**
      * Leaves ShutDownManager, if any, in place,
      * but removes its contents.
      * <p>

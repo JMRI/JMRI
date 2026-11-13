@@ -1,7 +1,7 @@
 package jmri.jmrit.ussctc;
 
-import jmri.util.JUnitUtil;
 import jmri.*;
+import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -63,7 +63,7 @@ public class MaintainerCallSectionTest {
     }
 
     CodeLine codeline;
-    Station station = null;
+    Station<CodeGroupOneBit, CodeGroupNoBits> station = null;
     boolean requestIndicationStart;
 
     private Turnout mcLayoutTurnout = null;

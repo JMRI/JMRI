@@ -8,6 +8,7 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.InstanceManager;
+import jmri.JmriUncheckedException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionScript;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
@@ -295,7 +296,7 @@ public class ActionScriptSwing extends AbstractDigitalActionSwing {
                 throw new IllegalArgumentException("_tabbedPaneAspectType has unknown selection");
             }
         } catch (ParserException e) {
-            throw new RuntimeException("ParserException: "+e.getMessage(), e);
+            throw new JmriUncheckedException("ParserException: "+e.getMessage(), e);
         }
 
         _scriptEngineSelectorSwing.update();

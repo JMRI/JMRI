@@ -101,7 +101,7 @@ While doing the release, it might be useful to have [GitHub Desktop](https://git
 ```
 
 (if you have this file open in an editor, refresh the contents from disk after running the script)
-then manually update the end of that line above in this document to be this version being made today, next version to be made later, one after that; i.e. when starting to do *.4, the arguments _after_ you edit it here are *.4 *.5 *.6
+then manually update the end of that line above in this document to be this version being made today, next version to be made later, one after that; i.e. when starting to do x.x.4, the arguments _after_ you edit it here are x.x.4 x.x.5 x.x.6
 
 - To check the script ran OK, the following should be the release you're doing now: 5.17.5
 
@@ -313,7 +313,7 @@ This section describes in detail the process for creating the release note for a
 
 - Create the new draft note section
 ```
-        cp help/en/releasenotes/jmri5.17-master.shtml help/en/releasenotes/current-draft-note.shtml
+        cp help/en/releasenotes/jmri5.19-master.shtml help/en/releasenotes/current-draft-note.shtml
         cp help/en/releasenotes/warnings-master.shtml help/en/releasenotes/current-draft-warnings.shtml
         git commit -m"start for 5.19.1 release note" help/en/releasenotes/*.shtml
         git push github
@@ -343,13 +343,13 @@ This section describes in detail the process for creating the release note for a
 ```
         git checkout master
         git pull
-        sed -i.bak s/5.17.3-SNAPSHOT/5.17.5-SNAPSHOT/g pom.xml
+        sed -i.bak s/5.17.4-SNAPSHOT/5.17.5-SNAPSHOT/g pom.xml
         head -10 pom.xml
 ```
 
 - Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field now, so check the numbers in the following line)
 ```
-        sed -i.bak s/release.build=3/release.build=4/g release.properties
+        sed -i.bak s/release.build=4/release.build=5/g release.properties
         head -10 release.properties
 ```
  - Check that both those edits left 5.17.5 defined in the two files
@@ -412,7 +412,7 @@ Maintainers, please set the (next series, i.e. 5.19.1) milestone on pulls from n
 
 Jenkins will be creating files shortly at the [CI server](https://builds.jmri.org/jenkins/job/TestReleases/job/5.17.5/)
 
-If you're developing any additional (post-5.17.5) changes that you want in the JMRI 5.16 production release, please start from this branch, i.e. do `git fetch; git checkout release-5.17.5; git checkout -b myBranchName` to start your work.
+If you're developing any additional (post-5.17.5) changes that you want in the JMRI 5.18 production release, please start from this branch, i.e. do `git fetch; git checkout release-5.17.5; git checkout -b myBranchName` to start your work.
 ```
 
 
@@ -424,7 +424,7 @@ If you're developing any additional (post-5.17.5) changes that you want in the J
 
 (If you can't build with Jenkins, see the "Local Build Alternative" section near the bottom)
 
-- Log in to the [Jenkins CI engine](https://builds.jmri.org/jenkins/job/TestReleases/) "Releases" section
+- Log in to the [Jenkins CI engine](https://builds.jmri.org/jenkins/job/TestReleases/) "Test Releases" section
 
 - Click "New Item"
 
@@ -604,9 +604,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.17.5+Ree5b9bd115.dmg](https://github.com/JMRI/JMRI/releases/download/v5.17.5/JMRI.5.17.5+Ree5b9bd115.dmg) | 5e022da196803dfb7f43f65889e471b3d029be7dbf855e7cb12fc1480443f311
-[JMRI.5.17.5+Ree5b9bd115.exe](https://github.com/JMRI/JMRI/releases/download/v5.17.5/JMRI.5.17.5+Ree5b9bd115.exe) | cdde32a0fc51a8fd4ee633a911397a41263e3e88c90f9c5b1f6e05166d88298f
-[JMRI.5.17.5+Ree5b9bd115.tgz](https://github.com/JMRI/JMRI/releases/download/v5.17.5/JMRI.5.17.5+Ree5b9bd115.tgz) | 08c3f70d5ec8758f858015724628f70f7d7d2eb5df828127fe0ace51496ec9a6
+[JMRI.5.17.5+Rd898332e23.dmg](https://github.com/JMRI/JMRI/releases/download/v5.17.5/JMRI.5.17.5+Rd898332e23.dmg) | 2d208c16606397a36396a4dd77759e5f85e4e2b28f9aff1e6de1f28911fdbffd
+[JMRI.5.17.5+Rd898332e23.exe](https://github.com/JMRI/JMRI/releases/download/v5.17.5/JMRI.5.17.5+Rd898332e23.exe) | 73983020153bfe8c78ec903a311598cf5c9927fd4d73774282963d96c248195a
+[JMRI.5.17.5+Rd898332e23.tgz](https://github.com/JMRI/JMRI/releases/download/v5.17.5/JMRI.5.17.5+Rd898332e23.tgz) | c83d8b3e675cef125cedf1d2c71c1fb4d42bbc4eb9c32843ce35ae0734f75865
 
 ```
 
@@ -658,7 +658,7 @@ If there are any changes in other files, do both of:
 
 - Create the [next GitHub Issue](https://github.com/JMRI/JMRI/issues/new) to hold discussion with conventional title "Create Test Release 5.19.1". Add the 5.19.1 release milestone (created above) to it. Typical text (get the date from the [milestone page](https://github.com/JMRI/JMRI/milestones)); for later releases in the series copy specific text from the milestone page:
 ```
-This is the next release in the 5.18 cycle. It's intended to be created from the `HEAD` of the `master` branch.
+This is the next release in the 5.20 cycle. It's intended to be created from the `HEAD` of the `master` branch.
 ```
 
 - Confirm that the tag for the current release (v5.17.5 for release 5.17.5) is in place via the [tags page](https://github.com/JMRI/JMRI/tags), then manually delete the current release branch (release-5.17.5) via the [GitHub branches page](https://github.com/JMRI/JMRI/branches).  (N.B. We are experimenting with having the `release*` branches protected, in which case you may have to go to Setting; Branches; then edit the release* branch name to releaseX* to disable the protection before removing the branch.  If you do that, remember to replace the protection!)
@@ -738,7 +738,7 @@ You might want to edit it, i.e. to add
     JMRI 5.17.5 has been released. Files are available in the GitHub release section.
 
 ```
-- Commit this document and push back to GitHub
+- Commit this document and push back to GitHub master branch
 
 - For production releases, file copyright registration
 

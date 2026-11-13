@@ -327,6 +327,9 @@ public class ActionListenOnBeans extends AbstractDigitalAction
 
         public NamedBeanReference(NamedBeanReference ref) {
             this(ref._handle, ref._type, ref._listenOnAllProperties);
+            // keep a name that has no bean yet, for example an Entry/Exit
+            // pair that is looked up at setup
+            _name = ref._name;
         }
 
         public NamedBeanReference(String name, NamedBeanType type, boolean all) {
@@ -349,7 +352,15 @@ public class ActionListenOnBeans extends AbstractDigitalAction
             _handle = handle;
         }
 
+        /**
+         * Get the name of the bean. When the bean is found, this is the name
+         * of its handle, which follows a rename of the bean; otherwise it is
+         * the name the reference was given.
+         *
+         * @return the name, or null if none
+         */
         public String getName() {
+            if (_handle != null) return _handle.getName();
             return _name;
         }
 

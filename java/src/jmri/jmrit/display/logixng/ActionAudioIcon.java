@@ -316,7 +316,7 @@ public class ActionAudioIcon extends AbstractDigitalAction implements VetoableCh
                     audioIcon.stop();
                     break;
                 default:
-                    throw new RuntimeException("operation has invalid value: "+operation.name());
+                    throw new JmriUncheckedException("operation has invalid value: "+operation.name());
             }
         });
     }

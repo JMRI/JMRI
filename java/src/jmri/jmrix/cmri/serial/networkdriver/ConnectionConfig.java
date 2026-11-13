@@ -49,8 +49,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         setInstance();
         b = new JButton(Bundle.getMessage("ConfigureNodesTitle"));
         b.addActionListener(new NodeConfigManagerAction((CMRISystemConnectionMemo)adapter.getSystemConnectionMemo()));
-        if (!additionalItems.contains(b)) {
-            additionalItems.add(b);
+        if (!getAdditionalItems().contains(b)) {
+            getAdditionalItems().add(b);
         }
         super.loadDetails(details);
     }

@@ -1,7 +1,7 @@
 package jmri.jmrix.mrc;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.text.DecimalFormat;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -452,7 +452,6 @@ public class MrcPackets {
      * @param m   clock info message
      * @param txt build description of clock info onto this
      */
-    @SuppressFBWarnings(value = "SF_SWITCH_NO_DEFAULT", justification = "covers all possible values")
     static void appendClockMessage(MrcMessage m, StringBuilder txt) {
         int clockModeBits = m.getElement(2) & 0xC0;
         switch (clockModeBits) {

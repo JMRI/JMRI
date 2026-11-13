@@ -126,7 +126,6 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         }
     }
 
-    @SuppressFBWarnings(value="UW_UNCOND_WAIT", justification="waits may be indefinite until satisfied or thread aborted")
     private void runCommands() {
         if (log.isDebugEnabled()) {
             log.debug("Engineer started warrant {} _throttle= {}",
@@ -459,7 +458,7 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
      * @param endBlockIdx BlockOrder index of the block where ramp is to end.
      *        -1 if an end block is not specified.
      */
-    @SuppressFBWarnings(value={"SLF4J_FORMAT_SHOULD_BE_CONST","FE_FLOATING_POINT_EQUALITY"}, 
+    @SuppressFBWarnings(value={"SLF4J_FORMAT_SHOULD_BE_CONST","FE_FLOATING_POINT_EQUALITY"},
                             justification="False assumption; Not result of calculation")
     protected synchronized void rampSpeedTo(@Nonnull String endSpeedType, int endBlockIdx) {
         float speed = _speedUtil.modifySpeed(_normalSpeed, endSpeedType);
@@ -1103,7 +1102,6 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
     }
 
     @Override
-    @SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification="Sensor change on another thread is expected even when Engineer (this) has not done any modifing")
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (log.isDebugEnabled()) {
             log.debug("propertyChange {} new value= {}", evt.getPropertyName(), evt.getNewValue());
@@ -1348,7 +1346,6 @@ class Engineer extends Thread implements java.beans.PropertyChangeListener {
         }
 
         @Override
-        @SuppressFBWarnings(value="UW_UNCOND_WAIT", justification="waits may be indefinite until satisfied or thread aborted")
         public void run() {
             boolean failed = false;
             try {

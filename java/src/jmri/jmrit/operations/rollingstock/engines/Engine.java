@@ -30,7 +30,7 @@ public class Engine extends RollingStock {
     private String _model = NONE;
 
     EngineModels engineModels = InstanceManager.getDefault(EngineModels.class);
-    
+
     public Engine() {
         super();
     }
@@ -48,7 +48,7 @@ public class Engine extends RollingStock {
         eng.setBunit(isBunit());
         return eng;
     }
-    
+
     /**
      * Set the locomotive's model. Note a model has only one length, type, and
      * horsepower rating.
@@ -336,7 +336,7 @@ public class Engine extends RollingStock {
     public String checkDestination(Location destination, Track track) {
         return super.checkDestination(destination, track);
     }
-    
+
     @Override
     public String setDestination(Location destination, Track track, boolean force) {
         String destinationName = getDestinationName();
@@ -385,13 +385,13 @@ public class Engine extends RollingStock {
         }
         super.moveRollingStock(current, next);
     }
-    
+
     @Override
     public void reset() {
         super.reset();
         destroyClone();
     }
-    
+
     /*
      * This routine destroys the clone and restores the cloned car to its
      * original location and load. Note there can be multiple clones for a car.
@@ -469,8 +469,6 @@ public class Engine extends RollingStock {
         }
     }
 
-    boolean verboseStore = false;
-
     /**
      * Create an XML element to represent this Entry. This member has to remain
      * synchronized with the detailed DTD in operations-engines.dtd.
@@ -509,7 +507,7 @@ public class Engine extends RollingStock {
         InstanceManager.getDefault(EngineLengths.class).addPropertyChangeListener(this);
         super.addPropertyChangeListeners();
     }
-    
+
     @Override
     protected void removePropertyChangeListeners() {
         InstanceManager.getDefault(EngineTypes.class).removePropertyChangeListener(this);

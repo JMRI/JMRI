@@ -7,6 +7,7 @@ import java.util.Map;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.JmriUncheckedException;
 import jmri.jmrit.logixng.*;
 
 /**
@@ -48,7 +49,7 @@ public class DigitalBooleanMany extends AbstractDigitalBooleanAction
 
     private void setActionSystemNames(List<Map.Entry<String, String>> systemNames) {
         if (!_actionEntries.isEmpty()) {
-            throw new RuntimeException("action system names cannot be set more than once");
+            throw new JmriUncheckedException("action system names cannot be set more than once");
         }
 
         for (Map.Entry<String, String> entry : systemNames) {
@@ -94,7 +95,7 @@ public class DigitalBooleanMany extends AbstractDigitalBooleanAction
                 }
             } catch (SocketAlreadyConnectedException ex) {
                 // This shouldn't happen and is a runtime error if it does.
-                throw new RuntimeException("socket is already connected");
+                throw new JmriUncheckedException("socket is already connected");
             }
         }
 
