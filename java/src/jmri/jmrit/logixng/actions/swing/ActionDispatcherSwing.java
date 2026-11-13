@@ -398,7 +398,7 @@ public class ActionDispatcherSwing extends AbstractDigitalActionSwing {
                 throw new IllegalArgumentException("_tabbedPaneData has unknown selection");
             }
         } catch (ParserException e) {
-            throw new RuntimeException("ParserException: "+e.getMessage(), e);
+            throw new JmriUncheckedException("ParserException: "+e.getMessage(), e);
         }
     }
 

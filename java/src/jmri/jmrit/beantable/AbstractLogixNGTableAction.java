@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.table.TableColumn;
 
 import jmri.InstanceManager;
+import jmri.JmriUncheckedException;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.NamedBean.BadSystemNameException;
@@ -679,7 +680,7 @@ public abstract class AbstractLogixNGTableAction<E extends NamedBean> extends Ab
 
         if (_curNamedBean == null) {
             // This should never happen but SpotBugs complains about it.
-            throw new RuntimeException("_curNamedBean is null");
+            throw new JmriUncheckedException("_curNamedBean is null");
         }
 
         String title = Bundle.getMessage("BrowserLogixNG") + " " + _curNamedBean.getSystemName() + "    " // NOI18N

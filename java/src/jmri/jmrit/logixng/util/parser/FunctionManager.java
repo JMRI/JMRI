@@ -2,6 +2,8 @@ package jmri.jmrit.logixng.util.parser;
 
 import java.util.*;
 
+import jmri.JmriUncheckedException;
+
 /**
  * Manager for LogixNG formula functions.
  *
@@ -21,7 +23,7 @@ public class FunctionManager implements jmri.InstanceManagerAutoDefault {
                             constant.getName(), actionFactory.getModule(), actionFactory.getClass().getName());
                 }
                 if (_constants.containsKey(constant.getName())) {
-                    throw new RuntimeException("Constant " + constant.getName() + " is already registered. Class: " + constant.getClass().getName());
+                    throw new JmriUncheckedException("Constant " + constant.getName() + " is already registered. Class: " + constant.getClass().getName());
                 }
 //                System.err.format("Add constant %s, %s%n", constant.getName(), constant.getClass().getName());
                 _constants.put(constant.getName(), constant);
@@ -32,7 +34,7 @@ public class FunctionManager implements jmri.InstanceManagerAutoDefault {
                             function.getName(), actionFactory.getModule(), actionFactory.getClass().getName());
                 }
                 if (_functions.containsKey(function.getName())) {
-                    throw new RuntimeException("Function " + function.getName() + " is already registered. Class: " + function.getClass().getName());
+                    throw new JmriUncheckedException("Function " + function.getName() + " is already registered. Class: " + function.getClass().getName());
                 }
 //                System.err.format("Add function %s, %s%n", function.getName(), function.getClass().getName());
                 _functions.put(function.getName(), function);

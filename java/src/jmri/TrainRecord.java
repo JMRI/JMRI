@@ -358,8 +358,9 @@ public interface TrainRecord extends PropertyChangeProvider {
      * @param frontKnown true if the first Block given holds the front of
      *                   the train
      * @param rule       {@link Reason.Rule#PLACED},
-     *                   {@link Reason.Rule#PLACED_BY_VALUE} or
-     *                   {@link Reason.Rule#PLACED_BY_DISPATCHER}
+     *                   {@link Reason.Rule#PLACED_BY_VALUE},
+     *                   {@link Reason.Rule#PLACED_BY_DISPATCHER} or
+     *                   {@link Reason.Rule#PLACED_BY_OPERATOR}
      * @throws IllegalArgumentException if the list is empty or holds a
      *                                  Block twice
      * @throws IllegalStateException    if the record has been disposed
@@ -742,6 +743,8 @@ public interface TrainRecord extends PropertyChangeProvider {
             PLACED_BY_VALUE,
             /** Placed in its start Block by Dispatcher. */
             PLACED_BY_DISPATCHER,
+            /** Placed by the operator: "train is here". */
+            PLACED_BY_OPERATOR,
             /** No longer placed anywhere. */
             UNPLACED,
             /** Entered a Block next to one of its ends: its sensor went occupied. */
@@ -750,6 +753,12 @@ public interface TrainRecord extends PropertyChangeProvider {
             ENTERED_THROUGH_DARK,
             /** One of several trains that could have entered a Block. */
             AMBIGUOUS,
+            /**
+             * Entered a Block next to both of its ends while which end leads
+             * isn't known: which end entered isn't known until the train
+             * leaves one of them.
+             */
+            ENTERED_END_UNKNOWN,
             /** The Block's value named it as the train that entered. */
             SETTLED_BY_VALUE,
             /** Another train was named as the one that entered: no longer in doubt. */
@@ -902,8 +911,12 @@ public interface TrainRecord extends PropertyChangeProvider {
 
         private final String name;
         private final Double lengthMm;
+        private final Double frontOverhangMm;
+        private final Double rearOverhangMm;
 
         /**
+         * A component whose wheel overhangs are not known.
+         *
          * @param name     the component's name; null is taken as "", and
          *                 leading and trailing spaces are removed
          * @param lengthMm its length in millimetres, more than 0, or null if
@@ -911,11 +924,41 @@ public interface TrainRecord extends PropertyChangeProvider {
          * @throws IllegalArgumentException if the length is not more than 0
          */
         public TrainComponent(@CheckForNull String name, @CheckForNull Double lengthMm) {
+            this(name, lengthMm, null, null);
+        }
+
+        /**
+         * A component with its wheel overhangs. Detection sees wheels, never
+         * buffers: the front overhang is how far the component reaches ahead
+         * of its first wheels, and the rear overhang how far behind its last.
+         *
+         * @param name            the component's name; null is taken as "",
+         *                        and leading and trailing spaces are removed
+         * @param lengthMm        its length in millimetres, more than 0, or
+         *                        null if not known
+         * @param frontOverhangMm its front wheel overhang in millimetres, 0
+         *                        or more, or null if not known
+         * @param rearOverhangMm  its rear wheel overhang in millimetres, 0 or
+         *                        more, or null if not known
+         * @throws IllegalArgumentException if the length is not more than 0,
+         *                                  or an overhang is less than 0
+         * @since 5.19.1
+         */
+        public TrainComponent(@CheckForNull String name, @CheckForNull Double lengthMm,
+                @CheckForNull Double frontOverhangMm, @CheckForNull Double rearOverhangMm) {
             if (lengthMm != null && !(lengthMm > 0)) {
                 throw new IllegalArgumentException("component length must be more than 0: " + lengthMm);
             }
+            if (frontOverhangMm != null && !(frontOverhangMm >= 0)) {
+                throw new IllegalArgumentException("front overhang must not be negative: " + frontOverhangMm);
+            }
+            if (rearOverhangMm != null && !(rearOverhangMm >= 0)) {
+                throw new IllegalArgumentException("rear overhang must not be negative: " + rearOverhangMm);
+            }
             this.name = name == null ? "" : name.trim();
             this.lengthMm = lengthMm;
+            this.frontOverhangMm = frontOverhangMm;
+            this.rearOverhangMm = rearOverhangMm;
         }
 
         /**
@@ -934,6 +977,26 @@ public interface TrainRecord extends PropertyChangeProvider {
             return lengthMm;
         }
 
+        /**
+         * @return how far the component reaches ahead of its first wheels, in
+         *         millimetres, or null if not known
+         * @since 5.19.1
+         */
+        @CheckForNull
+        public Double getFrontOverhang() {
+            return frontOverhangMm;
+        }
+
+        /**
+         * @return how far the component reaches behind its last wheels, in
+         *         millimetres, or null if not known
+         * @since 5.19.1
+         */
+        @CheckForNull
+        public Double getRearOverhang() {
+            return rearOverhangMm;
+        }
+
         @Override
         public boolean equals(Object o) {
             if (this == o) {
@@ -943,17 +1006,20 @@ public interface TrainRecord extends PropertyChangeProvider {
                 return false;
             }
             TrainComponent c = (TrainComponent) o;
-            return name.equals(c.name) && Objects.equals(lengthMm, c.lengthMm);
+            return name.equals(c.name) && Objects.equals(lengthMm, c.lengthMm)
+                    && Objects.equals(frontOverhangMm, c.frontOverhangMm)
+                    && Objects.equals(rearOverhangMm, c.rearOverhangMm);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(name, lengthMm);
+            return Objects.hash(name, lengthMm, frontOverhangMm, rearOverhangMm);
         }
 
         @Override
         public String toString() {
-            return "TrainComponent[" + name + ", " + lengthMm + " mm]";
+            return "TrainComponent[" + name + ", " + lengthMm + " mm, overhang " + frontOverhangMm + " / "
+                    + rearOverhangMm + " mm]";
         }
     }
 

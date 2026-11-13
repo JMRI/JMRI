@@ -488,7 +488,7 @@ public class DigitalFormulaTest extends AbstractDigitalExpressionTestBase {
                 break;
 
             default:
-                throw new RuntimeException(String.format("Unknown expected result: %d", expectedResult));
+                throw new JmriUncheckedException(String.format("Unknown expected result: %d", expectedResult));
         }
 
         if (! errorMessage.isEmpty()) {

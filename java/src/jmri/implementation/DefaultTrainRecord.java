@@ -464,7 +464,7 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
         Objects.requireNonNull(blocks, "blocks");
         Objects.requireNonNull(rule, "rule");
         if (rule != Reason.Rule.PLACED && rule != Reason.Rule.PLACED_BY_VALUE
-                && rule != Reason.Rule.PLACED_BY_DISPATCHER) {
+                && rule != Reason.Rule.PLACED_BY_DISPATCHER && rule != Reason.Rule.PLACED_BY_OPERATOR) {
             throw new IllegalArgumentException("not a rule that places: " + rule);
         }
         checkNotDisposed();
@@ -730,13 +730,21 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
      *
      * @param c      the confidence, or null when not placed
      * @param reason why; kept in the history unless it is the reason for a
-     *               change of Blocks, which keeps it itself
+     *               change of Blocks, which keeps it itself. If the
+     *               confidence is unchanged, it still becomes the reason
+     *               for it when it is a newer fix, or a different rule
      */
     @InvokeOnLayoutThread
     void setConfidence(@CheckForNull Confidence c, @CheckForNull Reason reason) {
         if (c == confidence) {
-            if (c != null && reason != null && PLACING_OR_MOVING.contains(reason.getRule())) {
+            if (c == null || reason == null) {
+                return;
+            }
+            if (PLACING_OR_MOVING.contains(reason.getRule())) {
                 confidenceReason = reason; // as sure as before, from a newer fix
+            } else if (confidenceReason == null || confidenceReason.getRule() != reason.getRule()) {
+                confidenceReason = reason; // as sure as before, for a different reason
+                addToHistory(reason);
             }
             return;
         }
@@ -750,7 +758,8 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     }
 
     private static final Set<Reason.Rule> PLACING_OR_MOVING = EnumSet.of(Reason.Rule.PLACED,
-            Reason.Rule.PLACED_BY_VALUE, Reason.Rule.PLACED_BY_DISPATCHER, Reason.Rule.UNPLACED,
+            Reason.Rule.PLACED_BY_VALUE, Reason.Rule.PLACED_BY_DISPATCHER, Reason.Rule.PLACED_BY_OPERATOR,
+            Reason.Rule.UNPLACED,
             Reason.Rule.ENTERED, Reason.Rule.ENTERED_THROUGH_DARK, Reason.Rule.SETTLED_BY_VALUE);
 
     private void addToHistory(@CheckForNull Reason reason) {

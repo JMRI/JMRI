@@ -144,7 +144,7 @@ public class FunctionTableModel extends AbstractTableModel implements PropertyCh
         rosterEntry.setFunctionEntry(newrfe);
         // force reload of image panels
         getFunctionImagePanel(fn).setImagePath(newrfe.getImage());
-        getFunctionSelectedImagePanel(fn).setImagePath(newrfe.getImage());
+        getFunctionSelectedImagePanel(fn).setImagePath(newrfe.getSelectedImage());
         // refresh rendering
         fireTableDataChanged();
     }

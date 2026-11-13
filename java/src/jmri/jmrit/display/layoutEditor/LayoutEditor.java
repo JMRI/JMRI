@@ -3714,7 +3714,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
         popup.add(new AbstractAction(jmri.jmrit.trainrecord.swing.BlockDialog.menuItemText(block)) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                jmri.jmrit.trainrecord.swing.BlockDialog.open(block, true);
+                jmri.jmrit.trainrecord.swing.BlockDialog.open(block, true, allControlling());
             }
         });
         popup.show(event.getComponent(), event.getX(), event.getY());
@@ -3734,6 +3734,31 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
             }
         }
         return null;
+    }
+
+    /**
+     * In operating mode, a loco marker was dragged onto the track of a
+     * Block: the train is there, for train tracking.
+     *
+     * @param marker the marker
+     * @param loc    where it was dropped, in panel coordinates
+     */
+    void markerDropped(@Nonnull LocoIcon marker, @Nonnull Point2D loc) {
+        jmri.Block block = blockOfTrackAt(loc);
+        if (block == null || !jmri.jmrit.trainrecord.PermissionsTrainTracking.mayCorrect()) {
+            return;
+        }
+        String name = marker.getText();
+        if (name == null || name.isEmpty()) {
+            name = marker.getUnRotatedText();
+        }
+        String text = name;
+        jmri.util.ThreadingUtil.runOnLayout(() -> {
+            jmri.TrainRecord r = jmri.jmrit.trainrecord.TrainCorrections.recordForMarker(marker.getRosterEntry(), text);
+            if (r != null) {
+                jmri.jmrit.trainrecord.TrainCorrections.trainIsHere(r, block);
+            }
+        });
     }
 
     private TrackSegment checkTrackSegmentPopUps(@Nonnull Point2D loc) {
@@ -4348,6 +4373,11 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
             if (!selections.isEmpty()) {
                 selections.get(0).doMouseDragged(event);
             }
+        }
+
+        if (!isEditable() && isDragging && selectedHitPointType == HitPointType.MARKER
+                && selectedObject instanceof LocoIcon && allControlling()) {
+            markerDropped((LocoIcon) selectedObject, dLoc);
         }
 
         if (selectedObject != null) {

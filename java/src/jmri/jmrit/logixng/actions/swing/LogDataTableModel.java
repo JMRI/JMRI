@@ -10,6 +10,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 
+import jmri.JmriUncheckedException;
 import jmri.jmrit.logixng.actions.LogData;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.util.swing.JComboBoxUtil;
@@ -147,7 +148,7 @@ public class LogDataTableModel extends AbstractTableModel {
         try {
             _dataList.add(new LogData.Data(LogData.DataType.LocalVariable, ""));
         } catch (ParserException e) {
-            throw new RuntimeException(e);  // This should never happen
+            throw new JmriUncheckedException(e);  // This should never happen
         }
         fireTableRowsInserted(row, row);
     }
@@ -176,7 +177,7 @@ public class LogDataTableModel extends AbstractTableModel {
                 }
                 setText(((LogData.DataType) value).toString());
             } else {
-                throw new RuntimeException("Unknown column: "+Integer.toString(column));
+                throw new JmriUncheckedException("Unknown column: "+Integer.toString(column));
             }
             return this;
         }

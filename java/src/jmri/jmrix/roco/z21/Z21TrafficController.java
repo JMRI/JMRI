@@ -1,12 +1,15 @@
 package jmri.jmrix.roco.z21;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import jmri.jmrix.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -93,62 +96,62 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
     /**
      * Actually transmits the next message to the port.
      */
-    @SuppressFBWarnings(value = {"TLW_TWO_LOCK_WAIT", "", "UW_UNCOND_WAIT"},
-            justification = "Two locks needed for synchronization here, this is OK; String + only used for debug, so inefficient String processing not really a problem; Unconditional Wait is to give external hardware, which doesn't necessarilly respond, time to process the data.")
     @Override
-    synchronized protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
-        if (log.isDebugEnabled()) {
-            log.debug("forwardToPort message: [{}]", m);
-        }
-        // remember who sent this
-        mLastSender = reply;
-
-        // forward the message to the registered recipients,
-        // which includes the communications monitor, except the sender.
-        // Schedule notification via the Swing event queue to ensure order
-        Runnable r = new XmtNotifier(m, mLastSender, this);
-        javax.swing.SwingUtilities.invokeLater(r);
-
+    protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         // stream to port in single write, as that's needed by serial
         byte[] msg = new byte[lengthOfByteStream(m)];
-        // add header
-        int offset = addHeaderToOutput(msg, m);
 
-        // add data content
-        int len = m.getNumDataElements();
-        for (int i = 0; i < len; i++) {
-            msg[i + offset] = (byte) m.getElement(i);
+        synchronized(this) {
+            if (log.isDebugEnabled()) {
+                log.debug("forwardToPort message: [{}]", m);
+            }
+            // remember who sent this
+            mLastSender = reply;
+
+            // forward the message to the registered recipients,
+            // which includes the communications monitor, except the sender.
+            // Schedule notification via the Swing event queue to ensure order
+            Runnable r = new XmtNotifier(m, mLastSender, this);
+            javax.swing.SwingUtilities.invokeLater(r);
+
+            // add header
+            int offset = addHeaderToOutput(msg, m);
+
+            // add data content
+            int len = m.getNumDataElements();
+            for (int i = 0; i < len; i++) {
+                msg[i + offset] = (byte) m.getElement(i);
+            }
+            // add trailer
+            addTrailerToOutput(msg, len + offset, m);
         }
-        // add trailer
-        addTrailerToOutput(msg, len + offset, m);
+
         // and send the bytes
         try {
             if (log.isDebugEnabled()) {
-                StringBuilder f = new StringBuilder("formatted message: ");
+                StringBuilder f = new StringBuilder();
                 for (byte b : msg) {
                     f.append(Integer.toHexString(0xFF & b));
                     f.append(" ");
                 }
-                log.debug(new String(f));
+                log.debug("formatted message: {}", new String(f));
             }
             while (m.getRetries() >= 0) {
-                if (portReadyToSend(controller)) {
+                if (synchronizedPortReadyToSend(controller)) {
                     // create a datagram with the data from the
                     // message.
                     byte[] data = ((Z21Message) m).getBuffer();
                     DatagramPacket sendPacket
                             = new DatagramPacket(data, ((Z21Message) m).getLength(), host, port);
                     // and send it.
-                    ((Z21Adapter) controller).getSocket().send(sendPacket);
+                    synchronized(this) {
+                        ((Z21Adapter) controller).getSocket().send(sendPacket);
+                    }
                     log.debug("written, msg timeout: {} mSec", m.getTimeout());
                     break;
                 } else if (m.getRetries() >= 0) {
                     if (log.isDebugEnabled()) {
-                        StringBuilder b = new StringBuilder("Retry message: ");
-                        b.append(m.toString());
-                        b.append(" attempts remaining: ");
-                        b.append(m.getRetries());
-                        log.debug(new String(b));
+                        log.debug("Retry message: {} attempts remaining: {}", m.toString(), m.getRetries());
                     }
                     m.setRetries(m.getRetries() - 1);
                     try {
@@ -167,11 +170,13 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
                     log.warn("sendMessage: port not ready for data sending: {}", java.util.Arrays.toString(msg));
                 }
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             // TODO Currently there's no port recovery if an exception occurs
             // must restart JMRI to clear xmtException.
-            xmtException = true;
-            portWarn(e);
+            synchronized(this) {
+                xmtException = true;
+                portWarn(e);
+            }
         }
     }
 
@@ -258,8 +263,6 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
      * <p>
      * (This is public for testing purposes) Runs in the "Receive" thread.
      */
-    @SuppressFBWarnings(value = {"UW_UNCOND_WAIT", "WA_NOT_IN_LOOP", "NO_NOTIFY_NOT_NOTIFYALL"},
-            justification = "Wait is for external hardware, which doesn't necessarilly respond, to process the data.  Notify is used because Having more than one thread waiting on XMT_RUNNABLE_LOCK is an error.")
     @Override
     public void handleOneIncomingReply() throws java.io.IOException {
         // we sit in this until the message is complete, relying on

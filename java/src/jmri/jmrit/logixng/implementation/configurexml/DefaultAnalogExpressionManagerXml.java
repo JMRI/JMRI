@@ -6,6 +6,7 @@ import java.util.*;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
+import jmri.JmriUncheckedException;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.implementation.DefaultAnalogExpressionManager;
@@ -56,7 +57,7 @@ public class DefaultAnalogExpressionManagerXml extends AbstractManagerXml {
                         for (Element ee : elements) e.addContent(ee);
                         expressions.addContent(e);
                     } else {
-                        throw new RuntimeException("Cannot load xml configurator for " + a.getObject().getClass().getName());
+                        throw new JmriUncheckedException("Cannot load xml configurator for " + a.getObject().getClass().getName());
                     }
                 } catch (RuntimeException e) {
                     log.error("Error storing action: {}", e, e);
@@ -141,7 +142,7 @@ public class DefaultAnalogExpressionManagerXml extends AbstractManagerXml {
                         // Load male socket data if a new bean has been registered
                         MaleSocket newLastItem = InstanceManager.getDefault(AnalogExpressionManager.class).getLastRegisteredMaleSocket();
                         if (newLastItem != oldLastItem) loadMaleSocket(expressionList.get(i), newLastItem);
-                        else throw new RuntimeException("No new bean has been added. This class: "+getClass().getName());
+                        else throw new JmriUncheckedException("No new bean has been added. This class: "+getClass().getName());
                     } catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
                         log.error("cannot create object", ex);
                     } catch (JmriConfigureXmlException ex) {
