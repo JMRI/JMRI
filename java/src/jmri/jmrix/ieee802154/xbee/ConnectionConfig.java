@@ -36,8 +36,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     @Override
     public void loadDetails(JPanel details) {
         b.addActionListener(new XBeeNodeConfigAction());
-        if (!additionalItems.contains(b)) {
-            additionalItems.add(b);
+        if (!getAdditionalItems().contains(b)) {
+            getAdditionalItems().add(b);
         }
         super.loadDetails(details);
     }

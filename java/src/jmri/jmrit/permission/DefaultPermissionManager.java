@@ -553,7 +553,7 @@ public class DefaultPermissionManager implements PermissionManager {
     @Override
     public synchronized void registerPermission(Permission permission) {
         if (!_owners.contains(permission.getOwner())) {
-            throw new RuntimeException(String.format(
+            throw new JmriUncheckedException(String.format(
                     "Permission class %s has an owner that's not known: %s",
                     permission.getClass().getName(), permission.getOwner()));
         }

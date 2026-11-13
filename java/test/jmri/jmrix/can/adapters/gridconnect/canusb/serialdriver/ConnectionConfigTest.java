@@ -1,5 +1,7 @@
 package jmri.jmrix.can.adapters.gridconnect.canusb.serialdriver;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -10,6 +12,11 @@ import org.junit.jupiter.api.*;
  * @author Paul Bender Copyright (C) 2016
  **/
 public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionConfigTestBase  {
+
+   @Test
+   public void testIsSimulator() {
+        assertFalse(cc.isSimulator(), "a CANUSB connection is real hardware");
+   }
 
    @BeforeEach
    @Override

@@ -1,6 +1,18 @@
 package jmri.util.zeroconf;
 
+import java.io.IOException;
+import java.net.InetAddress;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.BrokenBarrierException;
+import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
+import javax.jmdns.JmDNS;
+import javax.jmdns.ServiceInfo;
 
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
@@ -13,6 +25,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 /**
  * Tests for the ZeroConfService class
@@ -178,6 +196,145 @@ public class ZeroConfServiceManagerTest {
             return manager.isPublished(instance) == true;
         }), "Timed out publishing ZeroConf Service");
         assertEquals(1, manager.allServices().size());
+    }
+
+    /**
+     * Stopping a service unregisters it from every address at the same time.
+     * JmDNS blocks in unregisterService while it announces that the service
+     * has gone; each mock instance here waits in unregisterService until the
+     * other has also started, which only happens if both run at once.
+     *
+     * @throws IOException if a mock is not set up
+     */
+    @Test
+    public void testStopUnregistersFromEveryAddressAtOnce() throws IOException {
+        List<JmDNS> dnses = twoBlockingDnses();
+        HashMap<InetAddress, JmDNS> saved = useDnses(dnses);
+        try {
+            ZeroConfService instance = manager.create(HTTP, 9999);
+            List<ZeroConfServiceEvent> unpublished = new ArrayList<>();
+            instance.addEventListener(new UnpublishedListener(unpublished));
+            manager.publish(instance);
+            assertTrue(manager.isPublished(instance));
+
+            manager.stop(instance);
+
+            assertTrue(failures.isEmpty(), () -> "unregistered one after another: " + failures);
+            for (JmDNS dns : dnses) {
+                verify(dns).unregisterService(any(ServiceInfo.class));
+                assertFalse(instance.containsServiceInfo(dns.getInetAddress()));
+            }
+            assertEquals(2, unpublished.size(), "one serviceUnpublished per address");
+            assertFalse(manager.isPublished(instance));
+        } finally {
+            restoreDnses(saved);
+        }
+    }
+
+    /**
+     * Stopping all services unregisters them from every address at the same
+     * time, and stopAll() does not close the JmDNS instances.
+     *
+     * @throws IOException if a mock is not set up
+     */
+    @Test
+    public void testStopAllUnregistersFromEveryAddressAtOnce() throws IOException {
+        List<JmDNS> dnses = twoBlockingDnses();
+        HashMap<InetAddress, JmDNS> saved = useDnses(dnses);
+        try {
+            ZeroConfService instance = manager.create(HTTP, 9999);
+            List<ZeroConfServiceEvent> unpublished = new ArrayList<>();
+            instance.addEventListener(new UnpublishedListener(unpublished));
+            manager.publish(instance);
+            assertTrue(manager.isPublished(instance));
+
+            manager.stopAll();
+
+            assertTrue(failures.isEmpty(), () -> "unregistered one after another: " + failures);
+            for (JmDNS dns : dnses) {
+                verify(dns).unregisterAllServices();
+                verify(dns, never()).close();
+                assertFalse(instance.containsServiceInfo(dns.getInetAddress()));
+            }
+            assertEquals(2, unpublished.size(), "one serviceUnpublished per address");
+            assertTrue(manager.allServices().isEmpty());
+        } finally {
+            restoreDnses(saved);
+        }
+    }
+
+    private final List<Exception> failures = Collections.synchronizedList(new ArrayList<>());
+
+    /**
+     * Two mock JmDNS instances. Each waits in unregisterService and
+     * unregisterAllServices until the other has started its call; the wait
+     * ends early only if the calls run one after another, after 30 seconds,
+     * and that is recorded in {@link #failures}.
+     */
+    private List<JmDNS> twoBlockingDnses() throws IOException {
+        CyclicBarrier bothStarted = new CyclicBarrier(2);
+        List<JmDNS> dnses = new ArrayList<>();
+        for (String address : new String[]{"192.0.2.10", "192.0.2.11"}) {
+            JmDNS dns = mock(JmDNS.class);
+            when(dns.getInetAddress()).thenReturn(InetAddress.getByName(address));
+            doAnswer(invocation -> {
+                waitForTheOther(bothStarted);
+                return null;
+            }).when(dns).unregisterService(any(ServiceInfo.class));
+            doAnswer(invocation -> {
+                waitForTheOther(bothStarted);
+                return null;
+            }).when(dns).unregisterAllServices();
+            dnses.add(dns);
+        }
+        return dnses;
+    }
+
+    private void waitForTheOther(CyclicBarrier bothStarted) {
+        try {
+            bothStarted.await(30, TimeUnit.SECONDS);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+            failures.add(ex);
+        } catch (BrokenBarrierException | TimeoutException ex) {
+            failures.add(ex);
+        }
+    }
+
+    private HashMap<InetAddress, JmDNS> useDnses(List<JmDNS> dnses) throws IOException {
+        HashMap<InetAddress, JmDNS> saved = new HashMap<>(ZeroConfServiceManager.JMDNS_SERVICES);
+        ZeroConfServiceManager.JMDNS_SERVICES.clear();
+        for (JmDNS dns : dnses) {
+            ZeroConfServiceManager.JMDNS_SERVICES.put(dns.getInetAddress(), dns);
+        }
+        return saved;
+    }
+
+    private void restoreDnses(HashMap<InetAddress, JmDNS> saved) {
+        ZeroConfServiceManager.JMDNS_SERVICES.clear();
+        ZeroConfServiceManager.JMDNS_SERVICES.putAll(saved);
+    }
+
+    private static class UnpublishedListener implements ZeroConfServiceListener {
+
+        private final List<ZeroConfServiceEvent> unpublished;
+
+        UnpublishedListener(List<ZeroConfServiceEvent> unpublished) {
+            this.unpublished = unpublished;
+        }
+
+        @Override
+        public void serviceQueued(ZeroConfServiceEvent se) {
+        }
+
+        @Override
+        public void servicePublished(ZeroConfServiceEvent se) {
+        }
+
+        @Override
+        public void serviceUnpublished(ZeroConfServiceEvent se) {
+            unpublished.add(se);
+        }
     }
 
     @Test

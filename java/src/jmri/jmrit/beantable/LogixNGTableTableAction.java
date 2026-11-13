@@ -11,6 +11,7 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import jmri.InstanceManager;
+import jmri.JmriUncheckedException;
 import jmri.Manager;
 import jmri.jmrit.logixng.Table;
 import jmri.util.FileUtil;
@@ -133,7 +134,7 @@ public class LogixNGTableTableAction extends AbstractLogixNGTableAction<NamedTab
             // Open table editor
         } else {
             log.error("No table type selected");
-            throw new RuntimeException("No table type selected");
+            throw new JmriUncheckedException("No table type selected");
         }
 
 //        InstanceManager.getDefault(NamedTableManager.class).loadTableFromCSV(file, systemName, userName);

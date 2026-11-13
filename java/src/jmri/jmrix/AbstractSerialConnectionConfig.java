@@ -1,28 +1,10 @@
 package jmri.jmrix;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.ItemEvent;
-import java.util.Collections;
-import java.util.Map;
-import java.util.ResourceBundle;
-import java.util.Vector;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
 
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.JTextField;
-import javax.swing.ListCellRenderer;
-import javax.swing.SpinnerNumberModel;
+import javax.swing.*;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 
@@ -192,7 +174,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             log.error("port name Vector v is null!");
             return;
         }
-        
+
         // Display differences between the present and previous list of ports
         if (originalList != null) {
             Vector<String> newPorts = new Vector<>(v);
@@ -202,7 +184,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             lostPorts.removeAll(v);
             for (var port : lostPorts) { log.info("Port {} no longer present", port);}
         }
-        
+
         /* as we make amendments to the list of port in vector v, we keep a copy of it before
          modification, this copy is then used to validate against any changes in the port lists.
          */
@@ -266,12 +248,15 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             adapter.setPort(port);
         });
         portBox.addPopupMenuListener(new PopupMenuListener(){
+            @Override
             public void popupMenuCanceled(PopupMenuEvent e) {
                 log.trace("popupMenuCanceled");
             }
+            @Override
             public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
                 log.trace("popupMenuWillBecomeInvisible");
             }
+            @Override
             public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
                 log.debug("popupMenuWillBecomeVisible");
                 refreshPortBox();
@@ -328,7 +313,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         if (adapter.getSystemConnectionMemo() != null) {
             systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
-            NUMOPTIONS = NUMOPTIONS + 2;
+            increaseNumOptions(2);
         }
 
         refreshPortBox();
@@ -365,7 +350,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             baudBox.setEnabled(false);
         }
 
-        NUMOPTIONS = NUMOPTIONS + options.size();
+        increaseNumOptions(options.size());
 
         portBoxLabel = new JLabel(Bundle.getMessage("SerialPortLabel"));
         baudBoxLabel = new JLabel(Bundle.getMessage("BaudRateLabel"));
@@ -397,8 +382,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
-        justification = "Type is checked before casting")
     protected void showAdvancedItems() {
         _details.removeAll();
         cL.anchor = GridBagConstraints.WEST;
@@ -425,7 +408,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         if (adapter.getSystemConnectionMemo() != null) {
             stdrows = stdrows + 2;
         }
-        if (stdrows == NUMOPTIONS) {
+        if (stdrows == getNumOptions()) {
             incAdvancedOptions = false;
         }
         _details.setLayout(gbLayout);
@@ -479,7 +462,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
         }
         cL.gridwidth = 2;
-        for (JComponent item : additionalItems) {
+        for (JComponent item : getAdditionalItems()) {
             cL.gridy = i;
             gbLayout.setConstraints(item, cL);
             _details.add(item);
@@ -644,7 +627,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
     /**
      * Provide a vector of valid port names, each a String.
-     * This may be implemented differently in subclasses 
+     * This may be implemented differently in subclasses
      * that e.g. do loopback or use a custom port-access library.
      * @return Valid port names in the form used to select them later.
      */
@@ -657,7 +640,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         }
         return retval;
     }
-        
+
     /**
      * This provides a method to return potentially meaningful names that are
      * used in OS to help identify ports against Hardware.

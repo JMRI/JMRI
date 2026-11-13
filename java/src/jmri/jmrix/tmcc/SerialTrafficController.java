@@ -192,7 +192,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         return 6;
     }
 
-    /** 
+    /**
      * Skip warning message, as timeouts are routine in this protocol
      */
     @Override
@@ -243,8 +243,8 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
                         for (int i = 0; i < len; i++) {
                             ostream.write(msg[i]);
                             try {
-                                synchronized (xmtRunnable) {
-                                    xmtRunnable.wait(10);
+                                synchronized (XMT_RUNNABLE_LOCK) {
+                                    XMT_RUNNABLE_LOCK.wait(10);
                                 }
                             } catch (InterruptedException e) {
                                 Thread.currentThread().interrupt(); // retain if needed later
@@ -256,8 +256,8 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
                         log.debug("Retry message: {} attempts remaining: {}", m, m.getRetries());
                         m.setRetries(m.getRetries() - 1);
                         try {
-                            synchronized (xmtRunnable) {
-                                xmtRunnable.wait(m.getTimeout());
+                            synchronized (XMT_RUNNABLE_LOCK) {
+                                XMT_RUNNABLE_LOCK.wait(m.getTimeout());
                             }
                         } catch (InterruptedException e) {
                             log.error("retry wait interrupted");

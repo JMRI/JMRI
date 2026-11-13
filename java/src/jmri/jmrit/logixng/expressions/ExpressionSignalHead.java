@@ -317,7 +317,7 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
                 result = ! signalHead.getHeld();
                 break;
             default:
-                throw new RuntimeException("Unknown enum: "+_queryType.name());
+                throw new JmriUncheckedException("Unknown enum: "+_queryType.name());
         }
 
         return result;
@@ -442,7 +442,7 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
                     break;
 
                 default:
-                    throw new RuntimeException("Unknown enum: "+_queryType.name());
+                    throw new JmriUncheckedException("Unknown enum: "+_queryType.name());
             }
             _listenersAreRegistered = true;
         }
@@ -471,7 +471,7 @@ public class ExpressionSignalHead extends AbstractDigitalExpression
                     break;
 
                 default:
-                    throw new RuntimeException("Unknown enum: "+_queryType.name());
+                    throw new JmriUncheckedException("Unknown enum: "+_queryType.name());
             }
             _listenersAreRegistered = false;
         }

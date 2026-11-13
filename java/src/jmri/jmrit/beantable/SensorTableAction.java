@@ -93,7 +93,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
     // initially allow any 20 char string, updated by prefixBox selection
     JTextField userNameField = new JTextField(40);
     ManagerComboBox<Sensor> prefixBox = new ManagerComboBox<>();
-    SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
+    SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 1000, 1); // maximum 1000 items, e.g. a whole C/MRI node
     JSpinner numberToAddSpinner = new JSpinner(rangeSpinner);
     JCheckBox rangeBox = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     JLabel hwAddressLabel = new JLabel(Bundle.getMessage("LabelHardwareAddress"));
@@ -172,7 +172,7 @@ public class SensorTableAction extends AbstractTableAction<Sensor> {
         if (rangeBox.isSelected()) {
             numberOfSensors = (Integer) numberToAddSpinner.getValue();
         }
-        if (numberOfSensors >= 65 // number beyond which to warn and ask permission; limited by JSpinnerModel to 100
+        if (numberOfSensors >= 65 // number beyond which to warn and ask permission; limited by JSpinnerModel to 1000
             && JmriJOptionPane.showConfirmDialog(addFrame,
                 Bundle.getMessage("WarnExcessBeans", Bundle.getMessage("Sensors"), numberOfSensors),
                 Bundle.getMessage("WarningTitle"),

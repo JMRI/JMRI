@@ -75,6 +75,43 @@ public class DefaultSectionTest {
     Assert.assertTrue("blocks are not sent allocation events", blockEvents.isEmpty());
    }
 
+   @Test
+   public void testStopPoints() {
+    Section s = new DefaultSection("TS1");
+    Assert.assertEquals("none at first", 0.0f, s.getStopPointMm(Section.FORWARD), 0.0f);
+    Assert.assertEquals("none at first", 0.0f, s.getStopPointMm(Section.REVERSE), 0.0f);
+    s.setStopPointMm(Section.FORWARD, 420.5f);
+    s.setStopPointMm(Section.REVERSE, 150.0f);
+    Assert.assertEquals(420.5f, s.getStopPointMm(Section.FORWARD), 0.0f);
+    Assert.assertEquals(150.0f, s.getStopPointMm(Section.REVERSE), 0.0f);
+    Assert.assertEquals("kept as a property, so it is saved", 420.5f, s.getProperty(Section.STOP_POINT_FORWARD));
+    s.setStopPointMm(Section.FORWARD, 0.0f);
+    Assert.assertEquals("0 clears it", 0.0f, s.getStopPointMm(Section.FORWARD), 0.0f);
+    Assert.assertFalse("and removes the property", s.getPropertyKeys().contains(Section.STOP_POINT_FORWARD));
+    Assert.assertEquals("the other direction is kept", 150.0f, s.getStopPointMm(Section.REVERSE), 0.0f);
+   }
+
+   @Test
+   public void testValidateStopPoints() {
+    DefaultSection s = new DefaultSection("TS1");
+    jmri.Block a = new jmri.Block("IB1", "A");
+    jmri.Block b = new jmri.Block("IB2", "B");
+    s.addBlock(a);
+    s.addBlock(b);
+    Assert.assertEquals("no stop point: nothing to check", "", s.validateStopPoints());
+    s.setStopPointMm(Section.FORWARD, 450.0f);
+    Assert.assertEquals("a Block with no length: can't be checked", "", s.validateStopPoints());
+    jmri.util.JUnitAppender.assertWarnMessageStartsWith("Section TS1 has a stop point, but its Block A (IB1) has no length");
+    a.setLength(300.0f);
+    b.setLength(200.0f);
+    Assert.assertEquals("inside the Section", "", s.validateStopPoints());
+    s.setStopPointMm(Section.REVERSE, 520.0f);
+    Assert.assertEquals("Reverse stop point 520mm is beyond the end of Section TS1, whose Blocks are 500mm long.",
+            s.validateStopPoints());
+    s.setStopPointMm(Section.REVERSE, 500.0f);
+    Assert.assertEquals("at the far end is inside", "", s.validateStopPoints());
+   }
+
    @BeforeEach
    public void setUp() {
         JUnitUtil.setUp();

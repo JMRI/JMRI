@@ -83,6 +83,17 @@ public class JsonMockConnection extends JsonConnection {
     /**
      * {@inheritDoc}
      * <p>
+     * This implementation records the message as
+     * {@link #sendMessage(JsonNode, JsonRequest)} does; the key is not used.
+     */
+    @Override
+    public void sendMessage(@CheckForNull JsonNode message, JsonRequest request, Object key) throws IOException {
+        sendMessage(message, request);
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
      * This implementation accepts a null message to reset the list of sent
      * messages, and if {@link #isThrowIOException()} is true throws an
      * {@link IOException}. Note that after throwing the IOException,

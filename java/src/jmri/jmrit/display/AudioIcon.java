@@ -362,7 +362,7 @@ public class AudioIcon extends PositionableLabel {
 
             javax.imageio.ImageIO.write(bi, "gif", new java.io.File(jmri.util.FileUtil.getExternalFilename("resources/icons/audio_icon.gif")));
         } catch (java.io.IOException ie) {
-            throw new RuntimeException(ie);
+            throw new JmriUncheckedException(ie);
         }
     }
 */

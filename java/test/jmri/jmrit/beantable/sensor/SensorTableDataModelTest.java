@@ -40,7 +40,7 @@ public class SensorTableDataModelTest extends jmri.jmrit.beantable.AbstractBeanT
     
     @Override
     public int getModelColumnCount(){
-        return 13;
+        return 14;
     }
     
     @Test
@@ -57,9 +57,11 @@ public class SensorTableDataModelTest extends jmri.jmrit.beantable.AbstractBeanT
             t.getColumnName(SensorTableDataModel.INACTIVEDELAY));
         assertEquals("Column10 - PULLUPCOL",Bundle.getMessage("SensorPullUp"),
             t.getColumnName(SensorTableDataModel.PULLUPCOL));
-        assertEquals("Column11 - FORGETCOL",Bundle.getMessage("StateForgetHeader"),
+        assertEquals("Column11 - DETECTSCOL",Bundle.getMessage("SensorDetects"),
+            t.getColumnName(SensorTableDataModel.DETECTSCOL));
+        assertEquals("Column12 - FORGETCOL",Bundle.getMessage("StateForgetHeader"),
             t.getColumnName(SensorTableDataModel.FORGETCOL));
-        assertEquals("Column12 - QUERYCOL",Bundle.getMessage("StateQueryHeader"),
+        assertEquals("Column13 - QUERYCOL",Bundle.getMessage("StateQueryHeader"),
             t.getColumnName(SensorTableDataModel.QUERYCOL));
     }
     
@@ -71,6 +73,7 @@ public class SensorTableDataModelTest extends jmri.jmrit.beantable.AbstractBeanT
         assertEquals("ACTIVEDELAY Long not long",Long.class,t.getColumnClass(SensorTableDataModel.ACTIVEDELAY) );
         assertEquals("INACTIVEDELAY Long not long",Long.class,t.getColumnClass(SensorTableDataModel.INACTIVEDELAY) );
         assertEquals("PULLUPCOL ",JComboBox.class,t.getColumnClass(SensorTableDataModel.PULLUPCOL) );
+        assertEquals("DETECTSCOL ",JComboBox.class,t.getColumnClass(SensorTableDataModel.DETECTSCOL) );
         assertEquals("FORGETCOL ",JButton.class,t.getColumnClass(SensorTableDataModel.FORGETCOL) );
         assertEquals("QUERYCOL ",JButton.class,t.getColumnClass(SensorTableDataModel.QUERYCOL) );
     }
@@ -198,6 +201,39 @@ public class SensorTableDataModelTest extends jmri.jmrit.beantable.AbstractBeanT
         }
         assertEquals("sensor toggled by clicking the cell", Sensor.ACTIVE, s.getKnownState());
         model.dispose();
+    }
+
+    @Test
+    public void testDetectsColumn() {
+        Sensor s = InstanceManager.getDefault(SensorManager.class).provideSensor("IS1");
+        int row = t.getRowCount() - 1;
+        assertSame("the sensor's row", s, t.getValueAt(row, SensorTableDataModel.SYSNAMECOL));
+        assertTrue("editable", t.isCellEditable(row, SensorTableDataModel.DETECTSCOL));
+
+        JComboBox<?> c = (JComboBox<?>) t.getValueAt(row, SensorTableDataModel.DETECTSCOL);
+        assertEquals("the default", Sensor.Detects.WHEELS, c.getSelectedItem());
+        assertEquals("every choice", Sensor.Detects.values().length, c.getItemCount());
+
+        c.setSelectedItem(Sensor.Detects.BODY);
+        t.setValueAt(c, row, SensorTableDataModel.DETECTSCOL);
+        assertEquals("set from the table", Sensor.Detects.BODY, s.getDetects());
+        assertEquals("shown in the table", Sensor.Detects.BODY,
+                ((JComboBox<?>) t.getValueAt(row, SensorTableDataModel.DETECTSCOL)).getSelectedItem());
+    }
+
+    @Test
+    public void testDetectsColumnHiddenUntilChosen() {
+        InstanceManager.getDefault(SensorManager.class).provideSensor("IS1");
+        JTable table = new JTable(t);
+        XTableColumnModel tcm = new XTableColumnModel();
+        table.setColumnModel(tcm);
+        table.createDefaultColumnsFromModel();
+        t.configureTable(table);
+        Assertions.assertFalse(tcm.isColumnVisible(tcm.getColumnByModelIndex(SensorTableDataModel.DETECTSCOL)),
+                "hidden at first");
+        Assertions.assertTrue(tcm.isColumnVisible(tcm.getColumnByModelIndex(SensorTableDataModel.INVERTCOL)),
+                "the others as before");
+        t.stopPersistingTable(table);
     }
 
     @BeforeEach

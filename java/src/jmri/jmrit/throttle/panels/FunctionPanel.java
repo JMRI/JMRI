@@ -22,6 +22,7 @@ import jmri.jmrit.throttle.preferences.ThrottlesPreferences;
 import jmri.util.FileUtil;
 import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.OptionallyTabbedPanel;
+import jmri.util.ThreadingUtil;
 
 import org.jdom2.Element;
 
@@ -320,25 +321,24 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
                         log.debug("setFnButtons(): can't parse button image size attribute ");
                     }
                 }
-                functionButtons[i].setButtonLabel( i<3 ? Bundle.getMessage(Throttle.getFunctionString(i)) : Throttle.getFunctionString(i) );
+                functionButtons[i].setDisplay(rosterEntry.getFunctionVisible(fn));
+                functionButtons[i].setButtonLabel( fn<3 ? Bundle.getMessage(Throttle.getFunctionString(fn)) : Throttle.getFunctionString(fn) );
                 String text = rosterEntry.getFunctionLabel(fn);
                 if (text != null) {
-                    functionButtons[i].setDisplay(rosterEntry.getFunctionVisible(fn));
                     functionButtons[i].setButtonLabel(text);
-                    if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
-                        functionButtons[i].setIconPath(rosterEntry.getFunctionImage(fn));
-                        functionButtons[i].setSelectedIconPath(rosterEntry.getFunctionSelectedImage(fn));
-                    } else {
-                        functionButtons[i].setIconPath(null);
-                        functionButtons[i].setSelectedIconPath(null);
-                    }
-                    functionButtons[i].setIsLockable(rosterEntry.getFunctionLockable(fn));
-                } else if (preferences.isUsingExThrottle()
-                        && preferences.isHidingUndefinedFuncButt()) {
-                    functionButtons[i].setDisplay(false);
+                }
+                functionButtons[i].setIsLockable(rosterEntry.getFunctionLockable(fn));
+                String fnImage = rosterEntry.getFunctionImage(fn);
+                String fnSelectedImage = rosterEntry.getFunctionSelectedImage(fn);
+                if (preferences.isUsingExThrottle() && preferences.isUsingFunctionIcon()) {
+                    functionButtons[i].setIconPath(fnImage);
+                    functionButtons[i].setSelectedIconPath(fnSelectedImage);
                 } else {
-                    functionButtons[i].setDisplay(true);
-                    functionButtons[i].setButtonLabel( fn<3 ? Bundle.getMessage(Throttle.getFunctionString(fn)) : Throttle.getFunctionString(fn) );
+                    functionButtons[i].setIconPath(null);
+                    functionButtons[i].setSelectedIconPath(null);
+                }
+                if ((text == null || text.isEmpty()) && fnImage == null && fnSelectedImage == null && preferences.isUsingExThrottle() && preferences.isHidingUndefinedFuncButt()) {
+                    functionButtons[i].setDisplay(false);
                 }
                 String fontSize = rosterEntry.getAttribute("function"+fn+"_ThrottleFontSize");
                 if (fontSize != null) {
@@ -348,9 +348,9 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
                         log.debug("setFnButtons(): can't parse font size attribute ");
                     }
                 }
-                functionButtons[i].updateLnF();                
+                functionButtons[i].updateLnF();
             }
-        }        
+        }
     }
 
     private void resetFnButton(FunctionButton fb, int i) {
@@ -395,6 +395,26 @@ public class FunctionPanel extends OptionallyTabbedPanel implements FunctionList
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
+        if (!ThreadingUtil.isGUIThread()) {
+            // throttles fire changes on the thread that made them: a Warrant, a script or a connection's own
+            ThreadingUtil.runOnGUIEventually(() -> throttlePropertyChange(e));
+            return;
+        }
+        throttlePropertyChange(e);
+    }
+
+    /**
+     * Update this panel for a change of its throttle, on the GUI thread (Swing
+     * thread).
+     * <p>
+     * Kept apart from {@link #propertyChange}, which a subclass may override
+     * to act on the change itself before calling it (as the Warrant learn
+     * panels record it). A change passed to the GUI thread comes here, so the
+     * subclass does not act on it a second time.
+     *
+     * @param e the change
+     */
+    private void throttlePropertyChange(java.beans.PropertyChangeEvent e) {
         if (e == null) {
             return;
         }

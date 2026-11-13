@@ -2,10 +2,10 @@ package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
 
+import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-
-import jmri.util.JUnitUtil;
 
 /**
  *
@@ -18,7 +18,7 @@ public class BeanTableFrameTest extends jmri.util.JmriJFrameTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-            frame = new BeanTableFrame();
+            frame = new BeanTableFrame<>();
         }
     }
 
