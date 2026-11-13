@@ -934,6 +934,10 @@
                 do, they move on the layout's own track and set internal
                 sensors as they pass, with the time they passed. The sample
                 script SimulatedTrains.py shows two trains running.</li>
+            <li>For developers: simulated trains can carry an ID tag, read by
+                the reporters of the Blocks they come into, on internal
+                reporters and on CBUS reporters of CAN Simulation
+                connections.</li>
             <li>For developers: tests and scripts can set faults on simulated
                 trains' layout: detector drop-outs, a sensor showing a train
                 that isn't there, swapped sensors, a Block longer or shorter
