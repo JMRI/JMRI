@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.LocoAddress;
@@ -161,6 +162,46 @@ public class ControlPanelTest {
         assertEquals( 0.0, throttle.getSpeedSetting(), 1e-7);
         assertEquals(mode, throttle.getSpeedStepMode());
 
+    }
+
+    /**
+     * A throttle changed on another thread, as by a Warrant or a script, is
+     * shown by the panel on the GUI thread, not on the thread that changed it.
+     *
+     * @throws InterruptedException if interrupted while holding the GUI thread
+     */
+    @Test
+    public void testThrottleChangeOnOtherThreadShownOnGuiThread() throws InterruptedException {
+        setupControlPanel();
+        InstanceManager.throttleManagerInstance().requestThrottle(3,
+            new ThrottleListener(){
+              @Override
+              public void notifyThrottleFound(DccThrottle t) {
+                throttle = t;
+                panel.notifyAddressThrottleFound(t);
+              }
+
+              @Override
+              public void notifyFailedThrottleRequest(LocoAddress address,
+                  String reason) {
+              }
+              @Override
+              public void notifyDecisionRequired(LocoAddress address,
+                  DecisionType question) {
+              }
+            });
+        assertNotNull(throttle);
+        int before = ThreadingUtil.runOnGUIwithReturn(() -> panel.getSpeedSlider().getValue());
+
+        int whileHeld;
+        try (GuiThreadHold hold = new GuiThreadHold()) {
+            throttle.setSpeedSetting(0.5f); // on this thread, not the GUI thread
+            whileHeld = panel.getSpeedSlider().getValue();
+        }
+
+        assertEquals(before, whileHeld, "slider not changed off the GUI thread");
+        JUnitUtil.waitFor(() -> ThreadingUtil.runOnGUIwithReturn(() -> panel.getSpeedSlider().getValue() != before),
+            "slider follows the throttle");
     }
 
     @BeforeEach
