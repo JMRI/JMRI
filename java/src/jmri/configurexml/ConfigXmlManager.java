@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.annotation.CheckReturnValue;
 
 import jmri.InstanceManager;
+import jmri.JmriUncheckedException;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.revhistory.FileHistory;
 import jmri.util.FileUtil;
@@ -574,7 +575,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 return ret;
             } catch (Exception e) {
                 log.trace("  ending load() via JmriConfigureXmlException");
-                throw new RuntimeException(e);
+                throw new JmriUncheckedException(e);
             }
         });
 

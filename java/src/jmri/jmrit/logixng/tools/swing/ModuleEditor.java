@@ -5,6 +5,7 @@ import java.util.*;
 
 import jmri.Category;
 import jmri.InstanceManager;
+import jmri.JmriUncheckedException;
 import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.Module;
@@ -58,11 +59,11 @@ public class ModuleEditor extends TreeEditor implements AbstractLogixNGEditor<Mo
 
         if (!_treePane._femaleRootSocket.isConnected()) {
             // This should never happen
-            throw new RuntimeException("Module is not connected");
+            throw new JmriUncheckedException("Module is not connected");
         }
         if (!(_treePane._femaleRootSocket.getConnectedSocket().getObject() instanceof Module)) {
             // This should never happen
-            throw new RuntimeException("Connected socket is not a Module");
+            throw new JmriUncheckedException("Connected socket is not a Module");
         }
         _module = (Module) _treePane._femaleRootSocket.getConnectedSocket().getObject();
 
@@ -85,7 +86,7 @@ public class ModuleEditor extends TreeEditor implements AbstractLogixNGEditor<Mo
             module = (Module)maleSocket.getObject();
         } else {
             while ((b != null) && !(b instanceof Module)) b = b.getParent();
-            if (b == null) throw new RuntimeException("Module is not found");
+            if (b == null) throw new JmriUncheckedException("Module is not found");
             module = (Module)b;
         }
 
@@ -118,7 +119,7 @@ public class ModuleEditor extends TreeEditor implements AbstractLogixNGEditor<Mo
             socket.connect(new ModuleEditorMaleSocket(null, module));
         } catch (SocketAlreadyConnectedException e) {
             // This should never happen
-            throw new RuntimeException("Socket already connected", e);
+            throw new JmriUncheckedException("Socket already connected", e);
         }
 
         return socket;

@@ -48,6 +48,7 @@
 
               <xs:element name="blockNamedBean" type="LogixNG_SelectNamedBeanType" minOccurs="0" maxOccurs="1" />
               <xs:element name="listenToBlock" type="yesNoType" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="blockValueType" type="LogixNG_BlockValueType_Type" minOccurs="0" maxOccurs="1"/>
 
               <xs:element name="reporterNamedBean" type="LogixNG_SelectNamedBeanType" minOccurs="0" maxOccurs="1" />
               <xs:element name="listenToReporter" type="yesNoType" minOccurs="0" maxOccurs="1"/>

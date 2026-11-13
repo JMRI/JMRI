@@ -66,6 +66,7 @@
             <li><a href="I8N.shtml">Internationalization</a></li>
             <li><a href="Logging.shtml">Logging &amp; Error Handling</a></li>
             <li><a href="JUnit.shtml">Unit testing with JUnit</a></li>
+            <li><a href="simulatedtrains.shtml">Writing tests with simulated trains</a></li>
             <li><a href="Javadoc.shtml">Documentation using Javadoc and UML</a></li>
             <li><a href="SpotBugs.shtml">Run the SpotBugs static analysis tool</a></li>
             <li><a href="Help.shtml">Providing help using JavaHelp</a></li>

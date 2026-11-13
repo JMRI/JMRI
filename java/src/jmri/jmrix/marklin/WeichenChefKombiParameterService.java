@@ -1,17 +1,14 @@
 package jmri.jmrix.marklin;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
+
 import jmri.jmrix.marklin.mcan.address.AddressEncoding;
 import jmri.jmrix.marklin.mcan.address.CdBAddressCodec;
-import jmri.jmrix.marklin.mcan.cdb.CdBConfigCommands;
-import jmri.jmrix.marklin.mcan.cdb.CdBFrameParser;
-import jmri.jmrix.marklin.mcan.cdb.CdBWeichenChefCommands;
-import jmri.jmrix.marklin.mcan.cdb.CdBFrameType;
+import jmri.jmrix.marklin.mcan.cdb.*;
 import jmri.jmrix.marklin.mcan.cs2.Cs2AccessoryCommands;
 import jmri.util.ThreadingUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -175,6 +172,7 @@ public class WeichenChefKombiParameterService {
      *
      * Callers of this service (UI panels, tests) should call this or {@link #dispose()} when they are done with it.
      */
+    @SuppressWarnings("javadoc")
     public void cancelPendingTasks() {
         ThreadingUtil.runOnGUI(() -> {
             selectGeneration++;
@@ -199,6 +197,7 @@ public class WeichenChefKombiParameterService {
      * staggered {@value #FRAME_INTERVAL_MS} ms apart.
      * The first retry check fires {@value #RETRY_DELAY_MS} ms after the last frame is sent.
      */
+    @SuppressWarnings("javadoc")
     public void startPropertyQuery() {
         if (currentRawId == 0) return;
         int canClass = getCanClass();
@@ -259,6 +258,7 @@ public class WeichenChefKombiParameterService {
      *
      * @param config configuration to write
      */
+    @SuppressWarnings("javadoc")
     public void writeConfiguration(WeichenChefKombiConfig config) {
         if (currentRawId == 0) return;
         int canClass = getCanClass();

@@ -1,6 +1,5 @@
 package jmri.jmrix.cmri.serial.sim;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
@@ -15,8 +14,6 @@ import jmri.util.ImmediatePipedOutputStream;
  *
  * @author Bob Jacobsen Copyright (C) 2002, 2008, 2011
  */
-@SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-        justification = "Access to 'self' OK until multiple instance pattern installed")
 public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter {
 
     @Override
@@ -39,16 +36,11 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
     /**
      * set up all of the other objects to operate connected to this port
      */
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "Access to 'self' OK until multiple instance pattern installed")
-
     @Override
     public void configure() {
         // install a traffic controller that doesn't time out
         SerialTrafficController tc = new SerialTrafficController() {
             // timeout doesn't do anything
-            @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-                    justification = "only until multi-connect update done")
             @Override
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage m, jmri.jmrix.AbstractMRListener l) {
             }

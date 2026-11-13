@@ -1,10 +1,10 @@
 package jmri;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+
 import javax.annotation.CheckReturnValue;
 import javax.annotation.CheckForNull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -49,8 +49,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @CheckReturnValue
 @javax.annotation.concurrent.Immutable
-@SuppressFBWarnings(value = {"HSM_HIDING_METHOD"},
-    justification = "Desired pattern is repeated class names with package-level access to members")
+// @SuppressFBWarnings(value = {"HSM_HIDING_METHOD"},
+//    justification = "Desired pattern is repeated class names with package-level access to members")
 public class Bundle {
 
     @CheckForNull
@@ -192,7 +192,7 @@ public class Bundle {
      * Formats a message string with parameters.
      * <p>
      * It's used when a message is fetched from a foreign bundle.
-     * 
+     *
      * @param message The message to be formatted
      * @param subs    Array of objects to be inserted into the message
      * @return The formatted message
@@ -227,7 +227,7 @@ public class Bundle {
     //           log.error("Failed to load defaults because of missing bundle");
     //           return;
     //        }
-    
+
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Bundle.class);
 
 }

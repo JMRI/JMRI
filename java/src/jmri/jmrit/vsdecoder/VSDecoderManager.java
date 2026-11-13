@@ -833,6 +833,7 @@ public class VSDecoderManager implements PropertyChangeListener {
         // Needs to check the ID on the event, look up the appropriate VSDecoder,
         // get the location of the event source, and update the decoder's location.
         String eventName = event.getPropertyName();
+        log.debug("reporter class: {}, LF: {}, ALF: {}", event.getSource().getClass(), lf_version, alf_version);
         if (lf_version == 1 || (geofile_ok && alf_version == 1)) {
             if ((event.getSource() instanceof PhysicalLocationReporter) && (eventName.equals("currentReport"))) { // NOI18N
                 PhysicalLocationReporter arp = (PhysicalLocationReporter) event.getSource();

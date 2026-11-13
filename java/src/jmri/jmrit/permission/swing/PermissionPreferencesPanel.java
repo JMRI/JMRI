@@ -31,7 +31,7 @@ public class PermissionPreferencesPanel extends JPanel implements PreferencesPan
     public PermissionPreferencesPanel() {
         PermissionManager mngr = InstanceManager.getDefault(PermissionManager.class);
         if (!(mngr instanceof DefaultPermissionManager)) {
-            throw new RuntimeException("PermissionManager is not of type DefaultPermissionManager");
+            throw new JmriUncheckedException("PermissionManager is not of type DefaultPermissionManager");
         }
         _temporaryPermissionManager = ((DefaultPermissionManager)mngr).getTemporaryInstance();
         initGUI();

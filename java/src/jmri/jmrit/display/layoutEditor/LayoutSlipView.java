@@ -53,8 +53,6 @@ public class LayoutSlipView extends LayoutTurnoutView {
 
     private final LayoutSlip slip;
 
-    public int currentState = UNKNOWN;
-
     public LayoutSlip getSlip() {return slip; }
     // this should only be used for debugging...
     @Override

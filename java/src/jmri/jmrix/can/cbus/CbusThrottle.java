@@ -323,7 +323,15 @@ public class CbusThrottle extends AbstractThrottle {
 
     // following a speed or direction change, sends to layout
     private void sendToLayout() {
-        int newCbusSpeed = getCbusSpeedDirection();
+        int newCbusSpeed;
+        float sentSpeed;
+        boolean sentForward;
+        synchronized (this) {
+            // the speed and direction this message carries, taken together
+            newCbusSpeed = getCbusSpeedDirection();
+            sentSpeed = this.speedSetting;
+            sentForward = this.isForward;
+        }
         if (!hasActiveSession()) {
             // disposed, or stolen and awaiting session recovery,
             // local state is updated but nothing is sent
@@ -338,7 +346,24 @@ public class CbusThrottle extends AbstractThrottle {
         if ( timer != null ) {
             timer.restart();
         }
-        cs.setSpeedDir(_handle, oldCbusSpeed);
+        if (hasSpeedSentListeners()) {
+            cs.setSpeedDir(_handle, oldCbusSpeed,
+                (m, timeNanos) -> fireSpeedSent(sentSpeed, sentForward, timeNanos));
+        } else {
+            cs.setSpeedDir(_handle, oldCbusSpeed);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Every CBUS connection records when it writes a message, so a CBUS
+     * Throttle reports each speed and direction (DSPD) message when it has
+     * been written. Keep-alive (DKEEP) messages are not reported.
+     */
+    @Override
+    public boolean reportsSpeedSent() {
+        return true;
     }
 
     /**

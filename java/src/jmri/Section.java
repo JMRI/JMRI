@@ -174,6 +174,57 @@ public interface Section extends NamedBean {
     Sensor getReverseStoppingSensor();
 
     /**
+     * Key of the property holding the stop point for trains running through
+     * the Section in the forward direction.
+     */
+    String STOP_POINT_FORWARD = "StopPointForward"; // NOI18N
+
+    /**
+     * Key of the property holding the stop point for trains running through
+     * the Section in the reverse direction.
+     */
+    String STOP_POINT_REVERSE = "StopPointReverse"; // NOI18N
+
+    /**
+     * Get the stop point for trains running through the Section in a
+     * direction: how far from the end of the Section where they enter the
+     * head of a train is when it stops in the Section. Where the Section has a
+     * stopping sensor for that direction, this is where the sensor is.
+     * <p>
+     * Kept as a property of the Section, so it is saved with the Section's
+     * other properties.
+     *
+     * @param direction {@link #FORWARD} or {@link #REVERSE}
+     * @return the distance in mm, or 0 if no stop point is set
+     */
+    default float getStopPointMm(int direction) {
+        Object value = getProperty(direction == REVERSE ? STOP_POINT_REVERSE : STOP_POINT_FORWARD);
+        if (value instanceof Number) {
+            float mm = ((Number) value).floatValue();
+            return mm > 0.0f ? mm : 0.0f;
+        }
+        return 0.0f;
+    }
+
+    /**
+     * Set the stop point for trains running through the Section in a
+     * direction.
+     *
+     * @param direction {@link #FORWARD} or {@link #REVERSE}
+     * @param mm        the distance in mm from the end of the Section where
+     *                  trains enter; 0 or less for none
+     * @see #getStopPointMm(int)
+     */
+    default void setStopPointMm(int direction, float mm) {
+        String key = direction == REVERSE ? STOP_POINT_REVERSE : STOP_POINT_FORWARD;
+        if (mm > 0.0f) {
+            setProperty(key, mm);
+        } else {
+            removeProperty(key);
+        }
+    }
+
+    /**
      * Add a Block to the Section. Block and sequence number must be unique
      * within the Section. Block sequence numbers are set automatically as
      * blocks are added.
@@ -377,19 +428,50 @@ public interface Section extends NamedBean {
     void setAlternateColorFromActiveBlock(boolean set);
 
     /**
+     * Set the allocated value of every Block in this Section: the train the
+     * Section is allocated to, shown on panels while a Block has no value of
+     * its own. The Blocks' values are left to Block tracking.
+     *
+     * @param value the train name, roster entry or other value; null when the
+     *              Section is no longer allocated
+     * @see Block#setAllocatedValue(Object)
+     */
+    void setAllocatedValue(@CheckForNull Object value);
+
+    /**
      * Set the block values for blocks in this Section.
      *
      * @param name the value to set all blocks to
+     * @deprecated since 5.19.1; to show the train a Section is allocated to,
+     *             use {@link #setAllocatedValue(Object)}, which leaves the
+     *             Block values to Block tracking; to set the values, use
+     *             {@link Block#setValue(Object)} on each Block
      */
+    @Deprecated(since="5.19.1", forRemoval=true)
     void setNameInBlocks(String name);
 
     /**
      * Set the block values for blocks in this Section.
      *
      * @param value the name to set block values to
+     * @deprecated since 5.19.1; to show the train a Section is allocated to,
+     *             use {@link #setAllocatedValue(Object)}, which leaves the
+     *             Block values to Block tracking; to set the values, use
+     *             {@link Block#setValue(Object)} on each Block
      */
+    @Deprecated(since="5.19.1", forRemoval=true)
     void setNameInBlocks(Object value);
 
+    /**
+     * Set the block values for the Blocks of this Section from the first
+     * occupied Block, in the direction of travel, to the end of the Section.
+     *
+     * @param value the value to set
+     * @deprecated since 5.19.1; to show the train a Section is allocated to,
+     *             use {@link #setAllocatedValue(Object)}, which leaves the
+     *             Block values to Block tracking
+     */
+    @Deprecated(since="5.19.1", forRemoval=true)
     void setNameFromActiveBlock(Object value);
 
     /**
@@ -402,7 +484,11 @@ public interface Section extends NamedBean {
      * so the text set above doesn't get wiped out.
      *
      * @param set true to suppress the update; false otherwise
+     * @deprecated since 5.19.1; to show the train a Section is allocated to
+     *             while its Blocks are empty, use
+     *             {@link #setAllocatedValue(Object)}
      */
+    @Deprecated(since="5.19.1", forRemoval=true)
     void suppressNameUpdate(boolean set);
 
     @SuppressWarnings("hiding")     // Field has same name as a field in the super class

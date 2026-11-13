@@ -246,6 +246,49 @@
       web.servlet.panel as an example, can be found on <a href=
       "PanelServlet.shtml#example">PanelServlet Help page</a>.</p>
 
+      <h3 id="jquery3">Updating Custom Pages to jQuery 3</h3>
+
+      <p>As of JMRI 5.19.1, the web server's pages use jQuery 3.7.1, and the older jQuery 2.2.4
+      is no longer included. If you have your own web pages that load
+      jQuery, or edited copies of JMRI files like <code>panel.js</code> or
+      <code>webThrottle.js</code> in a <code>web/js</code> directory under your User Files,
+      profile or settings directory, they may need a few changes.</p>
+
+      <ol>
+        <li>Change any script tags that load an old jQuery so they load
+        <code>/js/jquery-3.7.1.min.js</code> instead.</li>
+
+        <li>Right after that line, add JMRI's copy of jQuery Migrate:
+          <pre>
+&lt;script src="/js/jquery-3.7.1.min.js"&gt;&lt;/script&gt;
+&lt;script src="/js/jquery-migrate-3.6.0.js"&gt;&lt;/script&gt;
+</pre>
+          Migrate puts back most of what jQuery 3 removed, so older code usually keeps working.
+          It also writes a warning to the browser's console (open the browser's developer tools to
+          see it) for each old call it finds, saying what to change it to.
+        </li>
+
+        <li>Load your page, work through the warnings and update your code.</li>
+
+        <li>Once the console is clear, remove the Migrate line.</li>
+      </ol>
+
+      <p>For edited copies of JMRI files, it's often easier to start again from the new JMRI
+      version of the file and re-apply your changes to it.</p>
+
+      <p>These are the changes JMRI's own files needed, as examples:</p>
+
+      <ul>
+        <li><code>.load(fn)</code>, <code>.error(fn)</code> and <code>.unload(fn)</code> become
+        <code>.on('load', fn)</code>, <code>.on('error', fn)</code> and
+        <code>.on('unload', fn)</code></li>
+
+        <li><code>.size()</code> becomes <code>.length</code></li>
+      </ul>
+
+      <p>The <a href="https://jquery.com/upgrade-guide/3.0/">jQuery 3.0 upgrade guide</a> lists
+      everything that changed.</p>
+
       <h2 id="redirection">Request Redirection</h2>
 
       <p>Some requests are automatically redirected by one of the JMRI web services to ensure that

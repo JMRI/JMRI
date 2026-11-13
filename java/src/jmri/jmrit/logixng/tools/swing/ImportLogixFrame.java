@@ -186,11 +186,11 @@ public final class ImportLogixFrame extends JmriJFrame {
                 }
             }
         } else if (_whichLogix_All.isSelected()) {
-            throw new RuntimeException("Currently not supported");
+            throw new JmriUncheckedException("Currently not supported");
         } else if (_whichLogix_All.isSelected()) {
-            throw new RuntimeException("Currently not supported");
+            throw new JmriUncheckedException("Currently not supported");
         } else {
-            throw new RuntimeException("No choice selected");
+            throw new JmriUncheckedException("No choice selected");
         }
 
         boolean error = false;
@@ -226,7 +226,7 @@ public final class ImportLogixFrame extends JmriJFrame {
                     ImportLogix importLogix = new ImportLogix(logix, _includeSystemLogixs.isSelected(), false);
                     importLogix.doImport();
                 } catch (JmriException e) {
-                    throw new RuntimeException("Unexpected error: "+e.getMessage(), e);
+                    throw new JmriUncheckedException("Unexpected error: "+e.getMessage(), e);
                 }
             }
             JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("LogixsAreImported"),

@@ -37,11 +37,8 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
     private ProgReplyListener progListener;
 
     static final int WAIT_VALUE = 1000; // number of ms to wait after a
-    // programming operation.  This 
+    // programming operation.  This
     // should not be more than 15.
-
-    @SuppressFBWarnings(value = "SC_START_IN_CTOR",
-            justification = "with existing code structure, we do not expect this to ever be subclassed.")
 
     public LV102InternalFrame() {
 
@@ -166,7 +163,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                 defaultButton.setSelected(false);
             });
 
-        // install a handler to set the status line when the selected item 
+        // install a handler to set the status line when the selected item
         // changes in the e-Line box
         eLineBox.addActionListener((ActionEvent a) -> {
                 synchronized (currentStatus) {
@@ -175,7 +172,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                 }
             });
 
-        // install a handler to set the status line when the selected item 
+        // install a handler to set the status line when the selected item
         // changes in the RailCom box
         railComBox.addActionListener((ActionEvent a) -> {
                 synchronized (currentStatus) {
@@ -184,7 +181,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                 }
             });
 
-        // install a handler to set the status line when the selected item 
+        // install a handler to set the status line when the selected item
         // changes in the RailComMode box
         railComModeBox.addActionListener((ActionEvent a) -> {
                 synchronized (currentStatus) {
@@ -193,7 +190,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                 }
             });
 
-        // install a handler to set the status line when the selected item 
+        // install a handler to set the status line when the selected item
         // changes in the RailComTiming box
         railComTimingBox.addActionListener((ActionEvent a) -> {
                 synchronized (currentStatus) {
@@ -202,7 +199,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                 }
             });
 
-        // install a handler to set the status line when the selected item 
+        // install a handler to set the status line when the selected item
         // changes in the volt box
         voltBox.addActionListener((ActionEvent a) -> {
                 synchronized (currentStatus) {
@@ -293,7 +290,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                 currentStatus.setText(Bundle.getMessage(LV_102_STATUS_PROG_MODE));
                 currentStatus.doLayout();
                 log.debug(DEBUG_STATUS, Bundle.getMessage(LV_102_STATUS_PROG_MODE));
-                /* Pause briefly to give the user a chance to see what is 
+                /* Pause briefly to give the user a chance to see what is
                  happening */
                 new jmri.util.WaitHandler(this,WAIT_VALUE);
 
@@ -305,7 +302,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                     // Don't do anything with this yet
                 }
 
-                /* Pause briefly to give the booster a chance to change 
+                /* Pause briefly to give the booster a chance to change
                  into It's programming mode */
                 new jmri.util.WaitHandler(this,WAIT_VALUE);
 
@@ -321,7 +318,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                     // Don't do anything with this yet
                 }
 
-                /* Pause briefly to wait for the programmer to send back a 
+                /* Pause briefly to wait for the programmer to send back a
                  reply */
                 new jmri.util.WaitHandler(this,WAIT_VALUE);
 
@@ -342,7 +339,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                 currentStatus.doLayout();
                 log.debug(DEBUG_STATUS, Bundle.getMessage(LV_102_STATUS_PROG_MODE));
 
-                /* Pause briefly to give the user a chance to see what is 
+                /* Pause briefly to give the user a chance to see what is
                  happening */
                 new jmri.util.WaitHandler(this,WAIT_VALUE);
 
@@ -354,7 +351,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                     // Don't do anything with this yet
                 }
 
-                /* Pause briefly to give the booster a chance to change 
+                /* Pause briefly to give the booster a chance to change
                  into It's programming mode */
                 new jmri.util.WaitHandler(this,WAIT_VALUE);
 
@@ -370,7 +367,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                     // Don't do anything with this yet
                 }
 
-                /* Pause briefly to wait for the programmer to send back a 
+                /* Pause briefly to wait for the programmer to send back a
                  reply */
                 new jmri.util.WaitHandler(this,WAIT_VALUE);
 
@@ -392,7 +389,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                 currentStatus.doLayout();
                 log.debug(DEBUG_STATUS, Bundle.getMessage(LV_102_STATUS_PROG_MODE));
 
-                /* Pause briefly to give the user a chance to see what is 
+                /* Pause briefly to give the user a chance to see what is
                  happening */
                 new jmri.util.WaitHandler(this,WAIT_VALUE);
 
@@ -404,7 +401,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                     // Don't do anything with this yet
                 }
 
-                /* Pause briefly to give the booster a chance to change 
+                /* Pause briefly to give the booster a chance to change
                  into It's programming mode */
                 new jmri.util.WaitHandler(this,WAIT_VALUE);
 
@@ -420,7 +417,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                     // Don't do anything with this yet
                 }
 
-                /* Pause briefly to wait for the programmer to send back a 
+                /* Pause briefly to wait for the programmer to send back a
                  reply */
                 new jmri.util.WaitHandler(this,WAIT_VALUE);
 
@@ -441,7 +438,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                 currentStatus.doLayout();
                 log.debug(DEBUG_STATUS, Bundle.getMessage(LV_102_STATUS_PROG_MODE));
 
-                /* Pause briefly to give the user a chance to see what is 
+                /* Pause briefly to give the user a chance to see what is
                  happening */
                 new jmri.util.WaitHandler(this,WAIT_VALUE);
 
@@ -453,7 +450,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                     // Don't do anything with this yet
                 }
 
-                /* Pause briefly to give the booster a chance to change 
+                /* Pause briefly to give the booster a chance to change
                  into It's programming mode */
                 new jmri.util.WaitHandler(this,WAIT_VALUE);
 
@@ -469,7 +466,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                     // Don't do anything with this yet
                 }
 
-                /* Pause briefly to wait for the programmer to send back a 
+                /* Pause briefly to wait for the programmer to send back a
                  reply */
                 new jmri.util.WaitHandler(this,WAIT_VALUE);
 
@@ -490,7 +487,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                 currentStatus.doLayout();
                 log.debug(DEBUG_STATUS, Bundle.getMessage(LV_102_STATUS_PROG_MODE));
 
-                /* Pause briefly to give the user a chance to see what is 
+                /* Pause briefly to give the user a chance to see what is
                  happening */
                 new jmri.util.WaitHandler(this,WAIT_VALUE);
 
@@ -502,7 +499,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                     // Don't do anything with this yet
                 }
 
-                /* Pause briefly to give the booster a chance to change 
+                /* Pause briefly to give the booster a chance to change
                  into It's programming mode */
                 new jmri.util.WaitHandler(this,WAIT_VALUE);
 
@@ -518,7 +515,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
                     // Don't do anything with this yet
                 }
 
-                /* Pause briefly to wait for the programmer to send back a 
+                /* Pause briefly to wait for the programmer to send back a
                  reply */
                 new jmri.util.WaitHandler(this,WAIT_VALUE);
 
@@ -528,7 +525,7 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
         }
     }
 
-    // Set to LV102 default values.  Voltage is 16, E Line is Active, 
+    // Set to LV102 default values.  Voltage is 16, E Line is Active,
     // Railcom is inactive, Railcom Mode is 3 bit cutout, Railcom Timing is 435 uS.
     void defaultLV102Settings() {
         voltBox.setSelectedIndex(10);

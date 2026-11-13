@@ -3,6 +3,7 @@ package jmri.implementation;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -152,7 +153,8 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
         if(getBlock()==null){
            _nextBlock = null; // no current block, so can't have a next block.
         } else {
-          _nextBlock = nextBlockOnPath(getBlock());
+          NextBlock next = nextBlockOnPath(getBlock(), getBlock().getDirection());
+          _nextBlock = (next == null ? null : next.block);
         }
     
         if(_nextBlock!=null) {
@@ -168,26 +170,43 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
         return _nextBlock;
     }
 
+    /**
+     * The Block a train enters next, with the direction it has as it enters.
+     */
+    private static final class NextBlock {
+        final Block block;
+        final int direction;
+
+        NextBlock(Block block, int direction) {
+            this.block = block;
+            this.direction = direction;
+        }
+    }
+
+    /**
+     * Find the Block a train leaving a Block enters next, on the paths that
+     * are set.
+     * <p>
+     * This is a lookup only: it does not change the direction of any Block,
+     * since Block tracking and Dispatcher use those directions. The direction
+     * of travel is passed along instead, so a walk ahead can follow it.
+     *
+     * @param current       the Block the train is leaving
+     * @param fromDirection the direction of travel in that Block
+     * @return the next Block and the direction of travel in it, or null if
+     *         no path out of the Block is set
+     */
     @CheckForNull
-    private Block nextBlockOnPath(Block current){
-        int fromdirection = current.getDirection();
-        List<Path> thispaths = current.getPaths();
-        for (final Path testpath : thispaths) {
+    private static NextBlock nextBlockOnPath(@Nonnull Block current, int fromDirection) {
+        for (Path testpath : current.getPaths()) {
             if (testpath.checkPathSet()) {
                 Block blockTest = testpath.getBlock();
                 int dirftTest = testpath.getFromBlockDirection();
                 int dirtoTest = testpath.getToBlockDirection();
-                if (directionMatch(fromdirection, dirtoTest)) { // most reliable
-                    blockTest.setDirection(dirtoTest);
-                    return blockTest;
-                }
-                if ((fromdirection & dirftTest) == 0) { // less reliable
-                    blockTest.setDirection(dirtoTest);
-                    return blockTest;
-                }
-                if ((fromdirection != dirftTest)) { // least reliable but copes with 180 degrees 
-                    blockTest.setDirection(dirtoTest);
-                    return blockTest;
+                if (directionMatch(fromDirection, dirtoTest) // most reliable
+                        || (fromDirection & dirftTest) == 0 // less reliable
+                        || fromDirection != dirftTest) { // least reliable but copes with 180 degrees
+                    return new NextBlock(blockTest, dirtoTest);
                 }
             }
         }
@@ -216,11 +235,15 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
             LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         
             Block b = getBlock();
-            Block nB = getNextBlock();
-            while(_nextMast == null && nB !=null ) {
-                _nextMast = lbm.getFacingSignalMast(b, nB);
-                b = nB;
-                nB = nextBlockOnPath(b); 
+            getNextBlock(); // update the next block, and fire its change
+            NextBlock nB = nextBlockOnPath(b, b.getDirection());
+            Set<Block> visited = new HashSet<>();
+            visited.add(b);
+            // a loop with no facing mast ends when it reaches a Block again
+            while (_nextMast == null && nB != null && visited.add(nB.block)) {
+                _nextMast = lbm.getFacingSignalMast(b, nB.block);
+                b = nB.block;
+                nB = nextBlockOnPath(b, nB.direction);
             }
             if ( _nextMast == null) {
                 // use block b which is the last non-null block in the path
@@ -265,13 +288,15 @@ public class DefaultCabSignal implements CabSignal, PropertyChangeListener {
             return blockList;
         }
         blockList.add(thisBlock);
-        Block nextBlock = nextBlockOnPath(thisBlock); 
-        SignalMast mast = ( nextBlock == null ? null : lbm.getFacingSignalMast(thisBlock, nextBlock));
-        while ( okToProceedAfterMast(mast) && nextBlock !=null ) {
-            blockList.add(nextBlock);
-            mast = lbm.getFacingSignalMast(thisBlock, nextBlock);
-            thisBlock = nextBlock;
-            nextBlock = nextBlockOnPath(thisBlock); 
+        Set<Block> visited = new HashSet<>(blockList);
+        NextBlock next = nextBlockOnPath(thisBlock, thisBlock.getDirection());
+        // a loop with no mast at stop ends when it reaches a Block again
+        while (next != null && !visited.contains(next.block)
+                && okToProceedAfterMast(lbm.getFacingSignalMast(thisBlock, next.block))) {
+            blockList.add(next.block);
+            visited.add(next.block);
+            thisBlock = next.block;
+            next = nextBlockOnPath(thisBlock, next.direction);
         }
         return blockList;
     }

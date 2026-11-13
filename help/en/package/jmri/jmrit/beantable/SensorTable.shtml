@@ -106,6 +106,27 @@
           help pages for specific <a href="../../../../html/hardware/index.shtml">hardware</a> or
           on manufacturers' web sites.
         </dd>
+
+        <dt id="detects"><strong>Detects</strong>
+        </dt>
+
+        <dd>
+          What the Sensor's detector sees of a train. It is hidden until you choose it from the
+          table's column menu (right-click on a column heading).
+          <ul>
+            <li><strong>Wheels</strong>, the default: current detection, axle counters and track
+            contacts see the first and last of a vehicle's wheels they can detect, so a little of
+            the vehicle overhangs them at each end.</li>
+
+            <li><strong>Vehicle body</strong>: optical and infrared detectors see the vehicle
+            itself, so little or nothing of it overhangs them.</li>
+
+            <li><strong>Tag or magnet</strong>: RFID and RailCom readers, and reed and Hall
+            sensors, see one point on one vehicle.</li>
+          </ul>
+          It describes the detector only: nothing in JMRI changes what it does because of it. A
+          Sensor left as <strong>Wheels</strong> adds nothing to the panel file.
+        </dd>
       </dl>
 
       <h3>Button Columns</h3>

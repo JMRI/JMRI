@@ -60,8 +60,9 @@ public class CbusLight extends AbstractLight implements CanListener, CbusEventIn
                 log.error("Can't parse CbusLight system name: {}", address);
                 return;
         }
-        // connect
-        addTc(tc);
+        // connect, through the connection's dispatcher, which offers this bean
+        // only the frames of its own addresses
+        CbusBeanDispatcher.add(tc, this, addrOn, addrOff);
     }
 
     /**
@@ -75,12 +76,12 @@ public class CbusLight extends AbstractLight implements CanListener, CbusEventIn
             case ON:
                 m = addrOn.makeMessage(tc.getCanid());
                 CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-                tc.sendCanMessage(m, this);
+                CbusBeanDispatcher.send(tc, m, this);
                 break;
             case OFF:
                 m = addrOff.makeMessage(tc.getCanid());
                 CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-                tc.sendCanMessage(m, this);
+                CbusBeanDispatcher.send(tc, m, this);
                 break;
             default:
                 log.warn("illegal state requested for Light: {}", getSystemName());
@@ -94,7 +95,7 @@ public class CbusLight extends AbstractLight implements CanListener, CbusEventIn
         CanMessage m = addrOn.makeMessage(tc.getCanid());
         m.setOpCode( CbusOpCodes.isShortEvent(CbusMessage.getOpcode(m)) ? CbusConstants.CBUS_ASRQ : CbusConstants.CBUS_AREQ);
         CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-        tc.sendCanMessage(m, this);
+        CbusBeanDispatcher.send(tc, m, this);
     }
     
     /** {@inheritDoc} */
@@ -162,7 +163,7 @@ public class CbusLight extends AbstractLight implements CanListener, CbusEventIn
      */
     @Override
     public void dispose() {
-        tc.removeCanListener(this);
+        CbusBeanDispatcher.remove(tc, this);
         super.dispose();
     }    
     

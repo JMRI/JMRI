@@ -122,6 +122,81 @@ public class GcTrafficControllerTest extends jmri.jmrix.can.TrafficControllerTes
         pcs.dispose();
     }
 
+    // The sender's frame, not its GridConnect encoding, is stamped once the
+    // write has returned, and its sent listener is told on the layout thread.
+    @Timeout(10)
+    @Test
+    public void testOutgoingFrameStampedWhenWritten() throws Exception {
+
+        DummyCanListener monitor = new DummyCanListener((GcTrafficController)tc);
+        java.util.concurrent.CountDownLatch writing = new java.util.concurrent.CountDownLatch(1);
+        java.util.concurrent.CountDownLatch release = new java.util.concurrent.CountDownLatch(1);
+        java.io.ByteArrayOutputStream written = new java.io.ByteArrayOutputStream();
+        java.io.OutputStream gate = new java.io.OutputStream() {
+            @Override
+            public void write(int b) throws java.io.IOException {
+                write(new byte[]{(byte) b}, 0, 1);
+            }
+
+            @Override
+            public void write(byte[] b, int off, int len) throws java.io.IOException {
+                writing.countDown();
+                try {
+                    release.await();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    throw new java.io.IOException(e);
+                }
+                written.write(b, off, len);
+            }
+        };
+        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
+        AbstractPortControllerScaffold pcs = new AbstractPortControllerScaffold(memo) {
+            private final java.io.DataOutputStream out = new java.io.DataOutputStream(gate);
+
+            @Override
+            public java.io.DataOutputStream getOutputStream() {
+                return out;
+            }
+        };
+        tc.connectPort(pcs);
+
+        java.util.concurrent.atomic.AtomicLong toldTime = new java.util.concurrent.atomic.AtomicLong();
+        java.util.concurrent.atomic.AtomicBoolean told = new java.util.concurrent.atomic.AtomicBoolean(false);
+        java.util.concurrent.atomic.AtomicBoolean onLayoutThread = new java.util.concurrent.atomic.AtomicBoolean(false);
+        CanMessage m = new CanMessage(new int[]{0x0D}, 0x7A); // QNN
+        m.setSentListener((message, timeNanos) -> {
+            Assertions.assertSame(m, message, "told of the sender's frame");
+            onLayoutThread.set(jmri.util.ThreadingUtil.isLayoutThread());
+            toldTime.set(timeNanos);
+            told.set(true);
+        });
+
+        long released;
+        try {
+            ((GcTrafficController)tc).sendCanMessage(m, null);
+            Assertions.assertTrue(writing.await(5, java.util.concurrent.TimeUnit.SECONDS), "write started");
+            Assertions.assertFalse(m.hasSentTime(), "not stamped while the write is under way");
+            released = System.nanoTime();
+        } finally {
+            release.countDown();
+        }
+
+        JUnitUtil.waitFor(told::get, "sent listener told");
+        String frame = written.toString(java.nio.charset.StandardCharsets.US_ASCII);
+        Assertions.assertTrue(frame.startsWith(":S") && frame.endsWith("N0D;"), "QNN written: " + frame);
+        Assertions.assertTrue(m.hasSentTime(), "sender's frame stamped");
+        Assertions.assertTrue(m.getSentTime() >= released, "stamped after the write returned");
+        Assertions.assertEquals(m.getSentTime(), toldTime.get(), "listener told the same time");
+        Assertions.assertTrue(onLayoutThread.get(), "listener told on the layout thread");
+        Assertions.assertSame(m, monitor.getMessages().get(0), "monitors were given the same frame");
+
+        monitor.dispose();
+        tc.disconnectPort(pcs);
+        pcs.dispose();
+        gate.close();
+    }
+
     @Override
     @BeforeEach
     public void setUp() {

@@ -70,7 +70,7 @@ public class ShutdownComputer extends AbstractDigitalAction {
                     break;
 
                 default:
-                    throw new RuntimeException("_operation has invalid value: " + operation.name());
+                    throw new JmriUncheckedException("_operation has invalid value: " + operation.name());
             }
         });
     }

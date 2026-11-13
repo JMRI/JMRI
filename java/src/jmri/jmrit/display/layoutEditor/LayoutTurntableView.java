@@ -131,6 +131,43 @@ public class LayoutTurntableView extends LayoutTrackView {
     }
 
     /**
+     * {@inheritDoc}
+     * <p>
+     * The bridge is drawn in the turntable's block's colours, and each ray in
+     * the colours of the block of the track joined to it.
+     */
+    @Override
+    public boolean usesLayoutBlock(@Nonnull LayoutBlock layoutBlock) {
+        if (getLayoutBlock() == layoutBlock) {
+            return true;
+        }
+        for (int k = 0; k < getNumberRays(); k++) {
+            TrackSegment ts = getRayConnectOrdered(k);
+            if ((ts != null) && (ts.getLayoutBlock() == layoutBlock)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * The bridge turns about the centre, and can point away from every ray, so
+     * this is the square round the circle that holds the pit and all the rays.
+     */
+    @Override
+    @Nonnull
+    public Rectangle2D getRepaintBounds() {
+        Point2D centre = getCoordsCenter();
+        double reach = getRadius();
+        for (int k = 0; k < getNumberRays(); k++) {
+            reach = Math.max(reach, centre.distance(getRayCoordsOrdered(k)));
+        }
+        return new Rectangle2D.Double(centre.getX() - reach, centre.getY() - reach, 2 * reach, 2 * reach);
+    }
+
+    /**
      * Add a ray at the specified angle.
      *
      * @param angle the angle
@@ -558,8 +595,6 @@ public class LayoutTurntableView extends LayoutTrackView {
         }
         return result;
     }
-
-    public String tLayoutBlockName = "";
 
     /**
      * Is this turntable turnout controlled?

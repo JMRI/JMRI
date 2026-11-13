@@ -44,15 +44,16 @@ class LayoutEditorComponent extends JComponent {
             if (clipBounds != null) {
                 if (!clipBounds.isEmpty()) {
                     if ((clipBounds.getWidth() > 0) && (clipBounds.getHeight() > 0)) {
-                        // clipBounds is the visible part of the panel, 
-                        // used here to cull drawing, while the incoming clip in g2
-                        // is the area Swing actually asked for in original graphics units 
-                        // (not scaled units). 
+                        // clipBounds is the visible part of the panel, used to
+                        // cull drawing; the incoming clip in g2 is the area Swing
+                        // asked to be repainted. Draw only where both apply:
+                        // replacing the incoming clip would redraw the whole
+                        // visible panel for every small repaint.
 
-                        log.debug("LEComponent.paint(): original g2 clip: {} requested clip: {}", 
+                        log.debug("LEComponent.paint(): original g2 clip: {} visible part: {}",
                                     g2.getClipBounds(), clipBounds);
 
-                        g2.setClip(clipBounds);
+                        g2.clip(clipBounds);
                     }
                 }
             }
@@ -656,13 +657,23 @@ class LayoutEditorComponent extends JComponent {
         }
     }
 
-    /*
-    * {@inheritDoc}
+    /**
+     * {@inheritDoc}
+     * <p>
+     * This component covers the whole target panel. Like the panel's other
+     * children (its icons and labels), its bounds are in the panel's unzoomed
+     * coordinates, as the target panel paints its children with its graphics
+     * already scaled by the zoom. Swing clips this component's painting to
+     * these bounds, so bounds in zoomed (screen) units would leave only part
+     * of the panel drawn when zoomed out.
      */
     @Override
     public Rectangle getBounds() {
         JComponent targetPanel = layoutEditor.getTargetPanel();
         Rectangle2D targetBounds = targetPanel.getBounds();
+        double zoom = layoutEditor.getZoom();
+        int width = (int) Math.ceil(targetBounds.getWidth() / zoom);
+        int height = (int) Math.ceil(targetBounds.getHeight() / zoom);
         Container parent = getParent();
         if (parent != null) {   // if there is a parent...
             Rectangle2D parentBounds = parent.getBounds();
@@ -672,10 +683,9 @@ class LayoutEditorComponent extends JComponent {
                     targetBounds.getX() - parentBounds.getX(),
                     targetBounds.getY() - parentBounds.getY());
 
-            return new Rectangle((int) origin.getX(), (int) origin.getY(),
-                    (int) targetBounds.getWidth(), (int) targetBounds.getHeight());
+            return new Rectangle((int) origin.getX(), (int) origin.getY(), width, height);
         } else {
-            return MathUtil.rectangle2DToRectangle(targetBounds);
+            return new Rectangle((int) targetBounds.getX(), (int) targetBounds.getY(), width, height);
         }
     }
 

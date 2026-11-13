@@ -305,6 +305,11 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     public static final String PROPERTY_ALLOCATED = "allocated";
 
     /**
+     * String constant for property changes to the allocated value.
+     */
+    public static final String PROPERTY_ALLOCATED_VALUE = "allocatedValue";
+
+    /**
      * Set the sensor by name.
      * Fires propertyChange "OccupancySensorChange" when changed.
      * @param pName the name of the Sensor to set
@@ -558,6 +563,53 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     @CheckForNull
     public Object getValue() {
         return _value;
+    }
+
+    private Object _allocatedValue = null;
+
+    /**
+     * Set the value that identifies the train this Block is allocated to, for
+     * example by Dispatcher. Unlike {@link #setValue(Object)}, which records
+     * the train in this Block, this records the train the Block is held for,
+     * which may not have reached it yet or may have left it. Block tracking
+     * does not use it.
+     * <p>
+     * Fires propertyChange "allocatedValue" when changed.
+     *
+     * @param value the train name, roster entry or other value; null when the
+     *              Block is no longer allocated
+     */
+    public void setAllocatedValue(@CheckForNull Object value) {
+        Object old = _allocatedValue;
+        if (Objects.equals(old, value)) {
+            return;
+        }
+        _allocatedValue = value;
+        firePropertyChange(PROPERTY_ALLOCATED_VALUE, old, value);
+    }
+
+    /**
+     * Get the value that identifies the train this Block is allocated to.
+     *
+     * @return the value, or null if the Block is not allocated or no value was
+     *         given
+     * @see #setAllocatedValue(Object)
+     */
+    @CheckForNull
+    public Object getAllocatedValue() {
+        return _allocatedValue;
+    }
+
+    /**
+     * Get the value to show for this Block on a panel: the train in it if
+     * known, otherwise the train it is allocated to.
+     *
+     * @return {@link #getValue()} if not null, else
+     *         {@link #getAllocatedValue()}
+     */
+    @CheckForNull
+    public Object getDisplayValue() {
+        return _value != null ? _value : _allocatedValue;
     }
 
     /**
@@ -853,6 +905,308 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      */
     public float getLengthIn() {
         return (_length / 25.4f);
+    }
+
+    /**
+     * The name of the property change fired when a route length through this
+     * Block is set or cleared. Each length is stored as a bean property whose
+     * key starts with {@link #ROUTE_LENGTH_KEY}, so it is saved in the panel
+     * file with the Block's other properties, and kept by versions of JMRI
+     * that don't know it.
+     *
+     * @since 5.19.1
+     */
+    public static final String PROPERTY_ROUTE_LENGTHS = "RouteLengths"; // NOI18N
+
+    /**
+     * The start of the key of the bean property that stores the length of one
+     * way through this Block; the rest names its two neighbours.
+     *
+     * @since 5.19.1
+     */
+    public static final String ROUTE_LENGTH_KEY = "RouteLength:"; // NOI18N
+
+    /**
+     * The name of the property change fired when this Block is made, or is no
+     * longer, a braking section for trains leaving towards a neighbour. Each
+     * is stored as a bean property whose key starts with
+     * {@link #BRAKING_KEY}.
+     *
+     * @since 5.19.1
+     */
+    public static final String PROPERTY_BRAKING = "BrakingSection"; // NOI18N
+
+    /**
+     * The start of the key of the bean property that marks this Block as a
+     * braking section for trains leaving towards one neighbour; the rest names
+     * the neighbour.
+     *
+     * @since 5.19.1
+     */
+    public static final String BRAKING_KEY = "BrakingTowards:"; // NOI18N
+
+    /**
+     * A way through a Block, between two of its neighbouring Blocks. A way is
+     * the same whichever way it is travelled, so the way from A to B equals
+     * the way from B to A.
+     *
+     * @since 5.19.1
+     */
+    @javax.annotation.concurrent.Immutable
+    public static final class WayThrough {
+
+        private final Block one;
+        private final Block other;
+
+        /**
+         * @param one   a neighbouring Block at one end
+         * @param other a neighbouring Block at the other end
+         * @throws IllegalArgumentException if they are the same Block
+         */
+        public WayThrough(@Nonnull Block one, @Nonnull Block other) {
+            if (one == other) {
+                throw new IllegalArgumentException("a way through joins two different Blocks");
+            }
+            // in system name order, so that equal ways are built alike
+            boolean inOrder = one.getSystemName().compareTo(other.getSystemName()) <= 0;
+            this.one = inOrder ? one : other;
+            this.other = inOrder ? other : one;
+        }
+
+        /**
+         * @return the neighbour at one end, the first of the two by system
+         *         name
+         */
+        @Nonnull
+        public Block getOneEnd() {
+            return one;
+        }
+
+        /**
+         * @return the neighbour at the other end
+         */
+        @Nonnull
+        public Block getOtherEnd() {
+            return other;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (!(o instanceof WayThrough)) {
+                return false;
+            }
+            WayThrough w = (WayThrough) o;
+            return one == w.one && other == w.other;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(one.getSystemName(), other.getSystemName());
+        }
+
+        @Override
+        public String toString() {
+            return one.getDisplayName() + " - " + other.getDisplayName();
+        }
+    }
+
+    /**
+     * The ways through this Block, from its paths: each pair of neighbouring
+     * Blocks whose paths can be set at once. Two neighbours reached only by
+     * setting one turnout both ways, as the two legs of a turnout are, are
+     * not a way through.
+     *
+     * @return the ways, in system name order of their ends; empty if the
+     *         Block has fewer than two neighbours
+     * @since 5.19.1
+     */
+    @Nonnull
+    public List<WayThrough> getWaysThrough() {
+        List<Path> list = getPaths();
+        java.util.Set<WayThrough> ways = new java.util.TreeSet<>(
+                java.util.Comparator.comparing((WayThrough w) -> w.getOneEnd().getSystemName())
+                        .thenComparing(w -> w.getOtherEnd().getSystemName()));
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = i + 1; j < list.size(); j++) {
+                Block a = list.get(i).getBlock();
+                Block b = list.get(j).getBlock();
+                if (a != null && b != null && a != b && a != this && b != this
+                        && settable(list.get(i), list.get(j))) {
+                    ways.add(new WayThrough(a, b));
+                }
+            }
+        }
+        return new ArrayList<>(ways);
+    }
+
+    /**
+     * @return true if no bean is set one way for one path and another way
+     *         for the other
+     */
+    private static boolean settable(Path p, Path q) {
+        for (BeanSetting s : p.getSettings()) {
+            for (BeanSetting t : q.getSettings()) {
+                if (s.getBean() == t.getBean() && s.getSetting() != t.getSetting()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Get the length of a way through this Block.
+     *
+     * @param from the neighbour at one end
+     * @param to   the neighbour at the other end
+     * @return the length set for the way, mm, or this Block's length if none
+     *         has been set
+     * @since 5.19.1
+     */
+    public float getRouteLengthMm(@Nonnull Block from, @Nonnull Block to) {
+        Float set = routeLengthSet(new WayThrough(from, to));
+        return set == null ? getLengthMm() : set;
+    }
+
+    /**
+     * @param from the neighbour at one end
+     * @param to   the neighbour at the other end
+     * @return true if a length has been set for the way through this Block
+     *         between them
+     * @since 5.19.1
+     */
+    public boolean hasRouteLength(@Nonnull Block from, @Nonnull Block to) {
+        return routeLengthSet(new WayThrough(from, to)) != null;
+    }
+
+    /**
+     * Set the length of a way through this Block, for a way whose length
+     * differs from the Block's own. Fires a property change named
+     * {@link #PROPERTY_ROUTE_LENGTHS}, with the way as its old value and the
+     * new length (or null) as its new value, when the length changes.
+     *
+     * @param from the neighbour at one end
+     * @param to   the neighbour at the other end
+     * @param mm   the length, mm, more than 0
+     * @throws IllegalArgumentException if the length isn't more than 0
+     * @see #clearRouteLength(Block, Block)
+     * @since 5.19.1
+     */
+    public void setRouteLengthMm(@Nonnull Block from, @Nonnull Block to, float mm) {
+        if (!(mm > 0) || Float.isInfinite(mm)) {
+            throw new IllegalArgumentException("a route length must be more than 0: " + mm);
+        }
+        changeRouteLength(new WayThrough(from, to), mm);
+    }
+
+    /**
+     * Clear the length of a way through this Block, so that the Block's own
+     * length is used for it. Fires a property change named
+     * {@link #PROPERTY_ROUTE_LENGTHS}, with the way as its old value and null
+     * as its new value, if a length was set.
+     *
+     * @param from the neighbour at one end
+     * @param to   the neighbour at the other end
+     * @since 5.19.1
+     */
+    public void clearRouteLength(@Nonnull Block from, @Nonnull Block to) {
+        changeRouteLength(new WayThrough(from, to), null);
+    }
+
+    private void changeRouteLength(WayThrough way, @CheckForNull Float now) {
+        Float old = routeLengthSet(way);
+        if (Objects.equals(old, now)) {
+            return;
+        }
+        if (now == null) {
+            removeProperty(routeLengthKey(way));
+        } else {
+            setProperty(routeLengthKey(way), now);
+        }
+        firePropertyChange(PROPERTY_ROUTE_LENGTHS, way, now);
+    }
+
+    private static String routeLengthKey(WayThrough way) {
+        return ROUTE_LENGTH_KEY + keyName(way.getOneEnd()) + "|" + keyName(way.getOtherEnd());
+    }
+
+    /**
+     * @return the length set for a way, mm, or null if none
+     */
+    @CheckForNull
+    private Float routeLengthSet(WayThrough way) {
+        Object v = getProperty(routeLengthKey(way));
+        if (v == null) {
+            return null;
+        }
+        try {
+            float f = Float.parseFloat(v.toString());
+            return f > 0 ? f : null;
+        } catch (NumberFormatException e) {
+            return null; // not a length: as if none were set
+        }
+    }
+
+    /**
+     * Get whether this Block is a braking section for trains leaving it
+     * towards a neighbour: a stretch, such as one with Automatic Brake
+     * Control or a cut-out, where the track itself brings trains to a stand
+     * before the Block beyond. Nothing in JMRI acts on it by itself; features
+     * that work out where a train will stop can use it.
+     *
+     * @param towards the neighbour trains leave towards
+     * @return true if it is a braking section for trains leaving towards it
+     * @since 5.19.1
+     */
+    public boolean isBrakingTowards(@Nonnull Block towards) {
+        return getProperty(BRAKING_KEY + keyName(towards)) != null;
+    }
+
+    /**
+     * Make this Block a braking section for trains leaving it towards a
+     * neighbour, or not. Fires a property change named
+     * {@link #PROPERTY_BRAKING}, with the neighbour as its old value and the
+     * setting as its new value, when the setting changes.
+     *
+     * @param towards the neighbour trains leave towards
+     * @param braking true if it is a braking section for them
+     * @since 5.19.1
+     */
+    public void setBrakingTowards(@Nonnull Block towards, boolean braking) {
+        if (isBrakingTowards(towards) == braking) {
+            return;
+        }
+        if (braking) {
+            setProperty(BRAKING_KEY + keyName(towards), Boolean.TRUE);
+        } else {
+            removeProperty(BRAKING_KEY + keyName(towards));
+        }
+        firePropertyChange(PROPERTY_BRAKING, towards, braking);
+    }
+
+    /**
+     * @return the neighbouring Blocks, by this Block's paths, towards which
+     *         it is a braking section
+     * @since 5.19.1
+     */
+    @Nonnull
+    public List<Block> getBrakingTowards() {
+        List<Block> list = new ArrayList<>();
+        for (Path p : getPaths()) {
+            Block b = p.getBlock();
+            if (b != null && !list.contains(b) && isBrakingTowards(b)) {
+                list.add(b);
+            }
+        }
+        return list;
+    }
+
+    /**
+     * A Block's system name as part of a property key: encoded, so that no
+     * character in it can be taken for the key's separators.
+     */
+    private static String keyName(Block b) {
+        return java.net.URLEncoder.encode(b.getSystemName(), java.nio.charset.StandardCharsets.UTF_8);
     }
 
     /**

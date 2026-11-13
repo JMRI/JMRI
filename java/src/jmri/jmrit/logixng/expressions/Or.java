@@ -6,6 +6,7 @@ import java.util.Locale;
 import java.util.Map;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.JmriUncheckedException;
 import jmri.jmrit.logixng.*;
 
 /**
@@ -64,7 +65,7 @@ public class Or extends AbstractDigitalExpression implements FemaleSocketListene
 
     private void setExpressionSystemNames(List<Map.Entry<String, String>> systemNames) {
         if (!_expressionEntries.isEmpty()) {
-            throw new RuntimeException("expression system names cannot be set more than once");
+            throw new JmriUncheckedException("expression system names cannot be set more than once");
         }
 
         for (Map.Entry<String, String> entry : systemNames) {
@@ -280,7 +281,7 @@ public class Or extends AbstractDigitalExpression implements FemaleSocketListene
                 }
             } catch (SocketAlreadyConnectedException ex) {
                 // This shouldn't happen and is a runtime error if it does.
-                throw new RuntimeException("socket is already connected");
+                throw new JmriUncheckedException("socket is already connected");
             }
         }
 

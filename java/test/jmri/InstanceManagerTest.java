@@ -2,10 +2,14 @@ package jmri;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
+import java.beans.VetoableChangeListener;
+import java.util.List;
+
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.roster.RosterIconFactory;
+import jmri.managers.ProxyTurnoutManager;
 import jmri.managers.TurnoutManagerScaffold;
 import jmri.progdebugger.DebugProgrammerManager;
 import jmri.util.JUnitAppender;
@@ -311,6 +315,69 @@ public class InstanceManagerTest {
         // one; the items this one holds must still be disposed
         InstanceManager.getDefault().clearAll();
         JUnitAppender.assertWarnMessage(OkToDispose.MESSAGE + 1);
+    }
+
+    @Test
+    public void testManagersDisposedAfterClearAllMakeNothingNew() {
+        // the internal turnout manager, which the internal connection disposes
+        // of when clearAll removes it
+        Manager<Turnout> internalTurnoutManager =
+            ((ProxyTurnoutManager) InstanceManager.getDefault(TurnoutManager.class)).getInternalManager();
+        // managers that listen to other managers for deletions, made as JMRI
+        // makes them; nothing disposes of these in clearAll, so this test does
+        // once the InstanceManager has changed
+        List<Manager<?>> others = List.of(
+            InstanceManager.getDefault(SignalHeadManager.class),
+            InstanceManager.getDefault(SignalMastManager.class),
+            InstanceManager.getDefault(SignalMastLogicManager.class),
+            InstanceManager.getDefault(RouteManager.class),
+            InstanceManager.getDefault(BlockManager.class),
+            InstanceManager.getDefault(SectionManager.class),
+            InstanceManager.getDefault(TransitManager.class),
+            InstanceManager.getDefault(LayoutBlockManager.class));
+        // the managers they listen to
+        List<Manager<?>> listenedTo = List.of(
+            InstanceManager.getDefault(SensorManager.class),
+            InstanceManager.getDefault(ReporterManager.class),
+            InstanceManager.getDefault(MemoryManager.class),
+            InstanceManager.getDefault(TurnoutManager.class),
+            InstanceManager.getDefault(SignalHeadManager.class),
+            InstanceManager.getDefault(SignalMastManager.class),
+            InstanceManager.getDefault(BlockManager.class),
+            InstanceManager.getDefault(SectionManager.class));
+        TurnoutManager turnouts = InstanceManager.getDefault(TurnoutManager.class);
+        SignalHead head = new jmri.implementation.DoubleTurnoutSignalHead("IH1",
+            new NamedBeanHandle<>("IT1", turnouts.provideTurnout("IT1")),
+            new NamedBeanHandle<>("IT2", turnouts.provideTurnout("IT2")));
+        LayoutBlockManager layoutBlockManager = InstanceManager.getDefault(LayoutBlockManager.class);
+        int layoutBlockManagerListeners = layoutBlockManager.getPropertyChangeListeners().length;
+        ShutDownManager shutDownManager = InstanceManager.getDefault(ShutDownManager.class);
+        ShutDownTask blockShutDownTask = InstanceManager.getDefault(BlockManager.class).shutDownTask;
+        assertTrue(shutDownManager.getRunnables().contains(blockShutDownTask), "Block shut down task registered");
+
+        // clearAll makes a new default InstanceManager before clearing this
+        // one, so these are disposed of with another InstanceManager in place
+        InstanceManager.getDefault().clearAll();
+        others.forEach(Manager::dispose);
+        head.dispose();
+
+        // disposing of them made nothing in the new InstanceManager
+        assertTrue(InstanceManager.getList(SystemConnectionMemo.class).isEmpty(),
+            "no connection made in the new InstanceManager");
+        for (Class<?> type : List.of(SensorManager.class, TurnoutManager.class, ReporterManager.class,
+                MemoryManager.class, SignalHeadManager.class, SignalMastManager.class, BlockManager.class,
+                SectionManager.class, LayoutBlockManager.class, ShutDownManager.class)) {
+            assertFalse(InstanceManager.containsDefault(type), type.getSimpleName() + " made in the new InstanceManager");
+        }
+        // and each stopped listening to the managers it listened to
+        for (Manager<?> m : listenedTo) {
+            for (VetoableChangeListener l : m.getVetoableChangeListeners()) {
+                assertFalse(l == internalTurnoutManager || others.stream().anyMatch(o -> o == l), l + " still listens to " + m);
+            }
+        }
+        assertEquals(layoutBlockManagerListeners - 1, layoutBlockManager.getPropertyChangeListeners().length,
+            "Signal Mast Logic manager stopped listening to the Layout Block manager");
+        assertFalse(shutDownManager.getRunnables().contains(blockShutDownTask), "Block shut down task deregistered");
     }
 
     /**
