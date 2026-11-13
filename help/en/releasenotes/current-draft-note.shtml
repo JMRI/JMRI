@@ -966,6 +966,16 @@
                 do, they move on the layout's own track and set internal
                 sensors as they pass, with the time they passed. The sample
                 script SimulatedTrains.py shows two trains running.</li>
+            <li>In such a profile, a loco marker dragged onto a Block's
+                track on a Layout Editor panel, in operating mode, places a
+                simulated train there: a window asks for its length, how it
+                is detected, the way it faces and where its front is, filled
+                in so that OK is usually enough, and offers to tell train
+                tracking the train is there as well. The Block's menu takes
+                the train off again. With any connection to a layout, a
+                dropped marker does what it did before. See the <a href=
+                "https://www.jmri.org/help/en/html/tools/simulatedtrains/index.shtml#placing">Simulated
+                Trains</a> page.</li>
             <li>For developers: simulated trains can carry an ID tag, read by
                 the reporters of the Blocks they come into, on internal
                 reporters and on CBUS reporters of CAN Simulation
