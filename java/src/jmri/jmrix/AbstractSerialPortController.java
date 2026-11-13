@@ -724,6 +724,8 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * Starts a reconnect thread
      */
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "SLF4J_SIGN_ONLY_FORMAT",
+        justification = "I18N of Info Message")
     protected void reconnect() {
         // If the connection is already open, then we shouldn't try a re-connect.
         if (opened || !allowConnectionRecovery) {
