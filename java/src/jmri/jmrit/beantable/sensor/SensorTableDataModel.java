@@ -44,7 +44,8 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
     public static final int ACTIVEDELAY = USEGLOBALDELAY + 1;
     public static final int INACTIVEDELAY = ACTIVEDELAY + 1;
     public static final int PULLUPCOL = INACTIVEDELAY + 1;
-    public static final int FORGETCOL = PULLUPCOL + 1;
+    public static final int DETECTSCOL = PULLUPCOL + 1;
+    public static final int FORGETCOL = DETECTSCOL + 1;
     public static final int QUERYCOL = FORGETCOL + 1;
 
     private Manager<Sensor> senManager = null;
@@ -180,6 +181,8 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
                 return Bundle.getMessage("SensorInActiveDebounce");
             case PULLUPCOL:
                 return Bundle.getMessage("SensorPullUp");
+            case DETECTSCOL:
+                return Bundle.getMessage("SensorDetects");
             case FORGETCOL:
                 return Bundle.getMessage("StateForgetHeader");
             case QUERYCOL:
@@ -202,6 +205,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
             case INACTIVEDELAY:
                 return Long.class; // if long.class (lowercase) is returned here, cell is NOT editable.
             case PULLUPCOL:
+            case DETECTSCOL:
                 return JComboBox.class;
             case EDITCOL:
             case FORGETCOL:
@@ -231,6 +235,8 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
             case INACTIVEDELAY:
             case PULLUPCOL:
                 return new JTextField(8).getPreferredSize().width;
+            case DETECTSCOL:
+                return new JTextField(10).getPreferredSize().width;
             case EDITCOL:
                 return new JButton(Bundle.getMessage("ButtonEdit")).getPreferredSize().width+4;
             case FORGETCOL:
@@ -257,6 +263,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
         switch (col) {
             case EDITCOL:
             case USEGLOBALDELAY:
+            case DETECTSCOL:
             case FORGETCOL:
             case QUERYCOL:
                 return true;
@@ -306,6 +313,10 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
                 PullResistanceComboBox c = new PullResistanceComboBox(Sensor.PullResistance.values());
                 c.setSelectedItem(s.getPullResistance());
                 return c;
+            case DETECTSCOL:
+                DetectsComboBox d = new DetectsComboBox(Sensor.Detects.values());
+                d.setSelectedItem(s.getDetects());
+                return d;
             case FORGETCOL:
                 return Bundle.getMessage("StateForgetButton");
             case QUERYCOL:
@@ -320,6 +331,13 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
      */
     private static class PullResistanceComboBox extends JComboBox<Sensor.PullResistance> {
         PullResistanceComboBox(Sensor.PullResistance[] values) { super(values); }
+    }
+
+    /**
+     * Small class to ensure type-safety of references otherwise lost to type erasure
+     */
+    private static class DetectsComboBox extends JComboBox<Sensor.Detects> {
+        DetectsComboBox(Sensor.Detects[] values) { super(values); }
     }
 
     /**
@@ -381,6 +399,12 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
                 PullResistanceComboBox cb = (PullResistanceComboBox) value;
                 s.setPullResistance((Sensor.PullResistance) cb.getSelectedItem());
                 break;
+            case DETECTSCOL:
+                Object detects = ((DetectsComboBox) value).getSelectedItem();
+                if (detects instanceof Sensor.Detects) {
+                    s.setDetects((Sensor.Detects) detects);
+                }
+                break;
             case FORGETCOL:
                 try {
                     s.setKnownState(Sensor.UNKNOWN);
@@ -420,6 +444,7 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
             case Sensor.PROPERTY_GLOBAL_TIMER:
             case Sensor.PROPERTY_ACTIVE_TIMER:
             case Sensor.PROPERTY_INACTIVE_TIMER:
+            case Sensor.PROPERTY_DETECTS:
                 return true;
             default:
                 return super.matchPropertyName(e);
@@ -654,6 +679,9 @@ public class SensorTableDataModel extends BeanTableDataModel<Sensor> {
      */
     @Override
     public void configureTable(JTable table) {
+        // hidden until chosen; super.configureTable then applies the user's saved choice
+        XTableColumnModel tcm = (XTableColumnModel) table.getColumnModel();
+        tcm.setColumnVisible(tcm.getColumnByModelIndex(DETECTSCOL), false);
         super.configureTable(table);
         if (_graphicState) {
             // make the rows tall enough for the state icons, once and outside of the

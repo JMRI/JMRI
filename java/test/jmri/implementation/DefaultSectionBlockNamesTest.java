@@ -13,6 +13,7 @@ import jmri.InstanceManager;
 import jmri.Section;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -24,6 +25,7 @@ import org.junit.jupiter.api.*;
  * <p>
  * The Section has Blocks B1, B2 and B3, in that order. The train is in B2.
  */
+@SuppressWarnings("removal") // tests deprecated methods, which still work until removed
 public class DefaultSectionBlockNamesTest {
 
     private DefaultSection section;
@@ -35,12 +37,40 @@ public class DefaultSectionBlockNamesTest {
     private LayoutBlock lb3;
 
     @Test
+    public void testSetNameInBlocks() {
+        section.setNameInBlocks("Train");
+        assertEquals("Train", b1.getValue(), "B1");
+        assertEquals("Train", b2.getValue(), "B2");
+        assertEquals("Train", b3.getValue(), "B3");
+        JUnitAppender.assertWarnMessage("Section.setNameInBlocks is deprecated, please remove references to it");
+        section.setNameInBlocks((Object) null);
+        assertNull(b2.getValue(), "cleared");
+        // and no second warning: an unexpected one fails the test
+    }
+
+    @Test
+    public void testSetAllocatedValue() {
+        section.setAllocatedValue("Train");
+        for (Block b : new Block[]{b1, b2, b3}) {
+            assertEquals("Train", b.getAllocatedValue(), b.getUserName());
+            assertNull(b.getValue(), b.getUserName() + ": its value is left to Block tracking");
+            assertEquals("Train", b.getDisplayValue(), b.getUserName());
+        }
+        section.setAllocatedValue(null);
+        for (Block b : new Block[]{b1, b2, b3}) {
+            assertNull(b.getAllocatedValue(), b.getUserName() + " released");
+        }
+        // not deprecated: an unexpected warning fails the test
+    }
+
+    @Test
     public void testForward() {
         section.setState(Section.FORWARD);
         section.setNameFromActiveBlock("Train");
         assertNull(b1.getValue(), "B1 is behind the train");
         assertEquals("Train", b2.getValue(), "B2 holds the train");
         assertEquals("Train", b3.getValue(), "B3 is ahead");
+        JUnitAppender.assertWarnMessage("Section.setNameFromActiveBlock is deprecated, please remove references to it");
     }
 
     @Test
@@ -50,6 +80,7 @@ public class DefaultSectionBlockNamesTest {
         assertEquals("Train", b1.getValue(), "B1 is ahead");
         assertEquals("Train", b2.getValue(), "B2 holds the train");
         assertNull(b3.getValue(), "B3 is behind the train");
+        JUnitAppender.assertWarnMessage("Section.setNameFromActiveBlock is deprecated, please remove references to it");
     }
 
     @Test
@@ -59,6 +90,14 @@ public class DefaultSectionBlockNamesTest {
         assertEquals("Train", b1.getValue(), "B1");
         assertEquals("Train", b2.getValue(), "B2");
         assertEquals("Train", b3.getValue(), "B3");
+        JUnitAppender.assertWarnMessage("Section.setNameFromActiveBlock is deprecated, please remove references to it");
+    }
+
+    @Test
+    public void testSuppressNameUpdateIsDeprecated() {
+        section.suppressNameUpdate(true);
+        JUnitAppender.assertWarnMessage("Section.suppressNameUpdate is deprecated, please remove references to it");
+        JUnitAppender.assertWarnMessage("LayoutBlock.setSuppressNameUpdate is deprecated, please remove references to it");
     }
 
     @Test

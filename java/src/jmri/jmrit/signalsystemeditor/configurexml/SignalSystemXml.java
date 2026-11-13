@@ -3,6 +3,7 @@ package jmri.jmrit.signalsystemeditor.configurexml;
 import java.io.*;
 import java.net.URL;
 
+import jmri.JmriUncheckedException;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.signalsystemeditor.*;
 import jmri.util.FileUtil;
@@ -46,7 +47,7 @@ public class SignalSystemXml {
                     }
                 }
                 if (attr == null) {
-                    throw new RuntimeException("Attribute 'noNamespaceSchemaLocation' is not found for element 'aspecttable'");
+                    throw new JmriUncheckedException("Attribute 'noNamespaceSchemaLocation' is not found for element 'aspecttable'");
                 }
             }
 

@@ -4,6 +4,7 @@ import java.util.*;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.GuardedBy;
 
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
@@ -36,7 +37,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
      *  See MAXMATRIXBITS in {@link jmri.jmrit.beantable.signalmast.MatrixSignalMastAddPane}.
      */
     private int mastBitNum = 6;
-    private int mDelay = 0;
+    private volatile int mDelay = 0;
 
     private static final String errorChars = "nnnnnn";
     private final char[] errorBits = errorChars.toCharArray();
@@ -356,52 +357,116 @@ public class MatrixSignalMast extends AbstractSignalMast {
     }
 
     /**
-     *  Send hardware instruction.
+     * A command to one output, waiting to be sent.
+     */
+    private static final class OutputStep {
+        final Turnout output;
+        final int state;
+
+        OutputStep(Turnout output, int state) {
+            this.output = output;
+            this.state = state;
+        }
+    }
+
+    /**
+     * Commands waiting to be sent, in order.
+     */
+    @GuardedBy("this")
+    private final Deque<OutputStep> pendingSteps = new ArrayDeque<>();
+
+    /**
+     * The state this mast has commanded for each output, including commands
+     * still waiting to be sent. A turnout's own commanded state can't be used
+     * for this, since it changes only when a command is sent.
+     */
+    @GuardedBy("this")
+    private final Map<Turnout, Integer> commandedByMast = new HashMap<>();
+
+    /**
+     * True while a step is due to be sent on the layout thread.
+     */
+    @GuardedBy("this")
+    private boolean sendingSteps = false;
+
+    /**
+     * Send hardware instruction.
+     * <p>
+     * Each output whose state changes is sent in turn, the mast's command
+     * delay apart, on the layout thread. This method doesn't wait for them.
+     * Outputs already in the required state, counting the commands still
+     * waiting from earlier calls, are not sent again.
      *
-     *  @param bits char[] of on/off outputs per aspect, like "00010"
-     *  Length of array should match the number of outputs defined
+     * @param bits char[] of on/off outputs per aspect, like "00010"
+     *             Length of array should match the number of outputs defined
      */
     public void updateOutputs(char[] bits) {
-        int newState;
-        if (bits == null){
+        if (bits == null) {
             log.debug("Empty char[] received");
-        } else {
+            return;
+        }
+        synchronized (this) {
             for (int i = 0; i < outputsToBeans.size(); i++) {
                 log.debug("Setting bits[1] = {} for output #{}", bits[i], i);
                 Turnout t = getOutputBean(i + 1);
-                if (t != null) {
-                    t.setBinaryOutput(true); // prevent feedback etc.
+                if (t == null) {
+                    continue;
                 }
-                if (bits[i] == '1' && t != null && t.getCommandedState() != Turnout.CLOSED) {
-                    // no need to set a state already set
+                t.setBinaryOutput(true); // prevent feedback etc.
+                int newState;
+                if (bits[i] == '1') {
                     newState = Turnout.CLOSED;
-                } else if (bits[i] == '0' && t != null && t.getCommandedState() != Turnout.THROWN) {
+                } else if (bits[i] == '0') {
                     newState = Turnout.THROWN;
-                } else if (bits[i] == 'n' || bits[i] == 'u') {
-                    // let pass, extra chars up to mastBitNum are not defined
-                    newState = -1;
                 } else {
-                    // invalid char or state is already set
-                    newState = -2;
+                    // 'n' and 'u' are not defined, extra chars up to mastBitNum
                     log.debug("Element {} not converted to state for output #{}", bits[i], i);
+                    continue;
                 }
-                // wait mast specific delay before sending each (valid) state change to a (valid) output
-                if (newState >= 0 && t != null) { // t!=null check required
-                    final int toState = newState;
-                    final Turnout setTurnout = t;
-                    ThreadingUtil.runOnLayoutEventually(() -> {   // eventually, even though we have timing here, should be soon
-                        setTurnout.setCommandedStateAtInterval(toState); // delayed on specific connection by its turnoutManager
-                    });
-                    try {
-                        Thread.sleep(mDelay); // only the Mast specific user defined delay is applied here
-                    } catch (InterruptedException e) {
-                        log.debug("interrupted in updateOutputs");
-                        Thread.currentThread().interrupt(); // retain if needed later
-                        return;
-                    }
+                Integer commanded = commandedByMast.get(t);
+                if ((commanded == null ? t.getCommandedState() : commanded) == newState) {
+                    continue; // no need to set a state already set
                 }
+                commandedByMast.put(t, newState);
+                pendingSteps.add(new OutputStep(t, newState));
+            }
+            if (!sendingSteps && !pendingSteps.isEmpty()) {
+                sendingSteps = true;
+                ThreadingUtil.runOnLayoutEventually(this::sendSteps);
             }
         }
+    }
+
+    /**
+     * Send the waiting commands, on the layout thread. With a command delay,
+     * send one and come back after the delay for the next.
+     */
+    private void sendSteps() {
+        OutputStep step;
+        do {
+            synchronized (this) {
+                step = pendingSteps.poll();
+                if (step == null) {
+                    sendingSteps = false;
+                    return;
+                }
+            }
+            // delayed on specific connection by its turnoutManager
+            step.output.setCommandedStateAtInterval(step.state);
+        } while (mDelay == 0);
+        // only the Mast specific user defined delay is applied here
+        ThreadingUtil.runOnLayoutDelayed(this::sendSteps, mDelay);
+    }
+
+    /**
+     * Stop sending commands that are still waiting.
+     */
+    @Override
+    public void dispose() {
+        synchronized (this) {
+            pendingSteps.clear();
+        }
+        super.dispose();
     }
 
     private boolean resetPreviousStates = false;

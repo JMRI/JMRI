@@ -89,7 +89,12 @@ public class ActionListenOnBeansXml extends jmri.managers.configurexml.AbstractN
             }
             boolean listenToAll = "yes".equals(all); // NOI18N
 
-            h.addReference(new NamedBeanReference(elementName.getTextTrim(), type, listenToAll));
+            NamedBeanReference reference = new NamedBeanReference(elementName.getTextTrim(), type, listenToAll);
+            // Entry/Exit pairs don't exist yet; they are looked up at setup
+            if (reference.getHandle() == null && type != NamedBeanType.EntryExit) {
+                log.error("{} \"{}\" is not found", type.getManager().getBeanTypeHandled(), reference.getName());
+            }
+            h.addReference(reference);
         }
 
         Element variableName = shared.getChild("localVariableNamedBean");

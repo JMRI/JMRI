@@ -213,7 +213,7 @@ public class LogData extends AbstractDigitalAction
                 bundleKey = "LogData_Long_StringFormat";
                 break;
             default:
-                throw new RuntimeException("_formatType has unknown value: "+_formatType.name());
+                throw new JmriUncheckedException("_formatType has unknown value: "+_formatType.name());
         }
         return Bundle.getMessage(locale, bundleKey, _format);
     }

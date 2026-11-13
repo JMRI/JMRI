@@ -1,6 +1,5 @@
 package jmri.jmrit.display.controlPanelEditor;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -18,6 +17,7 @@ import jmri.jmrit.display.PositionableIcon;
 import jmri.jmrit.display.ToolTip;
 import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.logix.Portal;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -153,7 +153,6 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
         return null;
     }
 
-    @SuppressFBWarnings(value="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification="Portals always have userNames")
     public void setPortal(Portal portal) {
         if (portal == null) {
             return;

@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.expressions;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -35,9 +36,11 @@ import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.jmrit.logixng.actions.ActionAtomicBoolean;
 import jmri.jmrit.logixng.actions.IfThenElse;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
+import jmri.jmrit.logixng.util.configurexml.LogixNG_SelectNamedBeanXml;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
+import org.jdom2.Element;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -261,6 +264,28 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         expressionSensor.getSelectNamedBean().setNamedBean(otherSensorHandle);
         assertEquals( otherSensor, expressionSensor.getSelectNamedBean().getNamedBean().getBean(), "Sensors are equal");
         assertEquals( otherSensorHandle, expressionSensor.getSelectNamedBean().getNamedBean(), "SensorHandles are equal");
+    }
+
+    @Test
+    public void testSensorKeptAfterUserNameChangeAndReload() {
+        // Disable the conditionalNG. This will unregister the listeners
+        conditionalNG.setEnabled(false);
+
+        Sensor sensor21 = InstanceManager.getDefault(SensorManager.class).provide("IS21");
+        sensor21.setUserName("Old name");
+        expressionSensor.getSelectNamedBean().setNamedBean(sensor21);
+
+        // changed directly on the sensor, as a script does
+        sensor21.setUserName("New name");
+
+        var selectNamedBeanXml = new LogixNG_SelectNamedBeanXml<Sensor>();
+        Element stored = selectNamedBeanXml.store(expressionSensor.getSelectNamedBean(), "namedBean");
+        assertEquals( "New name", stored.getChildText("name"), "the new user name is stored");
+
+        ExpressionSensor loaded = new ExpressionSensor("IQDE322", null);
+        assertDoesNotThrow( () -> selectNamedBeanXml.load(stored, loaded.getSelectNamedBean()));
+        assertSame( sensor21, loaded.getSelectNamedBean().getBean(), "the sensor is found after loading");
+        assertEquals( "Sensor New name is Active", loaded.getLongDescription(), "String matches");
     }
 
     @Test

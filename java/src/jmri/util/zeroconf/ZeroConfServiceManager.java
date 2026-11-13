@@ -7,14 +7,15 @@ import java.net.Inet6Address;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
-import java.util.concurrent.CountDownLatch;
 
 import javax.annotation.Nonnull;
 import javax.jmdns.JmDNS;
@@ -29,6 +30,7 @@ import jmri.InstanceManagerAutoDefault;
 import jmri.ShutDownManager;
 import jmri.profile.ProfileManager;
 import jmri.util.SystemType;
+import jmri.util.ThreadingUtil;
 import jmri.util.node.NodeIdentity;
 import jmri.web.server.WebServerPreferences;
 
@@ -95,6 +97,12 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
     protected final Runnable shutDownTask = () -> dispose(this);
 
     public static final String DNS_CLOSE_THREAD_NAME = "dns.close in ZerConfServiceManager#stopAll";
+
+    /**
+     * The start of the name of each thread that unregisters services from one
+     * JmDNS instance.
+     */
+    private static final String UNREGISTER_THREAD_NAME = "ZeroConfServiceManager unregister";
 
     protected final ZeroConfPreferences preferences = new ZeroConfPreferences(ProfileManager.getDefault().getActiveProfile());
 
@@ -264,22 +272,35 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
     public void stop(ZeroConfService service) {
         log.debug("Stopping ZeroConfService {}", service.getKey());
         if (services.containsKey(service.getKey())) {
-            getDNSes().values().parallelStream().forEach((dns) -> {
+            HashMap<JmDNS, InetAddress> registered = new HashMap<>();
+            getDNSes().values().forEach(dns -> {
                 try {
                     final InetAddress address = dns.getInetAddress();
-                    try {
-                        log.debug("Unregistering {} from {}", service.getKey(), address);
-                        dns.unregisterService(service.getServiceInfo(address));
-                        service.removeServiceInfo(address);
-                        service.getListeners().stream().forEach((listener) -> {
-                            listener.serviceUnpublished(new ZeroConfServiceEvent(service, dns));
-                        });
-                    } catch (NullPointerException ex) {
+                    if (service.getServiceInfo(address) != null) {
+                        registered.put(dns, address);
+                    } else {
                         log.debug("{} already unregistered from {}", service.getKey(), address);
                     }
                 } catch (IOException ex) {
                     log.error("Unable to stop ZeroConfService {}. {}", service.getKey(), ex.getLocalizedMessage());
                 }
+            });
+            // JmDNS blocks in unregisterService while it announces that the
+            // service has gone, so unregister from every address at once
+            ArrayList<Runnable> unregisters = new ArrayList<>();
+            registered.forEach((dns, address) -> {
+                ServiceInfo info = service.getServiceInfo(address);
+                unregisters.add(() -> {
+                    log.debug("Unregistering {} from {}", service.getKey(), address);
+                    dns.unregisterService(info);
+                });
+            });
+            runConcurrently(unregisters, UNREGISTER_THREAD_NAME + " " + service.getKey());
+            registered.forEach((dns, address) -> {
+                service.removeServiceInfo(address);
+                service.getListeners().stream().forEach(listener -> {
+                    listener.serviceUnpublished(new ZeroConfServiceEvent(service, dns));
+                });
             });
             services.remove(service.getKey());
         }
@@ -292,40 +313,79 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
         stopAll(false);
     }
 
+    /**
+     * Stop advertising all services, and optionally close every JmDNS
+     * instance.
+     * <p>
+     * Each JmDNS instance unregisters all of its services together, and the
+     * instances do so at the same time, so this waits for one round of
+     * announcements whatever the number of services and addresses. Closing an
+     * instance makes a further announcement; that is left to run on its own
+     * thread, named from {@link #DNS_CLOSE_THREAD_NAME}, and is not waited
+     * for.
+     *
+     * @param close true to close every JmDNS instance once its services are
+     *              unregistered
+     */
     private void stopAll(final boolean close) {
         log.debug("Stopping all ZeroConfServices");
-        CountDownLatch zcLatch = new CountDownLatch(services.size());
-        new HashMap<>(services).values().parallelStream().forEach(service -> {
-            stop(service);
-            zcLatch.countDown();
+        HashMap<InetAddress, JmDNS> dnses = getDNSes();
+        ArrayList<Runnable> unregisters = new ArrayList<>();
+        dnses.values().forEach(dns -> unregisters.add(dns::unregisterAllServices));
+        runConcurrently(unregisters, UNREGISTER_THREAD_NAME + " all");
+        new HashMap<>(services).values().forEach(service -> {
+            dnses.forEach((address, dns) -> {
+                if (service.containsServiceInfo(address)) {
+                    service.removeServiceInfo(address);
+                    service.getListeners().stream().forEach(listener -> {
+                        listener.serviceUnpublished(new ZeroConfServiceEvent(service, dns));
+                    });
+                }
+            });
         });
-        try {
-            zcLatch.await();
-        } catch (InterruptedException ex) {
-            log.warn("ZeroConfService stop threads interrupted.", ex);
-        }
-        CountDownLatch nsLatch = new CountDownLatch(getDNSes().size());
-        new HashMap<>(getDNSes()).values().parallelStream().forEach(dns -> {
-            Thread t = new Thread(() -> {
-                dns.unregisterAllServices();
-                if (close) {
+        services.clear();
+        if (close) {
+            dnses.values().forEach(dns -> {
+                ThreadingUtil.newThread(() -> {
                     try {
                         dns.close();
                     } catch (IOException ex) {
                         log.debug("jmdns.close() returned IOException: {}", ex.getMessage());
                     }
-                }
-                nsLatch.countDown();
+                }, DNS_CLOSE_THREAD_NAME + ":" + dns.toString()).start();
             });
-            t.setName(DNS_CLOSE_THREAD_NAME + ":" + dns.toString());
-            t.start();
-        });
-        try {
-            zcLatch.await();
-        } catch (InterruptedException ex) {
-            log.warn("JmDNS unregister threads interrupted.", ex);
         }
-        services.clear();
+    }
+
+    /**
+     * Run each task on its own thread, all at the same time, and wait until
+     * every one has finished.
+     * <p>
+     * The tasks here block on JmDNS while it announces a change, for about two
+     * seconds, and JmDNS limits each wait. Running them one after another made
+     * the wait grow with the number of addresses. A parallel stream is not
+     * used: it may run every element on the calling thread, for example when
+     * the common pool has a single worker or the source does not split.
+     *
+     * @param tasks      the tasks to run
+     * @param threadName the name for each task's thread
+     */
+    private static void runConcurrently(List<Runnable> tasks, String threadName) {
+        ArrayList<Thread> threads = new ArrayList<>();
+        tasks.forEach(task -> {
+            Thread thread = ThreadingUtil.newThread(task, threadName);
+            thread.start();
+            threads.add(thread);
+        });
+        for (Thread thread : threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException ex) {
+                log.warn("Interrupted while waiting for {}", threadName);
+                Thread.currentThread().interrupt();
+                return;
+            }
+        }
     }
 
     /**

@@ -42,7 +42,6 @@ public class SprogTrafficController implements SprogInterface,
      *
      * @param adaptermemo the associated SystemConnectionMemo
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SC_START_IN_CTOR", justification="done at end, waits for data")
     public SprogTrafficController(SprogSystemConnectionMemo adaptermemo) {
         memo = adaptermemo;
         init();

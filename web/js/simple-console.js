@@ -40,7 +40,7 @@ var server = {
         server._onclose();
     }
 };
-$(window).unload(function() {
+$(window).on('unload', function() {
     server.close();
     server = null;
 });

@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.ArrayList;
 
@@ -12,11 +13,15 @@ import javax.swing.JTextArea;
 
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.actions.ActionListenOnBeans.NamedBeanReference;
+import jmri.jmrit.logixng.actions.configurexml.ActionListenOnBeansXml;
 import jmri.jmrit.logixng.implementation.DefaultConditionalNGScaffold;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.script.swing.ScriptOutput;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
+import org.jdom2.Element;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -119,6 +124,58 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
         assertEquals( "Listen on beans", a1.getShortDescription(), "strings are equal");
         ActionListenOnBeans a2 = new ActionListenOnBeans("IQDA321", null);
         assertEquals( "Listen on beans", a2.getLongDescription(), "strings are equal");
+    }
+
+    @Test
+    public void testSensorKeptAfterRenameAndReload() throws JmriException {
+        Sensor sensor = InstanceManager.getDefault(SensorManager.class).provideSensor("IS21");
+        sensor.setUserName("Old name");
+        ActionListenOnBeans action = new ActionListenOnBeans("IQDA921", null);
+        NamedBeanReference reference = new NamedBeanReference((NamedBeanHandle<Sensor>) null, NamedBeanType.Sensor, false);
+        reference.setName(sensor);  // as the editor does when a sensor is picked
+        action.addReference(reference);
+
+        // renamed in the sensor table
+        sensor.setUserName("New name");
+        InstanceManager.getDefault(NamedBeanHandleManager.class).renameBean("Old name", "New name", sensor);
+        assertEquals( "New name", reference.getName(), "the reference follows the rename");
+
+        Element stored = new ActionListenOnBeansXml().store(action);
+        assertEquals( "New name", stored.getChild("References").getChild("Reference").getChildText("name"),
+                "the new user name is stored");
+
+        stored.getChild("systemName").setText("IQDA922");
+        assertTrue( new ActionListenOnBeansXml().load(stored, null));
+        Base loadedBase = InstanceManager.getDefault(DigitalActionManager.class).getBySystemName("IQDA922");
+        while (loadedBase instanceof MaleSocket) {
+            loadedBase = ((MaleSocket) loadedBase).getObject();
+        }
+        if (!(loadedBase instanceof ActionListenOnBeans)) {
+            fail("the loaded action is not Listen on beans: " + loadedBase);
+            return;
+        }
+        ActionListenOnBeans loaded = (ActionListenOnBeans) loadedBase;
+        NamedBeanReference loadedReference = loaded.getReferences().iterator().next();
+        assertNotNull( loadedReference.getHandle(), "the sensor is found after loading");
+        assertSame( sensor, loadedReference.getHandle().getBean(), "the sensor is found after loading");
+    }
+
+    @Test
+    public void testLoadMissingBeanLogsError() {
+        ActionListenOnBeans action = new ActionListenOnBeans("IQDA923", null);
+        action.addReference("Sensor:Missing sensor");
+        Element stored = new ActionListenOnBeansXml().store(action);
+        stored.getChild("systemName").setText("IQDA924");
+
+        assertTrue( new ActionListenOnBeansXml().load(stored, null));
+        JUnitAppender.assertErrorMessage("Sensor \"Missing sensor\" is not found");
+    }
+
+    @Test
+    public void testCopyKeepsNameWithoutBean() {
+        NamedBeanReference reference = new NamedBeanReference("Missing sensor", NamedBeanType.Sensor, false);
+        assertEquals( "Missing sensor", new NamedBeanReference(reference).getName(),
+                "the editor's copy keeps the name");
     }
 
     private JTextArea getOutputArea() {

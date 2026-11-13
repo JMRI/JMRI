@@ -1,11 +1,10 @@
 package jmri;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
-import java.util.Collections;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrix.internal.InternalSensorManager;
@@ -13,12 +12,6 @@ import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Tests for the Block class
@@ -794,6 +787,152 @@ public class BlockTest {
             return propChangeNames.get(index).getNewValue();
         }
         
+    }
+
+    @Test
+    public void testWaysThrough() {
+        Block a = new Block("IB1");
+        Block b = new Block("IB2");
+        Block c = new Block("IB3");
+        Block d = new Block("IB4");
+        Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
+        b.addPath(new Path(a, Path.NONE, Path.NONE));
+        b.addPath(new Path(c, Path.NONE, Path.NONE, new BeanSetting(t, Turnout.CLOSED)));
+        b.addPath(new Path(d, Path.NONE, Path.NONE, new BeanSetting(t, Turnout.THROWN)));
+        b.addPath(new Path(c, Path.EAST, Path.WEST, new BeanSetting(t, Turnout.CLOSED))); // a second path to C: still one way
+        assertEquals(List.of(new Block.WayThrough(a, c), new Block.WayThrough(a, d)), b.getWaysThrough(),
+                "A to either leg, but not between the turnout's two legs");
+        assertTrue(a.getWaysThrough().isEmpty(), "no paths: no way through");
+
+        // a ladder: each road set by its own turnout, so any two can be set at once
+        Block e = new Block("IB5");
+        Block f = new Block("IB6");
+        Block g = new Block("IB7");
+        Turnout t2 = InstanceManager.turnoutManagerInstance().provideTurnout("IT2");
+        e.addPath(new Path(f, Path.NONE, Path.NONE, new BeanSetting(t, Turnout.THROWN)));
+        e.addPath(new Path(g, Path.NONE, Path.NONE, new BeanSetting(t2, Turnout.THROWN)));
+        assertEquals(List.of(new Block.WayThrough(f, g)), e.getWaysThrough(), "different turnouts don't conflict");
+        assertEquals(new Block.WayThrough(c, a), new Block.WayThrough(a, c), "the same either way");
+        assertEquals(new Block.WayThrough(c, a).hashCode(), new Block.WayThrough(a, c).hashCode());
+        assertSame(a, new Block.WayThrough(c, a).getOneEnd(), "in system name order");
+        assertSame(c, new Block.WayThrough(c, a).getOtherEnd());
+        assertNotEquals(new Block.WayThrough(a, c), new Block.WayThrough(a, d));
+        assertNotEquals(new Block.WayThrough(a, c), "IB1 - IB3");
+        assertEquals("IB1 - IB3", new Block.WayThrough(c, a).toString());
+        assertThrows(IllegalArgumentException.class, () -> new Block.WayThrough(a, a));
+    }
+
+    @Test
+    public void testRouteLengths() {
+        Block a = new Block("IB1");
+        Block b = new Block("IB2");
+        Block c = new Block("IB3");
+        b.setLength(500f);
+        List<PropertyChangeEvent> events = new ArrayList<>();
+        b.addPropertyChangeListener(Block.PROPERTY_ROUTE_LENGTHS, events::add);
+
+        assertEquals(500f, b.getRouteLengthMm(a, c), "the Block's length until one is set");
+        assertFalse(b.hasRouteLength(a, c));
+        b.setRouteLengthMm(a, c, 620f);
+        assertEquals(620f, b.getRouteLengthMm(c, a), "the same either way");
+        assertTrue(b.hasRouteLength(c, a));
+        assertEquals(1, events.size());
+        assertEquals(new Block.WayThrough(a, c), events.get(0).getOldValue());
+        assertEquals(620f, events.get(0).getNewValue());
+
+        b.setRouteLengthMm(c, a, 620f);
+        assertEquals(1, events.size(), "no change, no event");
+        b.setLength(800f);
+        assertEquals(620f, b.getRouteLengthMm(a, c), "kept when the Block's length changes");
+
+        assertThrows(IllegalArgumentException.class, () -> b.setRouteLengthMm(a, c, 0f), "not a length");
+        assertThrows(IllegalArgumentException.class, () -> b.setRouteLengthMm(a, c, -5f), "not a length");
+        assertThrows(IllegalArgumentException.class, () -> b.setRouteLengthMm(a, c, Float.NaN), "not a length");
+        assertThrows(IllegalArgumentException.class, () -> b.setRouteLengthMm(a, c, Float.POSITIVE_INFINITY));
+        assertEquals(620f, b.getRouteLengthMm(a, c), "a refused length changes nothing");
+        assertEquals(1, events.size());
+
+        b.clearRouteLength(a, c);
+        assertEquals(800f, b.getRouteLengthMm(a, c), "cleared: the Block's length again");
+        assertFalse(b.hasRouteLength(a, c));
+        assertEquals(2, events.size());
+        assertNull(events.get(1).getNewValue());
+        assertTrue(b.getPropertyKeys().isEmpty(), "nothing left stored");
+        b.clearRouteLength(c, a);
+        assertEquals(2, events.size(), "clearing what isn't set changes nothing");
+    }
+
+    @Test
+    public void testRouteLengthsKeptApartWhateverTheNames() {
+        // without encoding, both ways would be stored under the same key
+        Block x = new Block("IBx|IBy");
+        Block z = new Block("IBz");
+        Block x2 = new Block("IBx");
+        Block y2 = new Block("IBy|IBz");
+        Block b = new Block("IB%41 :b");
+        b.setRouteLengthMm(x, z, 100f);
+        b.setRouteLengthMm(x2, y2, 200f);
+        assertEquals(100f, b.getRouteLengthMm(x, z));
+        assertEquals(200f, b.getRouteLengthMm(x2, y2));
+        assertEquals(2, b.getPropertyKeys().size());
+
+        // a % is encoded too, so a name holding an encoded | is still its own
+        Block p = new Block("IBp|q");
+        Block p2 = new Block("IBp%7Cq");
+        b.setRouteLengthMm(p, z, 300f);
+        b.setRouteLengthMm(p2, z, 400f);
+        assertEquals(300f, b.getRouteLengthMm(p, z));
+        assertEquals(400f, b.getRouteLengthMm(p2, z));
+        b.setBrakingTowards(p, true);
+        assertTrue(b.isBrakingTowards(p));
+        assertFalse(b.isBrakingTowards(p2), "only the Block it was set for");
+        assertEquals(5, b.getPropertyKeys().size());
+    }
+
+    @Test
+    public void testRouteLengthNotANumberReadsAsUnset() {
+        Block a = new Block("IB1");
+        Block b = new Block("IB2");
+        Block c = new Block("IB3");
+        b.setLength(500f);
+        b.setProperty(Block.ROUTE_LENGTH_KEY + "IB1|IB3", "long");
+        assertFalse(b.hasRouteLength(a, c), "not a length: as if none were set");
+        assertEquals(500f, b.getRouteLengthMm(a, c));
+        b.setProperty(Block.ROUTE_LENGTH_KEY + "IB1|IB3", "-3");
+        assertFalse(b.hasRouteLength(a, c), "not a length either");
+    }
+
+    @Test
+    public void testBrakingSections() {
+        Block a = new Block("IB1");
+        Block b = new Block("IB2");
+        Block c = new Block("IB3");
+        Block far = new Block("IB9");
+        b.addPath(new Path(a, Path.NONE, Path.NONE));
+        b.addPath(new Path(c, Path.NONE, Path.NONE));
+        List<PropertyChangeEvent> events = new ArrayList<>();
+        b.addPropertyChangeListener(Block.PROPERTY_BRAKING, events::add);
+
+        assertFalse(b.isBrakingTowards(c));
+        assertTrue(b.getBrakingTowards().isEmpty());
+        b.setBrakingTowards(c, true);
+        assertTrue(b.isBrakingTowards(c));
+        assertFalse(b.isBrakingTowards(a), "only for trains leaving towards C");
+        assertEquals(List.of(c), b.getBrakingTowards());
+        assertEquals(1, events.size());
+        assertSame(c, events.get(0).getOldValue());
+        assertEquals(Boolean.TRUE, events.get(0).getNewValue());
+
+        b.setBrakingTowards(c, true);
+        assertEquals(1, events.size(), "no change, no event");
+        b.setBrakingTowards(far, true);
+        assertEquals(List.of(c), b.getBrakingTowards(), "only neighbours, by the Block's paths");
+
+        b.setBrakingTowards(c, false);
+        b.setBrakingTowards(far, false);
+        assertFalse(b.isBrakingTowards(c));
+        assertTrue(b.getPropertyKeys().isEmpty(), "nothing left stored");
+        assertEquals(Boolean.FALSE, events.get(events.size() - 1).getNewValue());
     }
 
     @BeforeEach

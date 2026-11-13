@@ -8,6 +8,7 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.InstanceManager;
+import jmri.JmriUncheckedException;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.EditorManager;
 import jmri.jmrit.display.Positionable;
@@ -280,7 +281,7 @@ public class ActionPositionableSwing extends AbstractDigitalActionSwing {
                 throw new IllegalArgumentException("_tabbedPanePositionableState has unknown selection");
             }
         } catch (ParserException e) {
-            throw new RuntimeException("ParserException: "+e.getMessage(), e);
+            throw new JmriUncheckedException("ParserException: "+e.getMessage(), e);
         }
     }
 
