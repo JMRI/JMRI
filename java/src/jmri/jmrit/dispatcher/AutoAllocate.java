@@ -774,11 +774,12 @@ public class AutoAllocate implements Runnable {
     /*
      * A plan can never be completed once one of its trains has been
      * terminated, has finished, or has been reset and lost its allocations;
-     * once a train has gone past its target, or has taken another Section
-     * where its target is; once a train's target is occupied or allocated by
-     * a train outside the plan, or allocated to the other train of the plan;
-     * or, in a passing meet, once every road the passing train could use is
-     * occupied or allocated by a train outside the plan.
+     * once a train has gone past its target, has taken another Section where
+     * its target is, or already holds Sections beyond its target, so it can't
+     * be held there; once a train's target is occupied or allocated by a train
+     * outside the plan, or allocated to the other train of the plan; or, in a
+     * passing meet, once every road the passing train could use is occupied
+     * or allocated by a train outside the plan.
      * Keeping such a plan would hold the other train forever.
      */
     private boolean isPlanAbandoned(AllocationPlan ap) {
@@ -802,6 +803,11 @@ public class AutoAllocate implements Runnable {
             }
             if (holdsOtherSectionAt(at, target, targetSeq)) {
                 log.debug("Allocation Plan {} abandoned, {} has taken another Section in place of {}",
+                        ap.getPlanNum(), at.getTrainName(), target.getDisplayName(USERSYS));
+                return true;
+            }
+            if (holdsSectionsBeyond(at, target, targetSeq)) {
+                log.debug("Allocation Plan {} abandoned, {} already holds Sections beyond {}",
                         ap.getPlanNum(), at.getTrainName(), target.getDisplayName(USERSYS));
                 return true;
             }
@@ -854,6 +860,19 @@ public class AutoAllocate implements Runnable {
     private static boolean holdsSectionAt(ActiveTrain at, int seq) {
         for (AllocatedSection as : at.getAllocatedSectionList()) {
             if (as.getSequence() == seq) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /*
+     * Whether a train was allocated more Sections after its target Section.
+     */
+    private static boolean holdsSectionsBeyond(ActiveTrain at, Section target, int seq) {
+        List<AllocatedSection> list = at.getAllocatedSectionList();
+        for (int i = 0; i < list.size() - 1; i++) {
+            if ((list.get(i).getSection() == target) && (list.get(i).getSequence() == seq)) {
                 return true;
             }
         }
