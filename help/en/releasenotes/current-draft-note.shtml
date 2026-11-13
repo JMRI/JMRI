@@ -654,7 +654,7 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>The departure edit location window now appears when using the prompt departure track from staging.</li>
         </ul>
 
    <h3>Panel Editor</h3>
