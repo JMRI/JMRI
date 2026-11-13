@@ -319,6 +319,60 @@ public class TrainRecordDarkBlocksTest {
         assertSame(reason, r.getReason(d), "in the dark Block for the same reason");
     }
 
+    /**
+     * A loop: the train is in A, B and C, and E can be reached through a dark
+     * Block from either end, D1 beyond C and D2 beyond A.
+     */
+    private Block[] darkLoop() {
+        Block a = detected("A");
+        Block b = detected("B");
+        Block c = detected("C");
+        Block d1 = dark("D1");
+        Block e = detected("E");
+        Block d2 = dark("D2");
+        chain(a, b, c, d1, e, d2, a);
+        return new Block[]{a, b, c, d1, e, d2};
+    }
+
+    @Test
+    public void testThroughDarkBlocksAtBothEndsWithNoLeadingEnd() {
+        Block[] b = darkLoop();
+        for (int i = 0; i < 3; i++) {
+            occupy(b[i]);
+        }
+        TrainRecord r = ThreadingUtil.runOnGUIwithReturn(() -> {
+            TrainRecord t = manager.newRecord("T1");
+            t.place(List.of(b[0], b[1], b[2]), false);
+            return t;
+        });
+        assertNull(r.getLeadingEnd());
+
+        occupy(b[4]); // E, through D2 from A or through D1 from C
+        assertEquals(List.of(b[0], b[1], b[2]), r.getBlocks(), "nothing added while the end isn't known");
+        assertEquals(Confidence.AMBIGUOUS, r.getConfidence(), "one candidate, not ambiguous with itself twice");
+        assertEquals(Rule.ENTERED_END_UNKNOWN, Objects.requireNonNull(r.getConfidenceReason()).getRule());
+
+        clear(b[2]); // it moved away from C, so it went through D2 from A
+        assertEquals(List.of(b[4], b[5], b[0], b[1]), r.getBlocks(), "entered E through D2, then left C");
+        assertSame(b[5], last(r).getFrom(), "entered from the dark Block beyond A");
+        assertEquals(Confidence.CONFIRMED, r.getConfidence());
+    }
+
+    @Test
+    public void testThroughDarkBlocksAtBothEndsWithLeadingEndKnown() {
+        Block[] b = darkLoop();
+        TrainRecord r = placed(b[1], b[0]); // front in B
+        occupy(b[2]); // now in C, B, A, moving A to B to C
+        assertEquals(List.of(b[2], b[1], b[0]), r.getBlocks());
+        assertEquals(TrainRecord.End.FRONT, r.getLeadingEnd());
+
+        occupy(b[4]); // E, through D1 from C (front) or through D2 from A (rear)
+        assertEquals(List.of(b[4], b[3], b[2], b[1], b[0]), r.getBlocks(), "entered at the leading end, through D1");
+        assertSame(TrainRecord.End.FRONT, last(r).getEnd());
+        assertSame(b[3], last(r).getFrom(), "entered from the dark Block beyond C");
+        assertEquals(Confidence.CONFIRMED, r.getConfidence(), "one train is not ambiguous with itself");
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
