@@ -726,6 +726,8 @@
 
         <h4>Signal Heads</h4>
             <ul>
+                <li>Deleting a signal head that is flashing no longer
+                    leaves it flashing, or logs an error every 750 ms.</li>
                 <li>Deleting a Signal Head now clears the Comments JMRI wrote on
                     its output Turnouts when it was set up. The Turnouts stay;
                     Comments entered by the user are left alone.</li>
