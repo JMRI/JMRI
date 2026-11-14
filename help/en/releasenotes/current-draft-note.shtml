@@ -876,6 +876,8 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
+            <li>Web panels: a panel showing a sensor as text no longer
+                reloads in the browser each time the sensor changes.</li>
             <li>The JSON block object adds <code>allocatedValue</code>, the
                 train the Block is allocated to, kept apart from
                 <code>value</code>, the train in the Block. A web panel's
