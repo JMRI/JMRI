@@ -864,6 +864,11 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
+            <li>The Layout Scale in Warrant preferences now offers JMRI's
+                list of scales, the one Dispatcher's Options and the
+                Timetable offer: OO is now UK-OO, UK-N is added, and G is
+                1:32. A layout scale set before that is not in the list,
+                such as 1:22.5, is kept and shown as Custom.</li>
             <li></li>
         </ul>
 
