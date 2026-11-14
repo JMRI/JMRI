@@ -108,11 +108,10 @@ public class DefaultLogixManager extends AbstractManager<Logix>
      */
     @Override
     public void activateAllLogixs() {
-        // Guarantee Initializer executes first.
+        // Guarantee Initializer executes first, on the same terms as the rest
         Logix x = getBySystemName(LRouteTableAction.getLogixInitializer());
         if (x != null) {
-            x.activateLogix();
-            x.setGuiNames();
+            activate(x);
         }
         // iterate thru all Logixs that exist
         java.util.Iterator<Logix> iter
@@ -125,19 +124,22 @@ public class DefaultLogixManager extends AbstractManager<Logix>
                 continue;
             }
 
-            if (loadDisabled) {
-                // user has requested that Logixs be loaded disabled
-                log.warn("load disabled set - will not activate logic for: {}", x.getDisplayName());
-                x.setEnabled(false);
-            }
-            if (x.getEnabled()) {
-                //System.out.println("logix set enabled");
-                x.activateLogix();
-            }
-            x.setGuiNames();
+            activate(x);
         }
         // reset the load switch
         loadDisabled = false;
+    }
+
+    private void activate(Logix x) {
+        if (loadDisabled) {
+            // user has requested that Logixs be loaded disabled
+            log.warn("load disabled set - will not activate logic for: {}", x.getDisplayName());
+            x.setEnabled(false);
+        }
+        if (x.getEnabled()) {
+            x.activateLogix();
+        }
+        x.setGuiNames();
     }
 
     /**
