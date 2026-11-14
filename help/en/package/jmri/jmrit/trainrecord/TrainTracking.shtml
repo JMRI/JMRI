@@ -55,6 +55,17 @@
       has in each Block, and a <strong>Why?</strong> column, both hidden until chosen from the
       column header's right-click menu. The Block's <strong>Value</strong> column is unchanged.</p>
 
+      <h2>Operations</h2>
+
+      <p>When a train has the same name as an Operations train that has been built, train
+      tracking takes what the train is made up of from Operations. The train is divided into
+      the parts it will be split into: each group of cars to be set out at the same stop, and
+      what goes on to the end with the engines. Each part's length is worked out from its cars'
+      and engines' lengths in Operations, at Operations' scale. Their total is the train's
+      Operations length. Both are taken again each time the train moves on to its next stop.
+      The Block dialog shows the train's work at its next stop: how many cars and engines it is
+      to set out and pick up there.</p>
+
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

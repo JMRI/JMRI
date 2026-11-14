@@ -1,11 +1,17 @@
 package jmri.implementation;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+
 import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.SignalHeadManager;
 import jmri.SignalMast;
 import jmri.SignalSystem;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 
 import org.junit.jupiter.api.*;
 
@@ -216,6 +222,62 @@ public class SignalHeadSignalMastTest {
     }
 
     // from here down is testing infrastructure
+
+    /**
+     * An aspect with a delay (BR-2003 semaphore home and distant, 1.5 s) sets
+     * its heads in order, on the layout thread.
+     */
+    @Test
+    public void testDelayedAspectSetsHeadsInOrderOnLayoutThread() {
+        SignalMast s = new SignalHeadSignalMast("IF$shsm:BR-2003:2-h-d-sema:IH1:IH2", "user");
+        SignalHead ih1 = Objects.requireNonNull(
+                InstanceManager.getDefault(SignalHeadManager.class).getSignalHead("IH1"), "IH1");
+        SignalHead ih2 = Objects.requireNonNull(
+                InstanceManager.getDefault(SignalHeadManager.class).getSignalHead("IH2"), "IH2");
+        List<String> changes = Collections.synchronizedList(new ArrayList<>());
+        List<Boolean> onLayoutThread = Collections.synchronizedList(new ArrayList<>());
+        for (SignalHead h : new SignalHead[]{ih1, ih2}) {
+            h.addPropertyChangeListener("Appearance", e -> {
+                changes.add(h.getSystemName() + " " + h.getAppearanceName());
+                onLayoutThread.add(ThreadingUtil.isLayoutThread());
+            });
+        }
+
+        ThreadingUtil.runOnLayout(() -> s.setAspect("Proceed"));
+        JUnitUtil.waitFor(() -> changes.size() == 2, "both heads set");
+
+        assertEquals(List.of("IH1 Green", "IH2 Green"), changes, "heads in order");
+        assertEquals(List.of(true, true), onLayoutThread, "heads set on the layout thread");
+    }
+
+    /**
+     * A second aspect set before the first one's delayed heads are all set
+     * stops the first one, so the mast doesn't end with heads from both.
+     */
+    @Test
+    public void testSecondAspectStopsFirstOnesDelayedHeads() {
+        SignalMast s = new SignalHeadSignalMast("IF$shsm:BR-2003:2-h-d-sema:IH1:IH2", "user");
+        SignalHead ih1 = Objects.requireNonNull(
+                InstanceManager.getDefault(SignalHeadManager.class).getSignalHead("IH1"), "IH1");
+        SignalHead ih2 = Objects.requireNonNull(
+                InstanceManager.getDefault(SignalHeadManager.class).getSignalHead("IH2"), "IH2");
+        List<String> ih2Changes = Collections.synchronizedList(new ArrayList<>());
+        ih2.addPropertyChangeListener("Appearance", e -> ih2Changes.add(ih2.getAppearanceName()));
+
+        ThreadingUtil.runOnLayout(() -> {
+            s.setAspect("Proceed");
+            s.setAspect("Danger"); // before Proceed has set its second head
+        });
+        JUnitUtil.waitFor(() -> ih2Changes.contains("Yellow"), "second head set for Danger");
+        // a step left from Proceed would be due within a millisecond of
+        // Danger's, as both aspects were set together: allow 200 ms
+        JUnitUtil.waitFor(200);
+        ThreadingUtil.runOnLayout(() -> {});
+
+        assertEquals(List.of("Yellow"), ih2Changes, "second head set only for Danger");
+        assertEquals(SignalHead.RED, ih1.getAppearance(), "first head red for Danger");
+        assertEquals("Danger", s.getAspect());
+    }
 
     @BeforeEach
     public void setUp() {

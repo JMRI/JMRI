@@ -523,6 +523,18 @@
                  another train, a train has taken the other's track, or a
                  train is already past the meeting place. Allocating by hand
                  was needed to free the train.</li>
+             <li>New option
+                 <a href="https://www.jmri.org/help/en/package/jmri/jmrit/dispatcher/Options.shtml#WaitWhereTrainsCanStop">Wait
+                 Where Trains Can Stop</a>, off unless checked, for layouts
+                 where a train stopped at once on entering a short Section
+                 (one shorter than the train, with no stopping sensor, such as
+                 a short turnout Section) runs on into the next Section, which
+                 can leave the trains unable to move when another train holds
+                 it. With it checked, automatic allocation gives an automatic
+                 train such a Section only when the Sections beyond it are
+                 free as far as one the train can stop in, and then gives it
+                 all of them together; until then the train waits in the
+                 Section before, if that is one it can stop in.</li>
              <li></li>
              <li>A Section can have a stop point for each direction, set in
                  the Section's Add/Edit window in mm or in inches (to the
@@ -574,6 +586,9 @@
                  <code>LayoutBlock.setSuppressNameUpdate</code> are no longer
                  needed; they still work, but log a warning the first time
                  they are used, and will be removed.</li>
+             <li><code>Section.setNameInBlocks</code> is no longer used
+                 either; it still works, but logs a warning the first time it
+                 is used, and will be removed.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -617,6 +632,15 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+          <li>The Block expression can compare a Block's allocated value or
+              its display value with a string, as well as its value, and the
+              Local Variable and Table actions can copy a Block's allocated
+              value or display value instead of its value. The allocated value
+              is the train Dispatcher has allocated the Block to, with
+              <strong>Place train name in allocated Blocks</strong> on; the
+              display value is what panels show: the value, or the allocated
+              value when the Block has no value. A LogixNG that relied on
+              Dispatcher's train name in the value can use the display value.</li>
           <li>When a LogixNG is loaded and an item it uses, such as a sensor,
               is not found, an error now names the missing item in the
               System Console. Before, the item was silently left empty and
@@ -642,7 +666,7 @@
     <h3>OperationsPro</h3>
         <a id="Operations" name="Operations"></a>
         <ul>
-            <li></li>
+            <li>The departure edit location window now appears when using the prompt departure track from staging.</li>
         </ul>
 
    <h3>Panel Editor</h3>
@@ -661,6 +685,11 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
+            <li>Moving or resizing a window no longer rewrites the user
+                interface preferences file for every step of the drag,
+                which made JMRI stutter. The window's place and size are
+                saved when it starts moving, once it stops, and when it
+                closes.</li>
             <li></li>
         </ul>
 
@@ -827,6 +856,9 @@
                 the places that use it by that name now follow the change.
                 Before, only a change made in a table window did this, and
                 after storing and reloading, a LogixNG could lose the item.</li>
+            <li>The Block Table has an Allocated Value column, hidden until
+                chosen, showing the train Dispatcher has allocated each Block
+                to.</li>
         </ul>
 
    <h3>Warrants</h3>
@@ -855,6 +887,11 @@
                 including jQuery 1.8.2, jQuery Mobile, and the unminified
                 Bootstrap files. If you have custom web pages that load any
                 of these directly, they'll need updating.</li>
+            <li>The web server's pages now use jQuery 3.7.1 instead of
+                2.2.4, and the 2.2.4 copy has been removed. If you have
+                custom web pages or edited copies of JMRI's web files, see
+                <a href="https://www.jmri.org/help/en/html/web/index.shtml#jquery3">Updating Custom
+                Pages to jQuery 3</a>.</li>
         </ul>
 
     <h3>Where Used</h3>
@@ -884,6 +921,12 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
+            <li>For developers: a train record now follows its train through
+                Blocks with no detector: when the train reaches the next
+                detected Block through a run of them, along paths that are
+                set, they are added to the Blocks it is in, and they are left
+                when it is seen to leave a detected Block in front of them. It
+                only watches.</li>
             <li></li>
             <li>Quitting JMRI, and closing the CBUS or LCC Hub window, no
                 longer wait about 2 seconds for each network address while
@@ -899,6 +942,11 @@
                 feedback; and Blocks joined through Blocks with no detector by
                 more than one way. Each says what is wrong. The checks only
                 read, and change nothing.</li>
+            <li>A train with the same name as a built Operations train now
+                takes what it is made up of from Operations: the groups of cars
+                it will set out at each stop, and the rest, with their lengths.
+                The Block dialog shows the train's set-outs and pick-ups at its
+                next stop.</li>
             <li>Where a train has been placed in a Block (by Dispatcher, or by
                 setting a Block's value to the train), right-clicking the
                 Block's track on a Layout Editor panel in operating mode, or a

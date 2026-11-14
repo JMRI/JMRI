@@ -53,7 +53,12 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
     public static final int TRAINCOL = GHOSTCOL + 1;
     /** Why train tracking records them there; hidden until chosen. */
     public static final int WHYCOL = TRAINCOL + 1;
-    public static final int COLUMNCOUNT = WHYCOL + 1;
+    /**
+     * The train the Block is allocated to; read only, hidden until chosen.
+     * @since 5.19.1
+     */
+    public static final int ALLOCATEDVALUECOL = WHYCOL + 1;
+    public static final int COLUMNCOUNT = ALLOCATEDVALUECOL + 1;
 
     private final boolean _graphicState =
         InstanceManager.getDefault(GuiLafPreferencesManager.class).isGraphicTableState();
@@ -90,17 +95,23 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
             log.debug("requested getValue(\"{}\"), Block doesn't exist", name);
             return "(no Block)";
         }
-        Object m = b.getValue();
-        if (m != null) {
-            if ( m instanceof Reportable) {
-                return ((Reportable) m).toReportString();
-            }
-            else {
-                return m.toString();
-            }
-        } else {
+        return valueText(b.getValue());
+    }
+
+    /**
+     * The text the table shows for a Block's value or allocated value.
+     *
+     * @param m the value, which may be null
+     * @return the text; empty for null
+     */
+    private static String valueText(Object m) {
+        if (m == null) {
             return "";
         }
+        if (m instanceof Reportable) {
+            return ((Reportable) m).toReportString();
+        }
+        return m.toString();
     }
 
     @Override
@@ -183,6 +194,8 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
                 return trainsIn(b);
             case WHYCOL:
                 return whyIn(b);
+            case ALLOCATEDVALUECOL:
+                return valueText(b.getAllocatedValue());
             default:
                 return super.getValueAt(row, col);
         }
@@ -278,6 +291,8 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
                 return Bundle.getMessage("BlockTrainColName");
             case WHYCOL:
                 return Bundle.getMessage("BlockWhyColName");
+            case ALLOCATEDVALUECOL:
+                return Bundle.getMessage("BlockAllocatedValueColName");
             default:
                 return super.getColumnName(col);
         }
@@ -290,6 +305,7 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
             case VALUECOL: // not a button
             case TRAINCOL:
             case WHYCOL:
+            case ALLOCATEDVALUECOL:
                 return String.class;
             case LENGTHCOL:
                 return Float.class;
@@ -332,6 +348,7 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
             case STATECOL:
             case REPORTERCOL:
             case SENSORCOL:
+            case ALLOCATEDVALUECOL:
                 return new JTextField(8).getPreferredSize().width;
             case TRAINCOL:
                 return new JTextField(12).getPreferredSize().width;
@@ -363,6 +380,7 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
             case STATECOL:
             case TRAINCOL:
             case WHYCOL:
+            case ALLOCATEDVALUECOL:
                 return false;
             default:
                 return super.isCellEditable(row, col);
@@ -386,6 +404,8 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
             jmri.util.swing.XTableColumnModel columns = (jmri.util.swing.XTableColumnModel) table.getColumnModel();
             columns.setColumnVisible(columns.getColumnByModelIndex(TRAINCOL), false);
             columns.setColumnVisible(columns.getColumnByModelIndex(WHYCOL), false);
+            // only Dispatcher sets an allocated value, and only with "Place train name in allocated Blocks" on
+            columns.setColumnVisible(columns.getColumnByModelIndex(ALLOCATEDVALUECOL), false);
         }
     }
 

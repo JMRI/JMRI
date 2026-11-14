@@ -428,17 +428,38 @@ public interface Section extends NamedBean {
     void setAlternateColorFromActiveBlock(boolean set);
 
     /**
+     * Set the allocated value of every Block in this Section: the train the
+     * Section is allocated to, shown on panels while a Block has no value of
+     * its own. The Blocks' values are left to Block tracking.
+     *
+     * @param value the train name, roster entry or other value; null when the
+     *              Section is no longer allocated
+     * @see Block#setAllocatedValue(Object)
+     */
+    void setAllocatedValue(@CheckForNull Object value);
+
+    /**
      * Set the block values for blocks in this Section.
      *
      * @param name the value to set all blocks to
+     * @deprecated since 5.19.1; to show the train a Section is allocated to,
+     *             use {@link #setAllocatedValue(Object)}, which leaves the
+     *             Block values to Block tracking; to set the values, use
+     *             {@link Block#setValue(Object)} on each Block
      */
+    @Deprecated(since="5.19.1", forRemoval=true)
     void setNameInBlocks(String name);
 
     /**
      * Set the block values for blocks in this Section.
      *
      * @param value the name to set block values to
+     * @deprecated since 5.19.1; to show the train a Section is allocated to,
+     *             use {@link #setAllocatedValue(Object)}, which leaves the
+     *             Block values to Block tracking; to set the values, use
+     *             {@link Block#setValue(Object)} on each Block
      */
+    @Deprecated(since="5.19.1", forRemoval=true)
     void setNameInBlocks(Object value);
 
     /**
@@ -447,8 +468,8 @@ public interface Section extends NamedBean {
      *
      * @param value the value to set
      * @deprecated since 5.19.1; to show the train a Section is allocated to,
-     *             use {@link Block#setAllocatedValue(Object)} on its Blocks,
-     *             which leaves the Block values to Block tracking
+     *             use {@link #setAllocatedValue(Object)}, which leaves the
+     *             Block values to Block tracking
      */
     @Deprecated(since="5.19.1", forRemoval=true)
     void setNameFromActiveBlock(Object value);
@@ -465,7 +486,7 @@ public interface Section extends NamedBean {
      * @param set true to suppress the update; false otherwise
      * @deprecated since 5.19.1; to show the train a Section is allocated to
      *             while its Blocks are empty, use
-     *             {@link Block#setAllocatedValue(Object)} on its Blocks
+     *             {@link #setAllocatedValue(Object)}
      */
     @Deprecated(since="5.19.1", forRemoval=true)
     void suppressNameUpdate(boolean set);

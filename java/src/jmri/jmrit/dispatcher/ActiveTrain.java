@@ -1003,10 +1003,7 @@ public class ActiveTrain implements PropertyChangeProvider {
             }
             if (mDispatcher.getNameInAllocatedBlock()) {
                 LoggingUtil.infoOnce(log, ALLOCATED_VALUE_NOTE);
-                Object allocatedValue = getAllocatedBlockValue();
-                for (Block b : as.getSection().getBlockList()) {
-                    b.setAllocatedValue(allocatedValue);
-                }
+                as.getSection().setAllocatedValue(getAllocatedBlockValue());
             }
             if (mDispatcher.getExtraColorForAllocated()) {
                 as.getSection().setAlternateColorFromActiveBlock(true);
