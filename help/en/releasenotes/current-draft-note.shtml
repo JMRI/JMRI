@@ -880,6 +880,9 @@
                 custom web pages or edited copies of JMRI's web files, see
                 <a href="https://www.jmri.org/help/en/html/web/index.shtml#jquery3">Updating Custom
                 Pages to jQuery 3</a>.</li>
+            <li>The web server's pages now use Bootstrap 3.4.1 instead of
+                3.3.2. It's a drop-in update with security fixes, so pages
+                look and work the same.</li>
         </ul>
 
     <h3>Where Used</h3>
