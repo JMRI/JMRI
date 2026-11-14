@@ -256,17 +256,16 @@ final class PlaceTrainModel {
     void place(@Nonnull VirtualTrain train, @CheckForNull Block from, double frontMm) {
         SimulatedLayout layout = SimulatedLayout.getDefault();
         VirtualTrain old = placedTrain(train.getName());
-        if (old != null) {
-            layout.remove(old);
+        if (old == null) {
+            layout.place(train, block, from, frontMm);
+            return;
         }
+        layout.remove(old);
         try {
             layout.place(train, block, from, frontMm);
         } catch (IllegalArgumentException | IllegalStateException e) {
-            if (old != null) {
-                throw new IllegalArgumentException(
-                        Bundle.getMessage("PlaceMovedTrainRemoved", train.getName(), e.getMessage()), e);
-            }
-            throw e;
+            throw new IllegalArgumentException(
+                    Bundle.getMessage("PlaceMovedTrainRemoved", train.getName(), e.getMessage()), e);
         }
     }
 }

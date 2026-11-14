@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.text.ParseException;
 
@@ -109,7 +110,7 @@ public class LengthUnitsTest {
             try {
                 field.commitEdit();
             } catch (ParseException e) {
-                throw new AssertionError(e);
+                fail("9 1/4 not taken", e);
             }
         });
         assertEquals(9.25, in.getValue(), "typed as a fraction");
