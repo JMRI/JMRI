@@ -104,6 +104,14 @@ public class CbusNodeConstants {
                 case 19: // CANSERVO8C
                     node.setnvWriteInLearnOnly(true);
                     break;
+                case 11: // CANSERVO
+                    // firmware 2H takes NV writes only in learn mode (as MMC's
+                    // module descriptor for it says); 2u and 3h don't need it
+                    if ( node.getNodeParamManager().getParameter(MAJOR_VER_IDX) == 2
+                            && node.getNodeParamManager().getParameter(MINOR_VER_IDX) == 'H' ) {
+                        node.setnvWriteInLearnOnly(true);
+                    }
+                    break;
                 default:
                     break;
             }
