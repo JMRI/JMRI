@@ -172,7 +172,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
                                 options.getAttribute("waitwheretrainscanstop").getValue().equals("yes"));
                     }
                     if (options.getAttribute("preventdeadlock") != null) {
-                        dispatcher.setPreventDeadlock(!options.getAttribute("preventdeadlock").getValue().equals("no"));
+                        dispatcher.setPreventDeadlock(options.getAttribute("preventdeadlock").getValue().equals("yes"));
                     }
                     if (options.getAttribute("useoccupiedtrackspeed") != null) {
                         dispatcher.setUseOccupiedTrackSpeed(false);

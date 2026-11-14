@@ -97,7 +97,7 @@
 
         <li>
           <a id="PreventDeadlock" name="PreventDeadlock"></a>
-          <p>Check <strong>Prevent Deadlock</strong>, the default, to have automated allocation give
+          <p>Check <strong>Prevent Deadlock</strong> to have automated allocation give
           trains track so that they can never end up waiting for each other for good, such as two
           trains each holding half of a single line. A train is given track from one place it can
           stop to the next, all at once or not at all: a Section it can stop in (by its stopping
@@ -112,8 +112,8 @@
           naming the trains is written to the System Console. Terminate one of them, or change
           its Transit.</p>
 
-          <p>Uncheck it to allocate as in earlier versions: a number of Sections ahead, or by safe
-          Sections, with meets planned by priority.</p>
+          <p>Unchecked, the default, Sections are allocated as in earlier versions: a number of
+          Sections ahead, or by safe Sections, with meets planned by priority.</p>
         </li>
 
         <li>
