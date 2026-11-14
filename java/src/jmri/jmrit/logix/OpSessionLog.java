@@ -51,7 +51,7 @@ class OpSessionLog {
         }
 
         try {
-            _outBuff = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.ISO_8859_1));
+            _outBuff = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8));
             writeHeader(fileName);
         } catch (FileNotFoundException fnfe) {
             JmriJOptionPane.showMessageDialog(parent, fnfe.getMessage(),

@@ -88,7 +88,7 @@ public class Server {
 
         try ( OutputStream outStream = new FileOutputStream(settingsFileName);
             PrintStream settingsStream =
-                    new PrintStream(outStream, false, StandardCharsets.ISO_8859_1); ) {
+                    new PrintStream(outStream, false, StandardCharsets.UTF_8); ) {
 
             settingsStream.println("# DCCppOverTcp Configuration Settings");
             settingsStream.println(AUTO_START_KEY + " = " + (autoStart ? "1" : "0"));

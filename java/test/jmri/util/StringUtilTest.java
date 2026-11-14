@@ -409,7 +409,7 @@ public class StringUtilTest {
     @Test
     public void testFullTextToHexArray() {
 
-        byte[] b = StringUtil.fullTextToHexArray("PAN",7,StandardCharsets.ISO_8859_1);
+        byte[] b = StringUtil.fullTextToHexArray("PAN",7,StandardCharsets.UTF_8);
         assertEquals( 7, b.length, "array length");
         assertEquals( 0x50, b[0] & 0xFF, "0th byte");
         assertEquals( 0x41, b[1] & 0xFF, "1st byte");

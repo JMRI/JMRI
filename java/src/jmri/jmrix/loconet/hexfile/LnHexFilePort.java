@@ -72,7 +72,7 @@ public class LnHexFilePort extends LnPortController implements Runnable {
         // (This will emulate the LocoNet echo)
         try {
             sFile = new BufferedReader(new InputStreamReader(
-                    new FileInputStream(file), StandardCharsets.ISO_8859_1));
+                    new FileInputStream(file), StandardCharsets.UTF_8));
         } catch (Exception e) {
             log.error("load (pipe): Exception: {}", e.toString()); // NOI18N
         }

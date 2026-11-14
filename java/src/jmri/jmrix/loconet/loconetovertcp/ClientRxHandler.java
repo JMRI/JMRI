@@ -49,7 +49,7 @@ public final class ClientRxHandler extends Thread implements LocoNetListener {
 
         try {
             inStream = new BufferedReader(new InputStreamReader(
-                    clientSocket.getInputStream(), StandardCharsets.ISO_8859_1));
+                    clientSocket.getInputStream(), StandardCharsets.UTF_8));
             outStream = clientSocket.getOutputStream();
 
             tc.addLocoNetListener(~0, this);

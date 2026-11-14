@@ -27,7 +27,7 @@ public class Z21CANSetDescriptionRequestFormatter implements Z21MessageFormatter
             description[i] = (byte) m.getElement(6 + i);
         }
         String hexAddress= Integer.toHexString(networkID);
-        String descString = new String(description, StandardCharsets.ISO_8859_1).trim();
+        String descString = new String(description, StandardCharsets.UTF_8).trim();
         return Bundle.getMessage("Z21CANSetDescriptionRequest", hexAddress, descString);
     }
 }

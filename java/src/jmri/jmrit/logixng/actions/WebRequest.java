@@ -325,7 +325,7 @@ public class WebRequest extends AbstractDigitalAction
                     reply = con.getInputStream().readAllBytes();
                 } else if (replyType == ReplyType.String || replyType == ReplyType.ListOfStrings) {
                     List<String> list = new ArrayList<>();
-                    try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.ISO_8859_1))) {
+                    try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8))) {
                         String input;
                         while ((input = br.readLine()) != null) {
     //                        System.out.println(input);

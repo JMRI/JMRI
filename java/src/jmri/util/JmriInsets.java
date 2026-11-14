@@ -84,7 +84,7 @@ public class JmriInsets {
             try {
                 Process p = Runtime.getRuntime().exec(new String[]{"ps","ax"}); // NOI18N
                 BufferedReader r = new BufferedReader(new InputStreamReader(
-                        p.getInputStream(), StandardCharsets.ISO_8859_1));
+                        p.getInputStream(), StandardCharsets.UTF_8));
 
                 try {
                     java.util.List<String> desktopList = Arrays.asList(DESKTOP_ENVIRONMENTS.split("\\|")); // NOI18N

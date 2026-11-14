@@ -2850,7 +2850,7 @@ public class CreateLogixNGTreeScaffold {
         webRequest = new WebRequest(digitalActionManager.getAutoSystemName(), null);
         actionTurnout.setComment("A comment");
         webRequest.getSelectUrl().setValue("https://www.jmri.org/");
-        webRequest.getSelectCharset().setStandardValue(java.nio.charset.StandardCharsets.ISO_8859_1);
+        webRequest.getSelectCharset().setStandardValue(java.nio.charset.StandardCharsets.UTF_8);
         webRequest.getSelectRequestMethod().setEnum(WebRequest.RequestMethodType.Post);
         webRequest.getSelectUserAgent().setValue("JmriWebBrowser");
         webRequest.getSelectReplyType().setEnum(WebRequest.ReplyType.Bytes);

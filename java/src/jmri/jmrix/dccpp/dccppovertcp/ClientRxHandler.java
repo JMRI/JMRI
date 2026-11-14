@@ -65,7 +65,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
             txThread.setPriority(Thread.MAX_PRIORITY);
             txThread.setName("ClientTxHandler:" + remoteAddress);
 
-            inStream = new BufferedReader(new InputStreamReader(clientSocket.getInputStream(), StandardCharsets.ISO_8859_1));
+            inStream = new BufferedReader(new InputStreamReader(clientSocket.getInputStream(), StandardCharsets.UTF_8));
             outStream = clientSocket.getOutputStream();
 
             memo.getDCCppTrafficController().addDCCppListener(~0, this);

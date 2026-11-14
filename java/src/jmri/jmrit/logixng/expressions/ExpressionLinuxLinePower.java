@@ -67,7 +67,7 @@ public class ExpressionLinuxLinePower extends AbstractDigitalExpression
 
         Process process = Runtime.getRuntime().exec(new String[]{"upower","-e"});
         try (BufferedReader buffer = new BufferedReader(
-                new InputStreamReader(process.getInputStream(), StandardCharsets.ISO_8859_1)))  {
+                new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8)))  {
             String line;
             while ((line = buffer.readLine()) != null) {
                 powerSupplies.add(line);
@@ -87,7 +87,7 @@ public class ExpressionLinuxLinePower extends AbstractDigitalExpression
         for (String powerSupply : getLinuxPowerSupplies()) {
             Process process = Runtime.getRuntime().exec(new String[]{"upower", "-i", powerSupply});
             try (BufferedReader buffer = new BufferedReader(
-                    new InputStreamReader(process.getInputStream(), StandardCharsets.ISO_8859_1)))  {
+                    new InputStreamReader(process.getInputStream(), StandardCharsets.UTF_8)))  {
                 String line;
                 boolean linePowerFound = false;
                 while ((line = buffer.readLine()) != null) {

@@ -105,7 +105,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
     public void connectPort(DCCppNetworkPortController p) {
         istream = p.getInputStream();
         istreamReader = new BufferedReader(
-                new InputStreamReader(istream, StandardCharsets.ISO_8859_1));
+                new InputStreamReader(istream, StandardCharsets.UTF_8));
         ostream = p.getOutputStream();
         if (networkController != null) {
             log.warn("connectPort: connect called while connected");
