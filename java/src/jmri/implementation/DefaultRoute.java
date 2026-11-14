@@ -1322,8 +1322,19 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
                             setSensor.getSystemName(), r.getDisplayName(), e.getMessage());
                     }
                 });
-                threadSleep(50);
+                if (!isInternal(setSensor)) {
+                    // space commands to a connection; an internal sensor
+                    // sends nothing, so needs no gap
+                    threadSleep(50);
+                }
             }
+        }
+
+        private boolean isInternal(Sensor sensor) {
+            jmri.jmrix.internal.InternalSystemConnectionMemo internal =
+                InstanceManager.getNullableDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class);
+            return internal != null
+                && internal.getSystemPrefix().equals(jmri.Manager.getSystemPrefix(sensor.getSystemName()));
         }
 
         private void threadSleep(long millis) {
