@@ -197,7 +197,8 @@ public class AutoActiveTrainStopByDistanceTest {
         ActiveTrain at = dispatcher.getActiveTrainsList().get(0);
         aat = at.getAutoActiveTrain();
         assertNotNull(at.getRosterEntry(), "roster entry");
-        aat.setMinReliableOperatingSpeed(MIN_RELIABLE);
+        aat.setSpeedFactor(speedFactor);
+        aat.setMinReliableOperatingSpeed(MIN_RELIABLE); // also gives the engineer the speed factor
         aat.setStopByDistanceMm(stopDistanceMm);
 
         int sections = block5Occupied ? 2 : 3;
@@ -205,6 +206,28 @@ public class AutoActiveTrainStopByDistanceTest {
                 "Allocated sections should be " + sections);
         JUnitUtil.waitFor(() -> aat.getThrottle() != null && aat.getThrottle().getSpeedSetting() > 0.0f,
                 "Failed to start");
+    }
+
+    /** The train's speed factor, set when it is started. */
+    private float speedFactor = 1.0f;
+
+    /**
+     * A train with a speed factor slows to its minimum reliable speed, not to
+     * that speed divided by the factor: the stop is planned in the throttle's
+     * actual settings, against the speed profile.
+     */
+    @Test
+    public void testSlowsToMinimumWithASpeedFactor() {
+        speedFactor = 1.5f;
+        startTrain();
+        runToFinalSection();
+        // without the fix it holds MIN_RELIABLE / 1.5, below the minimum reliable speed
+        JUnitUtil.waitFor(() -> speed() < MIN_RELIABLE + 0.01f, () -> "did not slow to a crawl, speed " + speed());
+        JUnitUtil.waitFor(500);
+        assertEquals(MIN_RELIABLE, speed(), 0.01f, "keeps the minimum reliable speed, whatever the speed factor");
+        JUnitUtil.setBeanStateAndWait(stopSensor, Sensor.ACTIVE);
+        JUnitUtil.waitFor(() -> speed() < TOLERANCE, () -> "did not stop on the sensor, speed " + speed());
+        finish();
     }
 
     private void set(int block, int state) {

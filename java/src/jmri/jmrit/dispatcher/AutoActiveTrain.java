@@ -2945,6 +2945,13 @@ public class AutoActiveTrain implements ThrottleListener {
     // _________________________________________________________________________________________
     // this class handles the interface with the throttle
     // (This class started from code by Pete Cressman contained in Warrant.java.)
+    /**
+     * The speed factor given to RosterSpeedProfile's planners: 1, since they
+     * send their settings straight to the throttle, so those settings must be
+     * the throttle's actual ones.
+     */
+    private static final float NO_SPEED_FACTOR = 1.0f;
+
     class AutoEngineer  {
 
         AutoEngineer(DccThrottle throttle, RosterEntry rosterEntry) {
@@ -3091,14 +3098,20 @@ public class AutoActiveTrain implements ThrottleListener {
                             forward
                         );
                         // Delegate the acceleration plan & execution to RosterSpeedProfile
+                        // the target is the actual setting, speed factor and
+                        // limits applied, as for any other speed change; the
+                        // profile sends its settings straight to the throttle.
+                        // With Dispatcher's "as in earlier versions" option, the
+                        // requested speed and the speed factor, as before.
+                        boolean asBefore = _dispatcher.getStopByDistanceAsBefore();
                         re.getSpeedProfile().runPhysicsAccelerationToTargetThrottle(
                             throttle,
-                            speed,
+                            asBefore ? speed : targetSpeed,
                             AutoActiveTrain.this._driverPowerPercent,
                             AutoActiveTrain.this._additionalWeightTonnes,
                             AutoActiveTrain.this._rollingResistanceCoeff,
                             (float) AutoActiveTrain.this._dispatcher.getScale().getScaleRatio(),
-                            speedFactor
+                            asBefore ? speedFactor : NO_SPEED_FACTOR
                         );
                     }
                 }, "PhysicsRamp " + AutoActiveTrain.this._activeTrain.getTrainName());
@@ -3261,10 +3274,16 @@ public class AutoActiveTrain implements ThrottleListener {
             profile.setMinMaxLimitsKmh(minReliableOperatingSpeed, maxSpeed, _maxSpeedScaleKmh,
                     (float) _dispatcher.getScale().getScaleRatio(), getIsForward());
             speedProfileStoppingIsRunning = true;
+            // The profile sends its settings straight to the throttle, so they
+            // must be the throttle's actual settings: no speed factor, which
+            // only scales the speeds this train is asked to run at. With
+            // Dispatcher's "as in earlier versions" option, planned as before.
+            boolean asBefore = _dispatcher.getStopByDistanceAsBefore();
+            float plannerFactor = asBefore ? speedFactor : NO_SPEED_FACTOR;
             if (toMinimum) {
-                profile.planApproachToMinOverDistance(throttle, distanceMm, speedFactor);
+                profile.planApproachToMinOverDistance(throttle, distanceMm, plannerFactor, asBefore);
             } else {
-                profile.planStopToZeroOverDistance(throttle, distanceMm, speedFactor);
+                profile.planStopToZeroOverDistance(throttle, distanceMm, plannerFactor, asBefore);
             }
         }
 

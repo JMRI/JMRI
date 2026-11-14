@@ -551,6 +551,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     private boolean _PreventDeadlock = false;
     private boolean _useStrictTrainTracking = true;
     private boolean _WaitWhereTrainsCanStop = false;
+    private boolean _StopByDistanceAsBefore = false;
     private boolean _useTurnoutConnectionDelay = false;
     private boolean _ShortActiveTrainNames = false;
     private boolean _ShortNameInBlock = true;
@@ -3452,6 +3453,23 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
     protected void setWaitWhereTrainsCanStop(boolean set) {
         _WaitWhereTrainsCanStop = set;
+    }
+
+    /**
+     * Whether automatic trains stop by distance as earlier versions of JMRI
+     * did: the train's speed factor applied to the profile's settings a second
+     * time, the overrun times read as seconds, and an approach held a little
+     * above the minimum reliable speed.
+     *
+     * @return true to stop as earlier versions did; false, the default, to
+     *         stop where the speed profile says
+     */
+    protected boolean getStopByDistanceAsBefore() {
+        return _StopByDistanceAsBefore;
+    }
+
+    protected void setStopByDistanceAsBefore(boolean set) {
+        _StopByDistanceAsBefore = set;
     }
 
     protected boolean getUseStrictTrainTracking() {

@@ -80,6 +80,38 @@ public class OptionsMenuTest {
         JUnitUtil.dispose(d);
     }
 
+    @Test
+    public void testStopByDistanceAsBeforeCheckBox() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/dispatcheroptions.xml");
+        JUnitUtil.initDefaultUserMessagePreferences();
+
+        DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
+        d.setAutoTurnouts(false);  // or Apply warns that there is no panel to set turnouts from
+        OptionsMenu t = new OptionsMenu(d);
+        Assert.assertFalse("off to start with", d.getStopByDistanceAsBefore());
+
+        openOptionsWindow(t);
+        JFrameOperator window = new JFrameOperator(Bundle.getMessage("OptionWindowItem"));
+        JCheckBoxOperator box = new JCheckBoxOperator(window, Bundle.getMessage("stopByDistanceAsBefore"));
+        Assert.assertFalse("shown off", box.isSelected());
+        box.changeSelection(true);
+        new JButtonOperator(window, Bundle.getMessage("ButtonApply")).push();
+        window.waitClosed();
+        Assert.assertTrue("Apply turns it on", d.getStopByDistanceAsBefore());
+
+        openOptionsWindow(t);
+        window = new JFrameOperator(Bundle.getMessage("OptionWindowItem"));
+        box = new JCheckBoxOperator(window, Bundle.getMessage("stopByDistanceAsBefore"));
+        Assert.assertTrue("shown on", box.isSelected());
+        box.changeSelection(false);
+        new JButtonOperator(window, Bundle.getMessage("ButtonApply")).push();
+        window.waitClosed();
+        Assert.assertFalse("Apply turns it off", d.getStopByDistanceAsBefore());
+
+        JUnitUtil.dispose(d);
+    }
+
     private static void openOptionsWindow(OptionsMenu menu) {
         String text = Bundle.getMessage("OptionWindowItem") + "...";
         for (Component c : menu.getMenuComponents()) {
