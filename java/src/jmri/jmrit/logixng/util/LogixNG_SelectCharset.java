@@ -38,7 +38,7 @@ public class LogixNG_SelectCharset {
     private static List<Charset> getStandardCharsets() {
         List<Charset> standardCharsets = new ArrayList<>();
         standardCharsets.add(StandardCharsets.US_ASCII);
-        standardCharsets.add(StandardCharsets.UTF_8);
+        standardCharsets.add(StandardCharsets.ISO_8859_1);
         standardCharsets.add(StandardCharsets.UTF_8);
         standardCharsets.add(StandardCharsets.UTF_16);
         standardCharsets.add(StandardCharsets.UTF_16BE);
