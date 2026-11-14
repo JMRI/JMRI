@@ -48,6 +48,10 @@
                     lights that use its event, instead of to every one on the
                     connection, so the time taken for each frame no longer grows
                     with the size of the layout.</li>
+                <li>CBUS Node Manager: a CANSERVO with firmware 2H is now
+                    put in learn mode for each NV it is sent, as
+                    CANSERVO8C and CANMIO-SVO already are, since that
+                    firmware takes NV writes only in learn mode.</li>
                 <li>The CBUS simulator delivers its frames in the order a bus
                     would: frames due at the same moment now arrive in the
                     order they were sent, where before they could arrive in

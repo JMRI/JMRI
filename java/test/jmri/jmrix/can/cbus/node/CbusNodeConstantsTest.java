@@ -84,6 +84,25 @@ public class CbusNodeConstantsTest {
             CbusNodeConstants.lookupByName("COMPLETEDWITHERROR"));
     }
     
+    // MERG CANSERVO, module type 11, with firmware major.minor
+    private static boolean canservoNvWriteInLearnOnly(int major, char minor) {
+        jmri.jmrix.can.CanSystemConnectionMemo memo = new jmri.jmrix.can.CanSystemConnectionMemo();
+        CbusNode node = new CbusNode(memo, 300);
+        node.getNodeParamManager().setParameters(new int[]{8, 165, minor, 11, 4, 2, 3, major, 8});
+        CbusNodeConstants.setTraits(node);
+        boolean learnOnly = node.getnvWriteInLearnOnly();
+        node.dispose();
+        memo.dispose();
+        return learnOnly;
+    }
+
+    @Test
+    public void testCanservo2HWritesNvsInLearnMode() {
+        Assertions.assertTrue(canservoNvWriteInLearnOnly(2, 'H'), "CANSERVO 2H");
+        Assertions.assertFalse(canservoNvWriteInLearnOnly(2, 'u'), "CANSERVO 2u");
+        Assertions.assertFalse(canservoNvWriteInLearnOnly(3, 'h'), "CANSERVO 3h");
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
