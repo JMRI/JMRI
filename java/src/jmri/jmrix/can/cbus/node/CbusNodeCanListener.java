@@ -95,7 +95,11 @@ public class CbusNodeCanListener implements jmri.jmrix.can.CanListener {
         // if the OPC is coming from a Node, update the CAN ID field
         // if the OPC is coming from software, do NOT update the CAN ID field
         // as the Frame CAN ID is that of the software, not the node.
-        if ( fromNode ) {
+        // Other tools on the bus, such as MMC, also send frames carrying this
+        // node's number (NVRD, NERD, SNN ...), as do other nodes (EVANS and
+        // events carry an event's node number), so only a frame whose node
+        // number is its sender's own gives the node's CAN ID.
+        if ( fromNode && isSentByTheNode(opc) ) {
             _node.setCanId(CbusMessage.getId(m));
         }
 
@@ -359,6 +363,36 @@ public class CbusNodeCanListener implements jmri.jmrix.can.CanListener {
         removeTc(memo);
     }
     
+    /**
+     * Whether a frame with this opcode carries the node number of the node
+     * that sent it: the replies and reports a node sends about itself. A
+     * request from a configuration tool carries the number of the node it is
+     * for, and an event or EVANS the event's node number.
+     *
+     * @param opc the opcode
+     * @return true if the frame's node number is its sender's
+     */
+    static boolean isSentByTheNode(int opc) {
+        switch (opc) {
+            case CbusConstants.CBUS_RQNN:
+            case CbusConstants.CBUS_NNREL:
+            case CbusConstants.CBUS_NNACK:
+            case CbusConstants.CBUS_WRACK:
+            case CbusConstants.CBUS_CMDERR:
+            case CbusConstants.CBUS_EVNLF:
+            case CbusConstants.CBUS_NUMEV:
+            case CbusConstants.CBUS_NVANS:
+            case CbusConstants.CBUS_PARAN:
+            case CbusConstants.CBUS_NEVAL:
+            case CbusConstants.CBUS_PNN:
+            case CbusConstants.CBUS_ENRSP:
+            case CbusConstants.CBUS_STAT:
+                return true;
+            default:
+                return false;
+        }
+    }
+
     private static final Logger log = LoggerFactory.getLogger(CbusNodeCanListener.class);
     
 }
