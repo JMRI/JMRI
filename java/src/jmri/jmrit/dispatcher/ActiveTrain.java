@@ -187,6 +187,8 @@ public class ActiveTrain implements PropertyChangeProvider {
      * String property constant for status.
      */
     public static final String PROPERTY_STATUS = "status";
+    /** Property name for what a waiting train is waiting for. */
+    public static final String PROPERTY_WAITING_FOR = "waitingFor";
 
     /**
      * String property constant for mode.
@@ -244,6 +246,7 @@ public class ActiveTrain implements PropertyChangeProvider {
     private int mTrainSource = ROSTER;
     private jmri.jmrit.roster.RosterEntry mRoster = null;
     private volatile int mStatus = WAITING;
+    private volatile String mWaitingFor = null;
     private volatile int mMode = DISPATCHED;
     private boolean mTransitReversed = false;  // true if Transit is running in reverse
     private boolean mAllocationReversed = false;  // true if allocating Sections in reverse
@@ -400,6 +403,29 @@ public class ActiveTrain implements PropertyChangeProvider {
         firePropertyChange(PROPERTY_CURRENT_BLOCK, oldSignal, newSignal);
     }
 
+    /**
+     * Say what a waiting train is waiting for, to be shown with its status.
+     * It is forgotten when the train is next given a Section.
+     *
+     * @param what a few words, such as "turnout LT5"; null when it is no
+     *             longer waiting for it
+     */
+    public void setWaitingFor(@CheckForNull String what) {
+        String old = mWaitingFor;
+        if (!java.util.Objects.equals(old, what)) {
+            mWaitingFor = what;
+            firePropertyChange(PROPERTY_WAITING_FOR, old, what);
+        }
+    }
+
+    /**
+     * @return what the train is waiting for, if it has been said; or null
+     */
+    @CheckForNull
+    public String getWaitingFor() {
+        return mWaitingFor;
+    }
+
     public String getStatusText() {
         if (mStatus == RUNNING) {
             return Bundle.getMessage("RUNNING");
@@ -413,6 +439,10 @@ public class ActiveTrain implements PropertyChangeProvider {
                 } else if (mDelayedStart == SENSORDELAY) {
                     return (Bundle.getMessage("BeanNameSensor") + " " + getDelaySensorName());
                 }
+            }
+            String waitingFor = mWaitingFor;
+            if (waitingFor != null) {
+                return Bundle.getMessage("WaitingFor", waitingFor);
             }
             return Bundle.getMessage("WAITING");
         } else if (mStatus == WORKING) {
@@ -980,6 +1010,7 @@ public class ActiveTrain implements PropertyChangeProvider {
     public void addAllocatedSection(AllocatedSection as) {
         if (as != null) {
             mAllocatedSections.add(as);
+            setWaitingFor(null);
             if (as.getSection() == mNextSectionToAllocate) {
                 // this  is the next Section in the Transit, update pointers
                 mLastAllocatedSection = as.getSection();

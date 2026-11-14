@@ -237,33 +237,38 @@ public class AutoTurnouts {
             }
         }
 
-        List<LayoutTrackExpectedState<LayoutTurnout>> turnoutList = new ArrayList<>();
+        List<LayoutTrackExpectedState<LayoutTurnout>> turnoutList;
         // get turnouts by Block
         boolean turnoutsOK = true;
 
         var layoutBlockManger = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
+        // with no entry point, the first Block is the one the train is standing in (its start, or its end when reversed)
+        boolean standingBlock = (entryPt == null);
         while (curBlock != null) {
-            /*No point in getting the list if the previous block is null as it will return empty and generate an error,
-             this will only happen on the first run.  Plus working on the basis that the turnouts in the current block would have already of
-             been set correctly for the train to have arrived in the first place.
+            /* The turnouts in the Block the train is standing in are checked, not set, while the Block is
+             occupied: the train may be standing on them. With no previous Block the way it came in is not
+             known, so the turnouts it needs are those every way into the Block in this direction agrees on.
              */
             log.trace("curBlock {}: PrevBlock[{}]", curBlock.getDisplayName(),
                     prevBlock == null ?   "Null" : prevBlock.getDisplayName());
-            if (prevBlock != null) {
-                var blockName = curBlock.getUserName();
-                if (blockName != null) {
-                    var lblock = layoutBlockManger.getLayoutBlock(blockName);
-                    if (lblock != null) {
-                        var panel = lblock.getMaxConnectedPanel();
-                        if (panel != null) {
-                            var connection = new ConnectivityUtil(panel);
-                            // note turnouts for turntables are added to the list in getTurnoutList
-                            turnoutList = connection.getTurnoutList(curBlock, prevBlock, nextBlock, true);
-                        }
+            ConnectivityUtil connection = null;
+            var blockName = curBlock.getUserName();
+            if (blockName != null) {
+                var lblock = layoutBlockManger.getLayoutBlock(blockName);
+                if (lblock != null) {
+                    var panel = lblock.getMaxConnectedPanel();
+                    if (panel != null) {
+                        connection = new ConnectivityUtil(panel);
                     }
                 }
+            }
+            if (connection == null) {
+                turnoutList = new ArrayList<>();
+            } else if (prevBlock != null) {
+                // note turnouts for turntables are added to the list in getTurnoutList
+                turnoutList = connection.getTurnoutList(curBlock, prevBlock, nextBlock, true);
             } else {
-               log.debug("turnoutUtil - No previous block");
+                turnoutList = standingBlockTurnouts(connection, s, direction, curBlock, nextBlock);
             }
             // loop over turnouts checking and optionally setting turnouts
             for (int i = 0; i < turnoutList.size(); i++) {
@@ -278,6 +283,12 @@ public class AutoTurnouts {
                 int setting = turnoutList.get(i).getExpectedState();
                 if (turnoutList.get(i).getObject() instanceof LayoutSlip) {
                     setting = ((LayoutSlip) turnoutList.get(i).getObject()).getTurnoutState(turnoutList.get(i).getExpectedState());
+                }
+                if (standingBlock) {
+                    if (!standingBlockTurnoutOK(turnoutList.get(i), setting, set, s, curBlock, at, useTurnoutConnectionDelay)) {
+                        turnoutsOK = false;
+                    }
+                    continue;
                 }
                 // check or ignore current setting based on flag, set in Options
                 if (!trustKnownTurnouts && set) {
@@ -355,6 +366,7 @@ public class AutoTurnouts {
                     }
                 }
             }
+            standingBlock = false;
             if (turnoutsOK) {
                 // move to next Block if any
                 if (nextBlockSeqNum >= 0) {
@@ -387,6 +399,176 @@ public class AutoTurnouts {
             return turnoutListForAllocatedSection;
         }
         return null;
+    }
+
+    /**
+     * The turnouts needed to leave the Block a train is standing in for the
+     * next Block, when the way it came into the Block is not known. Each entry
+     * into the Block in this direction gives a list; a turnout is needed only
+     * if every entry needs it, in the same state.
+     *
+     * @param connection the connectivity of the Block's panel
+     * @param s          the Section being allocated
+     * @param direction  the direction of travel through the Section
+     * @param curBlock   the Block the train is standing in
+     * @param nextBlock  the Block the train goes to next, or null if none
+     * @return the turnouts and their states, in order; empty if none can be
+     *         worked out
+     */
+    private List<LayoutTrackExpectedState<LayoutTurnout>> standingBlockTurnouts(ConnectivityUtil connection,
+            Section s, int direction, Block curBlock, Block nextBlock) {
+        List<LayoutTrackExpectedState<LayoutTurnout>> result = null;
+        if (nextBlock == null) {
+            return new ArrayList<>();
+        }
+        List<EntryPoint> entries = (direction == Section.FORWARD) ? s.getForwardEntryPointList()
+                : s.getReverseEntryPointList();
+        for (EntryPoint ep : entries) {
+            if (ep.getBlock() != curBlock || ep.getFromBlock() == null) {
+                continue;
+            }
+            List<LayoutTrackExpectedState<LayoutTurnout>> fromEntry
+                    = connection.getTurnoutList(curBlock, ep.getFromBlock(), nextBlock, true);
+            if (result == null) {
+                result = new ArrayList<>(fromEntry);
+            } else {
+                result.removeIf(needed -> fromEntry.stream().noneMatch(e -> e.getObject() == needed.getObject()
+                        && e.getExpectedState().equals(needed.getExpectedState())));
+            }
+        }
+        if (result == null) {
+            log.debug("Block {} has no entry in this direction, its turnouts are not checked", curBlock.getDisplayName());
+            return new ArrayList<>();
+        }
+        return result;
+    }
+
+    /**
+     * Check, and set if it is safe, a turnout in the Block a train is standing
+     * in. A turnout that is not known to be set right is changed only if the
+     * Block is not occupied; otherwise the train may be standing on it, so the
+     * Section is not allocated until the turnout is set by hand.
+     *
+     * @param tes      the turnout and the state it is needed in
+     * @param setting  the state needed (for a slip, its first turnout)
+     * @param set      true to set the turnout if it is safe, false to check only
+     * @param s        the Section being allocated
+     * @param curBlock the Block the train is standing in
+     * @param at       the train
+     * @param useTurnoutConnectionDelay true if the turnout connection delay should be applied
+     * @return true if the turnout is set right, or has been commanded to be
+     */
+    // package access for testing
+    boolean standingBlockTurnoutOK(LayoutTrackExpectedState<LayoutTurnout> tes, int setting, boolean set,
+            Section s, Block curBlock, ActiveTrain at, boolean useTurnoutConnectionDelay) {
+        List<Turnout> turnouts = new ArrayList<>();
+        List<Integer> settings = new ArrayList<>();
+        turnouts.add(tes.getObject().getTurnout());
+        settings.add(setting);
+        if (tes.getObject() instanceof LayoutSlip) {
+            turnouts.add(((LayoutSlip) tes.getObject()).getTurnoutB());
+            settings.add(((LayoutSlip) tes.getObject()).getTurnoutBState(tes.getExpectedState()));
+        }
+        boolean ok = true;
+        for (int i = 0; i < turnouts.size(); i++) {
+            Turnout to = turnouts.get(i);
+            int needed = settings.get(i);
+            if (to == null || to.getKnownState() == needed) {
+                continue;
+            }
+            if (set && checkTurnoutsCanBeSet(tes.getObject(), needed, s, curBlock, at)) {
+                log.debug("{}: turnout {} in starting Block commanded to {}", at.getTrainName(), to.getDisplayName(USERSYS),
+                        (needed == Turnout.CLOSED ? closedText : thrownText));
+                if (useTurnoutConnectionDelay) {
+                    to.setCommandedStateAtInterval(needed);
+                } else {
+                    to.setCommandedState(needed);
+                }
+                continue;
+            }
+            jmri.util.LoggingUtil.warnOnce(log, "{}: turnout {} in {}, where the train is standing, is not set {} for its route;"
+                    + " set it by hand to let the train go", at.getTrainName(), to.getDisplayName(USERSYS),
+                    curBlock.getDisplayName(USERSYS), (needed == Turnout.CLOSED ? closedText : thrownText));
+            String neededText = (needed == Turnout.CLOSED ? closedText : thrownText);
+            at.setWaitingFor(Bundle.getMessage("WaitingForTurnout", to.getDisplayName()));
+            if (retryWhenChanged(to, at)) {
+                tellDispatcher(at, to, curBlock, neededText);
+            }
+            ok = false;
+        }
+        return ok;
+    }
+
+    // turnouts trains are waiting for, and the trains waiting for each
+    private final java.util.Map<Turnout, java.util.Set<ActiveTrain>> awaitedTurnouts = new java.util.HashMap<>();
+    private final java.beans.PropertyChangeListener awaitedTurnoutListener = this::awaitedTurnoutChanged;
+
+    /**
+     * Try again when a turnout a train is waiting for changes. Nothing else
+     * would prompt it: the train's Block is occupied already and stays so, and
+     * a train's first Section is not in the queue of allocation requests.
+     *
+     * @param to the turnout
+     * @param at the train waiting for it
+     * @return true if the train has just started waiting for the turnout,
+     *         false if it was waiting for it already
+     */
+    private boolean retryWhenChanged(Turnout to, ActiveTrain at) {
+        synchronized (awaitedTurnouts) {
+            java.util.Set<ActiveTrain> trains = awaitedTurnouts.get(to);
+            if (trains == null) {
+                trains = new java.util.HashSet<>();
+                awaitedTurnouts.put(to, trains);
+                to.addPropertyChangeListener("KnownState", awaitedTurnoutListener);
+            }
+            return trains.add(at);
+        }
+    }
+
+    /**
+     * Tell whoever is at the Dispatcher window that a train can't start
+     * until a turnout is set by hand. The window doesn't wait for an answer,
+     * so allocation carries on for the other trains. Nothing is shown where
+     * there is no display.
+     *
+     * @param at         the train
+     * @param to         the turnout it is waiting for
+     * @param curBlock   the Block it is standing in
+     * @param neededText the state the turnout is needed in, in words
+     */
+    private void tellDispatcher(ActiveTrain at, Turnout to, Block curBlock, String neededText) {
+        if (java.awt.GraphicsEnvironment.isHeadless()) {
+            return;
+        }
+        String message = Bundle.getMessage("TurnoutUnderTrainMessage", at.getTrainName(), to.getDisplayName(),
+                curBlock.getDisplayName(), neededText);
+        jmri.util.ThreadingUtil.runOnGUIEventually(() -> jmri.util.swing.JmriJOptionPane.showMessageDialogNonModal(
+                _dispatcher, message, Bundle.getMessage("TurnoutUnderTrainTitle"),
+                jmri.util.swing.JmriJOptionPane.WARNING_MESSAGE, null));
+    }
+
+    private void awaitedTurnoutChanged(java.beans.PropertyChangeEvent e) {
+        Turnout to = (Turnout) e.getSource();
+        java.util.Set<ActiveTrain> trains;
+        synchronized (awaitedTurnouts) {
+            trains = awaitedTurnouts.remove(to);
+            to.removePropertyChangeListener("KnownState", awaitedTurnoutListener);
+        }
+        if (trains == null) {
+            return;
+        }
+        for (ActiveTrain at : trains) {
+            at.setWaitingFor(null); // said again if the turnout is still not right for it
+            if (!_dispatcher.getActiveTrainsList().contains(at)) {
+                continue; // terminated while waiting
+            }
+            if (at.getAllocatedSectionList().isEmpty()) {
+                // its first Section: asked for again, as a failed first request is not kept
+                at.initializeFirstAllocation();
+            } else {
+                _dispatcher.queueScanOfAllocationRequests();
+            }
+        }
     }
 
     /*
