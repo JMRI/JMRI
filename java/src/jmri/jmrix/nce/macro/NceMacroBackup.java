@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
@@ -117,14 +118,15 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
             }
         }
 
-        try (PrintWriter fileOut = new PrintWriter(new BufferedWriter(new FileWriter(f)), true)) {
+        try (PrintWriter fileOut = new PrintWriter(new BufferedWriter(
+                new FileWriter(f, StandardCharsets.UTF_8)), true)) {
             if (JmriJOptionPane.showConfirmDialog(null,
                     Bundle.getMessage("dialogBackupTime"),
                     Bundle.getMessage("BackupTitle"),
                     JmriJOptionPane.YES_NO_OPTION) != JmriJOptionPane.YES_OPTION) {
                 fileOut.close();
                 return;
-            }     
+            }
 
             // create a status frame
             JPanel ps = new JPanel();
