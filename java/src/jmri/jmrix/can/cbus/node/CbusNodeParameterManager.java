@@ -2,6 +2,8 @@ package jmri.jmrix.can.cbus.node;
 
 import static jmri.jmrix.can.cbus.node.CbusNodeConstants.*;
 
+import javax.annotation.Nonnull;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -216,14 +218,43 @@ public class CbusNodeParameterManager {
         .append( CbusNodeConstants.getModuleType(getParameter(1),getParameter(3)))
         .append (" ")
         .append (Bundle.getMessage("FirmwareVer",getParameter(7),Character.toString((char) getParameter(2) )));
-        if ((getParameter(0)>19) && (getParameter(20)>0) ){
-            n.append (Bundle.getMessage("FWBeta"))
-            .append (getParameter(20))
+        String build = getFirmwareBuildText();
+        if (!build.isEmpty()) {
+            n.append (build)
             .append (" ");
         }
         n.append (Bundle.getMessage("CbusNode"))
         .append (_node.getNodeNumber());
         return n.toString();
+    }
+
+    /**
+     * Whether the node is a VLCB node: bit 6 of its flags, from parameter 8
+     * or, before the parameters are read, from its PNN.
+     *
+     * @return true for a VLCB node
+     */
+    public boolean isVlcb() {
+        int flags = getParameter(FLAGS_IDX);
+        if (flags < 0 && _node instanceof CbusNode) {
+            flags = ((CbusNode) _node).getNodeFlags();
+        }
+        return flags >= 0 && (flags & FLAG_VLCB) != 0;
+    }
+
+    /**
+     * The build part of the firmware version, from parameter 20: "Beta n" for
+     * a CBUS node's beta firmware, "Patch n" for a VLCB node, where it is
+     * the patch number of a released version.
+     *
+     * @return the text, or an empty String if parameter 20 is 0 or unknown
+     */
+    @Nonnull
+    public String getFirmwareBuildText() {
+        if (getParameter(0) < BETA_REV_IDX || getParameter(BETA_REV_IDX) <= 0) {
+            return "";
+        }
+        return Bundle.getMessage(isVlcb() ? "FWPatch" : "FWBeta") + getParameter(BETA_REV_IDX);
     }
 
     public void requestEventTot() {
@@ -279,6 +310,10 @@ public class CbusNodeParameterManager {
                 return true;
             } else {
                 // Major and minor are equal, test beta
+                if (isVlcb()) {
+                    // a VLCB patch number: higher is newer, 0 the first release
+                    return beta <= getParameter(BETA_REV_IDX);
+                }
                 if (beta == 0) {
                     // Release is always newer than any beta
                     return true;
