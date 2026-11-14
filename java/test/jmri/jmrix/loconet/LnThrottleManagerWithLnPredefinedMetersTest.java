@@ -178,6 +178,7 @@ public class LnThrottleManagerWithLnPredefinedMetersTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
         memo = new LocoNetSystemConnectionMemo();
         lnis = new LocoNetInterfaceScaffold(memo);
         memo.setLnTrafficController(lnis);

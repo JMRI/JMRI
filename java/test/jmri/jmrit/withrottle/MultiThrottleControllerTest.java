@@ -345,6 +345,7 @@ public class MultiThrottleControllerTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
         memo = InstanceManager.getDefault(InternalSystemConnectionMemo.class);
         JUnitUtil.initDebugThrottleManager(memo);
         JUnitUtil.initRosterConfigManager();

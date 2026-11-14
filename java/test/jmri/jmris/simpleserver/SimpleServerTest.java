@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**
- * Tests for the jmri.jmris.simpleserver.SimpleServer class 
+ * Tests for the jmri.jmris.simpleserver.SimpleServer class
  *
  * @author Paul Bender Copyright (C) 2012,2016
  */
@@ -46,7 +46,7 @@ public class SimpleServerTest {
         ) {
             String code = "LIGHT IL1 OFF\n\r";
             InputStream input = new ByteArrayInputStream(code.getBytes());
-            Thread t = new Thread(() -> { 
+            Thread t = new Thread(() -> {
                 try {
                     ss.handleClient(new DataInputStream(input),output);
                 } catch( IOException ioe) {
@@ -66,6 +66,7 @@ public class SimpleServerTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initDebugPowerManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();

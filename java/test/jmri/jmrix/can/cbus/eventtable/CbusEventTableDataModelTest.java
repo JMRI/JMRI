@@ -391,6 +391,7 @@ public class CbusEventTableDataModelTest {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
         JUnitUtil.resetInstanceManager();
+        JUnitUtil.initTimeProviderManager();
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);

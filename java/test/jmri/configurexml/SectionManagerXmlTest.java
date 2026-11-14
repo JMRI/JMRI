@@ -543,6 +543,7 @@ public class SectionManagerXmlTest {
         JUnitUtil.setUp();
         Assertions.assertDoesNotThrow( () ->
             JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder)));
+        JUnitUtil.initTimeProviderManager();
     }
 
     @AfterEach

@@ -284,6 +284,7 @@ public class CbusEventTablePaneTest extends jmri.util.swing.JmriPanelTest {
             fail("Exception creating temp. user folder");
         }
         JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initTimeProviderManager();
         title = Bundle.getMessage("EventTableTitle");
         helpTarget = "package.jmri.jmrix.can.cbus.swing.eventtable.EventTablePane";
         memo = new CanSystemConnectionMemo();
