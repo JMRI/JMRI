@@ -548,6 +548,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     private boolean _TrustKnownTurnouts = false;
     private boolean _UseOccupiedTrackSpeed = false;
     private boolean _useStrictTrainTracking = true;
+    private boolean _WaitWhereTrainsCanStop = false;
     private boolean _useTurnoutConnectionDelay = false;
     private boolean _ShortActiveTrainNames = false;
     private boolean _ShortNameInBlock = true;
@@ -3408,6 +3409,22 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
     protected void setUseOccupiedTrackSpeed(boolean set) {
         _UseOccupiedTrackSpeed = set;
+    }
+
+    /**
+     * Whether automatic allocation keeps an automatic train waiting in a
+     * Section it can stop in, when the next Section is one it can't stop in
+     * and the Sections beyond that are not free as far as one it can stop in.
+     *
+     * @return true to keep the train waiting; false, the default, to allocate
+     *         the next Section whatever lies beyond it
+     */
+    protected boolean getWaitWhereTrainsCanStop() {
+        return _WaitWhereTrainsCanStop;
+    }
+
+    protected void setWaitWhereTrainsCanStop(boolean set) {
+        _WaitWhereTrainsCanStop = set;
     }
 
     protected boolean getUseStrictTrainTracking() {

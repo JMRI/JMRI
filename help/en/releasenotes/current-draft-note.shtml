@@ -523,6 +523,18 @@
                  another train, a train has taken the other's track, or a
                  train is already past the meeting place. Allocating by hand
                  was needed to free the train.</li>
+             <li>New option
+                 <a href="https://www.jmri.org/help/en/package/jmri/jmrit/dispatcher/Options.shtml#WaitWhereTrainsCanStop">Wait
+                 Where Trains Can Stop</a>, off unless checked, for layouts
+                 where a train stopped at once on entering a short Section
+                 (one shorter than the train, with no stopping sensor, such as
+                 a short turnout Section) runs on into the next Section, which
+                 can leave the trains unable to move when another train holds
+                 it. With it checked, automatic allocation gives an automatic
+                 train such a Section only when the Sections beyond it are
+                 free as far as one the train can stop in, and then gives it
+                 all of them together; until then the train waits in the
+                 Section before, if that is one it can stop in.</li>
              <li></li>
              <li>A Section can have a stop point for each direction, set in
                  the Section's Add/Edit window in mm or in inches (to the

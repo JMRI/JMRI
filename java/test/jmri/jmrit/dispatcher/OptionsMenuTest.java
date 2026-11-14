@@ -1,14 +1,21 @@
 package jmri.jmrit.dispatcher;
 
+import java.awt.Component;
 import java.awt.GraphicsEnvironment;
+
+import javax.swing.JMenuItem;
 
 import jmri.InstanceManager;
 import jmri.jmrit.dispatcher.DispatcherFrame.TrainsFrom;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 
 import org.junit.jupiter.api.*;
 import org.junit.Assert;
 import org.junit.Assume;
+import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JCheckBoxOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  *
@@ -37,6 +44,51 @@ public class OptionsMenuTest {
         Assert.assertEquals("Layout Scale", "G", d.getScale().getScaleName());
         Assert.assertEquals("Use Metres", true, d.getUseScaleMeters());
         JUnitUtil.dispose(d);
+    }
+
+    @Test
+    public void testWaitWhereTrainsCanStopCheckBox() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/dispatcheroptions.xml");
+        JUnitUtil.initDefaultUserMessagePreferences();
+
+        DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
+        d.setAutoTurnouts(false);  // or Apply warns that there is no panel to set turnouts from
+        OptionsMenu t = new OptionsMenu(d);
+        Assert.assertFalse("off to start with", d.getWaitWhereTrainsCanStop());
+
+        // the window shows the option as Dispatcher has it, and Apply sets it
+        d.setWaitWhereTrainsCanStop(true);
+        openOptionsWindow(t);
+        JFrameOperator window = new JFrameOperator(Bundle.getMessage("OptionWindowItem"));
+        JCheckBoxOperator box = new JCheckBoxOperator(window, Bundle.getMessage("waitWhereTrainsCanStop"));
+        Assert.assertTrue("shown on", box.isSelected());
+        box.changeSelection(false);
+        new JButtonOperator(window, Bundle.getMessage("ButtonApply")).push();
+        window.waitClosed();
+        Assert.assertFalse("Apply turns it off", d.getWaitWhereTrainsCanStop());
+
+        openOptionsWindow(t);
+        window = new JFrameOperator(Bundle.getMessage("OptionWindowItem"));
+        box = new JCheckBoxOperator(window, Bundle.getMessage("waitWhereTrainsCanStop"));
+        Assert.assertFalse("shown off", box.isSelected());
+        box.changeSelection(true);
+        new JButtonOperator(window, Bundle.getMessage("ButtonApply")).push();
+        window.waitClosed();
+        Assert.assertTrue("Apply turns it on", d.getWaitWhereTrainsCanStop());
+
+        JUnitUtil.dispose(d);
+    }
+
+    private static void openOptionsWindow(OptionsMenu menu) {
+        String text = Bundle.getMessage("OptionWindowItem") + "...";
+        for (Component c : menu.getMenuComponents()) {
+            if (c instanceof JMenuItem && text.equals(((JMenuItem) c).getText())) {
+                ThreadingUtil.runOnGUI(() -> ((JMenuItem) c).doClick());
+                return;
+            }
+        }
+        Assert.fail("no menu item " + text);
     }
 
     @BeforeEach
