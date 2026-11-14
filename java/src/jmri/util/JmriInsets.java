@@ -11,7 +11,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,7 +83,8 @@ public class JmriInsets {
                 && !OS_NAME.toLowerCase().startsWith("mac")) { // NOI18N
             try {
                 Process p = Runtime.getRuntime().exec(new String[]{"ps","ax"}); // NOI18N
-                BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
+                BufferedReader r = new BufferedReader(new InputStreamReader(
+                        p.getInputStream(), StandardCharsets.UTF_8));
 
                 try {
                     java.util.List<String> desktopList = Arrays.asList(DESKTOP_ENVIRONMENTS.split("\\|")); // NOI18N
@@ -239,7 +242,8 @@ public class JmriInsets {
         try {
             boolean found = false;
             String temp;
-            try (FileReader reader = new FileReader(xmlFile); BufferedReader buffer = new BufferedReader(reader)) {
+            try (FileReader reader = new FileReader(xmlFile, StandardCharsets.UTF_8);
+                    BufferedReader buffer = new BufferedReader(reader)) {
                 temp = buffer.readLine();
                 while (temp != null) {
                     if (temp.contains("<entry name=\"size\"")) { // NOI18N
@@ -271,7 +275,7 @@ public class JmriInsets {
 
             boolean found = false;
             String value = null;
-            FileReader reader = new FileReader(f);
+            FileReader reader = new FileReader(f, StandardCharsets.UTF_8);
             BufferedReader buffer = new BufferedReader(reader);
             try {
                 String temp = buffer.readLine();

@@ -1,11 +1,10 @@
 package jmri.util;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.EntityResolver;
@@ -136,9 +135,12 @@ public class JmriLocalEntityResolver implements EntityResolver {
                 } else {
                     log.trace("schema file with null path");
                     try {
-                        return new InputSource(new FileReader(new File(source)));
+                        return new InputSource(new FileReader(new File(source), StandardCharsets.UTF_8));
                     } catch (FileNotFoundException e2) {
                         log.error("did not find direct entity file: {}", source);
+                        return null;
+                    } catch (IOException e2) {
+                        log.error("could not read file: {}", source);
                         return null;
                     }
                 }

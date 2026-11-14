@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.ServerSocket;
+import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
 import jmri.InstanceManager;
@@ -22,7 +23,7 @@ import org.slf4j.LoggerFactory;
  * JMRI Implementation of the BiDiBOverTcp Server Protocol.
  * Starting and Stopping of the server is delegated to the
  * NetPlainTcpBidib class.
- * 
+ *
  * There is one server for each BiDiB connection and they must have different port numbers,
  * so the client is connected to a specific BiDiB connection.
  *
@@ -55,7 +56,7 @@ public class TcpServer {
     //    log.debug("BiDiB TcpServer started!");
     //    memo = null;
     // }
-    
+
     public TcpServer(BiDiBSystemConnectionMemo memo) {
         this.memo = memo;
         log.debug("BiDiB TcpServer created for {}", memo.getUserName());
@@ -102,7 +103,7 @@ public class TcpServer {
         log.debug("TcpServer: saving settings file {}", settingsFileName);
 
         try ( OutputStream outStream = new FileOutputStream(settingsFileName);
-            PrintStream settingsStream = new PrintStream(outStream); ) {
+            PrintStream settingsStream = new PrintStream(outStream, false, StandardCharsets.UTF_8); ) {
 
             settingsStream.println("# BiDiBOverTcp Configuration Settings");
             settingsStream.println(AUTO_START_KEY + " = " + (autoStart ? "1" : "0"));
@@ -150,7 +151,7 @@ public class TcpServer {
             return true;
         }
         return false;
-    }            
+    }
 
     public boolean isSettingChanged() {
         return settingsChanged;
@@ -165,11 +166,11 @@ public class TcpServer {
                 netPlainTcpBidib = new NetPlainTcpBidib(memo.getBiDiBTrafficController());
             }
             netPlainTcpBidib.start(portNumber);
-            
+
             if (netPlainTcpBidib.isStarted()) {
-                
+
                 updateServerStateListener();
-                
+
                 if (this.shutDownTask == null) {
                     this.shutDownTask = this::disable;
                 }
@@ -180,7 +181,7 @@ public class TcpServer {
             else {
                 jmri.util.swing.JmriJOptionPane.showMessageDialog(null, rb.getString("BiDiBOverTCPServerConnectError"), "TCP over BiDiB Server", jmri.util.swing.JmriJOptionPane.ERROR_MESSAGE);
             }
-            
+
 //            // advertise over Zeroconf/Bonjour
 //            if (this.service == null) {
 //                this.service = ZeroConfService.create("_bidibovertcpserver._tcp.local.", portNumber);
@@ -194,7 +195,7 @@ public class TcpServer {
     public void disable() {
         if (netPlainTcpBidib != null) {
             log.info("Stopping BiDiBOverTcpServer listener.");
-            
+
             netPlainTcpBidib.stop();
             netPlainTcpBidib = null;
 
@@ -210,9 +211,9 @@ public class TcpServer {
 //                ((ClientRxHandler) clientsArray[i]).close();
 //            }
         }
-        
+
 //        this.service.stop();
-        
+
         if (this.shutDownTask != null) {
             InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(this.shutDownTask);
         }

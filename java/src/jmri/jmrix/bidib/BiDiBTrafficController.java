@@ -27,6 +27,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+import java.nio.charset.StandardCharsets;
+
 import jmri.*;
 import jmri.implementation.AbstractShutDownTask;
 import jmri.jmrix.PortAdapter;
@@ -36,21 +39,21 @@ import jmri.jmrix.bidib.netbidib.NetBiDiBPairingRequestDialog;
  * The BiDiB Traffic Controller provides the interface for JMRI to the BiDiB Library (jbidibc) - it
  * does not handle any protocol functions itself. Therefor it does not extend AbstractMRTrafficController.
  * Instead, it delegates BiDiB handling to a BiDiB controller instance (serial, simulation, etc.) using BiDiBInterface.
- * 
+ *
  * @author Bob Jacobsen Copyright (C) 2002
  * @author Eckart Meyer Copyright (C) 2019-2025
  *
  */
 
 @SuppressFBWarnings(value = "JLM_JSR166_UTILCONCURRENT_MONITORENTER")
-// This code uses several AtomicBoolean variables as synch objects.  In this use, 
+// This code uses several AtomicBoolean variables as synch objects.  In this use,
 // they're synchronizing access to code blocks, not just synchronizing access
 // to the underlying boolean value. it would be possible to use separate
 // Object variables for this process, but keeping those in synch would actually
 // be more complex and confusing than this approach.
 
 public class BiDiBTrafficController implements CommandStation {
-    
+
     public static final String ASYNCCONNECTIONINIT = "jmri-async-init";
     public static final String ISNETBIDIB = "jmri-is-netbidib";
     public static final String USELOCALPING = "jmri-use-local-ping";
@@ -76,7 +79,7 @@ public class BiDiBTrafficController implements CommandStation {
     protected final TreeMap<Long, Node> nodes = new TreeMap<>(); //our node list - use TreeMap since it retains order if insertion (HashMap has arbitrary order)
 
     private Node cachedCommandStationNode = null;
-    
+
     private final AtomicBoolean mIsProgMode = new AtomicBoolean();
     volatile protected CommandStationState mSavedMode;
     private Node currentGlobalProgrammerNode = null;
@@ -105,14 +108,14 @@ public class BiDiBTrafficController implements CommandStation {
 
         progTimer.setRepeats(false);
         mIsProgMode.set(false);
-        
+
         nodeInitializer = new BiDiBNodeInitializer(this, bidib, nodes);
-                
+
     }
-    
+
     /**
      * Opens the BiDiB connection in the jbidibc library, add listeners and initialize BiDiB.
-     * 
+     *
      * @param p BiDiB port adapter (serial or simulation)
      * @return a jbidibc context
      */
@@ -121,21 +124,21 @@ public class BiDiBTrafficController implements CommandStation {
         // init bidib
         portController = (BiDiBPortController)p;
         Context context = portController.getContext();
-        
+
         // there is currently no difference between "use async init" and "this is a netBiDiB device"...
         isAsyncInit = context.get(ASYNCCONNECTIONINIT, Boolean.class, false);
         isNetBiDiB = context.get(ISNETBIDIB, Boolean.class, false);
         useLocalPing = context.get(USELOCALPING, Boolean.class, true);
-        
+
         stallLock.set(false); //not stalled
-        
+
         messageListeners.add(new DefaultMessageListener() {
 
             @Override
             public void error(byte[] address, int messageNum, int errorCode, byte[] reasonData) {
                 log.debug("Node error event: addr: {}, msg num: {}, error code: {}, data: {}", address, messageNum, errorCode, reasonData);
                 if (errorCode == 1) {
-                    log.info("error: {}", new String(reasonData));
+                    log.info("error: {}", new String(reasonData, StandardCharsets.UTF_8));
                 }
             }
 
@@ -189,7 +192,7 @@ public class BiDiBTrafficController implements CommandStation {
                     }
                 }
             }
-            
+
             @Override
             public void nodeLost(byte[] address, int messageNum, Node node) {
                 log.debug("Node lost event: {}", node);
@@ -201,7 +204,7 @@ public class BiDiBTrafficController implements CommandStation {
                 log.debug("Node new event: {}", node);
                 nodeInitializer.nodeNew(node);
             }
-            
+
             @Override
             public void stall(byte[] address, int messageNum, boolean stall) {
                 log.trace("message listener stall! {} node: {}", stall, getNodeByAddr(address));
@@ -219,7 +222,7 @@ public class BiDiBTrafficController implements CommandStation {
                     }
                 }
             }
-            
+
             @Override
             public void localPong(byte[] address, int messageNum) {
                 if (log.isTraceEnabled()) {
@@ -227,7 +230,7 @@ public class BiDiBTrafficController implements CommandStation {
                     log.trace("local pong - msg num: {}, node: {}, ", messageNum, node);
                 }
             }
-            
+
             // don't know if this is the correct place...
             @Override
             public void csState(byte[] address, int messageNum, CommandStationState commandStationState) {
@@ -271,7 +274,7 @@ public class BiDiBTrafficController implements CommandStation {
                 }
             }
         });
-                
+
         transferListeners.add(new TransferListener() {
 
             @Override
@@ -318,17 +321,17 @@ public class BiDiBTrafficController implements CommandStation {
                 log.trace("ctsChanged");
             }
         });
-        
+
         ConnectionListener connectionListener = new ConnectionListener() {
-            
+
             /**
              * The port was opened.
              * In case of a netBiDiB connection pairing has not been verified and the
              * server is not logged in. This will be notified later.
-             * 
+             *
              * For all other connections the port is now usable and we init the
              * connection just here.
-             * 
+             *
              * @param port is the name of the port just opened.
              */
             @Override
@@ -344,7 +347,7 @@ public class BiDiBTrafficController implements CommandStation {
             /**
              * The port was closed
              * If the local ping feature was enabled (netBiDiB), it stopped now.
-             * 
+             *
              * @param port is the name of the closed port
              */
             @Override
@@ -367,7 +370,7 @@ public class BiDiBTrafficController implements CommandStation {
                 // no implementation
                 log.info("connection stall! {}", stall);
             }
-            
+
             @Override
             public void status(String messageKey, Context context) {
                 // no implementation
@@ -377,13 +380,13 @@ public class BiDiBTrafficController implements CommandStation {
             /**
              * This is called if the pairing state machine is now either in "paired"
              * or "unpaired" state.
-             * 
+             *
              * If "paired" is signalled, there is nothing more to do since the
              * connection will only be ready after server has logged in.
-             * 
+             *
              * If pairing failed, timed out or the an existing pairing was removed
              * on the remote side, we will clear all nodes and then close the connection.
-             * 
+             *
              * @param pairingResult pairing result
              */
             @Override
@@ -426,7 +429,7 @@ public class BiDiBTrafficController implements CommandStation {
                         bidib.signalUserAction(NetBidibContextKeys.KEY_PAIRING_REQUEST, context);
 
                         pairingDialog = new NetBiDiBPairingRequestDialog(context, portController, new ActionListener() {
-                            
+
                             /**
                              * called when the pairing dialog was closed by the user or if the user pressed the cancel-button.
                              * In this case the init should fail.
@@ -442,9 +445,9 @@ public class BiDiBTrafficController implements CommandStation {
                         // show() will not wait for user interaction or timeout, but will return immediately
                         pairingDialog.show();
                     }
-                }       
+                }
             }
-            
+
             /**
              * The remote side has logged in. The connection is now fully usable.
              */
@@ -480,7 +483,7 @@ public class BiDiBTrafficController implements CommandStation {
                 fireConnectionChanged("logoff");
             }
         };
-        
+
         String portName = portController.getRealPortName();
         log.info("Open BiDiB connection on \"{}\"", portName);
 
@@ -495,14 +498,14 @@ public class BiDiBTrafficController implements CommandStation {
                 // If one day we start to really use the listeners we would have to check if this is o.k.
                 portController.registerAllListeners(connectionListener, nodeListeners, messageListeners, transferListeners);
             }
-            
-            
+
+
             log.debug("the connection is now opened: {}", bidib.isOpened());
-            
+
             if (isAsyncInit) {
                 // for async connections (netBiDiB) we have to wait here until the connection is paired
                 // the server has logged in and the nodes have been initialized.
-                
+
                 // get the pairing timeout and then wait a bit longer to be sure...
                 final NetBidibLinkData clientLinkData =
                     context.get(Context.NET_BIDIB_CLIENT_LINK_DATA, NetBidibLinkData.class, null);
@@ -535,15 +538,15 @@ public class BiDiBTrafficController implements CommandStation {
                     log.warn("node init timeout!");
                 }
             }
-            
+
             if (!bidib.isOpened()  ||  !connectionIsReady) {
                 log.info("connection is not ready - not initialized.");
                 return null;
             }
-            
+
             // The connection is ready now.
             // The nodes have already been initialized here from the connectionListener events.
-            
+
             log.info("registering shutdown task");
             ShutDownTask shutDownTask = new AbstractShutDownTask("BiDiB Shutdown Task") {
                 @Override
@@ -554,7 +557,7 @@ public class BiDiBTrafficController implements CommandStation {
                 }
             };
             InstanceManager.getDefault(ShutDownManager.class).register(shutDownTask);
-            
+
             return context;
 
         }
@@ -566,33 +569,33 @@ public class BiDiBTrafficController implements CommandStation {
         }
         return null;
     }
-    
+
 //    public Long getUniqueId() {
 //        return deviceUniqueId;
 //    }
-        
+
     /**
      * Check if the connection is ready to communicate.
      * For netBiDiB this is the case only if the pairing was successful and
      * the server has logged in.
      * For all other connections the connection is ready if it has been
      * successfully opened.
-     * 
+     *
      * @return true if the connection is ready
      */
     public boolean isConnectionReady() {
         return connectionIsReady;
     }
-    
+
     /**
      * Check of the connection is netBiDiB.
-     * 
+     *
      * @return true if this connection is netBiDiB
      */
     public boolean isNetBiDiB() {
         return isNetBiDiB;
     }
-    
+
     /**
      * Set the connection to lost state.
      * All nodes will be removed and the components will be invalidated
@@ -601,13 +604,13 @@ public class BiDiBTrafficController implements CommandStation {
         connectionIsReady = false;
         nodeInitializer.connectionLost();
     }
-    
+
     // Methods used by BiDiB only
 
     /**
      * Check if the connection is detached i.e. it is opened, paired
      * but the logon has been rejected.
-     * 
+     *
      * @return true if detached
      */
     public boolean isDetached() {
@@ -622,18 +625,18 @@ public class BiDiBTrafficController implements CommandStation {
         }
         return false;
     }
-    
+
     /**
      * Set or remove the detached state.
      * If logoff is requested (detach), a logon reject is sent to the device
      * and all nodes will be notified that they are no more reachable (lost node).
      * The connection remains active, but other clients may request a logon from
      * the connected device.
-     * 
+     *
      * If a logon is requested (attach), the connected device is asked for a new logon.
      * When the logon is received, the nodes will be re-initialized by the traffic
      * controller.
-     * 
+     *
      * @param logon - true for logon (attach), false for logoff (detach)
      */
     public void setLogon(boolean logon) {
@@ -659,10 +662,10 @@ public class BiDiBTrafficController implements CommandStation {
             bidib.getRootNode().getMasterNode().setDetached(true);
         }
     }
-    
+
     /**
      * Add/Remove an ActionListener to be called when the connection has changed.
-     * 
+     *
      * @param l - an Object implementing the ActionListener interface
      */
     public void addConnectionChangedListener(ActionListener l) {
@@ -670,13 +673,13 @@ public class BiDiBTrafficController implements CommandStation {
             connectionChangedListeners.add(l);
         }
     }
-    
+
     public void removeConnectionChangedListener(ActionListener l) {
         synchronized (connectionChangedListeners) {
             connectionChangedListeners.remove(l);
         }
     }
-    
+
     private void fireConnectionChanged(String cmd) {
 
         final Collection<ActionListener> safeListeners;
@@ -716,9 +719,9 @@ public class BiDiBTrafficController implements CommandStation {
             log.debug("local ping is disabled.");
         }
     }
- 
+
     // End Methods used by BiDiB only
-    
+
 
     Node debugSavedNode;
     public void TEST(boolean a) {///////////////////DEBUG
@@ -736,10 +739,10 @@ public class BiDiBTrafficController implements CommandStation {
             }
         }
     }
-    
+
     /**
      * Get Bidib Interface
-     * 
+     *
      * @return Bidib Interface
      */
     public BidibInterface getBidib() {
@@ -747,31 +750,31 @@ public class BiDiBTrafficController implements CommandStation {
     }
 
 // convenience methods for node handling
-    
+
     /**
      * Get the list of nodes found
-     * 
+     *
      * @return list of nodes
      */
     public Map<Long, Node> getNodeList() {
         return nodes;
     }
-    
+
     /**
      * Get node by unique id from nodelist
-     * 
+     *
      * @param uniqueId search for this
      * @return node
      */
     public Node getNodeByUniqueID(long uniqueId) {
         return nodes.get(uniqueId);
     }
-    
+
     /**
      * Get node by node address from nodelist
-     * 
+     *
      * @param addr input to search
-     * @return node 
+     * @return node
      */
     public Node getNodeByAddr(byte[] addr) {
         for(Map.Entry<Long, Node> entry : nodes.entrySet()) {
@@ -782,12 +785,12 @@ public class BiDiBTrafficController implements CommandStation {
         }
         return null;
     }
-    
+
     /**
      * Get node by node username from nodelist
-     * 
+     *
      * @param userName input to search
-     * @return node 
+     * @return node
      */
     public Node getNodeByUserName(String userName) {
         //log.debug("getNodeByUserName: [{}]", userName);
@@ -800,38 +803,38 @@ public class BiDiBTrafficController implements CommandStation {
         }
         return null;
     }
-    
+
     /**
      * Get root node from nodelist
-     * 
-     * @return node 
+     *
+     * @return node
      */
     public Node getRootNode() {
         byte[] addr = {0};
         return getNodeByAddr(addr);
     }
-    
+
     /**
      * A node suitable as a global programmer must be
-     * 
+     *
      * - a command station,
      * - must support service mode programming and
      * - must be a booster.
      * - for other nodes than the global command station the local DCC generator
      *   must be switched on (MSG_BOOST_STAT returns this as "control")
-     * 
+     *
      * @param node to check
-     * 
+     *
      * @return true if the node is suitable as a global progreammer
      */
     public boolean isGlobalProgrammerNode(Node node) {
-       
+
         if (NodeUtils.hasCommandStationFunctions(node.getUniqueId())) {
 //                if (node.equals(getRootNode())) { //DEBUG
 //                    log.trace("---is root node: {}", node);
 //                    continue;//TEST: pretend that the root does not support service mode.
 //                }
-            if (NodeUtils.hasCommandStationProgrammingFunctions(node.getUniqueId()) 
+            if (NodeUtils.hasCommandStationProgrammingFunctions(node.getUniqueId())
                         &&  NodeUtils.hasBoosterFunctions(node.getUniqueId())) {
                 log.trace("node supports command station, programming and booster functions: {}", node);
                 if (node == getFirstCommandStationNode()  ||  hasLocalDccEnabled(node)) {
@@ -849,8 +852,8 @@ public class BiDiBTrafficController implements CommandStation {
      * probably not be used as a global programmer and the other have been added just for that purpose.
      * TODO: the user should select the global programmer node if there multiple nodes suitable
      * as a global programmer.
-     * 
-     * 
+     *
+     *
      * @return programmer node or null if none available
      */
     public Node getFirstGlobalProgrammerNode() {
@@ -868,12 +871,12 @@ public class BiDiBTrafficController implements CommandStation {
         }
         return null;
     }
-    
+
     /**
      * Set the  global programmer node to use.
-     * 
+     *
      * @param node to be used as global programmer node or null to remove the currentGlobalProgrammerNode
-     * 
+     *
      * @return true if node is a suitable global programmer node, currentGlobalProgrammerNode is set to that node. false if it is not.
      */
     public boolean setCurrentGlobalProgrammerNode(Node node) {
@@ -883,7 +886,7 @@ public class BiDiBTrafficController implements CommandStation {
         }
         return false;
     }
-    
+
     /**
      * Get the cached global programmer node. If there is no, try to find a suitable node.
      * Note that the global programmer node may dynamically change by user settings.
@@ -898,15 +901,15 @@ public class BiDiBTrafficController implements CommandStation {
         }
         return currentGlobalProgrammerNode;
     }
-    
+
     /**
      * Ask the node if the local DCC generator is enabled. The state is returned as a
      * BoosterControl value of LOCAL.
      * Note that this function is expensive since it gets the information directly
      * from the node and receiving a MSG_BOOST_STATE message.
-     * 
+     *
      * As far as I know (2023) there is only one device that supports the dynamically DCC generator switching: the Fichtelbahn ReadyBoost
-     * 
+     *
      * @param node to ask
      * @return true if local DCC generator is enabled, false if the booster is connected to the
      *         global command station.
@@ -932,13 +935,13 @@ public class BiDiBTrafficController implements CommandStation {
         log.debug("node has local DCC enabled: {}, {}", hasLocalDCC, node);
         return hasLocalDCC;
     }
-    
-    
+
+
     /**
      * Get the first and most probably only command station node (also used for Programming on the Main - POM)
      * A cached value is returned here for performance reasons since the function is called very often.
      * We don't expect the command station to change.
-     * 
+     *
      * @return command station node
      */
     public Node getFirstCommandStationNode() {
@@ -954,7 +957,7 @@ public class BiDiBTrafficController implements CommandStation {
         }
         return cachedCommandStationNode;
     }
-    
+
     /**
      * Get the first booster node.
      * There may be more booster nodes, so prefer the command station and then try the others
@@ -985,7 +988,7 @@ public class BiDiBTrafficController implements CommandStation {
      * Therefor it should be converted to "hasOutputNode" or similar.
      * @return output node
      */
-    public Node getFirstOutputNode() {  
+    public Node getFirstOutputNode() {
         for(Map.Entry<Long, Node> entry : nodes.entrySet()) {
             Node node = entry.getValue();
             if (NodeUtils.hasAccessoryFunctions(node.getUniqueId())  ||  NodeUtils.hasSwitchFunctions(node.getUniqueId())) {
@@ -995,7 +998,7 @@ public class BiDiBTrafficController implements CommandStation {
         }
         return null;
     }
-    
+
     /**
      * Check if we have at least one node capable of Accessory functions
      * @return true or false
@@ -1010,12 +1013,12 @@ public class BiDiBTrafficController implements CommandStation {
         }
         return false;
     }
-    
+
 // convenience methods for feature handling
-    
+
     /**
      * Find a feature for given node.
-     * 
+     *
      * @param node selected node
      * @param requestedFeatureId as integer
      * @return a Feature object or null if the node does not have the feature at all
@@ -1023,10 +1026,10 @@ public class BiDiBTrafficController implements CommandStation {
     public Feature findNodeFeature(Node node, final int requestedFeatureId) {
         return Feature.findFeature(node.getFeatures(), requestedFeatureId);
     }
-    
+
     /**
      * Get the feature value of a node.
-     * 
+     *
      * @param node selected node
      * @param requestedFeatureId feature to get
      * @return the feature value as integer or 0 if the node does not have the feature
@@ -1040,7 +1043,7 @@ public class BiDiBTrafficController implements CommandStation {
             return f.getValue();
         }
     }
-    
+
     // this is here only as a workaround until PortModelEnum.getPortModel eventually will support flat_extended itself
     public PortModelEnum getPortModel(final Node node) {
         if (PortModelEnum.getPortModel(node) == PortModelEnum.type) {
@@ -1057,7 +1060,7 @@ public class BiDiBTrafficController implements CommandStation {
     }
 
     // convenience methods to handle Message Listeners
-    
+
     /**
      * Add a message Listener to the connection
      * @param messageListener to be added
@@ -1106,10 +1109,10 @@ public class BiDiBTrafficController implements CommandStation {
         }
     }
 
-    
+
 // Config and ConfigX handling
 // NOTE: All of these methods should be either obsolete to moved to BiDiBOutputMessageHandler
-    
+
     private int getTypeCount(Node node, LcOutputType type) {
         int id;
         switch (type) {
@@ -1163,10 +1166,10 @@ public class BiDiBTrafficController implements CommandStation {
             }
         }
     }
-    
+
     /**
      * Request CONFIGX from all ports on a given node and possibly only for a given type.
-     * 
+     *
      * @param node requested node
      * @param type - if null, request all port types
      * @return Note: always returns null, since data is not collected synchroneously but delivered to registered Message Listeners.
@@ -1213,10 +1216,10 @@ public class BiDiBTrafficController implements CommandStation {
         }
         return portConfigXList;
     }
-    
+
     /**
      * Request CONFIGX if a given port on a given node and possibly only for a given type.
-     * 
+     *
      * @param node requested node
      * @param portAddr as an integer
      * @param type - if null, request all port types
@@ -1249,11 +1252,11 @@ public class BiDiBTrafficController implements CommandStation {
         }
         return null; ////////TODO remove return value completely
     }
-    
+
     /**
      * Convert a CONFIG object to a CONFIGX object.
      * This is a convenience method so the JMRI components need only to handle the CONFIGX format
-     * 
+     *
      * @param node context node
      * @param lcConfig the LcConfig object
      * @return a new LcConfigX object
@@ -1355,10 +1358,10 @@ public class BiDiBTrafficController implements CommandStation {
         LcConfigX configX = new LcConfigX(bidibPort, portConfigValues);
         return configX;
     }
-    
+
     // Asynchronous methods to request the status of all BiDiB ports
     // For this reason there is no need to query  FEATURE_CTRL_PORT_QUERY_AVAILABLE, since without this feature there would simply be no answer for the port.
-    
+
     /**
      * Request LC_STAT from all ports on all nodes of this connection.
      * Returns immediately.
@@ -1373,13 +1376,13 @@ public class BiDiBTrafficController implements CommandStation {
             }
         }
     }
-    
+
     /**
      * Request LC_STAT from all ports on a given node.
      * Returns immediately.
      * Received data is delivered to registered Message Listeners.
      * The differences for the addressing model an the old LC_STAT handling are hidden to the caller.
-     * 
+     *
      * @param node selected node
      * @param typemask a 16 bit type mask where each bit represents a type, Bit0 is SWITCHPORT, Bit1 is LIGHTPORT and so on. Bit 15 is INPUTPORT.
      *        Return LC_STAT only for ports which are selected on the type mask (the correspondend bit is set).
@@ -1456,7 +1459,7 @@ public class BiDiBTrafficController implements CommandStation {
                     }
                 }
             }
-        }        
+        }
     }
 
 // Asynchronous methods to request the status of all BiDiB feedback channels
@@ -1470,7 +1473,7 @@ public class BiDiBTrafficController implements CommandStation {
             }
         }
     }
-    
+
     public void accessoryState(Node node) {
         int accSize = getNodeFeature(node, BidibLibrary.FEATURE_ACCESSORY_COUNT);
         if (NodeUtils.hasAccessoryFunctions(node.getUniqueId())  &&  accSize > 0 ) {
@@ -1480,7 +1483,7 @@ public class BiDiBTrafficController implements CommandStation {
             }
         }
     }
-    
+
     /**
      * Request Feedback Status (called BM status in BiDiB - BM (Belegtmelder) is german for "feedback") from all ports on all nodes of this connection.
      * Returns immediately.
@@ -1495,12 +1498,12 @@ public class BiDiBTrafficController implements CommandStation {
             }
         }
     }
-    
+
     /**
      * Request Feedback Status (called BM status in BiDiB - BM (Belegtmelder) is german for "feedback") from all ports on a given node.
      * Returns immediately.
      * Received data is delivered to registered Message Listeners.
-     * 
+     *
      * @param node selected node
      */
     public void feedback(Node node) {
@@ -1510,11 +1513,11 @@ public class BiDiBTrafficController implements CommandStation {
             sendBiDiBMessage(new FeedbackGetRangeMessage(0, bmSize), node);
         }
     }
-    
+
 // End of obsolete Methods
-    
+
 // BiDiB Message handling
-    
+
     /**
      * Forward a preformatted BiDiBMessage to the actual interface.
      *
@@ -1540,11 +1543,11 @@ public class BiDiBTrafficController implements CommandStation {
             log.error("switching to or from PROG mode (global programmer) failed!");
         }
     }
-    
+
     /**
      * Check if the command station is in the requested state (Normal, PT)
      * If the command station is not in the requested state, a message is sent to BiDiB to switch to the requested state.
-     * 
+     *
      * @param needProgMode true if we request the command station to be in programming state, false if normal state is requested
      * @param node selected node
      * @return 0 if nothing to do, 1 if state has been changed, -1 on error
@@ -1612,15 +1615,15 @@ public class BiDiBTrafficController implements CommandStation {
 
         return hasChanged;
     }
-        
+
     private void progTimeout() {
         log.trace("prog mode timeout - stop global programmer PROG mode - reset to {}", mSavedMode);
         checkProgMode(false, getCurrentGlobalProgrammerNode());
     }
 
-    
+
 // BiDiB Watchdog
-    
+
     private class WatchdogTimerTask extends java.util.TimerTask {
         @Override
         public void run () {
@@ -1630,7 +1633,7 @@ public class BiDiBTrafficController implements CommandStation {
                     sendBiDiBMessage(new CommandStationSetStateMessage(CommandStationState.GO), getFirstCommandStationNode());
                 }
             }
-        }   
+        }
     }
 
     public final void setWatchdogTimer(boolean state) {
@@ -1667,7 +1670,7 @@ public class BiDiBTrafficController implements CommandStation {
             }
         }
     }
-    
+
 // local ping (netBiDiB devices)
 
     private void localPingTimeout() {
@@ -1731,7 +1734,7 @@ public class BiDiBTrafficController implements CommandStation {
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * Not supported! We probably don't need the command station interface at all...
      * ... besides perhaps consist control or DCC Signal Mast / Head ??
      */
@@ -1784,8 +1787,8 @@ public class BiDiBTrafficController implements CommandStation {
 //            return temp;
 //        }
 //    }
-    
-    
+
+
 // Shutdown function
 
     protected void terminate () {
@@ -1806,10 +1809,10 @@ public class BiDiBTrafficController implements CommandStation {
         catch (ProtocolException e) {
             log.error("unable to disable node", e);
         }
-        
+
         log.debug("Cleanup ends");
     }
-    
+
 //    /** NO LONGER USED
 //     * Internal class to handle traffic controller cleanup. The primary task of
 //     * this thread is to make sure the DCC system has exited service mode when
@@ -1829,7 +1832,7 @@ public class BiDiBTrafficController implements CommandStation {
 //        }
 //    }
 //
-    
+
     private static final Logger log = LoggerFactory.getLogger(BiDiBTrafficController.class);
 
 }

@@ -6,9 +6,11 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -18,6 +20,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
+
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.TextAreaFIFO;
@@ -368,7 +371,9 @@ public abstract class AbstractMonFrame extends JmriJFrame {
         if (logStream == null) {  // successive clicks don't restart the file
             // start logging
             try {
-                logStream = new PrintStream(new FileOutputStream(logFileChooser.getSelectedFile()));
+                logStream = new PrintStream(
+                        new FileOutputStream(logFileChooser.getSelectedFile()),
+                        false, StandardCharsets.UTF_8);
             } catch (java.io.FileNotFoundException ex) {
                 log.error("exception", ex);
             }

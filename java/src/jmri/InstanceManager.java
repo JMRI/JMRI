@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -594,7 +595,7 @@ public final class InstanceManager {
     public static Set<Class<?>> getInstanceClasses() {
         return Collections.unmodifiableSet(getDefault().managerLists.keySet());
     }
-    
+
     /**
      * Remove notification on changes to specific types.
      *
@@ -1071,7 +1072,7 @@ public final class InstanceManager {
         PrintWriter tempWriter = null;
         try {
             tempWriter = (traceFileActive
-                    ? new PrintWriter(new BufferedWriter(new FileWriter(new File(traceFileName), traceFileAppend)))
+                    ? new PrintWriter(new BufferedWriter(new FileWriter(new File(traceFileName), StandardCharsets.UTF_8, traceFileAppend)))
                     : null);
         } catch (java.io.IOException e) {
             log.error("failed to open log file", e);

@@ -5,12 +5,15 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
+
 import jmri.InstanceManager;
 import jmri.jmrix.dccpp.DCCppListener;
 import jmri.jmrix.dccpp.DCCppMessage;
 import jmri.jmrix.dccpp.DCCppReply;
 import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,7 +65,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
             txThread.setPriority(Thread.MAX_PRIORITY);
             txThread.setName("ClientTxHandler:" + remoteAddress);
 
-            inStream = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            inStream = new BufferedReader(new InputStreamReader(clientSocket.getInputStream(), StandardCharsets.UTF_8));
             outStream = clientSocket.getOutputStream();
 
             memo.getDCCppTrafficController().addDCCppListener(~0, this);
@@ -156,7 +159,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
             try {
                 outBuf = new StringBuilder(newServerVersionString);
                 outBuf.append(jmri.Version.name()).append("\r\n");
-                outStream.write(outBuf.toString().getBytes());
+                outStream.write(outBuf.toString().getBytes(StandardCharsets.UTF_8));
 
                 while (!isInterrupted()) {
                     msg = null;
@@ -182,7 +185,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
                         outBuf.append(">");
                         log.debug("ClientTxHandler: Send: {}", outBuf);
                         outBuf.append("\r\n");
-                        outStream.write(outBuf.toString().getBytes());
+                        outStream.write(outBuf.toString().getBytes(StandardCharsets.UTF_8));
                         outStream.flush();
                     }
                 }

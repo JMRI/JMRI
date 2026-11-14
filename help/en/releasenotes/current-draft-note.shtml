@@ -620,6 +620,14 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+          <li>LogixNG Tables are now loaded using UTF-8 encoding.
+              If you are using Windows and have Java 11 or Java 17 and if you
+              are using non English characters in LogixNG Tables, the
+              data in the table might have strange characters instead
+              of the desired non English characters. If so, you could
+              either store the CSV file as UTF-8 or use only English characters.
+              If you are using Linux or Mac, or if you are using Java 21
+              or later, you will probably not have this problem.</li>
           <li>The Block expression can compare a Block's allocated value or
               its display value with a string, as well as its value, and the
               Local Variable and Table actions can copy a Block's allocated
@@ -667,7 +675,13 @@
     <h3>Permissions</h3>
         <a id="Permissions" name="Permissions"></a>
         <ul>
-            <li></li>
+            <li>The permission configuration file is now read using UTF-8 encoding.
+                If you are using Windows and have Java 11 or Java 17 and if you
+                are using non English characters in usernames or passwords,
+                you might not be able to log in. If so, see
+                <a href="https://www.jmri.org/help/en/package/jmri/jmrit/permission/PermissionManager.shtml">I have locked myself out! What do I do?</a>.
+                If you are using Linux or Mac, or if you are using Java 21
+                or later, you will probably not have this problem.</li>
         </ul>
 
     <h3>Preferences</h3>

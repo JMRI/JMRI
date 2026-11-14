@@ -1,5 +1,7 @@
 package jmri.jmrit.roster;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 
@@ -33,6 +35,8 @@ import org.jdom2.Element;
  *
  * @author Bob Jacobsen Copyright 2014, 2018
  */
+@SuppressFBWarnings(value = {"AT_UNSAFE_RESOURCE_ACCESS_IN_THREAD"},
+        justification = "Better to suppress it in one class than to suppress it everywhere in JMRI")
 public class FullBackupImportAction extends ImportRosterItemAction {
 
     //private Component _who;
@@ -52,10 +56,10 @@ public class FullBackupImportAction extends ImportRosterItemAction {
     public FullBackupImportAction(String title, Component parent) {
         super(title, parent);
     }
-    
+
     boolean acceptAll;
     boolean acceptAllDup;
-    
+
     JFileChooser chooser;
     String filename;
     FileInputStream inputfile;
@@ -89,17 +93,17 @@ public class FullBackupImportAction extends ImportRosterItemAction {
         new Thread(() -> {run();}).start();
     }
 
-    /** 
+    /**
      * actually do the processing on a separate thread
      */
-    public void run() {    
+    public void run() {
         try {
 
             inputfile = new FileInputStream(filename);
-            
+
             dialog = new CountingBusyDialog(null, "Importing Roster", true, -1);// indeterminate bar
             ThreadingUtil.runOnGUIEventually(() -> {dialog.start();});
-            
+
             zipper = new ZipInputStream(inputfile) {
                 @Override
                 public void close() {
@@ -115,23 +119,23 @@ public class FullBackupImportAction extends ImportRosterItemAction {
             acceptAll = false; // skip prompting for each entry and accept all
             acceptAllDup = false;  // skip prompting for dups and accept all
             SimpleDateFormat isoDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); // NOI18N ISO8601
-            
+
             while ((entry = zipper.getNextEntry()) != null) {
                 log.debug("Entry: {} len {} ({}) added {} content: {}",
-                                        entry.getName(), 
-                                        entry.getSize(), 
-                                        entry.getCompressedSize(), 
+                                        entry.getName(),
+                                        entry.getSize(),
+                                        entry.getCompressedSize(),
                                         isoDateFormat.format(entry.getTime()),
                                         entry.getComment()
                         );
 
                 final int thisCount = ++count;
                 ThreadingUtil.runOnGUI(() -> {dialog.count(thisCount);});
-                
+
                 // Once we get the entry from the stream, the stream is
                 // positioned read to read the raw data, and we keep
                 // reading until read returns 0 or less.
-                
+
                 // find type and process
                 // Unfortunately, the comment field doesn't carry through (see debug above)
                 // so we check the filename
@@ -155,7 +159,7 @@ public class FullBackupImportAction extends ImportRosterItemAction {
                         }
                     });
                 }
-                
+
             }
 
         } catch (FileNotFoundException ex) {
@@ -289,14 +293,14 @@ public class FullBackupImportAction extends ImportRosterItemAction {
 
         return true;
     }
-    
+
     @Override
     void addToEntryToRoster() {
         // add the new entry to the roster
         Roster.getDefault().addEntry(mToEntry);
-        // unlike the superclass method, this does not 
+        // unlike the superclass method, this does not
         // write the full Roster until the end of the full import
-        // to improve speed.  
+        // to improve speed.
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(FullBackupImportAction.class);

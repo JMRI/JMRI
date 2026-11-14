@@ -2,6 +2,7 @@ package jmri.jmrix.loconet.soundloader;
 
 import java.awt.Font;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
@@ -254,7 +255,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
     // should probably be abstract and put in invoking GUI
     // Also used to display the .map block
     void viewTxtButtonPressed(Object value, int row, int col) {
-        String content = new String(file.getHeader(row + 1).getByteArray());
+        String content = new String(file.getHeader(row + 1).getByteArray(), StandardCharsets.UTF_8);
         JFrame frame = new JFrame();
         JTextArea text = new JTextArea(content);
         text.setEditable(false);

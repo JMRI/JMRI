@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.beans.*;
 import java.io.PrintWriter;
 import java.util.*;
@@ -634,6 +636,9 @@ public interface Base extends PropertyChangeProvider {
 
 
     interface RunnableWithBaseThrowException {
+
+        @SuppressFBWarnings(value = "THROWS_METHOD_THROWS_CLAUSE_BASIC_EXCEPTION",
+                justification = "This method needs to be able to throw any exception")
         void run(@Nonnull Base b) throws Exception;
     }
 

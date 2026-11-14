@@ -1,12 +1,15 @@
 package jmri.jmrix.loconet.spjfile;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+
 import jmri.jmrix.loconet.sdf.SdfBuffer;
 
 /**
@@ -115,7 +118,7 @@ public class SpjFile {
         while ((++end) < buffer.length) {
             if (buffer[end] == 0x0D || buffer[end] == 0x0A) {
                 // sound end; make string
-                String next = new String(buffer, start, end - start);
+                String next = new String(buffer, start, end - start, StandardCharsets.UTF_8);
                 // increment pointers
                 start = ++end;
                 log.debug("new start value is {}", start);
@@ -267,7 +270,7 @@ public class SpjFile {
             log.debug("Last byte at {}", length);
             s.close();
         }
-        
+
         // inefficient way to read, hecause of all the skips (instead
         // of seeks)  But it handles non-consecutive and overlapping definitions.
         for (int i = 1; i < n; i++) {
@@ -470,7 +473,7 @@ public class SpjFile {
 
         /**
          * Get as a SDF buffer.
-         * This buffer then becomes associated, and a later write will use 
+         * This buffer then becomes associated, and a later write will use
          * the buffer's contents.
          * @return the byte array as SDF buffer.
          */
@@ -526,7 +529,7 @@ public class SpjFile {
             index = copyInt4(buffer, index, 0); // spare 7
 
             // name is written in zero-filled array
-            byte[] name = filename.getBytes();
+            byte[] name = filename.getBytes(StandardCharsets.UTF_8);
             if (name.length > 72) {
                 log.error("Name too long: {}", name.length);
             }
@@ -555,7 +558,7 @@ public class SpjFile {
             writeInt4(s, 0);  // spare 7
 
             // name is written in zero-filled array
-            byte[] name = filename.getBytes();
+            byte[] name = filename.getBytes(StandardCharsets.UTF_8);
             if (name.length > 72) {
                 log.error("Name too long: {}", name.length);
             }
@@ -599,7 +602,7 @@ public class SpjFile {
             for (int i = 0; i < len; i++) {
                 shortname[i] = name[i];
             }
-            filename = new String(shortname);
+            filename = new String(shortname, StandardCharsets.UTF_8);
         }
 
         @Override

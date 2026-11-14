@@ -2,6 +2,7 @@ package jmri.jmris.srcp;
 
 import jmri.*;
 import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,7 @@ import org.mockito.Mockito;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,7 +31,7 @@ public class TimeStampedOutputTest {
     public void testWrite() throws IOException {
         try(ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
             try(TimeStampedOutput t = new TimeStampedOutput(baos)) {
-                t.write("hello world".getBytes());
+                t.write("hello world".getBytes(StandardCharsets.UTF_8));
                 assertThat(baos.toString()).isNotEmpty().isEqualTo("12345678.910 hello world");
             }
         }

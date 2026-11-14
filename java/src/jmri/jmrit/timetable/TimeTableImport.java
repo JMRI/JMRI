@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,7 +27,7 @@ public class TimeTableImport {
         _dm = dm;
         _dm.setLockCalculate(true);
         try {
-            fileReader = new FileReader(file);
+            fileReader = new FileReader(file, StandardCharsets.UTF_8);
             bufferedReader = new BufferedReader(fileReader);
 
             int row = 1;

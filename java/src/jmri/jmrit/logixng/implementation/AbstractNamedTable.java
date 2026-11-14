@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.implementation;
 
 import java.beans.PropertyChangeEvent;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import javax.annotation.CheckForNull;
@@ -219,7 +220,7 @@ public abstract class AbstractNamedTable extends AbstractNamedBean implements Na
         if (bomInputStream.hasBOM()) {
             log.debug("Input file has a Byte Order Marker attached");
         }
-        InputStreamReader rdr = new InputStreamReader(bomInputStream);
+        InputStreamReader rdr = new InputStreamReader(bomInputStream, StandardCharsets.UTF_8);
         BufferedReader buffered = new BufferedReader(rdr);
         CSVFormat format = null;
         if (csvType == CsvType.TABBED) {

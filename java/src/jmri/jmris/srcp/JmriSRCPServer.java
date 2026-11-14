@@ -58,7 +58,7 @@ public class JmriSRCPServer extends JmriServer {
         sh.setThrottleServer(new JmriSRCPThrottleServer(inStream,outputStream));
 
         // Start by sending a welcome message
-        outputStream.write( "SRCP 0.8.3\n\r".getBytes());
+        outputStream.write( "SRCP 0.8.3\n\r".getBytes(StandardCharsets.UTF_8));
 
         while (true) {
             // Read the command from the client
@@ -76,13 +76,14 @@ public class JmriSRCPServer extends JmriServer {
                     // generate the response.  If this happens, we
                     // need to send the message out.
                     if (v.getOutputString() != null) {
-                        outputStream.write((v.getOutputString() + "\n\r").getBytes());
+                        outputStream.write((v.getOutputString() + "\n\r")
+                                .getBytes(StandardCharsets.UTF_8));
                     }
                 } catch (ParseException pe) {
                     log.debug("Parse Exception", pe);
                     jmri.jmris.srcp.parser.Token t = parser.getNextToken();
                     if (t.kind == jmri.jmris.srcp.parser.SRCPParserConstants.EOF) {
-                        // the input ended.  
+                        // the input ended.
                         if (log.isDebugEnabled()) {
                             log.debug("Closing connection due to close of input stream");
                         }
@@ -90,7 +91,8 @@ public class JmriSRCPServer extends JmriServer {
                         inStream.close();
                         return;
                     }
-                    outputStream.write("425 ERROR not supported\n\r".getBytes());
+                    outputStream.write("425 ERROR not supported\n\r"
+                            .getBytes(StandardCharsets.UTF_8));
                     // recover by consuming tokens in the token stream
                     // until we reach the end of the line.
                     while (t.kind != jmri.jmris.srcp.parser.SRCPParserConstants.EOL) {
@@ -110,13 +112,14 @@ public class JmriSRCPServer extends JmriServer {
                     // generate the response.  If this happens, we
                     // need to send the message out.
                     if (v.getOutputString() != null) {
-                        outputStream.write((v.getOutputString() + "\n\r").getBytes());
+                        outputStream.write((v.getOutputString() + "\n\r")
+                                .getBytes(StandardCharsets.UTF_8));
                     }
                 } catch (ParseException pe) {
                     log.debug("Parse Exception", pe);
                     jmri.jmris.srcp.parser.Token t = parser.getNextToken();
                     if (t.kind == jmri.jmris.srcp.parser.SRCPParserConstants.EOF) {
-                        // the input ended.  The parser may have prepared 
+                        // the input ended.  The parser may have prepared
                         // an output string to return (if the client issued
                         // a "TERM 0 SESSION" request).
                         //if(v.getOutputString()!=null)
@@ -127,7 +130,8 @@ public class JmriSRCPServer extends JmriServer {
                         inStream.close();
                         return;
                     }
-                    outputStream.write(("425 ERROR not supported\n\r").getBytes());
+                    outputStream.write(("425 ERROR not supported\n\r")
+                            .getBytes(StandardCharsets.UTF_8));
                     // recover by consuming tokens in the token stream
                     // until we reach the end of the line.
                     while (t.kind != jmri.jmris.srcp.parser.SRCPParserConstants.EOL) {
@@ -135,7 +139,8 @@ public class JmriSRCPServer extends JmriServer {
                     }
                 } catch (TokenMgrError tme) {
                     log.debug("Token Manager Exception", tme);
-                    outputStream.write("410 ERROR unknown command\n\r".getBytes());
+                    outputStream.write("410 ERROR unknown command\n\r"
+                            .getBytes(StandardCharsets.UTF_8));
                 }
             } else if (!sh.isCommandMode()) {
                 BufferedReader d  = new BufferedReader(new InputStreamReader(inStream,
@@ -154,7 +159,7 @@ public class JmriSRCPServer extends JmriServer {
                     // we don't care if there is an error on input.
                 }
             } else {
-                outputStream.write("500 ERROR out of resources\n\r".getBytes());
+                outputStream.write("500 ERROR out of resources\n\r".getBytes(StandardCharsets.UTF_8));
                 outputStream.close();
                 inStream.close();
                 return;

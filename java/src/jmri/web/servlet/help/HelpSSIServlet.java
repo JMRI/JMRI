@@ -67,7 +67,7 @@ public class HelpSSIServlet extends HttpServlet {
                     }
                 } else {
                     String error = String.format("--- ERROR: Plugin resource \"%s\" couldn't be found", resourceName);
-                    response.getOutputStream().write(error.getBytes());
+                    response.getOutputStream().write(error.getBytes(StandardCharsets.UTF_8));
                     log.warn(error);
                 }
             }
@@ -140,7 +140,7 @@ public class HelpSSIServlet extends HttpServlet {
                     }
                 }
             } else {
-                content = new String(Files.readAllBytes(Paths.get(fileName)));
+                content = new String(Files.readAllBytes(Paths.get(fileName)), StandardCharsets.UTF_8);
             }
         } catch (IOException ex) {
             content = "Exception thrown: " + ex.getMessage();
