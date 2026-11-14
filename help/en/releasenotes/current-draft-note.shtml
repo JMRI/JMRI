@@ -928,6 +928,9 @@
                 when it is seen to leave a detected Block in front of them. It
                 only watches.</li>
             <li></li>
+            <li>Monitors and the system console: a full window no longer
+                slows down as each line is added; it now keeps up to a
+                tenth more lines than its maximum.</li>
             <li>Quitting JMRI, and closing the CBUS or LCC Hub window, no
                 longer wait about 2 seconds for each network address while
                 JMRI withdraws its ZeroConf (mDNS) announcements, such as the
