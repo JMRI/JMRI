@@ -38,6 +38,17 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
     private boolean disposed = false;
     private final java.util.Map<Block, java.util.Deque<BlockEvent>> blockHistories = new java.util.HashMap<>();
     private final java.beans.PropertyChangeListener historyListener = this::historyChanged;
+    private final java.util.Set<Block> unexplained = new java.util.LinkedHashSet<>();
+    private final java.util.Set<Block> untrusted = new java.util.LinkedHashSet<>();
+    private final java.beans.PropertyChangeListener blocksListener = e -> {
+        if (e.getNewValue() instanceof List) {
+            for (Object b : (List<?>) e.getNewValue()) {
+                if (b instanceof Block) {
+                    setUnexplained((Block) b, false); // a train is there now
+                }
+            }
+        }
+    };
 
     /**
      * Make the manager, which starts following the layout's Blocks: their
@@ -55,6 +66,16 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
             @Override
             public TrainRecord recordFor(Object value) {
                 return getByValue(value);
+            }
+
+            @Override
+            public void unexplained(@Nonnull Block block, boolean unexplained) {
+                setUnexplained(block, unexplained && getRecordsIn(block).isEmpty() && !isUntrusted(block));
+            }
+
+            @Override
+            public boolean isUntrusted(@Nonnull Block block) {
+                return untrusted.contains(block);
             }
         });
         watcher.start();
@@ -158,6 +179,7 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
         }
         DefaultTrainRecord r = new DefaultTrainRecord(n, registry);
         r.addPropertyChangeListener(TrainRecord.PROPERTY_HISTORY, historyListener);
+        r.addPropertyChangeListener(TrainRecord.PROPERTY_BLOCKS, blocksListener);
         records.add(r);
         makeupWatcher.update();
         firePropertyChange(PROPERTY_RECORDS, null, r);
@@ -178,6 +200,7 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
         DefaultTrainRecord r = (DefaultTrainRecord) record;
         records.remove(r);
         r.removePropertyChangeListener(TrainRecord.PROPERTY_HISTORY, historyListener);
+        r.removePropertyChangeListener(TrainRecord.PROPERTY_BLOCKS, blocksListener);
         r.dispose();
         watcher.placementChanged();
         speedWatcher.update();
@@ -191,6 +214,54 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
     public List<BlockEvent> getHistory(@Nonnull Block block) {
         java.util.Deque<BlockEvent> h = blockHistories.get(block);
         return h == null ? new ArrayList<>() : new ArrayList<>(h);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @Nonnull
+    public List<Block> getUnexplained() {
+        return new ArrayList<>(unexplained);
+    }
+
+    private void setUnexplained(Block block, boolean is) {
+        if (is ? unexplained.add(block) : unexplained.remove(block)) {
+            firePropertyChange(PROPERTY_UNEXPLAINED, is ? null : block, is ? block : null);
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean isUntrusted(@Nonnull Block block) {
+        return untrusted.contains(block);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @InvokeOnLayoutThread
+    public void setUntrusted(@Nonnull Block block, boolean untrust) {
+        Objects.requireNonNull(block, "block");
+        if (untrust ? untrusted.add(block) : untrusted.remove(block)) {
+            if (untrust) {
+                setUnexplained(block, false);
+            }
+            firePropertyChange(PROPERTY_UNTRUSTED, untrust ? null : block, untrust ? block : null);
+        }
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @Nonnull
+    public List<Block> getUntrusted() {
+        return new ArrayList<>(untrusted);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @InvokeOnLayoutThread
+    public void reportOverdue(@Nonnull TrainRecord record, @Nonnull Block block, boolean commanded) {
+        if (record instanceof DefaultTrainRecord && records.contains(record)) {
+            ((DefaultTrainRecord) record).overdue(block, commanded);
+        }
     }
 
     private void historyChanged(java.beans.PropertyChangeEvent e) {

@@ -205,6 +205,7 @@ public class ToolsMenu extends JMenu {
         add(new jmri.jmrit.dispatcher.DispatcherAction(Bundle.getMessage("MenuItemDispatcher")));
         // train tracking, with its windows
         JMenu trainTrackingMenu = new JMenu(jmri.jmrit.trainrecord.swing.SetUpChecksFrame.menuText());
+        trainTrackingMenu.add(new jmri.jmrit.trainrecord.swing.WarningsFrame.Action());
         trainTrackingMenu.add(new jmri.jmrit.trainrecord.swing.SetUpChecksFrame.Action());
         add(trainTrackingMenu);
         add(new jmri.jmrit.timetable.swing.TimeTableAction(Bundle.getMessage("MenuItemTimeTable")));

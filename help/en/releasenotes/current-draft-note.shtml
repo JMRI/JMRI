@@ -958,6 +958,16 @@
                 still edits the Block's value. Nothing on the layout changes.</li>
             <li>The Train Tracking help page is now in the help's contents and
                 index, and the Blocks and Block Table help pages link to it.</li>
+            <li>While trains are placed, train tracking now warns, in a window of
+                its own, when a train hasn't been seen to reach the next Block
+                in time (stalled if its lead loco was told to move, otherwise
+                lost). These windows can be turned off in Preferences &gt;
+                Messages.
+                Tools &gt; Train Tracking &gt; Warnings lists the warnings still
+                open, and also each Block whose detector shows it occupied when
+                no train could have entered it; there, "Nothing: Detector Stuck"
+                tells train tracking to take no notice of that detector until it
+                is trusted again. It only warns: no train is stopped.</li>
             <li>For developers: a new train record (<code>jmri.TrainRecord</code>,
                 from the <code>jmri.TrainRecordManager</code>) holds what is
                 known about a train from one run to the next: its name, the

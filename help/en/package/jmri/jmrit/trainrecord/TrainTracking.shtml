@@ -40,6 +40,21 @@
         it to stop.</li>
       </ul>
 
+      <h2 id="warnings">Warnings</h2>
+
+      <p>While trains are followed, a window opens when a train stalls or is lost.
+      <strong>Show Me</strong> opens the Block dialog; <strong>Later</strong> closes the window,
+      and the warning stays in <strong>Tools &gt; Train Tracking &gt; Warnings</strong> until it
+      is over. To stop these windows opening, use <strong>Preferences &gt; Messages &gt; Train
+      Tracking Warnings</strong>. Train tracking only warns: no train is stopped.</p>
+
+      <p>A Block that becomes occupied when no train could have entered it opens no window: it is
+      listed in the Warnings window. A train JMRI isn't following, or a parked train on a
+      detector that drops out, would otherwise open one at every Block. There,
+      <strong>Nothing: Detector Stuck</strong> tells train tracking to take no notice of that
+      Block's detector until it is trusted again, from the Warnings window or the Block dialog;
+      nothing else that uses the sensor changes.</p>
+
       <h2 id="blockDialog">The Block dialog</h2>
 
       <p>On a Layout Editor panel in operating mode, right-click a Block's track and choose

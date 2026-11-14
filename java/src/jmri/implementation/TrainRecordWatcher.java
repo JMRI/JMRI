@@ -100,6 +100,24 @@ public class TrainRecordWatcher {
          */
         @CheckForNull
         TrainRecord recordFor(@CheckForNull Object value);
+
+        /**
+         * A Block's detector shows it occupied when no train could have
+         * entered it, or it no longer does.
+         *
+         * @param block       the Block
+         * @param unexplained true if its occupancy is unexplained
+         */
+        default void unexplained(@Nonnull Block block, boolean unexplained) {
+        }
+
+        /**
+         * @param block a Block
+         * @return true if its detector is not to be believed
+         */
+        default boolean isUntrusted(@Nonnull Block block) {
+            return false;
+        }
     }
 
     /**
@@ -227,6 +245,9 @@ public class TrainRecordWatcher {
      * A Block went occupied.
      */
     private void occupied(Block block, long timeNanos, Instant time) {
+        if (placer.isUntrusted(block)) {
+            return;
+        }
         ambiguous.remove(block);
         List<Candidate> candidates = new ArrayList<>();
         for (DefaultTrainRecord r : records.get()) {
@@ -264,6 +285,8 @@ public class TrainRecordWatcher {
             }
             ambiguous.put(block, candidates);
             settleByValue(block, block.getValue());
+        } else {
+            placer.unexplained(block, true);
         }
     }
 
@@ -492,6 +515,10 @@ public class TrainRecordWatcher {
      * A Block went unoccupied.
      */
     private void unoccupied(Block block) {
+        placer.unexplained(block, false);
+        if (placer.isUntrusted(block)) {
+            return;
+        }
         List<Candidate> pending = ambiguous.remove(block);
         if (pending != null) {
             restore(block, pending);
