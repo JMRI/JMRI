@@ -96,6 +96,27 @@
         </li>
 
         <li>
+          <a id="PreventDeadlock" name="PreventDeadlock"></a>
+          <p>Check <strong>Prevent Deadlock</strong>, the default, to have automated allocation give
+          trains track so that they can never end up waiting for each other for good, such as two
+          trains each holding half of a single line. A train is given track from one place it can
+          stop to the next, all at once or not at all: a Section it can stop in (by its stopping
+          sensor, its speed profile, or because it is long enough to hold the train), a Section
+          marked safe in its Transit, or the end of its Transit. And it is given that track only if,
+          with it given, every Active Train can still run its Transit, round again or to its end.
+          A train waiting for track gains one step of priority for each minute it waits, so that
+          trains of higher priority go first but no train waits for ever.</p>
+
+          <p>When a train is started where the Active Trains can't all run their Transits, for
+          example two trains booked head on over a single line with nowhere to pass, a warning
+          naming the trains is written to the System Console. Terminate one of them, or change
+          its Transit.</p>
+
+          <p>Uncheck it to allocate as in earlier versions: a number of Sections ahead, or by safe
+          Sections, with meets planned by priority.</p>
+        </li>
+
+        <li>
           <p>Check <strong>Automatically set turnouts when a Section is allocated</strong> to
           activate automatic setting of turnouts. Uncheck to deactivate automatic setting of
           turnouts. This item is equivalent to <strong>Auto Set Turnouts</strong> in Dispatcher's
@@ -131,7 +152,9 @@
           given its next Section as usual, as keeping it back would gain nothing. Unchecked, the
           default, Sections are allocated whatever lies beyond them. Sections and trains whose
           lengths are not known are allocated as usual, so this needs the Max Train Length of each
-          train and the lengths of the Blocks.</p>
+          train and the lengths of the Blocks. It has no effect while <strong>Prevent
+          Deadlock</strong> is checked, which gives trains track from one place they can stop to
+          the next itself.</p>
         </li>
 
         <li>

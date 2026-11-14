@@ -171,6 +171,9 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
                         dispatcher.setWaitWhereTrainsCanStop(
                                 options.getAttribute("waitwheretrainscanstop").getValue().equals("yes"));
                     }
+                    if (options.getAttribute("preventdeadlock") != null) {
+                        dispatcher.setPreventDeadlock(!options.getAttribute("preventdeadlock").getValue().equals("no"));
+                    }
                     if (options.getAttribute("useoccupiedtrackspeed") != null) {
                         dispatcher.setUseOccupiedTrackSpeed(false);
                         if (options.getAttribute("useoccupiedtrackspeed").getValue().equals("yes")) {
@@ -324,6 +327,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
         options.setAttribute("useturnoutconnectiondelay", "" + (dispatcher.getUseTurnoutConnectionDelay() ? "yes" : "no"));
         options.setAttribute("useoccupiedtrackspeed", "" + (dispatcher.getUseOccupiedTrackSpeed() ? "yes" : "no"));
         options.setAttribute("waitwheretrainscanstop", "" + (dispatcher.getWaitWhereTrainsCanStop() ? "yes" : "no"));
+        options.setAttribute("preventdeadlock", "" + (dispatcher.getPreventDeadlock() ? "yes" : "no"));
         options.setAttribute("usestricttraintracking", "" + (dispatcher.getUseStrictTrainTracking() ? "yes" : "no"));
         options.setAttribute("minthrottleinterval", "" + (dispatcher.getMinThrottleInterval()));
         options.setAttribute("fullramptime", "" + (dispatcher.getFullRampTime()));
