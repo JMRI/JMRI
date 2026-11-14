@@ -304,6 +304,16 @@ public class ActiveTrain implements PropertyChangeProvider {
         return mStarted;
     }
 
+    /**
+     * Get the Dispatcher that runs this train.
+     *
+     * @return the Dispatcher, or null if not set
+     */
+    @CheckForNull
+    public DispatcherFrame getDispatcher() {
+        return mDispatcher;
+    }
+
     public void setDispatcher(DispatcherFrame df) {
         mDispatcher = df;
         mSignalType = df.getSignalType();

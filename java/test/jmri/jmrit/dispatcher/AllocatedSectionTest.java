@@ -29,6 +29,31 @@ public class AllocatedSectionTest {
         JUnitUtil.dispose(d);
     }
 
+    @Test
+    public void testSectionChangeMakesNoDispatcher() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/dispatcheroptions.xml");
+        DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
+        jmri.Transit transit = new jmri.implementation.DefaultTransit("TT1");
+        ActiveTrain run = new ActiveTrain(transit, "Run", ActiveTrain.USER);
+        run.setDispatcher(d);
+        ActiveTrain noDispatcher = new ActiveTrain(transit, "Other", ActiveTrain.USER);
+        jmri.Section section1 = new jmri.implementation.DefaultSection("TS1");
+        jmri.Section section2 = new jmri.implementation.DefaultSection("TS2");
+        AllocatedSection forRun = new AllocatedSection(section1, run, 1, section2, 2);
+        AllocatedSection forOther = new AllocatedSection(section2, noDispatcher, 1, null, 0);
+        Assert.assertNotNull(forRun);
+        Assert.assertNotNull(forOther);
+
+        // the Dispatcher goes, as when a test ends, and then its Sections change,
+        // as when the allocation thread finishes a release after it was disposed
+        JUnitUtil.dispose(d);
+        InstanceManager.deregister(d, DispatcherFrame.class);
+        section1.setState(jmri.Section.FORWARD);
+        section2.setState(jmri.Section.FORWARD);
+        Assert.assertFalse("no new Dispatcher made", InstanceManager.containsDefault(DispatcherFrame.class));
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
