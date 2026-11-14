@@ -25,6 +25,35 @@ public class DefaultSectionTest {
    }
 
    @Test
+   public void testDisposeStopsListeningToBlocks() {
+    Block b = new Block("IB1", "user");
+    int before = b.getNumPropertyChangeListeners();
+    Section s = new DefaultSection("TS1");
+    s.addBlock(b);
+    Assert.assertEquals(before + 1, b.getNumPropertyChangeListeners());
+    s.dispose();
+    Assert.assertEquals("disposed Section no longer listens", before, b.getNumPropertyChangeListeners());
+   }
+
+   @Test
+   public void testRebuiltSectionWorksOccupancyOutAgain() throws JmriException {
+    Block occupied = new Block("IB1", "occupied");
+    Sensor os = InstanceManager.getDefault(SensorManager.class).provideSensor("IS1");
+    occupied.setSensor("IS1");
+    os.setState(Sensor.ACTIVE);
+    Block clear = new Block("IB2", "clear");
+    clear.setSensor("IS2");
+    InstanceManager.getDefault(SensorManager.class).provideSensor("IS2").setState(Sensor.INACTIVE);
+    Section s = new DefaultSection("TS1");
+    s.addBlock(occupied);
+    Assert.assertEquals(Section.OCCUPIED, s.getOccupancy());
+    s.removeAllBlocksFromSection();
+    Assert.assertNull("no end Block", s.getLastBlock());
+    s.addBlock(clear);
+    Assert.assertEquals("only the clear Block is left", Section.UNOCCUPIED, s.getOccupancy());
+   }
+
+   @Test
    public void testWarnOnBlockAdd() {
     Section  s = new DefaultSection("TS1");
     Assert.assertEquals(0, s.getBlockList().size());
@@ -117,6 +146,7 @@ public class DefaultSectionTest {
         JUnitUtil.setUp();
 
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        jmri.util.JUnitUtil.initInternalSensorManager();
    }
 
    @AfterEach

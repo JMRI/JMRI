@@ -695,6 +695,20 @@ public class DefaultSection extends AbstractNamedBean implements Section {
             mReverseEntryPoints.remove(i - 1);
         }
         initializationNeeded = false;
+        // the occupancy and end Blocks belonged to the old Blocks; work the
+        // occupancy out again from whatever Blocks are added next
+        mFirstBlock = null;
+        mLastBlock = null;
+        mOccupancyInitialized = false;
+    }
+
+    /**
+     * Stop listening to this Section's Blocks, then dispose of it.
+     */
+    @Override
+    public void dispose() {
+        removeAllBlocksFromSection();
+        super.dispose();
     }
     /**
      * Gets Blocks in order. If state is FREE or FORWARD, returns Blocks in
