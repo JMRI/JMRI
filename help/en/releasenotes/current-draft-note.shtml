@@ -37,6 +37,13 @@
                     station's sessions on the bus, whichever cab sent them
                     (<code>jmri.LocoSpeedSource</code>), and when a session
                     ends. It only listens. Nothing users see changes.</li>
+                <li>CBUS Node Manager: a node's CAN ID is now taken only
+                    from the replies and reports the node sends about
+                    itself. Requests from another configuration tool on
+                    the bus, such as MMC, carry the number of the node
+                    they are for, and EVANS replies and events carry an
+                    event's node number; each of these used to set the
+                    node's CAN ID to the sender's.</li>
                 <li>CBUS throttles: when several throttles are asked for at
                     the same moment, for example by Dispatcher starting several
                     automatic trains, by opening a saved throttle layout or by
