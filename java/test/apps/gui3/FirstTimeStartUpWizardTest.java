@@ -214,6 +214,39 @@ public class FirstTimeStartUpWizardTest {
 
     }
 
+    @Test
+    public void testLanguageListBuiltTwice() {
+        InstanceManager.setDefault(jmri.jmrix.ConnectionConfigManager.class, new jmri.jmrix.ConnectionConfigManager());
+        InstanceManager.setDefault(RosterConfigManager.class, new RosterConfigManager());
+        java.util.List<Throwable> thrown = new java.util.concurrent.CopyOnWriteArrayList<>();
+        Thread.UncaughtExceptionHandler before = Thread.getDefaultUncaughtExceptionHandler();
+        Thread.setDefaultUncaughtExceptionHandler((t, e) -> thrown.add(e));
+        try {
+            jmri.util.JmriJFrame jf = new jmri.util.JmriJFrame("testLanguageListBuiltTwice", false, false);
+            FirstTimeStartUpWizard w = jmri.util.ThreadingUtil.runOnGUIwithReturn(() -> new FirstTimeStartUpWizard(jf, null));
+            // the constructor built the list once; build it twice more at once, as testDisplayDialogues does
+            java.util.List<javax.swing.JComboBox<String>> boxes = new java.util.ArrayList<>();
+            jmri.util.ThreadingUtil.runOnGUI(() -> {
+                w.doLocale();
+                boxes.add(w.localeBox);
+                w.doLocale();
+                boxes.add(w.localeBox);
+            });
+            int count = java.util.Locale.getAvailableLocales().length;
+            for (javax.swing.JComboBox<String> box : boxes) {
+                JUnitUtil.waitFor(() -> box.getItemCount() == count, "the whole list in each box");
+                for (int i = 1; i < count; i++) {
+                    assertTrue(box.getItemAt(i - 1).compareTo(box.getItemAt(i)) <= 0, "sorted at " + i);
+                }
+            }
+            JUnitUtil.waitFor(() -> w.locale != null, "the names' locales known");
+            assertTrue(thrown.isEmpty(), "no exception on the threads that build the lists: " + thrown);
+            JUnitUtil.dispose(jf);
+        } finally {
+            Thread.setDefaultUncaughtExceptionHandler(before);
+        }
+    }
+
     @BeforeEach
     public void setUp(@TempDir File tempDir) throws IOException  {
         JUnitUtil.setUp();

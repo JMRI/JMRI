@@ -933,6 +933,10 @@
                 JMRI withdraws its ZeroConf (mDNS) announcements, such as the
                 Hub's, WiThrottle's and the Web Server's. The wait is now about
                 2 seconds in all.</li>
+            <li>The first-time start-up wizard finds its list of languages
+                into a list of its own, so building that page twice at
+                once can no longer break the sort with "Comparison method
+                violates its general contract".</li>
             <li>A new window, Tools &gt; Train Tracking &gt; Set-up Checks,
                 lists what in a layout's set-up makes following trains less
                 sure: trains with no length, or no speed profile for their lead
