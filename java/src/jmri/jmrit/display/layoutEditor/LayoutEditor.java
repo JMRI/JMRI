@@ -3717,6 +3717,13 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
                 jmri.jmrit.trainrecord.swing.BlockDialog.open(block, true, allControlling());
             }
         });
+        if (allControlling()) {
+            for (TrackMarkerDropHandler handler : java.util.ServiceLoader.load(TrackMarkerDropHandler.class)) {
+                if (handler.isActive()) {
+                    handler.addBlockMenuItems(popup, block);
+                }
+            }
+        }
         popup.show(event.getComponent(), event.getX(), event.getY());
     }
 
@@ -3738,14 +3745,35 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     /**
      * In operating mode, a loco marker was dragged onto the track of a
-     * Block: the train is there, for train tracking.
+     * Block. An active {@link TrackMarkerDropHandler} takes it, and says
+     * whether train tracking is told as well; with none, the train is there,
+     * for train tracking.
      *
      * @param marker the marker
      * @param loc    where it was dropped, in panel coordinates
      */
     void markerDropped(@Nonnull LocoIcon marker, @Nonnull Point2D loc) {
         jmri.Block block = blockOfTrackAt(loc);
-        if (block == null || !jmri.jmrit.trainrecord.PermissionsTrainTracking.mayCorrect()) {
+        if (block == null) {
+            return;
+        }
+        for (TrackMarkerDropHandler handler : java.util.ServiceLoader.load(TrackMarkerDropHandler.class)) {
+            if (handler.isActive()) {
+                handler.markerDropped(marker, block, this, () -> markerTrainIsIn(marker, block));
+                return;
+            }
+        }
+        markerTrainIsIn(marker, block);
+    }
+
+    /**
+     * Tell train tracking that a loco marker's train is in a Block.
+     *
+     * @param marker the marker
+     * @param block  the Block
+     */
+    private void markerTrainIsIn(@Nonnull LocoIcon marker, @Nonnull jmri.Block block) {
+        if (!jmri.jmrit.trainrecord.PermissionsTrainTracking.mayCorrect()) {
             return;
         }
         String name = marker.getText();
