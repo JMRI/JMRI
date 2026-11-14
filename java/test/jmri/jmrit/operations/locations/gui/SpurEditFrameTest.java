@@ -4,11 +4,6 @@ package jmri.jmrit.operations.locations.gui;
 import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.*;
@@ -18,6 +13,11 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.*;
 import jmri.util.swing.JemmyUtil;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the Operations Locations GUI class
@@ -44,10 +44,9 @@ public class SpurEditFrameTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LocationManager lManager = InstanceManager.getDefault(LocationManager.class);
         Location l = lManager.getLocationByName("Test Loc C");
-        SpurEditFrame f = new SpurEditFrame();
+        SpurEditFrame f = new SpurEditFrame(l);
         f.setTitle("Test Spur Add Frame");
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
-        f.initComponents(l, null);
 
         // create one spur tracks
         f.trackNameTextField.setText("new spur track");
@@ -90,10 +89,9 @@ public class SpurEditFrameTest extends OperationsTestCase {
     @Test
     public void testSetDirectionUsingCheckbox() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SpurEditFrame f = new SpurEditFrame();
+        SpurEditFrame f = new SpurEditFrame(l);
         f.setTitle("Test Spur Add Frame");
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
-        f.initComponents(l, null);
 
         f.trackNameTextField.setText("3rd spur track");
         f.trackLengthTextField.setText("1010");
@@ -120,10 +118,9 @@ public class SpurEditFrameTest extends OperationsTestCase {
     @Test
     public void testAddScheduleButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SpurEditFrame f = new SpurEditFrame();
+        SpurEditFrame f = new SpurEditFrame(l);
         f.setTitle("Test Spur Add Frame");
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
-        f.initComponents(l, null);
 
         f.trackNameTextField.setText("3rd spur track");
         f.trackLengthTextField.setText("1010");
@@ -148,10 +145,9 @@ public class SpurEditFrameTest extends OperationsTestCase {
         // improve test coverage by having a through train
         JUnitOperationsUtil.loadTrainServingAllExistingLocations();
         
-        SpurEditFrame f = new SpurEditFrame();
+        SpurEditFrame f = new SpurEditFrame(l);
         f.setTitle("Test Spur Add Frame");
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
-        f.initComponents(l, null);
 
         // create three spur tracks
         f.trackNameTextField.setText("new spur track");
@@ -203,10 +199,9 @@ public class SpurEditFrameTest extends OperationsTestCase {
     @Test
     public void testTrainServicesTrack() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SpurEditFrame f = new SpurEditFrame();
+        SpurEditFrame f = new SpurEditFrame(l);
         f.setTitle("Test Spur Frame");
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly    
-        f.initComponents(l, null);
         f.setSize(650, 800); // need to see save button
 
         // create track
@@ -305,8 +300,7 @@ public class SpurEditFrameTest extends OperationsTestCase {
     public void testCloseWindowOnSave() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Track t = l.addTrack("Test Close", Track.SPUR);
-        SpurEditFrame f = new SpurEditFrame();
-        f.initComponents(l, t);
+        SpurEditFrame f = new SpurEditFrame(t);
         JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 

@@ -4,6 +4,7 @@ import java.util.*;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.JmriUncheckedException;
 import jmri.jmrit.logixng.*;
 
 /**
@@ -135,7 +136,7 @@ public class RunOnce extends AbstractDigitalAction
             }
         } catch (SocketAlreadyConnectedException ex) {
             // This shouldn't happen and is a runtime error if it does.
-            throw new RuntimeException("socket is already connected");
+            throw new JmriUncheckedException("socket is already connected");
         }
     }
 

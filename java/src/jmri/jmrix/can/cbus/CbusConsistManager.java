@@ -30,7 +30,8 @@ public class CbusConsistManager extends NmraConsistManager implements EnableList
         return true;
     }
 
-    protected static final Vector<EnableListener> enableListeners = new Vector<EnableListener>();
+    // per-instance, listeners must not be shared between connections
+    protected final Vector<EnableListener> enableListeners = new Vector<>();
     protected boolean _enabled = false;
     
     /**

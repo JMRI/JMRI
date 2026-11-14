@@ -5,12 +5,12 @@ import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.jmrit.display.PositionablePopupUtil;
 
 public class FontPanel extends JPanel implements ItemListener {
@@ -121,7 +121,6 @@ public class FontPanel extends JPanel implements ItemListener {
         _callBack.actionPerformed(null);
     }
 
-    @SuppressFBWarnings(value = "Raw use of parameterized class", justification="AJComboBox is checked")
     @Override
     public void itemStateChanged(ItemEvent e) {
         if (e.getSource() instanceof AJComboBox<?>) {

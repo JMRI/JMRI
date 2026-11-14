@@ -34,9 +34,10 @@ public class CansolioPaneProvider extends Sol8BasePaneProvider {
     /** {@inheritDoc} */
     @Override
     public AbstractEditNVPane getEditNVFrame(CbusNodeNVTableDataModel dataModel, CbusNode node) {
-        if (_nVarEditFrame == null ){
-            _nVarEditFrame = new CansolioEditNVPane(dataModel, node);
-        }
+        // Always a new pane for this node and data model. Providers are shared by
+        // all nodes of a type, so a cached pane would stay bound to the first node and
+        // data model it was created for, and gather duplicate components and listeners.
+        _nVarEditFrame = new CansolioEditNVPane(dataModel, node);
         return _nVarEditFrame.getContent();
     }
 }

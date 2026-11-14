@@ -184,6 +184,9 @@ public class DispatcherFrameTest {
         JUnitUtil.resetProfileManager();
         JUnitUtil.initRosterConfigManager();
         JUnitUtil.initDebugThrottleManager();
+        // the options the Dispatcher reads when it is created: Auto Allocate off,
+        // whatever options file a test run before this one left set
+        OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/dispatcheroptions.xml");
     }
 
     @AfterEach

@@ -49,7 +49,16 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
     public static final int PERMISCOL = CURRENTREPCOL + 1;
     public static final int SPEEDCOL = PERMISCOL + 1;
     public static final int GHOSTCOL = SPEEDCOL + 1;
-    public static final int COLUMNCOUNT = GHOSTCOL + 1;
+    /** The trains train tracking records in the Block; read only, hidden until chosen. */
+    public static final int TRAINCOL = GHOSTCOL + 1;
+    /** Why train tracking records them there; hidden until chosen. */
+    public static final int WHYCOL = TRAINCOL + 1;
+    /**
+     * The train the Block is allocated to; read only, hidden until chosen.
+     * @since 5.19.1
+     */
+    public static final int ALLOCATEDVALUECOL = WHYCOL + 1;
+    public static final int COLUMNCOUNT = ALLOCATEDVALUECOL + 1;
 
     private final boolean _graphicState =
         InstanceManager.getDefault(GuiLafPreferencesManager.class).isGraphicTableState();
@@ -61,6 +70,7 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
     public BlockTableDataModel(Manager<Block> mgr){
         super();
         setManager(mgr); // for consistency with other BeanTableModels, default BlockManager always used.
+        listenToTrainRecords();
 
         defaultBlockSpeedText = Bundle.getMessage("UseGlobal", "Global") + " " +
             InstanceManager.getDefault(BlockManager.class).getDefaultSpeed(); // first entry in drop down list
@@ -85,17 +95,23 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
             log.debug("requested getValue(\"{}\"), Block doesn't exist", name);
             return "(no Block)";
         }
-        Object m = b.getValue();
-        if (m != null) {
-            if ( m instanceof Reportable) {
-                return ((Reportable) m).toReportString();
-            }
-            else {
-                return m.toString();
-            }
-        } else {
+        return valueText(b.getValue());
+    }
+
+    /**
+     * The text the table shows for a Block's value or allocated value.
+     *
+     * @param m the value, which may be null
+     * @return the text; empty for null
+     */
+    private static String valueText(Object m) {
+        if (m == null) {
             return "";
         }
+        if (m instanceof Reportable) {
+            return ((Reportable) m).toReportString();
+        }
+        return m.toString();
     }
 
     @Override
@@ -174,6 +190,12 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
                 return b.isReportingCurrent();
             case EDITCOL:
                 return Bundle.getMessage("ButtonEdit");
+            case TRAINCOL:
+                return trainsIn(b);
+            case WHYCOL:
+                return whyIn(b);
+            case ALLOCATEDVALUECOL:
+                return valueText(b.getAllocatedValue());
             default:
                 return super.getValueAt(row, col);
         }
@@ -265,6 +287,12 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
                 return Bundle.getMessage("BlockReporterCurrent");
             case EDITCOL:
                 return Bundle.getMessage("ButtonEdit");
+            case TRAINCOL:
+                return Bundle.getMessage("BlockTrainColName");
+            case WHYCOL:
+                return Bundle.getMessage("BlockWhyColName");
+            case ALLOCATEDVALUECOL:
+                return Bundle.getMessage("BlockAllocatedValueColName");
             default:
                 return super.getColumnName(col);
         }
@@ -275,6 +303,9 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
         switch (col) {
             case DIRECTIONCOL:
             case VALUECOL: // not a button
+            case TRAINCOL:
+            case WHYCOL:
+            case ALLOCATEDVALUECOL:
                 return String.class;
             case LENGTHCOL:
                 return Float.class;
@@ -317,7 +348,12 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
             case STATECOL:
             case REPORTERCOL:
             case SENSORCOL:
+            case ALLOCATEDVALUECOL:
                 return new JTextField(8).getPreferredSize().width;
+            case TRAINCOL:
+                return new JTextField(12).getPreferredSize().width;
+            case WHYCOL:
+                return new JTextField(30).getPreferredSize().width;
             default:
                 return super.getPreferredWidth(col);
         }
@@ -342,6 +378,9 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
             case EDITCOL:
                 return true;
             case STATECOL:
+            case TRAINCOL:
+            case WHYCOL:
+            case ALLOCATEDVALUECOL:
                 return false;
             default:
                 return super.isCellEditable(row, col);
@@ -361,6 +400,82 @@ public class BlockTableDataModel extends BeanTableDataModel<Block> {
     public void configureTable(JTable table) {
         configStateColumn(table);
         super.configureTable(table);
+        if (table.getColumnModel() instanceof jmri.util.swing.XTableColumnModel) {
+            jmri.util.swing.XTableColumnModel columns = (jmri.util.swing.XTableColumnModel) table.getColumnModel();
+            columns.setColumnVisible(columns.getColumnByModelIndex(TRAINCOL), false);
+            columns.setColumnVisible(columns.getColumnByModelIndex(WHYCOL), false);
+            // only Dispatcher sets an allocated value, and only with "Place train name in allocated Blocks" on
+            columns.setColumnVisible(columns.getColumnByModelIndex(ALLOCATEDVALUECOL), false);
+        }
+    }
+
+    private final java.beans.PropertyChangeListener trainRecordsListener = this::trainRecordsChanged;
+    private final java.beans.PropertyChangeListener trainRecordListener = e -> {
+        if (TrainRecord.PROPERTY_BLOCKS.equals(e.getPropertyName())
+                || TrainRecord.PROPERTY_CONFIDENCE.equals(e.getPropertyName())
+                || TrainRecord.PROPERTY_NAME.equals(e.getPropertyName())) {
+            jmri.util.ThreadingUtil.runOnGUIEventually(this::fireTableDataChanged);
+        }
+    };
+
+    private void listenToTrainRecords() {
+        TrainRecordManager trm = InstanceManager.getNullableDefault(TrainRecordManager.class);
+        if (trm == null) {
+            return;
+        }
+        trm.addPropertyChangeListener(TrainRecordManager.PROPERTY_RECORDS, trainRecordsListener);
+        for (TrainRecord r : trm.getRecords()) {
+            r.addPropertyChangeListener(trainRecordListener);
+        }
+    }
+
+    private void trainRecordsChanged(PropertyChangeEvent e) {
+        if (e.getOldValue() instanceof TrainRecord) {
+            ((TrainRecord) e.getOldValue()).removePropertyChangeListener(trainRecordListener);
+        }
+        if (e.getNewValue() instanceof TrainRecord) {
+            ((TrainRecord) e.getNewValue()).addPropertyChangeListener(trainRecordListener);
+        }
+        jmri.util.ThreadingUtil.runOnGUIEventually(this::fireTableDataChanged);
+    }
+
+    @Override
+    public synchronized void dispose() {
+        TrainRecordManager trm = InstanceManager.getNullableDefault(TrainRecordManager.class);
+        if (trm != null) {
+            trm.removePropertyChangeListener(TrainRecordManager.PROPERTY_RECORDS, trainRecordsListener);
+            for (TrainRecord r : trm.getRecords()) {
+                r.removePropertyChangeListener(trainRecordListener);
+            }
+        }
+        super.dispose();
+    }
+
+    private static java.util.List<TrainRecord> trainRecordsIn(Block b) {
+        TrainRecordManager trm = InstanceManager.getNullableDefault(TrainRecordManager.class);
+        return trm == null ? java.util.List.of() : trm.getRecordsIn(b);
+    }
+
+    private static String trainsIn(Block b) {
+        StringBuilder sb = new StringBuilder();
+        for (TrainRecord r : trainRecordsIn(b)) {
+            if (sb.length() > 0) {
+                sb.append(", ");
+            }
+            sb.append(jmri.jmrit.trainrecord.TrainRecordReasons.displayName(r));
+        }
+        return sb.toString();
+    }
+
+    private static String whyIn(Block b) {
+        StringBuilder sb = new StringBuilder();
+        for (TrainRecord r : trainRecordsIn(b)) {
+            if (sb.length() > 0) {
+                sb.append(' ');
+            }
+            sb.append(jmri.jmrit.trainrecord.TrainRecordReasons.why(r, b));
+        }
+        return sb.toString();
     }
 
     void editButton(Block b) {

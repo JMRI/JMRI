@@ -63,11 +63,11 @@ PositionableJPanel <|-- MemoryOrGVComboIcon
 MemoryOrGVComboIcon <|-- GlobalVariableComboIcon
 MemoryOrGVComboIcon <|-- MemoryComboIcon
 
-PositionableJPanel <|-- PositionableJTextField
+PositionableJPanel <|-- PositionableJPanelWithColumns
 
-PositionableJTextField <|-- BlockContentsInputIcon
-PositionableJTextField <|-- MemoryInputIcon
-PositionableJTextField <|-- GlobalVariableInputIcon
+PositionableJPanelWithColumns <|-- BlockContentsInputIcon
+PositionableJPanelWithColumns <|-- MemoryInputIcon
+PositionableJPanelWithColumns <|-- GlobalVariableInputIcon
 
 @end
  */

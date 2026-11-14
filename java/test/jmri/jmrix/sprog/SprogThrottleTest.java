@@ -12,6 +12,7 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2017
  */
+@SuppressWarnings("deprecation")
 public class SprogThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     private SprogTrafficControlScaffold stcs = null;
@@ -332,7 +333,7 @@ public class SprogThrottleTest extends jmri.jmrix.AbstractThrottleTest {
             Assert.assertEquals(true, instance.getFunction(i));
         }
     }
-    
+
     /**
      * Test of sendFunctionGroup1 method, of class AbstractThrottle.
      */
@@ -399,7 +400,7 @@ public class SprogThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         float result = instance.getSpeedIncrement();
         Assert.assertEquals(expResult, result, 0.0);
     }
-    
+
     @BeforeEach
     @Override
     public void setUp() {

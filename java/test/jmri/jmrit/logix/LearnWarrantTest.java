@@ -61,8 +61,9 @@ public class LearnWarrantTest {
         JFrameOperator jfo = new JFrameOperator(frame);
         pressButton(jfo, Bundle.getMessage("Calculate"));
 
-        JUnitUtil.waitFor(() -> (frame.getOrders() != null), "Found orders");
-        List<BlockOrder> orders = frame.getOrders();
+        // the route is filled in on the GUI thread, so read it there
+        JUnitUtil.waitFor(() -> ThreadingUtil.runOnGUIwithReturn(() -> frame.getOrders() != null), "Found orders");
+        List<BlockOrder> orders = ThreadingUtil.runOnGUIwithReturn(frame::getOrders);
         assertEquals(5, orders.size(), "5 BlockOrders");
 
         frame._speedUtil.setAddress("99");

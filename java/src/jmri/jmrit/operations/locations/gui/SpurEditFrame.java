@@ -5,9 +5,6 @@ import java.awt.GridBagLayout;
 
 import javax.swing.*;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
@@ -16,6 +13,9 @@ import jmri.jmrit.operations.locations.tools.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.swing.JmriJOptionPane;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user edit of a spur.
@@ -38,14 +38,18 @@ public class SpurEditFrame extends TrackEditFrame {
         super(Bundle.getMessage("AddSpur"));
     }
     
-    @Override
-    public void initComponents(Track track) {
-        setTitle(Bundle.getMessage("EditSpur", track.getLocation().getName()));
+    public SpurEditFrame(Location location) {
+        super(Bundle.getMessage("AddSpur"));
+        initComponents(location, null);
+    }
+    
+    public SpurEditFrame(Track track) {
+        super(Bundle.getMessage("EditSpur", track.getLocation().getName()));
         initComponents(track.getLocation(), track);
     }
 
     @Override
-    public void initComponents(Location location, Track track) {
+    protected void initComponents(Location location, Track track) {
         _type = Track.SPUR;
 
         // setup the optional panel with schedule stuff

@@ -159,8 +159,7 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
     }
 
     /**
-     * Set the status bar text; if the input is multi-line HTML, get just the
-     * first line, assuming lines are separated with {@code <br>}.
+     * Set the status bar text.
      *
      * @param message the message to set
      */
@@ -168,14 +167,7 @@ public class AddNewHardwareDevicePanel extends jmri.util.swing.JmriPanel {
         if (message == null) {
             statusBar.setText("");
         } else {
-            message = message.trim();
-            if (message.startsWith("<html>") && message.contains("<br>")) {
-                message = message.substring(0, message.indexOf("<br>"));
-                if (!message.endsWith("</html>")) {
-                    message = message + "</html>";
-                }
-            }
-            statusBar.setText(message);
+            statusBar.setText(message.trim());
         }
     }
 

@@ -3,7 +3,12 @@ package jmri.jmrit.dispatcher;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.DoubleSupplier;
 
 import javax.annotation.CheckForNull;
 
@@ -11,6 +16,7 @@ import jmri.*;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.dispatcher.ActiveTrain.TrainDetection;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.util.swing.JmriJOptionPane;
 
 /**
@@ -280,6 +286,57 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     /**
+     * Warn once per running direction when a configured scale speed cap cannot
+     * be resolved from the roster speed profile, so the throttle % cap will be
+     * used instead. This happens when the loco has no speed profile, or has a
+     * one-direction profile that does not cover the direction of travel.
+     * <p>
+     * Package-private so tests can drive the warning paths directly.
+     *
+     * @param caller  runtime path attempting to apply the cap, for diagnostics
+     * @param forward true if the train is running forward
+     */
+    void warnScaleCapNotApplicable(String caller, boolean forward) {
+        if (_maxSpeedScaleKmh <= 0.0f) {
+            return;
+        }
+        RosterEntry entry = (re != null) ? re : _activeTrain.getRosterEntry();
+        RosterSpeedProfile sp = (entry != null) ? entry.getSpeedProfile() : null;
+        if (sp != null && sp.getProfileSize() > 0) {
+            boolean dirHasProfile = forward ? sp.hasForwardSpeeds() : sp.hasReverseSpeeds();
+            if (dirHasProfile) {
+                return; // the scale cap can be resolved; no fallback
+            }
+        }
+        String direction = forward ? "forward" : "reverse";
+        if (!_scaleCapFallbackWarned.add(direction)) {
+            return; // already warned for this direction
+        }
+        String trainName = _activeTrain.getTrainName();
+        if (entry == null) {
+            log.warn("Train {}: scale speed cap {} km/h cannot be applied when running {} (called from {}): no roster entry with a speed profile is associated with the train; using throttle % cap {} instead",
+                    trainName, _maxSpeedScaleKmh, direction, caller, _maxSpeed);
+            return;
+        }
+        String rosterId = entry.getId();
+        if (sp == null || sp.getProfileSize() < 1) {
+            log.warn("Train {}: scale speed cap {} km/h cannot be applied when running {} (called from {}): roster entry {} has no speed profile; using throttle % cap {} instead",
+                    trainName, _maxSpeedScaleKmh, direction, caller, rosterId, _maxSpeed);
+        } else {
+            String profileDesc;
+            if (sp.hasForwardSpeeds() && !sp.hasReverseSpeeds()) {
+                profileDesc = "has a forward-only speed profile that does not cover this direction";
+            } else if (sp.hasReverseSpeeds() && !sp.hasForwardSpeeds()) {
+                profileDesc = "has a reverse-only speed profile that does not cover this direction";
+            } else {
+                profileDesc = "has a speed profile without data for this direction";
+            }
+            log.warn("Train {}: scale speed cap {} km/h cannot be applied when running {} (called from {}): roster entry {} {}; using throttle % cap {} instead",
+                    trainName, _maxSpeedScaleKmh, direction, caller, rosterId, profileDesc, _maxSpeed);
+        }
+    }
+
+    /**
      * @deprecated Use {@code ActiveTrain.setTrainDetection(TrainDetection value } insteadUse
      * @param set True if entire train is detectable
      */
@@ -349,6 +406,34 @@ public class AutoActiveTrain implements ThrottleListener {
     public float getStopBySpeedProfileAdjust() {
         return _stopBySpeedProfileAdjust;
     }
+
+    /**
+     * Check whether this train can be stopped short of the far end of a
+     * Section: by the Section's stopping sensor for the direction it is
+     * entered in, by its speed profile, or because the train fits in it.
+     * <p>
+     * A Section whose length is not known is taken to be one the train can
+     * stop in, as is any Section when the train's length is not known.
+     *
+     * @param section   the Section
+     * @param direction the direction the train runs through it,
+     *                  {@link Section#FORWARD} or {@link Section#REVERSE}
+     * @return false if the train would have to be stopped at once on entering
+     *         the Section, so that it may run on past its far end
+     */
+    public boolean canStopIn(Section section, int direction) {
+        Sensor stopSensor = (direction == Section.REVERSE)
+                ? section.getReverseStoppingSensor() : section.getForwardStoppingSensor();
+        if (stopSensor != null && _activeTrain.getUseStopSensor()) {
+            return true;
+        }
+        if (getUseSpeedProfile() && getStopBySpeedProfile()) {
+            return true;
+        }
+        long sectionLength = section.getActualLength();
+        long trainLength = getMaxTrainLengthMM();
+        return sectionLength <= 0 || trainLength <= 0 || sectionLength >= trainLength;
+    }
     /**
      * Set the F-Number for the light
      * @param value F-Number
@@ -415,6 +500,8 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     private RosterEntry re = null;
+    // Directions already warned about an unresolvable scale speed cap, to avoid log spam.
+    private final Set<String> _scaleCapFallbackWarned = ConcurrentHashMap.newKeySet();
     boolean useSpeedProfile = false;
 
     /**
@@ -587,12 +674,13 @@ public class AutoActiveTrain implements ThrottleListener {
     private PropertyChangeListener _turnoutStateListener = null;
     private boolean _stoppingByBlockOccupancy = false;    // if true, stop when _stoppingBlock goes UNOCCUPIED
     private boolean _stoppingUsingSpeedProfile = false;     // if true, using the speed profile against the roster entry to bring the loco to a stop in a specific distance
-    // Distance stop is armed (waiting to start at the section's first occupied block)
-    private boolean _distanceStopPending = false;
-    // If true, the pending distance stop is an approach-to-min (hold until sensor), not a stop-to-zero
-    private boolean _distanceStopPendingToMin = false;
-    private float _distanceStopPendingMm = 0.0f;
-    private int _distanceStopPendingTask = NO_TASK;
+    // guards a stop that waits for _stopSensor, in case the sensor fails; null if none
+    private volatile StopBackstop _backstop = null;
+    // a stop by distance being made: the Section it is in, where the head stops, from the
+    // start of the Section, and whether the train then waits for its stopping sensor
+    private AllocatedSection _distanceStopSection = null;
+    private float _distanceStopMm = 0.0f;
+    private boolean _distanceStopToMinimum = false;
     private volatile Block _stoppingBlock = null;
     private boolean _resumingAutomatic = false;  // if true, resuming automatic mode after WORKING session
     private boolean _needSetSpeed = false;  // if true, train will set speed according to signal instead of stopping
@@ -649,14 +737,38 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     // keeps track of number of horn execution threads that are active
+    // horns being sounded; guarded by itself
+    private final Object _hornLock = new Object();
     private int _activeHornThreads = 0;
 
     protected void decrementHornExecution() {
-        _activeHornThreads--;
+        synchronized (_hornLock) {
+            _activeHornThreads--;
+            _hornLock.notifyAll();
+        }
     }
 
     protected void incrementHornExecution() {
-        _activeHornThreads++;
+        synchronized (_hornLock) {
+            _activeHornThreads++;
+        }
+    }
+
+    /**
+     * Wait for horns being sounded to be turned off. Called once their actions
+     * have been interrupted, so each finishes by turning its horn off.
+     */
+    private void waitForHornsOff() {
+        synchronized (_hornLock) {
+            while (_activeHornThreads > 0) {
+                try {
+                    _hornLock.wait();
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return;
+                }
+            }
+        }
     }
 
     //
@@ -709,51 +821,35 @@ public class AutoActiveTrain implements ThrottleListener {
         }
     }
 
+    protected void handleBlockStateChange(AllocatedSection as, Block b) {
+        handleBlockStateChange(as, b, b.getState());
+    }
+
+    /**
+     * Handle a change of state of a Block in one of the train's Allocated
+     * Sections. Called for each change, in the order they happened.
+     *
+     * @param as    the Allocated Section holding the Block
+     * @param b     the Block
+     * @param state the state the Block changed to, which may no longer be its
+     *              current state
+     */
     @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC",
             justification = "OK to not sync here, no conflict expected")
-    protected void handleBlockStateChange(AllocatedSection as, Block b) {
+    protected void handleBlockStateChange(AllocatedSection as, Block b, int state) {
         //Block oldPreviousBlock = _previousBlock;
-        if (b.getState() == Block.OCCUPIED) {
+        if (state == Block.OCCUPIED) {
             // Block changed to OCCUPIED - train has entered this block
             log.debug("{}: handleBlockStateChange to OCCUPIED section {}, block {}, length {}", _activeTrain.getTrainName(),
                     as.getSection().getDisplayName(USERSYS),
                     b.getDisplayName(USERSYS), getBlockLength(b));
-            // If a distance stop is pending, start exactly at the first block INSIDE the current section
-            if (_distanceStopPending && _currentAllocatedSection != null) {
-                Block enter = _currentAllocatedSection.getEnterBlock(_previousAllocatedSection);
-                if (enter == b) {
-                    float mm = _distanceStopPendingMm;
-                    int taskPending = _distanceStopPendingTask;
-                    boolean toMin = _distanceStopPendingToMin;
-                    _distanceStopPending = false;
-                    _distanceStopPendingToMin = false;
-
-                    _stoppingUsingSpeedProfile = true; // commit to distance-based braking
-                    if (toMin) {
-                        // COMBINED (approach-to-min + sensor):
-                        re.getSpeedProfile().setMinCommandIntervalMs(_dispatcher.getMinThrottleInterval());
-                        re.getSpeedProfile().setMinCommandIntervalMs(_dispatcher.getMinThrottleInterval());
-                        re.getSpeedProfile().setMinCommandIntervalMs(_dispatcher.getMinThrottleInterval());
-                        re.getSpeedProfile().setMinMaxLimitsKmh(_minReliableOperatingSpeed, _maxSpeed,
-                                _maxSpeedScaleKmh, (float) _dispatcher.getScale().getScaleRatio(),
-                                _autoEngineer.getIsForward());
-                        re.getSpeedProfile().planApproachToMinOverDistanceThenStopBySensor(
-                                getThrottle(), mm, _stopSensor, _speedFactor);
-                        return; // bypass legacy inner controller
-                    }
-                    // PURE distance stop-to-zero: cancel and plan via RosterSpeedProfile (same semantics)
-                    cancelStopInCurrentSection();
-                    re.getSpeedProfile().setMinMaxLimitsKmh(_minReliableOperatingSpeed, _maxSpeed, _maxSpeedScaleKmh,
-                            (float) _dispatcher.getScale().getScaleRatio(), _autoEngineer.getIsForward());
-                    re.getSpeedProfile().planStopToZeroOverDistance(getThrottle(), mm, _speedFactor);
-                    Thread tWait = jmri.util.ThreadingUtil.newThread(new WaitForTrainToStop(taskPending),
-                            "Wait for stop " + getActiveTrain().getActiveTrainName());
-                    tWait.start();
-                }
-            }
             if (b == _nextBlock || _nextBlock == null) {
                 _activeTrain.setCurrentBlock(_currentBlock, b);
                 _currentBlock = b;
+                if (_backstop != null) {
+                    _backstop.headEntered(b);
+                }
+                headFixForStopByDistance(as, b);
                 // defer setting the next/previous blocks until we know if its required and in what fashion
                 // for stopping blocks that action happens after the train has stopped.
                 // first check for entering the end point
@@ -796,8 +892,8 @@ public class AutoActiveTrain implements ThrottleListener {
                         // If we stop in Block 1 of a 3 block section, and enter this code
                         // when starting off again, so its just an advance of the _nextBlock.
                         // we can tell which situation it is by looking
-                        // whether the _nextSection is not null and allocated to us.
-                        if ( _nextSection == null || !_activeTrain.isInAllocatedList(_nextSection)) {
+                        // whether the _nextSection is allocated to us ahead of the train.
+                        if (!isNextSectionAllocatedAhead()) {
                             removeCurrentSignal();
                             stopInCurrentSection(BEGINNING_RESET, StopContext.DESTINATION);
                         }
@@ -869,11 +965,30 @@ public class AutoActiveTrain implements ThrottleListener {
                         _activeTrain.getTrainName(), b.getDisplayName(USERSYS));
                 return;
             }
-        } else if (b.getState() == Block.UNOCCUPIED) {
+        } else if (state == Block.UNOCCUPIED) {
             log.debug("{}: handleBlockStateChange to UNOCCUPIED - Section {}, Block {}, speed {}", _activeTrain.getTrainName(),
                     as.getSection().getDisplayName(USERSYS), b.getDisplayName(USERSYS),
                     _autoEngineer == null ? "" : getTargetSpeed());
-            if (_stoppingByBlockOccupancy && (b == _stoppingBlock)) {
+            tailFixForStopByDistance(b);
+            boolean stoppingBlockCleared = _stoppingByBlockOccupancy && (b == _stoppingBlock);
+            if (stoppingBlockCleared
+                    && !isTailClearOfBlock(_activeTrain.getTrainDetection(), b, _activeTrain.getAllocatedSectionList())) {
+                // Head and Tail: the locomotive has left the stopping block, the tail is still behind it
+                log.debug("{}: stopping block [{}] unoccupied but tail not yet through it, keep going",
+                        _activeTrain.getTrainName(), b.getDisplayName(USERSYS));
+                stoppingBlockCleared = false;
+            } else if (!stoppingBlockCleared && _stoppingByBlockOccupancy && _stoppingBlock != null
+                    && _activeTrain.getTrainDetection() == TrainDetection.TRAINDETECTION_HEADANDTAIL
+                    && _stoppingBlock.getState() == Block.UNOCCUPIED
+                    && !hasOccupiedBlockBehind(_stoppingBlock, _activeTrain.getAllocatedSectionList())) {
+                // Head and Tail: the last occupied block behind the stopping block has cleared while
+                // the stopping block is unoccupied - the tail has lost detection. Stop now, short, rather
+                // than wait for a stopping block event that will not come.
+                log.warn("{}: tail lost detection before reaching stopping block [{}], stopping now",
+                        _activeTrain.getTrainName(), _stoppingBlock.getDisplayName(USERSYS));
+                stoppingBlockCleared = true;
+            }
+            if (stoppingBlockCleared) {
                 log.trace("{}: setStopNow by block occupancy from Block unoccupied, Block= {}", _activeTrain.getTrainName(), b.getDisplayName(USERSYS));
                 _stoppingByBlockOccupancy = false;
                 _stoppingBlock = null;
@@ -905,7 +1020,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 }
             }
         }
-        _autoTrainAction.handleBlockStateChange(as, b);
+        _autoTrainAction.handleBlockStateChange(as, b, state);
     }
 
     /**
@@ -1179,22 +1294,50 @@ public class AutoActiveTrain implements ThrottleListener {
         }
     }
 
+    /**
+     * Check whether the next Section is allocated to this train ahead of it.
+     * <p>
+     * A train that runs round and round can have the Section it has just left
+     * as its next Section for the new lap. That Section stays allocated
+     * behind the train, entered, until its tail has left it and it has been
+     * released, so it does not count.
+     *
+     * @return true if an allocation of the next Section has not yet been
+     *         entered by the train
+     */
+    private boolean isNextSectionAllocatedAhead() {
+        if (_nextSection == null) {
+            return false;
+        }
+        for (AllocatedSection a : _activeTrain.getAllocatedSectionList()) {
+            if (a.getSection() == _nextSection && !a.getEntered()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @CheckForNull
     private Block getNextBlock(Block b, AllocatedSection as) {
-        if (as.getNextSection() != null) {
-            EntryPoint ep = as.getSection().getExitPointToSection(_nextSection, as.getDirection());
+        // The Section after this one on the route, not _nextSection: that follows the train, and moves on only
+        // when the Section change has been handled, which can be after a Block change in the new Section.
+        Section next = as.getNextSection();
+        if (next != null) {
+            EntryPoint ep = as.getSection().getExitPointToSection(next, as.getDirection());
             if ((ep != null) && (ep.getBlock() == b))
                 // this block is connected to a block in the next section
                 return ep.getFromBlock();
         }
         // this allocated section has multiple blocks _or_ there is no next Section
-        Block blk = as.getSection().getEntryBlock();
-        while (blk != null) {
-            if (b == blk)
-                return as.getSection().getNextBlock();
-            blk = as.getSection().getNextBlock();
+        // look the block up rather than walk the Section, other threads may be walking it too
+        java.util.List<Block> blocks = as.getSection().getBlockList();
+        int ix = blocks.indexOf(b);
+        if (ix < 0) {
+            return null;
         }
-        return null;
+        // the direction it is allocated in: the Section may have been released since the Block changed
+        ix = (as.getDirection() == Section.REVERSE) ? ix - 1 : ix + 1;
+        return (ix >= 0 && ix < blocks.size()) ? blocks.get(ix) : null;
     }
 
     private void setNewCurrentSection(AllocatedSection as) {
@@ -1663,10 +1806,13 @@ public class AutoActiveTrain implements ThrottleListener {
         // Cancel any pending or in-progress stop-by-distance / profile-based stopping schedules.
         // If conditions improve (signal clears or allocations become available), we must be able to cancel
         // the stopping sequence and resume running.
-        _distanceStopPending = false;
-        _distanceStopPendingToMin = false;
-        _distanceStopPendingMm = 0.0f;
-        _distanceStopPendingTask = NO_TASK;
+        // the stop tasks are for this stop only, not for wherever the train next stops
+        WaitForTrainToStop wait = _waitForTrainToStop;
+        _waitForTrainToStop = null;
+        if (wait != null && wait._task != NO_TASK) {
+            log.warn("{}: stop cancelled before the train stopped, task[{}] not run",
+                    _activeTrain.getTrainName(), wait._task);
+        }
         if (re != null && re.getSpeedProfile() != null) {
             try {
                 re.getSpeedProfile().cancelSpeedChange();
@@ -1679,16 +1825,10 @@ public class AutoActiveTrain implements ThrottleListener {
         _stoppingByBlockOccupancy = false;
         _stoppingBlock = null;
         _stoppingUsingSpeedProfile = false;
+        forgetStopByDistance();
         if (_autoEngineer != null) {
             _autoEngineer.slowToStop(false);
         }
-    }
-
-    /** Clamp throttle [% 0..1] */
-    private static float clampThrottle(float pct) {
-        if (pct < 0.0f) return 0.0f;
-        if (pct > 1.0f) return 1.0f;
-        return pct;
     }
 
     private enum StopContext {
@@ -1699,6 +1839,217 @@ public class AutoActiveTrain implements ThrottleListener {
 
     private synchronized void stopInCurrentSection(int task) {
         stopInCurrentSection(task, StopContext.OTHER);
+    }
+
+    /**
+     * Stop by distance, if the train has a speed profile for its direction of
+     * travel and there is a distance to stop at. Where the train ends its
+     * trip, that is its own stop distance if it has one; otherwise, and at
+     * every other stop, it is the current Section's stop point for the
+     * direction of travel. The distance is measured from the start of the
+     * current Section, or from where the tail will be if the train's stop
+     * distance refers to the tail; the part of it the train has covered, the
+     * Section's Blocks behind the Block its head is in, is taken off. Each
+     * fix on the way, the head entering a Block of the Section or, where the
+     * tail is detected, the tail leaving a Block, corrects that.
+     * <ul>
+     * <li>With a stopping sensor in use, the train slows over the distance to
+     * its minimum reliable operating speed, and keeps that speed until the
+     * sensor goes active. A {@link StopBackstop} guards against the sensor
+     * failing.</li>
+     * <li>Without one, it slows to a stop at the distance.</li>
+     * </ul>
+     *
+     * @param task        the task to run once the train has stopped
+     * @param destination true if the train is ending its trip here
+     * @return true if the stop is planned; false if the train cannot stop by
+     *         distance, and stops in the usual way
+     */
+    private boolean planStopByDistance(int task, boolean destination) {
+        if (re == null || re.getSpeedProfile() == null || _autoEngineer == null) {
+            return false;
+        }
+        RosterSpeedProfile profile = re.getSpeedProfile();
+        if (!(_autoEngineer.getIsForward() ? profile.hasForwardSpeeds() : profile.hasReverseSpeeds())) {
+            return false;
+        }
+        Section section = _currentAllocatedSection.getSection();
+        Sensor stopSensor = (section.getState() == Section.FORWARD)
+                ? section.getForwardStoppingSensor()
+                : section.getReverseStoppingSensor();
+        // the override may have changed while running
+        _useStopSensor = _activeTrain.getUseStopSensor();
+        if (!_useStopSensor) {
+            stopSensor = null;
+        }
+
+        float distanceMm;
+        if (destination && _stopByDistanceMm > 0.0f) {
+            distanceMm = _stopByDistanceMm + (_stopByDistanceRefTail ? getMaxTrainLengthMM() : 0.0f);
+        } else {
+            distanceMm = section.getStopPointMm(section.getState() == Section.FORWARD ? Section.FORWARD : Section.REVERSE);
+            if (distanceMm <= 0.0f) {
+                return false;
+            }
+        }
+        float sectionLength = _currentAllocatedSection.getActualLength();
+        if (sectionLength > 0.0f && distanceMm > sectionLength) {
+            // do not plan to stop beyond the Section, into the next one or a train ahead
+            log.warn("{}: stop-by-distance {}mm exceeds section length {}mm; clamping to section length.",
+                    _activeTrain.getTrainName(), distanceMm, sectionLength);
+            distanceMm = sectionLength;
+        }
+        // the head is taken to be at the start of the Block it is in
+        float covered = (_currentBlock == null) ? 0.0f
+                : Math.max(0.0f, sectionLength - _currentAllocatedSection.getLengthRemaining(_currentBlock));
+        float remainingMm = Math.max(0.0f, distanceMm - covered);
+        log.debug("{}: stop by distance {}mm, {}mm still to go, then {}", _activeTrain.getTrainName(),
+                distanceMm, remainingMm, stopSensor == null ? "stop" : "stop at sensor " + stopSensor.getDisplayName(USERSYS));
+
+        cancelStopInCurrentSection();
+        if (stopSensor != null) {
+            _stoppingUsingSpeedProfile = true;
+            rememberStopByDistance(distanceMm, true);
+            _autoEngineer.slowOverDistance(remainingMm, true);
+            armStopSensor(stopSensor, true);
+        } else if (remainingMm <= 0.0f) {
+            setStopNow();
+        } else {
+            _stoppingUsingSpeedProfile = true;
+            rememberStopByDistance(distanceMm, false);
+            _autoEngineer.slowOverDistance(remainingMm, false);
+        }
+        startWaitForTrainToStop(task);
+        return true;
+    }
+
+    private void rememberStopByDistance(float distanceMm, boolean toMinimum) {
+        _distanceStopSection = _currentAllocatedSection;
+        _distanceStopMm = distanceMm;
+        _distanceStopToMinimum = toMinimum;
+    }
+
+    private void forgetStopByDistance() {
+        _distanceStopSection = null;
+        _distanceStopMm = 0.0f;
+        _distanceStopToMinimum = false;
+    }
+
+    /**
+     * The head has entered a Block of the Section the train is stopping in by
+     * distance: plan the rest of the stop from the start of that Block.
+     *
+     * @param as the Allocated Section holding the Block
+     * @param b  the Block
+     */
+    private void headFixForStopByDistance(AllocatedSection as, Block b) {
+        if (as != _distanceStopSection || !_stoppingUsingSpeedProfile) {
+            return;
+        }
+        float headMm = Math.max(0.0f, as.getActualLength() - as.getLengthRemaining(b));
+        replanStopByDistance(as, headMm, "head entered " + b.getDisplayName(USERSYS));
+    }
+
+    /**
+     * A Block of the train's has gone unoccupied while it is stopping by
+     * distance. Where the train's tail is detected and no Block behind this
+     * one is occupied, the tail has just left it, so the head is the train's
+     * length beyond the far end of the Block: plan the rest of the stop from
+     * there, if that is in the Block the head is in.
+     *
+     * @param b the Block
+     */
+    private void tailFixForStopByDistance(Block b) {
+        AllocatedSection stopping = _distanceStopSection;
+        if (stopping == null || !_stoppingUsingSpeedProfile || _currentBlock == null
+                || _activeTrain.getTrainDetection() == TrainDetection.TRAINDETECTION_HEADONLY) {
+            return;
+        }
+        float trainMm = getMaxTrainLengthMM();
+        List<AllocatedSection> sections = _activeTrain.getAllocatedSectionList();
+        if (trainMm <= 0.0f || hasOccupiedBlockBehind(b, sections)) {
+            return;
+        }
+        Float farEndMm = farEndFromSectionStart(b, stopping, sections);
+        if (farEndMm == null) {
+            return;
+        }
+        float headMm = farEndMm + trainMm;
+        // the head must be in the Block the head detector says it is in
+        float blockStartMm = stopping.getActualLength() - stopping.getLengthRemaining(_currentBlock);
+        if (!stopping.getSection().containsBlock(_currentBlock)
+                || headMm < blockStartMm || headMm > blockStartMm + getBlockLength(_currentBlock)) {
+            log.debug("{}: tail left {}, head would be {}mm into Section {}, not in {}: not used as a fix",
+                    _activeTrain.getTrainName(), b.getDisplayName(USERSYS), headMm,
+                    stopping.getSection().getDisplayName(USERSYS), _currentBlock.getDisplayName(USERSYS));
+            return;
+        }
+        replanStopByDistance(stopping, headMm, "tail left " + b.getDisplayName(USERSYS));
+    }
+
+    /**
+     * Find how far the far end of a Block, in the train's direction of
+     * travel, is from the start of the Section it is stopping in.
+     *
+     * @param block    the Block
+     * @param stopping the Allocated Section the train is stopping in
+     * @param sections the train's allocated Sections, oldest first
+     * @return the distance in mm, negative for a Block behind the Section; null
+     *         if the Block is not in the Sections up to the stopping one, or
+     *         a Block between has no length
+     */
+    @CheckForNull
+    static Float farEndFromSectionStart(Block block, AllocatedSection stopping, List<AllocatedSection> sections) {
+        List<Block> inOrder = new ArrayList<>();
+        int sectionStart = -1;
+        for (AllocatedSection as : sections) {
+            if (as == stopping) {
+                sectionStart = inOrder.size();
+            }
+            List<Block> blocks = as.getSection().getBlockList();
+            boolean reverse = as.getDirection() == Section.REVERSE;
+            for (int i = 0; i < blocks.size(); i++) {
+                inOrder.add(blocks.get(reverse ? blocks.size() - 1 - i : i));
+            }
+            if (as == stopping) {
+                break;
+            }
+        }
+        int index = inOrder.indexOf(block);
+        if (sectionStart < 0 || index < 0) {
+            return null;
+        }
+        float mm = 0.0f;
+        for (int i = Math.min(index + 1, sectionStart); i < Math.max(index + 1, sectionStart); i++) {
+            float length = inOrder.get(i).getLengthMm();
+            if (length <= 0.0f) {
+                return null;
+            }
+            mm += length;
+        }
+        return index + 1 >= sectionStart ? mm : -mm;
+    }
+
+    /**
+     * Plan the rest of a stop by distance from where a fix puts the head,
+     * unless the stop has been cancelled or made since.
+     *
+     * @param stopping the Allocated Section the stop is planned in
+     * @param headMm   where the head is, from the start of the Section
+     * @param fix      what put it there, for the log
+     */
+    private synchronized void replanStopByDistance(AllocatedSection stopping, float headMm, String fix) {
+        if (stopping != _distanceStopSection || !_stoppingUsingSpeedProfile) {
+            return;
+        }
+        float remainingMm = _distanceStopMm - headMm;
+        log.debug("{}: {}, {}mm into Section {}: {}mm still to go", _activeTrain.getTrainName(), fix,
+                headMm, _distanceStopSection.getSection().getDisplayName(USERSYS), remainingMm);
+        if (remainingMm <= 0.0f && !_distanceStopToMinimum) {
+            setStopNow();
+        } else if (_autoEngineer != null) {
+            _autoEngineer.slowOverDistance(Math.max(0.0f, remainingMm), _distanceStopToMinimum);
+        }
     }
 
     private synchronized void stopInCurrentSection(int task, StopContext context) {
@@ -1717,202 +2068,11 @@ public class AutoActiveTrain implements ThrottleListener {
             return;
         }
 
-
-        /* =======================================================================
-         * Distance-based stopping (destination section only) — custom planner.
-         * We compute a constant-deceleration braking curve to stop exactly at 'distanceMm'
-         * and drive the throttle ourselves via AutoEngineer.setSpeedImmediate(...).
-         *
-         * No dependency on RosterSpeedProfile.changeLocoSpeed or AutoEngineer.setTargetSpeed(distance,...).
-         * We only read profile speeds via re.getSpeedProfile().getDistanceTravelled(...) to invert throttle ↔ mm/s.
-         *
-         * TODO (future): extend to signal stop points inside sections using the same controller,
-         * with an explicit per-section stop origin.
-         * ======================================================================= */
-        // Distance-based stopping is currently applied only to destination/platform-style stops.
-        // For signal-driven and other stops, preserve existing Dispatcher stop behavior.
-        boolean allowDistanceStop = (context == StopContext.DESTINATION);
-
-        if (allowDistanceStop) {
-            boolean distanceEnabled = (_stopByDistanceMm > 0.0f);
-        // Direction-aware profile availability (we must have speeds for the current direction)
-        boolean profileAvailable = false;
-        if (re != null && re.getSpeedProfile() != null) {
-            boolean forward = _autoEngineer.getIsForward();
-            profileAvailable = forward ? re.getSpeedProfile().hasForwardSpeeds()
-                    : re.getSpeedProfile().hasReverseSpeeds();
-        }
-
-        // Resolve the section's stopping sensor for the current travel direction (do not mutate _stopSensor yet)
-        Sensor stopSensorCandidate = null;
-        if (_currentAllocatedSection != null) {
-            if (_currentAllocatedSection.getSection().getState() == Section.FORWARD) {
-                stopSensorCandidate = _currentAllocatedSection.getSection().getForwardStoppingSensor();
-            } else {
-                stopSensorCandidate = _currentAllocatedSection.getSection().getReverseStoppingSensor();
-            }
-        }
-
-        // Refresh override flag in case it changed (e.g., user updated the Train Info while running)
-        this._useStopSensor = _activeTrain.getUseStopSensor();
-
-        // Combined mode = user opted into Stop-by-Distance, profile is available, and a stopping sensor is present & in use
-        boolean combinedMode = distanceEnabled && profileAvailable && (_useStopSensor) && (stopSensorCandidate != null);
-
-        // DEBUG
-        log.debug("{}: stopInSection - distEnabled={}, profileAvail={}, sensorPresent={}, useStopSensor={}, combined={}",
-                _activeTrain.getTrainName(), distanceEnabled, profileAvailable, (stopSensorCandidate != null), _useStopSensor, combinedMode);
-
-        if ((distanceEnabled && profileAvailable) && !_stoppingUsingSpeedProfile && !_distanceStopPending) {
-
-            // Compute requested travel distance from section entry to stop reference
-
-            float distanceMmBase = _stopByDistanceMm + (_stopByDistanceRefTail ? getMaxTrainLengthMM() : 0.0f);
-            // Safety: do not allow stop-by-distance to extend beyond the destination section.
-            // This prevents overrunning into the next section / train ahead when a large distance is configured.
-            float sectionLenMm = (_currentAllocatedSection != null) ? _currentAllocatedSection.getActualLength() : 0.0f;
-            if (sectionLenMm > 0.0f && distanceMmBase > sectionLenMm) {
-                log.warn("{}: stop-by-distance {}mm exceeds section length {}mm; clamping to section length.",
-                        _activeTrain.getTrainName(), Float.valueOf(distanceMmBase), Float.valueOf(sectionLenMm));
-                distanceMmBase = sectionLenMm;
-            }
-
-            if (combinedMode) {
-                // --- New combined behaviour ---
-                // We will decelerate to MinimumReliableOperatingSpeed within distanceMmBase, then hold until the stop sensor fires.
-
-                // Decide whether to start NOW (already past the section entry) or ARM to start at the entry block
-                Block enter = (_currentAllocatedSection != null)
-                        ? _currentAllocatedSection.getEnterBlock(_previousAllocatedSection)
-                                : null;
-
-                if (enter == null || enter.getState() == Block.OCCUPIED) {
-                    // Start immediately from current position (adjust remaining distance if we’re already partway in)
-                    float remainingMm = distanceMmBase;
-                    if (_currentAllocatedSection != null && _currentBlock != null) {
-                        float sectionLen = _currentAllocatedSection.getActualLength();
-                        float lenRemaining = _currentAllocatedSection.getLengthRemaining(_currentBlock);
-                        float progressed = Math.max(0.0f, sectionLen - lenRemaining);
-                        remainingMm = distanceMmBase - progressed;
-                    }
-                    if (remainingMm <= 0.0f) {
-                        // Already at/inside the target – assert crawl and fall through to sensor wait
-                        float vMin =
-                                re.getSpeedProfile().getSpeed(_minReliableOperatingSpeed, _autoEngineer.getIsForward());
-                        float thrMin = re.getSpeedProfile().getThrottleSetting(vMin, _autoEngineer.getIsForward());
-
-                        // Quantize to a real throttle step to avoid values between 0 and the first speed step.
-                        float q = clampThrottle(thrMin);
-                        float inc = getThrottle().getSpeedIncrement();
-                        if (inc > 0.0f) {
-                            int steps = Math.round(q / inc);
-                            q = steps * inc;
-                            if (q > 0.0f && q < inc)
-                                q = inc;
-                            q = clampThrottle(q);
-                        }
-                        _autoEngineer.setSpeedImmediate(q);
-                    } else {
-                        // Cancel first; then mark that we are in a distance-based stop (suppresses setSpeedBySignal correctly)
-                        cancelStopInCurrentSection();
-                        _stoppingUsingSpeedProfile = true; // suppress setSpeedBySignal until done
-                        re.getSpeedProfile().setMinMaxLimitsKmh(_minReliableOperatingSpeed, _maxSpeed,
-                                _maxSpeedScaleKmh, (float) _dispatcher.getScale().getScaleRatio(),
-                                _autoEngineer.getIsForward());
-                        // Combined mode: approach to MIN over 'remainingMm', then stop by the section stop sensor.
-                        // (Use correct API and throttle accessor; do NOT return here.)
-                        re.getSpeedProfile().planApproachToMinOverDistanceThenStopBySensor(
-                                getThrottle(), remainingMm, stopSensorCandidate, _speedFactor);
-
-                        // Do NOT start the legacy DistanceStopController in combined mode.
-                    }
-
-                    // Now arm the stop sensor, but do NOT pre-lower to a generic stopping speed
-                    _stopSensor = stopSensorCandidate;
-                    if (_stopSensor.getKnownState() == Sensor.ACTIVE) {
-                        setStopNow();  // sensor is already made – stop immediately
-                    } else {
-                        _stopSensor.addPropertyChangeListener(_stopSensorListener = (java.beans.PropertyChangeEvent e) -> {
-                            handleStopSensorChange(e);
-                        });
-                        _stoppingBySensor = true;
-                    }
-                    // Ensure stop tasks/termination run when the train actually stops.
-                    Runnable __waitForStop = new WaitForTrainToStop(task);
-                    Thread __tWait = jmri.util.ThreadingUtil.newThread(__waitForStop,
-                            "Wait for stop " + getActiveTrain().getActiveTrainName());
-                    __tWait.start();
-
-                    return; // combined branch handled
-                }
-
-                // Not yet at the section entry: arm a pending approach-to-min plan and the stop sensor listener now
-                _distanceStopPending = true;
-                _distanceStopPendingToMin = true;
-                _distanceStopPendingMm = distanceMmBase;
-                _distanceStopPendingTask = task;
-
-                _stopSensor = stopSensorCandidate;
-                if (_stopSensor.getKnownState() == Sensor.ACTIVE) {
-                    setStopNow();
-                } else {
-                    _stopSensor.addPropertyChangeListener(_stopSensorListener = (java.beans.PropertyChangeEvent e) -> {
-                        handleStopSensorChange(e);
-                    });
-                    _stoppingBySensor = true;
-                }
-                // Ensure stop tasks/termination run when the train actually stops.
-                Runnable __waitForStop = new WaitForTrainToStop(_distanceStopPendingTask);
-                Thread __tWait = jmri.util.ThreadingUtil.newThread(__waitForStop,
-                        "Wait for stop " + getActiveTrain().getActiveTrainName());
-                __tWait.start();
-
-                return; // wait for entry OCCUPIED to start the approach-to-min plan
-            }
-
-            // --- Legacy pure distance stop (ramp to ZERO at the distance) ---
-            // Case A/B logic (start now or arm pending), just like before.
-            Block enter = (_currentAllocatedSection != null)
-                    ? _currentAllocatedSection.getEnterBlock(_previousAllocatedSection)
-                            : null;
-
-            if (enter == null || enter.getState() == Block.OCCUPIED) {
-                float remainingMm = distanceMmBase;
-                if (_currentAllocatedSection != null && _currentBlock != null) {
-                    float sectionLen = _currentAllocatedSection.getActualLength();
-                    float lenRemaining = _currentAllocatedSection.getLengthRemaining(_currentBlock);
-                    float progressed = Math.max(0.0f, sectionLen - lenRemaining);
-                    remainingMm = distanceMmBase - progressed;
-                }
-                if (remainingMm <= 0.0f) {
-                    setStopNow();
-                } else {
-                    _stoppingUsingSpeedProfile = true;
-                    cancelStopInCurrentSection();
-
-                    re.getSpeedProfile().setMinMaxLimitsKmh(_minReliableOperatingSpeed, _maxSpeed, _maxSpeedScaleKmh,
-                            (float) _dispatcher.getScale().getScaleRatio(), _autoEngineer.getIsForward());
-                    // Delegate pure distance stop-to-zero to RosterSpeedProfile
-                    re.getSpeedProfile().planStopToZeroOverDistance(getThrottle(), remainingMm, _speedFactor);
-                    Thread tWait = jmri.util.ThreadingUtil.newThread(new WaitForTrainToStop(task),
-                            "Wait for stop " + getActiveTrain().getActiveTrainName());
-                    tWait.start();
-                }
-                return;
-
-            }
-
-            // Arm pending pure distance stop
-            _distanceStopPending = true;
-            _distanceStopPendingToMin = false;
-            _distanceStopPendingMm = distanceMmBase;
-            _distanceStopPendingTask = task;
+        // Stop by distance: where the train ends its trip, and at Sections with a stop point
+        if (planStopByDistance(task, context == StopContext.DESTINATION)) {
             return;
         }
 
-    }
-
-    // =======================================================================
         // Do not exit before destination stop logic;
         // only bail out if the train is already at zero AND no profile/distance stop is requested.
         if (getTargetSpeed() == 0.0f && !_stopBySpeedProfile && _stopByDistanceMm <= 0.0f) {
@@ -1931,16 +2091,10 @@ public class AutoActiveTrain implements ThrottleListener {
                     _activeTrain.getTrainName(), _stopSensor.getDisplayName(USERSYS));
         }
         if (_stopSensor != null && _useStopSensor) {
-            if (_stopSensor.getKnownState() == Sensor.ACTIVE) {
-                // stop sensor is already active, stop now
-                setStopNow();
-            } else {
+            if (_stopSensor.getKnownState() != Sensor.ACTIVE) {
                 setDecreasedSpeedBeforeStop();
-                _stopSensor.addPropertyChangeListener(_stopSensorListener = (java.beans.PropertyChangeEvent e) -> {
-                    handleStopSensorChange(e);
-                });
-                _stoppingBySensor = true;
             }
+            armStopSensor(_stopSensor, false);
         } else if (useSpeedProfile && _stopBySpeedProfile) {
             log.debug("{}: Section [{}] Section Length[{}] Max Train Length [{}] StopBySpeedProfile [{}]. setStopNow", _activeTrain.getTrainName(),
                     _currentAllocatedSection.getSection().getDisplayName(USERSYS), _currentAllocatedSection.getActualLength(), getMaxTrainLengthMM(), _stopBySpeedProfile);
@@ -1956,10 +2110,10 @@ public class AutoActiveTrain implements ThrottleListener {
                     getMaxTrainLengthMM(), _stopBySpeedProfile);
             // train will not fit comfortably in the Section, stop it immediately
             setStopNow();
-        } else if (_activeTrain.getTrainDetection() == TrainDetection.TRAINDETECTION_WHOLETRAIN) {
+        } else if (_activeTrain.getTrainDetection() != TrainDetection.TRAINDETECTION_HEADONLY) {
             log.debug("{}: train will fit in [{}] ({}>={}), stop when prev block clears.", _activeTrain.getTrainName(),
                     _currentAllocatedSection.getSection().getDisplayName(USERSYS), _currentAllocatedSection.getActualLength(), getMaxTrainLengthMM());
-            // train will fit in current allocated Section and has resistance wheels
+            // train will fit in current allocated Section and its tail is detected
             // try to stop by watching Section Block occupancy
             if (_currentAllocatedSection.getSection().getNumBlocks() == 1) {
                 if (_previousAllocatedSection != null) {
@@ -2049,15 +2203,14 @@ public class AutoActiveTrain implements ThrottleListener {
 
         // even if no task is required it must be run
         // as cleanup happens after train stops.
-        Runnable waitForStop = new WaitForTrainToStop(task);
-        Thread tWait = jmri.util.ThreadingUtil.newThread(waitForStop, "Wait for stop " + getActiveTrain().getActiveTrainName());
-        tWait.start();
+        startWaitForTrainToStop(task);
     }
 
     protected synchronized void executeStopTasks(int task) {
         // clean up stopping
         cancelStopInCurrentSection();
         _stoppingUsingSpeedProfile = false;  // queued stop has completed; allow normal speed logic again
+        forgetStopByDistance();
         _dispatcher.queueReleaseOfCompletedAllocations();
         log.trace("exec[{}]",task);
         switch (task) {
@@ -2079,7 +2232,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 _previousBlock = null;
                 // Set current block to head of train in reverse.
                 _nextBlock = getNextBlock(_currentBlock,_currentAllocatedSection);
-                while (_nextBlock.getState()==Block.OCCUPIED) {
+                while (_nextBlock != null && _nextBlock.getState()==Block.OCCUPIED) {
                     _previousBlock = _currentBlock;
                     _currentBlock = _nextBlock;
                     _nextBlock = getNextBlock(_currentBlock,_currentAllocatedSection);
@@ -2109,7 +2262,7 @@ public class AutoActiveTrain implements ThrottleListener {
                         _previousBlock = null;
                         _nextBlock = getNextBlock(_currentBlock,_currentAllocatedSection);
                         // get head of train
-                        while (_nextBlock.getState()==Block.OCCUPIED && _currentAllocatedSection.getSection().containsBlock(_nextBlock)) {
+                        while (_nextBlock != null && _nextBlock.getState()==Block.OCCUPIED && _currentAllocatedSection.getSection().containsBlock(_nextBlock)) {
                             _previousBlock = _currentBlock;
                             _currentBlock = _nextBlock;
                             _nextBlock = getNextBlock(_currentBlock,_currentAllocatedSection);
@@ -2142,6 +2295,7 @@ public class AutoActiveTrain implements ThrottleListener {
      * Remove the stopping sensor
      */
     private void cancelStoppingBySensor() {
+        stopBackstop();
         if (_stopSensor != null) {
             _stopSensor.removePropertyChangeListener(_stopSensorListener);
             _stoppingBySensor = false;
@@ -2151,12 +2305,112 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     /**
+     * Stop the train when a stopping sensor goes active, or now if it is
+     * already active. While waiting, a {@link StopBackstop} guards against
+     * the sensor failing.
+     *
+     * @param sensor the stopping sensor
+     * @param reckon true to reckon the distance travelled against the end of
+     *               the Section, as well as watching the Blocks beyond it
+     */
+    private void armStopSensor(Sensor sensor, boolean reckon) {
+        _stopSensor = sensor;
+        if (sensor.getKnownState() == Sensor.ACTIVE) {
+            setStopNow();
+            return;
+        }
+        sensor.addPropertyChangeListener(_stopSensorListener = this::handleStopSensorChange);
+        _stoppingBySensor = true;
+        startBackstop(sensor, reckon);
+    }
+
+    /**
+     * Guard the stop the train is waiting to make at its stopping sensor: it
+     * must not leave the Section it is stopping in. The Blocks just beyond the
+     * Section that are unoccupied and not allocated to another train are
+     * watched. When asked, and the train has a speed profile for its
+     * direction, its distance travelled is also reckoned against the end of
+     * the Section.
+     * <p>
+     * Some layouts use the detection sensor of a Block beyond the Section as
+     * the stopping sensor, so that the train stops as it enters that Block.
+     * That Block is then where the train is meant to go: it is not watched,
+     * and the distance is not reckoned.
+     *
+     * @param sensor the stopping sensor
+     * @param reckon true to reckon the distance travelled
+     */
+    private void startBackstop(Sensor sensor, boolean reckon) {
+        stopBackstop();
+        if (_currentAllocatedSection == null || _currentBlock == null) {
+            return;
+        }
+        AllocatedSection stopping = _currentAllocatedSection;
+        Section section = stopping.getSection();
+        List<Block> beyond = new ArrayList<>();
+        boolean sensorIsBeyond = false;
+        for (Block b : StopBackstop.blocksBeyond(section, stopping.getDirection())) {
+            if (b.getSensor() == sensor) {
+                sensorIsBeyond = true;
+            } else if (b.getState() != Block.OCCUPIED && !isAllocatedToAnotherTrain(b)) {
+                beyond.add(b);
+            }
+        }
+        DoubleSupplier speed = null;
+        boolean forward = getForward();
+        if (reckon && !sensorIsBeyond && re != null && re.getSpeedProfile() != null && _throttle != null
+                && (forward ? re.getSpeedProfile().hasForwardSpeeds() : re.getSpeedProfile().hasReverseSpeeds())) {
+            RosterSpeedProfile profile = re.getSpeedProfile();
+            DccThrottle throttle = _throttle;
+            speed = () -> profile.getSpeed(throttle.getSpeedSetting(), forward);
+        }
+        _backstop = new StopBackstop(section, beyond, _currentBlock, stopping::getLengthRemaining, speed,
+                this::stopByBackstop);
+    }
+
+    private void stopBackstop() {
+        if (_backstop != null) {
+            _backstop.dispose();
+            _backstop = null;
+        }
+    }
+
+    /**
+     * @param b a Block
+     * @return true if the Block is in a Section allocated to another train
+     */
+    private boolean isAllocatedToAnotherTrain(Block b) {
+        for (AllocatedSection as : _dispatcher.getAllocatedSectionsList()) {
+            if (as.getActiveTrain() != _activeTrain && as.getSection().containsBlock(b)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * The stopping sensor has not stopped the train and it is about to leave
+     * the Section it should stop in: stop it now.
+     *
+     * @param reason why the backstop stopped the train
+     */
+    private synchronized void stopByBackstop(String reason) {
+        log.warn("{}: stopping sensor {} has not stopped the train, and {}; stopping it now",
+                _activeTrain.getTrainName(),
+                _stopSensor == null ? "" : _stopSensor.getDisplayName(USERSYS), reason);
+        _backstop = null;
+        cancelStoppingBySensor();
+        setStopNow();
+    }
+
+    /**
      * When the stopping sensor we are waiting on goes active
      * stop the train or set a new speed and destroy itself
      * @param e  - the property change event
      */
     private synchronized void handleStopSensorChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("KnownState") && (int) e.getNewValue() == Sensor.ACTIVE) {
+            stopBackstop();
             _stopSensor.removePropertyChangeListener(_stopSensorListener);
             _stoppingBySensor = false;
             _stopSensorListener = null;
@@ -2175,6 +2429,7 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     private synchronized void setStopNow(boolean useSpeedProfile) {
+        forgetStopByDistance();  // the train stops here, whatever a later fix says
         setTargetSpeedState(STOP_SPEED,useSpeedProfile);
         if (_currentAllocatedSection == null) {  // this may occur if the train is not in the selected block when initially created and the signal is held.
             _activeTrain.setStatus(ActiveTrain.WAITING);
@@ -2199,6 +2454,58 @@ public class AutoActiveTrain implements ThrottleListener {
         } else {
             setStopNow();
         }
+    }
+
+    /**
+     * Check whether a Block going unoccupied means the tail of the train has
+     * left it, so a stop by block occupancy can complete.
+     * <ul>
+     * <li>"Entire Train": always, the whole train is detected.
+     * <li>"Head and Tail": only when no Block behind it, in the train's
+     * direction of travel, is still occupied. The middle of the train is not
+     * detected, so a Block can go unoccupied when the locomotive leaves it while
+     * the tail is still further back; it goes occupied again when the tail
+     * arrives, and unoccupied for the last time when the tail leaves.
+     * </ul>
+     *
+     * @param detection         the train detection setting
+     * @param block             the Block that has gone unoccupied
+     * @param allocatedSections the train's allocated Sections, oldest first
+     * @return true if the tail has left the Block
+     */
+    static boolean isTailClearOfBlock(TrainDetection detection, Block block,
+            java.util.List<AllocatedSection> allocatedSections) {
+        if (detection != TrainDetection.TRAINDETECTION_HEADANDTAIL) {
+            return true;
+        }
+        return !hasOccupiedBlockBehind(block, allocatedSections);
+    }
+
+    /**
+     * Check whether any Block behind a given Block, in the train's direction
+     * of travel through its allocated Sections, is occupied.
+     *
+     * @param block             the Block
+     * @param allocatedSections the train's allocated Sections, oldest first
+     * @return true if a Block behind it is occupied; false if none is, or the
+     *         Block is not in the allocated Sections
+     */
+    static boolean hasOccupiedBlockBehind(Block block, java.util.List<AllocatedSection> allocatedSections) {
+        boolean occupiedBehind = false;
+        for (AllocatedSection as : allocatedSections) {
+            java.util.List<Block> blocks = as.getSection().getBlockList();
+            boolean reverse = as.getDirection() == Section.REVERSE;
+            for (int i = 0; i < blocks.size(); i++) {
+                Block b = blocks.get(reverse ? blocks.size() - 1 - i : i);
+                if (b == block) {
+                    return occupiedBehind;
+                }
+                if (b.getState() == Block.OCCUPIED) {
+                    occupiedBehind = true;
+                }
+            }
+        }
+        return false;
     }
 
     /**
@@ -2457,24 +2764,19 @@ public class AutoActiveTrain implements ThrottleListener {
     }
 
     public void terminate() {
-        // here add code to stop the train and release its throttle if it is in autoRun
-        while (_activeHornThreads > 0) {
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                // ignore this exception
-            }
-        }
+        // stop the train and release its throttle. Interrupting the actions
+        // ends any horn being sounded, which turns the horn off first.
         _autoTrainAction.clearRemainingActions();
+        waitForHornsOff();
+        // a terminated train has no stop tasks left to run, nor a stop to wait for
+        _waitForTrainToStop = null;
+        synchronized (this) {
+            cancelStoppingBySensor();
+        }
         if (_autoEngineer != null) {
-            _autoEngineer.setHalt(true);
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                // ignore this exception
-            }
-            waitUntilStopped();
-            _autoEngineer.abort();
+            // stopped at once, and nothing can set a speed from now on, so
+            // there is nothing to wait for
+            _autoEngineer.stopForGood();
             InstanceManager.throttleManagerInstance().releaseThrottle(_throttle, this);
         }
     }
@@ -2492,6 +2794,43 @@ public class AutoActiveTrain implements ThrottleListener {
         _turnoutStateListener = null;
     }
 
+    // the wait for the train to stop whose stop tasks are still to run, null if none
+    private volatile WaitForTrainToStop _waitForTrainToStop = null;
+
+    /**
+     * Run the stop tasks once the train has stopped. A train has one pending
+     * stop: if it is already waiting to stop, that wait carries on, taking
+     * this task unless it already has one. Cancelling the stop, or terminating
+     * the train, drops it.
+     *
+     * @param task the stop task
+     */
+    private synchronized void startWaitForTrainToStop(int task) {
+        if (_waitForTrainToStop != null) {
+            if (_waitForTrainToStop._task == NO_TASK) {
+                _waitForTrainToStop._task = task;
+            } else if (task != NO_TASK && task != _waitForTrainToStop._task) {
+                log.debug("{}: already stopping with task[{}], task[{}] not run",
+                        _activeTrain.getTrainName(), _waitForTrainToStop._task, task);
+            }
+            return;
+        }
+        _waitForTrainToStop = new WaitForTrainToStop(task);
+        Thread tWait = jmri.util.ThreadingUtil.newThread(_waitForTrainToStop,
+                "Wait for stop " + getActiveTrain().getActiveTrainName());
+        tWait.start();
+    }
+
+    private synchronized void runStopTasks(WaitForTrainToStop wait) {
+        if (_waitForTrainToStop != wait) {
+            log.debug("{}: stop cancelled, task[{}] not run", _activeTrain.getTrainName(), wait._task);
+            return;
+        }
+        _waitForTrainToStop = null;
+        log.trace("executing task[{}]", wait._task);
+        executeStopTasks(wait._task);
+    }
+
     // _________________________________________________________________________________________
     // This class waits for train stop in a separate thread
     class WaitForTrainToStop implements Runnable {
@@ -2504,15 +2843,16 @@ public class AutoActiveTrain implements ThrottleListener {
         public void run() {
             boolean waitingOnTrain = true;
             try {
-                while (waitingOnTrain) {
+                while (waitingOnTrain && _waitForTrainToStop == this) {
                     if ((getAutoEngineer() != null) && (getAutoEngineer().isStopped())) {
                         waitingOnTrain = false;
                     } else {
                         Thread.sleep(_delay);
                     }
                 }
-                log.trace("executing task[{}]",_task);
-                executeStopTasks(_task);
+                // the stop tasks change the train, its Sections and sensors: do them on the layout
+                // thread (Swing thread), where the train's events are handled under the same lock
+                jmri.util.ThreadingUtil.runOnLayoutEventually(() -> runStopTasks(this));
             } catch (InterruptedException e) {
                 log.warn("Waiting for train to stop interrupted - stop tasks not executing");
             } catch (Exception e) {
@@ -2539,14 +2879,22 @@ public class AutoActiveTrain implements ThrottleListener {
             _fastMinutes = fastMinutes;
         }
 
+        /**
+         * Waits on this thread, holding no lock. The train's own work, stopping
+         * it, setting its status and starting it again, is done on the layout
+         * thread (Swing thread), where the train's sensor and Block events are
+         * handled under the same lock.
+         */
         @Override
         public void run() {
             // set to pause at a fast ramp rate
             _pausingActive = true;
-            // TODO: use stop in section or block?
-            _savedRampRate = getRampRate();
-            setCurrentRampRate(RAMP_FAST);
-            stopInCurrentSection(NO_TASK);
+            jmri.util.ThreadingUtil.runOnLayout(() -> {
+                // TODO: use stop in section or block?
+                _savedRampRate = getRampRate();
+                setCurrentRampRate(RAMP_FAST);
+                stopInCurrentSection(NO_TASK);
+            });
             // wait for train to stop
             boolean waitNow = true;
             boolean keepGoing = true;
@@ -2566,7 +2914,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     keepGoing = false;
                 }
             }
-            _activeTrain.setStatus(ActiveTrain.PAUSED);
+            jmri.util.ThreadingUtil.runOnLayout(() -> _activeTrain.setStatus(ActiveTrain.PAUSED));
             if (keepGoing) {
                 // wait for specified fast clock time
                 Timebase _clock = InstanceManager.getDefault(jmri.Timebase.class);
@@ -2589,16 +2937,19 @@ public class AutoActiveTrain implements ThrottleListener {
                 }
                 _clock.removeMinuteChangeListener(_clockListener);
             }
-            _pausingActive = false;
-            if (keepGoing) {
-                // this thread was not interrupted
-                //   resume running - restore speed, status, and ramp rate
-                setCurrentRampRate(_savedRampRate);
-                // Set speed by signal also works if signal missing
-                // so we dont need to restore a previous value.
-                _activeTrain.setStatus(ActiveTrain.RUNNING);
-                setSpeedBySignal();
-            }
+            final boolean resume = keepGoing;
+            jmri.util.ThreadingUtil.runOnLayoutEventually(() -> {
+                _pausingActive = false;
+                if (resume) {
+                    // this thread was not interrupted
+                    //   resume running - restore speed, status, and ramp rate
+                    setCurrentRampRate(_savedRampRate);
+                    // Set speed by signal also works if signal missing
+                    // so we dont need to restore a previous value.
+                    _activeTrain.setStatus(ActiveTrain.RUNNING);
+                    setSpeedBySignal();
+                }
+            });
         }
         private int _fastMinutes = 0;
         private int _savedRampRate = RAMP_NONE;
@@ -2669,7 +3020,10 @@ public class AutoActiveTrain implements ThrottleListener {
             return(throttle.getIsForward());
         }
 
-        public void setTargetSpeed(float speed) {
+        public synchronized void setTargetSpeed(float speed) {
+            if (refuseAfterStop("speed " + speed)) {
+                return;
+            }
             stopAllTimers();
             if (speed < 0.0f) {
                 // estop is estop
@@ -2731,28 +3085,37 @@ public class AutoActiveTrain implements ThrottleListener {
                 // Mark that a RosterSpeedProfile timer/queue may be active so stopAllTimers() can cancel it on terminate.
                 speedProfileStoppingIsRunning = true;
 
-                // Run physics planner off the EDT
+                // Run physics planner off the EDT, unless this speed change has
+                // been cancelled before the thread starts
+                final int generation = rampGeneration;
                 Thread phys = jmri.util.ThreadingUtil.newThread(() -> {
-                    // Ensure min/max limits (including optional scale km/h cap) are in the profile
-                    re.getSpeedProfile().setMinMaxLimitsKmh(
-                        minReliableOperatingSpeed,
-                        maxSpeed,
-                        AutoActiveTrain.this._maxSpeedScaleKmh,
-                        (float) AutoActiveTrain.this._dispatcher.getScale().getScaleRatio(),
-                        forward
-                    );
-                    // Delegate the acceleration plan & execution to RosterSpeedProfile
-                    re.getSpeedProfile().runPhysicsAccelerationToTargetThrottle(
-                        throttle,
-                        speed,
-                        AutoActiveTrain.this._driverPowerPercent,
-                        AutoActiveTrain.this._additionalWeightTonnes,
-                        AutoActiveTrain.this._rollingResistanceCoeff,
-                        (float) AutoActiveTrain.this._dispatcher.getScale().getScaleRatio(),
-                        speedFactor
-                    );
+                    synchronized (AutoEngineer.this) {
+                        if (generation != rampGeneration || stoppedForGood) {
+                            log.debug("{}: physics ramp cancelled before it started", _activeTrain.getTrainName());
+                            return;
+                    }
+                        // Ensure min/max limits (including optional scale km/h cap) are in the profile
+                        warnScaleCapNotApplicable("setTargetSpeed (physics ramp)", forward);
+                        re.getSpeedProfile().setMinMaxLimitsKmh(
+                            minReliableOperatingSpeed,
+                            maxSpeed,
+                            AutoActiveTrain.this._maxSpeedScaleKmh,
+                            (float) AutoActiveTrain.this._dispatcher.getScale().getScaleRatio(),
+                            forward
+                        );
+                        // Delegate the acceleration plan & execution to RosterSpeedProfile
+                        re.getSpeedProfile().runPhysicsAccelerationToTargetThrottle(
+                            throttle,
+                            speed,
+                            AutoActiveTrain.this._driverPowerPercent,
+                            AutoActiveTrain.this._additionalWeightTonnes,
+                            AutoActiveTrain.this._rollingResistanceCoeff,
+                            (float) AutoActiveTrain.this._dispatcher.getScale().getScaleRatio(),
+                            speedFactor
+                        );
+                    }
                 }, "PhysicsRamp " + AutoActiveTrain.this._activeTrain.getTrainName());
-                           phys.start();
+                phys.start();
                 return;
             }
             // Fallback to existing behaviour
@@ -2765,7 +3128,7 @@ public class AutoActiveTrain implements ThrottleListener {
             }
         }
 
-        public float getTargetSpeed(){
+        public synchronized float getTargetSpeed(){
             return(targetSpeed);
         }
 
@@ -2807,6 +3170,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 maxApplied = thrCapPct;
             } else {
                 // Fallback to the existing throttle % cap
+                AutoActiveTrain.this.warnScaleCapNotApplicable("applyMaxThrottleAndFactor (speed command)", forward);
                 maxApplied = maxSpeed;
             }
 
@@ -2817,12 +3181,34 @@ public class AutoActiveTrain implements ThrottleListener {
             return applied;
         }
 
+        // true once the train is terminated: it is stopped, and no speed is set again
+        private boolean stoppedForGood = false;
+
+        /**
+         * Stop the train at once and for good, as it is terminated. Every
+         * speed change under way is cancelled, and none is made after this,
+         * whichever thread asks for it.
+         */
+        public synchronized void stopForGood() {
+            stopAllTimers();
+            stoppedForGood = true;
+            targetSpeed = 0.0f;
+            throttle.setSpeedSetting(0.0f);
+        }
+
+        private boolean refuseAfterStop(String what) {
+            if (stoppedForGood) {
+                log.debug("{}: terminated, {} ignored", _activeTrain.getTrainName(), what);
+            }
+            return stoppedForGood;
+        }
+
         /**
          * Flag from user's control.
          *
          * @param halt true to immediately stop the train; false otherwise
          */
-        public void setHalt(boolean halt) {
+        public synchronized void setHalt(boolean halt) {
             if (halt) {
                 this.setSpeedImmediate(0.0f);
             }
@@ -2842,7 +3228,10 @@ public class AutoActiveTrain implements ThrottleListener {
             this.speedFactor = speedFactor;
         }
 
-        public void setTargetSpeed(float distance, float speed) {
+        public synchronized void setTargetSpeed(float distance, float speed) {
+            if (refuseAfterStop("speed " + speed + " over " + distance)) {
+                return;
+            }
             log.debug("Set Target Speed[{}] with distance{{}] from speed[{}]",speed,distance,throttle.getSpeedSetting());
             stopAllTimers();
             if (speed < 0.0f) {
@@ -2850,6 +3239,7 @@ public class AutoActiveTrain implements ThrottleListener {
             }
             if (rosterEntry != null) {
                 rosterEntry.getSpeedProfile().setExtraInitialDelay(1500f);
+                warnScaleCapNotApplicable("setTargetSpeed (speed profile stop planner)", getIsForward());
                 rosterEntry.getSpeedProfile().setMinMaxLimitsKmh(minReliableOperatingSpeed, maxSpeed,
                         AutoActiveTrain.this._maxSpeedScaleKmh,
                         (float) AutoActiveTrain.this._dispatcher.getScale().getScaleRatio(), getIsForward());
@@ -2861,7 +3251,37 @@ public class AutoActiveTrain implements ThrottleListener {
             }
         }
 
-        public void slowToStop(boolean on) {
+        /**
+         * Slow the train over a distance, using its speed profile: to a stop,
+         * or to its minimum reliable operating speed, which it then holds
+         * until it is told to stop. The speed profile runs the schedule; it is
+         * cancelled, like any other speed change, by {@link #stopAllTimers()}.
+         * The target speed is left as it was.
+         *
+         * @param distanceMm the distance in mm
+         * @param toMinimum  true to slow to the minimum reliable operating
+         *                   speed; false to stop
+         */
+        public synchronized void slowOverDistance(float distanceMm, boolean toMinimum) {
+            if (refuseAfterStop("slowing over " + distanceMm)) {
+                return;
+            }
+            stopAllTimers();
+            RosterSpeedProfile profile = rosterEntry.getSpeedProfile();
+            profile.setMinCommandIntervalMs(_dispatcher.getMinThrottleInterval());
+            warnScaleCapNotApplicable(toMinimum ? "slowOverDistance (approach-to-minimum stop)"
+                    : "slowOverDistance (distance stop-to-zero)", getIsForward());
+            profile.setMinMaxLimitsKmh(minReliableOperatingSpeed, maxSpeed, _maxSpeedScaleKmh,
+                    (float) _dispatcher.getScale().getScaleRatio(), getIsForward());
+            speedProfileStoppingIsRunning = true;
+            if (toMinimum) {
+                profile.planApproachToMinOverDistance(throttle, distanceMm, speedFactor);
+            } else {
+                profile.planStopToZeroOverDistance(throttle, distanceMm, speedFactor);
+            }
+        }
+
+        public synchronized void slowToStop(boolean on) {
             stopAllTimers();
             if (on) {
                 log.debug("SlowToStopOn");
@@ -2869,19 +3289,23 @@ public class AutoActiveTrain implements ThrottleListener {
             }
         }
 
-        public void stopAllTimers() {
+        public synchronized void stopAllTimers() {
             if (speedProfileStoppingIsRunning) {
                 re.getSpeedProfile().cancelSpeedChange();
                 speedProfileStoppingIsRunning = false;
             }
+            // a ramp step that is already running waits for this lock, then finds it is stale
+            rampGeneration++;
             if (rampingTimer != null) {
                 rampingTimer.stop();
                 rampingTimer = null;
             }
+            stepQueue = null;
         }
 
         LinkedList<SpeedSetting> stepQueue;
         private javax.swing.Timer rampingTimer;
+        private int rampGeneration = 0; // changed whenever the ramp is stopped
 
         private void rampToTarget() {
             // target already adjusted.
@@ -2924,7 +3348,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 }
             }
             if (rampingTimer == null) { //If this is the first time round then kick off the speed change
-                setNextStep();
+                setNextStep(rampGeneration);
             }
         }
 
@@ -2937,7 +3361,11 @@ public class AutoActiveTrain implements ThrottleListener {
             stepQueue = null;
         }
 
-        synchronized void setNextStep() {
+        private synchronized void setNextStep(int generation) {
+            if (generation != rampGeneration || stoppedForGood) {
+                log.trace("Ramp stopped, step ignored");
+                return;
+            }
             if (stepQueue.isEmpty()) {
                 log.trace("Empty");
                 finishChange();
@@ -2954,7 +3382,7 @@ public class AutoActiveTrain implements ThrottleListener {
             throttle.setSpeedSetting(ss.getSpeedStep());
             log.debug("{}: ramp step -> {}", _activeTrain.getTrainName(), ss.getSpeedStep());
             rampingTimer = new javax.swing.Timer(ss.getDuration(), (java.awt.event.ActionEvent e) -> {
-                setNextStep();
+                setNextStep(generation);
             });
             rampingTimer.setRepeats(false);
             rampingTimer.start();
@@ -2985,6 +3413,9 @@ public class AutoActiveTrain implements ThrottleListener {
          * @param speed 0.0 (stop) to 1.0 (full)
          */
         public synchronized void setSpeedImmediate(float speed) {
+            if (refuseAfterStop("speed " + speed)) {
+                return;
+            }
             log.trace("{}: setting speed directly to {}%", _activeTrain.getTrainName(), (int) (speed * 100));
             stopAllTimers();
             targetSpeed = applyMaxThrottleAndFactor(speed);
@@ -3014,7 +3445,7 @@ public class AutoActiveTrain implements ThrottleListener {
         /**
          * Flag from user to end run.
          */
-        public void abort() {
+        public synchronized void abort() {
             stopAllTimers();
         }
 

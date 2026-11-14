@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -62,7 +63,6 @@ public class SimpleThrottlePanel extends JPanel implements ThrottleControllerUI 
         throttleManager = tm;
         throuic = new ThrottleUICore(throttleManager, this, false);
         initGUI(isShowingCtrlPanel, isShowingFnPanel, isShowingIconPanel);
-        throuic.loadDefaultThrottle();
         throttleFrameManager.getThrottlesListPanel().getTableModel().fireTableStructureChanged();
     }
 
@@ -132,10 +132,14 @@ public class SimpleThrottlePanel extends JPanel implements ThrottleControllerUI 
         if (myContainer == null) {
             return;
         }
-        if (myContainer instanceof Window) {
-            ((Window) myContainer).toFront();
+        if (myContainer instanceof Frame) {
+            Frame f = (Frame) myContainer;            
+            if (f.getExtendedState() == JFrame.ICONIFIED) { // uniconify if iconified
+                f.setExtendedState(JFrame.NORMAL); 
+            }
+            f.toFront();      
         } else {
-            log.warn("Unable to set simple throttle window to front, myContainer is not an instance of Window");
+            log.warn("Unable to set simple throttle window to front, myContainer is not an instance of Frame");
         }
     }
 
@@ -291,14 +295,12 @@ public class SimpleThrottlePanel extends JPanel implements ThrottleControllerUI 
             // Don't show error dialog if file is not found
             log.debug("Loading throttle exception: {}", ex.getMessage());
             log.debug("Tried loading throttle file \"{}\" , reverting to default, if any", sfile);
-            throuic.loadDefaultThrottle(); // revert to loading default one
         } catch (NullPointerException | IOException | JDOMException ex) {
             log.debug("Loading throttle exception: {}", ex.getMessage());
             log.debug("Tried loading throttle file \"{}\" , reverting to default, if any", sfile);
             jmri.configurexml.ConfigXmlManager.creationErrorEncountered(
                     null, "parsing file " + sfile,
                     "Parse error", null, null, ex);
-            throuic.loadDefaultThrottle(); // revert to loading default one
         }
     }
 

@@ -24,7 +24,7 @@ import javax.swing.table.TableCellRenderer;
 
 public class FunctionTableCellRenderer implements TableCellRenderer {
 
-    public static final int CELL_HEIGHT = 32;
+    public static final int CELL_HEIGHT = 48;
     public static final int LABEL_WIDTH = 200;
     public static final int[] columnWidths = new int[FunctionTableModel.NBCOL];
     public static final String[] columnTooltips = new String[FunctionTableModel.NBCOL];
@@ -55,7 +55,9 @@ public class FunctionTableCellRenderer implements TableCellRenderer {
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         JPanel retPanel = new JPanel();
         retPanel.setLayout(new BorderLayout());
-
+        if (isSelected) {
+            retPanel.setBackground(javax.swing.UIManager.getDefaults().getColor("List.selectionBackground"));
+        }
         if (value == null) {
             return retPanel;
         }

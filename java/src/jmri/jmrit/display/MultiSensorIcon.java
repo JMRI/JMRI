@@ -113,6 +113,11 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         return list;
     }
 
+    @Override
+    public jmri.NamedBean getNamedBean() {
+        return entries.isEmpty() ? null : entries.get(0).namedSensor.getBean();
+    }
+
     public String getSensorName(int i) {
         return entries.get(i).namedSensor.getName();
     }

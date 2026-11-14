@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.rollingstock;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
@@ -49,6 +48,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
     public JButton editLengthButton = new JButton(Bundle.getMessage("ButtonEdit"));
     public JButton editGroupButton = new JButton(Bundle.getMessage("ButtonEdit"));
     public JButton editOwnerButton = new JButton(Bundle.getMessage("ButtonEdit"));
+    public JButton editColorButton = new JButton(Bundle.getMessage("ButtonEdit"));
 
     public JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
     public JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
@@ -75,6 +75,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
     public JComboBox<String> typeComboBox = getTypeManager().getComboBox();
     public JComboBox<String> lengthComboBox = getLengthManager().getComboBox();
     public JComboBox<String> ownerComboBox = InstanceManager.getDefault(CarOwners.class).getComboBox();
+    public JComboBox<String> colorComboBox = InstanceManager.getDefault(CarColors.class).getComboBox();
     public JComboBox<String> groupComboBox;
     public JComboBox<String> modelComboBox; // for engines
     public JComboBox<Location> locationBox = locationManager.getComboBox();
@@ -88,7 +89,6 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
 
     // panels for car edit
     public JPanel pBlocking = new JPanel();
-    public JPanel pColor = new JPanel();
     public JPanel pLoad = new JPanel();
     public JPanel pWeightOz = new JPanel();
 
@@ -113,7 +113,6 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
 
     abstract protected void delete();
 
-    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Checks for null")
     @Override
     public void initComponents() {
 
@@ -129,6 +128,8 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
                 Bundle.getMessage("length"))); // initial caps for some languages i.e. German
         editOwnerButton.setToolTipText(Bundle.getMessage("TipAddDeleteReplace",
                 Bundle.getMessage("Owner").toLowerCase()));
+        editColorButton.setToolTipText(Bundle.getMessage("TipAddDeleteReplace",
+                Bundle.getMessage("Color").toLowerCase()));
 
         autoTrackCheckBox.setToolTipText(getRb().getString("rsTipAutoTrack"));
 
@@ -217,9 +218,13 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         pWeight.add(pWeightTons);
         pOptional.add(pWeight);
 
-        // row 8 for cars
+        // row 8 color
+        JPanel pColor = new JPanel();
         pOptional.add(pColor);
-        pColor.setVisible(false);
+        pColor.setLayout(new GridBagLayout());
+        pColor.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Color")));
+        addItem(pColor, colorComboBox, 1, 0);
+        addItem(pColor, editColorButton, 2, 0);
 
         // row 9 for cars
         pOptional.add(pLoad);
@@ -302,6 +307,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         addEditButtonAction(editLengthButton);
         addEditButtonAction(editGroupButton);
         addEditButtonAction(editOwnerButton);
+        addEditButtonAction(editColorButton);
 
         addButtonAction(clearRoadNumberButton);
         addButtonAction(deleteButton);
@@ -373,6 +379,16 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
             }
         }
         ownerComboBox.setSelectedItem(rs.getOwnerName());
+
+        // color attribute
+        if (!InstanceManager.getDefault(CarColors.class).containsName(rs.getColorName())) {
+            if (JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("colorNameNotExist",
+                    rs.getColorName()), Bundle.getMessage("addColor"),
+                    JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
+                InstanceManager.getDefault(CarColors.class).addName(rs.getColorName());
+            }
+        }
+        colorComboBox.setSelectedItem(rs.getColorName());
 
         commentTextField.setText(rs.getComment());
         valueTextArea.setText(rs.getValue());
@@ -467,7 +483,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
 
     protected boolean check(RollingStock rs) {
         String roadNum = roadNumberTextField.getText();
-        // hyphen feature needs at least one character to work properly        
+        // hyphen feature needs at least one character to work properly
         if (roadNum.contains(TrainCommon.HYPHEN) && roadNum.split(TrainCommon.HYPHEN).length == 0) {
             JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("HyphenFeature"), Bundle.getMessage("roadNumNG"),
                     JmriJOptionPane.ERROR_MESSAGE);
@@ -532,6 +548,9 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         }
         if (typeComboBox.getSelectedItem() != null) {
             _rs.setTypeName((String) typeComboBox.getSelectedItem());
+        }
+        if (colorComboBox.getSelectedItem() != null) {
+            _rs.setColorName((String) colorComboBox.getSelectedItem());
         }
 
         int blocking = RollingStock.DEFAULT_BLOCKING_ORDER;
@@ -635,6 +654,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         getTypeManager().addPropertyChangeListener(this);
         getLengthManager().addPropertyChangeListener(this);
         InstanceManager.getDefault(CarOwners.class).addPropertyChangeListener(this);
+        InstanceManager.getDefault(CarColors.class).addPropertyChangeListener(this);
         locationManager.addPropertyChangeListener(this);
     }
 
@@ -643,6 +663,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         getTypeManager().removePropertyChangeListener(this);
         getLengthManager().removePropertyChangeListener(this);
         InstanceManager.getDefault(CarOwners.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarColors.class).removePropertyChangeListener(this);
         locationManager.removePropertyChangeListener(this);
     }
 
@@ -673,6 +694,12 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
             updateTrackLocationBox();
             if (_rs != null && _rs.getLocation() != null) {
                 locationBox.setSelectedItem(_rs.getLocation());
+            }
+        }
+        if (e.getPropertyName().equals(CarColors.CARCOLORS_CHANGED_PROPERTY)) {
+            InstanceManager.getDefault(CarColors.class).updateComboBox(colorComboBox);
+            if (_rs != null) {
+                colorComboBox.setSelectedItem(_rs.getColorName());
             }
         }
     }

@@ -739,6 +739,15 @@
           get around the lock up or slow down problem, start with all your Logixs disabled, (see
           below) then enable them one by one until you discover the loop.</p>
 
+          <p>A loop in which Logixs trigger each other immediately, for example through
+          internal sensors, is stopped when a Conditional has re-triggered itself 10 times inside
+          its own calculation. An error is written to the JMRI System Console, naming the
+          Conditionals in the loop. The Logixs are not disabled, so the error is logged again each
+          time the loop is started. A loop through so many Logixs that it uses up the program's
+          stack before that is not stopped: the stack overflow is still a fatal error, but the
+          console names the Conditional where the calculations started. Loops that pass through
+          the layout, or through delayed actions, are not stopped this way.</p>
+
           <p>If the panel file containing Logixs loads automatically when the program starts up,
           press <strong>F8</strong> as soon as you see the small JMRI splash screen (the first thing
           you see during start up). Your panel file will be loaded with all Logixs disabled.</p>

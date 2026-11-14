@@ -118,8 +118,21 @@ public class AutoAllocate implements Runnable {
         log.trace("Add request from [{}] for [{}][{}]",
                 task.getTrainName(),task.getAction().name(),
                 task.getAllocationRequest() == null ? "None" : task.getAllocationRequest().getSectionName());
-        taskList.add(task);
+        synchronized (queueLock) {
+            TaskAction action = task.getAction();
+            if (lastQueuedTask != null && lastQueuedTask.getAction() == action
+                    && (action == TaskAction.SCAN_REQUESTS || action == TaskAction.AUTO_RELEASE)) {
+                // the same check is already at the end of the queue and has not
+                // started, so it will see whatever caused this request
+                return;
+            }
+            lastQueuedTask = task;
+            taskList.add(task);
+        }
     }
+
+    private final Object queueLock = new Object();
+    private TaskAllocateRelease lastQueuedTask = null;  // last task queued, while it is still in the queue
 
     /*
      * Main loop processing queue
@@ -129,6 +142,11 @@ public class AutoAllocate implements Runnable {
         while (!abort) {
             try {
                 TaskAllocateRelease task = taskList.take();
+                synchronized (queueLock) {
+                    if (task == lastQueuedTask) {
+                        lastQueuedTask = null;
+                    }
+                }
                 try {
                     switch (task.getAction()) {
                         case AUTO_RELEASE:
@@ -149,6 +167,10 @@ public class AutoAllocate implements Runnable {
                             break;
                         case ABORT:
                             abort = true; //belt an braces
+                            break;
+                        case BARRIER:
+                            // every task queued before this one is done
+                            task.getWhenReached().run();
                             break;
                         default:
                             log.error("Unknown action in TaskAllocateRelease - ignoring");
@@ -187,6 +209,10 @@ public class AutoAllocate implements Runnable {
                 // Check to see if there is a sensor temporarily block
                 // allocation blocking allocation
                 ActiveTrain activeTrain = ar.getActiveTrain();
+                if (activeTrain.isTerminating()) {
+                    // its requests are removed once the tasks before its terminate are done
+                    continue;
+                }
                 String trainName = activeTrain.getTrainName();
                 log.trace("{}: try to allocate [{}]", trainName, ar.getSection().getDisplayName(USERSYS));
                 if (activeTrain.getLastAllocatedSection() != null) {
@@ -295,14 +321,18 @@ public class AutoAllocate implements Runnable {
                                                 sS.getDisplayName(USERSYS));
                                         areForwardsFree = false;
                                     } else if (_dispatcher.checkBlocksNotInAllocatedSection(sS, ar) != null) {
-                                        log.debug("{}: Forward section [{}] is in conflict with [{}]",
-                                                trainName, sS.getUserName(),
-                                                _dispatcher.checkBlocksNotInAllocatedSection(sS, ar));
+                                        if (log.isDebugEnabled()) {
+                                            log.debug("{}: Forward section [{}] is in conflict with [{}]",
+                                                    trainName, sS.getUserName(),
+                                                    _dispatcher.checkBlocksNotInAllocatedSection(sS, ar));
+                                        }
                                         areForwardsFree = false;
                                     } else if (checkBlocksNotInReservedSection(activeTrain, sS) != null) {
-                                        log.debug("{}: Forward section [{}] is in conflict with [{}]",
-                                                trainName, sS.getDisplayName(),
-                                                checkBlocksNotInReservedSection(activeTrain, sS).getDisplayName());
+                                        if (log.isDebugEnabled()) {
+                                            log.debug("{}: Forward section [{}] is in conflict with [{}]",
+                                                    trainName, sS.getDisplayName(),
+                                                    checkBlocksNotInReservedSection(activeTrain, sS).getDisplayName());
+                                        }
                                         areForwardsFree = false;
 
                                     } else if (reservedSections.get(sS.getSystemName()) != null &&
@@ -617,8 +647,9 @@ public class AutoAllocate implements Runnable {
         return null;
     }
 
-    private final AllocationRequest savedAR = null;
-    private final Section savedSection = null;
+    // a choice of next Section prepared by allocate(AllocationRequest), used while it allocates
+    private AllocationRequest savedAR = null;
+    private Section savedSection = null;
 
     // private implementation methods
     private void copyAndSortARs(List<AllocationRequest> list) {
@@ -716,14 +747,138 @@ public class AutoAllocate implements Runnable {
         while (foundCompletePlan) {
             foundCompletePlan = false;
             for (int i = 0; (!foundCompletePlan) && (i < _planList.size()); i++) {
-                // remove if all planned allocations have been made
-                foundCompletePlan = _planList.get(i).isComplete();
+                // remove if all planned allocations have been made, or if
+                // they never can be
+                foundCompletePlan = _planList.get(i).isComplete() || isPlanAbandoned(_planList.get(i));
                 if (foundCompletePlan) {
                     _planList.get(i).dispose();
                     _planList.remove(i);
                 }
             }
         }
+    }
+
+    /*
+     * Add a plan only if it can be completed now; a plan that can't be
+     * completed would hold its trains for no reason.
+     */
+    private boolean addPlanIfItCanComplete(AllocationPlan ap) {
+        if (isPlanAbandoned(ap)) {
+            log.debug("Allocation Plan {} not made, it could not be completed", ap.getPlanNum());
+            ap.dispose();
+            return false;
+        }
+        _planList.add(ap);
+        return true;
+    }
+
+    /*
+     * A plan can never be completed once one of its trains has been
+     * terminated, has finished, or has been reset and lost its allocations;
+     * once a train has gone past its target, or has taken another Section
+     * where its target is; once a train's target is occupied or allocated by
+     * a train outside the plan, or allocated to the other train of the plan;
+     * or, in a passing meet, once every road the passing train could use is
+     * occupied or allocated by a train outside the plan.
+     * Keeping such a plan would hold the other train forever.
+     */
+    private boolean isPlanAbandoned(AllocationPlan ap) {
+        List<ActiveTrain> activeTrains = _dispatcher.getActiveTrainsList();
+        for (int j = 1; j < 3; j++) {
+            ActiveTrain at = ap.getActiveTrain(j);
+            if ((at == null) || !activeTrains.contains(at) || (at.getMode() == ActiveTrain.TERMINATED) ||
+                    (at.getStatus() == ActiveTrain.DONE) || at.getAllocatedSectionList().isEmpty()) {
+                log.debug("Allocation Plan {} abandoned, a train has gone or been reset", ap.getPlanNum());
+                return true;
+            }
+        }
+        for (int j = 1; j < 3; j++) {
+            ActiveTrain at = ap.getActiveTrain(j);
+            Section target = ap.getTargetSection(j);
+            int targetSeq = ap.getTargetSectionSequenceNum(j);
+            if (!isAllocatedTo(target, at) && isPastSequence(at, targetSeq)) {
+                log.debug("Allocation Plan {} abandoned, {} is already past {}",
+                        ap.getPlanNum(), at.getTrainName(), target.getDisplayName(USERSYS));
+                return true;
+            }
+            if (holdsOtherSectionAt(at, target, targetSeq)) {
+                log.debug("Allocation Plan {} abandoned, {} has taken another Section in place of {}",
+                        ap.getPlanNum(), at.getTrainName(), target.getDisplayName(USERSYS));
+                return true;
+            }
+            if (!isAllocatedTo(target, at) && (isHeldOutsidePlan(target, ap)
+                    || isAllocatedTo(target, ap.getActiveTrain(3 - j)))) {
+                log.debug("Allocation Plan {} abandoned, {}'s target {} is held by another train",
+                        ap.getPlanNum(), at.getTrainName(), target.getDisplayName(USERSYS));
+                return true;
+            }
+        }
+        int passingSeq = ap.getPassingSequenceNum();
+        ActiveTrain passer = ap.getActiveTrain(2);
+        if ((ap.getPlanType() == AllocationPlan.PASSING_MEET) && (passingSeq > 0)
+                && !holdsSectionAt(passer, passingSeq)) {
+            boolean roadFree = false;
+            for (Section road : passer.getTransit().getSectionListBySeq(passingSeq)) {
+                if ((road != ap.getTargetSection(1)) && !isHeldOutsidePlan(road, ap)) {
+                    roadFree = true;
+                }
+            }
+            if (!roadFree) {
+                log.debug("Allocation Plan {} abandoned, {} has no free road to pass {}",
+                        ap.getPlanNum(), passer.getTrainName(), ap.getActiveTrain(1).getTrainName());
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean isAllocatedTo(Section s, ActiveTrain at) {
+        for (AllocatedSection as : at.getAllocatedSectionList()) {
+            if (as.getSection() == s) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /*
+     * Whether the head of a train is beyond a place in its Transit.
+     */
+    private boolean isPastSequence(ActiveTrain at, int seq) {
+        int current = getCurrentSequenceNumber(at);
+        if (current == 0) {
+            return false;
+        }
+        return at.isAllocationReversed() ? (current < seq) : (current > seq);
+    }
+
+    private static boolean holdsSectionAt(ActiveTrain at, int seq) {
+        for (AllocatedSection as : at.getAllocatedSectionList()) {
+            if (as.getSequence() == seq) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean holdsOtherSectionAt(ActiveTrain at, Section s, int seq) {
+        for (AllocatedSection as : at.getAllocatedSectionList()) {
+            if ((as.getSequence() == seq) && (as.getSection() != s)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /*
+     * Whether a Section is occupied or allocated, and not allocated to either
+     * train of the plan.
+     */
+    private static boolean isHeldOutsidePlan(Section s, AllocationPlan ap) {
+        if (isAllocatedTo(s, ap.getActiveTrain(1)) || isAllocatedTo(s, ap.getActiveTrain(2))) {
+            return false;
+        }
+        return (s.getOccupancy() == Section.OCCUPIED) || (s.getState() != Section.FREE);
     }
 
     protected void clearAllocationPlans() {
@@ -741,7 +896,7 @@ public class AutoAllocate implements Runnable {
         log.trace("in allocateMore, ar.Section={}", ar.getSection().getDisplayName(USERSYS));
         int allocateSectionsAhead = ar.getActiveTrain().getAllocateMethod();
         if (allocateSectionsAhead == ActiveTrain.ALLOCATE_AS_FAR_AS_IT_CAN) {
-            if (_dispatcher.allocateSection(ar, null) == null) {
+            if (!allocate(ar)) {
                 return false;
             }
             return true;
@@ -785,7 +940,7 @@ public class AutoAllocate implements Runnable {
                 return false;
             } else if (allocateBySafeSections) {
                 log.trace("auto allocating Section keep going");
-                if (_dispatcher.allocateSection(ar, null) != null) {
+                if (allocate(ar)) {
                     return true;
                 } else {
                     return false;
@@ -801,7 +956,7 @@ public class AutoAllocate implements Runnable {
             }
             log.trace("FinalCounter[{}]", numberAllocatedButUnoccupied);
             if (numberAllocatedButUnoccupied < allocateSectionsAhead) {
-                if (_dispatcher.allocateSection(ar, null) == null) {
+                if (!allocate(ar)) {
                     return false;
                 }
                 return true;
@@ -811,10 +966,145 @@ public class AutoAllocate implements Runnable {
         }
         log.debug("{}: auto allocating Section {}", ar.getActiveTrain().getTrainName(),
                 ar.getSection().getDisplayName(USERSYS));
-        if (_dispatcher.allocateSection(ar, null) == null) {
+        if (!allocate(ar)) {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Allocate the requested Section to the train. With the option "Wait Where
+     * Trains Can Stop", a Section the train can't stop in is allocated only
+     * with the Sections beyond it, as far as one the train can stop in.
+     * <p>
+     * An automatic train held at the far end of a Section it can't stop in (one
+     * shorter than the train, with no stopping sensor) is stopped at once on
+     * entering it. Its momentum may carry it on into the next Section, which is
+     * not its own. With the option on, and the train waiting in a Section it
+     * can stop in, such a Section is allocated only when the train has a free
+     * run beyond it to a Section it can stop in, or to the end of its Transit.
+     * Then the whole run is allocated, each Section of it being chosen as the
+     * next of the one before so that the turnouts are set for it. Otherwise
+     * none of it is, and the train goes on waiting where it can stop.
+     * <p>
+     * A train that has no Section yet, or that waits in a Section it can't stop
+     * in either, gains nothing by being kept back, so its request is allocated
+     * as it is with the option off.
+     *
+     * @param ar the request
+     * @return true if the Section was allocated
+     */
+    private boolean allocate(AllocationRequest ar) {
+        ActiveTrain at = ar.getActiveTrain();
+        AutoActiveTrain aat = at.getAutoActiveTrain();
+        int seq = ar.getSectionSeqNumber();
+        if (!_dispatcher.getWaitWhereTrainsCanStop() || aat == null
+                || aat.canStopIn(ar.getSection(), ar.getSectionDirection())
+                || !waitsWhereItCanStop(at, aat)
+                || nextSequence(at, seq) == 0) {  // the end of the Transit: what follows is decided there
+            return _dispatcher.allocateSection(ar, null) != null;
+        }
+        List<Section> run = freeRunBeyond(at, aat, ar);
+        if (run.isEmpty()) {
+            log.debug("{}: [{}] not allocated, the train can't stop in it and has no free run beyond it to where it can",
+                    at.getTrainName(), ar.getSection().getDisplayName(USERSYS));
+            return false;
+        }
+        AllocationRequest request = ar;
+        boolean allocated = false;
+        for (Section beyond : run) {
+            AllocatedSection as;
+            savedAR = request;
+            savedSection = beyond;
+            try {
+                as = _dispatcher.allocateSection(request, null);
+            } finally {
+                savedAR = null;
+                savedSection = null;
+            }
+            if (as == null) {
+                return allocated;
+            }
+            allocated = true;
+            seq = nextSequence(at, seq);
+            request = (as.getNextSection() != beyond) ? null : _dispatcher.findAllocationRequestInQueue(beyond, seq,
+                    at.getAllocationDirectionFromSectionAndSeq(beyond, seq), at);
+            if (request == null) {
+                log.debug("{}: [{}] was free but is not allocated with the Section before it", at.getTrainName(),
+                        beyond.getDisplayName(USERSYS));
+                return true;
+            }
+        }
+        // the end of the run: a Section the train can stop in, or the last of its Transit
+        if (_dispatcher.allocateSection(request, null) == null) {
+            log.debug("{}: the end of its free run was not allocated", at.getTrainName());
+        }
+        return true;
+    }
+
+    /*
+     * The Sections beyond the requested one that the train would run through
+     * to reach a Section it can stop in, that one last, if every one of them
+     * could be allocated now. Where a Transit has alternates, a free one the
+     * train can stop in is taken before a free one it can't. The run also ends
+     * at the last Section of the Transit. Empty if there is no such free run.
+     */
+    private List<Section> freeRunBeyond(ActiveTrain at, AutoActiveTrain aat, AllocationRequest ar) {
+        List<Section> run = new ArrayList<>();
+        for (int seq = nextSequence(at, ar.getSectionSeqNumber()); seq > 0; seq = nextSequence(at, seq)) {
+            Section free = null;
+            boolean canStop = false;
+            for (Section s : at.getTransit().getSectionListBySeq(seq)) {
+                if (isFree(s, ar)) {
+                    canStop = aat.canStopIn(s, at.getAllocationDirectionFromSectionAndSeq(s, seq));
+                    if (free == null || canStop) {
+                        free = s;
+                    }
+                    if (canStop) {
+                        break;
+                    }
+                }
+            }
+            if (free == null) {
+                return new ArrayList<>();
+            }
+            run.add(free);
+            if (canStop) {
+                break;
+            }
+        }
+        return run;
+    }
+
+    /*
+     * Check that the train, kept waiting for its next Section, waits in a
+     * Section it can stop in: the last one allocated to it.
+     */
+    private static boolean waitsWhereItCanStop(ActiveTrain at, AutoActiveTrain aat) {
+        List<AllocatedSection> held = at.getAllocatedSectionList();
+        if (held.isEmpty()) {
+            return false;
+        }
+        AllocatedSection last = held.get(held.size() - 1);
+        return aat.canStopIn(last.getSection(), last.getDirection());
+    }
+
+    /*
+     * The sequence number of the Section after the one at seq, in the direction
+     * the train is allocating, or 0 if there is none.
+     */
+    private static int nextSequence(ActiveTrain at, int seq) {
+        int next = at.isAllocationReversed() ? seq - 1 : seq + 1;
+        return (next >= 1 && next <= at.getTransit().getMaxSequence()) ? next : 0;
+    }
+
+    /*
+     * Check that a Section could be allocated now: free, not occupied, and none
+     * of its Blocks in a Section allocated to another train.
+     */
+    private boolean isFree(Section s, AllocationRequest ar) {
+        return s.getState() == Section.FREE && s.getOccupancy() != Section.OCCUPIED
+                && _dispatcher.checkBlocksNotInAllocatedSection(s, ar) == null;
     }
 
     private boolean checkForXingPlan(AllocationRequest ar, ActiveTrain nt,
@@ -915,8 +1205,7 @@ public class AutoAllocate implements Runnable {
         ap.setTargetSection(aSec, aSecSeq, 1);
         ap.setActiveTrain(nt, 2);
         ap.setTargetSection(nSec, nSecSeq, 2);
-        _planList.add(ap);
-        return true;
+        return addPlanIfItCanComplete(ap);
     }
 
     private boolean checkForPassingPlan(AllocationRequest ar, ActiveTrain nt,
@@ -927,6 +1216,7 @@ public class AutoAllocate implements Runnable {
         Section aSec = null;
         int nSecSeq = 0;
         int aSecSeq = 0;
+        int passingSeq = 0;
         ActiveTrain at = ar.getActiveTrain();
         AllocationPlan apx = getPlanThisTrain(nt);
         if (apx != null) {
@@ -1018,6 +1308,7 @@ public class AutoAllocate implements Runnable {
             if ((aSec == null) || (nSec == null)) {
                 return false;
             }
+            passingSeq = nSecSeq;
             // push higher priority train one section further, if possible
             if (!nt.isAllocationReversed()) {
                 if (nSecSeq < nt.getTransit().getMaxSequence()) {
@@ -1054,8 +1345,8 @@ public class AutoAllocate implements Runnable {
         ap.setTargetSection(aSec, aSecSeq, 1);
         ap.setActiveTrain(nt, 2);
         ap.setTargetSection(nSec, nSecSeq, 2);
-        _planList.add(ap);
-        return true;
+        ap.setPassingSequenceNum(passingSeq);
+        return addPlanIfItCanComplete(ap);
     }
 
     private boolean isThereConflictingPlan(ActiveTrain at, Section aSec, int aSecSeq,
@@ -1176,7 +1467,7 @@ public class AutoAllocate implements Runnable {
                 ar.getSectionSeqNumber());
         boolean found = false;
         for (int i = 0; i < aSectionList.size(); i++) {
-            if (!(at.getTransit().containsSection(aSectionList.get(i)))) {
+            if (at.getTransit().containsSection(aSectionList.get(i))) {
                 found = true;
             }
         }
@@ -1209,29 +1500,6 @@ public class AutoAllocate implements Runnable {
                 }
             }
         }
-        if (ar.getActiveTrain().getSignalType() == DispatcherFrame.SIGNALMAST) {
-            if (!at.isAllocationReversed()) {
-                for (int i = 0; i < tsList.size(); i++) {
-                    if (tsList.get(i).getSequenceNumber() > curSeq) {
-                        for (int j = 0; j < aSectionList.size(); j++) {
-                            if (tsList.get(i).getSection() == aSectionList.get(j)) {
-                                return true;
-                            }
-                        }
-                    }
-                }
-            } else {
-                for (int i = tsList.size() - 1; i >= 0; i--) {
-                    if (tsList.get(i).getSequenceNumber() < curSeq) {
-                        for (int j = 0; j < aSectionList.size(); j++) {
-                            if (tsList.get(i).getSection() == aSectionList.get(j)) {
-                                return true;
-                            }
-                        }
-                    }
-                }
-            }
-        }
         return false;
     }
 
@@ -1251,7 +1519,7 @@ public class AutoAllocate implements Runnable {
                 if (tsList.get(i).getSequenceNumber() > curSeq) {
                     for (int k = 0; k < rtsList.size(); k++) {
                         if ((tsList.get(i).getSection() == rtsList.get(k).getSection()) &&
-                                (tsList.get(i).getDirection() == rtsList.get(k).getDirection())) {
+                                (runDirection(at, tsList.get(i)) == runDirection(ar.getActiveTrain(), rtsList.get(k)))) {
                             return true;
                         }
                     }
@@ -1262,7 +1530,7 @@ public class AutoAllocate implements Runnable {
                 if (tsList.get(i).getSequenceNumber() < curSeq) {
                     for (int k = 0; k < rtsList.size(); k++) {
                         if ((tsList.get(i).getSection() == rtsList.get(k).getSection()) &&
-                                (tsList.get(i).getDirection() == rtsList.get(k).getDirection())) {
+                                (runDirection(at, tsList.get(i)) == runDirection(ar.getActiveTrain(), rtsList.get(k)))) {
                             return true;
                         }
                     }
@@ -1272,11 +1540,21 @@ public class AutoAllocate implements Runnable {
         return false;
     }
 
+    /*
+     * The direction a train runs through a Section of its Transit, allowing for
+     * the train running its Transit in reverse.
+     */
+    private int runDirection(ActiveTrain at, TransitSection ts) {
+        return at.getAllocationDirectionFromSectionAndSeq(ts.getSection(), ts.getSequenceNumber());
+    }
+
     private boolean firstTrainLeadsSecond(ActiveTrain at, ActiveTrain nt) {
-        int aSeq = getCurrentSequenceNumber(at);
-        Section aSec = getCurSection();
-        int nSeq = getCurrentSequenceNumber(nt);
-        Section nSec = getCurSection();
+        TransitSection aCurrent = getCurrentTransitSection(at);
+        int aSeq = (aCurrent == null) ? 0 : aCurrent.getSequenceNumber();
+        Section aSec = (aCurrent == null) ? null : aCurrent.getSection();
+        TransitSection nCurrent = getCurrentTransitSection(nt);
+        int nSeq = (nCurrent == null) ? 0 : nCurrent.getSequenceNumber();
+        Section nSec = (nCurrent == null) ? null : nCurrent.getSection();
         List<TransitSection> atsList = at.getTransit().getTransitSectionList();
         if (!at.isTransitReversed()) {
             for (int i = 0; i < atsList.size(); i++) {
@@ -1288,7 +1566,7 @@ public class AutoAllocate implements Runnable {
                 }
             }
         } else {
-            for (int i = atsList.size() - 1; i <= 0; i--) {
+            for (int i = atsList.size() - 1; i >= 0; i--) {
                 if (atsList.get(i).getSequenceNumber() < aSeq) {
                     if (atsList.get(i).getSection() == nSec) {
                         // first train has not yet reached second train position
@@ -1309,7 +1587,7 @@ public class AutoAllocate implements Runnable {
                 }
             }
         } else {
-            for (int i = ntsList.size() - 1; i <= 0; i--) {
+            for (int i = ntsList.size() - 1; i >= 0; i--) {
                 if (ntsList.get(i).getSequenceNumber() < nSeq) {
                     if (ntsList.get(i).getSection() == aSec) {
                         // second train has found first train in its on coming
@@ -1324,10 +1602,12 @@ public class AutoAllocate implements Runnable {
 
     private boolean willTrainsCross(ActiveTrain at, ActiveTrain nt) {
         // returns true if both trains will eventually reach the others position
-        int aSeq = getCurrentSequenceNumber(at);
-        Section aSec = getCurSection();
-        int nSeq = getCurrentSequenceNumber(nt);
-        Section nSec = getCurSection();
+        TransitSection aCurrent = getCurrentTransitSection(at);
+        int aSeq = (aCurrent == null) ? 0 : aCurrent.getSequenceNumber();
+        Section aSec = (aCurrent == null) ? null : aCurrent.getSection();
+        TransitSection nCurrent = getCurrentTransitSection(nt);
+        int nSeq = (nCurrent == null) ? 0 : nCurrent.getSequenceNumber();
+        Section nSec = (nCurrent == null) ? null : nCurrent.getSection();
         List<TransitSection> atsList = at.getTransit().getTransitSectionList();
         boolean found = false;
         if (!at.isTransitReversed()) {
@@ -1340,7 +1620,7 @@ public class AutoAllocate implements Runnable {
                 }
             }
         } else {
-            for (int i = atsList.size() - 1; (i <= 0) && (!found); i--) {
+            for (int i = atsList.size() - 1; (i >= 0) && (!found); i--) {
                 if (atsList.get(i).getSequenceNumber() < aSeq) {
                     if (atsList.get(i).getSection() == nSec) {
                         // first train has reached second train position
@@ -1364,7 +1644,7 @@ public class AutoAllocate implements Runnable {
                 }
             }
         } else {
-            for (int i = ntsList.size() - 1; i <= 0; i--) {
+            for (int i = ntsList.size() - 1; i >= 0; i--) {
                 if (ntsList.get(i).getSequenceNumber() < nSeq) {
                     if (ntsList.get(i).getSection() == aSec) {
                         // second train has found first train in its on coming
@@ -1384,7 +1664,7 @@ public class AutoAllocate implements Runnable {
         List<AllocatedSection> allocatedSections = _dispatcher.getAllocatedSectionsList();
         List<TransitSection> atsList = at.getTransit().getTransitSectionList();
         int aSeq = getCurrentSequenceNumber(at);
-        Section nSec = getCurSection();
+        Section nSec = getCurrentSection(nt);
         if (willTraverse(nSec, at, aSeq) != 0) {
             // at is moving toward nt
             if (!at.isTransitReversed()) {
@@ -1410,7 +1690,7 @@ public class AutoAllocate implements Runnable {
                     }
                 }
             } else {
-                for (int i = atsList.size() - 1; i <= 0; i--) {
+                for (int i = atsList.size() - 1; i >= 0; i--) {
                     if (atsList.get(i).getSequenceNumber() < aSeq) {
                         Section tSec = atsList.get(i).getSection();
                         if (tSec == nSec) {
@@ -1457,7 +1737,7 @@ public class AutoAllocate implements Runnable {
                     }
                 }
             } else {
-                for (int i = atsList.size() - 1; i <= 0; i--) {
+                for (int i = atsList.size() - 1; i >= 0; i--) {
                     if (atsList.get(i).getSequenceNumber() < aSeq) {
                         Section tSec = atsList.get(i).getSection();
                         if (tSec == nSec) {
@@ -1483,18 +1763,18 @@ public class AutoAllocate implements Runnable {
         return false;
     }
 
-    private int getCurrentSequenceNumber(ActiveTrain at) {
-        // finds the current position of the head of the ActiveTrain in its
-        // Transit
-        // returns sequence number of current position. getCurSection() returns
-        // Section.
-        int seq = 0;
-        curSection = null;
+    /*
+     * Find the current position of the head of an ActiveTrain in its Transit:
+     * the furthest occupied Section allocated to it.
+     * This only looks, it does not change anything.
+     * Returns null if the train has no occupied allocated Section.
+     */
+    private TransitSection getCurrentTransitSection(ActiveTrain at) {
         if (at == null) {
-            log.error("null argument on entry to 'getCurrentSeqNumber'");
-            return seq;
+            log.error("null argument on entry to 'getCurrentTransitSection'");
+            return null;
         }
-        Section temSection = null;
+        TransitSection current = null;
         List<TransitSection> tsList = at.getTransit().getTransitSectionList();
         if (!at.isTransitReversed()) {
             // find the highest numbered occupied section
@@ -1502,11 +1782,10 @@ public class AutoAllocate implements Runnable {
                 if ((tsList.get(i).getSection().getOccupancy() == Section.OCCUPIED) &&
                         isSectionAllocatedToTrain(tsList.get(i).getSection(),
                                 tsList.get(i).getSequenceNumber(), at)) {
-                    seq = tsList.get(i).getSequenceNumber();
-                    temSection = tsList.get(i).getSection();
+                    current = tsList.get(i);
                 }
             }
-            if (seq == at.getTransit().getMaxSequence()) {
+            if ((current != null) && (current.getSequenceNumber() == at.getTransit().getMaxSequence())) {
                 if (at.getResetWhenDone()) {
                     // train may have passed the last Section during continuous
                     // running
@@ -1515,8 +1794,7 @@ public class AutoAllocate implements Runnable {
                         if ((tsList.get(j).getSection().getOccupancy() == Section.OCCUPIED) &&
                                 isSectionAllocatedToTrain(tsList.get(j).getSection(),
                                         tsList.get(j).getSequenceNumber(), at)) {
-                            seq = tsList.get(j).getSequenceNumber();
-                            temSection = tsList.get(j).getSection();
+                            current = tsList.get(j);
                         } else {
                             further = false;
                         }
@@ -1529,31 +1807,32 @@ public class AutoAllocate implements Runnable {
                 if ((tsList.get(i).getSection().getOccupancy() == Section.OCCUPIED) &&
                         isSectionAllocatedToTrain(tsList.get(i).getSection(),
                                 tsList.get(i).getSequenceNumber(), at)) {
-                    seq = tsList.get(i).getSequenceNumber();
-                    temSection = tsList.get(i).getSection();
+                    current = tsList.get(i);
                 }
             }
         }
-        if (seq == 0) {
-            if (at.getMode() != ActiveTrain.MANUAL) {
-                log.error("{}: ActiveTrain has no occupied Section. Halting immediately to avoid runaway.",
-                        at.getTrainName());
-                at.getAutoActiveTrain().getAutoEngineer().setHalt(true);
-            } else {
-                log.debug("{}: ActiveTrain has no occupied Section, running in Manual mode.", at.getTrainName());
-            }
-        } else {
-            curSection = temSection;
+        if (current == null) {
+            log.debug("{}: ActiveTrain has no occupied Section.", at.getTrainName());
         }
-        return seq;
+        return current;
     }
 
-    Section curSection = null;
+    /*
+     * Returns the sequence number of the current position of the head of the
+     * ActiveTrain in its Transit, or 0 if not known.
+     */
+    private int getCurrentSequenceNumber(ActiveTrain at) {
+        TransitSection current = getCurrentTransitSection(at);
+        return (current == null) ? 0 : current.getSequenceNumber();
+    }
 
-    // Returns the Section with the sequence number returned by last call to
-    // getCurrentSequenceNumber
-    private Section getCurSection() {
-        return curSection;
+    /*
+     * Returns the Section at the current position of the head of the
+     * ActiveTrain in its Transit, or null if not known.
+     */
+    private Section getCurrentSection(ActiveTrain at) {
+        TransitSection current = getCurrentTransitSection(at);
+        return (current == null) ? null : current.getSection();
     }
 
     private boolean isSectionAllocatedToTrain(Section s, int seq, ActiveTrain at) {

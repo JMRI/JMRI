@@ -248,6 +248,7 @@ public class CbusNodeEditNVarPane extends CbusNodeConfigTab implements TableMode
             nodeNVModel.dispose(); // which does a node setliveUpdate(false)
         }
         editNVGui.dispose();
+        super.dispose(); // removes node listener
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusNodeEditNVarPane.class);

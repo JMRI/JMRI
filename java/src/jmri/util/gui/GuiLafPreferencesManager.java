@@ -528,6 +528,10 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
                             // Swing-handled class name
                             UIManager.setLookAndFeel(localLafClassName);
                         }
+                        if (localLafClassName.endsWith("GTKLookAndFeel")) {
+                            // remove useless task bar from GTK look'n feel JDektopPanes
+                            UIManager.put("InternalFrame.useTaskBar", Boolean.FALSE);
+                        }
                     } catch (ClassNotFoundException ex) {
                         log.error("Could not find look and feel \"{}\".", this.lookAndFeel);
                     } catch (

@@ -50,6 +50,7 @@ public class ActionsAndExpressionsTest {
     private final Set<Locale> locales = new HashSet<>();
 
     // Populates languages and locales fields. Called in test setup.
+    @SuppressWarnings("deprecation")
     private void getLocales() throws IOException {
         Path path = FileSystems.getDefault().getPath("java/src/jmri/jmrit/logixng/");
 

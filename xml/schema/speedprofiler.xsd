@@ -91,6 +91,16 @@
       <xs:element name="speedStepFrom" type="speedStepType" minOccurs="0" maxOccurs="1"/>
       <xs:element name="speedStepTo" type="speedStepType" minOccurs="0" maxOccurs="1"/>
       <xs:element name="speedStepIncr" type="xs:integer" minOccurs="0" maxOccurs="1"/>
+      <xs:element name="repeatLowestSteps" type="speedStepType" minOccurs="0" maxOccurs="1">
+        <xs:annotation><xs:documentation>
+          How many of the lowest steps to measure again at the end of the profile. Since 5.17.5.
+        </xs:documentation></xs:annotation>
+      </xs:element>
+      <xs:element name="repeatTimes" type="xs:positiveInteger" minOccurs="0" maxOccurs="1">
+        <xs:annotation><xs:documentation>
+          How many times to measure each of them again. Since 5.17.5.
+        </xs:documentation></xs:annotation>
+      </xs:element>
     </xs:sequence>
   </xs:complexType>
 

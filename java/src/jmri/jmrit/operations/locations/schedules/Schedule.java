@@ -2,10 +2,6 @@ package jmri.jmrit.operations.locations.schedules;
 
 import java.util.*;
 
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.locations.*;
@@ -14,10 +10,14 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Represents a car delivery schedule for a location
  *
- * @author Daniel Boudreau Copyright (C) 2009, 2011, 2013
+ * @author Daniel Boudreau Copyright (C) 2009, 2011, 2013, 2026
  */
 public class Schedule extends PropertyChangeSupport implements java.beans.PropertyChangeListener {
 
@@ -252,6 +252,31 @@ public class Schedule extends PropertyChangeSupport implements java.beans.Proper
         for (ScheduleItem si : sortList) {
             for (int j = 0; j < out.size(); j++) {
                 if (si.getSequenceId() < out.get(j).getSequenceId()) {
+                    out.add(j, si);
+                    break;
+                }
+            }
+            if (!out.contains(si)) {
+                out.add(si);
+            }
+        }
+        return out;
+    }
+    
+    /**
+     * Get a list of ScheduleItems sorted by hit order
+     *
+     * @return list of ScheduleItems ordered by hits
+     */
+    public List<ScheduleItem> getItemsByHitList() {
+        // first get by sequence list
+        List<ScheduleItem> sortList = getItemsBySequenceList();
+        // now re-sort
+        List<ScheduleItem> out = new ArrayList<ScheduleItem>();
+
+        for (ScheduleItem si : sortList) {
+            for (int j = 0; j < out.size(); j++) {
+                if (si.getHits() < out.get(j).getHits()) {
                     out.add(j, si);
                     break;
                 }

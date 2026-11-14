@@ -7,6 +7,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -75,6 +76,13 @@ import jmri.util.PhysicalLocation;
  * but the direction of this block (b2 in the example) is not updated.
  * In other words,
  * we're not noticing that the train must have reversed to go back out.
+ * <li> When a Block can't tell which of its occupied neighbours' trains
+ * entered it, a neighbour becoming unoccupied is taken as its train entering
+ * this Block, unless that train is known to have gone elsewhere: a Block
+ * beyond the neighbour became occupied after this one, or holds that train.
+ * If detection drops out as the train passes between the neighbour and the
+ * Block beyond, so that the neighbour reads empty before the Block beyond
+ * reads occupied, its train leaving is still taken as entering this Block.
  * </ul>
  * <p>
  * Do not assume that a Block object uniquely represents a piece of track.
@@ -295,6 +303,11 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      * String constant for property changes to allocated.
      */
     public static final String PROPERTY_ALLOCATED = "allocated";
+
+    /**
+     * String constant for property changes to the allocated value.
+     */
+    public static final String PROPERTY_ALLOCATED_VALUE = "allocatedValue";
 
     /**
      * Set the sensor by name.
@@ -550,6 +563,53 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     @CheckForNull
     public Object getValue() {
         return _value;
+    }
+
+    private Object _allocatedValue = null;
+
+    /**
+     * Set the value that identifies the train this Block is allocated to, for
+     * example by Dispatcher. Unlike {@link #setValue(Object)}, which records
+     * the train in this Block, this records the train the Block is held for,
+     * which may not have reached it yet or may have left it. Block tracking
+     * does not use it.
+     * <p>
+     * Fires propertyChange "allocatedValue" when changed.
+     *
+     * @param value the train name, roster entry or other value; null when the
+     *              Block is no longer allocated
+     */
+    public void setAllocatedValue(@CheckForNull Object value) {
+        Object old = _allocatedValue;
+        if (Objects.equals(old, value)) {
+            return;
+        }
+        _allocatedValue = value;
+        firePropertyChange(PROPERTY_ALLOCATED_VALUE, old, value);
+    }
+
+    /**
+     * Get the value that identifies the train this Block is allocated to.
+     *
+     * @return the value, or null if the Block is not allocated or no value was
+     *         given
+     * @see #setAllocatedValue(Object)
+     */
+    @CheckForNull
+    public Object getAllocatedValue() {
+        return _allocatedValue;
+    }
+
+    /**
+     * Get the value to show for this Block on a panel: the train in it if
+     * known, otherwise the train it is allocated to.
+     *
+     * @return {@link #getValue()} if not null, else
+     *         {@link #getAllocatedValue()}
+     */
+    @CheckForNull
+    public Object getDisplayValue() {
+        return _value != null ? _value : _allocatedValue;
     }
 
     /**
@@ -848,6 +908,308 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     }
 
     /**
+     * The name of the property change fired when a route length through this
+     * Block is set or cleared. Each length is stored as a bean property whose
+     * key starts with {@link #ROUTE_LENGTH_KEY}, so it is saved in the panel
+     * file with the Block's other properties, and kept by versions of JMRI
+     * that don't know it.
+     *
+     * @since 5.19.1
+     */
+    public static final String PROPERTY_ROUTE_LENGTHS = "RouteLengths"; // NOI18N
+
+    /**
+     * The start of the key of the bean property that stores the length of one
+     * way through this Block; the rest names its two neighbours.
+     *
+     * @since 5.19.1
+     */
+    public static final String ROUTE_LENGTH_KEY = "RouteLength:"; // NOI18N
+
+    /**
+     * The name of the property change fired when this Block is made, or is no
+     * longer, a braking section for trains leaving towards a neighbour. Each
+     * is stored as a bean property whose key starts with
+     * {@link #BRAKING_KEY}.
+     *
+     * @since 5.19.1
+     */
+    public static final String PROPERTY_BRAKING = "BrakingSection"; // NOI18N
+
+    /**
+     * The start of the key of the bean property that marks this Block as a
+     * braking section for trains leaving towards one neighbour; the rest names
+     * the neighbour.
+     *
+     * @since 5.19.1
+     */
+    public static final String BRAKING_KEY = "BrakingTowards:"; // NOI18N
+
+    /**
+     * A way through a Block, between two of its neighbouring Blocks. A way is
+     * the same whichever way it is travelled, so the way from A to B equals
+     * the way from B to A.
+     *
+     * @since 5.19.1
+     */
+    @javax.annotation.concurrent.Immutable
+    public static final class WayThrough {
+
+        private final Block one;
+        private final Block other;
+
+        /**
+         * @param one   a neighbouring Block at one end
+         * @param other a neighbouring Block at the other end
+         * @throws IllegalArgumentException if they are the same Block
+         */
+        public WayThrough(@Nonnull Block one, @Nonnull Block other) {
+            if (one == other) {
+                throw new IllegalArgumentException("a way through joins two different Blocks");
+            }
+            // in system name order, so that equal ways are built alike
+            boolean inOrder = one.getSystemName().compareTo(other.getSystemName()) <= 0;
+            this.one = inOrder ? one : other;
+            this.other = inOrder ? other : one;
+        }
+
+        /**
+         * @return the neighbour at one end, the first of the two by system
+         *         name
+         */
+        @Nonnull
+        public Block getOneEnd() {
+            return one;
+        }
+
+        /**
+         * @return the neighbour at the other end
+         */
+        @Nonnull
+        public Block getOtherEnd() {
+            return other;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (!(o instanceof WayThrough)) {
+                return false;
+            }
+            WayThrough w = (WayThrough) o;
+            return one == w.one && other == w.other;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(one.getSystemName(), other.getSystemName());
+        }
+
+        @Override
+        public String toString() {
+            return one.getDisplayName() + " - " + other.getDisplayName();
+        }
+    }
+
+    /**
+     * The ways through this Block, from its paths: each pair of neighbouring
+     * Blocks whose paths can be set at once. Two neighbours reached only by
+     * setting one turnout both ways, as the two legs of a turnout are, are
+     * not a way through.
+     *
+     * @return the ways, in system name order of their ends; empty if the
+     *         Block has fewer than two neighbours
+     * @since 5.19.1
+     */
+    @Nonnull
+    public List<WayThrough> getWaysThrough() {
+        List<Path> list = getPaths();
+        java.util.Set<WayThrough> ways = new java.util.TreeSet<>(
+                java.util.Comparator.comparing((WayThrough w) -> w.getOneEnd().getSystemName())
+                        .thenComparing(w -> w.getOtherEnd().getSystemName()));
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = i + 1; j < list.size(); j++) {
+                Block a = list.get(i).getBlock();
+                Block b = list.get(j).getBlock();
+                if (a != null && b != null && a != b && a != this && b != this
+                        && settable(list.get(i), list.get(j))) {
+                    ways.add(new WayThrough(a, b));
+                }
+            }
+        }
+        return new ArrayList<>(ways);
+    }
+
+    /**
+     * @return true if no bean is set one way for one path and another way
+     *         for the other
+     */
+    private static boolean settable(Path p, Path q) {
+        for (BeanSetting s : p.getSettings()) {
+            for (BeanSetting t : q.getSettings()) {
+                if (s.getBean() == t.getBean() && s.getSetting() != t.getSetting()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Get the length of a way through this Block.
+     *
+     * @param from the neighbour at one end
+     * @param to   the neighbour at the other end
+     * @return the length set for the way, mm, or this Block's length if none
+     *         has been set
+     * @since 5.19.1
+     */
+    public float getRouteLengthMm(@Nonnull Block from, @Nonnull Block to) {
+        Float set = routeLengthSet(new WayThrough(from, to));
+        return set == null ? getLengthMm() : set;
+    }
+
+    /**
+     * @param from the neighbour at one end
+     * @param to   the neighbour at the other end
+     * @return true if a length has been set for the way through this Block
+     *         between them
+     * @since 5.19.1
+     */
+    public boolean hasRouteLength(@Nonnull Block from, @Nonnull Block to) {
+        return routeLengthSet(new WayThrough(from, to)) != null;
+    }
+
+    /**
+     * Set the length of a way through this Block, for a way whose length
+     * differs from the Block's own. Fires a property change named
+     * {@link #PROPERTY_ROUTE_LENGTHS}, with the way as its old value and the
+     * new length (or null) as its new value, when the length changes.
+     *
+     * @param from the neighbour at one end
+     * @param to   the neighbour at the other end
+     * @param mm   the length, mm, more than 0
+     * @throws IllegalArgumentException if the length isn't more than 0
+     * @see #clearRouteLength(Block, Block)
+     * @since 5.19.1
+     */
+    public void setRouteLengthMm(@Nonnull Block from, @Nonnull Block to, float mm) {
+        if (!(mm > 0) || Float.isInfinite(mm)) {
+            throw new IllegalArgumentException("a route length must be more than 0: " + mm);
+        }
+        changeRouteLength(new WayThrough(from, to), mm);
+    }
+
+    /**
+     * Clear the length of a way through this Block, so that the Block's own
+     * length is used for it. Fires a property change named
+     * {@link #PROPERTY_ROUTE_LENGTHS}, with the way as its old value and null
+     * as its new value, if a length was set.
+     *
+     * @param from the neighbour at one end
+     * @param to   the neighbour at the other end
+     * @since 5.19.1
+     */
+    public void clearRouteLength(@Nonnull Block from, @Nonnull Block to) {
+        changeRouteLength(new WayThrough(from, to), null);
+    }
+
+    private void changeRouteLength(WayThrough way, @CheckForNull Float now) {
+        Float old = routeLengthSet(way);
+        if (Objects.equals(old, now)) {
+            return;
+        }
+        if (now == null) {
+            removeProperty(routeLengthKey(way));
+        } else {
+            setProperty(routeLengthKey(way), now);
+        }
+        firePropertyChange(PROPERTY_ROUTE_LENGTHS, way, now);
+    }
+
+    private static String routeLengthKey(WayThrough way) {
+        return ROUTE_LENGTH_KEY + keyName(way.getOneEnd()) + "|" + keyName(way.getOtherEnd());
+    }
+
+    /**
+     * @return the length set for a way, mm, or null if none
+     */
+    @CheckForNull
+    private Float routeLengthSet(WayThrough way) {
+        Object v = getProperty(routeLengthKey(way));
+        if (v == null) {
+            return null;
+        }
+        try {
+            float f = Float.parseFloat(v.toString());
+            return f > 0 ? f : null;
+        } catch (NumberFormatException e) {
+            return null; // not a length: as if none were set
+        }
+    }
+
+    /**
+     * Get whether this Block is a braking section for trains leaving it
+     * towards a neighbour: a stretch, such as one with Automatic Brake
+     * Control or a cut-out, where the track itself brings trains to a stand
+     * before the Block beyond. Nothing in JMRI acts on it by itself; features
+     * that work out where a train will stop can use it.
+     *
+     * @param towards the neighbour trains leave towards
+     * @return true if it is a braking section for trains leaving towards it
+     * @since 5.19.1
+     */
+    public boolean isBrakingTowards(@Nonnull Block towards) {
+        return getProperty(BRAKING_KEY + keyName(towards)) != null;
+    }
+
+    /**
+     * Make this Block a braking section for trains leaving it towards a
+     * neighbour, or not. Fires a property change named
+     * {@link #PROPERTY_BRAKING}, with the neighbour as its old value and the
+     * setting as its new value, when the setting changes.
+     *
+     * @param towards the neighbour trains leave towards
+     * @param braking true if it is a braking section for them
+     * @since 5.19.1
+     */
+    public void setBrakingTowards(@Nonnull Block towards, boolean braking) {
+        if (isBrakingTowards(towards) == braking) {
+            return;
+        }
+        if (braking) {
+            setProperty(BRAKING_KEY + keyName(towards), Boolean.TRUE);
+        } else {
+            removeProperty(BRAKING_KEY + keyName(towards));
+        }
+        firePropertyChange(PROPERTY_BRAKING, towards, braking);
+    }
+
+    /**
+     * @return the neighbouring Blocks, by this Block's paths, towards which
+     *         it is a braking section
+     * @since 5.19.1
+     */
+    @Nonnull
+    public List<Block> getBrakingTowards() {
+        List<Block> list = new ArrayList<>();
+        for (Path p : getPaths()) {
+            Block b = p.getBlock();
+            if (b != null && !list.contains(b) && isBrakingTowards(b)) {
+                list.add(b);
+            }
+        }
+        return list;
+    }
+
+    /**
+     * A Block's system name as part of a property key: encoded, so that no
+     * character in it can be taken for the key's separators.
+     */
+    private static String keyName(Block b) {
+        return java.net.URLEncoder.encode(b.getSystemName(), java.nio.charset.StandardCharsets.UTF_8);
+    }
+
+    /**
      * Note: this has to make choices about identity values (always the same)
      * and operation values (can change as the block works). Might be missing
      * some identity values.
@@ -896,20 +1258,210 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         cntOfPossibleEntrancePaths = 0;
     }
 
+    /**
+     * Get the paths through which a train could have entered this Block: those
+     * to an occupied neighbour along a set path. If Block directions are used,
+     * only neighbours whose direction leads into this Block are taken.
+     *
+     * @param pList    the paths of this Block
+     * @param isSet    whether each path is set
+     * @param isActive whether the Block at the end of each path is occupied
+     * @param pDir     the direction of the Block at the end of each path
+     * @param pFromDir the direction from the Block at the end of each path
+     * @return the paths a train could have entered by
+     */
+    private List<Path> possibleEntrancePaths(Path[] pList, boolean[] isSet, boolean[] isActive,
+            int[] pDir, int[] pFromDir) {
+        List<Path> entrants = new ArrayList<>();
+        List<Path> occupied = new ArrayList<>();
+        for (int i = 0; i < pList.length; i++) {
+            if (isSet[i] && isActive[i]) {
+                occupied.add(pList[i]);
+                // bitwise comparison supports combination directions such as "North, West"
+                if ((pDir[i] & pFromDir[i]) > 0) {
+                    entrants.add(pList[i]);
+                }
+            }
+        }
+        // without matching directions, for example when directions are not used, any occupied neighbour
+        return entrants.isEmpty() ? occupied : entrants;
+    }
+
+    /**
+     * Set the value of this Block when a train may have entered from more than
+     * one neighbour.
+     * <p>
+     * If only one neighbour could have entered, its value is taken. Otherwise
+     * every possible entrant is remembered until a later event shows which
+     * train entered, see {@link #setAsEntryBlockIfPossible(Block)}. Until
+     * then, if all the entrants holding a value hold the same one, this Block
+     * takes it, since it is the only train known to be there. If none of them
+     * holds a value, this Block's value is cleared, and if they hold different
+     * values it is left as it is.
+     *
+     * @param entrants the paths a train could have entered by
+     */
+    private void takeValueFromPossibleEntrants(List<Path> entrants) {
+        if (entrants.size() == 1) {
+            takeValueFrom(entrants.get(0));
+            return;
+        }
+        if (!takeAgreedValue(entrants)) {
+            log.warn("count of {} ACTIVE neighbors with proper direction can't be handled for"
+                + " block {} but maybe it can be determined when another block becomes free",
+                entrants.size(), getDisplayName());
+        }
+        rememberPossibleEntrants(entrants);
+    }
+
+    /**
+     * Take the value that all the possible entrants holding a value agree on.
+     * If none of them holds a value, this Block's value is cleared.
+     *
+     * @param entrants the paths a train could have entered by
+     * @return false if the entrants hold different values, so that this
+     *         Block's value was left as it is
+     */
+    private boolean takeAgreedValue(List<Path> entrants) {
+        Path identified = null;
+        for (Path p : entrants) {
+            Object value = p.getBlock().getValue();
+            if (value == null) {
+                continue;
+            }
+            if (identified == null) {
+                identified = p;
+            } else if (!value.equals(identified.getBlock().getValue())) {
+                return false;
+            }
+        }
+        if (identified == null) {
+            // no train is known to be there
+            setValue(null);
+        } else {
+            takeValueFrom(identified);
+        }
+        return true;
+    }
+
+    private void rememberPossibleEntrants(List<Path> entrants) {
+        pListOfPossibleEntrancePaths = entrants.toArray(new Path[0]);
+        cntOfPossibleEntrancePaths = pListOfPossibleEntrancePaths.length;
+    }
+
+    private void takeValueFrom(Path from) {
+        setValue(from.getBlock().getValue());
+        setDirection(from.getFromBlockDirection());
+        log.debug("Block {} gets new value '{}' from {}, direction {}",
+                getDisplayName(), getValue(), from.getBlock().getDisplayName(), Path.decodeDirection(getDirection()));
+    }
+
+    /**
+     * Settle which train entered this Block, now that a neighbour has become
+     * unoccupied, if this Block could not decide between its occupied
+     * neighbours when it became occupied and that neighbour was one of them.
+     * <p>
+     * A neighbour becoming unoccupied is either its train arriving here or its
+     * train leaving the other way. If its train is known to have gone
+     * elsewhere (see {@code trainLeftAwayFrom(Block)}), it did not enter this
+     * Block and is no longer a possible entrant; if only one possible entrant
+     * is then left, that is the train that entered. Otherwise its train is
+     * taken to have entered this Block, and this Block takes its value.
+     * <p>
+     * Nothing is taken unless this Block is still occupied.
+     *
+     * @param b the neighbour Block that has become unoccupied
+     * @return true if the value of b was taken
+     */
     boolean setAsEntryBlockIfPossible(Block b) {
+        if (getState() != OCCUPIED) {
+            // this Block has been emptied since, the train that entered it has gone
+            resetCandidateEntrancePaths();
+            return false;
+        }
         for (int i = 0; i < cntOfPossibleEntrancePaths; i++) {
-            Block candidateBlock = pListOfPossibleEntrancePaths[i].getBlock();
-            if (candidateBlock == b) {
-                setValue(candidateBlock.getValue());
-                setDirection(pListOfPossibleEntrancePaths[i].getFromBlockDirection());
-                log.info("Block {} gets LATE new value from {}, direction= {}",
-                    getDisplayName(), candidateBlock.getDisplayName(), Path.decodeDirection(getDirection()));
-                resetCandidateEntrancePaths();
+            Path entrant = pListOfPossibleEntrancePaths[i];
+            if (entrant.getBlock() != b) {
+                continue;
+            }
+            if (b.trainLeftAwayFrom(this)) {
+                log.debug("Block {}: the train in {} left the other way, so it did not enter",
+                    getDisplayName(), b.getDisplayName());
+                rulePossibleEntrantOut(i);
+                return false;
+            }
+            takeLateValueFrom(entrant);
+            resetCandidateEntrancePaths();
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Whether the train in this Block, which is becoming unoccupied, is known
+     * to have gone somewhere other than the given Block. That is so when a
+     * Block reached from this one along a set path is occupied and either
+     * became occupied after the given Block did, or holds this Block's train.
+     *
+     * @param entered the Block the train may instead have entered
+     * @return true if the train is known to have gone elsewhere
+     */
+    private boolean trainLeftAwayFrom(Block entered) {
+        Object train = getValue();
+        for (Path p : paths) {
+            Block other = p.getBlock();
+            if (other == null || other == entered || other.getState() != OCCUPIED || !p.checkPathSet()) {
+                continue;
+            }
+            if (other.occupiedOrder > entered.occupiedOrder
+                    || (train != null && train.equals(other.getValue()))) {
                 return true;
             }
         }
         return false;
     }
+
+    /**
+     * Rule out a possible entrant whose train is known not to have entered.
+     * If only one is left, it is the train that entered; otherwise the others
+     * are kept, and this Block takes the value they agree on, if any.
+     *
+     * @param index the index of the entrant in the list of possible entrants
+     */
+    private void rulePossibleEntrantOut(int index) {
+        List<Path> remaining = new ArrayList<>();
+        for (int i = 0; i < cntOfPossibleEntrancePaths; i++) {
+            if (i != index) {
+                remaining.add(pListOfPossibleEntrancePaths[i]);
+            }
+        }
+        if (remaining.size() == 1) {
+            takeLateValueFrom(remaining.get(0));
+            resetCandidateEntrancePaths();
+        } else {
+            takeAgreedValue(remaining);
+            rememberPossibleEntrants(remaining);
+        }
+    }
+
+    private void takeLateValueFrom(Path entrant) {
+        if (!Objects.equals(entrant.getBlock().getValue(), getValue())) {
+            log.info("Block {} gets LATE new value from {}, direction= {}",
+                getDisplayName(), entrant.getBlock().getDisplayName(),
+                Path.decodeDirection(entrant.getFromBlockDirection()));
+        }
+        setValue(entrant.getBlock().getValue());
+        setDirection(entrant.getFromBlockDirection());
+    }
+
+    /**
+     * Counts Blocks becoming occupied, so that the order in which two Blocks
+     * became occupied can be told without comparing times.
+     */
+    private static final AtomicLong OCCUPIED_COUNT = new AtomicLong();
+
+    /** The value of {@link #OCCUPIED_COUNT} when this Block last became occupied. */
+    private long occupiedOrder;
 
     /**
      * Handle change in sensor state.
@@ -939,14 +1491,29 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         }
     }
 
+    /**
+     * Handles Block sensor going UNKNOWN: the value is cleared.
+     * <p>
+     * The time is recorded as for a Block going unoccupied, so that the value
+     * is restored if the sensor goes active again within a short time, for
+     * example after a brief loss of the connection.
+     */
     public void goingUnknown() {
         setValue(null);
         setState(UNKNOWN);
+        _timeLastInactive = Instant.now();
     }
 
+    /**
+     * Handles Block sensor going INCONSISTENT: the value is cleared.
+     * <p>
+     * The time is recorded as for a Block going unoccupied, so that the value
+     * is restored if the sensor goes active again within a short time.
+     */
     public void goingInconsistent() {
         setValue(null);
         setState(INCONSISTENT);
+        _timeLastInactive = Instant.now();
     }
 
     /**
@@ -974,6 +1541,8 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                 b.setAsEntryBlockIfPossible(this);
             }
         }
+        // the train that could not be identified when it entered has left
+        resetCandidateEntrancePaths();
         setValue(null);
         setDirection(Path.NONE);
         setState(UNOCCUPIED);
@@ -992,6 +1561,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
             return;
         }
         log.debug("Block {} goes OCCUPIED", getDisplayName());
+        occupiedOrder = OCCUPIED_COUNT.incrementAndGet();
         resetCandidateEntrancePaths();
         // index through the paths, counting
         int count = 0;
@@ -1075,78 +1645,9 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                 }
                 break;
             default:
-                // count > 1, check for one with proper direction
-                // this time, count ones with proper direction
+                // More than one occupied neighbour could hold the train that entered
                 log.debug("Block {} has {} active linked blocks, comparing directions", getDisplayName(), count);
-                next = null;
-                count = 0;
-                // true until it's found that some neighbor blocks contain different contents (trains)
-                boolean allNeighborsAgree = true;
-
-                // scan for neighbors without matching direction
-                for (int i = 0; i < currPathCnt; i++) {
-                    if (isSet[i] && isActive[i]) {  //only consider active reachable blocks
-                        log.debug("comparing {} ({}) to {} ({})",
-                                pList[i].getBlock().getDisplayName(), Path.decodeDirection(pDir[i]),
-                                getDisplayName(), Path.decodeDirection(pFromDir[i]));
-                        //use bitwise comparison to support combination directions such as "North, West"
-                        if ((pDir[i] & pFromDir[i]) > 0) {
-                            if (next != null  && next.getBlock() != null ) {
-                                Object value = next.getBlock().getValue();
-                                if ( value != null && !value.equals(pList[i].getBlock().getValue())) {
-                                    allNeighborsAgree = false;
-                                }
-                            }
-                            count++;
-                            next = pList[i];
-                        }
-                    }
-                }
-
-                // If loop above didn't find neighbors with matching direction, scan w/out direction for neighbors
-                // This is used when directions are not being used
-                if (next == null) {
-                    for (int i = 0; i < currPathCnt; i++) {
-                        if (isSet[i] && isActive[i]) {
-                            if (next != null && next.getBlock() != null ) {
-                                Object value = next.getBlock().getValue();
-                                if ( value != null && ! value.equals(pList[i].getBlock().getValue())) {
-                                    allNeighborsAgree = false;
-                                }
-                            }
-                            count++;
-                            next = pList[i];
-                        }
-                    }
-                }
-
-                if (next != null && count == 1) {
-                    // found one block with proper direction, use it
-                    setValue(next.getBlock().getValue());
-                    setDirection(next.getFromBlockDirection());
-                    log.debug("Block {} gets new value '{}' from {}, direction {}",
-                            getDisplayName(), next.getBlock().getValue(),
-                            next.getBlock().getDisplayName(), Path.decodeDirection(getDirection()));
-                } else {
-                    // handle merging trains: All neighbors with same content (train ID)
-                    if (allNeighborsAgree && next != null) {
-                        setValue(next.getBlock().getValue());
-                        setDirection(next.getFromBlockDirection());
-                    } else {
-                    // don't all agree, so can't determine unique value
-                        log.warn("count of {} ACTIVE neighbors with proper direction can't be handled for"
-                            + " block {} but maybe it can be determined when another block becomes free",
-                            count, getDisplayName());
-                        pListOfPossibleEntrancePaths = new Path[currPathCnt];
-                        cntOfPossibleEntrancePaths = 0;
-                        for (int i = 0; i < currPathCnt; i++) {
-                            if (isSet[i] && isActive[i]) {
-                                pListOfPossibleEntrancePaths[cntOfPossibleEntrancePaths] = pList[i];
-                                cntOfPossibleEntrancePaths++;
-                            }
-                        }
-                    }
-                }
+                takeValueFromPossibleEntrants(possibleEntrancePaths(pList, isSet, isActive, pDir, pFromDir));
                 break;
         }
         setState(OCCUPIED);

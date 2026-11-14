@@ -339,7 +339,7 @@ public class ActionPositionableByClass extends AbstractDigitalAction implements 
                         p.setHidden(false);
                         break;
                     default:
-                        throw new RuntimeException("operation has invalid value: "+operation.name());
+                        throw new JmriUncheckedException("operation has invalid value: "+operation.name());
                 }
             }
             if (_editor instanceof LayoutEditor) {

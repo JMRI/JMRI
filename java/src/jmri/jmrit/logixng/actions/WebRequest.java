@@ -469,7 +469,7 @@ public class WebRequest extends AbstractDigitalAction
                 bundleKey = "ShowDialog_Long_StringFormat";
                 break;
             default:
-                throw new RuntimeException("_formatType has unknown value: "+_formatType.name());
+                throw new JmriUncheckedException("_formatType has unknown value: "+_formatType.name());
         }
         return Bundle.getMessage(locale, bundleKey, _format);
 */
@@ -515,7 +515,7 @@ public class WebRequest extends AbstractDigitalAction
             }
         } catch (SocketAlreadyConnectedException ex) {
             // This shouldn't happen and is a runtime error if it does.
-            throw new RuntimeException("socket is already connected");
+            throw new JmriUncheckedException("socket is already connected");
         }
     }
 

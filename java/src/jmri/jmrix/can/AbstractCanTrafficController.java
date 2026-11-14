@@ -83,7 +83,7 @@ abstract public class AbstractCanTrafficController
         } else {
             hm = encodeForHardware((CanMessage) m);
         }
-        log.debug("Encoded for hardware: [{}]", hm.toString());
+        log.debug("Encoded for hardware: [{}]", hm); // no eager toString(), called for every frame
 
         // stream to port in single write, as that's needed by serial
         byte msg[] = new byte[lengthOfByteStream(hm)];
@@ -116,6 +116,9 @@ abstract public class AbstractCanTrafficController
                 while (hm.getRetries() >= 0) {
                     if (portReadyToSend(controller)) {
                         ostream.write(msg);
+                        // the caller's message is the one stamped and told,
+                        // not its hardware encoding
+                        messageSent(m, System.nanoTime());
                         log.debug("message written");
                         break;
                     } else if (hm.getRetries() >= 0) {
@@ -124,8 +127,8 @@ abstract public class AbstractCanTrafficController
                         }
                         hm.setRetries(hm.getRetries() - 1);
                         try {
-                            synchronized (xmtRunnable) {
-                                xmtRunnable.wait(hm.getTimeout());
+                            synchronized (XMT_RUNNABLE_LOCK) {
+                                XMT_RUNNABLE_LOCK.wait(hm.getTimeout());
                             }
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later
@@ -215,12 +218,17 @@ abstract public class AbstractCanTrafficController
 
         // message exists, now fill it
         loadChars(hmsg, istream);
+        long receivedTime = System.nanoTime();
+        if (threadStopRequest) {
+            return; // connection closing, do not dispatch a partial or replayed frame
+        }
 
         // Decode the message from the hardware into a CanReply
         msg = decodeFromHardware(hmsg);
         if (msg == null) {
             return;  // some replies don't get forwarded
         }
+        msg.setReceivedTime(receivedTime);
         // message is complete, dispatch it !!
         replyInDispatch = true;
 
@@ -228,8 +236,13 @@ abstract public class AbstractCanTrafficController
             log.debug("dispatch reply of length {} contains {} state {}", msg.getNumDataElements(), msg.toString(), mCurrentState);
         }
 
-        // actually distribute the reply
-        distributeOneReply(msg, mLastSender);
+        // Actually distribute the reply, to the registered listeners only.
+        // A CAN bus has no request / reply pairing, so the frame is not
+        // addressed to whichever listener happened to send last. Passing
+        // mLastSender here also delivered every frame to that listener after
+        // it had been removed, eg. a closed tool window that sent the last
+        // frame kept receiving all traffic.
+        distributeOneReply(msg, null);
 
         if (!msg.isUnsolicited()) {
             log.debug("switch on state {}", mCurrentState);
@@ -238,10 +251,10 @@ abstract public class AbstractCanTrafficController
 
                 case WAITMSGREPLYSTATE: {
                     // update state, and notify to continue
-                    synchronized (xmtRunnable) {
+                    synchronized (XMT_RUNNABLE_LOCK) {
                         mCurrentState = NOTIFIEDSTATE;
                         replyInDispatch = false;
-                        xmtRunnable.notify();
+                        XMT_RUNNABLE_LOCK.notify();
                     }
                     break;
                 }
@@ -256,8 +269,8 @@ abstract public class AbstractCanTrafficController
                     int warmUpDelay = enterProgModeDelayTime();
                     if (warmUpDelay != 0) {
                         try {
-                            synchronized (xmtRunnable) {
-                                xmtRunnable.wait(warmUpDelay);
+                            synchronized (XMT_RUNNABLE_LOCK) {
+                                XMT_RUNNABLE_LOCK.wait(warmUpDelay);
                             }
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later
@@ -266,9 +279,9 @@ abstract public class AbstractCanTrafficController
                     }
 
                     // update state, and notify to continue
-                    synchronized (xmtRunnable) {
+                    synchronized (XMT_RUNNABLE_LOCK) {
                         mCurrentState = OKSENDMSGSTATE;
-                        xmtRunnable.notify();
+                        XMT_RUNNABLE_LOCK.notify();
                     }
                     break;
                 }
@@ -278,9 +291,9 @@ abstract public class AbstractCanTrafficController
                     mCurrentMode = NORMALMODE;
                     replyInDispatch = false;
                     // update state, and notify to continue
-                    synchronized (xmtRunnable) {
+                    synchronized (XMT_RUNNABLE_LOCK) {
                         mCurrentState = OKSENDMSGSTATE;
-                        xmtRunnable.notify();
+                        XMT_RUNNABLE_LOCK.notify();
                     }
                     break;
                 }

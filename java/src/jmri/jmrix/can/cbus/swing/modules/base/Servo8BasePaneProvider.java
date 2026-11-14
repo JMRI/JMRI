@@ -143,9 +143,10 @@ public class Servo8BasePaneProvider extends CbusConfigPaneProvider {
     /** {@inheritDoc} */
     @Override
     public AbstractEditNVPane getEditNVFrame(CbusNodeNVTableDataModel dataModel, CbusNode node) {
-        if (_nVarEditFrame == null ){
-            _nVarEditFrame = new Servo8BaseEditNVPane(dataModel, node);
-        }
+        // Always a new pane for this node and data model. Providers are shared by
+        // all nodes of a type, so a cached pane would stay bound to the first node and
+        // data model it was created for, and gather duplicate components and listeners.
+        _nVarEditFrame = new Servo8BaseEditNVPane(dataModel, node);
         return _nVarEditFrame.getContent();
     }
     

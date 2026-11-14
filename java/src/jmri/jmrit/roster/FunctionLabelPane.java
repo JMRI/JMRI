@@ -71,7 +71,6 @@ public class FunctionLabelPane extends javax.swing.JPanel {
         // allow drag'n drop of rows to reorder display order
         functionsTable.setDragEnabled(true);
         functionsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        functionsTable.setDropMode(DropMode.INSERT_ROWS);
         functionsTable.getTableHeader().setReorderingAllowed(false); // forbid columns reodering
         functionsTable.setTransferHandler(new FunctionTableRowTransferHandler(functionsTable));
         // column width and tooltips on columns titles
@@ -153,15 +152,48 @@ public class FunctionLabelPane extends javax.swing.JPanel {
             }
         }
         // compare function display order
-        if (r.getAttribute("FnDisplayOrder") == null && functionTableModel.getVisibilityOrderAttributeString() != null) {
-            log.debug("Function display order differs : re: {} vs fntbl: {}",r.getAttribute("FnDisplayOrder"), functionTableModel.getVisibilityOrderAttributeString());
+        if (r.getAttribute(FunctionTableModel.FB_ORDER_ATTR) == null && functionTableModel.getVisibilityOrderAttributeString() != null) {
+            log.debug("Function display order differs : re: {} vs fntbl: {}",r.getAttribute(FunctionTableModel.FB_ORDER_ATTR), functionTableModel.getVisibilityOrderAttributeString());
             return true;
         }
-        if (r.getAttribute("FnDisplayOrder") != null && !r.getAttribute("FnDisplayOrder").equals(functionTableModel.getVisibilityOrderAttributeString())) {
-            log.debug("Function display order differs : re: {} vs fntbl: {}",r.getAttribute("FnDisplayOrder"), functionTableModel.getVisibilityOrderAttributeString());
+        if (r.getAttribute(FunctionTableModel.FB_ORDER_ATTR) != null && !r.getAttribute(FunctionTableModel.FB_ORDER_ATTR).equals(functionTableModel.getVisibilityOrderAttributeString())) {
+            log.debug("Function display order differs : re: {} vs fntbl: {}",r.getAttribute(FunctionTableModel.FB_ORDER_ATTR), functionTableModel.getVisibilityOrderAttributeString());
             return true;
         }
         return false;
+    }
+
+    /**
+     * Clear all function button inputs on the panel
+     */
+    public void clearFnBtn() {
+        functionTableModel.reset(null,"",null);
+    }
+
+    /**
+     * Reset all function button inputs on the panel to the NMRA standard
+     */
+    public void resetFnBtnNMRA() {
+        functionTableModel.reset(RosterFunctionEntriesDefaults.NMRA_FUNCTION_ENTRIES, RosterFunctionEntriesDefaults.NMRA_SHUNTING_FN,null);
+    }
+    
+    /**
+     * Reset all function button inputs on the panel to the NEM 608 definition
+     */    
+    public void resetFnBtnNEM() {
+        functionTableModel.reset(RosterFunctionEntriesDefaults.NEM_FUNCTION_ENTRIES, RosterFunctionEntriesDefaults.NEM_SHUNTING_FN,null);
+    }
+
+    /**
+     * Reset all function button inputs on the panel to the one defined in the decoder definition, if any
+     * 
+     * @param decre the roster entry in which to look for a decoder definition
+     */      
+    public void resetFnBtnDecDef(RosterEntry decre) {
+        if (decre == null) {
+            return;
+        }
+        functionTableModel.reset(decre.getFunctionEntries(), "", null);
     }
 
     /**
@@ -190,9 +222,9 @@ public class FunctionLabelPane extends javax.swing.JPanel {
         // shunting functions
         r.setShuntingFunction(functionTableModel.getRosterEntry().getShuntingFunction());
         // function display order
-        r.deleteAttribute("FnDisplayOrder");
+        r.deleteAttribute(FunctionTableModel.FB_ORDER_ATTR);
         String dos = functionTableModel.getVisibilityOrderAttributeString();        
-        r.putAttribute("FnDisplayOrder", dos);        
+        r.putAttribute(FunctionTableModel.FB_ORDER_ATTR, dos);        
     }
 
     public void dispose() {

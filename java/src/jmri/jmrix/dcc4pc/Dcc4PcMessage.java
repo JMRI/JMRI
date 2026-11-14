@@ -155,6 +155,7 @@ public class Dcc4PcMessage extends jmri.jmrix.AbstractMRMessage {
     static final int INFO = 0x00;
     static final int DESC = 0x01;
     static final int SERIAL = 0x02;
+    static final int CHILDSELECTENCODING = 0x06;
     static final int CHILDENABLEDINPUTS = 0x07;
     static final int CHILDRESET = 0x09;
     static final int CHILDPOLL = 0x0a;
@@ -185,6 +186,90 @@ public class Dcc4PcMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
+    static final int CHILDSETSPEED = 0x04;
+    // interface (BUS) commands; offset so they can't be mistaken for child board commands
+    static final int BUSSETSPEED = 0x107;
+    static final int BUSRESETSPEEDS = 0x10D;
+
+    /** SPEED code for 62.5 kbps (Omnibus spec section 6). */
+    public static final int SPEED_62K5 = 4;
+
+    /**
+     * Mandatory Set Speed (0x04) for a board: it switches to the new bus speed
+     * once this transaction is complete. The interface must then be told with
+     * {@link #busSetSpeed(int, int)}.
+     *
+     * @param address board address
+     * @param speed   SPEED code, 0 for 8 kbps
+     * @return the message
+     */
+    public static Dcc4PcMessage setBoardSpeed(int address, int speed) {
+        Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) 0x0b, (byte) address, (byte) CHILDSETSPEED, (byte) speed});
+        m.childBoard = true;
+        m.board = address;
+        m.messageType = CHILDSETSPEED;
+        return m;
+    }
+
+    /**
+     * BUS Set Speed (0x07): the speed the interface uses to talk to one board.
+     *
+     * @param address board address
+     * @param speed   SPEED code, 0 for 8 kbps
+     * @return the message
+     */
+    public static Dcc4PcMessage busSetSpeed(int address, int speed) {
+        Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) 0x07, (byte) address, (byte) speed});
+        m.messageType = BUSSETSPEED;
+        m.noDataReply = true;
+        return m;
+    }
+
+    // The interface answers some commands with no bytes at all, only DSR rising
+    // and falling. The receive side can't see that, so the traffic controller
+    // waits for DSR to fall instead of waiting for a reply.
+    boolean noDataReply = false;
+
+    /**
+     * @return true if the interface answers this message with no data, only
+     *         its DSR handshake
+     */
+    public boolean isNoDataReply() {
+        return noDataReply;
+    }
+
+    @Override
+    public boolean replyExpected() {
+        return !noDataReply;
+    }
+
+    /**
+     * BUS Reset Speeds (0x0D, BUS 1.1): every board and the interface go back
+     * to 8 kbps.
+     *
+     * @return the message
+     */
+    public static Dcc4PcMessage busResetSpeeds() {
+        Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) 0x0D});
+        m.messageType = BUSRESETSPEEDS;
+        m.noDataReply = true;
+        return m;
+    }
+
+    /**
+     * Select the Raw RailCom encoding (encoding 0), the only one decoded.
+     *
+     * @param address board address
+     * @return the message
+     */
+    public static Dcc4PcMessage selectRawEncoding(int address) {
+        Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) 0x0b, (byte) address, (byte) CHILDSELECTENCODING, (byte) 0x00});
+        m.childBoard = true;
+        m.board = address;
+        m.messageType = CHILDSELECTENCODING;
+        return m;
+    }
+
     public static Dcc4PcMessage resetBoardData(int address) {
         Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) 0x0b, (byte) address, (byte) CHILDRESET});
         m.childBoard = true;
@@ -196,7 +281,7 @@ public class Dcc4PcMessage extends jmri.jmrix.AbstractMRMessage {
     public static Dcc4PcMessage pollBoard(int address){
         Dcc4PcMessage m = new Dcc4PcMessage(new byte[]{(byte) 0x0b, (byte) address, (byte) CHILDPOLL});
         m.childBoard = true;
-        m.setTimeout(500);
+        m.setTimeout(3000); // a Get Data at 8 kbps takes over 500 ms; timing out early lets the next command interrupt it
         m.board = address;
         m.messageType = CHILDPOLL;
         return m;

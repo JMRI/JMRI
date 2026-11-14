@@ -1,7 +1,9 @@
 package jmri.jmrit.operations.trains.trainbuilder;
 
 import java.io.*;
-import java.util.*;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.ResourceBundle;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
@@ -1878,34 +1880,25 @@ public class TrainBuilderTest extends OperationsTestCase {
         Car c5 = JUnitOperationsUtil.createAndPlaceCar("A", "5", "Boxcar", "40", actonYard1, 40);
         Car c6 = JUnitOperationsUtil.createAndPlaceCar("A", "6", "Boxcar", "40", actonYard1, 50);
 
-        java.util.Calendar cal = java.util.Calendar.getInstance();
-        java.util.Date start = cal.getTime();
+        LocalDateTime time = LocalDateTime.of(1956, 7, 2, 8, 0);
+        c1.setLastDate(time); // 4 hour before
 
-        cal.setTime(start);
-        cal.add(java.util.Calendar.HOUR_OF_DAY, -4);
-        c1.setLastDate(cal.getTime()); // 4 hour ago
+        time = LocalDateTime.of(1956, 7, 2, 10, 0);
+        c2.setLastDate(time); // 2 hour before
 
-        cal.setTime(start);
-        cal.add(java.util.Calendar.HOUR_OF_DAY, -2);
-        c2.setLastDate(cal.getTime()); // 2 hour ago
+        time = LocalDateTime.of(1956, 7, 2, 9, 0);
+        c3.setLastDate(time); // 3 hours before
 
-        cal.setTime(start);
-        cal.add(java.util.Calendar.HOUR_OF_DAY, -3);
-        c3.setLastDate(cal.getTime()); // 3 hours ago
-
-        cal.setTime(start);
-        cal.set(java.util.Calendar.DAY_OF_MONTH, -2);
-        c4.setLastDate(cal.getTime()); // 2 months ago.
+        time = LocalDateTime.of(1956, 5, 2, 12, 0);
+        c4.setLastDate(time); // 2 months before
 
         // the last car to be evaluated
-        cal.setTime(start);
-        cal.add(java.util.Calendar.HOUR_OF_DAY, -1);
-        c5.setLastDate(cal.getTime()); // 1 hour ago.
+        time = LocalDateTime.of(1956, 7, 2, 11, 0);
+        c5.setLastDate(time); // 1 hour before
 
         // the first car to be evaluated
-        cal.setTime(start);
-        cal.add(java.util.Calendar.YEAR, -1);
-        c6.setLastDate(cal.getTime()); // one year ago.
+        time = LocalDateTime.of(1955, 7, 2, 12, 0);
+        c6.setLastDate(time); // one year before
 
         // put Acton yard track into FIFO mode
         actonYard1.setServiceOrder(Track.FIFO);
@@ -2805,9 +2798,9 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // time is to the millisecond, need to wait a bit on a fast machine
         JUnitUtil.waitFor(() -> {
-            return java.util.Calendar.getInstance().getTime().after(c3.getLastMoveDate());
+            return LocalDateTime.now().isAfter(c3.getLastMoveDate());
         }, "time after last moved");
-        Assert.assertTrue(java.util.Calendar.getInstance().getTime().after(c3.getLastMoveDate()));
+        Assert.assertTrue(LocalDateTime.now().isAfter(c3.getLastMoveDate()));
 
         // now deliver the second set of cars
         new TrainBuilder().build(train1);
@@ -2817,10 +2810,10 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // now cars c4, c5, and c6 have been delivered after c2 and c3
         // note it is possible for c3 to be delivered after c2
-        if (!c3.getLastMoveDate().after(c2.getLastMoveDate())) {
-            Assert.assertTrue("confirm date order", c4.getLastMoveDate().after(c3.getLastMoveDate()));
-            Assert.assertTrue("confirm date order", c5.getLastMoveDate().after(c3.getLastMoveDate()));
-            Assert.assertTrue("confirm date order", c6.getLastMoveDate().after(c3.getLastMoveDate()));
+        if (!c3.getLastMoveDate().isAfter(c2.getLastMoveDate())) {
+            Assert.assertTrue("confirm date order", c4.getLastMoveDate().isAfter(c3.getLastMoveDate()));
+            Assert.assertTrue("confirm date order", c5.getLastMoveDate().isAfter(c3.getLastMoveDate()));
+            Assert.assertTrue("confirm date order", c6.getLastMoveDate().isAfter(c3.getLastMoveDate()));
 
             // c2 has the lowest move count on alternate, cars c2 and c3 have the same last moved time
             // confirm car locations
@@ -2838,15 +2831,15 @@ public class TrainBuilderTest extends OperationsTestCase {
             // c4, c5 and c6 delivered after c3 alternate track in LIFO mode
             Assert.assertEquals("Car destination", null, c3.getDestinationTrack());
             // possible for c5 or c6 to be a millisecond later than c4
-            if (c6.getLastMoveDate().after(c5.getLastMoveDate())) {
+            if (c6.getLastMoveDate().isAfter(c5.getLastMoveDate())) {
                 Assert.assertEquals("Car destination", null, c4.getDestinationTrack());
                 Assert.assertEquals("Car destination", null, c5.getDestinationTrack());
                 Assert.assertEquals("Car destination", bostonSpur2, c6.getDestinationTrack());
-            } else if (c5.getLastMoveDate().after(c4.getLastMoveDate())) {
+            } else if (c5.getLastMoveDate().isAfter(c4.getLastMoveDate())) {
                 Assert.assertEquals("Car destination", null, c4.getDestinationTrack());
                 Assert.assertEquals("Car destination", bostonSpur2, c5.getDestinationTrack());
                 Assert.assertEquals("Car destination", null, c6.getDestinationTrack());
-            } else if (c6.getLastMoveDate().after(c4.getLastMoveDate())) {
+            } else if (c6.getLastMoveDate().isAfter(c4.getLastMoveDate())) {
                 Assert.assertEquals("Car destination", null, c4.getDestinationTrack());
                 Assert.assertEquals("Car destination", null, c5.getDestinationTrack());
                 Assert.assertEquals("Car destination", bostonSpur2, c6.getDestinationTrack());
@@ -11086,10 +11079,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         e1.setModel("GP40");
 
         // note that a car's last moved date gets set after a train reset
-        Calendar cal = java.util.Calendar.getInstance();
-        Date date = cal.getTime();
-        cal.add(java.util.Calendar.HOUR, -2);
-        date = cal.getTime();
+        LocalDateTime date = LocalDateTime.of(1956, 7, 2, 12, 0);
 
         Car c1 = cmanager.newRS("UP", "1");
         c1.setTypeName(Bundle.getMessage("Caboose"));
@@ -11105,8 +11095,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c2.setCaboose(true);
         c2.setLastDate(date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c3date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c3date = LocalDateTime.of(1956, 7, 2, 12, 2);
 
         Car c3 = cmanager.newRS("SP", "3");
         c3.setTypeName(carTypes[1]);
@@ -11114,8 +11104,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c3.setMoves(40);
         c3.setLastDate(c3date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c4date = cal.getTime();
+        // add 2 more minutes
+        LocalDateTime c4date = LocalDateTime.of(1956, 7, 2, 12, 4);
 
         Car c4 = cmanager.newRS("UP", "4");
         c4.setTypeName(carTypes[1]);
@@ -11124,8 +11114,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c4.setFred(true);
         c4.setLastDate(c4date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        date = cal.getTime();
+        // add 2 more minutes
+        date = LocalDateTime.of(1956, 7, 2, 12, 6);
 
         Car c5 = cmanager.newRS("SP", "5");
         c5.setTypeName(carTypes[1]);
@@ -11134,8 +11124,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c5.setFred(true);
         c5.setLastDate(date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c6date = cal.getTime();
+        // add 2 more minutes
+        LocalDateTime c6date = LocalDateTime.of(1956, 7, 2, 12, 8);
 
         Car c6 = cmanager.newRS("SP", "6");
         c6.setTypeName(carTypes[1]);
@@ -11144,8 +11134,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c6.setFred(true);
         c6.setLastDate(c6date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c7date = cal.getTime();
+        // add 2 more minutes
+        LocalDateTime c7date = LocalDateTime.of(1956, 7, 2, 12, 10);
 
         Car c7 = cmanager.newRS("UP", "7");
         c7.setTypeName(carTypes[5]);
@@ -11154,8 +11144,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c7.setFred(true);
         c7.setLastDate(c7date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c8date = cal.getTime();
+        // add 2 more minutes
+        LocalDateTime c8date = LocalDateTime.of(1956, 7, 2, 12, 12);
 
         Car c8 = cmanager.newRS("SP", "8");
         c8.setTypeName(carTypes[1]);
@@ -11163,8 +11153,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c8.setMoves(4);
         c8.setLastDate(c8date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c9date = cal.getTime();
+        // add 2 more minutes
+        LocalDateTime c9date = LocalDateTime.of(1956, 7, 2, 12, 14);
 
         Car c9 = cmanager.newRS("NH", "9");
         c9.setTypeName(carTypes[1]);
@@ -11360,9 +11350,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         Engine e1 = emanager.newRS("NH", "1");
         e1.setModel("GP40");
 
-        Calendar cal = java.util.Calendar.getInstance();
-        cal.add(java.util.Calendar.HOUR, -2);
-        Date c1date = cal.getTime();
+        LocalDateTime c1date = LocalDateTime.of(1956, 7, 2, 12, 0);
 
         // create cars, cabooses and cars with FRED
         // c1 and c11 are regular cars on FIFO / LIFO track
@@ -11372,8 +11360,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c1.setMoves(10);
         c1.setLastDate(c1date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c2date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c2date = LocalDateTime.of(1956, 7, 2, 12, 2);
 
         Car c2 = cmanager.newRS("UP", "2");
         c2.setTypeName(Bundle.getMessage("Caboose"));
@@ -11382,8 +11370,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c2.setCaboose(true);
         c2.setLastDate(c2date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c3date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c3date = LocalDateTime.of(1956, 7, 2, 12, 4);
 
         Car c3 = cmanager.newRS("SP", "3");
         c3.setTypeName(Bundle.getMessage("Caboose"));
@@ -11392,8 +11380,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c3.setCaboose(true);
         c3.setLastDate(c3date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c4date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c4date = LocalDateTime.of(1956, 7, 2, 12, 6);
 
         Car c4 = cmanager.newRS("NH", "4");
         c4.setTypeName(Bundle.getMessage("Caboose"));
@@ -11402,8 +11390,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c4.setCaboose(true);
         c4.setLastDate(c4date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c5date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c5date = LocalDateTime.of(1956, 7, 2, 12, 8);
 
         Car c5 = cmanager.newRS("SP", "5");
         c5.setTypeName(Bundle.getMessage("Caboose"));
@@ -11412,8 +11400,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c5.setCaboose(true);
         c5.setLastDate(c5date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c6date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c6date = LocalDateTime.of(1956, 7, 2, 12, 10);
 
         Car c6 = cmanager.newRS("SP", "6");
         c6.setTypeName(carTypes[1]);
@@ -11422,8 +11410,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c6.setFred(true);
         c6.setLastDate(c6date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c7date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c7date = LocalDateTime.of(1956, 7, 2, 12, 12);
 
         Car c7 = cmanager.newRS("UP", "7");
         c7.setTypeName(carTypes[5]);
@@ -11432,8 +11420,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c7.setFred(true);
         c7.setLastDate(c7date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c8date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c8date = LocalDateTime.of(1956, 7, 2, 12, 14);
 
         Car c8 = cmanager.newRS("NH-1", "8");
         c8.setTypeName(carTypes[1]);
@@ -11442,8 +11430,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c8.setCaboose(true);
         c8.setLastDate(c8date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c9date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c9date = LocalDateTime.of(1956, 7, 2, 12, 18);
 
         Car c9 = cmanager.newRS("NH-2", "9");
         c9.setTypeName(carTypes[1]);
@@ -11452,8 +11440,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c9.setCaboose(true);
         c9.setLastDate(c9date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c10date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c10date = LocalDateTime.of(1956, 7, 2, 12, 20);
 
         Car c10 = cmanager.newRS("NH", "10");
         c10.setTypeName(carTypes[1]);
@@ -11462,8 +11450,8 @@ public class TrainBuilderTest extends OperationsTestCase {
         c10.setCaboose(true);
         c10.setLastDate(c10date);
 
-        cal.add(java.util.Calendar.MINUTE, 2);
-        Date c11date = cal.getTime();
+        // add 2 minutes
+        LocalDateTime c11date = LocalDateTime.of(1956, 7, 2, 12, 22);
 
         Car c11 = cmanager.newRS("NH-1", "11");
         c11.setTypeName(carTypes[1]);
@@ -17488,7 +17476,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         // confirm staging at start of route
         Assert.assertEquals("1st location in route", staging, train.getTrainDepartsRouteLocation().getLocation());
 
-        // place cars in staging
+        Car c1 = cmanager.getByRoadAndNumber("AA", "1");        // place cars in staging
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("AA", "3", "Boxcar", "50", stagingTrack1, 0);
         Car c4 = JUnitOperationsUtil.createAndPlaceCar("AA", "4", "Boxcar", "50", stagingTrack1, 1);
 
@@ -17497,24 +17485,32 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertTrue(train.isBuilt());
 
         // confirm car has custom load and destination
+        // load order: Bags, Flour, Nuts, repeat
+        // note that in match mode the current pointer gets bumped to next schedule item so Flour is the 1st load
         Assert.assertEquals("car load", "Flour", c3.getLoadName());
         Assert.assertEquals("car destination track", midtownSpur1, c3.getDestinationTrack());
-        Assert.assertEquals("car load", "Nuts", c4.getLoadName());
+        // the "hit" on Flour caused a reset in match mode, now Bags is the next schedule item
+        Assert.assertEquals("car load", "Bags", c4.getLoadName());
         Assert.assertEquals("car destination track", midtownSpur1, c4.getDestinationTrack());
+        
+        // note c1 has the custom load Bags which causes a hit
+        Assert.assertEquals("c1 assigned to train", train, c1.getTrain());
+        Assert.assertEquals("c1 destination", "Midtown spur 1", c1.getDestinationTrackName());
 
         // make midtownSpur1 too short for c3, capacity issue rather than track
         // length
-        midtownSpur1.setLength(50); // there's a 40' car already on Midtown spur
-                                    // 1
+        midtownSpur1.setLength(50); // there's a 40' car already on Midtown spur 1
 
         train.reset();
         new TrainBuilder().build(train);
         Assert.assertTrue(train.isBuilt());
 
         // confirm car has custom load and destination
-        Assert.assertEquals("car load", "Flour", c3.getLoadName());
+        // the schedule item "Nuts" hasn't been used, based on hit counts is next
+        Assert.assertEquals("car load", "Nuts", c3.getLoadName());
         Assert.assertEquals("car destination track", midtownSpur2, c3.getDestinationTrack());
-        Assert.assertEquals("car load", "Nuts", c4.getLoadName());
+        // schedule item Bags has two hits, the others only one hit, Flour is next
+        Assert.assertEquals("car load", "Flour", c4.getLoadName());
         Assert.assertEquals("car destination track", midtownSpur2, c4.getDestinationTrack());
 
         // now don't allow staging to service Midtowm
@@ -19482,16 +19478,15 @@ public class TrainBuilderTest extends OperationsTestCase {
         Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", "Boxcar", "40", "DAB", "1958", staging2, 1);
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("UP", "3", "Boxcar", "40", "DAB", "1958", staging3, 1);
 
-        Calendar cal = java.util.Calendar.getInstance();
-        Date date = cal.getTime();
+        LocalDateTime date = LocalDateTime.of(1956, 7, 2, 12, 30);
 
         // set the cars last moved dates
         c1.setLastDate(date);
-        cal.add(java.util.Calendar.MINUTE, -2);
-        date = cal.getTime();
+        // subtract 2 minutes
+        date = LocalDateTime.of(1956, 7, 2, 12, 28);
         c2.setLastDate(date);
-        cal.add(java.util.Calendar.MINUTE, -2);
-        date = cal.getTime();
+        // subtract 2 minutes
+        date = LocalDateTime.of(1956, 7, 2, 12, 26);
         c3.setLastDate(date); // First in
 
         Location yards = lmanager.newLocation("Test Yard");
@@ -19545,16 +19540,15 @@ public class TrainBuilderTest extends OperationsTestCase {
         Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", "Boxcar", "40", "DAB", "1958", staging2, 1);
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("UP", "3", "Boxcar", "40", "DAB", "1958", staging3, 1);
 
-        Calendar cal = java.util.Calendar.getInstance();
-        Date date = cal.getTime();
+        LocalDateTime date = LocalDateTime.of(1956, 7, 2, 12, 0);
 
         // set the cars last moved dates
         c1.setLastDate(date);
-        cal.add(java.util.Calendar.MINUTE, +2);
-        date = cal.getTime();
+        // add 2 minutes
+        date = LocalDateTime.of(1956, 7, 2, 12, 2);
         c2.setLastDate(date);
-        cal.add(java.util.Calendar.MINUTE, +2);
-        date = cal.getTime();
+        // add 2 more minutes
+        date = LocalDateTime.of(1956, 7, 2, 12, 4);
         c3.setLastDate(date); // Last in
 
         Location yards = lmanager.newLocation("Test Yard");
@@ -19606,16 +19600,15 @@ public class TrainBuilderTest extends OperationsTestCase {
         Car c2 = JUnitOperationsUtil.createAndPlaceCar("UP", "2", "Boxcar", "40", "DAB", "1958", staging2, 1);
         Car c3 = JUnitOperationsUtil.createAndPlaceCar("UP", "3", "Boxcar", "40", "DAB", "1958", staging3, 1);
 
-        Calendar cal = java.util.Calendar.getInstance();
-        Date date = cal.getTime();
+        LocalDateTime date = LocalDateTime.of(1956, 7, 2, 12, 0);
 
         // set the cars last moved dates
         c1.setLastDate(date);
-        cal.add(java.util.Calendar.MINUTE, +2);
-        date = cal.getTime();
+        // add 2 minutes
+        date = LocalDateTime.of(1956, 7, 2, 12, 2);
         c2.setLastDate(date);
-        cal.add(java.util.Calendar.MINUTE, +2);
-        date = cal.getTime();
+        // add 2 more minutes
+        date = LocalDateTime.of(1956, 7, 2, 12, 4);
         c3.setLastDate(date); // Last in
 
         Location yards = lmanager.newLocation("Test Yard");
@@ -21601,7 +21594,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         // force all boxcars to Boston
         Location chelmsford = route.getRouteLocationBySequenceNumber(3).getLocation();
         chelmsford.deleteTypeName("Boxcar");
-        
+
         // load two cars with bags
         c3.setLoadName("Bags");
         c6.setLoadName("Bags");
@@ -21610,7 +21603,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         c4.setFinalDestination(boston);
         c5.setFinalDestination(boston);
         c6.setFinalDestination(boston);
-        
+
         c5.setFinalDestinationTrack(bostonSpur2);
 
         // define the train
@@ -21676,7 +21669,7 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         Assert.assertEquals("cars worked", 4, train1.getNumberCarsWorked());
         Assert.assertEquals("total cars", 7, cmanager.getNumEntries());
-        
+
         Car clone5 = cmanager.getByRoadAndNumber("CP", "50" + Car.CLONE + "0004");
         Assert.assertNotNull(clone5);
 
@@ -21687,12 +21680,12 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("destionation", "Acton", c3.getDestinationName());
         Assert.assertEquals("destionation", "Acton", c4.getDestinationName());
         Assert.assertEquals("destionation", "Acton", c6.getDestinationName());
-        
+
         Assert.assertEquals("destionation", "Boston", clone5.getDestinationName());
-        
+
         Assert.assertEquals("final destionation", "", c5.getFinalDestinationName());
         Assert.assertEquals("final dest track", "", c5.getFinalDestinationTrackName());
-        
+
         // car's load should NoBags
         Assert.assertEquals("load", "NoBags", c3.getLoadName());
         Assert.assertEquals("load", "NoBags", c6.getLoadName());
@@ -23140,17 +23133,17 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertNotNull(e1Clone);
         Engine e2Clone = emanager.getClone(e2);
         Assert.assertNotNull(e2Clone);
-        
+
         Engine e4Clone = emanager.getClone(e4);
         Assert.assertNotNull(e4Clone);
-        
+
         Engine e5Clone = emanager.getClone(e5);
         Assert.assertNotNull(e5Clone);
         Engine e7Clone = emanager.getClone(e7);
         Assert.assertNotNull(e7Clone);
         Engine e8Clone = emanager.getClone(e8);
         Assert.assertNotNull(e8Clone);
-        
+
         Assert.assertEquals("e1 clone assigned to train", acton, e1Clone.getDestination());
         Assert.assertEquals("e2 assigned to train", acton, e2Clone.getDestination());
 
@@ -23162,10 +23155,10 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertEquals("e7 assigned to train", westford, e7Clone.getDestination());
         Assert.assertEquals("e8 assigned to train", westford, e8Clone.getDestination());
         Assert.assertEquals("e9 not assigned to train due to model type", null, e9.getDestination());
- 
+
         JUnitOperationsUtil.checkOperationsShutDownTask();
     }
-    
+
     @Test
     public void testEngineQuickServiceTurn() {
 
@@ -23227,10 +23220,10 @@ public class TrainBuilderTest extends OperationsTestCase {
         e9.setModel("GP30");
         e9.setBuilt("1944");
         e9.setMoves(2);
-        
+
         // 2 engine consist
         Consist con2 = InstanceManager.getDefault(ConsistManager.class).newConsist("C2");
-        
+
         Engine e7 = emanager.newRS("SP", "700");
         e7.setModel("GP40");
         e7.setBuilt("1944");
@@ -23246,7 +23239,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         // Place engines
         Assert.assertEquals("Place e1", Track.OKAY, e1.setLocation(acton, actonYard));
         Assert.assertEquals("Place e2", Track.OKAY, e2.setLocation(acton, actonYard));
-        
+
         Assert.assertEquals("Place e3", Track.OKAY, e3.setLocation(boston, bostonYard));
         Assert.assertEquals("Place e4", Track.OKAY, e4.setLocation(boston, bostonYard));
         Assert.assertEquals("Place e5", Track.OKAY, e5.setLocation(boston, bostonYard));
@@ -23295,22 +23288,22 @@ public class TrainBuilderTest extends OperationsTestCase {
         Assert.assertNotNull(e1Clone);
         Engine e2Clone = emanager.getClone(e2);
         Assert.assertNotNull(e2Clone);
-        
+
         Engine e4Clone = emanager.getClone(e4);
         Assert.assertNotNull(e4Clone);
         Engine e5Clone = emanager.getClone(e5);
         Assert.assertNotNull(e5Clone);
         Engine e6Clone = emanager.getClone(e6);
         Assert.assertNotNull(e6Clone);
-        
+
         Assert.assertEquals("e1 clone assigned to train", rlBoston1, e1Clone.getRouteDestination());
         Assert.assertEquals("e2 clone assigned to train", rlBoston1, e2Clone.getRouteDestination());
-        
+
         Assert.assertEquals("e1 assigned to train", rlActon2, e1.getRouteDestination());
         Assert.assertEquals("e2 assigned to train", rlActon2, e2.getRouteDestination());
 
         Assert.assertEquals("e3 not assigned to train due to road name", null, e3.getDestination());
-        
+
         Assert.assertEquals("e4 clone assigned to train", rlBoston2, e4Clone.getRouteDestination());
         Assert.assertEquals("e4 moved to Boston", boston, e4.getLocation());
         Assert.assertEquals("e5 clone assigned to train", rlBoston2, e5Clone.getRouteDestination());
@@ -23918,8 +23911,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         midtownSpur2.setHoldCarsWithCustomLoadsEnabled(true);
 
         // create the schedule, each spur should request loads in this order:
-        // Flour,
-        // Nuts, Bags, repeat
+        // Bags, Flour, Nuts, repeat
         Schedule schedule = smanager.newSchedule("Schedule for car load");
         ScheduleItem sch1Item1 = schedule.addItem("Boxcar");
         sch1Item1.setReceiveLoadName("Bags");

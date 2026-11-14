@@ -312,6 +312,10 @@ public abstract class AbstractNamedBean implements NamedBean {
             register.remove(l);
             listenerRefs.remove(l);
         }
+        // the name handles of this bean are no longer needed
+        if (jmri.InstanceManager.containsDefault(jmri.NamedBeanHandleManager.class)) {
+            jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).removeNamedBeanHandles(this);
+        }
     }
 
     /** {@inheritDoc} */

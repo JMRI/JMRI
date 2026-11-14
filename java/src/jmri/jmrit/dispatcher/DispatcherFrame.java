@@ -3,13 +3,19 @@ package jmri.jmrit.dispatcher;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
+import java.awt.SecondaryLoop;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -117,6 +123,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         if (fastClock == null) {
             log.error("Failed to instantiate a fast clock when constructing Dispatcher");
         } else {
+            lastFastClockTime = fastClock.getTime();
             minuteChangeListener = new java.beans.PropertyChangeListener() {
                 @Override
                 public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -274,6 +281,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
         log.debug("loading train:{}, startblockname:{}, destinationBlockName:{}", info.getTrainName(),
                 info.getStartBlockName(), info.getDestinationBlockName());
+        String lengthError = checkTrainLength(info);
+        if (lengthError != null) {
+            log.error("Train not loaded: {}", lengthError);
+            throw new IllegalArgumentException(lengthError);
+        }
         // create a new Active Train
 
         //set up defaults from traininfo
@@ -359,6 +371,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 }
             }
             at.setTrainDetection(info.getTrainDetection());
+            at.setMaxTrainLengthMM((long) (info.getMaxTrainLengthScaleMeters() * 1000.0 * getScale().getScaleFactor()));
+            ActiveTrainRecords.link(at);
             at.setAllocateMethod(info.getAllocationMethod());
             at.setDelayedStart(info.getDelayedStart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
             at.setDepartureTimeHr(info.getDepartureTimeHr()); // hour of day (fast-clock) to start this train
@@ -534,6 +548,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     private boolean _TrustKnownTurnouts = false;
     private boolean _UseOccupiedTrackSpeed = false;
     private boolean _useStrictTrainTracking = true;
+    private boolean _WaitWhereTrainsCanStop = false;
     private boolean _useTurnoutConnectionDelay = false;
     private boolean _ShortActiveTrainNames = false;
     private boolean _ShortNameInBlock = true;
@@ -584,6 +599,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     private final Timebase fastClock = InstanceManager.getNullableDefault(jmri.Timebase.class);
     private final Sensor fastClockSensor = InstanceManager.sensorManagerInstance().provideSensor("ISCLOCKRUNNING");
     private transient java.beans.PropertyChangeListener minuteChangeListener = null;
+    private java.util.Date lastFastClockTime = null;  // fast clock time at the last minute change
 
     // dispatcher window variables
     protected JmriJFrame dispatcherFrame = null;
@@ -839,9 +855,118 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         });
     }
 
+    /**
+     * Release an Allocated Section when the dispatcher clicks its Release
+     * button in the Allocated Sections table.
+     * <p>
+     * Only a train's oldest Section, once the train has left it, or its
+     * furthest allocated Section, if the train has not reached it, can be
+     * released, so that the train's route is never left with a gap. The
+     * Section directly ahead of the train can only be released while the
+     * train is stopped, and the dispatcher is then offered to terminate the
+     * train. With Auto Allocate on, a release ahead of the train puts the
+     * train's allocation on hold, so that the Section is not allocated to it
+     * again straight away. Scripts and Dispatcher's own releases are not
+     * restricted.
+     *
+     * @param index the row of the Allocated Section in the table
+     */
     void releaseAllocatedSectionFromTable(int index) {
         AllocatedSection as = allocatedSections.get(index);
+        String refusal = getManualReleaseRefusal(as);
+        if (refusal != null) {
+            JmriJOptionPane.showMessageDialog(dispatcherFrame, refusal,
+                    Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        ActiveTrain at = as.getActiveTrain();
+        boolean aheadOfTrain = !as.getEntered();
+        boolean nextOfTrain = aheadOfTrain && isNextSectionOfTrain(as);
+        if (aheadOfTrain && _AutoAllocate) {
+            // before the release is queued, so that the allocator cannot allocate it again first
+            at.holdAllocation(true);
+            activeTrainsTableModel.fireTableDataChanged();
+        }
         releaseAllocatedSection(as, false);
+        if (nextOfTrain) {
+            int selectedValue = JmriJOptionPane.showOptionDialog(dispatcherFrame,
+                    java.text.MessageFormat.format(Bundle.getMessage("QuestionTerminateAfterRelease"),
+                            new Object[]{as.getSectionName(), at.getActiveTrainName()}),
+                    Bundle.getMessage("MessageTitle"),
+                    JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.QUESTION_MESSAGE, null,
+                    new Object[]{Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo")},
+                    Bundle.getMessage("ButtonNo"));
+            if (selectedValue == 0) { // array position 0, Yes pressed
+                terminateActiveTrain(at, true, false);
+            }
+        }
+    }
+
+    /**
+     * Get why the dispatcher may not release an Allocated Section from the
+     * Allocated Sections table.
+     *
+     * @param as the Allocated Section
+     * @return the reason, to show to the dispatcher, or null if it may be
+     *         released
+     */
+    @CheckForNull
+    String getManualReleaseRefusal(@Nonnull AllocatedSection as) {
+        if (as.getSection().getOccupancy() == Section.OCCUPIED) {
+            return java.text.MessageFormat.format(Bundle.getMessage("ReleaseRefusedOccupied"),
+                    new Object[]{as.getSectionName()});
+        }
+        AllocatedSection oldest = null;
+        AllocatedSection furthest = null;
+        for (AllocatedSection a : as.getActiveTrain().getAllocatedSectionList()) {
+            if (oldest == null || a.getAllocationNumber() < oldest.getAllocationNumber()) {
+                oldest = a;
+            }
+            if (furthest == null || a.getAllocationNumber() > furthest.getAllocationNumber()) {
+                furthest = a;
+            }
+        }
+        if (as == oldest && as.getExited()) {
+            return null;
+        }
+        if (as == furthest && !as.getEntered()) {
+            if (isNextSectionOfTrain(as) && !isTrainStopped(as.getActiveTrain())) {
+                return java.text.MessageFormat.format(Bundle.getMessage("ReleaseRefusedMoving"),
+                        new Object[]{as.getSectionName(), as.getActiveTrain().getActiveTrainName()});
+            }
+            return null;
+        }
+        return java.text.MessageFormat.format(Bundle.getMessage("ReleaseRefusedMiddle"),
+                new Object[]{as.getSectionName(), as.getActiveTrain().getActiveTrainName()});
+    }
+
+    /**
+     * Whether an Allocated Section is the one directly ahead of its train:
+     * the train has not entered it, nor any Section allocated before it.
+     */
+    private boolean isNextSectionOfTrain(@Nonnull AllocatedSection as) {
+        if (as.getEntered()) {
+            return false;
+        }
+        for (AllocatedSection a : as.getActiveTrain().getAllocatedSectionList()) {
+            if (a != as && !a.getEntered() && a.getAllocationNumber() < as.getAllocationNumber()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Whether a train is stopped, so that the Section ahead of it may be
+     * released: an automatic train's engineer must have stopped it, and any
+     * other train must be STOPPED or WAITING.
+     */
+    private boolean isTrainStopped(@Nonnull ActiveTrain at) {
+        if (at.getMode() == ActiveTrain.AUTOMATIC && at.getAutoActiveTrain() != null) {
+            AutoActiveTrain.AutoEngineer engineer = at.getAutoActiveTrain().getAutoEngineer();
+            return engineer == null || engineer.isStopped();
+        }
+        return at.getStatus() == ActiveTrain.STOPPED || at.getStatus() == ActiveTrain.WAITING;
     }
 
     // allocate extra window variables
@@ -958,20 +1083,41 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     }
 
     /*
-     * Wait for the queue to empty
+     * Wait until every task already queued, including the one being run now,
+     * has been completed.
+     * On the GUI thread, events are still handled while waiting.
      */
     protected void queueWaitForEmpty() {
-        if (_AutoAllocate) {
-            while (!autoAllocate.allRequestsDone()) {
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException iex) {
-                    // we closing do done
+        Thread allocatorThread = autoAllocateThread;
+        if (!_AutoAllocate || autoAllocate == null || allocatorThread == null
+                || Thread.currentThread() == allocatorThread) {
+            // nothing to wait for, or called by a task: tasks run one at a time
+            return;
+        }
+        CountDownLatch done = new CountDownLatch(1);
+        autoAllocate.scanAllocationRequests(new TaskAllocateRelease(TaskAction.BARRIER, done::countDown));
+        if (ThreadingUtil.isGUIThread()) {
+            SecondaryLoop loop = Toolkit.getDefaultToolkit().getSystemEventQueue().createSecondaryLoop();
+            javax.swing.Timer check = new javax.swing.Timer(10, e -> {
+                if (done.getCount() == 0 || !allocatorThread.isAlive()) {
+                    loop.exit();
+                }
+            });
+            check.start();
+            loop.enter();
+            check.stop();
+            return;
+        }
+        try {
+            while (!done.await(100, TimeUnit.MILLISECONDS)) {
+                if (!allocatorThread.isAlive()) {
                     return;
                 }
             }
+        } catch (InterruptedException iex) {
+            // we closing do done
+            Thread.currentThread().interrupt();
         }
-        return;
     }
 
     /*
@@ -1716,12 +1862,16 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             log.error("Null ActiveTrain pointer when attempting to terminate an ActiveTrain");
             return;
         }
-        // terminate the train - remove any allocation requests
-        for (int k = allocationRequests.size(); k > 0; k--) {
-            if (at == allocationRequests.get(k - 1).getActiveTrain()) {
-                allocationRequests.get(k - 1).dispose();
-                allocationRequests.remove(k - 1);
-            }
+        if (terminateNow) {
+            // before its Sections are released: a Block change still waiting to be
+            // handled would otherwise find the train with no Sections
+            at.setTerminating();
+        }
+        // terminate the train - remove any allocation requests. With automatic
+        // allocation, a full terminate removes them on the allocation thread
+        // (below), where they may be being worked on.
+        if (autoAllocate == null || !terminateNow) {
+            removeAllocationRequests(at);
         }
         // remove any allocated sections
         // except occupied if not a full termination
@@ -1752,6 +1902,14 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         }
         if (autoAllocate != null) {
             queueReleaseOfReservedSections(at.getTrainName());
+            if (terminateNow) {
+                // An allocation for this train may already be under way on the
+                // allocation thread. Once every task queued so far is done, no
+                // more can be made for it (it is terminating), so release
+                // whatever it was given in the meantime.
+                autoAllocate.scanAllocationRequests(new TaskAllocateRelease(TaskAction.BARRIER,
+                        () -> releaseTerminatedTrain(at)));
+            }
         }
         // terminate the train
         if (terminateNow) {
@@ -1788,6 +1946,40 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             allocatedSectionTableModel.fireTableDataChanged();
         }
         allocationRequestTableModel.fireTableDataChanged();
+    }
+
+    private void removeAllocationRequests(ActiveTrain at) {
+        for (int k = allocationRequests.size(); k > 0; k--) {
+            if (at == allocationRequests.get(k - 1).getActiveTrain()) {
+                allocationRequests.get(k - 1).dispose();
+                allocationRequests.remove(k - 1);
+            }
+        }
+    }
+
+    /**
+     * Remove what a terminated train still has: its allocation requests, and
+     * any Section allocated to it while it was being terminated. Run on the
+     * allocation thread, after every task queued before the train was
+     * terminated.
+     *
+     * @param at the terminated train
+     */
+    private void releaseTerminatedTrain(ActiveTrain at) {
+        removeAllocationRequests(at);
+        for (AllocatedSection as : new ArrayList<>(allocatedSections)) {
+            if (as.getActiveTrain() == at) {
+                log.debug("{}: releasing [{}], allocated while the train was terminated",
+                        at.getTrainName(), as.getSectionName());
+                doReleaseAllocatedSection(as, true);
+            }
+        }
+        ThreadingUtil.runOnGUIEventually(() -> {
+            allocationRequestTableModel.fireTableDataChanged();
+            if (allocatedSectionTableModel != null) {
+                allocatedSectionTableModel.fireTableDataChanged();
+            }
+        });
     }
 
     /**
@@ -1828,6 +2020,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                         JmriJOptionPane.ERROR_MESSAGE);
             }
             log.error("Missing Section specification in allocation request from {}", activeTrain.getActiveTrainName());
+            return false;
+        }
+        if (activeTrain.isTerminating()) {
+            log.debug("{}: terminating, no allocation of [{}] requested", activeTrain.getTrainName(),
+                    section.getDisplayName(USERSYS));
             return false;
         }
         if (((seqNumber <= 0) || (seqNumber > (activeTrain.getTransit().getMaxSequence()))) && (seqNumber != -99)) {
@@ -1894,6 +2091,18 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         allocationRequestTableModel.fireTableDataChanged();
     }
 
+    /**
+     * Cancel an allocation request, if it is still queued.
+     *
+     * @param ar the allocation request to cancel
+     */
+    protected void cancelAllocationRequest(AllocationRequest ar) {
+        int index = allocationRequests.indexOf(ar);
+        if (index >= 0) {
+            cancelAllocationRequest(index);
+        }
+    }
+
     private void allocateRequested(int index) {
         AllocationRequest ar = allocationRequests.get(index);
         allocateSection(ar, null);
@@ -1940,6 +2149,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         int nextSectionSeqNo = 0;
         ActiveTrain at = ar.getActiveTrain();
         Section s = ar.getSection();
+        if (at.isTerminating()) {
+            log.debug("{}: terminating, [{}] not allocated", at.getTrainName(), s.getDisplayName(USERSYS));
+            return null;
+        }
         if (at.reachedRestartPoint()) {
             log.debug("{}: waiting for restart, [{}] not allocated", at.getTrainName(), s.getDisplayName(USERSYS));
             return null;
@@ -2246,6 +2459,19 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         return as;
     }
 
+    /*
+     * Run a change to the layout on the layout thread (Swing thread), waiting
+     * for it when called from another thread, such as the auto allocator's.
+     * The auto allocator's thread holds no lock that the layout thread takes.
+     */
+    private static void onLayoutThread(Runnable change) {
+        if (ThreadingUtil.isLayoutThread()) {
+            change.run();
+        } else {
+            ThreadingUtil.runOnLayout(change::run);
+        }
+    }
+
     private AllocatedSection allocateSection(ActiveTrain at, Section s, int seqNum, Section nextSection,
             int nextSectionSeqNo, int direction, List<LayoutTrackExpectedState<LayoutTurnout>> expectedTurnOutStates) {
         AllocatedSection as = null;
@@ -2255,37 +2481,44 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             as.addPropertyChangeListener(InstanceManager.getDefault(jmri.jmrit.vsdecoder.VSDecoderManager.class));
         }
 
-        s.setState(direction/*ar.getSectionDirection()*/);
-        if (getSignalType() == SIGNALMAST) {
-            String property = "forwardMast";
-            if (s.getState() == Section.REVERSE) {
-                property = "reverseMast";
-            }
-            Object smProperty = s.getProperty(property);
-            if (smProperty != null) {
-                SignalMast toHold = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(smProperty.toString());
-                if (toHold != null) {
-                    if (!toHold.getHeld()) {
-                        heldMasts.add(new HeldMastDetails(toHold, at));
-                        toHold.setHeld(true);
+        // Setting the Section's direction and holding or releasing Signal Masts runs
+        // their listeners, so it is done on the layout thread (Swing thread), also
+        // when the auto allocator's thread allocates the Section.
+        onLayoutThread(() -> {
+            s.setState(direction/*ar.getSectionDirection()*/);
+            // record which train holds the Section, cleared when it is set FREE
+            s.setAllocatedTo(at);
+            if (getSignalType() == SIGNALMAST) {
+                String property = "forwardMast";
+                if (s.getState() == Section.REVERSE) {
+                    property = "reverseMast";
+                }
+                Object smProperty = s.getProperty(property);
+                if (smProperty != null) {
+                    SignalMast toHold = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(smProperty.toString());
+                    if (toHold != null) {
+                        if (!toHold.getHeld()) {
+                            heldMasts.add(new HeldMastDetails(toHold, at));
+                            toHold.setHeld(true);
+                        }
                     }
+
                 }
 
-            }
-
-            Section lastOccSec = at.getLastAllocatedSection();
-            if (lastOccSec != null) {
-                smProperty = lastOccSec.getProperty(property);
-                if ( smProperty != null) {
-                    SignalMast toRelease = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(smProperty.toString());
-                    if (toRelease != null && isMastHeldByDispatcher(toRelease, at)) {
-                        removeHeldMast(toRelease, at);
-                        //heldMasts.remove(toRelease);
-                        toRelease.setHeld(false);
+                Section lastOccSec = at.getLastAllocatedSection();
+                if (lastOccSec != null) {
+                    smProperty = lastOccSec.getProperty(property);
+                    if ( smProperty != null) {
+                        SignalMast toRelease = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(smProperty.toString());
+                        if (toRelease != null && isMastHeldByDispatcher(toRelease, at)) {
+                            removeHeldMast(toRelease, at);
+                            //heldMasts.remove(toRelease);
+                            toRelease.setHeld(false);
+                        }
                     }
                 }
             }
-        }
+        });
         as.setAutoTurnoutsResponse(expectedTurnOutStates);
         at.addAllocatedSection(as);
         allocatedSections.add(as);
@@ -2463,6 +2696,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         if (ar != null) {
             at = ar.getActiveTrain();
         }
+        List<Block> bls = null;   // the Blocks to check, the same for every allocated section
         for (AllocatedSection as : allocatedSections) {
             if (as.getSection() != s) {
                 List<Block> blas = as.getSection().getBlockList();
@@ -2478,8 +2712,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 // the blocklist for the section during the initial allocation.
                 //
 
-                List<Block> bls = new ArrayList<>();
-                if (ar != null && ar.getActiveTrain().getAllocatedSectionList().size() == 0) {
+                if (bls != null) {
+                    // already worked out for an earlier allocated section
+                } else if (ar != null && ar.getActiveTrain().getAllocatedSectionList().size() == 0) {
+                    bls = new ArrayList<>();
                     int j;
                     if (ar.getSectionDirection() == Section.FORWARD) {
                         j = 0;
@@ -2677,27 +2913,29 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             // The next allocated section must be assigned to the same train, and it must have been entered for
             //    the exited Section to be released.
             // Extra allocated sections are not automatically released (allocation number = -1).
+            // Each pass releases at most the first allocated section of each train; passes are
+            // repeated until nothing more is released.
             boolean foundOne = true;
-            while ((allocatedSections.size() > 0) && foundOne) {
+            boolean releasedOne = true;
+            while ((allocatedSections.size() > 0) && releasedOne) {
                 try {
-                    foundOne = false;
-                    AllocatedSection as = null;
-                    for (int i = 0; (i < allocatedSections.size()) && !foundOne; i++) {
-                        as = allocatedSections.get(i);
+                    releasedOne = false;
+                    List<AllocatedSection> sectionsToCheck = new ArrayList<>(allocatedSections);
+                    // for each train, its first allocation number and its number of allocated sections
+                    HashMap<ActiveTrain, Integer> firstAllocationNumber = new HashMap<>();
+                    HashMap<ActiveTrain, Integer> allocatedCounts = new HashMap<>();
+                    for (AllocatedSection asx : sectionsToCheck) {
+                        allocatedCounts.merge(asx.getActiveTrain(), 1, Integer::sum);
+                        if (asx.getAllocationNumber() != -1) {
+                            firstAllocationNumber.merge(asx.getActiveTrain(), asx.getAllocationNumber(), Math::min);
+                        }
+                    }
+                    for (AllocatedSection as : sectionsToCheck) {
+                        foundOne = false;
                         if (as.getExited() && (as.getSection().getOccupancy() != Section.OCCUPIED)
                                 && (as.getAllocationNumber() != -1)) {
                             // possible candidate for deallocation - check order
-                            foundOne = true;
-                            for (int j = 0; (j < allocatedSections.size()) && foundOne; j++) {
-                                if (j != i) {
-                                    AllocatedSection asx = allocatedSections.get(j);
-                                    if ((asx.getActiveTrain() == as.getActiveTrain())
-                                            && (asx.getAllocationNumber() != -1)
-                                            && (asx.getAllocationNumber() < as.getAllocationNumber())) {
-                                        foundOne = false;
-                                    }
-                                }
-                            }
+                            foundOne = (as.getAllocationNumber() == firstAllocationNumber.get(as.getActiveTrain()));
 
                             // The train must have one occupied section.
                             // The train may be sitting in one of its allocated section undetected.
@@ -2709,14 +2947,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
                             if (foundOne) {
                                 // check its not the last allocated section
-                                int allocatedCount = 0;
-                                for (int j = 0; (j < allocatedSections.size()); j++) {
-                                    AllocatedSection asx = allocatedSections.get(j);
-                                    if (asx.getActiveTrain() == as.getActiveTrain()) {
-                                            allocatedCount++ ;
-                                    }
-                                }
-                                if (allocatedCount == 1) {
+                                if (allocatedCounts.get(as.getActiveTrain()) == 1) {
                                     foundOne = false;
                                 }
                             }
@@ -2746,10 +2977,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                                         foundOne = false;
                                     }
                                 }
-                                foundOne = sectionNotRequiredByHeadOnly(foundOne,at,as);
+                                foundOne = sectionNotRequiredByTrainLength(foundOne,at,as);
                                 if (foundOne) {
                                     log.debug("{}: releasing section [{}]", at.getTrainName(), as.getSection().getDisplayName(USERSYS));
                                     doReleaseAllocatedSection(as, false);
+                                    releasedOne = true;
                                 }
                             }
                         }
@@ -2766,44 +2998,120 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     }
 
     /*
-     * Check whether the section is in use by a "Head Only" train and can be released.
-     * calculate the length of exited sections, subtract the length of section
+     * Final check before an exited Section is auto-released.
+     * <p>
+     * If the earlier checks in checkAutoRelease() have already decided the
+     * Section must be kept (foundOne false) that decision stands.
+     * <p>
+     * For a "Head Only" or "Head and Tail" train the Section can only be
+     * released once the train must have cleared it, worked out from the train
+     * length. Seeing the Section clear is not enough: on a "Head Only" train
+     * the rest of the train is not detected, and on a "Head and Tail" train
+     * the tail may have lost detection while the head is in the next Section.
+     * See isClearByLength().
+     */
+    static boolean sectionNotRequiredByTrainLength(boolean foundOne, ActiveTrain at, AllocatedSection as) {
+        if (!foundOne) {
+            return false;
+        }
+        if (at.getTrainDetection() == TrainDetection.TRAINDETECTION_WHOLETRAIN) {
+            return true;
+        }
+        return isClearByLength(at, as);
+    }
+
+    /**
+     * Check whether a train's length is set when its detection setting needs
+     * one. A train whose tail is not always detected ("Head Only" or "Head and
+     * Tail") must have a Max Train Length, so that Sections behind it are not
+     * released while it may still be in them.
+     *
+     * @param info the train
+     * @return an error message, or null if the length is acceptable
+     */
+    static String checkTrainLength(TrainInfo info) {
+        TrainDetection detection = info.getTrainDetection();
+        if (detection == TrainDetection.TRAINDETECTION_WHOLETRAIN || info.getMaxTrainLengthScaleMeters() > 0) {
+            return null;
+        }
+        String detectionName = Bundle.getMessage(detection == TrainDetection.TRAINDETECTION_HEADONLY
+                ? "TrainDetectionHeadOnly" : "TrainDetectionHeadAndTail");
+        return Bundle.getMessage("Error52", info.getTrainName(), detectionName);
+    }
+
+    /*
+     * Get the train length in mm: the length given when the train was
+     * created, or for a train set up directly by a script, its automatic
+     * running length.
+     */
+    static long getTrainLengthMM(ActiveTrain at) {
+        long lengthMM = at.getMaxTrainLengthMM();
+        if (lengthMM <= 0 && at.getAutoActiveTrain() != null) {
+            lengthMM = at.getAutoActiveTrain().getMaxTrainLengthMM();
+        }
+        return lengthMM;
+    }
+
+    /*
+     * Check, by length, whether a train whose tail is not always detected must
+     * have cleared a Section.
+     * Calculate the length of exited sections, subtract the length of section
      * being released. If the train is moving do not include the length of the occupied section,
      * if the train is stationary and was stopped by sensor or speed profile include the length
      * of the occupied section. This is done as we dont know where the train is in the section block.
+     * A train that is not running automatically is always treated as moving.
+     * If the train length is not known the Section is kept.
      */
-    private boolean sectionNotRequiredByHeadOnly(boolean foundOne, ActiveTrain at, AllocatedSection as) {
-        if (at.getAutoActiveTrain() != null && at.getTrainDetection() == TrainDetection.TRAINDETECTION_HEADONLY) {
-            long allocatedLengthMM = 0;
-            for (AllocatedSection tas : at.getAllocatedSectionList()) {
-                if (tas.getSection().getOccupancy() == Section.OCCUPIED) {
-                    if (at.getAutoActiveTrain().getAutoEngineer().isStopped() &&
-                            (at.getAutoActiveTrain().getStopBySpeedProfile() ||
-                                    tas.getSection().getForwardStoppingSensor() != null ||
-                                    tas.getSection().getReverseStoppingSensor() != null)) {
-                        allocatedLengthMM += tas.getSection().getActualLength();
-                        log.debug("{}: sectionNotRequiredByHeadOnly Stopping at Secion [{}] including in length.",
-                                at.getTrainName(),tas.getSection().getDisplayName());
-                        break;
-                    } else {
-                        log.debug("{}: sectionNotRequiredByHeadOnly Stopping at Secion [{}] excluding from length.",
-                                at.getTrainName(),tas.getSection().getDisplayName());
-                        break;
-                    }
-                }
-                if (tas.getExited()) {
-                    allocatedLengthMM += tas.getSection().getActualLength();
-                }
+    private static boolean isClearByLength(ActiveTrain at, AllocatedSection as) {
+        long trainLengthMM = getTrainLengthMM(at);
+        if (trainLengthMM <= 0) {
+            if (at.firstNoLengthWarning()) {
+                log.warn("{}: has no Max Train Length, Sections behind it will not be released automatically.",
+                        at.getTrainName());
             }
-            long trainLengthMM = at.getAutoActiveTrain().getMaxTrainLengthMM();
-            long releaseLengthMM = as.getSection().getActualLength();
-            log.debug("[{}]:Release Section [{}] by Length allocated [{}] release [{}] train [{}]",
-                    at.getTrainName(), as.getSectionName(), allocatedLengthMM, releaseLengthMM, trainLengthMM);
-            if ((allocatedLengthMM - releaseLengthMM) < trainLengthMM) {
-                return (false);
+            return false;
+        }
+        AutoActiveTrain aat = at.getAutoActiveTrain();
+        List<AllocatedSection> trainSections = at.getAllocatedSectionList();
+        // Find the Section holding the head of the train. A "Head Only" train
+        // is only detected at its head, which is in the first occupied Section.
+        // A "Head and Tail" train may also be detected at its tail, in an
+        // earlier Section, so its head is in the last occupied Section.
+        int headIndex = -1;
+        for (int i = 0; i < trainSections.size(); i++) {
+            if (trainSections.get(i).getSection().getOccupancy() == Section.OCCUPIED) {
+                headIndex = i;
+                if (at.getTrainDetection() != TrainDetection.TRAINDETECTION_HEADANDTAIL) {
+                    break;
+                }
             }
         }
-        return (true);
+        long allocatedLengthMM = 0;
+        for (int i = 0; i < trainSections.size(); i++) {
+            AllocatedSection tas = trainSections.get(i);
+            if (i == headIndex) {
+                if (aat != null && aat.getAutoEngineer() != null && aat.getAutoEngineer().isStopped() &&
+                        (aat.getStopBySpeedProfile() ||
+                                tas.getSection().getForwardStoppingSensor() != null ||
+                                tas.getSection().getReverseStoppingSensor() != null)) {
+                    allocatedLengthMM += tas.getSection().getActualLength();
+                    log.debug("{}: isClearByLength Stopping at Secion [{}] including in length.",
+                            at.getTrainName(),tas.getSection().getDisplayName());
+                    break;
+                } else {
+                    log.debug("{}: isClearByLength Stopping at Secion [{}] excluding from length.",
+                            at.getTrainName(),tas.getSection().getDisplayName());
+                    break;
+                }
+            }
+            if (tas.getExited()) {
+                allocatedLengthMM += tas.getSection().getActualLength();
+            }
+        }
+        long releaseLengthMM = as.getSection().getActualLength();
+        log.debug("[{}]:Release Section [{}] by Length allocated [{}] release [{}] train [{}]",
+                at.getTrainName(), as.getSectionName(), allocatedLengthMM, releaseLengthMM, trainLengthMM);
+        return (allocatedLengthMM - releaseLengthMM) >= trainLengthMM;
     }
 
     /**
@@ -2827,6 +3135,13 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         }
     }
     protected void doReleaseAllocatedSection(AllocatedSection as, boolean terminatingTrain) {
+        if (!allocatedSections.contains(as)) {
+            // Already released, for example by an automatic release that was
+            // queued before this one. Its Section may now be allocated to
+            // another train, so it must not be set free again.
+            log.debug("Section [{}] already released", as.getSectionName());
+            return;
+        }
         // check that section is not occupied if not terminating train
         if (!terminatingTrain && (as.getSection().getOccupancy() == Section.OCCUPIED)) {
             // warn the manual dispatcher that Allocated Section is occupied
@@ -2845,9 +3160,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 allocatedSections.remove(i - 1);
             }
         }
-        as.getSection().setState(Section.FREE);
-        as.getActiveTrain().removeAllocatedSection(as);
-        as.dispose();
+        // setting the Section free runs its listeners, so do it on the layout thread
+        onLayoutThread(() -> {
+            as.getActiveTrain().releaseAllocatedSection(as);
+            as.dispose();
+        });
         if (allocatedSectionTableModel != null) {
             allocatedSectionTableModel.fireTableDataChanged();
         }
@@ -2874,20 +3191,23 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * Handle activity that is triggered by the fast clock
      */
     protected void newFastClockMinute() {
+        java.util.Date previousTime = lastFastClockTime;
+        java.util.Date now = fastClock.getTime();
+        lastFastClockTime = now;
         for (int i = delayedTrains.size() - 1; i >= 0; i--) {
             ActiveTrain at = delayedTrains.get(i);
             // check if this Active Train is waiting to start
             if ((!at.getStarted()) && at.getDelayedStart() != ActiveTrain.NODELAY) {
                 // is it time to start?
                 if (at.getDelayedStart() == ActiveTrain.TIMEDDELAY) {
-                    if (isFastClockTimeGE(at.getDepartureTimeHr(), at.getDepartureTimeMin())) {
+                    if (isFastClockTimeReached(at.getDepartureTimeHr(), at.getDepartureTimeMin(), previousTime, now)) {
                         // allow this train to start
                         at.setStarted();
                         delayedTrains.remove(i);
                     }
                 }
             } else if (at.getStarted() && at.getStatus() == ActiveTrain.READY && at.reachedRestartPoint()) {
-                if (isFastClockTimeGE(at.getRestartDepartHr(), at.getRestartDepartMin())) {
+                if (isFastClockTimeReached(at.getRestartDepartHr(), at.getRestartDepartMin(), previousTime, now)) {
                     at.restart();
                     delayedTrains.remove(i);
                 }
@@ -2911,6 +3231,48 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         int nowHours = now.get(Calendar.HOUR_OF_DAY);
         int nowMinutes = now.get(Calendar.MINUTE);
         return ((nowHours * 60) + nowMinutes) == ((hr * 60) + min);
+    }
+
+    /**
+     * Check whether the fast clock has reached a time of day since the
+     * previous minute change. The clock can move on by more than one minute
+     * at a time, for example when it is set forward, runs at a high rate or
+     * the minute change is handled late, so a time that was passed over still
+     * counts as reached. If the clock has been set back, or the previous time
+     * is not known, only the exact minute counts.
+     * <p>
+     * Departure and restart times are kept as an hour and minute with no
+     * date, so the time is taken as its latest occurrence not after now: on
+     * the fast clock's current day, or the day before if that is later than
+     * now.
+     *
+     * @param hr       the hour to test against (0-23)
+     * @param min      the minute to test against (0-59)
+     * @param previous the fast clock time at the previous minute change, or
+     *                 null if not known
+     * @param now      the fast clock time now
+     * @return true if the time is in the current minute, or is after
+     *         previous and not after now
+     */
+    static boolean isFastClockTimeReached(int hr, int min, @CheckForNull java.util.Date previous,
+            @Nonnull java.util.Date now) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(now);
+        cal.set(Calendar.HOUR_OF_DAY, hr);
+        cal.set(Calendar.MINUTE, min);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        if (cal.getTime().after(now)) {
+            cal.add(Calendar.DAY_OF_MONTH, -1);
+        }
+        java.util.Date time = cal.getTime();
+        if (now.getTime() - time.getTime() < 60000L) {
+            return true;  // the exact minute
+        }
+        if (previous == null || !previous.before(now)) {
+            return false;
+        }
+        return time.after(previous);
     }
 
     // option access methods
@@ -3047,6 +3409,22 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
     protected void setUseOccupiedTrackSpeed(boolean set) {
         _UseOccupiedTrackSpeed = set;
+    }
+
+    /**
+     * Whether automatic allocation keeps an automatic train waiting in a
+     * Section it can stop in, when the next Section is one it can't stop in
+     * and the Sections beyond that are not free as far as one it can stop in.
+     *
+     * @return true to keep the train waiting; false, the default, to allocate
+     *         the next Section whatever lies beyond it
+     */
+    protected boolean getWaitWhereTrainsCanStop() {
+        return _WaitWhereTrainsCanStop;
+    }
+
+    protected void setWaitWhereTrainsCanStop(boolean set) {
+        _WaitWhereTrainsCanStop = set;
     }
 
     protected boolean getUseStrictTrainTracking() {

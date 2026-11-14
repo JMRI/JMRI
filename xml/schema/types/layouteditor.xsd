@@ -47,6 +47,7 @@
         <xs:element name="sensoricon"         type="EditorSensorIconType"        minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="memoryicon"         type="EditorMemoryIconType"        minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="globalVariableIcon" type="EditorGlobalVariableIconType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="globalVariableInputIcon" type="EditorGlobalVariableInputIconType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="memoryInputIcon"    type="EditorMemoryInputIconType"   minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="signalheadicon"     type="EditorSignalHeadIconType"    minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="signalmasticon"     type="EditorSignalMastIconType"    minOccurs="0" maxOccurs="unbounded" />
@@ -68,6 +69,7 @@
         <xs:element name="logixngicon"        type="EditorLogixNGIconType"       minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="audioicon"          type="EditorAudioIconType"         minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="dccex_virtual_lcd"  type="EditorDccExVirtualLcdIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="dccex_messages" type="EditorDccExMessagesIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
       </xs:sequence>
 
       <xs:attribute name="class" type="classType" use="required" />

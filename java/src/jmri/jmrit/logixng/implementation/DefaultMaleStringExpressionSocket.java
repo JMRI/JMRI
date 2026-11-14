@@ -64,10 +64,10 @@ public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket
             }
         } catch (RuntimeException e) {
             handleError(this, Bundle.getMessage("ExceptionEvaluate", e.getLocalizedMessage()), e, log);
+        } finally {
+            currentConditionalNG.getStack().setCount(currentStackPos);
+            currentConditionalNG.getSymbolTable().removeSymbols(_localVariables);
         }
-        
-        currentConditionalNG.getStack().setCount(currentStackPos);
-        currentConditionalNG.getSymbolTable().removeSymbols(_localVariables);
         
         return result;
     }

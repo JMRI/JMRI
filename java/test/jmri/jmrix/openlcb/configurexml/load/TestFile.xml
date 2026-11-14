@@ -66,8 +66,8 @@
       <systemName>MF$olm:AAR-1946:PL-2-high($0001)</systemName>
       <userName>Olcb 1</userName>
       <lit>
-        <lit>00.00.00.00.00.00.01.00</lit>
-        <notlit>00.00.00.00.00.00.02.00</notlit>
+        <lit>00.00.00.00.00.00.02.00</lit>
+        <notlit>00.00.00.00.00.00.02.01</notlit>
       </lit>
       <held>
         <held>00.00.00.00.00.00.03.00</held>

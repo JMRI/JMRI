@@ -3,8 +3,6 @@ package jmri.jmrix.rps;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Arrays;
 import javax.vecmath.Point3d;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of 2.1th algorithm for reducing Readings
@@ -22,7 +20,6 @@ import org.slf4j.LoggerFactory;
  */
 public class Ash2_1Algorithm extends AbstractCalculator {
 
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     public Ash2_1Algorithm(Point3d[] sensors, double vsound, int offset) {
         this(sensors, vsound);
         this.offset = offset;
@@ -391,6 +388,6 @@ public class Ash2_1Algorithm extends AbstractCalculator {
         double x, y, z, vs;
     }
 
-    private static final Logger log = LoggerFactory.getLogger(Ash2_1Algorithm.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Ash2_1Algorithm.class);
 
 }

@@ -4,14 +4,10 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.List;
 
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
@@ -22,6 +18,11 @@ import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.setup.*;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Logs rolling stock movements by writing their locations to a file.
@@ -237,9 +238,9 @@ public class RollingStockLogger extends XmlFile implements InstanceManagerAutoDe
     }
 
     private String getDate() {
-        Date date = Calendar.getInstance().getTime();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd"); // NOI18N
-        return simpleDateFormat.format(date);
+        LocalDateTime date = LocalDateTime.now();
+        DateTimeFormatter simpleDateFormat = DateTimeFormatter.ofPattern("yyyy_MM_dd"); // NOI18N
+        return date.format(simpleDateFormat);
     }
 
     /**
@@ -248,14 +249,9 @@ public class RollingStockLogger extends XmlFile implements InstanceManagerAutoDe
      *
      */
     private String getTime() {
-        String time = Calendar.getInstance().getTime().toString();
-        SimpleDateFormat dt = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy"); // NOI18N
-        SimpleDateFormat dtout = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"); // NOI18N
-        try {
-            return dtout.format(dt.parse(time));
-        } catch (ParseException e) {
-            return time; // there was an issue, use the old format
-        }
+        LocalDateTime date = LocalDateTime.now();
+        DateTimeFormatter simpleDateFormat = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"); // NOI18N
+        return date.format(simpleDateFormat);
     }
 
     private void addCarListeners() {

@@ -3,6 +3,9 @@ package jmri.jmrit.operations.rollingstock;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 import jmri.*;
@@ -25,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * Represents rolling stock, both powered (locomotives) and not powered (cars)
  * on the layout.
  *
- * @author Daniel Boudreau Copyright (C) 2009, 2010, 2013, 2023
+ * @author Daniel Boudreau Copyright (C) 2009, 2010, 2013, 2023, 2026
  */
 public abstract class RollingStock extends PropertyChangeSupport implements Identifiable, PropertyChangeListener {
 
@@ -45,7 +48,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     protected String _road = NONE;
     protected String _type = NONE;
     protected String _length = "0";
-    protected String _color = NONE;
+    protected String _color = "Black";
     protected String _weight = DEFAULT_WEIGHT;
     protected String _weightTons = DEFAULT_WEIGHT;
     protected String _built = NONE;
@@ -54,7 +57,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     protected String _routeId = NONE; // saved route for interchange tracks
     protected String _rfid = NONE;
     protected String _value = NONE;
-    protected Date _lastDate = null;
+    protected LocalDateTime _lastDate = null;
     protected boolean _locationUnknown = false;
     protected boolean _outOfService = false;
     protected boolean _selected = false;
@@ -81,11 +84,12 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     protected IdTag _tag = null;
     protected PropertyChangeListener _tagListener = null;
     protected Location _whereLastSeen = null; // location reported by tag reader
-    protected Date _whenLastSeen = null; // date reported by tag reader
+    protected LocalDateTime _whenLastSeen = null; // date reported by tag reader
 
     public static final String LOCATION_UNKNOWN = "0";
 
     protected int number = 0; // used by rolling stock manager for sort by number
+    private final LocalDateTime epoch = LocalDateTime.ofInstant(new java.util.GregorianCalendar().getGregorianChange().toInstant(), ZoneId.systemDefault());
 
     public static final String ERROR_TRACK = "ERROR wrong track for location"; // checks for coding error // NOI18N
 
@@ -107,8 +111,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
     LocationManager locationManager = InstanceManager.getDefault(LocationManager.class);
 
     public RollingStock() {
-        // set to change date of the Gregorian Calendar.
-        _lastDate = (new java.util.GregorianCalendar()).getGregorianChange();
+        _lastDate = epoch;
     }
 
     public RollingStock(String road, String number) {
@@ -133,7 +136,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
 
     public RollingStock copy(RollingStock rs) {
         rs.setBuilt(getBuilt());
-        rs.setColor(getColor());
+        rs.setColorName(getColorName());
         rs.setLength(getLength());
         rs.setWeightTons(getWeightTons());
         rs.setNumber(getNumber());
@@ -275,7 +278,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         return getLengthInteger() + RollingStock.COUPLERS;
     }
 
-    public void setColor(String color) {
+    public void setColorName(String color) {
         String old = _color;
         _color = color;
         if (!old.equals(color)) {
@@ -283,7 +286,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         }
     }
 
-    public String getColor() {
+    public String getColorName() {
         return _color;
     }
 
@@ -1052,7 +1055,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
                         // update the time when this car was last moved
                         // stock when its IdTag is seen.
                         if (e.getNewValue() != null) {
-                            Date newDate = ((Date) e.getNewValue());
+                            LocalDateTime newDate = ((LocalDateTime) e.getNewValue());
                             setLastDate(newDate);
                             // and notify listeners when last seen was updated.
                             setDirtyAndFirePropertyChange("rolling stock whenLastSeen", _whenLastSeen,
@@ -1122,11 +1125,14 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         return NONE;
     }
 
-    public Date getWhenLastSeen() {
-        if (_tag == null) {
-            return null; // never seen, so no date.
+    public LocalDateTime getWhenLastSeen() {
+        if (_tag != null) {
+            Date date = _tag.getWhenLastSeen();
+            if (date != null) {
+                return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+            }
         }
-        return _tag.getWhenLastSeen();
+        return null; // never seen, so no date.
     }
 
     /**
@@ -1149,11 +1155,11 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      * @return String yyyy/MM/dd HH:mm:ss
      */
     public String getSortDate() {
-        if (_lastDate.equals((new java.util.GregorianCalendar()).getGregorianChange())) {
+        if (_lastDate.equals(epoch)) {
             return NONE; // return an empty string for the default date.
         }
-        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"); // NOI18N
-        return format.format(_lastDate);
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"); // NOI18N
+        return _lastDate.format(format);
     }
 
     public static final int DATE_TIME_LENGTH = 19;
@@ -1164,11 +1170,11 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      * @return String MM/dd/yyyy HH:mm:ss
      */
     public String getLastDate() {
-        if (_lastDate.equals((new java.util.GregorianCalendar()).getGregorianChange())) {
+        if (_lastDate.equals(epoch)) {
             return NONE; // return an empty string for the default date.
         }
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss"); // NOI18N
-        return format.format(_lastDate);
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss"); // NOI18N
+        return _lastDate.format(format);
     }
 
     /**
@@ -1176,8 +1182,8 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      *
      * @param date The Date when this rolling stock was last moved.
      */
-    public void setLastDate(Date date) {
-        Date old = _lastDate;
+    public void setLastDate(LocalDateTime date) {
+        LocalDateTime old = _lastDate;
         _lastDate = date;
         if (!old.equals(_lastDate)) {
             setDirtyAndFirePropertyChange("rolling stock date", old, date); // NOI18N
@@ -1189,7 +1195,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      *
      * @return date
      */
-    public Date getLastMoveDate() {
+    public LocalDateTime getLastMoveDate() {
         return _lastDate;
     }
 
@@ -1197,10 +1203,10 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
      * Sets the last date when this rolling stock was moved. This method is used
      * only for loading data from a file. Use setLastDate(Date) instead.
      *
-     * @param date MM/dd/yyyy HH:mm:ss, MM/dd/yyyy hh:mmaa, or MM/dd/yyyy HH:mm
+     * @param date MM/dd/yyyy HH:mm:ss, MM/dd/yyyy hh:mm a, or MM/dd/yyyy HH:mm
      */
     public void setLastDate(String date) {
-        Date d = TrainCommon.convertStringToDate(date);
+        LocalDateTime d = TrainCommon.convertStringToLocalDateTime(date);
         if (d != null) {
             _lastDate = d;
         }
@@ -1381,7 +1387,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
 
     protected void moveRollingStock(RouteLocation current, RouteLocation next) {
         if (current == getRouteLocation()) {
-            setLastDate(java.util.Calendar.getInstance().getTime());
+            setLastDate(LocalDateTime.now());
             // Arriving at destination?
             if (getRouteLocation() == getRouteDestination() || next == null) {
                 if (getRouteLocation() == getRouteDestination()) {
@@ -1434,9 +1440,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         setTrain(null);
         setDestination(null, null);
         setLocation(null, null);
-        InstanceManager.getDefault(CarRoads.class).removePropertyChangeListener(this);
-        InstanceManager.getDefault(CarOwners.class).removePropertyChangeListener(this);
-        InstanceManager.getDefault(CarColors.class).removePropertyChangeListener(this);
+        removePropertyChangeListeners();
         if (getIdTag() != null) {
             getIdTag().removePropertyChangeListener(_tagListener);
         }
@@ -1603,8 +1607,8 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         e.setAttribute(Xml.ROAD_NUMBER, getNumber());
         e.setAttribute(Xml.TYPE, getTypeName());
         e.setAttribute(Xml.LENGTH, getLength());
-        if (!getColor().equals(NONE)) {
-            e.setAttribute(Xml.COLOR, getColor());
+        if (!getColorName().equals(NONE)) {
+            e.setAttribute(Xml.COLOR, getColorName());
         }
         if (!getWeight().equals(DEFAULT_WEIGHT)) {
             e.setAttribute(Xml.WEIGHT, getWeight());
@@ -1690,10 +1694,16 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         return e;
     }
 
-    private void addPropertyChangeListeners() {
+    protected void addPropertyChangeListeners() {
         InstanceManager.getDefault(CarRoads.class).addPropertyChangeListener(this);
         InstanceManager.getDefault(CarOwners.class).addPropertyChangeListener(this);
         InstanceManager.getDefault(CarColors.class).addPropertyChangeListener(this);
+    }
+    
+    protected void removePropertyChangeListeners() {
+        InstanceManager.getDefault(CarRoads.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarOwners.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarColors.class).removePropertyChangeListener(this);
     }
 
     // rolling stock listens for changes in a location name or if a location is
@@ -1763,10 +1773,10 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
             }
         }
         if (e.getPropertyName().equals(CarColors.CARCOLORS_NAME_CHANGED_PROPERTY)) {
-            if (e.getOldValue().equals(getColor())) {
+            if (e.getOldValue().equals(getColorName())) {
                 log.debug("Rolling stock ({}) sees color name change from ({}) to ({})", this, e.getOldValue(),
                         e.getNewValue()); // NOI18N
-                setColor((String) e.getNewValue());
+                setColorName((String) e.getNewValue());
             }
         }
     }

@@ -22,7 +22,7 @@ public class Z21TrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
 
     @Test
     public void testReceivesCombinedPacketLongerThan100Bytes() throws Exception {
-        TestTrafficController controller = (TestTrafficController) tc;
+        Z21TrafficController controller = (Z21TrafficController) tc;
         List<Z21Reply> replies = new ArrayList<>();
 
         controller.addz21Listener(new Z21Listener() {
@@ -62,7 +62,7 @@ public class Z21TrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        tc = new TestTrafficController();
+        tc = new Z21TrafficController();
     }
 
     @Override
@@ -95,14 +95,6 @@ public class Z21TrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
         Field field = Z21TrafficController.class.getDeclaredField(fieldName);
         field.setAccessible(true);
         field.set(controller, value);
-    }
-
-    private static class TestTrafficController extends Z21TrafficController {
-
-        TestTrafficController() {
-            xmtRunnable = () -> {
-            };
-        }
     }
 
     private static class TestZ21Adapter extends Z21Adapter {

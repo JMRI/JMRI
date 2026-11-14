@@ -160,6 +160,10 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
             return new ProxyIdTagManager();
         }
 
+        if (type == TrainRecordManager.class) {
+            return new DefaultTrainRecordManager();
+        }
+
         return super.getDefault(type);
     }
 
@@ -190,6 +194,7 @@ public class DefaultInstanceInitializer extends AbstractInstanceInitializer {
                 SignalSystemManager.class,
                 StringIOManager.class,
                 Timebase.class,
+                TrainRecordManager.class,
                 TransitManager.class,
                 TurnoutManager.class,
                 VariableLightManager.class,

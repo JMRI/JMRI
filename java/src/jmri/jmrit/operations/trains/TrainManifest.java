@@ -215,6 +215,9 @@ public class TrainManifest extends TrainCommon {
                             .getStringTrainTerminates(),
                             new Object[]{routeLocationName, train.getSplitName(),
                                     train.getDescription(), rl.getLocation().getDivisionName()}));
+                    if (!train.getCommentTerminationWithColor().equals(Train.NONE)) {
+                        newLine(fileOut, train.getCommentTerminationCurrentWithColor());
+                    }
                 }
             }
             // Are there any cars that need to be found?

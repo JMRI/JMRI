@@ -1,11 +1,18 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
+import java.time.LocalDateTime;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.*;
+import jmri.jmrit.operations.rollingstock.cars.*;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
+import jmri.util.JUnitOperationsUtil;
+
 import org.junit.Assert;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 /**
  * Tests for the Operations RollingStock Engine class Last manually
@@ -164,5 +171,51 @@ public class EngineTest extends OperationsTestCase {
         Assert.assertEquals("destination set e1", Track.OKAY, e1.setDestination(l1, l1t1));
         // check for failure too.
         Assert.assertNotEquals("fail to set destination e1", Track.OKAY, e1.setDestination(l3, l1t1));
+    }
+    
+    @Test
+    public void testPropertyChange() {
+        JUnitOperationsUtil.initOperationsData();
+        EngineManager manager = InstanceManager.getDefault(EngineManager.class);
+
+        // GP40 length 59 feet
+        Engine e1 = manager.getByRoadAndNumber("PC", "5016");       
+        e1.setColorName("Red");
+        
+        // also test clone
+        TrainManager tmanager = InstanceManager.getDefault(TrainManager.class);
+        Train train = tmanager.getTrainByName("STF");
+        
+        LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
+        Location locationNorthEnd = lmanager.getLocationById("1");
+        Track northEndStaging1 = locationNorthEnd.getTrackById("1s1");
+        
+        Engine clone = manager.createClone(e1, northEndStaging1, train, LocalDateTime.now());
+        
+        // confirm clone has same attributes as original car
+        Assert.assertEquals("Engine length", "59", clone.getLength());
+        Assert.assertEquals("Engine road", "PC", clone.getRoadName());
+        Assert.assertEquals("Engine owner", "AT", clone.getOwnerName());
+        Assert.assertEquals("Engine color", "Red", clone.getColorName());
+        
+        InstanceManager.getDefault(EngineLengths.class).replaceName("59", "95");
+        Assert.assertEquals("Engine length", "95", e1.getLength());
+        Assert.assertEquals("Engine length", "95", clone.getLength());
+        
+        InstanceManager.getDefault(CarRoads.class).replaceName("PC", "CP");
+        Assert.assertEquals("Engine road", "CP", e1.getRoadName());
+        Assert.assertEquals("Engine road", "CP", clone.getRoadName());
+        
+        InstanceManager.getDefault(EngineTypes.class).replaceName("Diesel", "Steam");
+        Assert.assertEquals("Engine type", "Steam", e1.getTypeName());
+        Assert.assertEquals("Engine type", "Steam", clone.getTypeName());
+ 
+        InstanceManager.getDefault(CarOwners.class).replaceName("AT", "TA");     
+        Assert.assertEquals("Car owner", "TA", e1.getOwnerName());
+        Assert.assertEquals("Car owner", "TA", clone.getOwnerName());
+        
+        InstanceManager.getDefault(CarColors.class).replaceName("Red", "Blue"); 
+        Assert.assertEquals("Car color", "Blue", e1.getColorName());
+        Assert.assertEquals("Car color", "Blue", clone.getColorName());
     }
 }

@@ -3,6 +3,12 @@ package jmri.jmrit.operations.locations.divisions;
 import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 
+import jmri.InstanceManager;
+import jmri.jmrit.operations.OperationsTestCase;
+import jmri.jmrit.operations.setup.Setup;
+import jmri.util.*;
+import jmri.util.swing.JemmyUtil;
+
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.jupiter.api.Test;
@@ -10,12 +16,6 @@ import org.junit.jupiter.api.Timeout;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.netbeans.jemmy.operators.*;
 import org.netbeans.jemmy.util.NameComponentChooser;
-
-import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.setup.Setup;
-import jmri.util.*;
-import jmri.util.swing.JemmyUtil;
 
 /**
  *
@@ -38,8 +38,11 @@ public class DivisionEditFrameTest extends OperationsTestCase {
     public void testSaveButton() {
         Division division = new Division("testId", "testName");
         Assert.assertNotNull("exists", division);
-        DivisionEditFrame def = new DivisionEditFrame(division);
+        DivisionEditFrame def = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new DivisionEditFrame(division);
+        });
         Assert.assertNotNull("exists", def);
+        JemmyUtil.waitFor(def);
 
         JFrameOperator jfo = new JFrameOperator(def.getTitle());
         Assert.assertNotNull("visible and found", jfo);
@@ -65,8 +68,11 @@ public class DivisionEditFrameTest extends OperationsTestCase {
     public void testSaveButtonErrors() {
         Division division = new Division("testId", "testName");
         Assert.assertNotNull("exists", division);
-        DivisionEditFrame def = new DivisionEditFrame(division);
+        DivisionEditFrame def = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new DivisionEditFrame(division);
+        });
         Assert.assertNotNull("exists", def);
+        JemmyUtil.waitFor(def);
 
         JFrameOperator jfo = new JFrameOperator(def.getTitle());
         Assert.assertNotNull("visible and found", jfo);
@@ -116,8 +122,11 @@ public class DivisionEditFrameTest extends OperationsTestCase {
     
     @Test
     public void testAddButton() {
-        DivisionEditFrame def = new DivisionEditFrame(null);
+        DivisionEditFrame def = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new DivisionEditFrame(null);
+        });
         Assert.assertNotNull("exists", def);
+        JemmyUtil.waitFor(def);
 
         JFrameOperator jfo = new JFrameOperator(def.getTitle());
         Assert.assertNotNull("visible and found", jfo);
@@ -138,8 +147,11 @@ public class DivisionEditFrameTest extends OperationsTestCase {
     
     @Test
     public void testAddButtonErrors() {
-        DivisionEditFrame def = new DivisionEditFrame(null);
+        DivisionEditFrame def = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new DivisionEditFrame(null);
+        });
         Assert.assertNotNull("exists", def);
+        JemmyUtil.waitFor(def);
 
         JFrameOperator jfo = new JFrameOperator(def.getTitle());
         Assert.assertNotNull("visible and found", jfo);
@@ -199,8 +211,11 @@ public class DivisionEditFrameTest extends OperationsTestCase {
         Division division = dm.newDivision("testDivisionName");
         Assert.assertNotNull("exists", division);
         Assert.assertNotNull(dm.getDivisionByName("testDivisionName"));
-        DivisionEditFrame def = new DivisionEditFrame(division);
+        DivisionEditFrame def = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new DivisionEditFrame(division);
+        });
         Assert.assertNotNull("exists", def);
+        JemmyUtil.waitFor(def);
 
         JFrameOperator jfo = new JFrameOperator(def.getTitle());
         Assert.assertNotNull("visible and found", jfo);
@@ -238,9 +253,13 @@ public class DivisionEditFrameTest extends OperationsTestCase {
     public void testDeleteButtonError() {
         DivisionManager dm = InstanceManager.getDefault(DivisionManager.class);
         Division division = dm.newDivision("testDivisionName");
-        DivisionEditFrame def = new DivisionEditFrame(division);
+        DivisionEditFrame def = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new DivisionEditFrame(division);
+        });
+        Assert.assertNotNull("exists", def);
+        JemmyUtil.waitFor(def);
+        
         // try to delete a division that doesn't exist
-
         JFrameOperator jfo = new JFrameOperator(def.getTitle());
         Assert.assertNotNull("visible and found", jfo);
 
@@ -257,8 +276,12 @@ public class DivisionEditFrameTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         DivisionManager dm = InstanceManager.getDefault(DivisionManager.class);
         Division division = dm.newDivision("testDivisionName");
-        DivisionEditFrame f = new DivisionEditFrame(division);
-        JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
+        DivisionEditFrame def = ThreadingUtil.runOnGUIwithReturn(() -> {
+            return new DivisionEditFrame(division);
+        });
+        Assert.assertNotNull("exists", def);
+        JemmyUtil.waitFor(def);
+        JUnitOperationsUtil.testCloseWindowOnSave(def.getTitle());
     }
 
 }

@@ -22,6 +22,7 @@ import javax.swing.border.EmptyBorder;
 
 import org.python.google.common.annotations.VisibleForTesting;
 
+import jmri.JmriUncheckedException;
 import jmri.util.JmriJFrame;
 import jmri.util.PaperUtils;
 
@@ -106,14 +107,14 @@ public class HardcopyWriter extends Writer implements Printable {
     PrintRequestAttributeSet attributes = new HashPrintRequestAttributeSet();
 
     // constructor modified to add default printer name, page orientation, print header, print duplex, and page size
-    // All length parameters are in points. 
+    // All length parameters are in points.
     // various combinations of parameters can be set. The paper size/shape is set by the pagesize
     // parameter unless it is null, in which case the specified printer paper size is used.
-    // The page orientation is set by the isLandscape parameter unless it is null, in which 
+    // The page orientation is set by the isLandscape parameter unless it is null, in which
     // case the specified printer page orientation is used.
     /**
      * Constructor for HardcopyWriter
-     * 
+     *
      * @param frame         The AWT Frame (only required for preview mode) --
      *                      this is used to get the screen resolution.
      * @param jobname       The name to print in the title of the page
@@ -340,7 +341,7 @@ public class HardcopyWriter extends Writer implements Printable {
      * Get a graphics context for the current page (or the print job graphics
      * context if available) Make sure that this is setup with the appropriate
      * scale factor for the current page.
-     * 
+     *
      * @return the graphics context
      */
     private Graphics2D getGraphics() {
@@ -353,7 +354,7 @@ public class HardcopyWriter extends Writer implements Printable {
         BufferedImage img = new BufferedImage(pagesizePixels.width, pagesizePixels.height, BufferedImage.TYPE_INT_RGB);
         g = img.createGraphics();
         if (g == null) {
-            throw new RuntimeException("Could not get graphics context");
+            throw new JmriUncheckedException("Could not get graphics context");
         }
         setupGraphics(g, true);
         return g;
@@ -458,7 +459,7 @@ public class HardcopyWriter extends Writer implements Printable {
     /**
      * This function measures the size of the text in the current font. It
      * returns a Rectangle2D.
-     * 
+     *
      * @param s The string to be measured (no tabs allowed)
      * @return The Rectangle2D object in points
      */
@@ -471,7 +472,7 @@ public class HardcopyWriter extends Writer implements Printable {
     /**
      * This function returns the bounding box that includes all of the strings
      * passed (when printed on top of each other)
-     * 
+     *
      * @param stringList A collection of Strings
      * @return The Rectangle2D object in points
      */
@@ -491,7 +492,7 @@ public class HardcopyWriter extends Writer implements Printable {
 
     /**
      * Get the current page size in points (logical units).
-     * 
+     *
      * @return The printable page area in points
      */
     public Dimension getPrintablePagesizePoints() {
@@ -504,7 +505,7 @@ public class HardcopyWriter extends Writer implements Printable {
      * returns the page size for the display. It makes use of the PaperUtils
      * class to get the default paper size (based on locale and/or printer
      * settings).
-     * 
+     *
      * @return The page size in points
      */
     private Dimension getPagesizePoints() {
@@ -514,7 +515,7 @@ public class HardcopyWriter extends Writer implements Printable {
     /**
      * Get the screen resolution in pixels per inch. It caches this so that a
      * single value is used for the entire run of the preview/print.
-     * 
+     *
      * @return The screen resolution in pixels per inch.
      */
     private int getScreenResolution() {
@@ -546,7 +547,7 @@ public class HardcopyWriter extends Writer implements Printable {
      * If no columns are set, then the default is one column, left aligned with
      * the full width of the page
      * </p>
-     * 
+     *
      * @param columns Array of Column objects
      */
     public void setColumns(Column[] columns) {
@@ -574,7 +575,7 @@ public class HardcopyWriter extends Writer implements Printable {
      * If no columns are set, then the default is one column, left aligned with
      * the full width of the page
      * </p>
-     * 
+     *
      * @param columns Collection of Column objects
      */
     public void setColumns(Collection<Column> columns) {
@@ -671,7 +672,7 @@ public class HardcopyWriter extends Writer implements Printable {
         if (bounds.getWidth() > columnWidth) {
             // This text does not fit. This means that we need to split it and wrap it to the next line.
 
-            // First, we need to find where to split the string. 
+            // First, we need to find where to split the string.
             // Do this with a binary search to be efficient. We take spaces into account.
             // We want to get the longest possible string that will fit in the column.
             int splitPos = 0;
@@ -702,7 +703,7 @@ public class HardcopyWriter extends Writer implements Printable {
             }
 
             if (splitPos < 1) {
-                splitPos = 1; // Even if it won't fit, we have to output something.   
+                splitPos = 1; // Even if it won't fit, we have to output something.
             }
             // Now we can split the string and wrap it to the next line.
             String firstLine = line.substring(0, splitPos);
@@ -815,7 +816,7 @@ public class HardcopyWriter extends Writer implements Printable {
      * good for the next line (or column) of output. Use with caution.
      * <p>
      * If any of the parameters are null, the current value will be used.
-     * 
+     *
      * @param name  the name of the font
      * @param style the style of the font
      * @param size  the size of the font
@@ -864,7 +865,7 @@ public class HardcopyWriter extends Writer implements Printable {
     /**
      * Get the height of a line of text. This is the amount that the vertical
      * position will advance for each line.
-     * 
+     *
      * @return the height of a line of text
      */
     public float getLineHeight() {
@@ -873,7 +874,7 @@ public class HardcopyWriter extends Writer implements Printable {
 
     /**
      * Get the size of the font.
-     * 
+     *
      * @return the size of the font
      */
     public int getFontSize() {
@@ -882,7 +883,7 @@ public class HardcopyWriter extends Writer implements Printable {
 
     /**
      * Get the width of a character. This is only valid for monospaced fonts.
-     * 
+     *
      * @return the width of a character, or null if the font is not monospaced
      */
     public Float getCharWidth() {
@@ -896,7 +897,7 @@ public class HardcopyWriter extends Writer implements Printable {
     /**
      * Get the ascent of the font. This is the distance from the baseline to the
      * top of the font.
-     * 
+     *
      * @return the ascent of the font
      */
     public float getLineAscent() {
@@ -950,7 +951,7 @@ public class HardcopyWriter extends Writer implements Printable {
     /**
      * This ensures that the required amount of vertical space is available. If
      * not, a page break is inserted.
-     * 
+     *
      * @param points The amount of vertical space to ensure in points.
      */
     public void ensureVerticalSpace(int points) {
@@ -962,7 +963,7 @@ public class HardcopyWriter extends Writer implements Printable {
     /**
      * This leaves the required amount of vertical space. If not enough space is
      * available, a page break is inserted.
-     * 
+     *
      * @param points The amount of vertical space to leave in points.
      */
     public void leaveVerticalSpace(float points) {
@@ -1022,7 +1023,7 @@ public class HardcopyWriter extends Writer implements Printable {
                     (int) (pagesizePixels.height * 72.0 / getScreenResolution()));
             page.setColor(color);
         } else {
-            // We only need this is non-preview mode. 
+            // We only need this is non-preview mode.
             pageCommands.add(currentPageCommands);
         }
 
@@ -1050,7 +1051,7 @@ public class HardcopyWriter extends Writer implements Printable {
 
     /**
      * Gets all the pages as Images.
-     * 
+     *
      * @return the current page as a BufferedImage
      */
     public Vector<BufferedImage> getPageImages() {
@@ -1061,7 +1062,7 @@ public class HardcopyWriter extends Writer implements Printable {
      * Gets the current page num -- this can be used to determine when a page
      * break has happened. The page number may be increased whenever a newline
      * is printed.
-     * 
+     *
      * @return the current page number
      */
     public int getPageNum() {
@@ -1071,7 +1072,7 @@ public class HardcopyWriter extends Writer implements Printable {
     /**
      * Setup the graphics context for preview. We want the subpixel positioning
      * for text.
-     * 
+     *
      * @param g2d        the graphics context to setup
      * @param applyScale whether to apply the scale factor
      */
@@ -1126,7 +1127,7 @@ public class HardcopyWriter extends Writer implements Printable {
      * <p>
      * The image is positioned on the right side of the paper, at the current
      * height.
-     * 
+     *
      * @param no_advance if true, do not advance the v_pos
      * @return The actual size in points of the icon that was rendered.
      */
@@ -1161,7 +1162,7 @@ public class HardcopyWriter extends Writer implements Printable {
      * required size. More importantly, it does not save the image object in
      * memory, but will re-read it from the disk when it needs to be used. This
      * is needed if there are a lot of large images in a printout.
-     * 
+     *
      * @param icon         The ImageIconWrapper object to display
      * @param requiredSize The size in points to display the image
      * @return The actual size rendered
@@ -1320,7 +1321,7 @@ public class HardcopyWriter extends Writer implements Printable {
 
     /**
      * Get the current vertical position on the page
-     * 
+     *
      * @return the current vertical position of the base of the current line on
      *         the page (in points)
      */
@@ -1361,7 +1362,7 @@ public class HardcopyWriter extends Writer implements Printable {
 
     /**
      * Returns true if the current font is monospaced
-     * 
+     *
      * @return true if the current font is monospaced.
      */
     public boolean isMonospaced() {
@@ -1370,7 +1371,7 @@ public class HardcopyWriter extends Writer implements Printable {
 
     /**
      * Get the list of commands for the whole document.
-     * 
+     *
      * @return the list of commands for the document
      */
     public List<List<PrintCommand>> getPageCommands() {
@@ -1415,7 +1416,7 @@ public class HardcopyWriter extends Writer implements Printable {
 
         /**
          * Gets the base alignment of the column
-         * 
+         *
          * @return The base alignment of the column
          */
         public Align getBase() {
@@ -1424,7 +1425,7 @@ public class HardcopyWriter extends Writer implements Printable {
 
         /**
          * Gets whether the alignment is a wrap alignment
-         * 
+         *
          * @return true if the alignment is a wrap alignment
          */
         public boolean isWrap() {
@@ -1445,7 +1446,7 @@ public class HardcopyWriter extends Writer implements Printable {
 
         /**
          * Create a Column with specified position, width and alignment
-         * 
+         *
          * @param position  The position of the column in points
          * @param width     The width of the column in points
          * @param alignment The alignment of the column
@@ -1459,7 +1460,7 @@ public class HardcopyWriter extends Writer implements Printable {
         /**
          * Create a Column with specified position and alignment. The width will
          * be calculated up to the next column.
-         * 
+         *
          * @param position  The position of the column in points
          * @param alignment The alignment of the column
          */
@@ -1471,7 +1472,7 @@ public class HardcopyWriter extends Writer implements Printable {
 
         /**
          * Create a Column with specified position and width with LEFT alignment
-         * 
+         *
          * @param position The position of the column in points
          * @param width    The width of the column in points
          */
@@ -1481,7 +1482,7 @@ public class HardcopyWriter extends Writer implements Printable {
 
         /**
          * Sets the width of the column in points
-         * 
+         *
          * @param width The new width of the column in points
          */
         public void setWidth(int width) {
@@ -1490,7 +1491,7 @@ public class HardcopyWriter extends Writer implements Printable {
 
         /**
          * Gets the width of the column in points
-         * 
+         *
          * @return The width of the column in points
          */
         public int getWidth() {
@@ -1499,7 +1500,7 @@ public class HardcopyWriter extends Writer implements Printable {
 
         /**
          * Gets the starting position of text of length strlen (in points)
-         * 
+         *
          * @param strlen The length of the text in points
          * @return The starting position of the text in points
          */
@@ -1518,7 +1519,7 @@ public class HardcopyWriter extends Writer implements Printable {
 
         /**
          * Gets the starting position of the column in points
-         * 
+         *
          * @return The starting position of the column in points
          */
         public int getPosition() {
@@ -1527,7 +1528,7 @@ public class HardcopyWriter extends Writer implements Printable {
 
         /**
          * Gets the alignment of the column
-         * 
+         *
          * @return The alignment of the column
          */
         public Align getAlignment() {
@@ -1536,7 +1537,7 @@ public class HardcopyWriter extends Writer implements Printable {
 
         /**
          * Gets whether the column is a wrap column
-         * 
+         *
          * @return true if the column is a wrap column
          */
         public boolean isWrap() {
@@ -1552,7 +1553,7 @@ public class HardcopyWriter extends Writer implements Printable {
          * Stretch the columns to fit the specified width. The columns are
          * assumed to be sorted by position. The input widths are treated as
          * ratios. There is a gap between the columns.
-         * 
+         *
          * @param columns The columns to stretch
          * @param width   The width to stretch to in points
          * @param gap     The gap between the columns in points
@@ -1782,7 +1783,7 @@ public class HardcopyWriter extends Writer implements Printable {
 
         /**
          * Class to save and be able to restore the pathname of an ImageIcon.
-         * 
+         *
          * @param pathName The filename to construct the ImageIcon for.
          */
         public ImageIconWrapper(String pathName) {

@@ -93,6 +93,11 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
         return reporter;
     }
 
+    @Override
+    public jmri.NamedBean getNamedBean() {
+        return getReporter();
+    }
+
     // update icon as state changes
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {

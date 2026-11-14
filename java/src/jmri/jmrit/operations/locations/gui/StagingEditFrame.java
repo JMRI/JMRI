@@ -28,19 +28,19 @@ public class StagingEditFrame extends TrackEditFrame {
     JCheckBox blockCarsCheckBox = new JCheckBox(Bundle.getMessage("BlockCars"));
 
     JPanel panelLoad = panelOpt4;
-
-    public StagingEditFrame() {
+    
+    public StagingEditFrame(Location location) {
         super(Bundle.getMessage("AddStaging"));
+        initComponents(location, null);
     }
     
-    @Override
-    public void initComponents(Track track) {
-        setTitle(Bundle.getMessage("EditStaging", track.getLocation().getName()));
+    public StagingEditFrame(Track track) {
+        super(Bundle.getMessage("EditStaging", track.getLocation().getName()));
         initComponents(track.getLocation(), track);
     }
 
     @Override
-    public void initComponents(Location location, Track track) {
+    protected void initComponents(Location location, Track track) {
         _type = Track.STAGING;
 
         // setup the optional panel with staging stuff

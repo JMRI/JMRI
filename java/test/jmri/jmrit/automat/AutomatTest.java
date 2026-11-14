@@ -12,8 +12,8 @@ import org.junit.Assert;
  */
 public class AutomatTest {
 
-    private boolean initDone;
-    private boolean handleDone;
+    private volatile boolean initDone;
+    private volatile boolean handleDone;
 
     @Test
     public void testCreate() {
@@ -45,8 +45,8 @@ public class AutomatTest {
         // wait for thread to exec, failing if not
         jmri.util.JUnitUtil.waitFor(()->{return initDone;},"initDone after run");
 
-        // and check
-        Assert.assertTrue("handleDone after run", handleDone);
+        // handle() runs after init() on the automaton thread, so wait for it too
+        jmri.util.JUnitUtil.waitFor(()->{return handleDone;},"handleDone after run");
     }
 
     @Test
@@ -74,8 +74,8 @@ public class AutomatTest {
         // wait for thread to exec, failing if not
         jmri.util.JUnitUtil.waitFor(()->{return initDone;},"initDone after run");
 
-        // and check
-        Assert.assertTrue("handleDone after run", handleDone);
+        // handle() runs after init() on the automaton thread, so wait for it too
+        jmri.util.JUnitUtil.waitFor(()->{return handleDone;},"handleDone after run");
 
         // restart
         initDone = false;
@@ -89,8 +89,8 @@ public class AutomatTest {
         // wait for thread to exec, failing if not
         jmri.util.JUnitUtil.waitFor(()->{return initDone;},"initDone after 2nd run");
 
-        // and check
-        Assert.assertTrue("handleDone after 2nd run", handleDone);
+        // handle() runs after init() on the automaton thread, so wait for it too
+        jmri.util.JUnitUtil.waitFor(()->{return handleDone;},"handleDone after 2nd run");
     }
 
     @BeforeEach

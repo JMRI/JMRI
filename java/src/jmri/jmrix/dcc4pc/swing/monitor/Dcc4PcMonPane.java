@@ -40,7 +40,7 @@ public class Dcc4PcMonPane extends jmri.jmrix.AbstractMonPane implements Dcc4PcL
     }
 
     @Override
-    public void init() {
+    protected void init() {
     }
 
     Dcc4PcSystemConnectionMemo memo;

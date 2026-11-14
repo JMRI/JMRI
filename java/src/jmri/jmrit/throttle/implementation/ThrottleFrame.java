@@ -46,6 +46,7 @@ import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
 import jmri.jmrit.throttle.interfaces.ThrottleControllersUIContainer;
 import jmri.jmrit.throttle.panels.ControlPanel;
 import jmri.jmrit.throttle.panels.FunctionButton;
+import jmri.jmrit.throttle.preferences.ThrottlesPreferences;
 import jmri.util.FileUtil;
 import jmri.util.iharder.dnd.URIDrop;
 import jmri.util.swing.TransparencyUtils;
@@ -115,7 +116,6 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Th
         throttleWindow = tw;
         throuic = new ThrottleUICore(throttleManager, this);
         initGUI();
-        throuic.loadDefaultThrottle();
         throttleFrameManager.getThrottlesListPanel().getTableModel().fireTableStructureChanged();
     }
 
@@ -140,7 +140,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Th
         // horiz and vert gaps of 5 each (set in FunctionPanel class)
         // with 4 buttons across and 6 rows high
         int width = 4 * (FunctionButton.getButtonWidth()) + 2 * 4 * 5 + 10;   
-        int height = 6 * (FunctionButton.getButtonHeight()) + 2 * 6 * 5 + 20; 
+        int height = FunctionButton.DEFAULT_IMG_SIZE + 5 * (FunctionButton.getButtonHeight()) + 2 * 6 * 5 + 20; 
         
         functionPanelJIF.setSize(width, height);
         functionPanelJIF.setLocation(controlPanelJIF.getWidth(), 0);
@@ -159,10 +159,6 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Th
 //        if (functionPanelJIF.getWidth() < addressPanelJIF.getWidth()) {
 //            functionPanelJIF.setSize(addressPanelJIF.getWidth(), functionPanelJIF.getHeight());
 //        }
-
-        setPreferredSize(new Dimension(
-                Math.max(controlPanelJIF.getWidth() + functionPanelJIF.getWidth(), controlPanelJIF.getWidth() + addressPanelJIF.getWidth()),
-                Math.max(addressPanelJIF.getHeight() + functionPanelJIF.getHeight(), controlPanelJIF.getHeight()) ));
 
         add(controlPanelJIF, PANEL_LAYER_FRAME);
         add(functionPanelJIF, PANEL_LAYER_FRAME);
@@ -194,6 +190,11 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Th
             log.error("Error selecting InternalFrame: {}", ex.getMessage());
         }
 
+        setXml(InstanceManager.getDefault(ThrottlesPreferences.class).getThrottleFrameDefaultXML());
+
+        setPreferredSize(new Dimension(
+                Math.max(controlPanelJIF.getWidth() + functionPanelJIF.getWidth(), controlPanelJIF.getWidth() + addressPanelJIF.getWidth()),
+                Math.max(addressPanelJIF.getHeight() + functionPanelJIF.getHeight(), controlPanelJIF.getHeight()) ));
     }
     
     private JInternalFrame createSpeedPanelJIF() {
@@ -319,7 +320,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Th
     }
 
     public void resetFunctionPanelButton() {
-        throuic.getFunctionPanel().resetFnButtons();
+        throuic.getFunctionPanel().applyFnButtonsLnF();
         throuic.getFunctionPanel().setEnabled();
     }
 
@@ -986,6 +987,7 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Th
             if (file == null) {
                 return ;
             }
+            sfile = file.getAbsolutePath();
         }
         boolean switchAfter = false;
         if (!isEditMode) {
@@ -1018,14 +1020,12 @@ public class ThrottleFrame extends JDesktopPane implements ComponentListener, Th
             // Don't show error dialog if file is not found
             log.debug("Loading throttle exception: {}", ex.getMessage());
             log.debug("Tried loading throttle file \"{}\" , reverting to default, if any", sfile);
-            throuic.loadDefaultThrottle(); // revert to loading default one
         } catch (NullPointerException | IOException | JDOMException ex) {
             log.debug("Loading throttle exception: {}", ex.getMessage());
             log.debug("Tried loading throttle file \"{}\" , reverting to default, if any", sfile);
             jmri.configurexml.ConfigXmlManager.creationErrorEncountered(
                     null, "parsing file " + sfile,
                     "Parse error", null, null, ex);
-            throuic.loadDefaultThrottle(); // revert to loading default one
         }
         //     checkPosition();
         if (switchAfter) {

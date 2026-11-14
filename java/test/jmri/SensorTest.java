@@ -23,6 +23,20 @@ public class SensorTest {
         assertTrue( (Sensor.OFF & Sensor.INCONSISTENT) == 0, "Off and Inconsistent differ");
     }
 
+    @Test
+    public void testDetectsNames() {
+        for (Sensor.Detects d : Sensor.Detects.values()) {
+            Assertions.assertSame(d, Sensor.Detects.getByShortName(d.getShortName()), "read back from its stored name");
+            Assertions.assertEquals(d.getPeopleName(), d.toString(), "shown by its name for people");
+            Assertions.assertFalse(d.getPeopleName().startsWith("SensorDetects"), "a name from the bundle: " + d);
+        }
+        Assertions.assertEquals("wheels", Sensor.Detects.WHEELS.getShortName());
+        Assertions.assertEquals("body", Sensor.Detects.BODY.getShortName());
+        Assertions.assertEquals("tag", Sensor.Detects.TAG.getShortName());
+        Assertions.assertSame(Sensor.Detects.WHEELS, Sensor.Detects.getByShortName(null), "none stored");
+        Assertions.assertSame(Sensor.Detects.WHEELS, Sensor.Detects.getByShortName("laser"), "stored by a later version");
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

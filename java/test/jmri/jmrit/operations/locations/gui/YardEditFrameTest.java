@@ -3,13 +3,6 @@ package jmri.jmrit.operations.locations.gui;
 import java.awt.GraphicsEnvironment;
 import java.text.MessageFormat;
 
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.netbeans.jemmy.operators.JCheckBoxOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.*;
@@ -17,6 +10,13 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.netbeans.jemmy.operators.JCheckBoxOperator;
+import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * Tests for the Operations Locations GUI class
@@ -32,9 +32,8 @@ public class YardEditFrameTest extends OperationsTestCase {
     @Test
     public void testCreateYardTrackDefault() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        YardEditFrame f = new YardEditFrame();
+        YardEditFrame f = new YardEditFrame(l);
         f.setTitle("Test Yard Add Frame");
-        f.initComponents(l, null);
 
         // create a yard track with length 43.
         f.trackNameTextField.setText("new yard track");
@@ -80,9 +79,8 @@ public class YardEditFrameTest extends OperationsTestCase {
     @Test
     public void testSetDirectionUsingCheckbox() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        YardEditFrame f = new YardEditFrame();
+        YardEditFrame f = new YardEditFrame(l);
         f.setTitle("Test Yard Direction Set Frame");
-        f.initComponents(l, null);
 
         f.trackNameTextField.setText("4th yard track");
         f.trackLengthTextField.setText("21");
@@ -110,9 +108,8 @@ public class YardEditFrameTest extends OperationsTestCase {
     @Test
     public void testCreateTracksAndReloadFrame() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        YardEditFrame f = new YardEditFrame();
+        YardEditFrame f = new YardEditFrame(l);
         f.setTitle("Test Yard Create Frame");
-        f.initComponents(l, null);
 
         // create four yard tracks
         f.trackNameTextField.setText("new yard track");
@@ -164,8 +161,7 @@ public class YardEditFrameTest extends OperationsTestCase {
     public void testDeleteButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Track t = l.addTrack("Test Yard Delete", Track.YARD);
-        YardEditFrame f = new YardEditFrame();
-        f.initComponents(l, t);
+        YardEditFrame f = new YardEditFrame(t);
 
         JemmyUtil.enterClickAndLeave(f.deleteTrackButton);
         t = l.getTrackByName("Test Yard Delete", null);
@@ -178,8 +174,7 @@ public class YardEditFrameTest extends OperationsTestCase {
     public void testLIFO() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Track t = l.addTrack("Test Yard Order", Track.YARD);
-        YardEditFrame f = new YardEditFrame();
-        f.initComponents(l, t);
+        YardEditFrame f = new YardEditFrame(t);
 
         JemmyUtil.enterClickAndLeave(f.orderLIFO);
         Assert.assertEquals("service order", Track.LIFO, t.getServiceOrder());
@@ -194,8 +189,7 @@ public class YardEditFrameTest extends OperationsTestCase {
     @Test
     public void testErrorTrackName() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        YardEditFrame f = new YardEditFrame();
-        f.initComponents(l, null);
+        YardEditFrame f = new YardEditFrame(l);
 
         // no track name entered
         JemmyUtil.enterClickAndLeaveThreadSafe(f.addTrackButton);
@@ -223,8 +217,7 @@ public class YardEditFrameTest extends OperationsTestCase {
     @Test
     public void testErrorTrackLength() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        YardEditFrame f = new YardEditFrame();
-        f.initComponents(l, null);
+        YardEditFrame f = new YardEditFrame(l);
 
         // the length field is empty
         f.trackNameTextField.setText("new yard track");
@@ -275,8 +268,7 @@ public class YardEditFrameTest extends OperationsTestCase {
     public void testTrackLengthInches() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Track t = l.addTrack("Test Yard Length", Track.YARD);
-        YardEditFrame f = new YardEditFrame();
-        f.initComponents(l, t);
+        YardEditFrame f = new YardEditFrame(t);
 
         f.trackLengthTextField.setText("24\"");
         JemmyUtil.enterClickAndLeave(f.saveTrackButton);
@@ -291,8 +283,7 @@ public class YardEditFrameTest extends OperationsTestCase {
     public void testTrackLengthCentimeters() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Track t = l.addTrack("Test Yard Length", Track.YARD);
-        YardEditFrame f = new YardEditFrame();
-        f.initComponents(l, t);
+        YardEditFrame f = new YardEditFrame(t);
 
         f.trackLengthTextField.setText("240cm");
         JemmyUtil.enterClickAndLeave(f.saveTrackButton);
@@ -309,8 +300,7 @@ public class YardEditFrameTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Track t = l.addTrack("Test Car Types", Track.YARD);
         t.setLength(100);
-        YardEditFrame f = new YardEditFrame();
-        f.initComponents(l, t);
+        YardEditFrame f = new YardEditFrame(t);
         
         Assert.assertTrue("Boxcar is accepted", t.isTypeNameAccepted("Boxcar"));
 
@@ -330,8 +320,7 @@ public class YardEditFrameTest extends OperationsTestCase {
     public void testCloseWindowOnSave() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Track t = l.addTrack("Test Close", Track.YARD);
-        YardEditFrame f = new YardEditFrame();
-        f.initComponents(l, t);
+        YardEditFrame f = new YardEditFrame(t);
         JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 

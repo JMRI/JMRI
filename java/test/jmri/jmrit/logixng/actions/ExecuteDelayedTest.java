@@ -267,7 +267,7 @@ public class ExecuteDelayedTest extends AbstractDigitalActionTestBase {
         @Override
         public void schedule(TimerTask task, long delay) {
             if (_task != null) {
-                throw new RuntimeException("Only one task at the time can be executed");
+                throw new JmriUncheckedException("Only one task at the time can be executed");
             }
             _task = task;
 //            _delay = delay;

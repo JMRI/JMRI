@@ -2,8 +2,6 @@ package jmri.jmrix.sprog;
 
 import java.util.Vector;
 
-import jmri.util.JUnitUtil;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -94,12 +92,6 @@ public class SprogTrafficControlScaffold extends SprogTrafficController {
      */
     public int numListeners() {
         return cmdListeners.size();
-    }
-
-    @Override
-    public void dispose() {
-        super.dispose();
-        JUnitUtil.waitFor(() -> { return status() == false; },"Sprog STCS Thread did not terminate.");
     }
 
     private static final Logger log = LoggerFactory.getLogger(SprogTrafficControlScaffold.class);

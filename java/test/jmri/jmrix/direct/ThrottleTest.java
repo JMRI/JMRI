@@ -9,6 +9,7 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2017
  */
+@SuppressWarnings("deprecation")
 public class ThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     @Test

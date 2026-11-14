@@ -1,6 +1,5 @@
 package jmri.jmrit.catalog;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -56,7 +55,6 @@ public class DirectorySearcher implements InstanceManagerAutoDefault {
      *                directory so user can continue looking
      * @return chosen directory or null to cancel operation
      */
-    @SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification="false postive, guarded by logic")
     private File getDirectory(String msg, boolean recurse) {
         if (_directoryChooser == null) {
             _directoryChooser = new jmri.util.swing.JmriJFileChooser(FileSystemView.getFileSystemView());

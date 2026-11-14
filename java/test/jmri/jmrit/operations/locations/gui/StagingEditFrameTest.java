@@ -2,10 +2,6 @@ package jmri.jmrit.operations.locations.gui;
 
 import java.awt.GraphicsEnvironment;
 
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.jupiter.api.*;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.*;
@@ -16,6 +12,10 @@ import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
+
+import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.jupiter.api.*;
 
 /**
  * Tests for the Operations Locations GUI class
@@ -35,10 +35,9 @@ public class StagingEditFrameTest extends OperationsTestCase {
     @Test
     public void testAddStagingTrackDefaults() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        StagingEditFrame f = new StagingEditFrame();
+        StagingEditFrame f = new StagingEditFrame(l);
         f.setTitle("Test Staging Add Frame");
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
-        f.initComponents(l, null);
 
         // create one staging tracks
         f.trackNameTextField.setText("new staging track");
@@ -84,10 +83,9 @@ public class StagingEditFrameTest extends OperationsTestCase {
     @Test
     public void testSetDirectionUsingChceckbox() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        StagingEditFrame f = new StagingEditFrame();
+        StagingEditFrame f = new StagingEditFrame(l);
         f.setTitle("Test Staging Add Frame");
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
-        f.initComponents(l, null);
 
         f.trackNameTextField.setText("4th staging track");
         f.trackLengthTextField.setText("12");
@@ -113,10 +111,9 @@ public class StagingEditFrameTest extends OperationsTestCase {
     @Test
     public void testAddCloseAndReload() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        StagingEditFrame f = new StagingEditFrame();
+        StagingEditFrame f = new StagingEditFrame(l);
         f.setTitle("Test Staging Add Frame");
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
-        f.initComponents(l, null);
 
         // create four staging tracks
         f.trackNameTextField.setText("new staging track");
@@ -172,9 +169,8 @@ public class StagingEditFrameTest extends OperationsTestCase {
         t.setLength(44);
         Assert.assertNotNull(t);
         
-        StagingEditFrame f = new StagingEditFrame();
-        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
-        f.initComponents(t);  
+        StagingEditFrame f = new StagingEditFrame(t);
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly 
         
         JemmyUtil.enterClickAndLeave(f.routeDrop);
         JemmyUtil.enterClickAndLeave(f.routePickup);
@@ -234,9 +230,8 @@ public class StagingEditFrameTest extends OperationsTestCase {
         t.setLength(44);
         Assert.assertNotNull(t);
         
-        StagingEditFrame f = new StagingEditFrame();
-        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
-        f.initComponents(t);  
+        StagingEditFrame f = new StagingEditFrame(t);
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly  
         
         JemmyUtil.enterClickAndLeave(f.trainDrop);
         JemmyUtil.enterClickAndLeave(f.trainPickup);
@@ -308,9 +303,8 @@ public class StagingEditFrameTest extends OperationsTestCase {
         t.setLength(44);
         Assert.assertNotNull(t);
         
-        StagingEditFrame f = new StagingEditFrame();
-        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
-        f.initComponents(t);  
+        StagingEditFrame f = new StagingEditFrame(t);
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly  
            
         Assert.assertFalse(t.isBlockCarsEnabled());
         JemmyUtil.enterClickAndLeave(f.blockCarsCheckBox);
@@ -391,9 +385,8 @@ public class StagingEditFrameTest extends OperationsTestCase {
         t.setAddCustomLoadsEnabled(true);
         t.setBlockCarsEnabled(true);
         
-        StagingEditFrame f = new StagingEditFrame();
-        f.setLocation(0, 0); // entire panel must be visible for tests to work properly
-        f.initComponents(t);  
+        StagingEditFrame f = new StagingEditFrame(t);
+        f.setLocation(0, 0); // entire panel must be visible for tests to work properly 
            
         Assert.assertFalse(f.blockCarsCheckBox.isEnabled());
         Assert.assertFalse(f.blockCarsCheckBox.isSelected());
@@ -405,8 +398,7 @@ public class StagingEditFrameTest extends OperationsTestCase {
     public void testCloseWindowOnSave() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Track t = l.addTrack("Test Close", Track.STAGING);
-        StagingEditFrame f = new StagingEditFrame();
-        f.initComponents(l, t);
+        StagingEditFrame f = new StagingEditFrame(t);
         JUnitOperationsUtil.testCloseWindowOnSave(f.getTitle());
     }
 

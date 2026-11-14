@@ -8,9 +8,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.jmrit.logixng.expressions.ExpressionSensor;
 import jmri.jmrit.logixng.expressions.ExpressionMemory;
+import jmri.jmrit.logixng.expressions.False;
 import jmri.jmrit.logixng.expressions.True;
 import jmri.InstanceManager;
 import jmri.NamedBean;
@@ -288,6 +290,46 @@ public class LogixTest extends AbstractDigitalActionTestBase {
     @Test
     public void testCategory() {
         assertSame( LogixNG_Category.OTHER, _base.getCategory(), "Category matches");
+    }
+
+    /**
+     * A Logix conditional starts UNKNOWN, so its first calculation is a change
+     * whether it is true or false, and runs the matching "on change" actions.
+     * The Logix action, which emulates it, must do the same: a first
+     * evaluation that is false runs the "when false" actions, and a further
+     * false one does not.
+     *
+     * @throws SocketAlreadyConnectedException if a socket can't be connected
+     */
+    @Test
+    public void testFirstFalseResultIsAChange() throws SocketAlreadyConnectedException {
+        AtomicBoolean ran = new AtomicBoolean(false);
+        ConditionalNG cng = new DefaultConditionalNGScaffold("IQC2", "First result");  // NOI18N
+        InstanceManager.getDefault(ConditionalNG_Manager.class).register(cng);
+        cng.setRunDelayed(false);
+
+        // connected before the ConditionalNG is added and enabled, as in setUp()
+        Logix logix = new Logix("IQDA322", null);
+        cng.getChild(0).connect(InstanceManager.getDefault(DigitalActionManager.class).registerAction(logix));
+        logix.getChild(0).connect(InstanceManager.getDefault(DigitalExpressionManager.class)
+                .registerExpression(new False("IQDE322", null)));
+        DigitalBooleanLogixAction whenFalse =
+                new DigitalBooleanLogixAction("IQDB322", null, DigitalBooleanLogixAction.When.False);
+        logix.getChild(1).connect(InstanceManager.getDefault(DigitalBooleanActionManager.class)
+                .registerAction(whenFalse));
+        whenFalse.getChild(0).connect(InstanceManager.getDefault(DigitalActionManager.class)
+                .registerAction(new ActionAtomicBoolean("IQDA323", null, ran, true)));
+        logixNG.addConditionalNG(cng);
+        assertTrue( logixNG.setParentForAllChildren(new ArrayList<>()));
+        assertFalse( ran.get(), "nothing evaluated yet");
+
+        // the LogixNG is active, so enabling the ConditionalNG runs it: the first evaluation
+        cng.setEnabled(true);
+        assertTrue( ran.get(), "a first result of false runs the when false actions");
+
+        ran.set(false);
+        cng.execute();
+        assertFalse( ran.get(), "a second result of false is no change and runs nothing");
     }
 
     @BeforeEach

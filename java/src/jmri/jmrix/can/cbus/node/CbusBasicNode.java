@@ -124,11 +124,18 @@ public class CbusBasicNode {
 
     /**
      * Set Node CAN ID.
+     * <p>
+     * Notifies PropertyChangeListener "CANID" only if the CAN ID has changed,
+     * as this is called for every CAN Frame received from the node.
      * @param newcanid CAN ID of the node
      */
     public final void setCanId ( int newcanid ) {
+        if ( _canId == newcanid ) {
+            return;
+        }
+        int oldCanId = _canId;
         _canId = newcanid;
-        notifyPropertyChangeListener("CANID", null, _canId);
+        notifyPropertyChangeListener("CANID", oldCanId, _canId);
     }
     
     /**

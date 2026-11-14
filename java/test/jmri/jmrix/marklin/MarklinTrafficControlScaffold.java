@@ -50,4 +50,11 @@ public class MarklinTrafficControlScaffold extends jmri.jmrix.marklin.simulation
         return cmdListeners.size();
     }
 
+    /**
+     * Clear the list of sent messages.
+     */
+    public void clearSentMessages() {
+        list.clear();
+    }
+
 }

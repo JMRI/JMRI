@@ -64,6 +64,27 @@ public class TrackSegmentViewTest extends LayoutTrackViewTest {
     }
 
     @Test
+    public void test_getCentreLine() {
+        java.awt.Shape line = segmentView.getCentreLine();
+        assertTrue(line instanceof Line2D, "a straight segment's centre line is a line");
+        Line2D l = (Line2D) line;
+        assertEquals(new Point2D.Double(210.0, 220.0), l.getP1());
+        assertEquals(new Point2D.Double(220.0, 233.0), l.getP2());
+
+        segmentView.setArc(true);
+        segmentView.setAngle(90.0);
+        assertTrue(segmentView.getCentreLine() instanceof Arc2D, "an arc's centre line is an arc");
+
+        segmentView.setBezier(true);
+        segmentView.setBezierControlPoint(new Point2D.Double(212.0, 230.0), 0);
+        segmentView.setBezierControlPoint(new Point2D.Double(218.0, 224.0), 1);
+        java.awt.Shape curve = segmentView.getCentreLine();
+        assertTrue(!(curve instanceof Line2D) && !(curve instanceof Arc2D), "a Bezier's centre line is its curve");
+        java.awt.geom.Rectangle2D bounds = curve.getBounds2D();
+        assertTrue(bounds.getMinX() >= 209.9 && bounds.getMaxX() <= 220.1, "between its ends: " + bounds);
+    }
+
+    @Test
     public void test_getDirectionRAD() {
         assertEquals(4.056693354143153, segmentView.getDirectionRAD(), TOLERANCE, "segmentView.getDirectionRAD()");
         assertEquals(232.4314079711725, segmentView.getDirectionDEG(), TOLERANCE, "segmentView.getDirectionDEG()");

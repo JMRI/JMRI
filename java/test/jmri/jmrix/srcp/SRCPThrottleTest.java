@@ -11,6 +11,7 @@ import org.junit.jupiter.api.*;
  *
  * @author Bob Jacobsen
  */
+@SuppressWarnings("deprecation")
 public class SRCPThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     private SRCPBusConnectionMemo memo;

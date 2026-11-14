@@ -109,6 +109,11 @@ public final class LogixNGTableIcon extends PositionableJPanel {
     }
 
     @Override
+    public jmri.NamedBean getNamedBean() {
+        return _tableModel.getTable();
+    }
+
+    @Override
     @Nonnull
     public String getTypeString() {
         return Bundle.getMessage("PositionableType_LogixNGTableIcon");

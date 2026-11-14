@@ -276,7 +276,7 @@ public final class TimerUtil {
         synchronized (commonTimer) {
             var gtask = gtask(task);
             try {
-                commonTimer.schedule(gtask(task), delay, period);
+                commonTimer.schedule(gtask, delay, period);
             } catch (IllegalStateException e) {
                 log.warn("During schedule()", e);
             }

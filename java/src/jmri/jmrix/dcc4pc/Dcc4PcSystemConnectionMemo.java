@@ -2,10 +2,12 @@ package jmri.jmrix.dcc4pc;
 
 import java.util.Comparator;
 import java.util.ResourceBundle;
+import java.util.function.Supplier;
 
 import jmri.*;
 import jmri.jmrix.ConfiguringSystemConnectionMemo;
 import jmri.jmrix.DefaultSystemConnectionMemo;
+import jmri.jmrix.SystemConnectionMemoManager;
 import jmri.util.NamedBeanComparator;
 
 /**
@@ -106,8 +108,79 @@ public class Dcc4PcSystemConnectionMemo extends DefaultSystemConnectionMemo impl
         super.dispose();
     }
 
+    /**
+     * Provide Programming on Main through another connection's ops-mode
+     * programmer: it sends the packets, and the readback arrives as RailCom
+     * through this connection. Service mode stays with the other connection.
+     *
+     * @param <T> a manager for both modes
+     * @param dpm the other connection's programmer manager
+     */
     public <T extends AddressedProgrammerManager & GlobalProgrammerManager> void setRealProgramManager(T dpm) {
-        store(dpm,GlobalProgrammerManager.class);
-        store(dpm, AddressedProgrammerManager.class);
+        provideProgrammer(new Dcc4PcProgrammerManager(dpm, this));
+        log.info("{} reads CVs on the main through {}", getUserName(), dpm.getUserName());
     }
+
+    private void provideProgrammer(Dcc4PcProgrammerManager pm) {
+        store(pm, AddressedProgrammerManager.class);
+        InstanceManager.store(pm, AddressedProgrammerManager.class);
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * No consist manager, although this connection provides an ops-mode
+     * programmer: that only forwards to another connection, which provides
+     * its own consists.
+     */
+    @Override
+    public boolean provides(Class<?> c) {
+        boolean provided = super.provides(c);
+        return provided && !c.equals(ConsistManager.class);
+    }
+
+    /**
+     * Use another connection's ops-mode programmer for Programming on Main
+     * (the connection's "Programmer" option): that connection's command
+     * station sends the packets, and the RailCom reply comes back through
+     * this one. With no connection named, the default Command Station's
+     * connection (Preferences, Defaults) is used.
+     * <p>
+     * This connection offers its ops-mode programmer straight away, so it can
+     * be chosen as the default whichever connection starts first; the other
+     * connection is looked up each time a programmer is needed.
+     *
+     * @param userName the other connection's name, or empty to use the
+     *                 default command station
+     */
+    public void useProgrammerFrom(String userName) {
+        boolean useDefault = userName == null || userName.isEmpty();
+        Supplier<SystemConnectionMemo> other = () -> connectionNamed(useDefault ? defaultCommandStation() : userName);
+        provideProgrammer(new Dcc4PcProgrammerManager(
+                () -> managerOf(other.get(), AddressedProgrammerManager.class),
+                () -> managerOf(other.get(), CommandStation.class),
+                this));
+        log.info("{} reads CVs on the main through {}", getUserName(), useDefault ? "the default command station" : userName);
+    }
+
+    /** @return the name of the connection set as the default Command Station, or null if none */
+    private static String defaultCommandStation() {
+        jmri.managers.ManagerDefaultSelector defaults = InstanceManager.getNullableDefault(jmri.managers.ManagerDefaultSelector.class);
+        return defaults == null ? null : defaults.getDefault(CommandStation.class);
+    }
+
+    /** @return the named connection other than this one, or null if it isn't running */
+    private SystemConnectionMemo connectionNamed(String userName) {
+        if (userName == null) {
+            return null;
+        }
+        SystemConnectionMemo other = SystemConnectionMemoManager.getDefault().getSystemConnectionMemoForUserName(userName);
+        return other == this ? null : other;
+    }
+
+    private static <T> T managerOf(SystemConnectionMemo memo, Class<T> type) {
+        return memo == null ? null : memo.get(type);
+    }
+
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Dcc4PcSystemConnectionMemo.class);
 }

@@ -84,6 +84,7 @@ public class OlcbTestHelper {
     /**
      * Initializes the interface objects, and clears the startup messages in the mock.
      */
+    @SuppressWarnings("deprecation")
     private void expectInit() {
         NodeID id = new NodeID(new byte[]{1, 2, 0, 0, 1, 1});
         aliasMap.insert(0x333, id);

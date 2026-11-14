@@ -747,6 +747,7 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
             if (op != null) {
                 if (!op.isNonce()) {
                     op = op.makeNonce(t);
+                    t.setTurnoutOperation(op); // without this the turnout keeps using the old operation and edits are lost
                 }
                 // make and show edit dialog
                 log.debug("TurnoutOpsEditDialog starting");

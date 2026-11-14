@@ -105,11 +105,13 @@ public class UsbDeviceScaffold implements UsbDevice {
 
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
     public void syncSubmit(List list) throws UsbException, IllegalArgumentException, UsbDisconnectedException {
 
     }
 
+    @SuppressWarnings("rawtypes")
     @Override
     public void asyncSubmit(List list) throws UsbException, IllegalArgumentException, UsbDisconnectedException {
 

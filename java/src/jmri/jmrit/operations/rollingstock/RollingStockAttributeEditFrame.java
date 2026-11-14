@@ -1,12 +1,13 @@
 package jmri.jmrit.operations.rollingstock;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 
 import javax.swing.*;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -39,9 +40,10 @@ public abstract class RollingStockAttributeEditFrame extends OperationsFrame imp
     // text box
     public JTextField addTextBox = new JTextField(Control.max_len_string_attibute);
 
-    // ROAD and OWNER are the only two attributes shared between Cars and Engines
+    // ROAD, OWNER and COLOR are the attributes shared between Cars and Engines
     public static final String ROAD = "Road";
     public static final String OWNER = "Owner";
+    public static final String COLOR = "Color";
     public static final String TYPE = "Type"; // cars and engines have different types
     public static final String LENGTH = "Length"; // cars and engines have different lengths
 
@@ -201,6 +203,9 @@ public abstract class RollingStockAttributeEditFrame extends OperationsFrame imp
         if (_attribute.equals(OWNER)) {
             InstanceManager.getDefault(CarOwners.class).deleteName(deleteItem);
         }
+        if (_attribute.equals(COLOR)) {
+            InstanceManager.getDefault(CarColors.class).deleteName(deleteItem);
+        }
     }
 
     protected void addAttributeName(String addItem) {
@@ -210,6 +215,9 @@ public abstract class RollingStockAttributeEditFrame extends OperationsFrame imp
         if (_attribute.equals(OWNER)) {
             InstanceManager.getDefault(CarOwners.class).addName(addItem);
         }
+        if (_attribute.equals(COLOR)) {
+            InstanceManager.getDefault(CarColors.class).addName(addItem);
+        }
     }
 
     protected void replaceItem(String oldItem, String newItem) {
@@ -218,6 +226,9 @@ public abstract class RollingStockAttributeEditFrame extends OperationsFrame imp
         }
         if (_attribute.equals(OWNER)) {
             InstanceManager.getDefault(CarOwners.class).replaceName(oldItem, newItem);
+        }
+        if (_attribute.equals(COLOR)) {
+            InstanceManager.getDefault(CarColors.class).replaceName(oldItem, newItem);
         }
     }
 
@@ -229,6 +240,10 @@ public abstract class RollingStockAttributeEditFrame extends OperationsFrame imp
         if (_attribute.equals(OWNER)) {
             comboBox = InstanceManager.getDefault(CarOwners.class).getComboBox();
             InstanceManager.getDefault(CarOwners.class).addPropertyChangeListener(this);
+        }
+        if (_attribute.equals(COLOR)) {
+            comboBox = InstanceManager.getDefault(CarColors.class).getComboBox();
+            InstanceManager.getDefault(CarColors.class).addPropertyChangeListener(this);
         }
     }
 
@@ -355,6 +370,9 @@ public abstract class RollingStockAttributeEditFrame extends OperationsFrame imp
         }
         if (e.getPropertyName().equals(CarOwners.CAROWNERS_CHANGED_PROPERTY)) {
             InstanceManager.getDefault(CarOwners.class).updateComboBox(comboBox);
+        }
+        if (e.getPropertyName().equals(CarColors.CARCOLORS_CHANGED_PROPERTY)) {
+            InstanceManager.getDefault(CarColors.class).updateComboBox(comboBox);
         }
         comboBox.setSelectedItem(addTextBox.getText().trim()); // has to be the last line for propertyChange
     }

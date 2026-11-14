@@ -142,6 +142,11 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
     }
 
     @Override
+    public jmri.NamedBean getNamedBean() {
+        return getMemory();
+    }
+
+    @Override
     public void stateChanged(ChangeEvent e) {
         spinnerUpdated();
     }

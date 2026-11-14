@@ -331,7 +331,7 @@ public class JsonUtil {
         node.put(JsonOperations.LENGTH, rs.getLengthInteger());
         node.put(JsonOperations.WEIGHT, rs.getAdjustedWeightTons());
         node.put(JsonOperations.WEIGHT_TONS, rs.getWeightTons());
-        node.put(JsonOperations.COLOR, rs.getColor());
+        node.put(JsonOperations.COLOR, rs.getColorName());
         node.put(JsonOperations.OWNER, rs.getOwnerName());
         node.put(JsonOperations.BUILT, rs.getBuilt());
         node.put(JsonOperations.COMMENT, rs.getComment());
@@ -379,6 +379,7 @@ public class JsonUtil {
         data.put(JSON.DEPARTURE_TIME, train.getFormatedDepartureTime());
         data.put(JSON.DESCRIPTION, train.getDescription());
         data.put(JSON.COMMENT, train.getCommentCurrent());
+        data.put(JSON.COMMENT_TERMINATION, train.getCommentTerminationCurrent());
         if (train.getRoute() != null) {
             data.put(JSON.ROUTE, train.getRoute().getName());
             data.put(JSON.ROUTE_ID, train.getRoute().getId());

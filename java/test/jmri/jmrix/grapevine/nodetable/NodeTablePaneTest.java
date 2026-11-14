@@ -23,6 +23,19 @@ public class NodeTablePaneTest {
         Assert.assertNotNull("exists",t);
     }
 
+    @Test
+    public void testStartPollStopsEarlierCheck() {
+        NodeTablePane t = new NodeTablePane(memo);
+        t.initComponents();
+        javax.swing.Timer first = t.timer;
+        Assert.assertTrue("check started by initComponents", first.isRunning());
+        t.startPoll();
+        Assert.assertFalse("earlier check stopped", first.isRunning());
+        Assert.assertTrue("new check running", t.timer.isRunning());
+        t.dispose();
+        Assert.assertNull("check stopped by dispose", t.timer);
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

@@ -133,10 +133,10 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
         frame.setVisible(true);
 
         // check load
-        assertEquals("00.00.00.00.00.00.00.00", vp.litEventID.getText());
-        assertEquals("00.00.00.00.00.00.00.00", vp.notLitEventID.getText());
-        assertEquals("00.00.00.00.00.00.00.00", vp.heldEventID.getText());
-        assertEquals("00.00.00.00.00.00.00.00", vp.notHeldEventID.getText());
+        assertEquals("", vp.litEventID.getText());
+        assertEquals("", vp.notLitEventID.getText());
+        assertEquals("", vp.heldEventID.getText());
+        assertEquals("", vp.notHeldEventID.getText());
 
         // disable Approach Medim, change some of the event IDs
         // then build the mast, all on Swing thread
@@ -255,7 +255,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
 
         // check correct eventid present
         OlcbSignalMast foundMast = (OlcbSignalMast)sm2;
-        assertEquals(new OlcbAddress("00.00.00.00.00.00.00.00", null), new OlcbAddress(foundMast.getOutputForAppearance("Stop"), null));
+        assertEquals(new OlcbAddress("", null), new OlcbAddress(foundMast.getOutputForAppearance("Stop"), null));
         assertEquals(new OlcbAddress("01.02.03.04.05.06.07.08", null), new OlcbAddress(foundMast.getOutputForAppearance("Clear"), null));
         assertEquals(new OlcbAddress("01.01.01.01.01.01.01.01", null), new OlcbAddress(foundMast.getOutputForAppearance("Approach"), null));
 

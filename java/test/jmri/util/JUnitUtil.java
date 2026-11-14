@@ -46,6 +46,7 @@ import jmri.managers.*;
 import jmri.profile.*;
 import jmri.progdebugger.DebugProgrammerManager;
 import jmri.util.gui.GuiLafPreferencesManager;
+import jmri.util.junit.ThreadSafeTimeouts;
 import jmri.util.managers.*;
 import jmri.util.prefs.*;
 import jmri.util.zeroconf.MockZeroConfServiceManager;
@@ -267,6 +268,10 @@ public class JUnitUtil {
 
         // silence the Jemmy GUI unit testing framework
         JUnitUtil.silenceGUITestOutput();
+        // let the Jemmy timeouts be shared with the threads that close dialogs
+        if (!(JemmyProperties.getCurrentTimeouts() instanceof ThreadSafeTimeouts)) {
+            JemmyProperties.setCurrentTimeouts(new ThreadSafeTimeouts());
+        }
 
         // ideally this would be resetWindows(false, true) to force an error if an earlier
         // test left a window open, but different platforms seem to have just
@@ -340,7 +345,7 @@ public class JUnitUtil {
      * A bit expensive, so only used when needed.
      */
     public static void clearTurnoutThreads(){
-        removeMatchingThreads("setCommandedStateAtInterval"); // must stay consistent with AbstractTurnout
+        removeMatchingThreads("setCommandedStateAtInterval"); // AbstractTurnout no longer starts these
     }
 
     /**
@@ -1157,6 +1162,28 @@ public class JUnitUtil {
     public static void clearBlockBossLogic() {
         if(InstanceManager.containsDefault(BlockBossLogicProvider.class)) {
             InstanceManager.getDefault(BlockBossLogicProvider.class).dispose();
+        }
+    }
+
+    /**
+     * Remove and dispose of every Signal Mast Logic, so that none is left to
+     * act on a job it scheduled after the Signal Mast Logic delay.
+     * <p>
+     * Disposing of the Signal Mast Logic Manager, as resetting the
+     * InstanceManager does, leaves its logics in place. One still listening
+     * to its masts can schedule a job that runs after the next test has
+     * reset the InstanceManager, creating managers there before that test is
+     * set up (see issue #7898). Done on the layout thread (Swing thread), so
+     * that no job runs part way through.
+     */
+    public static void clearSignalMastLogic() {
+        if (InstanceManager.containsDefault(SignalMastLogicManager.class)) {
+            SignalMastLogicManager smlm = InstanceManager.getDefault(SignalMastLogicManager.class);
+            ThreadingUtil.runOnLayout(() -> {
+                for (SignalMastLogic sml : new ArrayList<>(smlm.getSignalMastLogicList())) {
+                    smlm.removeSignalMastLogic(sml);
+                }
+            });
         }
     }
 

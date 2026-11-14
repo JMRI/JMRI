@@ -21,9 +21,6 @@ import org.openlcb.ConsumerIdentifiedMessage;
 import org.openlcb.IdentifyProducersMessage;
 import org.openlcb.ProducerIdentifiedMessage;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * This class implements a SignalMast that use <B>OpenLCB Events</B>
  * to set aspects.
@@ -219,8 +216,11 @@ public class OlcbSignalMast extends AbstractSignalMast {
      */
     @Override
     public void setLit(boolean newLit) {
+        boolean oldLit = litMachine.getState();
         litMachine.setState(newLit);
-        // does not call super.setLit because no local state change until Event consumed
+        if (!litMachine.hasEventForState(newLit) && oldLit != newLit) {
+            firePropertyChange("Lit", oldLit, newLit);
+        }
     }
     @Override
     public boolean getLit() {
@@ -232,8 +232,11 @@ public class OlcbSignalMast extends AbstractSignalMast {
      */
     @Override
     public void setHeld(boolean newHeld) {
+        boolean oldHeld = heldMachine.getState();
         heldMachine.setState(newHeld);
-        // does not call super.setHeld because no local state change until Event consumed
+        if (!heldMachine.hasEventForState(newHeld) && oldHeld != newHeld) {
+            firePropertyChange("Held", oldHeld, newHeld);
+        }
     }
     @Override
     public boolean getHeld() {
@@ -294,10 +297,21 @@ public class OlcbSignalMast extends AbstractSignalMast {
         protected final HashMap<EventID, T> eventToState = new HashMap<>(); // for efficiency, but requires no null entries
 
         public void setState(@Nonnull T newState) {
+            EventID eventId = stateToEventID.get(newState);
+            if (eventId == null || nullEvent.equals(eventId)) {
+                log.debug("No event configured for state {}; not sending PCER", newState);
+                state = newState;
+                return;
+            }
             log.debug("sending PCER to {}", getEventStringForState(newState));
             connection.put(
-                    new ProducerConsumerEventReportMessage(node, getEventIDForState(newState)),
+                    new ProducerConsumerEventReportMessage(node, eventId),
                     null);
+        }
+
+        public boolean hasEventForState(@Nonnull T key) {
+            EventID eventId = stateToEventID.get(key);
+            return eventId != null && !nullEvent.equals(eventId);
         }
 
         private final EventID nullEvent = new EventID(new byte[]{0,0,0,0,0,0,0,0});
@@ -306,46 +320,46 @@ public class OlcbSignalMast extends AbstractSignalMast {
         public T getState() { return state; }
 
         public void setEventForState(@Nonnull T key, @Nonnull String value) {
-            stateToEventString.put(key, value);
+            String eventString = value.trim();
+            stateToEventString.put(key, eventString);
 
-            EventID eid = new OlcbAddress(value, systemMemo).toEventID();
+            EventID eid = eventString.isEmpty()
+                    ? nullEvent
+                    : new OlcbAddress(eventString, systemMemo).toEventID();
             stateToEventID.put(key, eid);
 
-            // check for whether already there; so, we're done.
-            if (eventToState.get(eid) == null) {
+            // The null event means "don't send" and must not be treated as a state.
+            if (! nullEvent.equals(eid) && eventToState.get(eid) == null) {
                 // Not there yet, save it
                 eventToState.put(eid, key);
+                // emit Producer, Consumer Identified messages to show our interest
+                connection.put(
+                        new ProducerIdentifiedMessage(node, eid, EventState.Unknown),
+                        null);
+                connection.put(
+                        new ConsumerIdentifiedMessage(node, eid, EventState.Unknown),
+                        null);
 
-                if (! nullEvent.equals(eid)) { // and if not the null (i.e. not the "don't send") event
-                    // emit Producer, Consumer Identified messages to show our interest
-                    connection.put(
-                            new ProducerIdentifiedMessage(node, eid, EventState.Unknown),
-                            null);
-                    connection.put(
-                            new ConsumerIdentifiedMessage(node, eid, EventState.Unknown),
-                            null);
-
-                    // emit Identify Producer, Consumer messages to get distributed state
-                    connection.put(
-                            new IdentifyProducersMessage(node, eid),
-                            null);
-                    connection.put(
-                            new IdentifyConsumersMessage(node, eid),
-                            null);
-                }
+                // emit Identify Producer, Consumer messages to get distributed state
+                connection.put(
+                        new IdentifyProducersMessage(node, eid),
+                        null);
+                connection.put(
+                        new IdentifyConsumersMessage(node, eid),
+                        null);
             }
         }
 
         @CheckForNull
         public EventID getEventIDForState(@Nonnull T key) {
             EventID retval = stateToEventID.get(key);
-            if (retval == null) retval = new EventID("00.00.00.00.00.00.00.00");
+            if (retval == null) retval = nullEvent;
             return retval;
         }
         @CheckForNull
         public String getEventStringForState(@Nonnull T key) {
             String retval = stateToEventString.get(key);
-            if (retval == null) retval = "00.00.00.00.00.00.00.00";
+            if (retval == null) retval = "";
             return retval;
         }
 
@@ -466,8 +480,6 @@ public class OlcbSignalMast extends AbstractSignalMast {
 
     }
 
-    private static final Logger log = LoggerFactory.getLogger(OlcbSignalMast.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OlcbSignalMast.class);
 
 }
-
-

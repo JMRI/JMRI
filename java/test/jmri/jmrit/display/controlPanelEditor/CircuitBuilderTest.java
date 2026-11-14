@@ -15,6 +15,7 @@ import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Portal;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 import jmri.util.junit.annotations.DisabledIfHeadless;
 import jmri.util.swing.JemmyUtil;
 
@@ -62,7 +63,7 @@ public class CircuitBuilderTest {
         OBlock ob3 = InstanceManager.getDefault(OBlockManager.class).getOBlock("OB3");
         cb.setCurrentBlock(ob3);
 
-        cb.editCircuit("editCircuitItem", false);
+        ThreadingUtil.runOnGUI(() -> cb.editCircuit("editCircuitItem", false));
         assertNotNull( cb.getEditFrame(), "exists");
 /*
         cb.editCircuit("editCircuitItem", true);
@@ -82,7 +83,7 @@ public class CircuitBuilderTest {
     public void testEditCircuitError() {
         getCPEandCB();
 
-        cb.editCircuitError("OB1");
+        ThreadingUtil.runOnGUI(() -> cb.editCircuitError("OB1"));
 
         JFrameOperator nfo = new JFrameOperator(cb.getEditFrame());
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonDone"));
@@ -96,7 +97,7 @@ public class CircuitBuilderTest {
         OBlock ob3 = InstanceManager.getDefault(OBlockManager.class).getOBlock("OB2");
         cb.setCurrentBlock(ob3);
 
-        cb.editPortals("editPortalsItem", false);
+        ThreadingUtil.runOnGUI(() -> cb.editPortals("editPortalsItem", false));
 
         JFrameOperator nfo = new JFrameOperator(cb.getEditFrame());
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonDone"));
@@ -110,7 +111,7 @@ public class CircuitBuilderTest {
         OBlock ob3 = InstanceManager.getDefault(OBlockManager.class).getOBlock("OB3");
         cb.setCurrentBlock(ob3);
 
-        cb.editCircuitPaths("editCircuitPathsItem", false);
+        ThreadingUtil.runOnGUI(() -> cb.editCircuitPaths("editCircuitPathsItem", false));
 
         JFrameOperator nfo = new JFrameOperator(cb.getEditFrame());
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonDone"));
@@ -124,7 +125,7 @@ public class CircuitBuilderTest {
         OBlock ob3 = InstanceManager.getDefault(OBlockManager.class).getOBlock("OB5");
         cb.setCurrentBlock(ob3);
 
-        cb.editPortalDirection("editDirectionItem", false);
+        ThreadingUtil.runOnGUI(() -> cb.editPortalDirection("editDirectionItem", false));
 
         JFrameOperator nfo = new JFrameOperator(cb.getEditFrame());
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonDone"));
@@ -138,7 +139,7 @@ public class CircuitBuilderTest {
         OBlock ob3 = InstanceManager.getDefault(OBlockManager.class).getOBlock("OB4");
         cb.setCurrentBlock(ob3);
 
-        cb.editSignalFrame("editSignalItem", false);
+        ThreadingUtil.runOnGUI(() -> cb.editSignalFrame("editSignalItem", false));
 
         JFrameOperator nfo = new JFrameOperator(cb.getEditFrame());
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonDone"));
@@ -156,7 +157,7 @@ public class CircuitBuilderTest {
             jbo.push();
         }).start();*/
 
-        cb.editPortalError("EastExit-EastJunction");
+        ThreadingUtil.runOnGUI(() -> cb.editPortalError("EastExit-EastJunction"));
 
         JFrameOperator nfo = new JFrameOperator(cb.getEditFrame());
         JemmyUtil.pressButton(nfo, Bundle.getMessage("ButtonDone"));
@@ -178,7 +179,7 @@ public class CircuitBuilderTest {
             jbo.push();
         }).start();
 
-        cb.editPortalError(block, portal, null);
+        ThreadingUtil.runOnGUI(() -> cb.editPortalError(block, portal, null));
 
         JFrameOperator nfo = new JFrameOperator(cb.getEditFrame());
 

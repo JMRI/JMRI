@@ -156,7 +156,11 @@ public class CbusConsoleLoggingPane extends javax.swing.JPanel {
             try {
                 logStream = new PrintStream(new FileOutputStream(logFileChooser.getSelectedFile()));
             } catch (FileNotFoundException ex) {
-                log.error("exception", ex);
+                log.error("Unable to open log file {}", logFileChooser.getSelectedFile(), ex);
+                // not logging, so do not show the button as logging
+                logStream = null;
+                startStopLogButton.setSelected(false);
+                updateStartStopButtonText();
             }
         }
     }
@@ -235,6 +239,9 @@ public class CbusConsoleLoggingPane extends javax.swing.JPanel {
     public void dispose(){
         var p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         p.setSimplePreferenceState(logToFilePreferenceString(), startStopLogButton.isSelected());
+        // close the log file, the logging state is restored from the preference
+        // when the console is next opened
+        stopLogButtonActionPerformed(null);
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusConsoleLoggingPane.class);

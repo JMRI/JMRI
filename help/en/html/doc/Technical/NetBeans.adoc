@@ -9,7 +9,7 @@ Apache NetBeans is a very powerful Integrated Development Environment (IDE), whi
 
 == Installation
 
-. Download and install a Java 8 or newer https://adoptopenjdk.net[Java Development Kit (JDK)] (It is recommended to use a package manager if possible to ensure security updates can be automatically installed)
+. Download and install a Java 11 or newer https://adoptopenjdk.net[Java Development Kit (JDK)] (It is recommended to use a package manager if possible to ensure security updates can be automatically installed)
 . Download Apache NetBeans from http://netbeans.apache.org/download[netbeans.apache.org] (It is recommended to use a package manager if possible to ensure security updates can be automatically installed)
 . Run the Apache NetBeans installer
 

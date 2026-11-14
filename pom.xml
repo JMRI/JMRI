@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>5.17.4-SNAPSHOT</version>
+    <version>5.17.5-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -22,8 +22,8 @@
         <jemmy.version>RELEASE125</jemmy.version>
         <slf4j.version>2.0.17</slf4j.version>
         <log4j.version>2.25.4</log4j.version>
-        <jackson-core.version>2.22.0</jackson-core.version>
-        <jackson-databind.version>2.22.0</jackson-databind.version>
+        <jackson-core.version>2.22.4</jackson-core.version>
+        <jackson-databind.version>2.22.4</jackson-databind.version>
         <jackson-annotations.version>2.22</jackson-annotations.version>
         <jackson-datatype-jsr310.version>2.22.0</jackson-datatype-jsr310.version>
         <jogamp.version>2.5.0</jogamp.version>
@@ -392,6 +392,15 @@
         </filters>
 
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.5.0</version>
+                <configuration>
+                    <propertiesEncoding>UTF-8</propertiesEncoding>
+                </configuration>
+            </plugin>			
+			
             <plugin>
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
@@ -1498,7 +1507,7 @@
             <!-- used in jmri.util.GenerateSearchIndexTest -->
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
-            <version>1.15.3</version>
+            <version>1.23.2</version>
             <scope>test</scope>
         </dependency>
         <dependency>

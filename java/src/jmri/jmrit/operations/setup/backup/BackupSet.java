@@ -3,10 +3,11 @@
  */
 package jmri.jmrit.operations.setup.backup;
 
-import java.io.File;
-import java.util.Date;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import java.io.File;
+import java.time.*;
+
+import jmri.JmriUncheckedException;
 
 /**
  * Represents the set of Operations files that is considered a "Backup" of the
@@ -27,24 +28,23 @@ public class BackupSet {
         return _setName;
     }
 
-    public Date getLastModifiedDate() {
+    public LocalDateTime getLastModifiedDate() {
         return _lastModifiedDate;
     }
 
-    private Date _lastModifiedDate;
+    private LocalDateTime _lastModifiedDate;
     private File _dir;
 
     public BackupSet(File dir) {
         _dir = dir;
         _setName = dir.getName();
-        _lastModifiedDate = new Date(dir.lastModified());
+        _lastModifiedDate = LocalDateTime.ofInstant(Instant.ofEpochMilli(dir.lastModified()), ZoneId.systemDefault());
     }
 
     public void delete() {
         deleteDirectoryAndFiles(_dir);
     }
 
-    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "not possible")
     private void deleteDirectoryAndFiles(File dir) {
         // Deletes all of the files in a directory, and then the directory
         // itself.
@@ -57,14 +57,14 @@ public class BackupSet {
             if (f.isFile()) {
                 ok = f.delete();
                 if (!ok) {
-                    throw new RuntimeException("Failed to delete file: " + f.getAbsolutePath()); // NOI18N
+                    throw new JmriUncheckedException("Failed to delete file: " + f.getAbsolutePath()); // NOI18N
                 }
             }
         }
 
         ok = dir.delete();
         if (!ok) {
-            throw new RuntimeException("Failed to delete directory: " + dir.getAbsolutePath()); // NOI18N
+            throw new JmriUncheckedException("Failed to delete directory: " + dir.getAbsolutePath()); // NOI18N
         }
     }
 

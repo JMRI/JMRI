@@ -24,30 +24,37 @@ public class CbusMessage {
      * Return a CanReply for use in sensors, turnouts + light
      * If a response event, set to normal event
      * In future, this may also translate extended messages down to normal messages.
+     * <p>
+     * The original CanReply is returned unchanged ( no copy is made ) when the
+     * OPC does not need converting, as this is called by every Sensor, Turnout
+     * and Light for every incoming Frame. Callers must not modify the returned
+     * CanReply.
      *
      * @param original CanReply to be coverted to normal opc
-     * @return new CanReply perhaps converted from response OPC to normal OPC.
+     * @return the original CanReply if no conversion required,
+     * else a new CanReply converted from response OPC to normal OPC.
      */
     public static CanReply opcRangeToStl(CanReply original){
-        CanReply msg = new CanReply(original);
-        int opc = getOpcode(msg);
-        // log.debug(" about to check opc {} ",opc);
-        switch (opc) {
+        int newOpc;
+        switch (getOpcode(original)) {
             case CbusConstants.CBUS_ARON:
-                msg.setElement(0, CbusConstants.CBUS_ACON);
+                newOpc = CbusConstants.CBUS_ACON;
                 break;
             case CbusConstants.CBUS_AROF:
-                msg.setElement(0, CbusConstants.CBUS_ACOF);
+                newOpc = CbusConstants.CBUS_ACOF;
                 break;
             case CbusConstants.CBUS_ARSON:
-                msg.setElement(0, CbusConstants.CBUS_ASON);
+                newOpc = CbusConstants.CBUS_ASON;
                 break;
             case CbusConstants.CBUS_ARSOF:
-                msg.setElement(0, CbusConstants.CBUS_ASOF);
+                newOpc = CbusConstants.CBUS_ASOF;
                 break;
             default:
-                break;
+                // not a response event, nothing to convert
+                return original;
         }
+        CanReply msg = new CanReply(original);
+        msg.setElement(0, newOpc);
         return msg;
     }
 

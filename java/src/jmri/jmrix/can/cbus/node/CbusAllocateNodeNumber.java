@@ -13,6 +13,8 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 
+import jmri.InvokeOnAnyThread;
+import jmri.InvokeOnGuiThread;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -21,10 +23,19 @@ import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.jmrix.can.cbus.CbusSend;
+import jmri.util.ThreadingUtil;
 import jmri.util.TimerUtil;
 import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JSpinnerUtil;
 
+/**
+ * Listens for CBUS Nodes requesting a Node Number, and asks the user for one.
+ * <p>
+ * Incoming frames, the node number dialogue and the Set Node Number timeout
+ * are all handled on the GUI thread, which owns the allocation state.
+ * Once {@link #dispose()} has been called, frames and timeouts that were
+ * already queued for the GUI thread are ignored.
+ */
 public class CbusAllocateNodeNumber implements CanListener {
 
     private final CbusNodeTableDataModel nodeModel;
@@ -33,13 +44,14 @@ public class CbusAllocateNodeNumber implements CanListener {
 
     private JLabel rqNNtext;
     private int baseNodeNum;
-    private boolean WAITINGRESPONSE_RQNN_PARAMS;
-    private boolean NODE_NUM_DIALOGUE_OPEN;
-    private boolean WAITING_RESPONSE_NAME;
+    private boolean waitingForParams;
+    private volatile boolean dialogueOpen; // read by outgoing message thread
+    private boolean waitingForName;
     private int[] _paramsArr;
     private String _tempNodeName;
     private JLabel rqNNspinnerlabel;
     private int _timeout;
+    private volatile boolean disposed;
 
     public CbusAllocateNodeNumber(CanSystemConnectionMemo memo, CbusNodeTableDataModel model) {
 
@@ -51,9 +63,9 @@ public class CbusAllocateNodeNumber implements CanListener {
 
         baseNodeNum = 256;
         _paramsArr = null;
-        WAITINGRESPONSE_RQNN_PARAMS = false;
-        NODE_NUM_DIALOGUE_OPEN = false;
-        WAITING_RESPONSE_NAME = false;
+        waitingForParams = false;
+        dialogueOpen = false;
+        waitingForName = false;
         _timeout = CbusNodeTimerManager.SINGLE_MESSAGE_TIMEOUT_TIME;
         _tempNodeName="";
     }
@@ -65,13 +77,13 @@ public class CbusAllocateNodeNumber implements CanListener {
      * else previous node number
      * @param nodeText
      */
-    private void startnodeallocation(int nn, String nodeText) {
+    private void startNodeAllocation(int nn, String nodeText) {
 
-        if (NODE_NUM_DIALOGUE_OPEN) {
+        if (dialogueOpen) {
             return;
         }
 
-        NODE_NUM_DIALOGUE_OPEN=true;
+        dialogueOpen=true;
         _tempNodeName="";
 
         JPanel rqNNpane = new JPanel();
@@ -118,7 +130,7 @@ public class CbusAllocateNodeNumber implements CanListener {
         Toolkit.getDefaultToolkit().beep();
 
         if ( _paramsArr==null ) {
-            WAITINGRESPONSE_RQNN_PARAMS=true;
+            waitingForParams=true;
             send.nodeRequestParamSetup();
         }
 
@@ -127,14 +139,21 @@ public class CbusAllocateNodeNumber implements CanListener {
             popuplabel,
             JmriJOptionPane.OK_CANCEL_OPTION);
 
-        if (option == JmriJOptionPane.OK_OPTION) {
+        // the dialogue is modal, dispose() may have been called while it was open
+        if (option == JmriJOptionPane.OK_OPTION && !disposed) {
             int newval = (Integer) rqnnSpinner.getValue();
             baseNodeNum = newval;
             setSendSNNTimeout();
             send.nodeSetNodeNumber(newval);
+        } else {
+            // cancelled or disposed, discard any parameters / name received from the node in setup
+            // so they cannot be applied to a different node later.
+            _paramsArr = null;
+            _tempNodeName = "";
+            waitingForName = false;
         }
-        NODE_NUM_DIALOGUE_OPEN=false;
-        WAITINGRESPONSE_RQNN_PARAMS=false;
+        dialogueOpen=false;
+        waitingForParams=false;
     }
 
     private JSpinner getNewRqnnSpinner() {
@@ -167,28 +186,45 @@ public class CbusAllocateNodeNumber implements CanListener {
         return rqnnSpinner;
     }
 
-    private TimerTask sendSNNTask;
+    private volatile TimerTask sendSNNTask; // cancelled by dispose() on any thread
 
     private void clearSendSNNTimeout(){
-        if (sendSNNTask != null ) {
-            sendSNNTask.cancel();
-            sendSNNTask = null;
+        TimerTask task = sendSNNTask;
+        sendSNNTask = null;
+        if ( task != null ) {
+            task.cancel();
         }
     }
 
     private void setSendSNNTimeout() {
-        sendSNNTask = new TimerTask() {
+        clearSendSNNTimeout();
+        TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                sendSNNTask = null;
-                log.error("No confirmation from node when setting node number {}", baseNodeNum );
-                JmriJOptionPane.showMessageDialog(null,
-                    Bundle.getMessage("NnAllocError",baseNodeNum), Bundle.getMessage("WarningTitle"),
-                    JmriJOptionPane.ERROR_MESSAGE);
-                clearSendSNNTimeout();
+                // hand over to the GUI thread, which owns the allocation state, so the
+                // shared timer thread is not held while the error dialogue is open
+                ThreadingUtil.runOnGUIEventually( () -> sendSNNTimedOut(this) );
             }
         };
-        TimerUtil.schedule(sendSNNTask, _timeout);
+        sendSNNTask = task;
+        TimerUtil.schedule(task, _timeout);
+    }
+
+    /**
+     * Report that the Node did not confirm the Set Node Number.
+     * @param task the timer that expired. Ignored if it has since been
+     * cleared by a Node Number Acknowledge, replaced, or disposed.
+     */
+    @InvokeOnGuiThread
+    private void sendSNNTimedOut(TimerTask task) {
+        if ( disposed || task != sendSNNTask ) {
+            return;
+        }
+        sendSNNTask = null;
+        log.error("No confirmation from node when setting node number {}", baseNodeNum );
+        JmriJOptionPane.showMessageDialog(null,
+            Bundle.getMessage("NnAllocError",baseNodeNum), Bundle.getMessage("WarningTitle"),
+            JmriJOptionPane.ERROR_MESSAGE);
     }
 
     /**
@@ -206,10 +242,10 @@ public class CbusAllocateNodeNumber implements CanListener {
      */
     @Override
     public void message(CanMessage m) { // outgoing cbus message
-        if ( m.extendedOrRtr() ) {
+        if ( disposed || m.extendedOrRtr() ) {
             return;
         }
-        if (CbusMessage.getOpcode(m) == CbusConstants.CBUS_QNN && !NODE_NUM_DIALOGUE_OPEN ) {
+        if (CbusMessage.getOpcode(m) == CbusConstants.CBUS_QNN && !dialogueOpen ) {
             send.nodeRequestParamSetup();
         }
     }
@@ -220,48 +256,89 @@ public class CbusAllocateNodeNumber implements CanListener {
      */
     @Override
     public void reply(CanReply m) {
-        if ( m.extendedOrRtr() ) {
+        if ( disposed || m.extendedOrRtr() ) {
             return;
         }
         // run on GUI not Layout thread as pretty much all of this is GUI based.
         // and could be awaiting from response from JDialog.
-        jmri.util.ThreadingUtil.runOnGUIEventually( ()->{
+        ThreadingUtil.runOnGUIEventually( ()->{
             processAllocateFrame(m);
         });
     }
 
     private void processAllocateFrame(CanReply m){
+        if ( disposed ) { // frame was queued before dispose
+            return;
+        }
         switch (CbusMessage.getOpcode(m)) {
             case CbusConstants.CBUS_RQNN:
                 // node requesting a number, nn is existing number
-                startnodeallocation( ( m.getElement(1) * 256 ) + m.getElement(2), null );
+                startNodeAllocation( ( m.getElement(1) * 256 ) + m.getElement(2), null );
                 break;
             case CbusConstants.CBUS_PARAMS:
                 processNodeParams(m);
                 break;
             case CbusConstants.CBUS_NNACK: // node number acknowledge
-                clearSendSNNTimeout();
-                // if nodes are allowed to be added to node table, add.
-                // this is done here so any known parameters can be passed directly rather than re-requested
-                if ( _memo.get(CbusPreferences.class).getAddNodes() ) {
-                    int nodeNum = m.getElement(1) * 256 + m.getElement(2);
-                    nodeModel.setRequestNodeDisplay(nodeNum);
-                    // provide will add to table
-                    CbusNode nd = nodeModel.provideNodeByNodeNum( nodeNum );
-                    nd.getCanListener().setParamsFromSetup(_paramsArr);
-                    nd.setNodeNameFromName(_tempNodeName);
-                    nd.resetNodeAll();
-                    nodeModel.startUrgentFetch();
-                    nodeModel.setRequestNodeDisplay(-1);
-                    send.searchForCommandStations();
-                }
-                _paramsArr = null;
+                processNodeNumberAck(m);
                 break;
             case CbusConstants.CBUS_NAME:
                 processNodeName(m);
                 break;
             default:
                 break;
+        }
+    }
+
+    /**
+     * Process a Node Number Acknowledge.
+     * <p>
+     * A Node sends NNACK in response to a SNN ( Set Node Number ),
+     * and also in response to an ENUM ( CAN ID self enumeration ) request.
+     * <p>
+     * Only when the NNACK is in response to a SNN sent from here, ie. the SNN timer
+     * is running and the Node Number matches, are the parameters and name obtained
+     * from the Node in setup applied and the node reset for a full re-fetch.
+     * <p>
+     * An NNACK for a node not in the node table, eg. a Node Number set by other software,
+     * adds the node to the table if enabled in preferences.
+     * An NNACK from a node already in the table is otherwise ignored here,
+     * the node CAN listener handles the ENUM response.
+     *
+     * @param m the NNACK CanReply
+     */
+    private void processNodeNumberAck(CanReply m) {
+        int nodeNum = m.getElement(1) * 256 + m.getElement(2);
+        boolean snnAcknowledged = ( sendSNNTask != null && nodeNum == baseNodeNum );
+        if ( snnAcknowledged ) {
+            clearSendSNNTimeout();
+        }
+        // if nodes are allowed to be added to node table, add.
+        // this is done here so any known parameters can be passed directly rather than re-requested
+        if ( _memo.get(CbusPreferences.class).getAddNodes() ) {
+            if ( snnAcknowledged ) {
+                nodeModel.setRequestNodeDisplay(nodeNum);
+                // provide will add to table
+                CbusNode nd = nodeModel.provideNodeByNodeNum( nodeNum );
+                nd.getCanListener().setParamsFromSetup(_paramsArr);
+                nd.setNodeNameFromName(_tempNodeName);
+                nd.resetNodeAll();
+                nodeModel.startUrgentFetch();
+                nodeModel.setRequestNodeDisplay(-1);
+                send.searchForCommandStations();
+            } else if ( nodeModel.getNodeByNodeNum( nodeNum ) == null ) {
+                // node number not set by us, eg. by other software, add to table.
+                // setup parameters are not applied as they may be from a different node.
+                log.debug("NNACK from node {} not in table, adding", nodeNum);
+                nodeModel.provideNodeByNodeNum( nodeNum );
+                nodeModel.startUrgentFetch();
+                send.searchForCommandStations();
+            } else {
+                log.debug("NNACK from existing node {}, not in response to SNN, ignored", nodeNum);
+            }
+        }
+        if ( snnAcknowledged ) {
+            _paramsArr = null;
+            _tempNodeName = "";
         }
     }
 
@@ -275,23 +352,23 @@ public class CbusAllocateNodeNumber implements CanListener {
         nodepropbuilder.append (" ");
         nodepropbuilder.append( CbusNodeConstants.getModuleType( _paramsArr[0] , _paramsArr[2] ));
 
-        if (WAITINGRESPONSE_RQNN_PARAMS) {
+        if (waitingForParams) {
             rqNNtext.setText(nodepropbuilder.toString());
-            WAITINGRESPONSE_RQNN_PARAMS=false;
+            waitingForParams=false;
         }
-        else if (!NODE_NUM_DIALOGUE_OPEN) {
-            startnodeallocation( -1, nodepropbuilder.toString() );
+        else if (!dialogueOpen) {
+            startNodeAllocation( -1, nodepropbuilder.toString() );
         }
 
         if ( CbusNodeConstants.getModuleType( _paramsArr[0] , _paramsArr[2] ).isEmpty() ) {
-            WAITING_RESPONSE_NAME = true;
+            waitingForName = true;
             send.rQmn(); // request node type name if not recognised
         }
     }
 
     private void processNodeName(CanReply m){
-        if (WAITING_RESPONSE_NAME) {
-            WAITING_RESPONSE_NAME = false;
+        if (waitingForName) {
+            waitingForName = false;
             StringBuilder rval = new StringBuilder(10);
             rval.append("CAN");
             rval.append(String.format("%c", (char) m.getElement(1) ));
@@ -304,17 +381,27 @@ public class CbusAllocateNodeNumber implements CanListener {
             _tempNodeName = rval.toString().trim();
 
             StringBuilder nodepropbuilder = new StringBuilder(40);
-            nodepropbuilder.append (CbusNodeConstants.getManu( _paramsArr[0] ));
-            nodepropbuilder.append (" ");
+            if ( _paramsArr != null ) {
+                nodepropbuilder.append (CbusNodeConstants.getManu( _paramsArr[0] ));
+                nodepropbuilder.append (" ");
+            }
             nodepropbuilder.append (_tempNodeName);
 
-            rqNNtext.setText(nodepropbuilder.toString());
+            if ( rqNNtext != null ) {
+                rqNNtext.setText(nodepropbuilder.toString());
+            }
         }
     }
 
+    /**
+     * Stop listening and cancel any Set Node Number timeout.
+     * Frames and timeouts already queued for the GUI thread are then ignored.
+     */
+    @InvokeOnAnyThread
     public void dispose(){
-        clearSendSNNTimeout();
+        disposed = true;
         removeTc(_memo);
+        clearSendSNNTimeout();
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusAllocateNodeNumber.class);

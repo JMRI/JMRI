@@ -55,8 +55,9 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
                 log.error("Can't parse CbusTurnout system name: {}", address);
                 return;
         }
-        // connect
-        addTc(tc);
+        // connect, through the connection's dispatcher, which offers this bean
+        // only the frames of its own addresses
+        CbusBeanDispatcher.add(tc, this, addrThrown, addrClosed);
     }
 
     /**
@@ -72,7 +73,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
             m.setOpCode(CbusConstants.CBUS_AREQ);
         }
         CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-        tc.sendCanMessage(m, this);
+        CbusBeanDispatcher.send(tc, m, this);
 
         super.requestUpdateFromLayout(); // request update from feedback sensors.
     }
@@ -87,12 +88,12 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
         if (newState == Turnout.THROWN) {
             m = getAddrThrown();
             CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-            tc.sendCanMessage(m, this);
+            CbusBeanDispatcher.send(tc, m, this);
         } 
         if (newState == Turnout.CLOSED) {
             m = getAddrClosed();
             CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-            tc.sendCanMessage(m, this);
+            CbusBeanDispatcher.send(tc, m, this);
         }
     }
     
@@ -167,7 +168,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
         }
         if (m!=null) {
             CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-            tc.sendCanMessage(m, this);
+            CbusBeanDispatcher.send(tc, m, this);
         }
     }
     
@@ -187,8 +188,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
             if (_activeFeedbackType == DIRECT) {
                 newKnownState(state);
             } else if (_activeFeedbackType == DELAYED) {
-                newKnownState(INCONSISTENT);
-                jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> { newKnownState(state); },DELAYED_FEEDBACK_INTERVAL );
+                newKnownStateDelayed(state);
             }
         } else if (addrClosed.match(f)) {
             int state = (!getInverted() ? CLOSED : THROWN);
@@ -196,8 +196,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
             if (_activeFeedbackType == DIRECT) {
                 newKnownState(state);
             } else if (_activeFeedbackType == DELAYED) {
-                newKnownState(INCONSISTENT);
-                jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> { newKnownState(state); },DELAYED_FEEDBACK_INTERVAL );
+                newKnownStateDelayed(state);
             }
         }
     }
@@ -220,8 +219,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
             if (_activeFeedbackType == DIRECT) {
                 newKnownState(state);
             } else if (_activeFeedbackType == DELAYED) {
-                newKnownState(INCONSISTENT);
-                jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> { newKnownState(state); },DELAYED_FEEDBACK_INTERVAL );
+                newKnownStateDelayed(state);
             }
         } else if (addrClosed.match(f)) {
             int state = (!getInverted() ? CLOSED : THROWN);
@@ -229,8 +227,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
             if (_activeFeedbackType == DIRECT) {
                 newKnownState(state);
             } else if (_activeFeedbackType == DELAYED) {
-                newKnownState(INCONSISTENT);
-                jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> { newKnownState(state); },DELAYED_FEEDBACK_INTERVAL );
+                newKnownStateDelayed(state);
             }
         } else if (addrThrown.matchRequest(f)) {
             sendResponseToQuery();
@@ -273,7 +270,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
      */
     @Override
     public void dispose() {
-        tc.removeCanListener(this);
+        CbusBeanDispatcher.remove(tc, this);
         super.dispose();
     }    
 

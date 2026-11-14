@@ -10,6 +10,7 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2017
  */
+@SuppressWarnings("deprecation")
 public class MrcThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     @Test
@@ -38,7 +39,7 @@ public class MrcThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         SpeedStepMode result = instance.getSpeedStepMode();
         Assert.assertEquals(expResult, result);
     }
-    
+
     /**
      * Test of getSpeedIncrement method, of class AbstractThrottle.
      */

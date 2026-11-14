@@ -1,6 +1,5 @@
 package jmri.jmrit.dispatcher;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -13,6 +12,7 @@ import jmri.SignalMast;
 import jmri.SignalMastManager;
 import jmri.TransitSection;
 import jmri.TransitSectionAction;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -219,6 +219,11 @@ public class AutoTrainAction {
 
     // this method is called when the state of a Block in an Allocated Section changes
     protected synchronized void handleBlockStateChange(AllocatedSection as, Block b) {
+        handleBlockStateChange(as, b, b.getState());
+    }
+
+    // this method is called with the state the Block changed to
+    protected synchronized void handleBlockStateChange(AllocatedSection as, Block b, int state) {
         // Ignore call if not waiting on Block state change
         for (int i = 0; i < _activeActionList.size(); i++) {
             if (_activeActionList.get(i).getWaitingForBlock()) {
@@ -226,8 +231,8 @@ public class AutoTrainAction {
                 Block target = InstanceManager.getDefault(jmri.BlockManager.class).getBlock(tsa.getStringWhen());
                 if (b == target) {
                     // waiting on state change for this block
-                    if (((b.getState() == Block.OCCUPIED) && (tsa.getWhenCode() == TransitSectionAction.BLOCKENTRY))
-                            || ((b.getState() == Block.UNOCCUPIED) && (tsa.getWhenCode() == TransitSectionAction.BLOCKEXIT))) {
+                    if (((state == Block.OCCUPIED) && (tsa.getWhenCode() == TransitSectionAction.BLOCKENTRY))
+                            || ((state == Block.UNOCCUPIED) && (tsa.getWhenCode() == TransitSectionAction.BLOCKEXIT))) {
                         checkDelay(tsa);
                     }
                 }
@@ -361,8 +366,6 @@ public class AutoTrainAction {
     // this method is called to execute the action, when the "When" event has happened.
     // it is "public" because it may be called from a TransitSectionAction.
 // djd debugging - need to check this out - probably useless, but harmless
-    @SuppressFBWarnings(value = "SWL_SLEEP_WITH_LOCK_HELD",
-            justification = "used only by thread that can be stopped, no conflict with other threads expected")
     public synchronized void executeAction(TransitSectionAction tsa) {
         if (tsa == null) {
             log.error("executeAction called with null TransitSectionAction");
@@ -630,6 +633,29 @@ public class AutoTrainAction {
     }
 
     /**
+     * Continue an action that a thread of its own has been waiting on: a
+     * delay, or the train stopping or starting. The waiting thread holds no
+     * lock; the action changes the train and may set sensors, so it continues
+     * on the layout thread (Swing thread), where the train's Block changes are
+     * handled under this object's lock. An action cleared while the step was
+     * waiting to run, which also interrupts its thread, is not continued.
+     *
+     * @param tsa  the action
+     * @param step what to do next for it
+     */
+    private void continueOnLayoutThread(TransitSectionAction tsa, Runnable step) {
+        jmri.util.ThreadingUtil.runOnLayoutEventually(() -> {
+            synchronized (this) {
+                if (_activeActionList.contains(tsa)) {
+                    step.run();
+                } else {
+                    log.trace("Action Code[{}] cleared before it could continue", tsa.getWhatCode());
+                }
+            }
+        });
+    }
+
+    /**
      * A runnable that implements delayed execution of a TransitSectionAction.
      */
     class TSActionDelay implements Runnable {
@@ -645,7 +671,7 @@ public class AutoTrainAction {
         public void run() {
             try {
                 Thread.sleep(_delay);
-                executeAction(_tsa);
+                continueOnLayoutThread(_tsa, () -> executeAction(_tsa));
             } catch (InterruptedException e) {
                 // interrupting this thread will cause it to terminate without executing the action.
             }
@@ -749,7 +775,7 @@ public class AutoTrainAction {
                                 Thread.sleep(_delay);
                             }
                         }
-                        checkDelay(_tsa);
+                        continueOnLayoutThread(_tsa, () -> checkDelay(_tsa));
                     } catch (InterruptedException e) {
                         // interrupting will cause termination without executing the action
                     }
@@ -783,7 +809,7 @@ public class AutoTrainAction {
                                 Thread.sleep(_delay);
                             }
                         }
-                        checkDelay(_tsa);
+                        continueOnLayoutThread(_tsa, () -> checkDelay(_tsa));
                     } catch (InterruptedException e) {
                         // interrupting will cause termination without executing the action
                     }

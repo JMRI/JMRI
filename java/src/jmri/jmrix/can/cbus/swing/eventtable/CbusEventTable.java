@@ -17,7 +17,6 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableRowSorter;
 import jmri.InstanceManager;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
-import jmri.jmrix.can.cbus.eventtable.CbusTableEvent;
 
 import jmri.jmrix.can.cbus.swing.CbusCommonSwing;
 import jmri.jmrix.can.cbus.swing.CbusTableRowEventDnDHandler;
@@ -233,8 +232,9 @@ public class CbusEventTable extends JScrollPane implements TableModelListener {
     
     @Override
     public void tableChanged(TableModelEvent e) {
-        _mainPane.neweventcontainer.setNewButtonActive( !_mainPane.eventModel.getEvents().contains( new CbusTableEvent(null,
-            _mainPane.neweventcontainer.getNn(), _mainPane.neweventcontainer.getEn())) );
+        // indexed lookup, this is called for every table change
+        _mainPane.neweventcontainer.setNewButtonActive( _mainPane.eventModel.getEventTableRow(
+            _mainPane.neweventcontainer.getNn(), _mainPane.neweventcontainer.getEn()) < 0 );
     }
     
     public void addEvent(int nn,int en){

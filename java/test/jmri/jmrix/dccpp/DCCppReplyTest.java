@@ -522,6 +522,23 @@ public class DCCppReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     }
 
     @Test
+    public void testMessageReply() {
+        DCCppReply r = DCCppReply.parseDCCppReply("m \"This is a test message\"");
+        Assert.assertTrue(r.isMessageReply());
+        Assert.assertEquals("This is a test message", r.getMessageString());
+        Assert.assertTrue(r.isValidReplyFormat());
+        Assert.assertEquals("Message: 'This is a test message'", r.toMonitorString());
+        r = DCCppReply.parseDCCppReply("m \"say \"hi\" now\"");
+        Assert.assertEquals("say \"hi\" now", r.getMessageString());
+        r = DCCppReply.parseDCCppReply("m \"\"");
+        Assert.assertTrue(r.isMessageReply());
+        Assert.assertEquals("", r.getMessageString());
+        Assert.assertFalse(DCCppReply.parseDCCppReply("m no quotes").isMessageReply());
+        Assert.assertFalse(DCCppReply.parseDCCppReply("@ 0 1 \"lcd\"").isMessageReply());
+        Assert.assertTrue(DCCppReply.parseDCCppReply("@ 0 1 \"lcd\"").isLCDTextReply());
+    }
+
+    @Test
     public void testMonitorStringCurrentReply() {
         DCCppReply l = DCCppReply.parseDCCppReply("a MAIN 0");
         Assert.assertEquals("Named Current Monitor string", "Current: 0 / 1024", l.toMonitorString());

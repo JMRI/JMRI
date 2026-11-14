@@ -36,10 +36,10 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
         
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        litEventID.setText("00.00.00.00.00.00.00.00");
-        notLitEventID.setText("00.00.00.00.00.00.00.00");
-        heldEventID.setText("00.00.00.00.00.00.00.00");
-        notHeldEventID.setText("00.00.00.00.00.00.00.00");
+        litEventID.setText("");
+        notLitEventID.setText("");
+        heldEventID.setText("");
+        notHeldEventID.setText("");
 
         // populate the OpenLCB connections list before creating GUI components.
         getOlcbConnections();
@@ -167,7 +167,7 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
             JCheckBox disabled = new JCheckBox(aspectName);
             allAspectsCheckBoxes.put(aspectName, disabled);
             NamedEventIdTextField eventID = new NamedEventIdTextField(memo);
-            eventID.setText("00.00.00.00.00.00.00.00");
+            eventID.setText("");
             aspectEventIDs.put(aspectName, eventID);
         }
         allAspectsPanel.setLayout(new BoxLayout(allAspectsPanel, BoxLayout.Y_AXIS));
@@ -215,10 +215,10 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
 
         populateConnSelectionBox();
 
-        litEventID.setText("00.00.00.00.00.00.00.00");
-        notLitEventID.setText("00.00.00.00.00.00.00.00");
-        heldEventID.setText("00.00.00.00.00.00.00.00");
-        notHeldEventID.setText("00.00.00.00.00.00.00.00");
+        litEventID.setText("");
+        notLitEventID.setText("");
+        heldEventID.setText("");
+        notHeldEventID.setText("");
 
         allAspectsPanel.revalidate();
     }
@@ -321,13 +321,13 @@ public class OlcbSignalMastAddPane extends SignalMastAddPane {
         for (String aspect : currentMast.getAllKnownAspects()) {
             if (aspectEventIDs.get(aspect) == null) {
                 NamedEventIdTextField eventID = new NamedEventIdTextField(memo);
-                eventID.setText("00.00.00.00.00.00.00.00");
+                eventID.setText("");
                 aspectEventIDs.put(aspect, eventID);
             }
             if (currentMast.isOutputConfigured(aspect)) {
                 aspectEventIDs.get(aspect).setText(currentMast.getOutputForAppearance(aspect));
             } else {
-                aspectEventIDs.get(aspect).setText("00.00.00.00.00.00.00.00");
+                aspectEventIDs.get(aspect).setText("");
             }
         }
 

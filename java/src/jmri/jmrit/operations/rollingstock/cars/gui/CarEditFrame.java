@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.rollingstock.cars.gui;
 
+
 import java.awt.GridBagLayout;
 import java.text.*;
 import java.util.List;
@@ -7,7 +8,6 @@ import java.util.ResourceBundle;
 
 import javax.swing.*;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.*;
 import jmri.jmrit.operations.rollingstock.cars.*;
@@ -31,8 +31,6 @@ public class CarEditFrame extends RollingStockEditFrame {
 
     // labels
     JLabel textWeightOz = new JLabel(Bundle.getMessage("WeightOz"));
-
-    JButton editColorButton = new JButton(Bundle.getMessage("ButtonEdit"));
     JButton editLoadButton = new JButton(Bundle.getMessage("ButtonEdit"));
     JButton fillWeightButton = new JButton(Bundle.getMessage("Calculate"));
 
@@ -42,8 +40,7 @@ public class CarEditFrame extends RollingStockEditFrame {
     JCheckBox utilityCheckBox = new JCheckBox(Bundle.getMessage("Utility"));
     JCheckBox hazardousCheckBox = new JCheckBox(Bundle.getMessage("Hazardous"));
     JCheckBox autoWeightCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
-    
-    JComboBox<String> colorComboBox = InstanceManager.getDefault(CarColors.class).getComboBox();
+
     JComboBox<String> loadComboBox = InstanceManager.getDefault(CarLoads.class).getComboBox(null);
 
     CarLoadEditFrame carLoadEditFrame;
@@ -52,7 +49,6 @@ public class CarEditFrame extends RollingStockEditFrame {
         super(Bundle.getMessage("TitleCarAdd"));
     }
 
-    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Checks for null")
     @Override
     public void initComponents() {
 
@@ -86,13 +82,11 @@ public class CarEditFrame extends RollingStockEditFrame {
         builtTextField.setToolTipText(Bundle.getMessage("TipBuildDate"));
         valueTextArea.setToolTipText(Bundle.getMessage("TipValue"));
 
-        editColorButton.setToolTipText(Bundle.getMessage("TipAddDeleteReplace",
-                Bundle.getMessage("Color").toLowerCase()));
         editLoadButton.setToolTipText(Bundle.getMessage("TipAddDeleteReplace",
                 Bundle.getMessage("load"))); // initial caps for some languages i.e. German
         editGroupButton.setToolTipText(Bundle.getMessage("TipAddDeleteReplace",
                 Bundle.getMessage("Kernel").toLowerCase()));
-        
+
         deleteButton.setToolTipText(Bundle.getMessage("TipDeleteButton"));
         addButton.setToolTipText(Bundle.getMessage("TipAddButton"));
         saveButton.setToolTipText(Bundle.getMessage("TipSaveButton"));
@@ -104,27 +98,19 @@ public class CarEditFrame extends RollingStockEditFrame {
         addItem(pWeightOz, fillWeightButton, 2, 0);
         addItem(pWeightOz, autoWeightCheckBox, 3, 0);
 
-        // row 8
-        pColor.setLayout(new GridBagLayout());
-        pColor.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Color")));
-        addItem(pColor, colorComboBox, 1, 0);
-        addItem(pColor, editColorButton, 2, 0);
-        pColor.setVisible(true);
-
         // row 9
         pLoad.setLayout(new GridBagLayout());
         pLoad.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Load")));
         addItem(pLoad, loadComboBox, 1, 0);
         addItem(pLoad, editLoadButton, 2, 0);
         pLoad.setVisible(true);
-        
+
         // select first item so load combobox will update
         typeComboBox.setSelectedIndex(0);
 
         // row 10
         pGroup.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Kernel")));
 
-        addEditButtonAction(editColorButton);
         addButtonAction(fillWeightButton);
         addButtonAction(editLoadButton);
 
@@ -132,7 +118,7 @@ public class CarEditFrame extends RollingStockEditFrame {
         addCheckBoxAction(cabooseCheckBox);
         addCheckBoxAction(fredCheckBox);
         addCheckBoxAction(passengerCheckBox);
-        
+
         addHelpMenu("package.jmri.jmrit.operations.Operations_CarsEdit", true); // NOI18N
     }
 
@@ -174,19 +160,10 @@ public class CarEditFrame extends RollingStockEditFrame {
         }
         InstanceManager.getDefault(CarLoads.class).updateComboBox(car.getTypeName(), loadComboBox);
         loadComboBox.setSelectedItem(car.getLoadName());
-        
+
         // listen for changes in car load
         car.addPropertyChangeListener(this);
 
-        // only cars have color attribute
-        if (!InstanceManager.getDefault(CarColors.class).containsName(car.getColor())) {
-            if (JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("colorNameNotExist",
-                    car.getColor()), Bundle.getMessage("carAddColor"),
-                    JmriJOptionPane.YES_NO_OPTION) == JmriJOptionPane.YES_OPTION) {
-                InstanceManager.getDefault(CarColors.class).addName(car.getColor());
-            }
-        }
-        colorComboBox.setSelectedItem(car.getColor());
         groupComboBox.setSelectedItem(car.getKernelName());
     }
 
@@ -299,12 +276,8 @@ public class CarEditFrame extends RollingStockEditFrame {
             return;
         }
         Car car = (Car) _rs;
-        
-        if (colorComboBox.getSelectedItem() != null) {
-            car.setColor((String) colorComboBox.getSelectedItem());
-        }
 
-        // ask if all cars of this type should be passenger 
+        // ask if all cars of this type should be passenger
         if (isSave && car.isPassenger() ^ passengerCheckBox.isSelected()) {
             if (JmriJOptionPane.showConfirmDialog(this, MessageFormat.format(passengerCheckBox.isSelected() ? Bundle
                     .getMessage("carModifyTypePassenger") : Bundle.getMessage("carRemoveTypePassenger"),
@@ -432,7 +405,7 @@ public class CarEditFrame extends RollingStockEditFrame {
                 }
             }
         }
-        
+
         // place car on track after setting load name
         checkAndSetLocationAndTrack(car);
 
@@ -466,7 +439,7 @@ public class CarEditFrame extends RollingStockEditFrame {
             }
         }
     }
-    
+
     @Override
     protected void delete() {
         Car car = carManager.getByRoadAndNumber((String) roadComboBox.getSelectedItem(), roadNumberTextField
@@ -512,7 +485,6 @@ public class CarEditFrame extends RollingStockEditFrame {
     @Override
     protected void addPropertyChangeListeners() {
         InstanceManager.getDefault(CarLoads.class).addPropertyChangeListener(this);
-        InstanceManager.getDefault(CarColors.class).addPropertyChangeListener(this);
         InstanceManager.getDefault(KernelManager.class).addPropertyChangeListener(this);
         carManager.addPropertyChangeListener(this);
         super.addPropertyChangeListeners();
@@ -521,7 +493,6 @@ public class CarEditFrame extends RollingStockEditFrame {
     @Override
     protected void removePropertyChangeListeners() {
         InstanceManager.getDefault(CarLoads.class).removePropertyChangeListener(this);
-        InstanceManager.getDefault(CarColors.class).removePropertyChangeListener(this);
         InstanceManager.getDefault(KernelManager.class).removePropertyChangeListener(this);
         carManager.removePropertyChangeListener(this);
         if (_rs != null) {
@@ -529,7 +500,7 @@ public class CarEditFrame extends RollingStockEditFrame {
         }
         super.removePropertyChangeListeners();
     }
-    
+
     @Override
     public void dispose() {
         if (carLoadEditFrame != null) {
@@ -548,17 +519,11 @@ public class CarEditFrame extends RollingStockEditFrame {
                 .getNewValue());
         //        }
         super.propertyChange(e);
-        
+
         if (e.getPropertyName().equals(CarLengths.CARLENGTHS_CHANGED_PROPERTY)) {
             InstanceManager.getDefault(CarLengths.class).updateComboBox(lengthComboBox);
             if (_rs != null) {
                 lengthComboBox.setSelectedItem(_rs.getLength());
-            }
-        }
-        if (e.getPropertyName().equals(CarColors.CARCOLORS_CHANGED_PROPERTY)) {
-            InstanceManager.getDefault(CarColors.class).updateComboBox(colorComboBox);
-            if (_rs != null) {
-                colorComboBox.setSelectedItem(_rs.getColor());
             }
         }
         if (e.getPropertyName().equals(KernelManager.LISTLENGTH_CHANGED_PROPERTY) ||

@@ -652,7 +652,8 @@ public final class LayoutBlockConnectivityTools {
 
                     currentBlock = blocksInRoute.get(birSize - 3).getBlock().getBlock();
                     nextBlock = blocksInRoute.get(birSize - 2).getBlock().getBlock();
-                    offSet = blocksInRoute.get(birSize - 2).getTestedIndexes();
+                    // take a copy, the list of tested indexes must not be cleared when we move on
+                    offSet = new ArrayList<>(blocksInRoute.get(birSize - 2).getTestedIndexes());
                     bt = blocksInRoute.get(birSize - 2);
                     blocksInRoute.remove(birSize - 1);
                     ttl--;

@@ -102,12 +102,12 @@ public class LnSensor extends AbstractSensor  {
                         if (log.isDebugEnabled()) {
                             log.debug("Set ACTIVE"); // NOI18N
                         }
-                        setOwnState(Sensor.ACTIVE);
+                        setOwnState(Sensor.ACTIVE, l.getReceivedTime());
                     } else if ((!state) && getRawState() != Sensor.INACTIVE) {
                         if (log.isDebugEnabled()) {
                             log.debug("Set INACTIVE"); // NOI18N
                         }
-                        setOwnState(Sensor.INACTIVE);
+                        setOwnState(Sensor.INACTIVE, l.getReceivedTime());
                     }
                 }
                 return;

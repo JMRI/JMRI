@@ -191,14 +191,22 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
                 log.warn("handle error reply {}", m);
                 // perhaps no loco present? Fail back to end of programming
                 //controller().sendCanMessage(CbusMessage.getExitProgMode(), this);
-                stopTimer();
-                notifyProgListenerEnd(-1, jmri.ProgListener.NoLocoDetected);
+                endProgrammingWithError(jmri.ProgListener.NoLocoDetected);
             } else if ((m.getElement(0) == CbusConstants.CBUS_SSTAT)
                 && (m.getElement(2) == CbusConstants.SSTAT_OVLD)) {
                 log.warn("Programming overload {}", m);
                 // Overload. Fail back to end of programming
-                stopTimer();
-                notifyProgListenerEnd(-1, jmri.ProgListener.ProgrammingShort);
+                endProgrammingWithError(jmri.ProgListener.ProgrammingShort);
+            } else if ((m.getElement(0) == CbusConstants.CBUS_SSTAT)
+                && (m.getElement(2) == CbusConstants.SSTAT_BUSY)) {
+                log.warn("Programmer busy {}", m);
+                // Command station busy. Fail back to end of programming
+                endProgrammingWithError(jmri.ProgListener.ProgrammerBusy);
+            } else if ((m.getElement(0) == CbusConstants.CBUS_SSTAT)
+                && (m.getElement(2) == CbusConstants.SSTAT_CV_ERROR)) {
+                log.warn("CV error reported by command station {}", m);
+                // CV error, eg. CV out of range. Fail back to end of programming
+                endProgrammingWithError(jmri.ProgListener.UnknownError);
             } else {
                 // see why waiting
                 if (_progRead && (m.getElement(0) == CbusConstants.CBUS_PCVS)) {
@@ -263,6 +271,20 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
             //controller().sendCbusMessage(CbusMessage.getExitProgMode(), this);
             notifyProgListenerEnd(_val, jmri.ProgListener.FailedTimeout);
         }
+    }
+
+    /**
+     * End the current programming operation following an error status
+     * from the command station.
+     * <p>
+     * Leaves the programming state, stops the timeout and notifies the
+     * listener with the error status.
+     * @param status the ProgListener status code to report
+     */
+    private void endProgrammingWithError(int status) {
+        progState = NOTPROGRAMMING;
+        stopTimer();
+        notifyProgListenerEnd(-1, status);
     }
 
     // internal method to notify of the final result

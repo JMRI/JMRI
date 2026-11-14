@@ -163,6 +163,8 @@
             };
             jmri.panel = function (name, value, data) {
             };
+            jmri.panelDisplayOptions = function (name, value, data) {
+            };
             jmri.panels = function (data) {
             };
             jmri.power = function (state) {
@@ -1033,6 +1035,9 @@
                 panel: function (e) {
                     jmri.panel(e.data.name, e.data.value, e.data);
                 },
+                panelDisplayOptions: function (e) {
+                    jmri.panelDisplayOptions(e.data.name, e.data.value, e.data);
+                },
                 panels: function (e) {
                     jmri.panels(e);
                 },
@@ -1195,7 +1200,7 @@
             if (jmri.socket === null) {
                 $("#no-websockets").addClass("show").removeClass("hidden");
             }
-            $(window).unload(function () {
+            $(window).on('unload', function () {
                 if (jmri.socket != null) {
                     jmri.socket.close();
                 }

@@ -3,8 +3,10 @@ package jmri.jmrit.operations.trains.tools;
 import java.awt.Color;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
@@ -216,9 +218,9 @@ public class ExportTimetable extends XmlFile {
      */
     private void loadSchedule(CSVPrinter fileOut) throws IOException {
         // create schedule name based on date and time
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd kk:mm");
-        String scheduleName = simpleDateFormat.format(Calendar.getInstance().getTime());
-
+        LocalDateTime date = LocalDateTime.now();
+        DateTimeFormatter simpleDateFormat = DateTimeFormatter.ofPattern("yyyy_MM_dd kk:mm"); // NOI18N
+        String scheduleName = date.format(simpleDateFormat);
         fileOut.printRecord("Schedule", scheduleName, "Today", "0", "24");
     }
 

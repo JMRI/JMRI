@@ -53,6 +53,115 @@ public class CbusClockControlTest {
         assertEquals( 15, t.getTemp(), "-129 has no effect");
         JUnitAppender.assertWarnMessage("Temperature -129 out of range -128 to 127");
 
+        t.setTemp(128);
+        assertEquals( 15, t.getTemp(), "128 has no effect");
+        JUnitAppender.assertWarnMessage("Temperature 128 out of range -128 to 127");
+
+        // range limits are inclusive
+        t.setTemp(127);
+        assertEquals( 127, t.getTemp(), "127 accepted");
+        t.setTemp(-128);
+        assertEquals( -128, t.getTemp(), "-128 accepted");
+
+        t.dispose();
+    }
+
+    @Test
+    public void testNegativeTemperatureSentAsTwosComplement() throws jmri.TimebaseRateException {
+
+        tb = jmri.InstanceManager.getDefault(Timebase.class);
+        tb.setRun(false);
+
+        LocalDateTime specificDate = LocalDateTime.of(2020, 04, 24, 17, 57, 0);
+        tb.setTime(Date.from( specificDate.atZone( ZoneId.systemDefault()).toInstant())); // a Friday
+
+        t = new CbusClockControl(memo);
+        InstanceManager.setDefault(ClockControl.class, t);
+
+        tb.setInternalMaster(true, false);
+        tb.setSynchronize(true, true);
+        Assertions.assertNotNull(tcis);
+        assertEquals( 1, tcis.outbound.size() );
+        assertEquals( "[5f8] CF 39 11 46 00 18 00", tcis.outbound.get(0).toString());
+
+        t.setTemp(-37);
+        tb.setRate(2); // sends
+        assertEquals( 2, tcis.outbound.size() );
+        assertEquals( 0xDB, tcis.outbound.get(1).getElement(6), "-37 sent as 0xDB");
+        assertEquals( "[5f8] CF 39 11 46 00 18 DB", tcis.outbound.get(1).toString());
+
+        t.setTemp(-128);
+        tb.setRate(3);
+        assertEquals( 3, tcis.outbound.size() );
+        assertEquals( 0x80, tcis.outbound.get(2).getElement(6), "-128 sent as 0x80");
+
+        t.setTemp(127);
+        tb.setRate(4);
+        assertEquals( 4, tcis.outbound.size() );
+        assertEquals( 0x7F, tcis.outbound.get(3).getElement(6), "127 sent as 0x7F");
+
+        // temperature round-trips through the frame
+        assertEquals( "Stopped 17:57 Friday 24 April Temp: -128",
+            CbusClockControl.dateFromCanFrame(tcis.outbound.get(2)) );
+
+        t.dispose();
+    }
+
+    @Test
+    public void testDisposeRemovesMinuteListener() {
+
+        tb = jmri.InstanceManager.getDefault(Timebase.class);
+        int listeners = tb.getMinuteChangeListeners().length;
+
+        t = new CbusClockControl(memo);
+        assertEquals( listeners + 1, tb.getMinuteChangeListeners().length, "minute listener added");
+
+        t.dispose();
+        assertEquals( listeners, tb.getMinuteChangeListeners().length, "minute listener removed on dispose");
+    }
+
+    // The year used when setting the time from an incoming Fast Clock frame
+    // must be the calendar year, not the week-based year.
+    @Test
+    public void testIncomingSetDateUsesCalendarYear() {
+
+        tb = jmri.InstanceManager.getDefault(Timebase.class);
+        tb.setRun(false);
+
+        // 31 Dec 2024 is in week 1 of week-year 2025
+        LocalDateTime specificDate = LocalDateTime.of(2024, 12, 31, 17, 57, 0);
+        tb.setTime(Date.from( specificDate.atZone( ZoneId.systemDefault()).toInstant())); // a Tuesday
+
+        t = new CbusClockControl(memo);
+        Assertions.assertNotNull(t);
+        InstanceManager.setDefault(ClockControl.class, t);
+
+        tb.setInternalMaster(false, false);
+        tb.setSynchronize(true, true);
+        String clockName = t.getHardwareClockName();
+        Assertions.assertNotNull(clockName);
+        tb.setMasterName(clockName);
+
+        CanReply send = new CanReply(memo.getTrafficController().getCanid());
+        send.setNumDataElements(7);
+        send.setElement(0, CbusConstants.CBUS_FCLK);
+        send.setElement(1, 41 ); // mins
+        send.setElement(2, 13 ); // hrs
+        send.setElement(3, 0b11000011 ); // month 12, Tuesday
+        send.setElement(4,  1); // time divider
+        send.setElement(5, 31); // day of month
+        send.setElement(6, 0x05 ); // Temperature
+        CbusMessage.setPri(send, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
+
+        t.reply(send);
+
+        LocalDateTime newTime = LocalDateTime.ofInstant(tb.getTime().toInstant(), ZoneId.systemDefault());
+        assertEquals( 2024, newTime.getYear(), "calendar year kept, not week-year" );
+        assertEquals( 12, newTime.getMonthValue(), "month from frame" );
+        assertEquals( 31, newTime.getDayOfMonth(), "day from frame" );
+        assertEquals( 13, newTime.getHour(), "hour from frame" );
+        assertEquals( 41, newTime.getMinute(), "minute from frame" );
+
         t.dispose();
     }
 

@@ -7,6 +7,8 @@ import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
+import jmri.TurnoutOperation;
+import jmri.TurnoutOperationManager;
 import jmri.jmrit.beantable.turnout.TurnoutTableDataModel;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.jmrix.internal.InternalTurnoutManager;
@@ -14,6 +16,8 @@ import jmri.swing.ManagerComboBox;
 import jmri.util.ThreadingUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
+
+import javax.swing.JComboBox;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -274,6 +278,55 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
         a.configureManagerComboBox(box, j, TurnoutManager.class);
         Assert.assertEquals("full box", 2, box.getItemCount());
         Assert.assertEquals("selection", j, box.getSelectedItem());
+    }
+
+    @Test
+    public void testUpdateAutomationBoxShowsTypeOfTurnoutsOwnCopy() {
+        new jmri.RawTurnoutOperation(); // internal turnouts only offer NoFeedback, so add the hardware types
+        new jmri.SensorTurnoutOperation();
+        // issue #15471 follow-up: a turnout's own copy shows the type it was made from
+        Turnout to = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
+        to.setFeedbackMode(Turnout.DIRECT);
+        to.setInhibitOperation(false);
+        TurnoutOperationManager mgr = InstanceManager.getDefault(TurnoutOperationManager.class);
+        JComboBox<String> cb = new JComboBox<>();
+
+        to.setTurnoutOperation(mgr.getOperation("Raw").makeNonce(to));
+        TurnoutTableAction.updateAutomationBox(to, cb);
+        Assert.assertEquals("Raw copy shows Raw", "Raw", cb.getSelectedItem());
+
+        to.setTurnoutOperation(mgr.getOperation("NoFeedback").makeNonce(to));
+        TurnoutTableAction.updateAutomationBox(to, cb);
+        Assert.assertEquals("NoFeedback copy shows NoFeedback", "NoFeedback", cb.getSelectedItem());
+    }
+
+    @Test
+    public void testUpdateAutomationBoxShowsSensorCopy() {
+        new jmri.SensorTurnoutOperation(); // internal turnouts only offer NoFeedback, so add the hardware types
+        Turnout to = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
+        to.setFeedbackMode(Turnout.ONESENSOR);
+        to.setInhibitOperation(false);
+        TurnoutOperation op = InstanceManager.getDefault(TurnoutOperationManager.class).getOperation("Sensor").makeNonce(to);
+        to.setTurnoutOperation(op);
+        JComboBox<String> cb = new JComboBox<>();
+
+        TurnoutTableAction.updateAutomationBox(to, cb);
+        Assert.assertEquals("Sensor copy shows Sensor", "Sensor", cb.getSelectedItem());
+    }
+
+    @Test
+    public void testUpdateAutomationBoxUnlistedCopyFallsBackToFirstType() {
+        new jmri.SensorTurnoutOperation(); // internal turnouts only offer NoFeedback, so add Sensor
+        // a Sensor copy isn't listed for a DIRECT turnout, so keep the old behavior
+        Turnout to = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
+        to.setFeedbackMode(Turnout.DIRECT);
+        to.setInhibitOperation(false);
+        TurnoutOperation op = InstanceManager.getDefault(TurnoutOperationManager.class).getOperation("Sensor").makeNonce(to);
+        to.setTurnoutOperation(op);
+        JComboBox<String> cb = new JComboBox<>();
+
+        TurnoutTableAction.updateAutomationBox(to, cb);
+        Assert.assertEquals("falls back to the first type", 2, cb.getSelectedIndex());
     }
 
     @Override

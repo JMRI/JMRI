@@ -602,7 +602,7 @@ public class CarsTableModel extends OperationsTableModel implements PropertyChan
             case LOAD_COLUMN:
                 return getLoadNameString(car);
             case COLOR_COLUMN:
-                return car.getColor();
+                return car.getColorName();
             case LENGTH_COLUMN:
                 return car.getLengthInteger();
             case TYPE_COLUMN:

@@ -27,7 +27,8 @@ public class RouteFinder implements Runnable {
     private String _aPathName;
 
     private int _maxBlocks;
-    private boolean _quit = false;
+    private volatile boolean _quit = false;
+    private volatile boolean _cancelled = false;
 
     protected RouteFinder(WarrantRoute f, BlockOrder origin, BlockOrder dest,
             BlockOrder via, BlockOrder avoid, int maxB) {
@@ -41,6 +42,16 @@ public class RouteFinder implements Runnable {
 
     protected synchronized void quit() {
         log.debug("quit= {}", _quit);
+        _quit = true;
+    }
+
+    /**
+     * Stop the search without reporting any result, e.g. because a new
+     * search has replaced it.
+     */
+    protected synchronized void cancel() {
+        log.debug("cancel");
+        _cancelled = true;
         _quit = true;
     }
 
@@ -86,7 +97,6 @@ public class RouteFinder implements Runnable {
         }
 
         _destNodes = new ArrayList<>();
-        _quit = false;
         int level = 0;
         if (log.isDebugEnabled()) {
             log.debug("Origin= \"{}\" Path= \"{}\" Exit= \"{}\"",  _originBlockOrder.getBlock().getDisplayName(),
@@ -102,7 +112,14 @@ public class RouteFinder implements Runnable {
             log.debug("level {} has {} nodes. quit= {}", level, nodes.size(), _quit);
             level++;
         }
+        if (_cancelled) {
+            log.debug("search cancelled at level {}", level);
+            return;
+        }
         jmri.util.ThreadingUtil.runOnLayout(() -> {
+            if (_cancelled) {    // cancelled while waiting to report
+                return;
+            }
             if (_destNodes.isEmpty()) {
                 _caller.debugRoute(_tree, _originBlockOrder, _destBlockOrder);
             } else {

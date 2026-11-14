@@ -57,6 +57,15 @@ public interface ConditionalManager extends Manager<Conditional> {
     Logix getParentLogix(String name);
 
     /**
+     * Forget a deleted Logix as the parent of any Conditionals, so that
+     * {@link #getParentLogix(String)} no longer returns it. Called by the
+     * {@link LogixManager} when it deletes a Logix.
+     *
+     * @param x the deleted Logix
+     */
+    void forgetParentLogix(Logix x);
+
+    /**
      * Method to get an existing Conditional. First looks up assuming that name
      * is a User Name. Note: the parent Logix must be passed in x for user name
      * lookup. If this fails, or if x == null, looks up assuming that name is a

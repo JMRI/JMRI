@@ -79,7 +79,7 @@
 
       <h3>Hide undefined Roster function buttons</h3>
       When a Roster is selected, the address panels buttons are initialized as defined in the
-      Functions Labels panel in DecoderPro Label&Media screen. If this option is enabled, buttons not defined (no text) in
+      Functions Labels panel in DecoderPro Label&Media screen. If this option is enabled, buttons not defined (no text, no function image) in
       PanelPro will be automatically hidden in the <a href="BasicThrottleWindow.shtml">Function
       Panel</a>.<br>
 
@@ -124,9 +124,12 @@
       system, eg. <a href="../../hardware/can/cbus/index.shtml#dcc">CBUS&reg; Throttles</a>( CBUS&reg; is a registered trade mark of Dr Michael Bolton)</p>
 
       <h3>Default throttle file</h3>
-      This file selector allows to define a JMRI Throttle file (xml file created from <a href="ThrottleWindowMenus.shtml">save as menu in a throttle window</a>) 
+      <p>This file selector allows to define a JMRI Throttle file (xml file created from <a href="ThrottleWindowMenus.shtml">save as menu in a throttle window</a>) 
       as a default to be loaded each time a new throttle is obtained by a JMRI Throttle Window (unless an existing throttle file is available for that address or roster entry if any).<br>
-      This allows to define a nicely crafted JMRI Throttle window for any address to be used, particularly, default function names, icons and lockable states.
+      This allows to define a nicely crafted JMRI Throttle window for any address to be used, particularly, default function names, icons and lockable states.</p>
+
+      <p>The Use NMRA (NEM) buttons allow to use predefined throttle layout files included in the release.</p>
+      <p>Set field to blank to use none. Default is set as NMR layout.</p>
 
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>

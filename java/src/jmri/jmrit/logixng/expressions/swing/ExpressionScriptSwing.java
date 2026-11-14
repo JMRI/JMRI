@@ -10,6 +10,7 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.InstanceManager;
+import jmri.JmriUncheckedException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.ExpressionScript;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
@@ -336,7 +337,7 @@ public class ExpressionScriptSwing extends AbstractDigitalExpressionSwing {
                 throw new IllegalArgumentException("_tabbedPaneAspectType has unknown selection");
             }
         } catch (ParserException e) {
-            throw new RuntimeException("ParserException: "+e.getMessage(), e);
+            throw new JmriUncheckedException("ParserException: "+e.getMessage(), e);
         }
 
         expression.setRegisterListenerScript(_registerListener.getText());

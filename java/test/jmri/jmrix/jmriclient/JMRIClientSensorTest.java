@@ -1,5 +1,12 @@
 package jmri.jmrix.jmriclient;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import jmri.Sensor;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -25,6 +32,29 @@ public class JMRIClientSensorTest extends jmri.implementation.AbstractSensorTest
 
     @Override
     public void checkStatusRequestMsgSent() {}
+
+    @Test
+    public void testIncomingReplyGivesItsReceivedTime() {
+        List<Long> times = new ArrayList<>();
+        List<Integer> states = new ArrayList<>();
+        t.addRawStateListener((sensor, oldState, newState, timeNanos) -> {
+            states.add(newState);
+            times.add(timeNanos);
+        });
+
+        JMRIClientReply rActive = new JMRIClientReply("SENSOR " + t.getSystemName() + " ACTIVE\n");
+        rActive.setReceivedTime(1234L);
+        ((JMRIClientSensor) t).reply(rActive);
+
+        long before = System.nanoTime();
+        // not stamped, no time recorded
+        ((JMRIClientSensor) t).reply(new JMRIClientReply("SENSOR " + t.getSystemName() + " INACTIVE\n"));
+        long after = System.nanoTime();
+
+        assertEquals(List.of(Sensor.ACTIVE, Sensor.INACTIVE), states);
+        assertEquals(1234L, times.get(0), "the time the reply was received");
+        assertTrue(times.get(1) >= before && times.get(1) <= after, "not stamped: dated when set");
+    }
 
     @Override
     @BeforeEach

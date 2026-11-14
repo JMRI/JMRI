@@ -1,17 +1,19 @@
 package jmri.jmrit.operations.setup.backup;
 
+
 import java.io.*;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManagerAutoDefault;
+import jmri.JmriUncheckedException;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.OperationsXml;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Base class for backing up and restoring Operations working files. Derived
@@ -30,7 +32,7 @@ public abstract class BackupBase extends PropertyChangeSupport implements Instan
     // Just for testing......
     // If this is not null, it will be thrown to simulate various IO exceptions
     // that are hard to reproduce when running tests..
-    public RuntimeException testException = null;
+//    public JmriUncheckedException testException = null;
 
     // The root directory for all Operations files, usually
     // "user / name / JMRI / operations"
@@ -80,7 +82,7 @@ public abstract class BackupBase extends PropertyChangeSupport implements Instan
         if (!getBackupRoot().exists()) {
             Boolean ok = getBackupRoot().mkdirs();
             if (!ok) {
-                throw new RuntimeException("Unable to make directory: " // NOI18N
+                throw new JmriUncheckedException("Unable to make directory: " // NOI18N
                         + getBackupRoot().getAbsolutePath());
             }
         }
@@ -128,8 +130,6 @@ public abstract class BackupBase extends PropertyChangeSupport implements Instan
      * @return A sorted backup list.
      *
      */
-    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
-            justification = "not possible")  // NOI18N
     public String[] getBackupSetList() {
         String[] setList = getBackupRoot().list();
         // no guarantee of order, so we need to sort
@@ -147,8 +147,6 @@ public abstract class BackupBase extends PropertyChangeSupport implements Instan
         return dirs;
     }
 
-    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
-            justification = "not possible")  // NOI18N
     public BackupSet[] getBackupSets() {
         // This is a bit of a kludge for now, until I learn more about dynamic
         // sets
@@ -284,10 +282,10 @@ public abstract class BackupBase extends PropertyChangeSupport implements Instan
         }
 
         // Throw a test exception, if we have one.
-        if (testException != null) {
-            testException.fillInStackTrace();
-            throw testException;
-        }
+//        if (testException != null) {
+//            testException.fillInStackTrace();
+//            throw testException;
+//        }
         firePropertyChange(COPY_FILES_CHANGED_PROPERTY, sourceDir, destDir);
     }
 
@@ -384,8 +382,6 @@ public abstract class BackupBase extends PropertyChangeSupport implements Instan
      * Reset Operations by deleting XML files, leaves directories and backup
      * files in place.
      */
-    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
-            justification = "not possible")  // NOI18N
     public void deleteOperationsFiles() {
         // TODO Maybe this should also only delete specific files used by Operations,
         // and not just all XML files.
@@ -416,9 +412,9 @@ public abstract class BackupBase extends PropertyChangeSupport implements Instan
      * Returns the current date formatted for use as part of a Backup Set name.
      */
     private String getDate() {
-        Date date = Calendar.getInstance().getTime();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd");  // NOI18N
-        return simpleDateFormat.format(date);
+        LocalDateTime date = LocalDateTime.now();
+        DateTimeFormatter simpleDateFormat = DateTimeFormatter.ofPattern("yyyy_MM_dd"); // NOI18N
+        return date.format(simpleDateFormat);
     }
 
     /**
@@ -442,7 +438,6 @@ public abstract class BackupBase extends PropertyChangeSupport implements Instan
          * @throws IOException Thrown when overwrite false and destination directory exists.
          *
          */
-        @SuppressFBWarnings(value = "OBL_UNSATISFIED_OBLIGATION")
         public static void copy(String sourceFileName, String destFileName,
                 Boolean overwrite) throws IOException {
 
@@ -477,7 +472,7 @@ public abstract class BackupBase extends PropertyChangeSupport implements Instan
 
             Boolean ok = dst.setLastModified(src.lastModified());
             if (!ok) {
-                throw new RuntimeException(
+                throw new JmriUncheckedException(
                         "Failed to set modified time on file: " // NOI18N
                                 + dst.getAbsolutePath());
             }

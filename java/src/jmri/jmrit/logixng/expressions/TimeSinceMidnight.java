@@ -109,7 +109,7 @@ public class TimeSinceMidnight extends AbstractAnalogExpression implements Prope
                 return Bundle.getMessage(locale, "TimeSinceMidnight_Long_FastClock");
 
             default:
-                throw new RuntimeException("Unknown value of _timerType: "+_type.name());
+                throw new JmriUncheckedException("Unknown value of _timerType: "+_type.name());
         }
     }
 

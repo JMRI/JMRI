@@ -650,13 +650,30 @@ public class RosterSpeedProfile {
 
     /**
      * Plan and execute an approach to the minimum reliable operating speed over
+     * the given distance, then hold that speed. Stopping, for example when a
+     * stopping sensor goes active, is for the caller.
+     *
+     * @param t           The DccThrottle to drive
+     * @param distanceMm  Distance in mm ({@code >=} 0)
+     * @param speedFactor If {@code >} 0, throttle commands are divided by this
+     *                    factor before enqueuing.
+     */
+    public void planApproachToMinOverDistance(DccThrottle t, float distanceMm, float speedFactor) {
+        planDistanceSchedule(t, distanceMm, /* toMinOnly */ true, speedFactor);
+    }
+
+    /**
+     * Plan and execute an approach to the minimum reliable operating speed over
      * the given distance, then stop when the supplied sensor transitions to
      * ACTIVE.
-     * 
+     *
      * @param t          The DccThrottle to drive
      * @param distanceMm Distance in mm ({@code >=} 0)
      * @param stopSensor The sensor on which to stop (must not be null)
+     * @deprecated since 5.17.5; use {@link #planApproachToMinOverDistance(DccThrottle, float, float)}
+     *             and stop the train when the sensor goes active
      */
+    @Deprecated(since = "5.17.5", forRemoval = true)
     public void planApproachToMinOverDistanceThenStopBySensor(
             DccThrottle t, float distanceMm, jmri.Sensor stopSensor) {
         planApproachToMinOverDistanceThenStopBySensor(t, distanceMm, stopSensor, /*
@@ -674,9 +691,13 @@ public class RosterSpeedProfile {
      * @param stopSensor  The sensor on which to stop (must not be null)
      * @param speedFactor If {@code >} 0, throttle commands are divided by this
      *                    factor before enqueuing.
+     * @deprecated since 5.17.5; use {@link #planApproachToMinOverDistance(DccThrottle, float, float)}
+     *             and stop the train when the sensor goes active
      */
+    @Deprecated(since = "5.17.5", forRemoval = true)
     public void planApproachToMinOverDistanceThenStopBySensor(
             DccThrottle t, float distanceMm, jmri.Sensor stopSensor, float speedFactor) {
+        jmri.util.LoggingUtil.deprecationWarning(log, "planApproachToMinOverDistanceThenStopBySensor");
         if (stopSensor == null) {
             log.warn("planApproachToMin... called with null stopSensor; forcing immediate stop.");
             if (t != null)
@@ -1112,9 +1133,11 @@ public class RosterSpeedProfile {
     /**
      * Set min/max throttle limits, optionally enforcing a scale km/h cap. If
      * maxSpeedScaleKmh == 0.0f, the percent maxOperatingSpeed takes precedence
-     * (no effect). If maxSpeedScaleKmh {@code >} 0.0f, we convert the km/h cap
-     * to an equivalent throttle% using the roster profile and the layout scale
-     * ratio, then take the minimum of that and the percent cap.
+     * (no effect). If maxSpeedScaleKmh {@code >} 0.0f and the direction has
+     * profile data, we convert the km/h cap to an equivalent throttle% using
+     * the roster profile and the layout scale ratio; the scale cap then
+     * replaces the percent cap. The percent cap applies only when
+     * maxSpeedScaleKmh == 0.0f or the direction has no profile.
      *
      * @param minReliableOperatingSpeed lowest throttle % the loco reliably
      *                                  moves (0..1)
@@ -1142,7 +1165,7 @@ public class RosterSpeedProfile {
 
             float thrCapPct = getThrottleSetting(targetMms, isForward);
             if (thrCapPct > 0.0f) {
-                maxPct = Math.min(maxOperatingSpeed, thrCapPct);
+                maxPct = thrCapPct;
             }
         }
 
@@ -1156,6 +1179,15 @@ public class RosterSpeedProfile {
                     this.maxOperatingSpeed, this.minReliableOperatingSpeed);
             this.maxOperatingSpeed = this.minReliableOperatingSpeed;
         }
+    }
+
+    /**
+     * Get the maximum operating speed as a percentage of throttle (0..1).
+     *
+     * @return maximum throttle percentage.
+     */
+    public float getMaxOperatingSpeed() {
+        return maxOperatingSpeed;
     }
 
     /**

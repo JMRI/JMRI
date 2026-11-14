@@ -819,6 +819,13 @@ public abstract class CommonConductorYardmasterPanel extends OperationsPanel imp
     public String getLocationName() {
         return textLocationName.getText();
     }
+    
+    public Location getCurrentLocation() {
+        if (_train != null && _train.getCurrentRouteLocation() != null) {
+            return _train.getCurrentRouteLocation().getLocation();
+        }
+        return null;
+    }
 
     protected void removeCarFromList(Car car) {
         checkBoxes.remove("p" + car.getId());

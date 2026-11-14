@@ -175,6 +175,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                     status.setText(msg);
                     setOperationAborted(true);
                     log.info(msg);
+                    jmri.util.swing.JmriJOptionPane.showMessageDialog(LoaderPane.this, msg);
                 }
                 enableDownloadVerifyButtons();
             }

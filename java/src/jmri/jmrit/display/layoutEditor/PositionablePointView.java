@@ -255,6 +255,17 @@ public class PositionablePointView extends LayoutTrackView {
         return new Rectangle2D.Double(c.getX() - 0.5, c.getY() - 0.5, 1.0, 1.0);
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Anchors, end bumpers and edge connectors are not drawn in a layout
+     * block's colours; the track segments joined to them are.
+     */
+    @Override
+    public boolean usesLayoutBlock(@Nonnull LayoutBlock layoutBlock) {
+        return false;
+    }
+
     @CheckReturnValue
     @Nonnull
     public String getEastBoundSignal() {
@@ -611,10 +622,6 @@ public class PositionablePointView extends LayoutTrackView {
         }
     }
 
-    // initialization instance variables (used when loading a LayoutEditor)
-    public String trackSegment1Name = "";
-    public String trackSegment2Name = "";
-
     /**
      * setup a connection to a track
      *
@@ -714,14 +721,8 @@ public class PositionablePointView extends LayoutTrackView {
     protected int maxHeight() {
         return 5;
     }
-    // cursor location reference for this move (relative to object)
-    int xClick = 0;
-    int yClick = 0;
 
     public void mousePressed(JmriMouseEvent e) {
-        // remember where we are
-        xClick = e.getX();
-        yClick = e.getY();
         // if (debug) log.debug("Pressed: "+where(e));
         if (e.isPopupTrigger()) {
             showPopup(e);

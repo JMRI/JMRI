@@ -61,17 +61,14 @@
 
       <h3 id="html">HTML in Javadoc</h3>
 
-      <p>The Java 8 Javadoc content is interpreted as HTML 4.01, so it should be valid HTML 4.01.
-      If it's not, it probably won't display properly when somebody wants to understand your code,
-      so it's in your interest to get the Javadoc comments right. In addition, Java 11 will
-      eventually require us to write HTML 5 Javadoc content; keeping it orderly now will help with
-      that migration later.</p>
+      <p>Java 11
+      requires us to write HTML 5 Javadoc content.</p>
 
       <p>We run the <code>ant scanhelp</code> job during <a href=
       "ContinuousIntegration.shtml">integration</a> to keep errors from accumulating; you can run
       that on your own changes to the code to get feedback early.</p>
 
-      <p>The rest of this section is hints and tips on HTML 4.01.</p>
+      <p>The rest of this section is hints and tips on HTML in Javadoc.</p>
 
       <p>You have to properly escape the &gt;, & and &lt; characters, e.g. to show a generic type.
       To do that, either escape them individually by writing &amp;gt;, &amp;amp; and &amp;lt; (note
@@ -118,7 +115,7 @@
  * &lt;/p&gt;&lt;ul&gt;
  *    &lt;li&gt;List item
  * &lt;/ul&gt;
-</pre>Note that HTML 4.01 wants paragraph tags to be ended with &lt;/p&gt;, and that you can't have
+</pre>Note that HTML 5 wants paragraph tags to be ended with &lt;/p&gt;, and that you can't have
 a list inside a paragraph.
       <p>Finally, note that this Javadoc line is malformed:</p>
 

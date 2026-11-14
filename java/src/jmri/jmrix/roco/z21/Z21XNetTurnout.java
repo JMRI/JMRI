@@ -155,8 +155,9 @@ public class Z21XNetTurnout extends XNetTurnout {
             log.debug("Current Thread ID: {} Thread Name {}", java.lang.Thread.currentThread().getId(), java.lang.Thread.currentThread().getName());
         }
         XNetMessage msg = getOffMessage(state == _mThrown);
-        // Set the known state to the commanded state.
-        newKnownState(getCommandedState());
+        if (getFeedbackMode() != ONESENSOR && getFeedbackMode() != TWOSENSOR) {
+            newKnownState(getCommandedState());
+        }
         internalState = IDLE;
         // Then send the message.
         tc.sendXNetMessage(msg, this);  // reply sent through loconet

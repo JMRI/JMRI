@@ -48,6 +48,10 @@ public final class MarklinConstants {
     public static final int SOFCOMMANDSTART = 0x18;
     public static final int SOFCOMMANDEND = 0x1C;
 
+    // Individual software commands
+    public static final int CMDPING = 0x18;
+    public static final int CMDCANBOOT = 0x1B;
+
     // GUI Commands
     public static final int GUICOMMANDNO = 3;
     public static final int GUICOMMANDSTART = 0x20;

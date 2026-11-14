@@ -14,24 +14,13 @@ public class MarklinTurnoutManagerTest  extends jmri.managers.AbstractTurnoutMgr
 
     @Override
     public String getSystemName(int i) {
-        return "MT"+i;
+        return "MT" + i;
     }
 
     @Test
     public void testCTor() {
         Assertions.assertNotNull(l, "exists");
     }
-
-    @Test
-    @Override
-    @Disabled("Tested class requires further development")
-    public void testMakeSystemNameWithNoPrefixNotASystemName(){}
-
-    @Test
-    @Override
-    @Disabled("Tested class requires further development")
-    public void testMakeSystemNameWithPrefixNotASystemName(){}
-
 
     @BeforeEach
     @Override

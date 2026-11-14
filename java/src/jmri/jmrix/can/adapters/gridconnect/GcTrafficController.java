@@ -91,7 +91,7 @@ public class GcTrafficController extends TrafficController {
      */
     @Override
     public void sendCanMessage(CanMessage m, CanListener reply) {
-        log.debug("GcTrafficController sendCanMessage() {}", m.toString());
+        log.debug("GcTrafficController sendCanMessage() {}", m);
         sendMessage(m, reply);
     }
 
@@ -101,7 +101,7 @@ public class GcTrafficController extends TrafficController {
      */
     @Override
     public void sendCanReply(CanReply r, CanListener reply) {
-        log.debug("TrafficController sendCanReply() {}", r.toString());
+        log.debug("TrafficController sendCanReply() {}", r);
         notifyReply(r, reply);
     }
 
@@ -141,15 +141,16 @@ public class GcTrafficController extends TrafficController {
      */
     @Override
     public CanReply decodeFromHardware(AbstractMRReply m) {
-        GridConnectReply gc = new GridConnectReply();
         log.debug("Decoding from hardware");
-        try {
+        // no throwaway GridConnectReply is allocated for every incoming frame
+        GridConnectReply gc;
+        if (m instanceof GridConnectReply) {
             gc = (GridConnectReply) m;
-        } catch(java.lang.ClassCastException cce){
+        } else {
             log.error("{} cannot cast to a GridConnectReply",m);
+            gc = new GridConnectReply();
         }
-        CanReply ret = gc.createReply();
-        return ret;
+        return gc.createReply();
     }
 
     /**
@@ -226,6 +227,14 @@ public class GcTrafficController extends TrafficController {
                 while (char1 != ':') {
                     char1 = readByteProtected(istream);
                 }
+            } else if (char1 == ':') {
+                // Start of a new frame before the end of the current one,
+                // the end of the current frame ( ';' ) has been lost, eg. a serial overrun.
+                // Discard the partial frame and restart with this ':' so that the
+                // two frames are not merged into one corrupt frame.
+                log.warn("Incomplete frame discarded: {}", msg);
+                msg.flush();
+                i = 0;
             }
             //if (log.isDebugEnabled()) log.debug("char: "+(char1&0xFF)+" i: "+i);
             // if there was a timeout, flush any char received and start over

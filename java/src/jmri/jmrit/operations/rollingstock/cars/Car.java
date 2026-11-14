@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * Represents a car on the layout
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2012, 2013, 2014,
- *         2015, 2023, 2025
+ *         2015, 2023, 2025, 2026
  */
 public class Car extends RollingStock {
 
@@ -84,7 +84,6 @@ public class Car extends RollingStock {
         super(road, number);
         loaded = true;
         log.debug("New car ({} {})", road, number);
-        addPropertyChangeListeners();
     }
 
     @Override
@@ -1151,8 +1150,6 @@ public class Car extends RollingStock {
         setKernel(null);
         setFinalDestination(null); // removes property change listener
         setFinalDestinationTrack(null); // removes property change listener
-        InstanceManager.getDefault(CarTypes.class).removePropertyChangeListener(this);
-        InstanceManager.getDefault(CarLengths.class).removePropertyChangeListener(this);
         super.dispose();
     }
 
@@ -1255,7 +1252,6 @@ public class Car extends RollingStock {
         if ((a = e.getAttribute(Xml.ROUTE_PATH)) != null) {
             _routePath = a.getValue();
         }
-        addPropertyChangeListeners();
     }
 
     /**
@@ -1364,9 +1360,18 @@ public class Car extends RollingStock {
         super.setDirtyAndFirePropertyChange(p, old, n);
     }
 
-    private void addPropertyChangeListeners() {
+    @Override
+    protected void addPropertyChangeListeners() {
         InstanceManager.getDefault(CarTypes.class).addPropertyChangeListener(this);
         InstanceManager.getDefault(CarLengths.class).addPropertyChangeListener(this);
+        super.addPropertyChangeListeners();
+    }
+    
+    @Override
+    protected void removePropertyChangeListeners() {
+        InstanceManager.getDefault(CarTypes.class).removePropertyChangeListener(this);
+        InstanceManager.getDefault(CarLengths.class).removePropertyChangeListener(this);
+        super.removePropertyChangeListeners();
     }
 
     @Override

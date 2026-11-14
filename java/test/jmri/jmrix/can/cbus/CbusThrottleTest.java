@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author Paul Bender Copyright (C) 2017
  */
+@SuppressWarnings("deprecation")
 public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     @Test
@@ -1227,6 +1228,115 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         assertEquals("[78] 47 64 FF", msg.toString());
         // 78 Header 47 DSPD 64 loco FF fowards speed 126
 
+    }
+
+    @Test
+    public void testNothingSentToLayoutWhileStolen() {
+        CbusThrottle t = (CbusThrottle) instance;
+        int sent = tc.outbound.size();
+
+        // session stolen, awaiting recovery
+        t.setStolen(true);
+        t.setHandle(-1);
+
+        t.setSpeedSetting(0.5f);
+        t.setIsForward(false);
+        t.setFunction(3, true);
+        t.setSpeedStepMode(SpeedStepMode.NMRA_DCC_28);
+        t.releaseFromCommandStation();
+
+        assertEquals(sent, tc.outbound.size(), "nothing sent to layout while stolen " + tc.outbound);
+        assertEquals(0.5f, t.getSpeedSetting(), 0.001f, "local speed updated");
+        assertFalse(t.getIsForward(), "local direction updated");
+        assertTrue(t.getFunction(3), "local function updated");
+        assertEquals(SpeedStepMode.NMRA_DCC_28, t.getSpeedStepMode(), "local speed steps updated");
+
+        // session recovered with a new handle, speed 0 forwards from PLOC
+        t.setHandle(101);
+        t.setStolen(false);
+        t.throttleInit(0x80, 0, 0, 0);
+        assertEquals(0f, t.getSpeedSetting(), 0.001f, "speed from PLOC");
+        assertTrue(t.getIsForward(), "direction from PLOC");
+
+        t.setSpeedSetting(0.5f);
+        assertEquals(sent + 1, tc.outbound.size(), "speed sent after recovery");
+        assertEquals(CbusConstants.CBUS_DSPD, tc.outbound.lastElement().getElement(0), "DSPD sent");
+        assertEquals(101, tc.outbound.lastElement().getElement(1), "new session handle used");
+
+        t.setFunction(3, false);
+        assertEquals(sent + 2, tc.outbound.size(), "function sent after recovery");
+        assertEquals("[78] 60 65 01 00", tc.outbound.lastElement().toString(), "DFUN group 1 new handle");
+    }
+
+    @Test
+    public void testReportsSpeedSent() {
+        assertTrue(instance.reportsSpeedSent(), "CBUS connections record when they write");
+    }
+
+    // A speed or direction command is reported when the connection has
+    // written it, with the time the connection gives and the speed and
+    // direction that command set, not the throttle's later state.
+    @Test
+    public void testSpeedSentReportedWhenWritten() {
+        CbusThrottle t = (CbusThrottle) instance;
+        java.util.List<String> told = new java.util.concurrent.CopyOnWriteArrayList<>();
+        t.addSpeedSentListener((th, speed, forward, timeNanos) -> {
+            assertSame(t, th, "told which throttle");
+            told.add(speed + " " + forward + " " + timeNanos);
+        });
+        int sent = tc.outbound.size();
+
+        t.setSpeedSetting(0.5f);
+        assertEquals(sent + 1, tc.outbound.size(), "DSPD sent");
+        CanMessage first = tc.outbound.lastElement();
+        assertEquals(CbusConstants.CBUS_DSPD, first.getElement(0), "DSPD");
+        jmri.util.ThreadingUtil.runOnLayout(() -> {
+        }); // anything queued for the layout thread before this has run
+        assertTrue(told.isEmpty(), "not reported until the connection has written it");
+
+        t.setIsForward(false);
+        CanMessage second = tc.outbound.lastElement();
+        t.setSpeedSetting(-1f);
+        CanMessage third = tc.outbound.lastElement();
+        assertEquals(sent + 3, tc.outbound.size(), "three DSPDs sent");
+        t.setSpeedSetting(-1f);
+        assertEquals(sent + 3, tc.outbound.size(), "an unchanged speed is not sent");
+
+        tc.markWritten(first, 1000L);
+        tc.markWritten(second, 2000L);
+        tc.markWritten(third, 3000L);
+        JUnitUtil.waitFor(() -> told.size() == 3, "all three reported");
+        assertEquals(java.util.List.of("0.5 true 1000", "0.5 false 2000", "-1.0 false 3000"), told,
+                "each with the speed and direction it set, and when it was written");
+    }
+
+    // With nothing listening, a DSPD carries no sent listener, so the
+    // connection has nothing extra to do.
+    @Test
+    public void testNoSentListenerWhenNothingListens() {
+        instance.setSpeedSetting(0.5f);
+        assertNull(tc.outbound.lastElement().getSentListener(), "nothing to tell");
+    }
+
+    @Test
+    public void testNothingSentToLayoutAfterDispose() {
+        CbusThrottle t = (CbusThrottle) instance;
+        t.setSpeedSetting(0.25f);
+        int sent = tc.outbound.size();
+
+        t.throttleDispose();
+        assertEquals(-1, t.getHandle(), "handle cleared on dispose");
+
+        // must not throw ( no keep-alive timer or command station ) and must not send
+        t.setSpeedSetting(0.5f);
+        t.setSpeedSetting(-1f);
+        t.setIsForward(false);
+        t.setFunction(0, true);
+        t.setSpeedStepMode(SpeedStepMode.NMRA_DCC_14);
+        t.releaseFromCommandStation();
+
+        assertEquals(sent, tc.outbound.size(), "nothing sent to layout after dispose " + tc.outbound);
+        assertEquals(-1f, t.getSpeedSetting(), 0.001f, "local speed still updated");
     }
 
     private static ArrayList<CanMessage> stripKeepAlivesFromList( ArrayList<CanMessage> list ){

@@ -32,10 +32,21 @@ public class DefaultSignalMastLogicManager
     }
 
     final void addListeners(){
-        InstanceManager.getDefault(LayoutBlockManager.class).addPropertyChangeListener(propertyBlockManagerListener);
-        InstanceManager.getDefault(SignalMastManager.class).addVetoableChangeListener(this);
-        InstanceManager.getDefault(TurnoutManager.class).addVetoableChangeListener(this);
+        layoutBlockManager = InstanceManager.getDefault(LayoutBlockManager.class);
+        layoutBlockManager.addPropertyChangeListener(propertyBlockManagerListener);
+        signalMastManager = InstanceManager.getDefault(SignalMastManager.class);
+        signalMastManager.addVetoableChangeListener(this);
+        turnoutManager = InstanceManager.getDefault(TurnoutManager.class);
+        turnoutManager.addVetoableChangeListener(this);
     }
+
+    /**
+     * The LayoutBlockManager, SignalMastManager and TurnoutManager this manager listens to, so that
+     * {@link #dispose()} stops listening to those, not to whatever the InstanceManager holds by then.
+     */
+    private LayoutBlockManager layoutBlockManager;
+    private SignalMastManager signalMastManager;
+    private TurnoutManager turnoutManager;
 
     /**
      * {@inheritDoc}
@@ -394,12 +405,11 @@ public class DefaultSignalMastLogicManager
     public void generateSection() {
         log.debug("generateSection:");
         SectionManager sm = InstanceManager.getDefault(SectionManager.class);
-        sm.getNamedBeanSet().stream().map( nb -> {
-            if (nb.getSectionType() == Section.SIGNALMASTLOGIC) {
+        sm.getNamedBeanSet().stream().filter( nb -> nb.getSectionType() == Section.SIGNALMASTLOGIC)
+            .forEachOrdered( nb -> {
                 nb.removeProperty(PROPERTY_INTERMEDIATE_SECTION);
-            }
-            return nb;
-        }).forEachOrdered( nb -> nb.removeProperty("forwardMast"));
+                nb.removeProperty("forwardMast");
+            });
         int x = 0;
         for (SignalMastLogic sml : getSignalMastLogicList()) {
             x++;
@@ -423,7 +433,7 @@ public class DefaultSignalMastLogicManager
                         if (sec != null) {
                             //A Section already exists, lets check that it is one used with the SML, if so carry on using that.
                             if (sec.getSectionType() != Section.SIGNALMASTLOGIC) {
-                                break;
+                                continue;
                             }
                         } else {
                             try {
@@ -508,9 +518,9 @@ public class DefaultSignalMastLogicManager
     /** {@inheritDoc} */
     @Override
     public void dispose(){
-        InstanceManager.getDefault(LayoutBlockManager.class).removePropertyChangeListener(propertyBlockManagerListener);
-        InstanceManager.getDefault(SignalMastManager.class).removeVetoableChangeListener(this);
-        InstanceManager.getDefault(TurnoutManager.class).removeVetoableChangeListener(this);
+        layoutBlockManager.removePropertyChangeListener(propertyBlockManagerListener);
+        signalMastManager.removeVetoableChangeListener(this);
+        turnoutManager.removeVetoableChangeListener(this);
         super.dispose();
     }
 

@@ -228,8 +228,8 @@ public class ProxySensorManagerTest extends AbstractProxyManagerTestBase<ProxySe
         l.addManager(new InternalSensorManager(new InternalSystemConnectionMemo("Z", "Zulu")));
         l.provideSensor("ZS2");
 
-        // property listener should have been immediately invoked
-        assertEquals( 5, propertyListenerCount, "propertyListenerCount");
+        // property listener should have been immediately invoked, once
+        assertEquals( 4, propertyListenerCount, "propertyListenerCount");
         assertEquals( "length", propertyListenerLast, "last call");
 
         // listener should have been immediately invoked

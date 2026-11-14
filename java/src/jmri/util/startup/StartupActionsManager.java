@@ -8,18 +8,24 @@ import java.util.Locale;
 import java.util.ServiceLoader;
 import java.util.Set;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
+import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.SystemConnectionMemo;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.configurexml.XmlAdapter;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
 import jmri.spi.PreferencesManager;
+import jmri.util.StringUtil;
 import jmri.util.jdom.JDOMUtil;
 import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -110,15 +116,26 @@ public class StartupActionsManager extends AbstractPreferencesManager {
                 log.debug("No element to read");
             }
             if (perform) {
+                List<String> performed = new ArrayList<>();
+                List<Long> nanos = new ArrayList<>();
                 this.actions.stream().filter(action -> action.isValid()).forEachOrdered(action -> {
                     try {
                         if (action.isEnabled()) {
-                            action.performAction();
+                            long start = System.nanoTime();
+                            try {
+                                action.performAction();
+                            } finally {
+                                performed.add(describe(action));
+                                nanos.add(System.nanoTime() - start);
+                            }
                         }
                     } catch (JmriException ex) {
                         this.addInitializationException(profile, ex);
                     }
                 });
+                if (!performed.isEmpty()) {
+                    logSummary(summary(performed, nanos));
+                }
                 ServiceLoader.load(StartupRunnable.class).forEach(Runnable::run);
             }
             this.isDirty = false;
@@ -145,7 +162,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
         Element element = new Element(STARTUP, NAMESPACE);
         actions.stream().forEach((action) -> {
             log.debug("model is {} ({})", action.getName(), action);
-            if (action.getName() != null) {
+            if (action.getName() != null || isKeptAction(action)) {
                 Element e = ConfigXmlManager.elementFromObject(action, true);
                 if (e != null) {
                     element.addContent(e);
@@ -161,6 +178,102 @@ public class StartupActionsManager extends AbstractPreferencesManager {
         } catch (JDOMException ex) {
             log.error("Unable to create create XML", ex);
         }
+    }
+
+    /**
+     * Check if an action without a display name should still be saved.
+     * <p>
+     * An action's display name is only known while a connection or factory
+     * offering it is running. An action for a connection that is disabled,
+     * failed to start, or was removed in this session has no name, but it
+     * still has its class name and connection prefix. It is kept so that it
+     * works again when the connection comes back, rather than being silently
+     * deleted from the user's preferences.
+     *
+     * @param action the action to check
+     * @return true if the action is identified by a class name
+     */
+    private static boolean isKeptAction(StartupModel action) {
+        if (action instanceof AbstractActionModel) {
+            String className = ((AbstractActionModel) action).getClassName();
+            if (className != null && !className.isEmpty()) {
+                log.debug("keeping action {} for connection \"{}\" not currently available",
+                        className, ((AbstractActionModel) action).getSystemPrefix());
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Log the time taken by the Start Up actions, one line at a time.
+     *
+     * @param lines the lines made by {@link #summary(List, List)}
+     */
+    @SuppressFBWarnings(value = "SLF4J_SIGN_ONLY_FORMAT",
+            justification = "each line is made in full by summary(), which names what it is")
+    private static void logSummary(List<String> lines) {
+        // a loop, not a lambda: the warning is suppressed for this method only,
+        // and a lambda's body is compiled to a method of its own
+        for (String line : lines) {
+            log.info("{}", line);
+        }
+    }
+
+    /**
+     * Describe a start up action as the Start Up preferences list it: the type
+     * of action, then its name in quotes.
+     *
+     * @param action the action
+     * @return the description
+     */
+    private String describe(StartupModel action) {
+        StartupModelFactory factory = this.factories.get(action.getClass());
+        String type = (factory != null) ? factory.getDescription() : action.getClass().getSimpleName();
+        return type + " \"" + plainText(action.toString()) + "\"";
+    }
+
+    /**
+     * Give an action's name as plain text for the log. Some actions name
+     * themselves in HTML for the Start Up preferences table, for example a
+     * script button as its name and script on two lines.
+     *
+     * @param name the name, plain text or HTML
+     * @return the name as plain text, with HTML line breaks as ", "
+     */
+    static String plainText(String name) {
+        if (!name.regionMatches(true, 0, StringUtil.HTML_OPEN_TAG, 0, StringUtil.HTML_OPEN_TAG.length())) {
+            return name;
+        }
+        return StringUtil.stripHtmlTags(name.replaceAll("(?i)<br\\s*/?>", ", ")).trim();
+    }
+
+    /**
+     * Lines saying how long the start up actions took in all, then one line
+     * for each of them, in the order they were performed, so that a slow
+     * start up can be traced to its cause.
+     *
+     * @param performed the actions performed, as described by
+     *                  {@code describe(StartupModel)}
+     * @param nanos     the time each took, in nanoseconds
+     * @return the lines
+     */
+    static List<String> summary(List<String> performed, List<Long> nanos) {
+        long total = 0;
+        for (long n : nanos) {
+            total += n;
+        }
+        List<String> lines = new ArrayList<>();
+        lines.add("Start up actions took " + seconds("%.1f s", total) + " in all:");
+        for (int i = 0; i < performed.size(); i++) {
+            // times right-aligned, so that the long ones stand out
+            lines.add("  " + seconds("%5.1f s", nanos.get(i)) + "  " + performed.get(i));
+        }
+        return lines;
+    }
+
+    private static String seconds(String format, long nanos) {
+        return String.format(Locale.ROOT, format, nanos / 1e9);
     }
 
     public StartupModel[] getActions() {
@@ -241,6 +354,71 @@ public class StartupActionsManager extends AbstractPreferencesManager {
         if (fireChange) {
             this.fireIndexedPropertyChange(STARTUP, index, model, null);
         }
+    }
+
+    /**
+     * Get the startup actions that belong to a system connection.
+     *
+     * @param systemPrefix the system prefix of the connection
+     * @return the actions for that connection, in Start Up order; empty if none
+     */
+    @Nonnull
+    public List<AbstractActionModel> getActionsForConnection(@Nonnull String systemPrefix) {
+        ArrayList<AbstractActionModel> result = new ArrayList<>();
+        for (AbstractActionModel model : this.getActions(AbstractActionModel.class)) {
+            if (model.isSystemConnectionAction() && systemPrefix.equals(model.getSystemPrefix())) {
+                result.add(model);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Get the running connections that offer the action of a startup action,
+     * so the action could be moved to one of them.
+     *
+     * @param model          the startup action
+     * @param excludedPrefix the system prefix of a connection to leave out,
+     *                       usually the one being deleted; may be null
+     * @return the connections offering the action; empty if none
+     */
+    @Nonnull
+    public static List<SystemConnectionMemo> getConnectionsOffering(@Nonnull AbstractActionModel model,
+            @CheckForNull String excludedPrefix) {
+        ArrayList<SystemConnectionMemo> result = new ArrayList<>();
+        String className = model.getClassName();
+        for (SystemConnectionMemo memo : InstanceManager.getList(SystemConnectionMemo.class)) {
+            if (memo.getSystemPrefix().equals(excludedPrefix)) {
+                continue;
+            }
+            StartupActionFactory factory = memo.getActionFactory();
+            for (Class<?> clazz : factory.getActionClasses()) {
+                if (clazz.getName().equals(className)) {
+                    result.add(memo);
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Move a startup action to a different system connection. Triggers an
+     * {@link java.beans.IndexedPropertyChangeEvent} where the index, and the
+     * old value, are the position of the model, and the new value is the
+     * model.
+     *
+     * @param model        the startup action to move
+     * @param systemPrefix the system prefix of the connection to move it to
+     */
+    public void reassignAction(@Nonnull AbstractActionModel model, @Nonnull String systemPrefix) {
+        int index = this.actions.indexOf(model);
+        if (index < 0) {
+            return;
+        }
+        model.setSystemPrefix(systemPrefix);
+        this.setRestartRequired();
+        this.fireIndexedPropertyChange(STARTUP, index, index, model);
     }
 
     public HashMap<Class<? extends StartupModel>, StartupModelFactory> getFactories() {

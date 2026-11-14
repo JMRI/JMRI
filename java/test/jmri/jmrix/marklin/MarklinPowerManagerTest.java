@@ -22,17 +22,15 @@ public class MarklinPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTest
 
     @Override
     protected void hearOn() {
-        MarklinReply r = new MarklinReply(); // default priority 1
-        r.setCommand( MarklinConstants.SYSCOMMANDSTART);
-        r.setElement(9, MarklinConstants.CMDGOSYS);
+        int[] frame = jmri.jmrix.marklin.mcan.cs2.Cs2SystemCommands.buildSystemGoReply();
+        MarklinReply r = new MarklinReply(frame);
         pwr.reply(r);
     }
 
     @Override
     protected void hearOff() {
-        MarklinReply r = new MarklinReply(); // default priority 1
-        r.setCommand( MarklinConstants.SYSCOMMANDSTART);
-        r.setElement(9, MarklinConstants.CMDSTOPSYS);
+        int[] frame = jmri.jmrix.marklin.mcan.cs2.Cs2SystemCommands.buildSystemStopReply();
+        MarklinReply r = new MarklinReply(frame);
         pwr.reply(r);
     }
 
@@ -69,13 +67,13 @@ public class MarklinPowerManagerTest extends jmri.jmrix.AbstractPowerManagerTest
     @Override
     protected boolean outboundOnOK(int index) {
         MarklinMessage m = tc.getLastMessageSent();
-        return m != null && "00 00 47 11 05 00 00 00 00 01 00 00 00".equals(m.toString());
+        return m != null && "00 00 03 00 05 00 00 00 00 01 00 00 00".equals(m.toString());
     }
 
     @Override
     protected boolean outboundOffOK(int index) {
         MarklinMessage m = tc.getLastMessageSent();
-        return m != null && "00 00 47 11 05 00 00 00 00 00 00 00 00".equals(m.toString());
+        return m != null && "00 00 03 00 05 00 00 00 00 00 00 00 00".equals(m.toString());
     }
 
     @Override

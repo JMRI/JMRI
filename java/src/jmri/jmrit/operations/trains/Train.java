@@ -4,7 +4,8 @@ import java.awt.Color;
 import java.beans.PropertyChangeListener;
 import java.io.*;
 import java.text.MessageFormat;
-import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import jmri.InstanceManager;
@@ -98,11 +99,12 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     protected boolean _showTimes = true; // when true, show arrival and departure times for this train
     protected Engine _leadEngine = null; // lead engine for icon
     protected String _switchListStatus = UNKNOWN; // print switch list status
-    protected String _comment = NONE;
+    protected String _comment = NONE; 
+    protected String _commentTermination = NONE;
     protected String _serviceStatus = NONE; // status only if train is being built
     protected int _statusCode = CODE_UNKNOWN;
     protected int _oldStatusCode = CODE_UNKNOWN;
-    protected Date _date; // date for last status change for this train
+    protected LocalDateTime _date; // date for last status change for this train
     protected int _statusCarsRequested = 0;
     protected String _tableRowColorName = NONE; // color of row in Trains table
     protected String _tableRowColorResetName = NONE; // color of row in Trains table when reset
@@ -561,7 +563,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
 
         // AM_PM field
         String am_pm = "";
-        if (Setup.is12hrFormatEnabled() && !isSortFormat) {
+        if (Setup.is12hrFormatEnabled() && !isTrainEnRoute() && !isSortFormat) {
             am_pm = TrainCommon.SPACE + Bundle.getMessage("AM");
             if (hours >= 12) {
                 hours = hours - 12;
@@ -830,7 +832,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         String oldStatus = getStatus();
         int oldCode = getStatusCode();
         _statusCode = code;
-        setDate(Calendar.getInstance().getTime());
+        setDate(LocalDateTime.now());
         if (oldCode != getStatusCode()) {
             setDirtyAndFirePropertyChange(STATUS_CHANGED_PROPERTY, oldStatus, getStatus());
         }
@@ -2186,7 +2188,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         return _statusCarsRequested;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         _date = date;
     }
 
@@ -2194,16 +2196,16 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         if (_date == null) {
             return NONE;
         }
-        SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"); // NOI18N
-        return format.format(_date);
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"); // NOI18N
+        return _date.format(format);
     }
 
     public String getDate() {
         if (_date == null) {
             return NONE;
         }
-        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss"); // NOI18N
-        return format.format(_date);
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss"); // NOI18N
+        return _date.format(format);
     }
 
     /**
@@ -2878,6 +2880,41 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                         getTrainLength(crl), Setup.getLengthUnit().toLowerCase(),
                         getTrainWeight(crl), getLeadEngineRoadAndNumber(),
                         getLeadEngineDccAddress()});
+    }
+    
+    public void setCommentTermination(String comment) {
+        String old = _commentTermination;
+        _commentTermination = comment;
+        if (!old.equals(comment)) {
+            setDirtyAndFirePropertyChange("trainCommentTermination", old, comment); // NOI18N
+        }
+    }
+    
+    public String getCommentTermination() {
+        return TrainCommon.getOnlyText(getCommentTerminationWithColor());
+    }
+
+    public String getCommentTerminationWithColor() {
+        return _commentTermination;
+    }
+    
+    public Color getCommentTerminationColor() {
+        return TrainCommon.getTextColor(getCommentTerminationWithColor());
+    }
+    
+    public String getCommentTerminationColorName() {
+        return TrainCommon.getTextColorName(getCommentTerminationWithColor());
+    }
+    
+    public String getCommentTerminationCurrent() {
+        if (getRoute() != null) {
+            return getCommentCurrent(getCommentTermination(), getRoute().get2ndToLastRouteLocation());
+        }
+        return NONE;
+    }
+    
+    public String getCommentTerminationCurrentWithColor() {
+        return getCommentCurrent(getCommentTerminationWithColor(), getRoute().get2ndToLastRouteLocation());
     }
 
     /**
@@ -4262,7 +4299,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
             _leadEngineId = a.getValue();
         }
         if ((a = e.getAttribute(Xml.TERMINATION_DATE)) != null) {
-            _date = TrainCommon.convertStringToDate(a.getValue());
+            _date = TrainCommon.convertStringToLocalDateTime(a.getValue());
         }
         if ((a = e.getAttribute(Xml.REQUESTED_CARS)) != null) {
             try {
@@ -4308,6 +4345,9 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         }
         if ((a = e.getAttribute(Xml.COMMENT)) != null) {
             _comment = a.getValue();
+        }
+        if ((a = e.getAttribute(Xml.COMMENT_TERMINATION)) != null) {
+            _commentTermination = a.getValue();
         }
         if (getRoute() != null) {
             if ((a = e.getAttribute(Xml.CURRENT)) != null) {
@@ -4479,6 +4519,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         e.setAttribute(Xml.STATUS_CODE, Integer.toString(getStatusCode()));
         e.setAttribute(Xml.OLD_STATUS_CODE, Integer.toString(getOldStatusCode()));
         e.setAttribute(Xml.COMMENT, getCommentWithColor());
+        e.setAttribute(Xml.COMMENT_TERMINATION, getCommentTerminationWithColor());
         e.setAttribute(Xml.SHOW_TIMES, isShowArrivalAndDepartureTimesEnabled() ? Xml.TRUE : Xml.FALSE);
         // build list of car types for this train
         String[] types = getTypeNames();

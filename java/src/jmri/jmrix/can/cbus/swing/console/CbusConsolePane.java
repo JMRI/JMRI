@@ -280,8 +280,10 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
         while (!logBuffer.isEmpty()){
             CbusConsoleLogEntry next = logBuffer.removeFirst();
 
-            final int start = monTextPaneCbus.getText().length();
-            final int startc= monTextPaneCan.getText().length();
+            // getDocument().getLength() rather than getText().length(),
+            // which copies the whole console text for every frame
+            final int start = monTextPaneCbus.getDocument().getLength();
+            final int startc= monTextPaneCan.getDocument().getLength();
 
             monTextPaneCan.append(next.getFrameText());
             monTextPaneCbus.append(next.getDecodedText());
@@ -291,8 +293,8 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
                     CbusHighlightPainter cbusHighlightPainter = new CbusHighlightPainter(
                         CbusEventHighlightFrame.highlightColors[next.getHighlighter()]);
                     // log.debug("Add highlight start: " + start + " end: " + end);
-                    cbusHighlighter.addHighlight(start, monTextPaneCbus.getText().length() - 1, cbusHighlightPainter);
-                    canHighlighter.addHighlight(startc, monTextPaneCan.getText().length() - 1, cbusHighlightPainter);
+                    cbusHighlighter.addHighlight(start, monTextPaneCbus.getDocument().getLength() - 1, cbusHighlightPainter);
+                    canHighlighter.addHighlight(startc, monTextPaneCan.getDocument().getLength() - 1, cbusHighlightPainter);
                 } catch (BadLocationException e) {} // do nothing
             }
         }

@@ -12,10 +12,34 @@
     <!--#include virtual="../SidebarUp.shtml" -->
 
     <div id="mainContent">
-      <h1>Hardware Support: M&auml;rklin </h1>
-      JMRI supports two M&auml;rklin command stations:
-      the <a href="#cs2">Command Station 2 (CS2)</a> and
-      the <a href="#cdb">CdB CC-Schnitte 2</a>.
+      <h1>Hardware Support: M&auml;rklin</h1>
+
+      <p>JMRI communicates with M&auml;rklin Central Station 2/3 and Mobile Station 2 equipment over
+      the M&auml;rklin CAN (MCAN) protocol. Connections can use TCP/IP, UDP/IP or a serial interface.</p>
+
+      <p><strong>Note:</strong> Features available only through the CS2 or CS3 web server APIs are not supported.</p>
+
+      <h3>Connection Options</h3>
+
+      <h4>Network Connection</h4>
+      <p>Connect directly via TCP/IP or UDP/IP to:</p>
+      <ul>
+        <li><a href="https://www.maerklin.de/en/products/details/article/60226">Central Station 3</a> (60226)</li>
+        <li><a href="https://www.maerklin.de/de/produkte/produkt-informationen/modellbahn-steuerung/archiv-historische-digitale-steuerung/central-station-2">Central Station 2</a> (60214/60215) - see <a href="#cs2">configuration details below</a></li>
+        <li>Serial interfaces bridged to the network using the <a href="McanTcpBridge.shtml">MCAN TCP Bridge</a></li>
+      </ul>
+
+      <h4>Serial Connection</h4>
+      <p>Connect directly via USB to:</p>
+      <ul>
+        <li><a href="#cdb">CanDigitalBahn CC-Schnitte</a> 2.x and 3.0 interfaces</li>
+        <li>Community-developed CAN interfaces (e.g., <a href="https://github.com/ghfbsd/pico_rocrail_can_tcp_gateway">Pico Rocrail CAN TCP Gateway</a>)</li>
+      </ul>
+
+      <p>For detailed information about the protocol implementation, see the
+      <a href="McanLibrary.shtml">M&auml;rklin CAN Protocol Library</a> documentation.</p>
+
+      <hr>
 
       <h2 id="cs2">Command Station 2 (CS2)</h2>
 
@@ -33,7 +57,7 @@
 
       <p>Support for the M&auml;rklin CS2 was first available in <a href=
       "https://www.jmri.org/releasenotes/jmri3.1.1.shtml">JMRI 3.1.1</a>.
-      TCP protocol was added in 
+      TCP protocol was added in
       <a href="https://www.jmri.org/releasenotes/jmri5.11.5.shtml">JMRI 5.11.5</a></p>
 
       <h3 id="limitations">Limitations</h3>
@@ -63,17 +87,47 @@
       <img src="images/MarklinMenu416.png" width="251" height="74" class="floatRight" alt=
       "Menu"></p>
 
-      <h3 id="tools">JMRI Tools</h3>
+      <h3 id="tools">JMRI M&auml;rklin Tools</h3>
+
+      <h4>MCAN Serial-to-TCP Bridge</h4>
+      <p>The <a href="McanTcpBridge.shtml">MCAN TCP Bridge</a> is a standalone program that allows
+      multiple JMRI instances to share a single CC-Schnitte serial adapter over the network. It bridges
+      MCAN serial adapters to TCP/IP, enabling remote access and multiple concurrent connections.</p>
+
+      <h4>MCAN Poke Tool</h4>
+      <p>The standalone <code>marklin-poke</code> tool sends raw MCAN frames to a running bridge.
+      See the <a href="McanTcpBridge.shtml">bridge documentation</a> for build instructions and
+      command-line options.</p>
 
       <h4>Monitor Marklin Commands</h4>
       <img src="images/MarklinCommandMonitor.png" width="410" height="88" alt=
       "Command Monitor Tool">
+
       <h4>Send Marklin Commands</h4>
       <img src="images/MarklinCS2SendCommand.png" width="348" height="128" alt=
       "Send Packet Tool"><br>
       Enter a message as a hex string, starting with the prefix 0x e.g. <code>0x4467</code>. Press
       [Send] and wait for a reply from the CS2 connection to appear in the Reply field.
 
+      <h4 id="ms2roster">Mobile Station 2 Locomotives</h4>
+      <p>The Mobile Station 2 window of the most senior (master) MS2 reads its locomotive list with
+      [Get locos]. Select a Motorola or DCC locomotive and press [Import to roster] to copy it into
+      the JMRI roster. If a roster entry with the same protocol and address already exists, it is
+      updated: Its ID, decoder data and other details are kept. Otherwise a new entry named after
+      the MS2 locomotive is created. Mfx locomotives cannot be imported yet.
+      Their address is a temporary binding which is assigned when the decoder is registered and may change.</p>
+      <p>Imported entries carry these roster attributes:</p>
+      <ul>
+        <li><code>MarklinConnection</code>: system prefix of the M&auml;rklin connection</li>
+        <li><code>MarklinMs2Uid</code>: UID of the MS2 the locomotive was read from</li>
+        <li><code>MarklinMs2Name</code>: name shown on the MS2, refreshed on every import. The
+        roster ID can be longer than the MS2 display allows.</li>
+      </ul>
+
+      <h3 id="implementation">Implementation</h3>
+
+      <p>For information about the M&auml;rklin CAN protocol implementation in JMRI, see the
+      <a href="McanLibrary.shtml">M&auml;rklin CAN Protocol Library</a> page.</p>
 
       <h2 id="cdb">CdB CC-Schnitte 2</h2>
 

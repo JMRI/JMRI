@@ -2,6 +2,7 @@ package jmri.jmrit.operations.rollingstock.cars;
 
 import java.beans.PropertyChangeEvent;
 import java.text.NumberFormat;
+import java.time.LocalDateTime;
 import java.util.*;
 
 import jmri.*;
@@ -529,7 +530,7 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
      * @param startTime The date and time the clones were moved
      * @return clone for this car
      */
-    public Car createClone(Car car, Track track, Train train, Date startTime) {
+    public Car createClone(Car car, Track track, Train train, LocalDateTime startTime) {
         Car clone = createClone(car);
         // for reset
         clone.setPreviousFinalDestination(car.getPreviousFinalDestination());
@@ -541,7 +542,7 @@ public class CarManager extends RollingStockManager<Car> implements InstanceMana
         return clone;
     }
 
-    private void createCloneKernel(Car car, Track track, Train train, Date startTime, Car cloneCar) {
+    private void createCloneKernel(Car car, Track track, Train train, LocalDateTime startTime, Car cloneCar) {
         if (car.getKernel() != null) {
             String kernelName = car.getKernelName() + Car.CLONE + padNumber(car.getCloneOrder());
             Kernel kernel = InstanceManager.getDefault(KernelManager.class).newKernel(kernelName);

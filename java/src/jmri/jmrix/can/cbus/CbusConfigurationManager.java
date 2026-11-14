@@ -89,6 +89,10 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             storeToMemoAndInstance(getConsistManager(), ConsistManager.class);
         }
 
+        // the speed and direction of every cab's locos, as their sessions cross
+        // the bus: started now, so that it hears sessions from the start
+        provide(LocoSpeedSource.class);
+
         // kick-start cbus sim tools ( Dummy Command Station etc. ) if using loopback connection
         if ( adapterMemo.getTrafficController() instanceof jmri.jmrix.can.adapters.loopback.LoopbackTrafficController) {
             adapterMemo.get( CbusSimulator.class);
@@ -116,6 +120,8 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             return true;
         } else if (type.equals(CbusSlotMonitorDataModel.class)) {
             return true;
+        } else if (type.equals(LocoSpeedSource.class)) {
+            return true;
         } else {
             return DEFAULT_CLASSES.contains(type);
         }
@@ -140,6 +146,8 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         } else if (T.equals(CbusSimulator.class)) {
             return provide(T);
         } else if (T.equals(CbusSlotMonitorDataModel.class)) {
+            return provide(T);
+        } else if (T.equals(LocoSpeedSource.class)) {
             return provide(T);
         } else if ( DEFAULT_CLASSES.contains(T) ) {
             return provide(T);
@@ -252,6 +260,9 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         }
         else if (T.equals(CbusSlotMonitorDataModel.class)) {
             storeToMemoAndInstance(new CbusSlotMonitorDataModel(adapterMemo), CbusSlotMonitorDataModel.class);
+        }
+        else if (T.equals(LocoSpeedSource.class)) {
+            storeToMemoAndInstance(new CbusLocoSpeedSource(adapterMemo), LocoSpeedSource.class);
         }
         return adapterMemo.getFromMap(T); // if class not in map, class not provided.
     }

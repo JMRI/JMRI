@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author Paul Bender Copyright (C) 2017
  */
+@SuppressWarnings("deprecation")
 public class DebugThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     @Test

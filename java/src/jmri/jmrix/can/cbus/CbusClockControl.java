@@ -36,25 +36,29 @@ public class CbusClockControl extends jmri.implementation.DefaultClockControl im
     private final SimpleDateFormat dayInMonth;
     private final SimpleDateFormat monthFormat;
     private final SimpleDateFormat yearFormat;
-    
+
     private final CanSystemConnectionMemo _memo;
-    
+
+    // Timebase listener for Minute change events from the internal clock.
+    // Held as a field so that the same instance can be removed on dispose.
+    private final java.beans.PropertyChangeListener minuteListener = this::newMinute;
+
     public CbusClockControl(@Nonnull CanSystemConnectionMemo memo) {
         super();
-        
+
         minuteFormat = new java.text.SimpleDateFormat("mm");
-        hourFormat = new java.text.SimpleDateFormat("H");        
+        hourFormat = new java.text.SimpleDateFormat("H");
         dayofWeek = new java.text.SimpleDateFormat("u");
         dayInMonth = new java.text.SimpleDateFormat("d");
         monthFormat = new java.text.SimpleDateFormat("MM");
-        yearFormat = new java.text.SimpleDateFormat("YYYY");
-        
+        yearFormat = new java.text.SimpleDateFormat("yyyy"); // calendar year, "YYYY" is week-year
+
         _memo = memo;
         this.addTc(memo);
         // Get internal timebase
         clock = jmri.InstanceManager.getDefault(jmri.Timebase.class);
-        // Create a Timebase listener for Minute change events from the internal clock
-        clock.addMinuteChangeListener(this::newMinute);
+        // Listen for Minute change events from the internal clock
+        clock.addMinuteChangeListener(minuteListener);
     }
     
     private void newMinute(java.beans.PropertyChangeEvent e){
@@ -77,7 +81,7 @@ public class CbusClockControl extends jmri.implementation.DefaultClockControl im
      * @param newTemp -128 to 127
      */
     public void setTemp(int newTemp) {
-        if (newTemp>-128 && newTemp<127) {
+        if (newTemp>=-128 && newTemp<=127) {
             _cbusTemp = newTemp;
         }
         else {
@@ -179,7 +183,7 @@ public class CbusClockControl extends jmri.implementation.DefaultClockControl im
         send.setElement(3, bstot);
         send.setElement(4,  ( isRunning ? (int) getRate() : 0)); // time divider, 0 is stpeed, 1 is real time, 2 twice real, 3 thrice real
         send.setElement(5, Integer.parseInt(dayInMonth.format(clock.getTime()))); // day of month, 0-31
-        send.setElement(6, _cbusTemp); // Temperature as twos complement -127 to +127
+        send.setElement(6, _cbusTemp & 0xff); // Temperature as twos complement -128 to +127
         CbusMessage.setPri(send, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
         
         return send;
@@ -322,7 +326,7 @@ public class CbusClockControl extends jmri.implementation.DefaultClockControl im
      */
     @Override
     public void dispose() {
-        clock.removeMinuteChangeListener(this::newMinute);
+        clock.removeMinuteChangeListener(minuteListener);
         this.removeTc(_memo);
     }
     

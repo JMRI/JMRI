@@ -144,6 +144,11 @@ public class GlobalVariableSpinnerIcon extends PositionableJPanel implements Cha
     }
 
     @Override
+    public jmri.NamedBean getNamedBean() {
+        return getGlobalVariable();
+    }
+
+    @Override
     public void stateChanged(ChangeEvent e) {
         spinnerUpdated();
     }

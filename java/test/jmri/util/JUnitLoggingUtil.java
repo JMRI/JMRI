@@ -18,6 +18,14 @@ public class JUnitLoggingUtil extends LoggingUtil {
     }
 
     /**
+     * Restart the "once" part of {@link #infoOnce} so that the next invocation
+     * will log, even if it already has.
+     */
+    public static void restartInfoOnce() {
+        infodOnce = new HashMap<>();
+    }
+
+    /**
      * Control logging of deprecation warnings.
      * <p>
      * Should only be used by test code. We denote this by marking it

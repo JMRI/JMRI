@@ -244,6 +244,12 @@
       prototypical look when changing speeds for signal aspects and starting and stopping. The
       Warrants pane at <em>Edit-&gt;Preferences-&gt;Warrants</em> is where this and other Warrant
       parameters can be set.</p>
+
+      <p>Warrants allow for a decoder's momentum, using the values of CV3 (acceleration) and CV4
+      (deceleration) saved in the locomotive's roster entry. CV23 and CV24, the consist
+      acceleration and deceleration adjustments, are not used: a warrant can't tell whether the
+      address it drives is a consist address, or what adjustment the decoders in a consist apply.
+      Leave CV23 and CV24 at 0, or a warrant's speed changes won't match the decoder's.</p>
       <a href="images/WarrantsPrefs.png"><img src="images/WarrantsPrefs.png" class="floatRight"
       width="629" height="428" alt="Warrants Preferences pane in in JMRI 4.10"></a>
       <h2 id="prefs">Warrant Preferences</h2>

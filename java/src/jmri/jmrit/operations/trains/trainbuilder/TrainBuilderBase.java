@@ -2,12 +2,15 @@ package jmri.jmrit.operations.trains.trainbuilder;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 
 import jmri.InstanceManager;
 import jmri.Version;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.gui.LocationEditFrame;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.*;
@@ -44,7 +47,7 @@ public class TrainBuilderBase extends TrainCommon {
     protected static final String TIMING = "timing of trains";
 
     private PrintWriter _buildReport; // build report for this train
-    private Date _startTime; // when the build report started
+    private LocalDateTime _startTime; // when the build report started
     private Train _train; // the train being built
     private List<Engine> _engineList; // engines for this train, modified during build
     protected int _engineIndex; // index for engineList
@@ -55,15 +58,15 @@ public class TrainBuilderBase extends TrainCommon {
     private Track _departStageTrack; // departure staging track (null if not staging)
     private Location _terminateLocation; // train terminates at this location
     private Track _terminateStageTrack; // terminate staging track (null if not staging)
-    
+
     int _numberCars = 0; // number of cars moved by this train
     int _completedMoves; // the number of pick up car moves for a location
     int _reqNumOfMoves; // the requested number of car moves for a location
-    
+
     Engine _lastEngine; // last engine found from getEngine
     Engine _secondLeadEngine; // lead engine 2nd part of train's route
     Engine _thirdLeadEngine; // lead engine 3rd part of the train's route
-   
+
     Hashtable<String, Integer> _numOfBlocks; // Number of blocks of cars
                                              // departing staging.
     List<Car> _notRoutable = new ArrayList<>(); // cars that couldn't be routed
@@ -83,12 +86,12 @@ public class TrainBuilderBase extends TrainCommon {
     protected void setBuildReport(PrintWriter printWriter) {
         _buildReport = printWriter;
     }
-    
-    protected Date getStartTime() {
+
+    protected LocalDateTime getStartTime() {
         return _startTime;
     }
 
-    protected void setStartTime(Date date) {
+    protected void setStartTime(LocalDateTime date) {
         _startTime = date;
     }
 
@@ -130,7 +133,7 @@ public class TrainBuilderBase extends TrainCommon {
             _carIndex--;
         }
     }
-    
+
     protected void remove(Engine engine) {
         // remove this engine from the list
         if (getEngineList().remove(engine)) {
@@ -717,6 +720,9 @@ public class TrainBuilderBase extends TrainCommon {
             for (int i = 0; i < validTracks.size(); i++) {
                 tracks[i] = validTracks.get(i);
             }
+            
+            // show staging track details for user
+            LocationEditFrame lef = new LocationEditFrame(getDepartureLocation());
 
             Track selected = (Track) JmriJOptionPane.showInputDialog(null,
                     Bundle.getMessage("TrainDepartingStaging", getTrain().getName(), getDepartureLocation().getName()),
@@ -727,6 +733,7 @@ public class TrainBuilderBase extends TrainCommon {
             } else {
                 addLine(FIVE, Bundle.getMessage("buildUserCanceledDeparture"));
             }
+            lef.dispose();
             return selected;
         } else if (validTracks.size() == 1) {
             Track track = validTracks.get(0);
@@ -1192,12 +1199,12 @@ public class TrainBuilderBase extends TrainCommon {
                     log.debug("{} car ({}) last moved date: {}", car.getTrack().getTrackTypeName(), testCar.toString(),
                             testCar.getLastDate()); // NOI18N
                     if (car.getTrack().getServiceOrder().equals(Track.FIFO)) {
-                        if (bestCar.getLastMoveDate().after(testCar.getLastMoveDate())) {
+                        if (bestCar.getLastMoveDate().isAfter(testCar.getLastMoveDate())) {
                             bestCar = testCar;
                             log.debug("New best car ({})", bestCar.toString());
                         }
                     } else if (car.getTrack().getServiceOrder().equals(Track.LIFO)) {
-                        if (bestCar.getLastMoveDate().before(testCar.getLastMoveDate())) {
+                        if (bestCar.getLastMoveDate().isBefore(testCar.getLastMoveDate())) {
                             bestCar = testCar;
                             log.debug("New best car ({})", bestCar.toString());
                         }
@@ -1530,7 +1537,7 @@ public class TrainBuilderBase extends TrainCommon {
     /**
      * Determines if car can be pulled from an interchange or spur. Needed for
      * quick service tracks.
-     * 
+     *
      * @param car the car being pulled
      * @return true if car can be pulled, otherwise false.
      */
@@ -1576,7 +1583,7 @@ public class TrainBuilderBase extends TrainCommon {
      * Checks to see if an interchange track has destination restrictions.
      * Returns true if there's at least one destination in the train's route
      * that can service the car departing the interchange.
-     * 
+     *
      * @param car the car being evaluated
      * @return true if car can be pulled
      */
@@ -1996,7 +2003,7 @@ public class TrainBuilderBase extends TrainCommon {
                 departStageTrack.getServiceOrder()));
 
         List<Car> carList = carManager.getAvailableTrainList(getTrain());
-        Date carDepartStageTrackDate = null;
+        LocalDateTime carDepartStageTrackDate = null;
         for (Car car : carList) {
             if (car.getTrack() == departStageTrack) {
                 carDepartStageTrackDate = car.getLastMoveDate();
@@ -2013,7 +2020,7 @@ public class TrainBuilderBase extends TrainCommon {
                 continue;
             }
             // determine dates cars arrived into staging
-            Date carOtherStageTrackDate = null;
+            LocalDateTime carOtherStageTrackDate = null;
 
             for (Car car : carList) {
                 if (car.getTrack() == track) {
@@ -2023,14 +2030,14 @@ public class TrainBuilderBase extends TrainCommon {
             }
             if (carOtherStageTrackDate != null) {
                 if (departStageTrack.getServiceOrder().equals(Track.LIFO)) {
-                    if (carDepartStageTrackDate.before(carOtherStageTrackDate)) {
+                    if (carDepartStageTrackDate.isBefore(carOtherStageTrackDate)) {
                         addLine(SEVEN,
                                 Bundle.getMessage("buildStagingCarsBefore", departStageTrack.getName(),
                                         track.getName()));
                         return false;
                     }
                 } else {
-                    if (carOtherStageTrackDate.before(carDepartStageTrackDate)) {
+                    if (carOtherStageTrackDate.isBefore(carDepartStageTrackDate)) {
                         addLine(SEVEN, Bundle.getMessage("buildStagingCarsBefore", track.getName(),
                                 departStageTrack.getName()));
                         return false;
@@ -2171,8 +2178,6 @@ public class TrainBuilderBase extends TrainCommon {
                 Bundle.getMessage("buildTrainCanTerminateTrack", getTrain().getName(), terminateStageTrack.getName()));
         return true;
     }
-
-    boolean routeToTrackFound;
 
     protected boolean checkBasicMoves(Car car, Track track) {
         if (car.getTrack() == track) {
@@ -2440,7 +2445,7 @@ public class TrainBuilderBase extends TrainCommon {
 
     /**
      * Checks to see if track has an alternate and can be used
-     * 
+     *
      * @param car   the car being dropped
      * @param track the destination track
      * @return true if track has an alternate and can be used
@@ -2691,7 +2696,7 @@ public class TrainBuilderBase extends TrainCommon {
      * checks to see if the train being built already has car pick ups at the
      * same track, route location rl, and train, and there's a track space
      * issue.
-     * 
+     *
      * return true if there are already pick ups from the car's track
      */
     private boolean checkForPickUps(Car car, RouteLocation rl, boolean isCheckForCars) {
@@ -3019,7 +3024,8 @@ public class TrainBuilderBase extends TrainCommon {
             addLine(ONE, Bundle.getMessage("buildWarningMsg", getTrain().getName(), _warnings));
         }
         addLine(FIVE,
-                Bundle.getMessage("buildTime", getTrain().getName(), new Date().getTime() - getStartTime().getTime()));
+                Bundle.getMessage("buildTime", getTrain().getName(), LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli() -
+                        getStartTime().atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()));
     }
 
     /**
@@ -3104,7 +3110,7 @@ public class TrainBuilderBase extends TrainCommon {
      * different than the one used to deliver the rolling stock. To service the
      * rolling stock, the train must arrive after the rolling stock's clone is
      * set out by this train or by another train.
-     * 
+     *
      * @param rs the rolling stock
      * @param rl the route location pulling the rolling stock
      * @return true if rolling stock can be pulled

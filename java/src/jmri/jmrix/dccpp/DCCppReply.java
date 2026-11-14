@@ -339,6 +339,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             case DCCppConstants.LCD_TEXT_CMD:
                 text = "LCD Text '" + getLCDTextString() + "', disp " + getLCDDisplayNumString() + ", line " + getLCDLineNumString();
                 break;
+            case DCCppConstants.MESSAGE_REPLY:
+                text = "Message: '" + getMessageString() + "'";
+                break;
                 
             default:
                 text = "Unrecognized reply: '" + toString() + "'";
@@ -574,6 +577,11 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             case DCCppConstants.LCD_TEXT_REPLY:
                 if (s.matches(DCCppConstants.LCD_TEXT_REPLY_REGEX)) {
                     r.myRegex = DCCppConstants.LCD_TEXT_REPLY_REGEX;
+                }
+                return (r);
+            case DCCppConstants.MESSAGE_REPLY:
+                if (s.matches(DCCppConstants.MESSAGE_REPLY_REGEX)) {
+                    r.myRegex = DCCppConstants.MESSAGE_REPLY_REGEX;
                 }
                 return (r);
             case DCCppConstants.WRITE_EEPROM_REPLY:
@@ -1865,6 +1873,19 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         return (Integer.parseInt(this.getLCDLineNumString()));
     }
 
+    // <m "message text">
+    public boolean isMessageReply() {
+        return (this.matches(DCCppConstants.MESSAGE_REPLY_REGEX));
+    }
+    public String getMessageString() {
+        if (this.isMessageReply()) {
+            return (this.getValueString(1));
+        } else {
+            log.error("getMessageString Parser called on non-Message message type {}", this.getOpCodeChar());
+            return ("error");
+        }
+    }
+
     // -------------------------------------------------------------------
 
     // Message Identification functions
@@ -2079,6 +2100,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                 (this.matches(DCCppConstants.TURNOUT_DEF_VPIN_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.TURNOUT_DEF_LCN_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.LCD_TEXT_REPLY_REGEX)) ||
+                (this.matches(DCCppConstants.MESSAGE_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.CLOCK_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.DIAG_REPLY_REGEX)) ||
                 (this.matches(DCCppConstants.TRACKMANAGER_REPLY_REGEX))) {

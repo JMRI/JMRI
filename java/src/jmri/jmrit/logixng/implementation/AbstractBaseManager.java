@@ -9,6 +9,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
+import jmri.JmriUncheckedException;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.*;
 import jmri.managers.AbstractManager;
@@ -136,7 +137,7 @@ public abstract class AbstractBaseManager<E extends NamedBean> extends AbstractM
     @SuppressFBWarnings(value = "OVERRIDING_METHODS_MUST_INVOKE_SUPER",
             justification = "This method must never be called")
     public void register(@Nonnull E s) {
-        throw new RuntimeException("Use BaseManager.registerBean() instead");
+        throw new JmriUncheckedException("Use BaseManager.registerBean() instead");
     }
 
     @Override

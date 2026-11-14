@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Table Model for edit of engines used by operations
  *
- * @author Daniel Boudreau Copyright (C) 2008, 2012, 2025
+ * @author Daniel Boudreau Copyright (C) 2008, 2012, 2025, 2026
  */
 public class EnginesTableModel extends OperationsTableModel implements PropertyChangeListener {
 
@@ -39,26 +39,27 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
     private static final int WEIGHT_COLUMN = 5;
     private static final int TYPE_COLUMN = 6;
     private static final int LENGTH_COLUMN = 7;
-    private static final int CONSIST_COLUMN = 8;
-    private static final int LOCATION_COLUMN = 9;
-    private static final int RFID_WHERE_LAST_SEEN_COLUMN = 10;
-    private static final int RFID_WHEN_LAST_SEEN_COLUMN = 11;
-    private static final int DESTINATION_COLUMN = 12;
-    private static final int PREVIOUS_LOCATION_COLUMN = 13;
-    private static final int TRAIN_COLUMN = 14;
-    private static final int LAST_TRAIN_COLUMN = 15;
-    private static final int MOVES_COLUMN = 16;
-    private static final int BUILT_COLUMN = 17;
-    private static final int OWNER_COLUMN = 18;
-    private static final int VALUE_COLUMN = 19;
-    private static final int RFID_COLUMN = 20;
-    private static final int LAST_COLUMN = 21;
-    private static final int DCC_ADDRESS_COLUMN = 22;
-    private static final int PICKUP_COLUMN = 23;
-    private static final int SETOUT_COLUMN = 24;
-    private static final int COMMENT_COLUMN = 25;
-    private static final int SET_COLUMN = 26;
-    private static final int EDIT_COLUMN = 27;
+    private static final int COLOR_COLUMN = 8;
+    private static final int CONSIST_COLUMN = 9;
+    private static final int LOCATION_COLUMN = 10;
+    private static final int RFID_WHERE_LAST_SEEN_COLUMN = 11;
+    private static final int RFID_WHEN_LAST_SEEN_COLUMN = 12;
+    private static final int DESTINATION_COLUMN = 13;
+    private static final int PREVIOUS_LOCATION_COLUMN = 14;
+    private static final int TRAIN_COLUMN = 15;
+    private static final int LAST_TRAIN_COLUMN = 16;
+    private static final int MOVES_COLUMN = 17;
+    private static final int BUILT_COLUMN = 18;
+    private static final int OWNER_COLUMN = 19;
+    private static final int VALUE_COLUMN = 20;
+    private static final int RFID_COLUMN = 21;
+    private static final int LAST_COLUMN = 22;
+    private static final int DCC_ADDRESS_COLUMN = 23;
+    private static final int PICKUP_COLUMN = 24;
+    private static final int SETOUT_COLUMN = 25;
+    private static final int COMMENT_COLUMN = 26;
+    private static final int SET_COLUMN = 27;
+    private static final int EDIT_COLUMN = 28;
 
     private static final int HIGHEST_COLUMN = EDIT_COLUMN + 1;
 
@@ -187,7 +188,6 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
      * Search for engine by road number
      * 
      * @param roadNumber The string road number to search for.
-     *
      * @return -1 if not found, table row number if found
      */
     public int findEngineByRoadNumber(String roadNumber) {
@@ -275,8 +275,8 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
 
     // Default engines frame table column widths, starts with Number column and ends with Edit
     private final int[] _enginesTableColumnWidths =
-            {60, 60, 60, 65, 50, 65, 65, 35, 75, 190, 190, 190, 140, 190, 65, 90, 50, 50, 50, 50, 100, 130, 50, 50, 50,
-                    100, 65, 70};
+            {60, 60, 60, 65, 50, 65, 65, 65, 35, 75, 190, 190, 190, 140, 190, 65, 90, 50, 50, 50, 50, 100, 130, 50, 50,
+                    50, 100, 65, 70};
 
     void initTable() {
         // Use XTableColumnModel so we can control which columns are visible
@@ -343,6 +343,8 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
                 return Bundle.getMessage("HP");
             case TYPE_COLUMN:
                 return Bundle.getMessage("Type");
+            case COLOR_COLUMN:
+                return Bundle.getMessage("Color");
             case LENGTH_COLUMN:
                 return Bundle.getMessage("Len");
             case WEIGHT_COLUMN:
@@ -448,6 +450,8 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
                 return engine.getNumber();
             case ROAD_COLUMN:
                 return engine.getRoadName();
+            case COLOR_COLUMN:
+                return engine.getColorName();
             case LENGTH_COLUMN:
                 return engine.getLengthInteger();
             case MODEL_COLUMN:
@@ -477,7 +481,8 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
             }
             case RFID_WHERE_LAST_SEEN_COLUMN: {
                 return engine.getWhereLastSeenName() +
-                        (engine.getTrackLastSeenName().equals(Engine.NONE) ? "" : " (" + engine.getTrackLastSeenName() + ")");
+                        (engine.getTrackLastSeenName().equals(Engine.NONE) ? ""
+                                : " (" + engine.getTrackLastSeenName() + ")");
             }
             case RFID_WHEN_LAST_SEEN_COLUMN: {
                 return engine.getWhenLastSeenDate();
@@ -591,7 +596,7 @@ public class EnginesTableModel extends OperationsTableModel implements PropertyC
                 break;
         }
     }
-    
+
     @Override
     protected Font getFont(int row) {
         Engine eng = engineList.get(row);

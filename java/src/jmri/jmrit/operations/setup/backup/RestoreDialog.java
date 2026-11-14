@@ -3,7 +3,7 @@ package jmri.jmrit.operations.setup.backup;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -199,7 +199,7 @@ public class RestoreDialog extends JDialog {
             backup.deleteOperationsFiles();
 
             setName = ((BackupSet) comboBox.getSelectedItem()).getSetName();
-            Date date = ((BackupSet) comboBox.getSelectedItem()).getLastModifiedDate();
+            LocalDateTime date = ((BackupSet) comboBox.getSelectedItem()).getLastModifiedDate();
             String sd = String.format("%s", date);
 
             log.info(Bundle.getMessage("InfoRestoringSet", setName, sd));
