@@ -125,6 +125,41 @@ public class CbusConsolePaneTest extends jmri.util.swing.JmriPanelTest {
         jfo.requestClose();
     }
 
+    @Test
+    @DisabledIfHeadless
+    public void testHighlightsOfTrimmedLinesAreRemoved() {
+
+        cbPanel.initComponents(memo);
+        JFrameOperator jfo = createNewFrameWithPanel( cbPanel );
+        cbPanel.monTextPaneCan.setMaxLines(10);
+        cbPanel.monTextPaneCbus.setMaxLines(10);
+
+        for (int i = 0; i < 100; i++) {
+            cbPanel.nextLine("frame " + i + "\n", "decoded " + i + "\n", 0);
+        }
+        // the lines are shown later, on the GUI thread: wait for the last of them, then for the trim
+        JUnitUtil.waitFor(() -> cbPanel.monTextPaneCbus.getText().contains("decoded 99")
+            && cbPanel.monTextPaneCan.getText().contains("frame 99"), "every line shown");
+        // 10 lines and the one being added to; a pane may keep a line or two more before it trims
+        JUnitUtil.waitFor(() -> cbPanel.monTextPaneCbus.getLineCount() <= 13
+            && cbPanel.monTextPaneCan.getLineCount() <= 13, "panes trimmed");
+
+        // the highlights of the trimmed lines go when the next line is shown
+        cbPanel.nextLine("frame\n", "decoded\n", 0);
+        JUnitUtil.waitFor(() -> highlights(cbPanel.monTextPaneCbus) <= 14
+            && highlights(cbPanel.monTextPaneCan) <= 14, "highlights of trimmed lines removed");
+
+        new JButtonOperator(jfo, Bundle.getMessage("ButtonClearScreen")).doClick();
+        Assertions.assertEquals( 0, highlights(cbPanel.monTextPaneCbus), "clear removes the highlights");
+        Assertions.assertEquals( 0, highlights(cbPanel.monTextPaneCan), "clear removes the highlights");
+
+        jfo.requestClose();
+    }
+
+    private static int highlights(javax.swing.JTextArea pane) {
+        return pane.getHighlighter().getHighlights().length;
+    }
+
     private JFrameOperator createNewFrameWithPanel(CbusConsolePane p){
         JmriJFrame f = new JmriJFrame(p.getName());
         f.add(p);

@@ -3,6 +3,8 @@ package jmri.jmrix.can.cbus.swing.console;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 import javax.swing.*;
@@ -38,6 +40,9 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
     public TextAreaFIFO monTextPaneCbus;
     private Highlighter cbusHighlighter;
     private Highlighter canHighlighter;
+    // highlights in the order of their lines, so those trimmed away can be removed
+    private final Deque<Object> cbusHighlights = new ArrayDeque<>();
+    private final Deque<Object> canHighlights = new ArrayDeque<>();
 
     protected final CbusConsoleStatsPane statsPane;
     protected final CbusConsolePacketPane packetPane;
@@ -277,6 +282,8 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
     }
 
     private void processLogBuffer() {
+        removeTrimmed(cbusHighlighter, cbusHighlights);
+        removeTrimmed(canHighlighter, canHighlights);
         while (!logBuffer.isEmpty()){
             CbusConsoleLogEntry next = logBuffer.removeFirst();
 
@@ -293,16 +300,37 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel {
                     CbusHighlightPainter cbusHighlightPainter = new CbusHighlightPainter(
                         CbusEventHighlightFrame.highlightColors[next.getHighlighter()]);
                     // log.debug("Add highlight start: " + start + " end: " + end);
-                    cbusHighlighter.addHighlight(start, monTextPaneCbus.getDocument().getLength() - 1, cbusHighlightPainter);
-                    canHighlighter.addHighlight(startc, monTextPaneCan.getDocument().getLength() - 1, cbusHighlightPainter);
+                    cbusHighlights.add(cbusHighlighter.addHighlight(
+                        start, monTextPaneCbus.getDocument().getLength() - 1, cbusHighlightPainter));
+                    canHighlights.add(canHighlighter.addHighlight(
+                        startc, monTextPaneCan.getDocument().getLength() - 1, cbusHighlightPainter));
                 } catch (BadLocationException e) {} // do nothing
             }
+        }
+    }
+
+    /**
+     * Remove the highlights of lines the pane has trimmed away. Their text has
+     * gone, but a highlight stays until it is removed, and each one adds to the
+     * cost of every later change and repaint of the pane.
+     *
+     * @param highlighter the pane's highlighter
+     * @param tags        the highlights it has, in the order of their lines
+     */
+    private static void removeTrimmed(Highlighter highlighter, Deque<Object> tags) {
+        while (tags.peekFirst() instanceof Highlighter.Highlight
+                && ((Highlighter.Highlight) tags.peekFirst()).getEndOffset() == 0) {
+            highlighter.removeHighlight(tags.removeFirst());
         }
     }
 
     // clear the monitoring history
     private void clearButtonActionPerformed(ActionEvent e) {
         logBuffer.clear();
+        cbusHighlighter.removeAllHighlights();
+        canHighlighter.removeAllHighlights();
+        cbusHighlights.clear();
+        canHighlights.clear();
         monTextPaneCan.setText("");
         monTextPaneCbus.setText("");
     }
