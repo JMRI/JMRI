@@ -1,5 +1,6 @@
 package jmri.jmrix;
 
+import java.io.BufferedInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -23,6 +24,9 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     protected int m_port = 0;
     // keep the socket provides our connection.
     protected Socket socketConn = null;
+    // the input stream given out for socketConn, made once for each socket
+    private DataInputStream socketInput = null;
+    private Socket socketInputFor = null;
     protected int connTimeout = 0; // connection timeout for read operations.
     // Default is 0, an infinite timeout.
 
@@ -228,9 +232,15 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
 
     /**
      * {@inheritDoc}
+     * <p>
+     * The stream is buffered, so that reading a byte at a time, as the
+     * traffic controllers do, doesn't make a call to the operating system for
+     * each byte. There is one stream for each socket, given out every time
+     * this is called: two buffers on one socket would each hold part of what
+     * arrives.
      */
     @Override
-    public DataInputStream getInputStream() {
+    public synchronized DataInputStream getInputStream() {
         log.trace("getInputStream() starts");
         if (socketConn == null) {
             log.error("getInputStream invoked with null socketConn");
@@ -241,8 +251,12 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
                     getSystemConnectionMemo(), ConnectionStatus.CONNECTION_DOWN);
         }
         try {
+            if (socketInput == null || socketInputFor != socketConn) {
+                socketInput = new DataInputStream(new BufferedInputStream(socketConn.getInputStream()));
+                socketInputFor = socketConn;
+            }
             log.trace("getInputStream() returns normally");
-            return new DataInputStream(socketConn.getInputStream());
+            return socketInput;
         } catch (java.io.IOException ex1) {
             log.error("Exception getting input stream:", ex1);
             return null;
