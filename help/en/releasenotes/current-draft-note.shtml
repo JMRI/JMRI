@@ -43,6 +43,12 @@
                     a script, each now gets its throttle. Before, only the
                     last request was answered and the others waited with no
                     error. Each request now times out on its own.</li>
+                <li>CBUS Node Manager, VLCB nodes: parameter 20 is now
+                    shown as the patch number of the firmware version, not
+                    as a beta number, so released VLCB firmware no longer
+                    looks like a beta. The CAN ID buttons, which VLCB
+                    nodes ignore since they choose their own CAN ID, are
+                    no longer offered for them.</li>
                 <li>CBUS sensors, turnouts and lights: each frame sent or
                     received is now passed only to the sensors, turnouts and
                     lights that use its event, instead of to every one on the

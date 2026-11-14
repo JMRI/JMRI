@@ -57,6 +57,12 @@ public class CbusNodeConstants {
     public static final int CPU_ID_IDX = 15;        // Para 15 CPU manufacturer's id as read from the chip config space, 4 bytes, only firs two used for PIC18
     public static final int CPU_CODE_IDX = 19;      // Para 19 CPU manufacturer code
     public static final int BETA_REV_IDX = 20;      // Para 20 Beta revision (numeric), or 0 if release
+    /**
+     * Node flags (parameter 8, and in PNN) bit 6: the node is a VLCB node. For
+     * a VLCB node parameter 20 is the patch number of its firmware version,
+     * not a beta number.
+     */
+    public static final int FLAG_VLCB = 0x40;
     public static final int SPARE_IDX = 21;         // Para 21 - 24 
     // Following are available from hex data but not readable by index
     public static final int PARAM_COUNT_IDX = 25;    // Para 25 - 26 parameter count high byte

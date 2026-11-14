@@ -27,6 +27,7 @@ public class CbusNodeSetupPane extends CbusNodeConfigTab {
     private jmri.util.swing.BusyDialog busy_dialog;
 
     private JTextField textFieldName;
+    private JPanel canIdPanel;
 
     /**
      * Create a new instance of CbusNodeSetupPane.
@@ -52,9 +53,32 @@ public class CbusNodeSetupPane extends CbusNodeConfigTab {
     public void changedNode(CbusNode newNode){
 
         textFieldName.setText( nodeOfInterest.getUserName() );
+        showCanIdControls();
         validate();
         repaint();
 
+    }
+
+    /**
+     * Offer the CAN ID controls only for a CBUS node: a VLCB node chooses its
+     * own CAN ID, and ignores ENUM and CANID.
+     */
+    private void showCanIdControls() {
+        if ( nodeOfInterest != null ) {
+            canIdPanel.setVisible( !nodeOfInterest.getNodeParamManager().isVlcb() );
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     * The node's flags, which say whether it is a VLCB node, may come after
+     * the node is chosen.
+     */
+    @Override
+    public void propertyChange(java.beans.PropertyChangeEvent ev) {
+        if ( "PARAMETER".equals(ev.getPropertyName()) ) {
+            ThreadingUtil.runOnGUIEventually(this::showCanIdControls);
+        }
     }
 
     private void getInitPane() {
@@ -98,7 +122,7 @@ public class CbusNodeSetupPane extends CbusNodeConfigTab {
 
     private JPanel getCanIdPanel() {
 
-        JPanel canIdPanel = new JPanel();
+        canIdPanel = new JPanel();
         canIdPanel.setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createEtchedBorder(), ( "CAN ID")));
         JButton selfCanEnumerateButton = new JButton("CAN ID Self Enumeration");

@@ -218,10 +218,7 @@ public class CbusNodeInfoPane extends CbusNodeConfigTab {
                 paramMgr.getParameter(7),
                 Character.toString((char) paramMgr.getParameter(2))));
 
-            if ((paramMgr.getParameter(0)>19) && (paramMgr.getParameter(20)>0) ){
-                sb.append (Bundle.getMessage("FWBeta"));
-                sb.append (paramMgr.getParameter(20));
-            }
+            sb.append (paramMgr.getFirmwareBuildText());
             sb.append(System.getProperty("line.separator"));
         }
     }
