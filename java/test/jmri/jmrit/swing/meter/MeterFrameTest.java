@@ -67,6 +67,22 @@ public class MeterFrameTest extends jmri.util.JmriJFrameTestBase {
         });
     }
 
+    @Test
+    public void testDisposedFrameStopsListening() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Meter m = jmri.InstanceManager.getDefault(jmri.MeterManager.class).getNamedBeanSet().first();
+        int before = m.getPropertyChangeListeners(jmri.NamedBean.PROPERTY_STATE).length;
+        runOnLayout(() -> {
+            frame.initComponents();
+            ((MeterFrame) frame).setMeter(m);
+        });
+        Assertions.assertEquals(before + 1, m.getPropertyChangeListeners(jmri.NamedBean.PROPERTY_STATE).length);
+        jmri.util.ThreadingUtil.runOnGUI(() -> frame.dispose());
+        Assertions.assertEquals(before, m.getPropertyChangeListeners(jmri.NamedBean.PROPERTY_STATE).length,
+                "the closed window no longer listens");
+        frame = new MeterFrame();
+    }
+
     @BeforeEach
     @Override
     public void setUp() {
