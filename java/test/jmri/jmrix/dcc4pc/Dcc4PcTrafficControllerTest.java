@@ -8,6 +8,8 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadMXBean;
 import java.util.Vector;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 import jmri.jmrix.dcc4pc.serialdriver.SerialDriverAdapter;
 import jmri.util.JUnitUtil;
@@ -128,11 +130,25 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         Assertions.assertTrue(interrupted.get(), "interrupt ends loadChars with InterruptedIOException");
     }
 
-    // The end of a reply is still noticed promptly when DSR falls.
+    // The end of a reply is still noticed promptly when DSR falls: loadChars
+    // returns at the first look at DSR that finds it low, at once. The time is
+    // taken from that look to the return, both on the loadChars thread, not
+    // from DSR falling: a loaded machine can keep the thread waiting to run
+    // for any time before it looks (126 ms on a Windows CI run).
     @Test
     public void testLoadCharsEndsSoonAfterDsrFalls() throws Exception {
         AtomicBoolean dsr = new AtomicBoolean(true);
         Dcc4PcTrafficController c = loadCharsController(dsr);
+        AtomicInteger lowSeen = new AtomicInteger();
+        AtomicLong lowSeenAt = new AtomicLong();
+        AtomicLong returnedAt = new AtomicLong();
+        Mockito.when(c.port.isDSR()).thenAnswer(inv -> {
+            boolean high = dsr.get();
+            if (!high && lowSeen.incrementAndGet() == 1) {
+                lowSeenAt.set(System.nanoTime());
+            }
+            return high;
+        });
         Dcc4PcReply reply = new Dcc4PcReply();
         tistream.write(0x00);
         tistream.write(0x05);
@@ -141,6 +157,7 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         Thread t = new Thread(() -> {
             try {
                 c.loadChars(reply, istream);
+                returnedAt.set(System.nanoTime());
                 done.set(true);
             } catch (java.io.IOException e) {
                 // test fails below
@@ -151,13 +168,13 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         JUnitUtil.waitFor(() -> reply.getNumDataElements() == 2, "both bytes read");
         Thread.sleep(50);
         Assertions.assertFalse(done.get(), "reply not complete while DSR is high");
-        long start = System.nanoTime();
         dsr.set(false);
-        t.join(1000);
-        long ms = (System.nanoTime() - start) / 1000000;
-        log.info("DSR low noticed after {} ms", ms);
+        t.join(5000);
         Assertions.assertTrue(done.get(), "reply complete once DSR is low");
-        Assertions.assertTrue(ms < 50, "DSR low noticed after " + ms + " ms");
+        Assertions.assertEquals(1, lowSeen.get(), "returned at the first look that found DSR low");
+        long ms = (returnedAt.get() - lowSeenAt.get()) / 1000000;
+        log.info("returned {} ms after seeing DSR low", ms);
+        Assertions.assertTrue(ms < 50, "returned " + ms + " ms after seeing DSR low");
         Assertions.assertEquals(2, reply.getNumDataElements());
     }
 
