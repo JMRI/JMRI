@@ -1,17 +1,23 @@
 package jmri.jmrit.simpleclock.configurexml;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.Locale;
+
 import jmri.InstanceManager;
-import jmri.Timebase;
+// import jmri.Timebase;
+import jmri.time.FakeTimebase;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static jmri.Timebase.ClockInitialRunState.DO_NOTHING;
-import static jmri.Timebase.ClockInitialRunState.DO_START;
-import static jmri.Timebase.ClockInitialRunState.DO_STOP;
+import static jmri.time.FakeTimebase.ClockInitialRunState.DO_NOTHING;
+import static jmri.time.FakeTimebase.ClockInitialRunState.DO_START;
+import static jmri.time.FakeTimebase.ClockInitialRunState.DO_STOP;
+
+import jmri.time.*;
 
 /**
  * Handle XML persistance of SimpleTimebase objects.
@@ -31,42 +37,30 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
      */
     @Override
     public Element store(Object o) {
-
-        Timebase clock = InstanceManager.getDefault(jmri.Timebase.class);
-
-        Element elem = new Element("timebase");
-        elem.setAttribute("class", this.getClass().getName());
-
-        var loadAndStorePreferences = InstanceManager.getDefault(jmri.configurexml.LoadAndStorePreferences.class);
-        if (! loadAndStorePreferences.isExcludeTimebase() ) {
-            elem.setAttribute("time", clock.getStartTime().toString());
-        }
-
-        elem.setAttribute("rate", "" + clock.userGetRate());
-        elem.setAttribute("startrate", "" + clock.getStartRate());
-        elem.setAttribute("run", (clock.getClockInitialRunState() == DO_START ? "yes" : "no"));
-        elem.setAttribute("master", (clock.getInternalMaster() ? "yes" : "no"));
-        if (!clock.getInternalMaster()) {
-            elem.setAttribute("mastername", clock.getMasterName());
-        }
-        elem.setAttribute("sync", (clock.getSynchronize() ? "yes" : "no"));
-        elem.setAttribute("correct", (clock.getCorrectHardware() ? "yes" : "no"));
-        elem.setAttribute("display", (clock.use12HourDisplay() ? "yes" : "no"));
-        elem.setAttribute("startstopped", (clock.getClockInitialRunState() == DO_STOP ? "yes" : "no"));
-        elem.setAttribute("startrunning", ((clock.getClockInitialRunState() == DO_START) ? "yes" : "no"));
-        elem.setAttribute("startsettime", (clock.getStartSetTime() ? "yes" : "no"));
-        elem.setAttribute("startclockoption", Integer.toString(
-                clock.getStartClockOption()));
-        elem.setAttribute("showbutton", (clock.getShowStopButton() ? "yes" : "no"));
-        elem.setAttribute("startsetrate", (clock.getSetRateAtStart() ? "yes" : "no"));
-
-        return elem;
+        throw new UnsupportedOperationException("Not supported");
     }
 
     @Override
     public boolean load(Element shared, Element perNode) {
         boolean result = true;
-        Timebase clock = InstanceManager.getDefault(jmri.Timebase.class);
+
+        FakeTimebase clock = InstanceManager.getDefault(TimeProviderManager.class).getFakeTimebase();
+
+        TimeProvider timeProvider = InstanceManager.getDefault(TimeProviderManager.class).getCurrentTimeProvider();
+        TimeSetter timeSetter = null;
+        RateSetter rateSetter = null;
+        StartStopTimeProvider startStopTimeProvider = null;
+
+        if (timeProvider instanceof TimeSetter) {
+            timeSetter = (TimeSetter) timeProvider;
+        }
+        if (timeProvider instanceof RateSetter) {
+            rateSetter = (RateSetter) timeProvider;
+        }
+        if (timeProvider instanceof StartStopTimeProvider && ((StartStopTimeProvider) timeProvider).canStartAndStop()) {
+            startStopTimeProvider = (StartStopTimeProvider) timeProvider;
+        }
+
         String val, val2;
         if (shared.getAttribute("master") != null) {
             val = shared.getAttributeValue("master");
@@ -117,10 +111,14 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
             }
         }
         if ("yes".equals(shared.getAttributeValue("startrunning"))) {
-            clock.setRun(true);
+            if (startStopTimeProvider != null) {
+                startStopTimeProvider.start();
+            }
             clock.setClockInitialRunState(DO_START);
         } else if ("yes".equals(shared.getAttributeValue("startstopped"))) {
-            clock.setRun(false);
+            if (startStopTimeProvider != null) {
+                startStopTimeProvider.stop();
+            }
             clock.setClockInitialRunState(DO_STOP);
         } else if (shared.getAttribute("startrunning") != null){
             clock.setClockInitialRunState(DO_NOTHING);
@@ -129,11 +127,15 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
             if (shared.getAttribute("run") != null) {
                 val = shared.getAttributeValue("run");
                 if (val.equals("yes")) {
-                    clock.setRun(true);
+                    if (startStopTimeProvider != null) {
+                        startStopTimeProvider.start();
+                    }
                     clock.setClockInitialRunState(DO_START);
                 }
                 if (val.equals("no")) {
-                    clock.setRun(false);
+                    if (startStopTimeProvider != null) {
+                        startStopTimeProvider.stop();
+                    }
                     clock.setClockInitialRunState(DO_STOP);
                 }
             }
@@ -147,6 +149,9 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
             try {
                 double r = shared.getAttribute("startrate").getDoubleValue();
                 clock.setStartRate(r);
+                if (rateSetter != null) {
+                    rateSetter.setRate(r);
+                }
                 hasRate = true;
             } catch (org.jdom2.DataConversionException e2) {
                 log.error("Cannot convert start rate", e2);
@@ -157,6 +162,9 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
             try {
                 double r = shared.getAttribute("rate").getDoubleValue();
                 clock.setStartRate(r);
+                if (rateSetter != null) {
+                    rateSetter.setRate(r);
+                }
                 hasRate = true;
             } catch (org.jdom2.DataConversionException e2) {
                 log.error("Cannot convert rate", e2);
@@ -164,6 +172,9 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
             }
         }
         if (clock.getSetRateAtStart() && hasRate) {
+            clock.userSetRate(clock.getStartRate());
+        }
+/*        if (clock.getSetRateAtStart() && hasRate) {
             try {
                 clock.userSetRate(clock.getStartRate());
             } catch (jmri.TimebaseRateException e1) {
@@ -171,12 +182,15 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
                 result = false;
             }
         }
+*/
         if (shared.getAttribute("startsettime") != null) {
             val = shared.getAttributeValue("startsettime");
             if (val.equals("yes")) {
                 if (shared.getAttribute("time") != null) {
                     val2 = shared.getAttributeValue("time");
-                    try {
+                    clock.setStartSetTime(true, ZonedDateTime.parse(val2,TimeProvider.LEGACY_XML_DATETIME_FORMAT));
+                    clock.setTime(ZonedDateTime.parse(val2,TimeProvider.LEGACY_XML_DATETIME_FORMAT));
+/*                    try {
                         clock.setStartSetTime(true, format.parse(val2));
                         clock.setTime(format.parse(val2));
                     } catch (ParseException e) {
@@ -184,13 +198,20 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
                         log.warn("Cannot set date using value stored in file: {}", val2);
                         result = false;
                     }
+*/
                 }
             } else if (val.equals("no")) {
                 if (shared.getAttribute("time") != null) {
                     val2 = shared.getAttributeValue("time");
+                    clock.setStartSetTime(false, ZonedDateTime.parse(val2,TimeProvider.LEGACY_XML_DATETIME_FORMAT));
                     try {
-                        clock.setStartSetTime(false, format.parse(val2));
-                    } catch (ParseException e) {
+                        if (timeSetter != null) {
+                            ZonedDateTime zdt = ZonedDateTime.parse(
+                                    val2,
+                                    TimeProvider.LEGACY_XML_DATETIME_FORMAT);
+                            timeSetter.setDateTime(zdt);
+                        }
+                    } catch (DateTimeParseException e) {
                         // if non-invertable date format, just skip
                         log.warn("Cannot set date using value stored in file: {}", val2);
                         result = false;
@@ -201,21 +222,33 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
             // this only to preserve previous behavior for preexisting files
             val2 = shared.getAttributeValue("time");
             try {
-                clock.setStartSetTime(true, format.parse(val2));
-                clock.setTime(format.parse(val2));
-            } catch (ParseException e) {
+                clock.setStartSetTime(true, ZonedDateTime.parse(val2,TimeProvider.LEGACY_XML_DATETIME_FORMAT));
+                clock.setTime(ZonedDateTime.parse(val2,TimeProvider.LEGACY_XML_DATETIME_FORMAT));
+//                clock.setStartSetTime(true, format.parse(val2));
+//                clock.setTime(format.parse(val2));
+                if (timeSetter != null) {
+                    ZonedDateTime ldt = ZonedDateTime.parse(
+                            val2,
+                            TimeProvider.LEGACY_XML_DATETIME_FORMAT);
+                    timeSetter.setDateTime(ldt);
+                }
+            } catch (DateTimeParseException e) {
                 // if non-invertable date format, just skip
                 log.warn("Cannot set date using value stored in file: {}", val2);
                 result = false;
             }
+
         }
         if (shared.getAttribute("startclockoption") != null) {
             int option = Integer.parseInt(shared.getAttribute(
                     "startclockoption").getValue());
             clock.setStartClockOption(option);
             clock.initializeClock();
+//            clock.setStartClockOption(option);
+//            clock.initializeClock();
         }
         clock.initializeHardwareClock();
+//        clock.initializeHardwareClock();
         return result;
     }
 
