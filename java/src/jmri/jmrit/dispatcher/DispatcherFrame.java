@@ -180,11 +180,16 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
     @Override
     public void dispose( ) {
+        disposed = true;
         super.dispose();
         if (autoAllocate != null) {
             autoAllocate.setAbort();
         }
     }
+
+    // set when disposed: a task the allocation thread was already running then
+    // makes no more changes to the layout
+    private volatile boolean disposed = false;
 
     /**
      * Constants for the override type
@@ -2473,12 +2478,21 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * Run a change to the layout on the layout thread (Swing thread), waiting
      * for it when called from another thread, such as the auto allocator's.
      * The auto allocator's thread holds no lock that the layout thread takes.
+     * Once this Dispatcher has been disposed, no change is made: the
+     * allocation thread may still be finishing a task it had started.
      */
-    private static void onLayoutThread(Runnable change) {
+    private void onLayoutThread(Runnable change) {
+        Runnable unlessDisposed = () -> {
+            if (disposed) {
+                log.debug("Dispatcher disposed, layout change not made");
+            } else {
+                change.run();
+            }
+        };
         if (ThreadingUtil.isLayoutThread()) {
-            change.run();
+            unlessDisposed.run();
         } else {
-            ThreadingUtil.runOnLayout(change::run);
+            ThreadingUtil.runOnLayout(unlessDisposed::run);
         }
     }
 
