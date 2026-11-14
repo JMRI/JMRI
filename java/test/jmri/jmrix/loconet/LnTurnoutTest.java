@@ -577,11 +577,16 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
         assertEquals( 0xB0, lnis.outbound.get(1).getOpCode(), "check second message Opcode");
         assertEquals( 20, lnis.outbound.get(1).getElement(1), "check second message element 1");
         assertEquals( 0x20, lnis.outbound.get(1).getElement(2), "check second message element 2");
-        JUnitUtil.waitFor(()->{return lnis.outbound.size()==3;},"3rd message not received");
+        // the resend's own off message follows 100 ms later, so look for at least 3
+        JUnitUtil.waitFor(()->{return lnis.outbound.size()>=3;},"3rd message not received");
         // check for resend of original message
         assertEquals( 0xB0, lnis.outbound.get(2).getOpCode(), "check second message Opcode");
         assertEquals( 20, lnis.outbound.get(2).getElement(1), "check second message element 1");
         assertEquals( 0x30, lnis.outbound.get(2).getElement(2), "check second message element 2");
+        // and its off message, so that its warning is not left for tearDown
+        JUnitUtil.waitFor(()->{return lnis.outbound.size()>=4;},"4th message not received");
+        JUnitAppender.assertWarnMessage("Turnout 21 is using OPC_SWREQ off as confirmation, but is sending OFF commands itself anyway");
+        assertEquals( 0x20, lnis.outbound.get(3).getElement(2), "check resent off message element 2");
         assertEquals( UNKNOWN, t.getKnownState(), "check known state got updated");
     }
 
