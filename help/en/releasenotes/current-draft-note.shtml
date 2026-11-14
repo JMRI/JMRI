@@ -892,6 +892,12 @@
                 custom web pages or edited copies of JMRI's web files, see
                 <a href="https://www.jmri.org/help/en/html/web/index.shtml#jquery3">Updating Custom
                 Pages to jQuery 3</a>.</li>
+            <li>A page that still loads <code>/js/jquery-2.2.4.min.js</code>
+                now gets jQuery 3.7.1 and jQuery Migrate in its place, so
+                custom web pages and edited copies of JMRI's web files
+                written for earlier versions keep working, and one page can
+                be used with both this and earlier versions of JMRI. The
+                browser's console says what to change.</li>
         </ul>
 
     <h3>Where Used</h3>
