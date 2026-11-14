@@ -159,7 +159,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
             try {
                 outBuf = new StringBuilder(newServerVersionString);
                 outBuf.append(jmri.Version.name()).append("\r\n");
-                outStream.write(outBuf.toString().getBytes());
+                outStream.write(outBuf.toString().getBytes(StandardCharsets.UTF_8));
 
                 while (!isInterrupted()) {
                     msg = null;

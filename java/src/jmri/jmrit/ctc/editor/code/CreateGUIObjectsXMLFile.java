@@ -9,8 +9,10 @@ import java.awt.geom.AffineTransform;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.TreeMap;
+
 import jmri.InstanceManager;
 import jmri.jmrit.ctc.CtcManager;
 import jmri.jmrit.ctc.ctcserialdata.CodeButtonHandlerData;
@@ -38,7 +40,9 @@ public class CreateGUIObjectsXMLFile {
 
         PrintWriter printWriter;
         try {
-            printWriter = new PrintWriter(new FileWriter(jmri.util.FileUtil.getUserFilesPath() + "ctc/GUIObjects.xml"));  // NOI18N
+            printWriter = new PrintWriter(new FileWriter(
+                    jmri.util.FileUtil.getUserFilesPath() + "ctc/GUIObjects.xml",
+                    StandardCharsets.UTF_8));  // NOI18N
         } catch (IOException e) {
             log.debug("PrintWriter exception: {}", e.getMessage());
             return;

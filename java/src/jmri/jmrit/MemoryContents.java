@@ -1,6 +1,7 @@
 package jmri.jmrit;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import org.slf4j.Logger;
@@ -78,34 +79,34 @@ import jmri.util.StringUtil;
  * uses the following terms for the fields of the record:
  * <dl>
  * <dt>RECORD MARK</dt><dd>first character of a record.  ':'</dd>
- * 
- * <dt>RECLEN</dt><dd>a two-character specifier of the number of bytes of information 
- *          in the "INFO or DATA" field.  Immediately follows the RECORD 
- *          MARK charcter. Since each byte within the "INFO or DATA" field is 
+ *
+ * <dt>RECLEN</dt><dd>a two-character specifier of the number of bytes of information
+ *          in the "INFO or DATA" field.  Immediately follows the RECORD
+ *          MARK charcter. Since each byte within the "INFO or DATA" field is
  *          represented by two ASCII characters, the data field contains twice
  *          the RECLEN value number of ASCII characters.</dd>
- * 
+ *
  * <dt>LOAD OFFSET</dt><dd>specifies the 16-bit starting load offset of the data bytes.
  *          This applies only to "Data" records, so this class requires that
  *          this field must encode 0x0000 for all other record types.  The LOAD
  *          OFFSET field immediately follows the RECLEN field.
  * <p>
- *          Note that for the 24-bit addressing format used with ".DMF" 
+ *          Note that for the 24-bit addressing format used with ".DMF"
  *          files, this field is a 24-bit starting load offset, represented by
- *          six ASCII characters, rather than the four ASCII characters 
+ *          six ASCII characters, rather than the four ASCII characters
  *          specified in the Intel specification.</dd>
- * 
- * <dt>RECTYP</dt><dd>RECord TYPe - indicates the record type for this record.  The 
+ *
+ * <dt>RECTYP</dt><dd>RECord TYPe - indicates the record type for this record.  The
  *          RECTYPE field immediately follows the LOAD OFFSET field.</dd>
- * 
- * <dt>INFO or DATA</dt><dd>(Optional) field containing information or data which is 
+ *
+ * <dt>INFO or DATA</dt><dd>(Optional) field containing information or data which is
  *          appropriate to the RECTYP.  Immediately follows the RECTYP field.
  *          contains RECLEN times 2 characters, where consecutive pairs of
  *          characters represent one byte of info or data.</dd>
- * 
- * <dt>CHKSUM</dt><dd>8-bit Checksum, computed using the hexadecimal byte values represented 
- *          by the character pairs in RECLEN, LOAD OFFSET, RECTYP, and INFO 
- *          or DATA fields, such that the computed sum, when added to the 
+ *
+ * <dt>CHKSUM</dt><dd>8-bit Checksum, computed using the hexadecimal byte values represented
+ *          by the character pairs in RECLEN, LOAD OFFSET, RECTYP, and INFO
+ *          or DATA fields, such that the computed sum, when added to the
  *          CKSUM value, sums to an 8-bit value of 0x00.</dd>
  * </dl>
  * This information based on the Intel document "Hexadecimal Object File Format
@@ -119,7 +120,7 @@ import jmri.util.StringUtil;
  *      "ll"    is the RECLEN
  *      "oooo"  is the 16-bit LOAD OFFSET
  *      "tt"    is the RECTYP
- *      "{dd}"  is the INFO or DATA field, containing zero or more pairs of 
+ *      "{dd}"  is the INFO or DATA field, containing zero or more pairs of
  *                  characters of Info or Data associated with the record
  *      "cc"    is the CHKSUM
  * </pre>
@@ -138,10 +139,10 @@ public class MemoryContents {
 
     // Class (static) variables
 
-    /* For convenience, a page of local storage of data is sized to equal one 
-     * "segment" within an input file.  As such, the terms "page" and "segment" 
+    /* For convenience, a page of local storage of data is sized to equal one
+     * "segment" within an input file.  As such, the terms "page" and "segment"
      * are used interchangeably throughout here.
-     * 
+     *
      * The number of pages is chosen to match the 24-bit address space.
      */
     private static final int DEFAULT_MEM_VALUE = -1;
@@ -388,19 +389,20 @@ public class MemoryContents {
             IOException {
         BufferedReader fileStream;
         try {
-            fileStream = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+            fileStream = new BufferedReader(new InputStreamReader(
+                    new FileInputStream(file), StandardCharsets.UTF_8));
         } catch (IOException ex) {
             throw new FileNotFoundException(ex.toString());
         }
-        
-        this.clear();   // Ensure that the information storage is clear of any 
+
+        this.clear();   // Ensure that the information storage is clear of any
                         // previous contents
         currentPage = 0;
         loadOffsetFieldType = LoadOffsetFieldType.UNDEFINED;
         boolean foundDataRecords = false;
         boolean foundEOFRecord = false;
 
-        keyValComments.clear();  // ensure that no key/value pair values are retained 
+        keyValComments.clear();  // ensure that no key/value pair values are retained
         //from a previous invocation.
 
         lineNum = 0;
@@ -424,16 +426,16 @@ public class MemoryContents {
                     // machine comment; store it to allow for key/value extraction
                     keyValComments.add(line);
                 } else if (line.charAt(0) == LEADING_CHAR_RECORD_MARK) {
-                    // hex file record - determine LOAD OFFSET field type (if not yet 
+                    // hex file record - determine LOAD OFFSET field type (if not yet
                     // then interpret the record based on its RECTYP
 
                     int indexOfLastAddressCharacter;
                     if (loadOffsetFieldType == LoadOffsetFieldType.UNDEFINED) {
                         // Infer the file's LOAD OFFSET field type from the first record.
-                        // It is sufficient to infer the LOAD OFFSET field type once, then 
-                        // interpret all future records as the same type without 
+                        // It is sufficient to infer the LOAD OFFSET field type once, then
+                        // interpret all future records as the same type without
                         // checking the type again, because the checksum verfication
-                        // uses the LOAD OFFSET field type as part of the 
+                        // uses the LOAD OFFSET field type as part of the
                         // checksum verification.
 
                         loadOffsetFieldType = inferRecordAddressType(line);
@@ -448,7 +450,7 @@ public class MemoryContents {
                         }
                     }
 
-                    // Determine the index of the last character of the line which 
+                    // Determine the index of the last character of the line which
                     // contains LOAD OFFSET field info
                     indexOfLastAddressCharacter = charsInAddress() + 2;
                     if (indexOfLastAddressCharacter < 0) {
@@ -472,7 +474,7 @@ public class MemoryContents {
                             + charsInAddress()
                             + CHARS_IN_RECORD_TYPE
                             + (count * CHARS_IN_EACH_DATA_BYTE) + CHARS_IN_CHECKSUM) {
-                        // line length error - invalid record or invalid data 
+                        // line length error - invalid record or invalid data
                         // length byte or incorrect LOAD OFFSET field type
                         String message
                                 = "Data record line length is incorrect for " // NOI18N
@@ -483,12 +485,12 @@ public class MemoryContents {
                     }
 
                     // verify the checksum now that we know the RECTYP.
-                    // Do this by calculating the checksum of all characters on 
-                    //line (except the ':' record mark), which should result in 
+                    // Do this by calculating the checksum of all characters on
+                    //line (except the ':' record mark), which should result in
                     // a computed checksum value of 0
                     int computedChecksum = calculate8BitChecksum(line.substring(CHARS_IN_RECORD_MARK));
                     if (computedChecksum != 0x00) {
-                        // line's checksum is incorrect.  Find checksum of 
+                        // line's checksum is incorrect.  Find checksum of
                         // all but the checksum bytes
                         computedChecksum = calculate8BitChecksum(
                                 line.substring(
@@ -524,8 +526,8 @@ public class MemoryContents {
                         recordAddress &= (isLoadOffsetType24Bits())
                                 ? 0x00FFFFFF : 0x0000FFFF;
 
-                        // compute effective address (assumes cannot have 
-                        // non-zero values in both curExtLinAddr and 
+                        // compute effective address (assumes cannot have
+                        // non-zero values in both curExtLinAddr and
                         // curExtSegAddr)
                         int effectiveAddress = recordAddress + curExtLinAddr + curExtSegAddr;
 
@@ -715,7 +717,7 @@ public class MemoryContents {
     private void logError(String errorToLog) {
         log.error(errorToLog);
     }
-    
+
     /**
      * Sends a character stream of an image of a programmatic representation of
      * memory in the Intel "I8HEX" file format to a Writer.
@@ -1094,7 +1096,7 @@ public class MemoryContents {
         for (int i = 0; i < len; i += 2) {
             calculatedChecksum += Integer.parseInt(infoString.substring(i, i + 2), 16);
         }
-        // Safely remove extraneous bits from the calculated checksum to create an 
+        // Safely remove extraneous bits from the calculated checksum to create an
         // 8-bit result.
         return (0xFF & (0x100 - (calculatedChecksum & 0xFF)));
     }
@@ -1277,7 +1279,7 @@ public class MemoryContents {
                 line.substring(CHARS_IN_RECORD_MARK + CHARS_IN_RECORD_LENGTH,
                         CHARS_IN_RECORD_MARK + CHARS_IN_RECORD_LENGTH + charsInAddress()), 16);
     }
-    
+
     /**
      * Generalized class from which detailed exceptions are derived.
      */
@@ -1443,12 +1445,12 @@ public class MemoryContents {
 
     /**
      * Clear out an imported Firmware File.
-     * 
-     * This may be used, when the instantiating object has evaluated the contents of 
-     * a firmware file and found it to be inappropriate for updating to a device, 
+     *
+     * This may be used, when the instantiating object has evaluated the contents of
+     * a firmware file and found it to be inappropriate for updating to a device,
      * to clear out the firmware image so that there is no chance that it can be
      * updated to the device.
-     * 
+     *
      */
     public void clear() {
         log.info("Clearing a MemoryContents object by program request.");
@@ -1460,7 +1462,7 @@ public class MemoryContents {
         for (int i = 0 ; i < pageArray.length; ++i) {
             pageArray[i] = null;
         }
-        
+
     }
 
     private static final Logger log = LoggerFactory.getLogger(MemoryContents.class);

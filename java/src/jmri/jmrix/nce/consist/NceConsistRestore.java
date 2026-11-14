@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
@@ -65,7 +66,7 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
             return; // Canceled
         }
         File f = fc.getSelectedFile();
-        try (BufferedReader in = new BufferedReader(new FileReader(f))) {
+        try (BufferedReader in = new BufferedReader(new FileReader(f, StandardCharsets.UTF_8))) {
             // create a status frame
             JPanel ps = new JPanel();
             jmri.util.JmriJFrame fstatus = new jmri.util.JmriJFrame(Bundle.getMessage("NceConsistRestore"));
@@ -100,9 +101,9 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
                     log.error("NCE consist file terminator :0000 not found"); // NOI18N
                     break;
                 }
-                
+
                 log.debug("consist {}", line);
-                
+
                 // check that each line contains the NCE memory address of the consist
                 String consistAddr = ":" + Integer.toHexString(curConsist);
                 String[] consistLine = line.split(" ");
@@ -112,7 +113,7 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
                     fileValid = true; // success!
                     break;
                 }
-                
+
                 // check for consistLine our of range
                 consistMemAddr = Integer.parseUnsignedInt(consistLine[0].replace(":", ""), 16);
                 if (consistMemAddr < consistMemMim) {

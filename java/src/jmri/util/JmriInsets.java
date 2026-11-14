@@ -242,7 +242,8 @@ public class JmriInsets {
         try {
             boolean found = false;
             String temp;
-            try (FileReader reader = new FileReader(xmlFile); BufferedReader buffer = new BufferedReader(reader)) {
+            try (FileReader reader = new FileReader(xmlFile, StandardCharsets.UTF_8);
+                    BufferedReader buffer = new BufferedReader(reader)) {
                 temp = buffer.readLine();
                 while (temp != null) {
                     if (temp.contains("<entry name=\"size\"")) { // NOI18N
@@ -274,7 +275,7 @@ public class JmriInsets {
 
             boolean found = false;
             String value = null;
-            FileReader reader = new FileReader(f);
+            FileReader reader = new FileReader(f, StandardCharsets.UTF_8);
             BufferedReader buffer = new BufferedReader(reader);
             try {
                 String temp = buffer.readLine();

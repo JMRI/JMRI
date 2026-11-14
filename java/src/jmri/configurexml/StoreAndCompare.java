@@ -5,6 +5,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -208,9 +209,9 @@ public class StoreAndCompare extends AbstractAction {
         // compare files, except for certain special lines
         try (
                 BufferedReader fileStream1 = new BufferedReader(
-                        new InputStreamReader(new FileInputStream(inFile1)));
+                        new InputStreamReader(new FileInputStream(inFile1), StandardCharsets.UTF_8));
                 BufferedReader fileStream2 = new BufferedReader(
-                                new InputStreamReader(new FileInputStream(inFile2)))) {
+                                new InputStreamReader(new FileInputStream(inFile2), StandardCharsets.UTF_8))) {
 
             String line1 = fileStream1.readLine();
             String line2 = fileStream2.readLine();

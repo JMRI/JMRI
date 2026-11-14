@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Import CV values from a generic CSV format CV list file such as those written
@@ -29,7 +30,7 @@ public class CsvImporter {
     public CsvImporter(File file, CvTableModel cvModel)
             throws IOException, NumberFormatException {
 
-        try (FileReader fileReader = new FileReader(file);
+        try (FileReader fileReader = new FileReader(file, StandardCharsets.UTF_8);
                 BufferedReader bufferedReader = new BufferedReader(fileReader)) {
 
             String line;

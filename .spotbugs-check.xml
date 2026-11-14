@@ -83,11 +83,11 @@
      </Match>
 
      <Match>
-       <!-- Most of these are non-I18N, JMRI-specific file operations.
-            We should find the I18N ones, but it seems excessive
-            to track down and annotate all the others first thing.
-            Suppressed for now to focus attention on
-            other high-priority items.  -->
+       <Or>
+         <Class name="jmri.jmris.simpleserver.parser.SimpleCharStream" />
+         <Class name="jmri.jmris.srcp.parser.SimpleCharStream" />
+         <Class name="jmri.jmrix.srcp.parser.SimpleCharStream" />
+       </Or>
        <Bug pattern="DM_DEFAULT_ENCODING" />
      </Match>
 

@@ -4,6 +4,7 @@
 package jmri.jmrit.ctc.configurexml;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -11,7 +12,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+
 import jmri.jmrit.ctc.CTCFiles;
 
 /**
@@ -159,7 +162,7 @@ public class ImportCodeButtonHandlerData implements Serializable {
     public static void preprocessingUpgradeSelf(String filename) {
 //  First, get the existing _mFileVersion from the file to see if we need to work on it:
         int fileVersion = -1;       // Indicate none found.
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filename))) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filename, StandardCharsets.UTF_8))) {
             String aLine;
             while (!(aLine = bufferedReader.readLine()).contains(FILE_VERSION_STRING)) {}   // Skip to the line IF it exists.
             bufferedReader.readLine();  // Ignore <void method="set">
@@ -188,8 +191,8 @@ public class ImportCodeButtonHandlerData implements Serializable {
         String temporaryFilename = CTCFiles.changeExtensionTo(filename, TEMPORARY_EXTENSION);
         (new File(temporaryFilename)).delete();   // Just delete it for safety before we start:
         boolean hadAChange = false;
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filename));
-             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(temporaryFilename))) {
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filename, StandardCharsets.UTF_8));
+             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(temporaryFilename, StandardCharsets.UTF_8))) {
             String aLine = null;
             while ((aLine = bufferedReader.readLine()) != null) { // Not EOF:
                 if ((aLine = checkFileVersion(bufferedReader, bufferedWriter, aLine, "4", "5")) == null) { hadAChange = true; continue; } // Was processed.
@@ -233,8 +236,9 @@ public class ImportCodeButtonHandlerData implements Serializable {
         String temporaryFilename = CTCFiles.changeExtensionTo(filename, TEMPORARY_EXTENSION);
         (new File(temporaryFilename)).delete();   // Just delete it for safety before we start:
         boolean hadAChange = false;
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filename)); BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(temporaryFilename))) {
-            String aLine = null;
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filename, StandardCharsets.UTF_8));
+                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(temporaryFilename, StandardCharsets.UTF_8))) {
+            String aLine;
             while ((aLine = bufferedReader.readLine()) != null) { // Not EOF:
                 if ((aLine = checkFileVersion(bufferedReader, bufferedWriter, aLine, "5", "6")) == null) { hadAChange = true; continue; } // Was processed.
                 if ((aLine = checkForMultipleSemiColons(bufferedWriter, aLine)) == null) { hadAChange = true; continue; }  // NOI18N Was processed.

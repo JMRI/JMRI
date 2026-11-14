@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -548,7 +549,7 @@ public class ProfileManager extends Bean {
         doc.getRootElement().addContent(profilesElement);
         doc.getRootElement().addContent(pathsElement);
         try {
-            fw = new FileWriter(catalog);
+            fw = new FileWriter(catalog, StandardCharsets.UTF_8);
             XMLOutputter fmt = new XMLOutputter();
             fmt.setFormat(Format.getPrettyFormat()
                     .setLineSeparator(System.getProperty("line.separator"))

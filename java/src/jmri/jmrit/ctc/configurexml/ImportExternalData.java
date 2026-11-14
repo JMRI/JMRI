@@ -3,6 +3,7 @@ package jmri.jmrit.ctc.configurexml;
 
 import java.beans.XMLDecoder;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 
 import jmri.*;
@@ -103,8 +104,8 @@ public class ImportExternalData {
         if (!CTCFiles.deleteFile(temporaryFilename)) errors++;   // Just delete it for safety before we start:
 
         try (
-                BufferedReader bufferedReader = new BufferedReader(new FileReader(CTCFiles.getFullName(fileName)));
-                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(CTCFiles.getFullName(temporaryFilename)))) {
+                BufferedReader bufferedReader = new BufferedReader(new FileReader(CTCFiles.getFullName(fileName), StandardCharsets.UTF_8));
+                BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(CTCFiles.getFullName(temporaryFilename), StandardCharsets.UTF_8))) {
 
             String aLine;
             while ((aLine = bufferedReader.readLine()) != null) { // Not EOF:
