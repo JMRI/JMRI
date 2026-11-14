@@ -359,6 +359,9 @@ public class CbusPreferences extends PreferencesBean {
      * @param pixels new position
      */
     public void setNodeTableSplit(int pixels) {
+        if (pixels == _nodeTableSplit) {
+            return;
+        }
         _nodeTableSplit = pixels;
         savePreferences();
     }

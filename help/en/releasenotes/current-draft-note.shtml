@@ -57,6 +57,10 @@
                     them, and report on CBUS sensors as detectors on the bus
                     would. The simulated command station handles requests to
                     set a session's speed step mode (STMOD).</li>
+                <li>CBUS Node Manager: dragging the divider between the
+                    node table and the tabs no longer writes all of CBUS's
+                    preferences to disk for every pixel it moves. Where it
+                    is left is saved once it stops.</li>
             </ul>
 
         <h4>C/MRI</h4>
