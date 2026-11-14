@@ -32,7 +32,6 @@ public class OlcbThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     }
 
     @BeforeAll
-    @SuppressWarnings("deprecation") // OlcbInterface(NodeID, Connection)
     public static void preClassInit() {
         JUnitUtil.setUp();
         // we need to set up the memo because as a throttle is created in test, a message will be generated
@@ -47,7 +46,7 @@ public class OlcbThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         memo = new jmri.jmrix.openlcb.OlcbSystemConnectionMemoScaffold();
         TestTrafficController tc = new TestTrafficController();
         memo.setTrafficController(tc);
-        memo.setInterface(new OlcbInterface(nodeID, connection) {
+        memo.setInterface(new OlcbInterface(nodeID, connection, new OlcbTestThreadPool()) {
             @Override
             public Connection getOutputConnection() {
                 return connection;
