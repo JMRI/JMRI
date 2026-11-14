@@ -543,25 +543,41 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
             turnoutSensorOper = boo;
         }
 
-        // Don't yet have the AND or OR set.
+        /**
+         * Work out whether this item's head should be On: its turnouts all
+         * set as listed, and its sensors all as listed. With both lists, they
+         * are combined as the AND/OR setting says; a sensor match no longer
+         * overrides a turnout that is set the other way.
+         *
+         * @return true if the head is set to its On appearance
+         */
         public boolean checkActive() {
-            boolean state = false;
-            for (int x = 0; x < _signalTurnoutList.size(); x++) {
-                log.debug("Real state {} {} state we testing for {}", _signalTurnoutList.get(x).getName(), _signalTurnoutList.get(x).getTurnout().getKnownState(), _signalTurnoutList.get(x).getState());
-                if (_signalTurnoutList.get(x).getTurnout().getKnownState() == _signalTurnoutList.get(x).getState()) {
-                    state = true;
-                } else {
-                    state = false;
+            boolean turnoutsMatch = true;
+            for (SignalTurnout t : _signalTurnoutList) {
+                log.debug("Real state {} {} state we testing for {}", t.getName(), t.getTurnout().getKnownState(), t.getState());
+                if (t.getTurnout().getKnownState() != t.getState()) {
+                    turnoutsMatch = false;
                     break;
                 }
             }
-            for (int x = 0; x < _signalSensorList.size(); x++) {
-                if (_signalSensorList.get(x).getSensor().getKnownState() == _signalSensorList.get(x).getState()) {
-                    state = true;
-                } else {
-                    state = false;
+            boolean sensorsMatch = true;
+            for (SignalSensor s : _signalSensorList) {
+                if (s.getSensor().getKnownState() != s.getState()) {
+                    sensorsMatch = false;
                     break;
                 }
+            }
+            boolean state;
+            if (_signalTurnoutList.isEmpty() && _signalSensorList.isEmpty()) {
+                state = false;
+            } else if (_signalSensorList.isEmpty()) {
+                state = turnoutsMatch;
+            } else if (_signalTurnoutList.isEmpty()) {
+                state = sensorsMatch;
+            } else if (turnoutSensorOper) { // AND
+                state = turnoutsMatch && sensorsMatch;
+            } else { // OR
+                state = turnoutsMatch || sensorsMatch;
             }
             if (state) {
                 getSignalHead().setAppearance(onAppearance);
