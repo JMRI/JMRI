@@ -875,6 +875,9 @@
                 custom web pages or edited copies of JMRI's web files, see
                 <a href="https://www.jmri.org/help/en/html/web/index.shtml#jquery3">Updating Custom
                 Pages to jQuery 3</a>.</li>
+            <li>The web throttles and the LogixNG web example now use
+                jQuery 3.7.1 too, and the old 2.0.3 and 1.11.2 copies have
+                been removed.</li>
         </ul>
 
     <h3>Where Used</h3>
