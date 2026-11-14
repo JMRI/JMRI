@@ -70,7 +70,8 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
     }
 
     /**
-     * A Block's value was set while it was occupied: place the record the
+     * A Block's value was set while it was occupied, or the Block went
+     * occupied with a value it had just taken: place the record the
      * value identifies there if that record is not placed. A roster entry or
      * ID tag with no record gets one, named after it; a String names an
      * existing record only.

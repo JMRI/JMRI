@@ -188,6 +188,41 @@ public class BlockDialogTest {
         JUnitUtil.dispose(f.getWindow());
     }
 
+    @Test
+    public void testConfirmAndClear() {
+        Block a = InstanceManager.getDefault(BlockManager.class).provideBlock("IB3");
+        a.setUserName("LB4");
+        Block b = InstanceManager.getDefault(BlockManager.class).provideBlock("IB4");
+        b.setUserName("LB3");
+        a.addPath(new jmri.Path(b, 0, 0));
+        b.addPath(new jmri.Path(a, 0, 0));
+        TrainRecord r = InstanceManager.getDefault(TrainRecordManager.class).newRecord("47012 Coal empties");
+        ThreadingUtil.runOnGUI(() -> r.place(List.of(b), false));
+
+        ThreadingUtil.runOnGUI(() -> BlockDialog.open(a, true, true));
+        JFrameOperator f = new JFrameOperator(Bundle.getMessage("BlockDialogTitle", "LB4 (IB3)"));
+        org.netbeans.jemmy.operators.JComboBoxOperator trainHere = new org.netbeans.jemmy.operators.JComboBoxOperator(f);
+        JUnitUtil.waitFor(() -> trainHere.getItemCount() == 1, "the train next door offered");
+        assertEquals(Bundle.getMessage("BlockDialogChoiceNextDoor", "47012 Coal empties"),
+                trainHere.getItemAt(0).toString());
+        new JButtonOperator(f, Bundle.getMessage("BlockDialogConfirm")).doClick();
+        JUnitUtil.waitFor(() -> r.getBlocks().equals(List.of(a)), "the train is here");
+
+        new JButtonOperator(f, Bundle.getMessage("BlockDialogClear")).doClick();
+        JUnitUtil.waitFor(() -> !r.isPlaced(), "the Block is empty");
+        JUnitUtil.dispose(f.getWindow());
+    }
+
+    @Test
+    public void testNoCorrectionsFromAPanelThatDoesNotControlTheLayout() {
+        Block a = InstanceManager.getDefault(BlockManager.class).provideBlock("IB5");
+        ThreadingUtil.runOnGUI(() -> BlockDialog.open(a, true, false));
+        JFrameOperator f = new JFrameOperator(Bundle.getMessage("BlockDialogTitle", "IB5"));
+        assertTrue(!new JButtonOperator(f, Bundle.getMessage("BlockDialogConfirm")).isEnabled());
+        assertTrue(!new JButtonOperator(f, Bundle.getMessage("BlockDialogClear")).isEnabled());
+        JUnitUtil.dispose(f.getWindow());
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

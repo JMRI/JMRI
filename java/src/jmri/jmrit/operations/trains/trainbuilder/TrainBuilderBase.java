@@ -10,6 +10,7 @@ import jmri.InstanceManager;
 import jmri.Version;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.locations.gui.LocationEditFrame;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.*;
@@ -719,6 +720,9 @@ public class TrainBuilderBase extends TrainCommon {
             for (int i = 0; i < validTracks.size(); i++) {
                 tracks[i] = validTracks.get(i);
             }
+            
+            // show staging track details for user
+            LocationEditFrame lef = new LocationEditFrame(getDepartureLocation());
 
             Track selected = (Track) JmriJOptionPane.showInputDialog(null,
                     Bundle.getMessage("TrainDepartingStaging", getTrain().getName(), getDepartureLocation().getName()),
@@ -729,6 +733,7 @@ public class TrainBuilderBase extends TrainCommon {
             } else {
                 addLine(FIVE, Bundle.getMessage("buildUserCanceledDeparture"));
             }
+            lef.dispose();
             return selected;
         } else if (validTracks.size() == 1) {
             Track track = validTracks.get(0);

@@ -40,4 +40,15 @@ public interface SimulationAdapter {
     @Nonnull
     @InvokeOnAnyThread
     List<SimulatedDetectorOutput> getDetectorOutputs();
+
+    /**
+     * @return the reporter outputs for this system's simulator connections,
+     *         the same objects each time while those connections last; none
+     *         unless the system has one
+     */
+    @Nonnull
+    @InvokeOnAnyThread
+    default List<SimulatedReporterOutput> getReporterOutputs() {
+        return List.of();
+    }
 }
