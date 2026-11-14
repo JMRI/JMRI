@@ -1,5 +1,7 @@
 package jmri.managers;
 
+import java.util.List;
+
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.Logix;
@@ -28,17 +30,31 @@ public class DefaultLogixManager extends AbstractManager<Logix>
 
     public DefaultLogixManager(InternalSystemConnectionMemo memo) {
         super(memo);
-        jmri.InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
-        jmri.InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
-        jmri.InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
-        jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).addVetoableChangeListener(this);
-        jmri.InstanceManager.getDefault(jmri.SignalMastManager.class).addVetoableChangeListener(this);
-        jmri.InstanceManager.getDefault(jmri.BlockManager.class).addVetoableChangeListener(this);
-        jmri.InstanceManager.lightManagerInstance().addVetoableChangeListener(this);
-        jmri.InstanceManager.getDefault(jmri.ConditionalManager.class).addVetoableChangeListener(this);
-        InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class).addVetoableChangeListener(this);
-        InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).addVetoableChangeListener(this);
-        InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).addVetoableChangeListener(this);
+        listenedTo = List.of(
+                jmri.InstanceManager.turnoutManagerInstance(),
+                jmri.InstanceManager.sensorManagerInstance(),
+                jmri.InstanceManager.memoryManagerInstance(),
+                jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class),
+                jmri.InstanceManager.getDefault(jmri.SignalMastManager.class),
+                jmri.InstanceManager.getDefault(jmri.BlockManager.class),
+                jmri.InstanceManager.lightManagerInstance(),
+                jmri.InstanceManager.getDefault(jmri.ConditionalManager.class),
+                InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class),
+                InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class),
+                InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class));
+        listenedTo.forEach(m -> m.addVetoableChangeListener(this));
+    }
+
+    /**
+     * The managers this manager listens to for deletions, kept so that
+     * {@link #dispose()} stops listening to the same objects.
+     */
+    private final List<Manager<?>> listenedTo;
+
+    @Override
+    public void dispose() {
+        listenedTo.forEach(m -> m.removeVetoableChangeListener(this));
+        super.dispose();
     }
 
     @Override
