@@ -1,5 +1,7 @@
 package jmri.jmrix.mqtt;
 
+import java.nio.charset.StandardCharsets;
+
 import jmri.Light;
 import jmri.implementation.AbstractVariableLight;
 
@@ -143,7 +145,7 @@ public class MqttLight extends AbstractVariableLight implements MqttEventListene
 
     private void sendMessage(String c) {
         jmri.util.ThreadingUtil.runOnLayoutEventually(() -> {
-            mqttAdapter.publish(this.sendTopic, c.getBytes());
+            mqttAdapter.publish(this.sendTopic, c.getBytes(StandardCharsets.UTF_8));
         });
         log.debug("sent {}", c);
     }
