@@ -464,7 +464,7 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
         Objects.requireNonNull(blocks, "blocks");
         Objects.requireNonNull(rule, "rule");
         if (rule != Reason.Rule.PLACED && rule != Reason.Rule.PLACED_BY_VALUE
-                && rule != Reason.Rule.PLACED_BY_DISPATCHER) {
+                && rule != Reason.Rule.PLACED_BY_DISPATCHER && rule != Reason.Rule.PLACED_BY_OPERATOR) {
             throw new IllegalArgumentException("not a rule that places: " + rule);
         }
         checkNotDisposed();
@@ -637,10 +637,14 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     }
 
     /**
-     * The train has entered a Block at one end of the Blocks it is in. That
-     * end leads; if the front wasn't known, it is now: the end that led.
-     * Called by the {@link TrainRecordWatcher}.
+     * The train has entered a Block at one end of the Blocks it is in,
+     * perhaps through Blocks with no detector. That end leads; if the front
+     * wasn't known, it is now: the end that led. Called by the
+     * {@link TrainRecordWatcher}.
      *
+     * @param through   the Blocks with no detector it passed through to
+     *                  reach the Block, in order from the end it left; empty
+     *                  if none
      * @param block     the Block entered
      * @param atFirst   true if entered at the first of {@link #getBlocks()},
      *                  false if at the last
@@ -650,29 +654,44 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
      *                  entered, and the Block's value named it
      */
     @InvokeOnLayoutThread
-    void entered(@Nonnull Block block, boolean atFirst, long timeNanos, @Nonnull Instant time, boolean settled) {
+    void entered(@Nonnull List<Block> through, @Nonnull Block block, boolean atFirst, long timeNanos,
+            @Nonnull Instant time, boolean settled) {
         if (disposed || blocks.isEmpty() || blocks.contains(block)) {
             return;
         }
+        for (Block b : through) {
+            if (b == block || blocks.contains(b)) {
+                return;
+            }
+        }
         List<Block> old = getBlocks();
-        Block from = atFirst ? blocks.get(0) : blocks.get(blocks.size() - 1);
+        Block from = through.isEmpty() ? (atFirst ? blocks.get(0) : blocks.get(blocks.size() - 1))
+                : through.get(through.size() - 1);
         if (!frontKnown && !atFirst) {
             Collections.reverse(blocks);
             atFirst = true;
         }
         End end;
         if (atFirst) {
+            for (Block b : through) {
+                blocks.add(0, b);
+            }
             blocks.add(0, block);
             end = End.FRONT;
         } else {
+            blocks.addAll(through);
             blocks.add(block);
             end = End.REAR;
         }
         TrailEntry entry = new TrailEntry(block, from, end, timeNanos, time);
         addToTrail(entry);
-        Reason.Rule rule = settled ? Reason.Rule.SETTLED_BY_VALUE : Reason.Rule.ENTERED;
-        Reason reason = new Reason(rule, block, from, block.getSensor(), List.of(), time);
+        Reason.Rule rule = settled ? Reason.Rule.SETTLED_BY_VALUE
+                : through.isEmpty() ? Reason.Rule.ENTERED : Reason.Rule.ENTERED_THROUGH_DARK;
+        Reason reason = new Reason(rule, block, from, block.getSensor(), through, time);
         blockReasons.put(block, reason);
+        for (Block b : through) {
+            blockReasons.put(b, reason);
+        }
         setDirection(true, end);
         setConfidence(Confidence.CONFIRMED, reason);
         firePropertyChange(PROPERTY_BLOCKS, old, getBlocks());
@@ -711,13 +730,21 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
      *
      * @param c      the confidence, or null when not placed
      * @param reason why; kept in the history unless it is the reason for a
-     *               change of Blocks, which keeps it itself
+     *               change of Blocks, which keeps it itself. If the
+     *               confidence is unchanged, it still becomes the reason
+     *               for it when it is a newer fix, or a different rule
      */
     @InvokeOnLayoutThread
     void setConfidence(@CheckForNull Confidence c, @CheckForNull Reason reason) {
         if (c == confidence) {
-            if (c != null && reason != null && PLACING_OR_MOVING.contains(reason.getRule())) {
+            if (c == null || reason == null) {
+                return;
+            }
+            if (PLACING_OR_MOVING.contains(reason.getRule())) {
                 confidenceReason = reason; // as sure as before, from a newer fix
+            } else if (confidenceReason == null || confidenceReason.getRule() != reason.getRule()) {
+                confidenceReason = reason; // as sure as before, for a different reason
+                addToHistory(reason);
             }
             return;
         }
@@ -731,7 +758,8 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     }
 
     private static final Set<Reason.Rule> PLACING_OR_MOVING = EnumSet.of(Reason.Rule.PLACED,
-            Reason.Rule.PLACED_BY_VALUE, Reason.Rule.PLACED_BY_DISPATCHER, Reason.Rule.UNPLACED,
+            Reason.Rule.PLACED_BY_VALUE, Reason.Rule.PLACED_BY_DISPATCHER, Reason.Rule.PLACED_BY_OPERATOR,
+            Reason.Rule.UNPLACED,
             Reason.Rule.ENTERED, Reason.Rule.ENTERED_THROUGH_DARK, Reason.Rule.SETTLED_BY_VALUE);
 
     private void addToHistory(@CheckForNull Reason reason) {

@@ -34,6 +34,22 @@ public class TrainRecordTest {
         assertEquals(new TrainComponent("loco", 210.0).hashCode(), c.hashCode());
         assertNotEquals(new TrainComponent("loco", 200.0), c);
         assertNotEquals(new TrainComponent("coach", 210.0), c);
+        assertNull(c.getFrontOverhang(), "not known unless given");
+        assertNull(c.getRearOverhang());
+    }
+
+    @Test
+    public void testTrainComponentOverhangs() {
+        TrainComponent c = new TrainComponent("loco", 210.0, 18.0, 22.0);
+        assertEquals(18.0, c.getFrontOverhang());
+        assertEquals(22.0, c.getRearOverhang());
+        assertEquals(new TrainComponent("loco", 210.0, 18.0, 22.0), c);
+        assertEquals(new TrainComponent("loco", 210.0, 18.0, 22.0).hashCode(), c.hashCode());
+        assertNotEquals(new TrainComponent("loco", 210.0, 18.0, null), c);
+        assertNotEquals(new TrainComponent("loco", 210.0), c);
+        assertEquals(new TrainComponent("loco", 210.0, 0.0, 0.0).getFrontOverhang(), 0.0, "0 is allowed");
+        assertThrows(IllegalArgumentException.class, () -> new TrainComponent("loco", 210.0, -1.0, null));
+        assertThrows(IllegalArgumentException.class, () -> new TrainComponent("loco", 210.0, null, -1.0));
     }
 
     @Test
