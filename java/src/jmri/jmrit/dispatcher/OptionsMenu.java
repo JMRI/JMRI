@@ -128,6 +128,8 @@ public class OptionsMenu extends JMenu {
     JCheckBox nameInAllocatedBlockCheckBox = new JCheckBox(Bundle.getMessage("NameInAllocatedBlockBox"));
     JCheckBox supportVSDecoderCheckBox = new JCheckBox(Bundle.getMessage("SupportVSDecoder"));
     JComboBox<Scale> layoutScaleBox = new JComboBox<>();
+    // the CUSTOM scale's ratio, N in 1:N, shown and editable only while CUSTOM is chosen
+    JSpinner customRatioSpinner = new JSpinner(new SpinnerNumberModel(87.1, 1.0, 10000.0, 0.1));
     JRadioButton scaleFeet = new JRadioButton(Bundle.getMessage("ScaleFeet"));
     JRadioButton scaleMeters = new JRadioButton(Bundle.getMessage("ScaleMeters"));
     JCheckBox openDispatcherWithPanel = new JCheckBox(Bundle.getMessage("OpenDispatcherWithPanelBox"));
@@ -275,6 +277,11 @@ public class OptionsMenu extends JMenu {
             p8.add(new JLabel(Bundle.getMessage("LabelLayoutScale")));
             p8.add(layoutScaleBox);
             layoutScaleBox.setToolTipText(Bundle.getMessage("ScaleBoxHint"));
+            p8.add(new JLabel(Bundle.getMessage("CustomScaleRatioLabel")));
+            p8.add(customRatioSpinner);
+            customRatioSpinner.setToolTipText(Bundle.getMessage("CustomScaleRatioHint"));
+            layoutScaleBox.addActionListener(ev -> showCustomRatio());
+            showCustomRatio();
             optionsPane.add(p8);
             JPanel p12 = new JPanel();
             p12.setLayout(new FlowLayout());
@@ -429,7 +436,16 @@ public class OptionsMenu extends JMenu {
         dispatcher.setNameInAllocatedBlock(nameInAllocatedBlockCheckBox.isSelected());
         dispatcher.setRosterEntryInBlock(rosterInBlockCheckBox.isSelected());
         dispatcher.setSupportVSDecoder(supportVSDecoderCheckBox.isSelected());
-        dispatcher.setScale((Scale) layoutScaleBox.getSelectedItem());
+        Scale scale = (Scale) layoutScaleBox.getSelectedItem();
+        if (scale != null && isCustom(scale)) {
+            double ratio = ((Number) customRatioSpinner.getValue()).doubleValue();
+            if (ratio != scale.getScaleRatio() && !setCustomRatio(scale, ratio)) {
+                JmriJOptionPane.showMessageDialog(optionsFrame,
+                        Bundle.getMessage("CustomScaleRatioNotChanged", ratio, scale.getScaleRatio()),
+                        Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
+            }
+        }
+        dispatcher.setScale(scale);
         dispatcher.setUseScaleMeters(scaleMeters.isSelected());
         dispatcher.setMinThrottleInterval((int) minThrottleIntervalSpinner.getValue());
         dispatcher.setFullRampTime((int) fullRampTimeSpinner.getValue());
@@ -493,13 +509,47 @@ public class OptionsMenu extends JMenu {
     private void initializeScaleCombo() {
         layoutScaleBox.removeAllItems();
         for (Scale scale : ScaleManager.getScales()) {
-            if (scale.getScaleName().equals("CUSTOM")) {  // No custom support yet, don't show.
-                continue;
-            }
             layoutScaleBox.addItem(scale);
         }
         jmri.util.swing.JComboBoxUtil.setupComboBoxMaxRows(layoutScaleBox);
         layoutScaleBox.setSelectedItem(dispatcher.getScale());
+    }
+
+    /*
+     * The ratio box shows the CUSTOM scale's ratio, and may be changed, only
+     * while CUSTOM is chosen.
+     */
+    private void showCustomRatio() {
+        Scale scale = (Scale) layoutScaleBox.getSelectedItem();
+        if (scale != null && isCustom(scale)) {
+            customRatioSpinner.setEnabled(true);
+            customRatioSpinner.setValue(scale.getScaleRatio());
+        } else {
+            customRatioSpinner.setEnabled(false);
+        }
+    }
+
+    private static boolean isCustom(Scale scale) {
+        return "CUSTOM".equals(scale.getScaleName());  // NOI18N
+    }
+
+    /**
+     * Set the CUSTOM scale's ratio. There is one CUSTOM scale, shared with the
+     * Timetable, and kept in the user's scale file; a Timetable layout using it
+     * may refuse a ratio its times can't be worked out with.
+     *
+     * @param custom the CUSTOM scale
+     * @param ratio  N in 1:N
+     * @return true if the ratio was accepted
+     */
+    static boolean setCustomRatio(@javax.annotation.Nonnull Scale custom, double ratio) {
+        try {
+            custom.setScaleRatio(ratio);
+            return true;
+        } catch (IllegalArgumentException | java.beans.PropertyVetoException ex) {
+            log.warn("CUSTOM scale ratio {} not accepted: {}", ratio, ex.getMessage());
+            return false;
+        }
     }
 
     private void initializeStoppingSpeedCombo() {

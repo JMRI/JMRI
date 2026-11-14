@@ -198,7 +198,9 @@
 
         <li>
           <p>Select layout scale in the <strong>Layout Scale</strong> selection box. The selected
-          scale is used to convert Block length as used in automatic running of trains.</p>
+          scale is used to convert Block length as used in automatic running of trains.
+          For a scale not in the list, choose <strong>CUSTOM</strong> and enter its ratio, N in
+          1:N, in the box beside it. There is one CUSTOM scale, shared with the Timetable.</p>
         </li>
 
         <li>
