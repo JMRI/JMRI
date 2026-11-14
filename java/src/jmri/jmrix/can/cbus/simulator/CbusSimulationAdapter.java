@@ -8,6 +8,7 @@ import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.InvokeOnAnyThread;
 import jmri.jmrit.simulation.SimulatedDetectorOutput;
+import jmri.jmrit.simulation.SimulatedReporterOutput;
 import jmri.jmrit.simulation.SimulatedSpeedSource;
 import jmri.jmrit.simulation.SimulationAdapter;
 
@@ -48,6 +49,20 @@ public class CbusSimulationAdapter implements SimulationAdapter {
         List<SimulatedDetectorOutput> list = new ArrayList<>();
         for (CbusSimulator s : simulators()) {
             list.add(s.getSimulatedSensorOutput());
+        }
+        return list;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    @Nonnull
+    @InvokeOnAnyThread
+    public List<SimulatedReporterOutput> getReporterOutputs() {
+        List<SimulatedReporterOutput> list = new ArrayList<>();
+        for (CbusSimulator s : simulators()) {
+            list.add(s.getSimulatedReporterOutput());
         }
         return list;
     }

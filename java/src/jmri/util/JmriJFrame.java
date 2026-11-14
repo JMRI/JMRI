@@ -28,6 +28,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
+import javax.swing.Timer;
 
 import jmri.InstanceManager;
 import jmri.ShutDownManager;
@@ -976,22 +977,97 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     public void componentHidden(java.awt.event.ComponentEvent e) {
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     * <p>
+     * The new location is saved once the window has stopped moving, see
+     * saveWindowDetailsSoon().
+     */
     @Override
     public void componentMoved(java.awt.event.ComponentEvent e) {
-        InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent(p -> {
-            if (reuseFrameSavedPosition && isVisible()) {
-                p.setWindowLocation(windowFrameRef, this.getLocation());
-            }
-        });
+        saveWindowDetailsSoon();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     * <p>
+     * The new size is saved once the window has stopped changing size, see
+     * saveWindowDetailsSoon().
+     */
     @Override
     public void componentResized(java.awt.event.ComponentEvent e) {
+        saveWindowDetailsSoon();
+    }
+
+    /**
+     * How long a window must stay where it is before its location and size are
+     * saved again.
+     */
+    static final int WINDOW_DETAILS_SAVE_DELAY = 500; // milliseconds
+
+    /**
+     * Runs while the window is moving or changing size, and saves its location
+     * and size once it has stayed put for {@link #WINDOW_DETAILS_SAVE_DELAY}.
+     * Created on first use.
+     */
+    private transient Timer windowDetailsSave = null;
+
+    /** The location this window last saved, or null if none yet. */
+    private transient Point savedLocation = null;
+
+    /** The size this window last saved, or null if none yet. */
+    private transient Dimension savedSize = null;
+
+    /**
+     * Save the window's location and size when it moves or changes size.
+     * <p>
+     * The first change after the window has been still is saved at once, as
+     * it always was, so a window that is opened and placed has saved where it
+     * is before anything else happens. Further changes while the window is
+     * dragged are not saved one by one: saving writes the user interface
+     * preferences file, and dragging fires dozens of events a second. Instead
+     * the window is saved once more when it has stopped.
+     * <p>
+     * Called on the GUI thread.
+     */
+    private void saveWindowDetailsSoon() {
+        if (!isVisible()) {
+            return;
+        }
+        if (windowDetailsSave == null) {
+            windowDetailsSave = new Timer(WINDOW_DETAILS_SAVE_DELAY, e -> saveWindowDetails());
+            windowDetailsSave.setRepeats(false);
+        }
+        if (windowDetailsSave.isRunning()) {
+            windowDetailsSave.restart(); // still moving: save once it stops
+            return;
+        }
+        saveWindowDetails();
+        windowDetailsSave.start(); // collect any further moves
+    }
+
+    /**
+     * Save the window's location and size, as far as it is set to reuse them
+     * and they have changed since this window last saved them.
+     */
+    private void saveWindowDetails() {
+        if (!isVisible()) {
+            return;
+        }
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent(p -> {
-            if (reuseFrameSavedSized && isVisible()) {
-                saveWindowSize(p);
+            if (reuseFrameSavedPosition) {
+                Point location = this.getLocation();
+                if (!location.equals(savedLocation)) {
+                    p.setWindowLocation(windowFrameRef, location);
+                    savedLocation = location;
+                }
+            }
+            if (reuseFrameSavedSized) {
+                Dimension size = super.getSize();
+                if (!size.equals(savedSize)) {
+                    saveWindowSize(p);
+                    savedSize = size;
+                }
             }
         });
     }
@@ -1033,6 +1109,9 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
     @Override
     public void dispose() {
         log.debug("JmriJFrame dispose invoked on {}", getTitle());
+        if (windowDetailsSave != null) {
+            windowDetailsSave.stop(); // saved now instead
+        }
         InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent(p -> {
             if (reuseFrameSavedPosition) {
                 p.setWindowLocation(windowFrameRef, this.getLocation());

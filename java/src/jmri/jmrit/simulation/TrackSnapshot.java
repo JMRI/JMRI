@@ -20,6 +20,7 @@ import jmri.InvokeOnAnyThread;
 import jmri.InvokeOnLayoutThread;
 import jmri.NamedBean;
 import jmri.Path;
+import jmri.Reporter;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.TurnoutManager;
@@ -261,11 +262,15 @@ final class TrackSnapshot {
         final Sensor sensor;
         @CheckForNull
         final SimulatedDetectorOutput output;
+        @CheckForNull
+        final Reporter reporter;
+        @CheckForNull
+        final SimulatedReporterOutput reporterOutput;
         final List<BlockPath> paths = new ArrayList<>();
         final List<BlockOPath> oPaths = new ArrayList<>();
         final List<Portal> portals = new ArrayList<>();
 
-        BlockData(Block b, List<SimulatedDetectorOutput> outputs) {
+        BlockData(Block b, List<SimulatedDetectorOutput> outputs, List<SimulatedReporterOutput> reporterOutputs) {
             name = b.getDisplayName();
             length = b.getLengthMm();
             Sensor s = b.getSensor();
@@ -280,6 +285,18 @@ final class TrackSnapshot {
                 }
             }
             output = o;
+            Reporter r = b.getReporter();
+            reporter = r;
+            SimulatedReporterOutput ro = null;
+            if (r != null) {
+                for (SimulatedReporterOutput x : reporterOutputs) {
+                    if (x.reports(r)) {
+                        ro = x;
+                        break;
+                    }
+                }
+            }
+            reporterOutput = ro;
             for (Path p : b.getPaths()) {
                 if (p instanceof OPath) {
                     oPaths.add(new BlockOPath((OPath) p));
@@ -311,15 +328,28 @@ final class TrackSnapshot {
      * it if called from another.
      *
      * @param outputs the detector outputs, to choose each sensor's
-     * @return the snapshot
+     * @return the snapshot, with no reporters
      */
     @InvokeOnAnyThread
     static TrackSnapshot take(List<SimulatedDetectorOutput> outputs) {
+        return take(outputs, List.of());
+    }
+
+    /**
+     * Take a snapshot, with the Blocks' reporters. Runs on the layout thread
+     * (Swing thread), waiting for it if called from another.
+     *
+     * @param outputs         the detector outputs, to choose each sensor's
+     * @param reporterOutputs the reporter outputs, to choose each reporter's
+     * @return the snapshot
+     */
+    @InvokeOnAnyThread
+    static TrackSnapshot take(List<SimulatedDetectorOutput> outputs, List<SimulatedReporterOutput> reporterOutputs) {
         TrackSnapshot s = new TrackSnapshot();
         // waits for the layout thread to finish, so what it wrote is seen here; a failure is thrown
         // here rather than leaving a part-copied snapshot
         try {
-            ThreadingUtil.runOnLayoutWithJmriException(() -> s.read(outputs));
+            ThreadingUtil.runOnLayoutWithJmriException(() -> s.read(outputs, reporterOutputs));
         } catch (jmri.JmriException e) {
             throw new IllegalStateException("copying the layout's configuration failed", e); // read() throws none
         }
@@ -336,7 +366,7 @@ final class TrackSnapshot {
     }
 
     @InvokeOnLayoutThread
-    private void read(List<SimulatedDetectorOutput> outputs) {
+    private void read(List<SimulatedDetectorOutput> outputs, List<SimulatedReporterOutput> reporterOutputs) {
         EditorManager editors = InstanceManager.getNullableDefault(EditorManager.class);
         if (editors != null) {
             for (LayoutEditor le : editors.getAll(LayoutEditor.class)) {
@@ -364,7 +394,7 @@ final class TrackSnapshot {
             all.addAll(obm.getNamedBeanSet());
         }
         for (Block b : all) {
-            BlockData d = new BlockData(b, outputs);
+            BlockData d = new BlockData(b, outputs, reporterOutputs);
             blocks.put(b, d);
             if (d.sensor != null && d.output == null) {
                 unreported.put(d.sensor, d.name);
@@ -492,6 +522,26 @@ final class TrackSnapshot {
     Optional<SimulatedDetectorOutput> output(Block b) {
         BlockData d = blocks.get(b);
         return Optional.ofNullable(d == null ? null : d.output);
+    }
+
+    /**
+     * @param b a Block
+     * @return its reporter, if it has one and an output reports to it
+     */
+    @CheckForNull
+    Reporter reportedReporter(Block b) {
+        BlockData d = blocks.get(b);
+        return (d == null || d.reporterOutput == null) ? null : d.reporter;
+    }
+
+    /**
+     * @param b a Block
+     * @return the output for its reporter, if any
+     */
+    @CheckForNull
+    SimulatedReporterOutput reporterOutput(Block b) {
+        BlockData d = blocks.get(b);
+        return d == null ? null : d.reporterOutput;
     }
 
     /**

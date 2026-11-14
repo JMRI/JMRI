@@ -67,7 +67,10 @@
           show the value, or the allocated value when the Block has no value, so panels, including
           web panels, show the train's name in its allocated Blocks as before. A Block Contents
           Input icon edits the value, so it shows only the value. JSON clients get the allocated
-          value as the block's <code>allocatedValue</code>.</p>
+          value as the block's <code>allocatedValue</code>. The table's
+          <strong>Allocated Value</strong> column, hidden until chosen, shows it; LogixNG's Block
+          expression and its Local variable and Table actions can read it, or the display value,
+          as well as the value.</p>
 
           <p>With the option off, the default, nothing here changes. Before 5.19.1, with it on,
           Dispatcher wrote the train's name into the value of every allocated Block, so a Logix,
@@ -220,6 +223,13 @@
           at least one real block between ghost blocks.  Note:  This means ghost blocks cannot be
           used for both halves of crossovers.  A ghost block could be used for the recommended
           third block for double crossovers.</p>
+        </li>
+
+        <li>
+          <p><strong>Train</strong> and <strong>Why?</strong><span class="since">since
+          5.19.1</span> The trains train tracking has in the Block, and how each came to be there.
+          Both columns are hidden until chosen from the column header's right-click menu. See <a href=
+          "../trainrecord/TrainTracking.shtml#blockTable">Train Tracking</a>.</p>
         </li>
       </ul>
 

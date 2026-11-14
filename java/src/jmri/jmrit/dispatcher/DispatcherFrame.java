@@ -2458,6 +2458,19 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         return as;
     }
 
+    /*
+     * Run a change to the layout on the layout thread (Swing thread), waiting
+     * for it when called from another thread, such as the auto allocator's.
+     * The auto allocator's thread holds no lock that the layout thread takes.
+     */
+    private static void onLayoutThread(Runnable change) {
+        if (ThreadingUtil.isLayoutThread()) {
+            change.run();
+        } else {
+            ThreadingUtil.runOnLayout(change::run);
+        }
+    }
+
     private AllocatedSection allocateSection(ActiveTrain at, Section s, int seqNum, Section nextSection,
             int nextSectionSeqNo, int direction, List<LayoutTrackExpectedState<LayoutTurnout>> expectedTurnOutStates) {
         AllocatedSection as = null;
@@ -2467,39 +2480,44 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             as.addPropertyChangeListener(InstanceManager.getDefault(jmri.jmrit.vsdecoder.VSDecoderManager.class));
         }
 
-        s.setState(direction/*ar.getSectionDirection()*/);
-        // record which train holds the Section, cleared when it is set FREE
-        s.setAllocatedTo(at);
-        if (getSignalType() == SIGNALMAST) {
-            String property = "forwardMast";
-            if (s.getState() == Section.REVERSE) {
-                property = "reverseMast";
-            }
-            Object smProperty = s.getProperty(property);
-            if (smProperty != null) {
-                SignalMast toHold = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(smProperty.toString());
-                if (toHold != null) {
-                    if (!toHold.getHeld()) {
-                        heldMasts.add(new HeldMastDetails(toHold, at));
-                        toHold.setHeld(true);
+        // Setting the Section's direction and holding or releasing Signal Masts runs
+        // their listeners, so it is done on the layout thread (Swing thread), also
+        // when the auto allocator's thread allocates the Section.
+        onLayoutThread(() -> {
+            s.setState(direction/*ar.getSectionDirection()*/);
+            // record which train holds the Section, cleared when it is set FREE
+            s.setAllocatedTo(at);
+            if (getSignalType() == SIGNALMAST) {
+                String property = "forwardMast";
+                if (s.getState() == Section.REVERSE) {
+                    property = "reverseMast";
+                }
+                Object smProperty = s.getProperty(property);
+                if (smProperty != null) {
+                    SignalMast toHold = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(smProperty.toString());
+                    if (toHold != null) {
+                        if (!toHold.getHeld()) {
+                            heldMasts.add(new HeldMastDetails(toHold, at));
+                            toHold.setHeld(true);
+                        }
                     }
+
                 }
 
-            }
-
-            Section lastOccSec = at.getLastAllocatedSection();
-            if (lastOccSec != null) {
-                smProperty = lastOccSec.getProperty(property);
-                if ( smProperty != null) {
-                    SignalMast toRelease = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(smProperty.toString());
-                    if (toRelease != null && isMastHeldByDispatcher(toRelease, at)) {
-                        removeHeldMast(toRelease, at);
-                        //heldMasts.remove(toRelease);
-                        toRelease.setHeld(false);
+                Section lastOccSec = at.getLastAllocatedSection();
+                if (lastOccSec != null) {
+                    smProperty = lastOccSec.getProperty(property);
+                    if ( smProperty != null) {
+                        SignalMast toRelease = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(smProperty.toString());
+                        if (toRelease != null && isMastHeldByDispatcher(toRelease, at)) {
+                            removeHeldMast(toRelease, at);
+                            //heldMasts.remove(toRelease);
+                            toRelease.setHeld(false);
+                        }
                     }
                 }
             }
-        }
+        });
         as.setAutoTurnoutsResponse(expectedTurnOutStates);
         at.addAllocatedSection(as);
         allocatedSections.add(as);
@@ -3141,8 +3159,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 allocatedSections.remove(i - 1);
             }
         }
-        as.getActiveTrain().releaseAllocatedSection(as);
-        as.dispose();
+        // setting the Section free runs its listeners, so do it on the layout thread
+        onLayoutThread(() -> {
+            as.getActiveTrain().releaseAllocatedSection(as);
+            as.dispose();
+        });
         if (allocatedSectionTableModel != null) {
             allocatedSectionTableModel.fireTableDataChanged();
         }
