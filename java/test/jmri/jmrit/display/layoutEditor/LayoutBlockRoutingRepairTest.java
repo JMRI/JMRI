@@ -2,9 +2,11 @@ package jmri.jmrit.display.layoutEditor;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Objects;
 
 import jmri.InstanceManager;
 import jmri.jmrit.display.EditorManager;
@@ -57,7 +59,7 @@ public class LayoutBlockRoutingRepairTest {
             }
         }
         assertNotNull(lb, "panel has a block with a route of more than two hops");
-        LayoutBlock damaged = lb;
+        LayoutBlock damaged = Objects.requireNonNull(lb);
         int lost = index;
         String what = damaged.getDisplayName() + " to " + damaged.getRouteDestBlockAtIndex(lost).getDisplayName()
                 + " via " + damaged.getRouteNextBlockAtIndex(lost).getDisplayName();
@@ -67,7 +69,7 @@ public class LayoutBlockRoutingRepairTest {
             try {
                 routesOf(damaged).remove(lost);
             } catch (ReflectiveOperationException e) {
-                throw new AssertionError(e);
+                fail("could not reach the block's routes", e);
             }
             lbm.setLastRoutingChange();
         });
