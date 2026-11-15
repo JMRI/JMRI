@@ -484,7 +484,9 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li></li>
+            <li>A large panel using Layout Block routing no longer stops with
+                a StackOverflowError while the routing tables are built
+                (new in 5.17.5).</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
