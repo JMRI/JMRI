@@ -669,6 +669,12 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
+            <li>Tools &gt; Train Tracking &gt; Set-up Checks now also lists a
+                Block that takes its value from its Reporter's current report
+                ("Use Current" on the Block's Reporter tab). The value is then
+                cleared as soon as the Reporter stops seeing the train's tag,
+                while the train is still in the Block, so the train's name is
+                lost.</li>
             <li></li>
         </ul>
 

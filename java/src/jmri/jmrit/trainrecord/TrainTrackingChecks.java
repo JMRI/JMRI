@@ -21,6 +21,7 @@ import jmri.InstanceManager;
 import jmri.InvokeOnLayoutThread;
 import jmri.NamedBean;
 import jmri.Path;
+import jmri.Reporter;
 import jmri.Sensor;
 import jmri.TrainRecord;
 import jmri.TrainRecordManager;
@@ -46,6 +47,9 @@ import jmri.jmrit.roster.RosterSpeedProfile;
  * be followed into or out of it;</li>
  * <li>a path from one Block to another with no path back;</li>
  * <li>a sensor used by two Blocks;</li>
+ * <li>a Block that takes its value from its Reporter's current report, so
+ * the value is cleared while the train is still in the Block, as soon as the
+ * Reporter stops seeing its tag;</li>
  * <li>a Block with no detector whose paths depend on a turnout with no
  * feedback, so the way a train takes through it is only what was
  * commanded;</li>
@@ -78,6 +82,12 @@ public final class TrainTrackingChecks {
         PATH_ONE_WAY,
         /** A sensor used by more than one Block. */
         SENSOR_SHARED,
+        /**
+         * A Block that takes its value from its Reporter's current report.
+         *
+         * @since 5.19.2
+         */
+        REPORTER_CURRENT_REPORT,
         /** A Block with no detector whose paths depend on a turnout with no feedback. */
         DARK_BLOCK_TURNOUT_NO_FEEDBACK,
         /** Detected Blocks joined through dark Blocks by several ways no turnout chooses between. */
@@ -221,6 +231,13 @@ public final class TrainTrackingChecks {
 
     private static void checkBlock(Block b, List<Finding> found) {
         List<Block> neighbours = neighbours(b);
+        Reporter reporter = b.getReporter();
+        if (reporter != null && b.isReportingCurrent()) {
+            // the current report goes null when the tag leaves the reader,
+            // and the Block's value with it (Block.handleReporterChange)
+            found.add(new Finding(Kind.REPORTER_CURRENT_REPORT, b, List.of(reporter),
+                    Bundle.getMessage("CheckReporterCurrentReport", b.getDisplayName(), reporter.getDisplayName())));
+        }
         if (!neighbours.isEmpty() && !(b.getLengthMm() > 0)) {
             found.add(new Finding(Kind.BLOCK_NO_LENGTH, b, List.of(), Bundle.getMessage(
                     b.getSensor() == null ? "CheckDarkBlockNoLength" : "CheckBlockNoLength", b.getDisplayName())));
