@@ -1950,8 +1950,14 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     // This is used when a property event change is triggered for a removed route.
-    // Not sure that bulk removals will be necessary
+    // The removal is made by the LayoutBlockManager, after any it is already
+    // making, rather than by each neighbour calling the next; a removal that
+    // spreads across a large panel would otherwise nest calls for each block.
     private void removeRouteFromNeighbour(LayoutBlock src, RoutingPacket update) {
+        InstanceManager.getDefault(LayoutBlockManager.class).removeRouteFromNeighbour(this, src, update);
+    }
+
+    private void removeRouteFromNeighbourNow(LayoutBlock src, RoutingPacket update) {
         InstanceManager.getDefault(LayoutBlockManager.class).setLastRoutingChange();
         Block srcblk = src.getBlock();
         Block destblk = update.getBlock();
@@ -3503,7 +3509,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * The neighbours still to be told of a change to our route to a
      * destination, worked through by the {@link LayoutBlockManager}.
      */
-    final class RouteChange {
+    final class RouteChange implements LayoutBlockManager.RoutingStep {
 
         private final Block dest;
         private final Iterator<Adjacencies> toTell = new ArrayList<>(neighbours).iterator();
@@ -3517,7 +3523,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
          *
          * @return false if every neighbour had already been told
          */
-        boolean tellNextNeighbour() {
+        @Override
+        public boolean next() {
             if (!toTell.hasNext()) {
                 return false;
             }
@@ -3528,6 +3535,36 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
 
     RouteChange newRouteChange(Block dest) {
         return new RouteChange(dest);
+    }
+
+    /**
+     * A neighbour's withdrawal of a route, made by the
+     * {@link LayoutBlockManager} when its turn comes.
+     */
+    private final class RouteRemoval implements LayoutBlockManager.RoutingStep {
+
+        private final LayoutBlock src;
+        private final RoutingPacket update;
+        private boolean made;
+
+        private RouteRemoval(LayoutBlock src, RoutingPacket update) {
+            this.src = src;
+            this.update = update;
+        }
+
+        @Override
+        public boolean next() {
+            if (made) {
+                return false;
+            }
+            made = true;
+            removeRouteFromNeighbourNow(src, update);
+            return true;
+        }
+    }
+
+    LayoutBlockManager.RoutingStep newRouteRemoval(LayoutBlock src, RoutingPacket update) {
+        return new RouteRemoval(src, update);
     }
 
     private void advertiseRouteChange(Adjacencies adj, Block dest) {
@@ -3808,7 +3845,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     static final int NONE = 0x08;
     int metric = 100;
 
-    private static class RoutingPacket {
+    static class RoutingPacket {
 
         int packetType;
         Block block;

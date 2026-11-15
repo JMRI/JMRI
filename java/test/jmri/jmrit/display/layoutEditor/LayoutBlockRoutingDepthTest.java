@@ -18,8 +18,8 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
 
 /**
- * Check that a change to a route passed along a long line of blocks does not
- * need a nested call for each block it reaches. On a large panel the nested
+ * Check that a change to a route, or its removal, passed along a long line
+ * of blocks does not need a nested call for each block it reaches. On a large panel the nested
  * calls ran out of stack when the panel was loaded.
  *
  * @author Keith Bruce Copyright (C) 2026
@@ -117,8 +117,7 @@ public class LayoutBlockRoutingDepthTest {
                 + " class=\"jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml\" />\n";
     }
 
-    @Test
-    public void testChangeAlongLongLine() throws Exception {
+    private DepthRecordingManager loadLine() throws Exception {
         DepthRecordingManager lbm = new DepthRecordingManager();
         InstanceManager.setDefault(LayoutBlockManager.class, lbm);
         InstanceManager.getDefault(ConfigureManager.class).registerConfig(lbm, jmri.Manager.LAYOUTBLOCKS);
@@ -129,8 +128,14 @@ public class LayoutBlockRoutingDepthTest {
         ThreadingUtil.runOnGUI(() -> lbm.initializeLayoutBlockPaths());
         JUnitUtil.waitFor(() -> lbm.routingStablised(), "routing stabilised");
         ThreadingUtil.runOnLayout(() -> {});
+        new LayoutBlockRoutingChecker(lbm).assertTablesCorrect("after loading");
+        return lbm;
+    }
+
+    @Test
+    public void testChangeAlongLongLine() throws Exception {
+        DepthRecordingManager lbm = loadLine();
         LayoutBlockRoutingChecker checker = new LayoutBlockRoutingChecker(lbm);
-        checker.assertTablesCorrect("after loading");
 
         // a cost change at one end reaches every block along the line
         LayoutBlock end = lbm.getLayoutBlock("Line 1");
@@ -146,6 +151,36 @@ public class LayoutBlockRoutingDepthTest {
         int growth = lbm.deepest - lbm.shallowest;
         assertTrue(lbm.deepest > 0, "the change was passed on");
         assertTrue(growth < BLOCKS, "stack grew by " + growth + " frames passing a change along "
+                + BLOCKS + " blocks; it should not grow with the number of blocks");
+    }
+
+    @Test
+    public void testRemovalAlongLongLine() throws Exception {
+        DepthRecordingManager lbm = loadLine();
+
+        // taking away the connection at one end withdraws the routes to the
+        // last block from every block along the line
+        LayoutBlock last = lbm.getLayoutBlock("Line " + BLOCKS);
+        LayoutBlock before = lbm.getLayoutBlock("Line " + (BLOCKS - 1));
+        ThreadingUtil.runOnLayout(() -> {
+            lbm.recording = true;
+            before.notifiedNeighbourNoLongerMutual(last);
+            last.notifiedNeighbourNoLongerMutual(before);
+            lbm.recording = false;
+        });
+        JUnitUtil.waitFor(() -> lbm.routingStablised(), "routing stabilised after removing a connection");
+        ThreadingUtil.runOnLayout(() -> {});
+        for (int i = 1; i < BLOCKS; i++) {
+            LayoutBlock lb = lbm.getLayoutBlock("Line " + i);
+            for (int r = 0; r < lb.getNumberOfRoutes(); r++) {
+                assertTrue(lb.getRouteDestBlockAtIndex(r) != last.getBlock(),
+                        "route to " + last.getDisplayName() + " withdrawn at " + lb.getDisplayName());
+            }
+        }
+
+        int growth = lbm.deepest - lbm.shallowest;
+        assertTrue(lbm.deepest > 0, "the removal was passed on");
+        assertTrue(growth < BLOCKS, "stack grew by " + growth + " frames passing a removal along "
                 + BLOCKS + " blocks; it should not grow with the number of blocks");
     }
 

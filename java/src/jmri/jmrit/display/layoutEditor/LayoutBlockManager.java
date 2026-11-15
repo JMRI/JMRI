@@ -2723,10 +2723,28 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
     private volatile long lastRoutingChange;
 
-    // route changes being passed on, the latest last: each holds the
-    // neighbours of a block still to be told of a change to its route to a
-    // destination
-    private final Deque<LayoutBlock.RouteChange> routeChanges = new ArrayDeque<>();
+    /**
+     * A piece of routing work that may cause more: telling the neighbours of a
+     * block of a change to one of its routes, one at a time, or withdrawing a
+     * route a neighbour no longer offers.
+     */
+    interface RoutingStep {
+
+        /**
+         * Do the next part of the work.
+         *
+         * @return false if there was nothing left to do
+         */
+        boolean next();
+    }
+
+    // the routing work under way, the latest first; work that another piece
+    // of work causes is done before that piece goes on, as it would be if
+    // each block called the next
+    private final Deque<RoutingStep> routingSteps = new ArrayDeque<>();
+    // work caused by the part of a step being done now, in the order asked
+    private final List<RoutingStep> causedSteps = new ArrayList<>();
+    private boolean doingRoutingStep;
 
     /**
      * Pass a change to a route held by a block on to its neighbours, and any
@@ -2744,20 +2762,49 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
      * @param dest the destination of the route
      */
     void advertiseRouteChange(@Nonnull LayoutBlock from, @Nonnull Block dest) {
-        boolean outermost = routeChanges.isEmpty();
-        routeChanges.push(from.newRouteChange(dest));
-        if (!outermost) {
+        doRoutingStep(from.newRouteChange(dest));
+    }
+
+    /**
+     * Withdraw the route a block holds via a neighbour to a destination, and
+     * pass the withdrawal on as far as it goes.
+     * <p>
+     * If other routing work is under way, the withdrawal is made once the
+     * work that asked for it has finished its current part, rather than in a
+     * nested call. The outermost call returns once all the work is done.
+     *
+     * @param lb     the block holding the route
+     * @param src    the neighbour that no longer offers the route
+     * @param update the removal packet from the neighbour
+     */
+    void removeRouteFromNeighbour(@Nonnull LayoutBlock lb, @Nonnull LayoutBlock src, @Nonnull LayoutBlock.RoutingPacket update) {
+        doRoutingStep(lb.newRouteRemoval(src, update));
+    }
+
+    private void doRoutingStep(RoutingStep step) {
+        if (doingRoutingStep) {
+            causedSteps.add(step);
             return;
         }
+        doingRoutingStep = true;
+        routingSteps.push(step);
         try {
-            while (!routeChanges.isEmpty()) {
-                LayoutBlock.RouteChange change = routeChanges.peek();
-                if (!change.tellNextNeighbour()) {
-                    routeChanges.pop();
+            while (!routingSteps.isEmpty()) {
+                RoutingStep next = routingSteps.peek();
+                boolean more = next.next();
+                if (!more) {
+                    routingSteps.pop();
                 }
+                // what this part asked for is done next, first asked first
+                for (int i = causedSteps.size() - 1; i >= 0; i--) {
+                    routingSteps.push(causedSteps.get(i));
+                }
+                causedSteps.clear();
             }
         } finally {
-            routeChanges.clear();
+            routingSteps.clear();
+            causedSteps.clear();
+            doingRoutingStep = false;
         }
     }
 
