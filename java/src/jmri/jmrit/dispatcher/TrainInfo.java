@@ -84,7 +84,6 @@ public class TrainInfo {
     private TrainDetection trainDetection = TrainDetection.TRAINDETECTION_WHOLETRAIN;
     private boolean runInReverse = false;
     private boolean soundDecoder = false;
-    private float maxTrainLength = 100.0f;
     private float maxTrainLengthMeters = 30.0f;
     private TrainLengthUnits trainLengthUnits = TrainLengthUnits.TRAINLENGTH_SCALEFEET; // units used to enter value
     private boolean useSpeedProfile = false;
