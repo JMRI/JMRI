@@ -1,5 +1,7 @@
 package jmri.util.swing;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import javax.annotation.Nonnull;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -15,6 +17,12 @@ import org.slf4j.LoggerFactory;
  * Create a new TextAreaFIFO, an extended JTextArea
  * Keeps message log windows to a reasonable length
  * Scrolls down to last line of textarea by default
+ * <p>
+ * Lines are trimmed from the top in blocks, once there are a tenth more than
+ * the maximum, rather than one at a time: removing from the top of a long text
+ * costs time in proportion to the whole text, so trimming a line for each line
+ * added would make every line cost that.
+ * <p>
  * Originally based on https://community.oracle.com/thread/1373400
  * Modified for JMRI by Steve Young (c) 2018
  *
@@ -34,23 +42,32 @@ public class TextAreaFIFO extends JTextArea implements DocumentListener {
         getDocument().addDocumentListener( this );
     }
 
+    private final AtomicBoolean trimPending = new AtomicBoolean(false);
+
     @Override
     public void insertUpdate(DocumentEvent e) {
-        ThreadingUtil.runOnGUIEventually( ()->{
-            removeLines();
-        });
+        trimLater();
     }
     @Override
     public void removeUpdate(DocumentEvent e ) {
-        ThreadingUtil.runOnGUIEventually ( ()->{
-            removeLines();
-        });
+        // removing text never makes it too long
     }
     @Override
     public void changedUpdate(DocumentEvent e) {
-        ThreadingUtil.runOnGUIEventually( ()->{
-            removeLines();
-        });
+        // attribute changes don't add lines
+    }
+
+    /**
+     * Trim and scroll on the GUI thread, once for all the text added
+     * meanwhile.
+     */
+    private void trimLater() {
+        if (trimPending.compareAndSet(false, true)) {
+            ThreadingUtil.runOnGUIEventually( ()->{
+                trimPending.set(false);
+                removeLines();
+            });
+        }
     }
 
     /**
@@ -61,9 +78,7 @@ public class TextAreaFIFO extends JTextArea implements DocumentListener {
     public void setAutoScroll(@Nonnull Boolean newval) {
         _autoScroll = newval;
         if (_autoScroll) {
-            ThreadingUtil.runOnGUIEventually( ()->{
-                removeLines();
-            });
+            trimLater();
         }
     }
 
@@ -83,10 +98,11 @@ public class TextAreaFIFO extends JTextArea implements DocumentListener {
      */
     private void removeLines() {
         Element root = getDocument().getDefaultRootElement();
-        while (root.getElementCount() > ( _maxLines + 1 ) ) {
-            Element firstLine = root.getElement(0);
+        // the last element is the line being added to
+        int excess = root.getElementCount() - ( _maxLines + 1 );
+        if (excess > _maxLines / 10) { // a tenth over the maximum, or one line over a small one
             try {
-                getDocument().remove(0, firstLine.getEndOffset());
+                getDocument().remove(0, root.getElement(excess - 1).getEndOffset());
             } catch(BadLocationException ble) {
                 log.error("bad location",ble);
             }

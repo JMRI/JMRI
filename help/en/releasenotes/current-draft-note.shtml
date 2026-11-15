@@ -523,6 +523,18 @@
                  another train, a train has taken the other's track, or a
                  train is already past the meeting place. Allocating by hand
                  was needed to free the train.</li>
+             <li>New option
+                 <a href="https://www.jmri.org/help/en/package/jmri/jmrit/dispatcher/Options.shtml#WaitWhereTrainsCanStop">Wait
+                 Where Trains Can Stop</a>, off unless checked, for layouts
+                 where a train stopped at once on entering a short Section
+                 (one shorter than the train, with no stopping sensor, such as
+                 a short turnout Section) runs on into the next Section, which
+                 can leave the trains unable to move when another train holds
+                 it. With it checked, automatic allocation gives an automatic
+                 train such a Section only when the Sections beyond it are
+                 free as far as one the train can stop in, and then gives it
+                 all of them together; until then the train waits in the
+                 Section before, if that is one it can stop in.</li>
              <li></li>
              <li>A Section can have a stop point for each direction, set in
                  the Section's Add/Edit window in mm or in inches (to the
@@ -620,6 +632,14 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+          <li>LogixNG Tables are now loaded using UTF-8 encoding.
+              If you are using Windows and have Java 11 or Java 17 and if you
+              are using non English characters in LogixNG Tables, the
+              data in the table might have strange characters instead
+              of the desired non English characters. If so, you could
+              either store the CSV file as UTF-8 or use only English characters.
+              If you are using Linux or Mac, or if you are using Java 21
+              or later, you will probably not have this problem.</li>
           <li>The Block expression can compare a Block's allocated value or
               its display value with a string, as well as its value, and the
               Local Variable and Table actions can copy a Block's allocated
@@ -667,12 +687,23 @@
     <h3>Permissions</h3>
         <a id="Permissions" name="Permissions"></a>
         <ul>
-            <li></li>
+            <li>The permission configuration file is now read using UTF-8 encoding.
+                If you are using Windows and have Java 11 or Java 17 and if you
+                are using non English characters in usernames or passwords,
+                you might not be able to log in. If so, see
+                <a href="https://www.jmri.org/help/en/package/jmri/jmrit/permission/PermissionManager.shtml">I have locked myself out! What do I do?</a>.
+                If you are using Linux or Mac, or if you are using Java 21
+                or later, you will probably not have this problem.</li>
         </ul>
 
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
+            <li>Moving or resizing a window no longer rewrites the user
+                interface preferences file for every step of the drag,
+                which made JMRI stutter. The window's place and size are
+                saved when it starts moving, once it stops, and when it
+                closes.</li>
             <li></li>
         </ul>
 
@@ -726,6 +757,8 @@
 
         <h4>Signal Heads</h4>
             <ul>
+                <li>Deleting a signal head that is flashing no longer
+                    leaves it flashing, or logs an error every 750 ms.</li>
                 <li>Deleting a Signal Head now clears the Comments JMRI wrote on
                     its output Turnouts when it was set up. The Turnouts stay;
                     Comments entered by the user are left alone.</li>
@@ -878,6 +911,9 @@
             <li>The web throttles and the LogixNG web example now use
                 jQuery 3.7.1 too, and the old 2.0.3 and 1.11.2 copies have
                 been removed.</li>
+            <li>The web server's pages now use Bootstrap 3.4.1 instead of
+                3.3.2. It's a drop-in update with security fixes, so pages
+                look and work the same.</li>
         </ul>
 
     <h3>Where Used</h3>
@@ -914,6 +950,9 @@
                 when it is seen to leave a detected Block in front of them. It
                 only watches.</li>
             <li></li>
+            <li>Monitors and the system console: a full window no longer
+                slows down as each line is added; it now keeps up to a
+                tenth more lines than its maximum.</li>
             <li>Quitting JMRI, and closing the CBUS or LCC Hub window, no
                 longer wait about 2 seconds for each network address while
                 JMRI withdraws its ZeroConf (mDNS) announcements, such as the
@@ -928,6 +967,11 @@
                 feedback; and Blocks joined through Blocks with no detector by
                 more than one way. Each says what is wrong. The checks only
                 read, and change nothing.</li>
+            <li>A train with the same name as a built Operations train now
+                takes what it is made up of from Operations: the groups of cars
+                it will set out at each stop, and the rest, with their lengths.
+                The Block dialog shows the train's set-outs and pick-ups at its
+                next stop.</li>
             <li>Where a train has been placed in a Block (by Dispatcher, or by
                 setting a Block's value to the train), right-clicking the
                 Block's track on a Layout Editor panel in operating mode, or a
