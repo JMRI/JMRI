@@ -642,7 +642,7 @@ class DeadlockAvoidance {
     private void report(ActiveTrain at, String why) {
         if (!why.equals(reported.get(at))) {
             reported.put(at, why);
-            log.info("{}", why);
+            log.info("Prevent Deadlock: {}", why);
         }
     }
 
