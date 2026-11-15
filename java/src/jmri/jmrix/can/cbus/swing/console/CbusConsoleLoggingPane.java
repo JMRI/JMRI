@@ -7,7 +7,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
+
 import javax.swing.*;
+
 import jmri.util.FileUtil;
 import jmri.util.swing.JmriJOptionPane;
 
@@ -154,7 +157,9 @@ public class CbusConsoleLoggingPane extends javax.swing.JPanel {
         if (logStream == null) {  // successive clicks don't restart the file
             // start logging
             try {
-                logStream = new PrintStream(new FileOutputStream(logFileChooser.getSelectedFile()));
+                logStream = new PrintStream(
+                        new FileOutputStream(logFileChooser.getSelectedFile()),
+                        false, StandardCharsets.UTF_8);
             } catch (FileNotFoundException ex) {
                 log.error("Unable to open log file {}", logFileChooser.getSelectedFile(), ex);
                 // not logging, so do not show the button as logging

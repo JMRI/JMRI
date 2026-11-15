@@ -57,6 +57,19 @@ public class DoubleTurnoutSignalHeadTest extends AbstractSignalHeadTestBase {
         }
     }
 
+    @Test
+    public void testDisposeStopsTimers() {
+        createHead();
+        mHead.setAppearance(SignalHead.FLASHRED);
+        Assertions.assertTrue(mHead.timer.isRunning(), "flashing");
+        mGreenTurnout.setCommandedState(Turnout.THROWN); // starts the feedback read timer
+        Assertions.assertTrue(mHead.readUpdateTimer.isRunning());
+        javax.swing.Timer flash = mHead.timer;
+        mHead.dispose(); // the head is deleted
+        Assertions.assertFalse(flash.isRunning(), "a deleted head stops flashing its outputs");
+        Assertions.assertFalse(mHead.readUpdateTimer.isRunning(), "and stops reading them");
+    }
+
     private Turnout mRedTurnout;
     private Turnout mGreenTurnout;
     private DoubleTurnoutSignalHead mHead;

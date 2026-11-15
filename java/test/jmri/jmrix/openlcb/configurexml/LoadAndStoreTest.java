@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 
 import jmri.JmriException;
 import jmri.util.JUnitAppender;
+import jmri.jmrix.openlcb.OlcbTestThreadPool;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
@@ -63,7 +64,6 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
     private ArrayList<Message> messages;
 
     @BeforeEach
-    @SuppressWarnings("deprecation") // OlcbInterface(NodeID, Connection)
     @Override
     public void setUp(@TempDir java.io.File tempDir) throws IOException  {
         super.setUp(tempDir);
@@ -79,7 +79,7 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
 
         memo = new OlcbSystemConnectionMemoScaffold(); // this self-registers as 'M'
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
-        memo.setInterface(new OlcbInterface(nodeID, connection) {
+        memo.setInterface(new OlcbInterface(nodeID, connection, new OlcbTestThreadPool()) {
             @Override
             public Connection getOutputConnection() {
                 return connection;

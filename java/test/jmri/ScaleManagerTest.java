@@ -13,7 +13,7 @@ public class ScaleManagerTest {
     @Test
     public void testManager() {
         java.util.List<Scale> list = ScaleManager.getScales();
-        Assertions.assertEquals(12, list.size());
+        Assertions.assertEquals(13, list.size());
 
         Scale scale = ScaleManager.getScale("HO");
         Assertions.assertNotNull(scale);
@@ -24,6 +24,10 @@ public class ScaleManagerTest {
 
         scale = ScaleManager.getScaleByName("N");
         Assertions.assertNotNull(scale);
+
+        scale = ScaleManager.getScale("L");
+        Assertions.assertNotNull(scale, "L, which Warrants offered before they used this list");
+        Assertions.assertEquals(38.0, scale.getScaleRatio(), .01);
     }
 
     @BeforeEach

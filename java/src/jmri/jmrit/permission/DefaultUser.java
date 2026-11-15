@@ -1,6 +1,7 @@
 package jmri.jmrit.permission;
 
 import java.awt.GraphicsEnvironment;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
@@ -176,7 +177,7 @@ public class DefaultUser implements User {
     private String getPasswordSHA256(String password) throws NoSuchAlgorithmException {
         String passwd = this._seed + password;
         MessageDigest md = MessageDigest.getInstance("SHA-256");
-        md.update(passwd.getBytes());
+        md.update(passwd.getBytes(StandardCharsets.UTF_8));
         return DatatypeConverter
                 .printHexBinary(md.digest()).toUpperCase();
     }
