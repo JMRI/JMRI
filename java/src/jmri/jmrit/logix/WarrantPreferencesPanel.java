@@ -29,6 +29,8 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
 
+import jmri.Scale;
+import jmri.ScaleManager;
 import jmri.implementation.SignalSpeedMap;
 import jmri.swing.PreferencesPanel;
 import jmri.util.swing.JComboBoxUtil;
@@ -112,21 +114,20 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         add(panel);
      }
 
+    /** The name of the scale in JMRI's list whose ratio the user sets. */
+    private static final String CUSTOM_SCALE = "CUSTOM"; // NOI18N
+
     private JPanel layoutScalePanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         _layoutScales = new JComboBox<>();
-        _layoutScales.addItem(new ScaleData("G", 22.5f));
-        _layoutScales.addItem(new ScaleData("L", 38f));
-        _layoutScales.addItem(new ScaleData("O", 48f));
-        _layoutScales.addItem(new ScaleData("O'", 43f));
-        _layoutScales.addItem(new ScaleData("S", 64f));
-        _layoutScales.addItem(new ScaleData("OO", 76.2f));
-        _layoutScales.addItem(new ScaleData("HO", 87.1f));
-        _layoutScales.addItem(new ScaleData("TT", 120f));
-        _layoutScales.addItem(new ScaleData("N", 160f));
-        _layoutScales.addItem(new ScaleData("Z", 220f));
-        _layoutScales.addItem(new ScaleData("T", 480f));
+        // JMRI's one list of scales, as Dispatcher and Operations offer;
+        // any other ratio is the custom item below
+        for (Scale scale : ScaleManager.getScales()) {
+            if (!CUSTOM_SCALE.equals(scale.getScaleName())) {
+                _layoutScales.addItem(new ScaleData(scale.getUserName(), (float) scale.getScaleRatio()));
+            }
+        }
         JComboBoxUtil.setupComboBoxMaxRows(_layoutScales);
         ScaleData sc = makeCustomItem(WarrantPreferences.getDefault().getLayoutScale());
         _layoutScales.addItem(sc);
