@@ -916,6 +916,9 @@
                 written for earlier versions keep working, and one page can
                 be used with both this and earlier versions of JMRI. The
                 browser's console says what to change.</li>
+            <li>The web throttles and the LogixNG web example now use
+                jQuery 3.7.1 too, and the old 2.0.3 and 1.11.2 copies have
+                been removed.</li>
             <li>The web server's pages now use Bootstrap 3.4.1 instead of
                 3.3.2. It's a drop-in update with security fixes, so pages
                 look and work the same.</li>
