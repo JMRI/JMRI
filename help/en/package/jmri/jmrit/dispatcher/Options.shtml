@@ -117,6 +117,24 @@
         </li>
 
         <li>
+          <a id="WaitWhereTrainsCanStop" name="WaitWhereTrainsCanStop"></a>
+          <p>Check <strong>Wait Where Trains Can Stop</strong> if automatic trains run on past
+          the end of short Sections they are stopped in. An automatic train can be stopped short
+          of the end of a Section by the Section's stopping sensor, by its speed profile, or
+          because the Section is at least as long as the train. In any other Section, such as a
+          short turnout Section, it is stopped at once on entering, and its momentum may carry it
+          on into the next Section, which may be held by another train. With this checked,
+          automated allocation gives a train such a Section only when the Sections beyond it are
+          free as far as one the train can stop in, and then gives it all of them together, with
+          the turnouts set for them. Until then the train waits in the Section before, provided
+          that is one it can stop in. A train waiting in a Section it can't stop in either is
+          given its next Section as usual, as keeping it back would gain nothing. Unchecked, the
+          default, Sections are allocated whatever lies beyond them. Sections and trains whose
+          lengths are not known are allocated as usual, so this needs the Max Train Length of each
+          train and the lengths of the Blocks.</p>
+        </li>
+
+        <li>
           <p>Check <strong>Use short Active Train names</strong> to use the train name as the
           Active Train name in tables and selection boxes where Active Trains are referenced.
           Uncheck to use the full Active Train name in those locations.</p>
@@ -157,6 +175,14 @@
           also checked, the roster entry is shown instead. This feature, coupled with the above
           alternate color option, makes it easy for the dispatcher to see which Allocated Section
           is allocated to which Active Train when viewing a Layout Editor panel.</p>
+
+          <p><span class="since">since 5.17.5</span>A Block Contents icon shows the train a Block
+          is allocated to in italics after an arrow, for example <em>&rarr; 47012</em>, until Block
+          tracking places the train in the Block, and then shows it as usual, so you can see which
+          trains are really in their Blocks. A Block that stays marked although it is occupied is
+          one where Block tracking could not tell which train entered. Web panels show it the same
+          way. A Block Contents icon that uses an icon for each value, and a Layout Block memory,
+          show the train as before.</p>
 
           <p>The name is kept separately from the Block's value, which shows the train actually in
           the Block and is passed from Block to Block as the train moves. Logix, LogixNG and scripts

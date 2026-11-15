@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.implementation;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.beans.*;
 import java.io.PrintWriter;
 import java.util.*;
@@ -864,6 +866,8 @@ public abstract class AbstractMaleSocket implements MaleSocket {
     }
 
     @Override
+    @SuppressFBWarnings(value = {"THROWS_METHOD_THROWS_RUNTIMEEXCEPTION"},
+            justification = "We rethrow exception if it's a runtime exception")
     public void handleError(Base item, String message, RuntimeException e, Logger log) throws JmriException {
 
         ErrorHandlingType errorHandlingType = getErrorHandlingType();

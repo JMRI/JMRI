@@ -35,10 +35,10 @@ $(function () {
 //perform the image reload, including gray-out on error
 function reloadImage() {
     var img = new Image();
-    $(img).load(function () {
+    $(img).on('load', function () {
         $("div#frame_image_wrapper").html(this)  //load updated image into wrapper
         .css("opacity","1.0");  //set the opacity to full on success
-    }).error(function () {
+    }).on('error', function () {
         $("div#frame_image_wrapper").css("opacity","0.25"); //gray out image on error
     }).attr("src", "/frame/" + frameName + ".png?r="+ Math.floor(Math.random()*9999)); //include rand to force browser rtv
 }

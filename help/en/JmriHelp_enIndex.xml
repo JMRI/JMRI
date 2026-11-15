@@ -43,6 +43,8 @@
 
   <indexitem text="Edit Blocks " target="package.jmri.jmrit.beantable.BlockEdit"/>
 
+  <indexitem text="Train Tracking " target="package.jmri.jmrit.trainrecord.TrainTracking"/>
+
  </indexitem>
  <indexitem text="Block Table " target="package.jmri.jmrit.beantable.BlockTable"/>
 
@@ -717,6 +719,8 @@
 
  <indexitem text="Simple Turnout Control " target="package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl"/>
 
+ <indexitem text="Simulated Trains " target="html.tools.simulatedtrains.index"/>
+
  <indexitem text="SoundPro " target="html.apps.SoundPro.SoundPro"/>
 
  <indexitem text="Speed Matching, Locomotive " target="html.tools.speedometer.SpeedMatch"/>
@@ -808,6 +812,8 @@
  <indexitem text="Train Throttle App (Windows Throttle) " target="html.apps.index_addapp"/>
 
  <indexitem text="Train Trackers (Warrants) " target="package.jmri.jmrit.logix.Tracker"/>
+
+ <indexitem text="Train Tracking " target="package.jmri.jmrit.trainrecord.TrainTracking"/>
 
  <indexitem text="TrainCrew " target="html.apps.index_addapp"/>
 

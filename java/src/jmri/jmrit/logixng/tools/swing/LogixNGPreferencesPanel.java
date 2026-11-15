@@ -11,6 +11,7 @@ import javax.swing.*;
 import org.openide.util.lookup.ServiceProvider;
 
 import jmri.InstanceManager;
+import jmri.JmriUncheckedException;
 import jmri.jmrit.logixng.MaleSocket.ErrorHandlingType;
 import jmri.jmrit.logixng.actions.IfThenElse;
 // import jmri.swing.JTitledSeparator;
@@ -43,7 +44,7 @@ public class LogixNGPreferencesPanel extends JPanel implements PreferencesPanel 
     public LogixNGPreferencesPanel() {
         LogixNGPreferences prefs = InstanceManager.getDefault(LogixNGPreferences.class);
         if (!(prefs instanceof DefaultLogixNGPreferences)) {
-            throw new RuntimeException("LogixNGPreferences is not of type DefaultLogixNGPreferences");
+            throw new JmriUncheckedException("LogixNGPreferences is not of type DefaultLogixNGPreferences");
         }
         preferences = (DefaultLogixNGPreferences)prefs;
         initGUI();

@@ -112,6 +112,84 @@ public class SectionTableActionTest extends AbstractTableActionBase<Section> {
         JUnitUtil.dispose(f);
     }
 
+    private static Section firstSection() {
+        return InstanceManager.getDefault(jmri.SectionManager.class).getNamedBeanSet().stream().findFirst().orElse(null);
+    }
+
+    private JFrameOperator openAddFrame() {
+        a.actionPerformed(null);
+        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
+        JemmyUtil.pressButton(new JFrameOperator(f), Bundle.getMessage("ButtonAdd"));
+        JFrameOperator jf = new JFrameOperator(JFrameOperator.waitJFrame(getAddFrameName(), true, true));
+        ((JTextField) new JLabelOperator(jf, Bundle.getMessage("LabelSystemName")).getLabelFor()).setText("1");
+        JemmyUtil.pressButton(jf, ResourceBundle.getBundle("jmri.jmrit.beantable.SectionTransitTableBundle").getString("AddBlockButton"));
+        return jf;
+    }
+
+    @Test
+    @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
+    public void testStopPointsInInches() {
+        InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName("IB12").setLength(500.0f);
+        JFrameOperator jf = openAddFrame();
+        SectionTableAction sta = (SectionTableAction) a;
+        jmri.util.ThreadingUtil.runOnGUI(() -> {
+            sta.stopPointUnitsBox.setSelectedItem(SectionStopPoint.Units.INCHES);
+            sta.forwardStopPointField.setText("12 7/32");
+            sta.reverseStopPointField.setText("2.5");
+        });
+        JemmyUtil.pressButton(jf, Bundle.getMessage("ButtonCreate"));
+        Section s = firstSection();
+        Assertions.assertNotNull(s, "created");
+        Assertions.assertEquals(391 * 25.4f / 32, s.getStopPointMm(Section.FORWARD), 0.01f, "12 7/32 in");
+        Assertions.assertEquals(2.5f * 25.4f, s.getStopPointMm(Section.REVERSE), 0.01f, "2 1/2 in");
+        Assertions.assertEquals(SectionStopPoint.Units.INCHES, SectionStopPoint.getUnits(s), "shown in inches next time");
+        JUnitUtil.dispose(JFrameOperator.waitJFrame(getTableFrameName(), true, true));
+    }
+
+    @Test
+    @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
+    public void testStopPointBeyondTheSectionIsRefused() {
+        InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName("IB12").setLength(500.0f);
+        JFrameOperator jf = openAddFrame();
+        SectionTableAction sta = (SectionTableAction) a;
+        jmri.util.ThreadingUtil.runOnGUI(() -> {
+            sta.stopPointUnitsBox.setSelectedItem(SectionStopPoint.Units.MM);
+            sta.forwardStopPointField.setText("620");
+        });
+        Thread t = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ButtonOK"));
+        JemmyUtil.pressButton(jf, Bundle.getMessage("ButtonCreate"));
+        JUnitUtil.waitFor(() -> !t.isAlive(), "error shown");
+        Assertions.assertNull(firstSection(), "not created");
+
+        Thread t2 = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ButtonOK"));
+        jmri.util.ThreadingUtil.runOnGUI(() -> sta.forwardStopPointField.setText("about here"));
+        JemmyUtil.pressButton(jf, Bundle.getMessage("ButtonCreate"));
+        JUnitUtil.waitFor(() -> !t2.isAlive(), "not a distance");
+        Assertions.assertNull(firstSection(), "still not created");
+
+        jmri.util.ThreadingUtil.runOnGUI(() -> sta.forwardStopPointField.setText("480"));
+        JemmyUtil.pressButton(jf, Bundle.getMessage("ButtonCreate"));
+        Section s = firstSection();
+        Assertions.assertNotNull(s, "created once inside the Section");
+        Assertions.assertEquals(480.0f, s.getStopPointMm(Section.FORWARD), 0.0f);
+        JUnitUtil.dispose(JFrameOperator.waitJFrame(getTableFrameName(), true, true));
+    }
+
+    @Test
+    @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
+    public void testUnitsChangeConvertsWhatIsShown() {
+        JFrameOperator jf = openAddFrame();
+        SectionTableAction sta = (SectionTableAction) a;
+        jmri.util.ThreadingUtil.runOnGUI(() -> {
+            sta.stopPointUnitsBox.setSelectedItem(SectionStopPoint.Units.MM);
+            sta.forwardStopPointField.setText("254");
+            sta.stopPointUnitsBox.setSelectedItem(SectionStopPoint.Units.INCHES);
+        });
+        Assertions.assertEquals("10", sta.forwardStopPointField.getText());
+        jmri.util.ThreadingUtil.runOnGUI(() -> jf.getWindow().dispose());
+        JUnitUtil.dispose(JFrameOperator.waitJFrame(getTableFrameName(), true, true));
+    }
+
     @Override
     public String getEditFrameName() {
         return "Edit Section";

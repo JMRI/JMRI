@@ -285,7 +285,7 @@ if (!window.localStorage) {
 //if (!window.jQuery) {
 //    console.log("inserting jQuery");
 //    var script = document.createElement('script');
-//    script.src = '/js/jquery-2.2.4.min.js'; //
+//    script.src = '/js/jquery-3.7.1.min.js'; //
 //    document.getElementsByTagName('head')[0].appendChild(script);
 //}
 //insert logger.js if not available

@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import jmri.InstanceManager;
+import jmri.JmriUncheckedException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.actions.ActionSound;
 import jmri.jmrit.logixng.actions.ActionSound.Operation;
@@ -218,7 +219,7 @@ public class ActionSoundSwing extends AbstractDigitalActionSwing {
                 throw new IllegalArgumentException("_tabbedPaneAspectType has unknown selection");
             }
         } catch (ParserException e) {
-            throw new RuntimeException("ParserException: "+e.getMessage(), e);
+            throw new JmriUncheckedException("ParserException: "+e.getMessage(), e);
         }
     }
 

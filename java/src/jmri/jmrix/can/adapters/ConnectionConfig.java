@@ -85,7 +85,7 @@ abstract public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnecti
     @Override
     public void loadDetails(JPanel details) {
         setInstance();
-        ConfigPaneHelper.maybeAddOpenLCBProtocolOptionsButton(this, additionalItems);
+        ConfigPaneHelper.maybeAddOpenLCBProtocolOptionsButton(this, getAdditionalItems());
         super.loadDetails(details);
     }
 

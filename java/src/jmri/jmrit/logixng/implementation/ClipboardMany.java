@@ -33,7 +33,7 @@ public class ClipboardMany extends AbstractBase
     
     private void setItemSystemNames(List<ItemData> systemNamesAndClasses) {
         if (!_itemEntries.isEmpty()) {
-            throw new RuntimeException("action system names cannot be set more than once");
+            throw new JmriUncheckedException("action system names cannot be set more than once");
         }
         
         for (ItemData itemData : systemNamesAndClasses) {
@@ -84,7 +84,7 @@ public class ClipboardMany extends AbstractBase
                 }
             } catch (SocketAlreadyConnectedException ex) {
                 // This shouldn't happen and is a runtime error if it does.
-                throw new RuntimeException("socket is already connected");
+                throw new JmriUncheckedException("socket is already connected");
             }
         }
         
@@ -243,7 +243,7 @@ public class ClipboardMany extends AbstractBase
             }
             x++;
         }
-        throw new RuntimeException("Unable to find a new socket name");
+        throw new JmriUncheckedException("Unable to find a new socket name");
     }
 
     /** {@inheritDoc} */

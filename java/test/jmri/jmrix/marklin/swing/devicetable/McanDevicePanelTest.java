@@ -207,15 +207,20 @@ class McanDevicePanelTest {
                 .filter(c -> c.getProtocolGeneration() == CdBDeviceClass.ProtocolGeneration.NEW)
                 .toArray(CdBDeviceClass[]::new);
 
+        // A NEW-protocol ping is told by its CAN ID, the class's ping ID. OLD-protocol classes
+        // (LampenChef) also send pings with DLC=0, 128 addressed ones, starting 250 ms after the
+        // last NEW-protocol ping; they are not counted here, however soon this thread looks.
+        java.util.Set<Integer> newPingIds = java.util.Arrays.stream(newClasses)
+                .map(CdBDeviceClass::getPingId)
+                .collect(java.util.stream.Collectors.toSet());
+
         // Wait for all NEW-protocol pings to arrive (staggered 250 ms apart)
         jmri.util.JUnitUtil.waitFor(
-                () -> tc.getSentMessages().size() >= newClasses.length,
+                () -> newProtocolPings(newPingIds).size() >= newClasses.length,
                 "All NEW-protocol CdB pings sent");
 
-        // Collect only NEW-protocol pings (DLC=0) in arrival order
-        List<MarklinMessage> newPings = tc.getSentMessages().stream()
-                .filter(m -> m.getElement(4) == 0)
-                .collect(java.util.stream.Collectors.toList());
+        // Collect only NEW-protocol pings in arrival order
+        List<MarklinMessage> newPings = newProtocolPings(newPingIds);
 
         assertEquals(newClasses.length, newPings.size(),
                 "Expected one ping per NEW-protocol class");
@@ -237,6 +242,23 @@ class McanDevicePanelTest {
             assertEquals(0, msg.getElement(4),
                 String.format("DLC should be 0 for %s ping", deviceClass.getDisplayName()));
         }
+    }
+
+    /**
+     * The messages sent so far whose CAN ID is one of the given NEW-protocol ping
+     * IDs, in the order sent.
+     */
+    private List<MarklinMessage> newProtocolPings(java.util.Set<Integer> newPingIds) {
+        return new java.util.ArrayList<>(tc.getSentMessages()).stream()
+                .filter(m -> newPingIds.contains(canId(m)))
+                .collect(java.util.stream.Collectors.toList());
+    }
+
+    private static int canId(MarklinMessage msg) {
+        return ((msg.getElement(0) & 0xFF) << 24) |
+               ((msg.getElement(1) & 0xFF) << 16) |
+               ((msg.getElement(2) & 0xFF) << 8) |
+               (msg.getElement(3) & 0xFF);
     }
 
     @Test

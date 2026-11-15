@@ -267,8 +267,8 @@ public class URIDrop {
             public void drop(DropTargetDropEvent evt) {
                 log.debug("URIDrop: drop event.");                
                 Transferable tr = evt.getTransferable();
-                if (importExternalTransferable(tr, (ListenerExt) listener)) {
-                    evt.acceptDrop(DnDConstants.ACTION_COPY);
+                evt.acceptDrop(DnDConstants.ACTION_COPY);
+                if (importExternalTransferable(tr,  listener)) {
                     evt.getDropTargetContext().dropComplete(true);
                 } else {
                     log.debug("URIDrop: not droppable.");
@@ -312,16 +312,16 @@ public class URIDrop {
         makeDropTarget(c, recursive);
     }
 
-    public static boolean importExternalTransferable(Transferable tr, ListenerExt impan ) {
+    public static boolean importExternalTransferable(Transferable tr, Listener impan ) {
         if ((impan==null) || (tr==null)) {
             return false;
         }
         try {
             // Is it a raw image?
-            if (tr.isDataFlavorSupported(DataFlavor.imageFlavor)) {
+            if (tr.isDataFlavorSupported(DataFlavor.imageFlavor) && (impan instanceof ListenerExt)) {
                 log.debug("importExternalTransferable: raw image accepted.");
                 BufferedImage img = (BufferedImage) tr.getTransferData(DataFlavor.imageFlavor);
-                impan.imageDropped(img);
+                ((ListenerExt) impan).imageDropped(img);
                 // Mark that drop is completed.
                 log.debug("ImageDrop: drop complete as image.");                           
                 return true;

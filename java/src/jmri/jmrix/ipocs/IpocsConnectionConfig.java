@@ -156,7 +156,7 @@ public class IpocsConnectionConfig extends AbstractConnectionConfig {
     if (getAdapter().getSystemConnectionMemo() != null) {
       systemPrefixField.setText(getAdapter().getSystemConnectionMemo().getSystemPrefix());
       connectionNameField.setText(getAdapter().getSystemConnectionMemo().getUserName());
-      NUMOPTIONS = NUMOPTIONS + 2;
+      increaseNumOptions(2);
     }
     systemPrefixField.addActionListener(new SystemPrefixFieldActionListener());
     systemPrefixField.addFocusListener(new SystemPrefixFieldFocusListener());

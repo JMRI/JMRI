@@ -276,7 +276,7 @@ public class TableForEachSwing extends AbstractDigitalActionSwing {
 
             action.setLocalVariableName(_localVariable.getText());
         } catch (ParserException e) {
-            throw new RuntimeException("ParserException: "+e.getMessage(), e);
+            throw new JmriUncheckedException("ParserException: "+e.getMessage(), e);
         }
     }
 

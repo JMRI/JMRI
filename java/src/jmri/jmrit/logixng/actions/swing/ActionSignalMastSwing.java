@@ -9,6 +9,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 
 import jmri.InstanceManager;
+import jmri.JmriUncheckedException;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.SignalMast;
@@ -404,7 +405,7 @@ public class ActionSignalMastSwing extends AbstractDigitalActionSwing {
                 throw new IllegalArgumentException("_tabbedPaneAspectType has unknown selection");
             }
         } catch (ParserException e) {
-            throw new RuntimeException("ParserException: "+e.getMessage(), e);
+            throw new JmriUncheckedException("ParserException: "+e.getMessage(), e);
         }
     }
 

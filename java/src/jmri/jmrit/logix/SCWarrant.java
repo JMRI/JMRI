@@ -2,9 +2,12 @@ package jmri.jmrit.logix;
 
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.*;
 import jmri.implementation.SignalSpeedMap;
+import jmri.util.ThreadingUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -85,6 +88,55 @@ public class SCWarrant extends Warrant {
                 _maxBlockLength = blockLength;
             }
         }
+    }
+
+    /**
+     * Make a change to the layout, such as allocating Blocks and setting their
+     * paths' turnouts or turning the power off, on the layout thread (Swing
+     * thread), so that the listeners of the beans changed run there.
+     * <p>
+     * The train runner's thread holds this warrant's lock. It waits for the
+     * change as {@link Object#wait()} does, releasing the lock, so the layout
+     * thread can take it, both for the change and to tell this warrant that a
+     * Block or signal has changed.
+     *
+     * @param change the change to make
+     */
+    private void onLayoutThread(Runnable change) {
+        if (ThreadingUtil.isLayoutThread()) {
+            change.run();
+            return;
+        }
+        AtomicBoolean done = new AtomicBoolean(false);
+        ThreadingUtil.runOnLayoutEventually(() -> {
+            synchronized (this) {
+                try {
+                    change.run();
+                } finally {
+                    done.set(true);
+                    notifyAll();
+                }
+            }
+        });
+        boolean interrupted = false;
+        synchronized (this) {
+            while (!done.get()) {
+                try {
+                    wait();
+                } catch (InterruptedException e) {
+                    interrupted = true;  // the change is still made, so wait for it
+                }
+            }
+        }
+        if (interrupted) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    private String allocateStartBlockOnLayout() {
+        String[] message = {null};
+        onLayoutThread(() -> message[0] = allocateStartBlock());
+        return message[0];
     }
 
     private String allocateStartBlock() {
@@ -374,6 +426,10 @@ public class SCWarrant extends Warrant {
      * @param startIndex Allocate starting with this index
      */
     protected void allocateBlocksAndSetTurnouts(int startIndex) {
+        onLayoutThread(() -> allocateBlocksAndSetTurnoutsOnLayout(startIndex));
+    }
+
+    private void allocateBlocksAndSetTurnoutsOnLayout(int startIndex) {
         log.debug("{} allocateBlocksAndSetTurnouts startIndex={} _orders.size()={}",_trainName,startIndex,getBlockOrders().size());
         for (int i = startIndex; i < getBlockOrders().size(); i++) {
             log.debug("{} allocateBlocksAndSetTurnouts for loop #{}",_trainName,i);
@@ -568,8 +624,8 @@ public class SCWarrant extends Warrant {
      *     - it is _nextSignal
      * Do not worry about sensors and blocks. They are handled by goingActive and goingInactive.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"UW_UNCOND_WAIT", "NN_NAKED_NOTIFY"},
-            justification = "Unconditional wait is give the warrant that now has _stoppingBlock allocated a little time to deallocate it.  This occurs after this method sets _stoppingBlock to null. NotifyAll passing event, not state.")
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"NN_NAKED_NOTIFY"},
+            justification = "NotifyAll passing event, not state.")
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (!(evt.getSource() instanceof NamedBean)) {
@@ -717,7 +773,7 @@ public class SCWarrant extends Warrant {
                                 log.debug("{} _warrant.wait unexpected exception {}",_trainName,e,e);
                             }
                         }
-                        allocateStartBlock();
+                        allocateStartBlockOnLayout();
                         allocateBlocksAndSetTurnouts(1);
                         AllocationDone = isRouteAllocated();
                         if (!AllocationDone) {
@@ -858,7 +914,10 @@ public class SCWarrant extends Warrant {
                 } else {
                     _throttle.setSpeedSetting(SPEED_STOP);
                 }
-                stopWarrant(false, false);
+                // Stopping the warrant releases its Blocks on the layout thread and waits for
+                // that, so it must not be done here holding the warrant's lock, which the
+                // layout thread may be waiting for to tell the warrant that a Block changed.
+                onLayoutThread(() -> stopWarrant(false, false));
             }
         }
 
@@ -871,11 +930,13 @@ public class SCWarrant extends Warrant {
                 log.debug("{} EMERGENCY STOP IMPOSSIBLE: NO POWER MANAGER",_trainName);
                 return;
             }
-            try {
-                manager.setPower(PowerManager.OFF);
-            } catch (Exception e) {
-                log.debug("{} EMERGENCY STOP FAILED WITH EXCEPTION: {}",_trainName,e,e);
-            }
+            onLayoutThread(() -> {
+                try {
+                    manager.setPower(PowerManager.OFF);
+                } catch (Exception e) {
+                    log.debug("{} EMERGENCY STOP FAILED WITH EXCEPTION: {}",_trainName,e,e);
+                }
+            });
             log.debug("{} EMERGENCY STOP",_trainName);
         }
 

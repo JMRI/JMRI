@@ -136,6 +136,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                         throw new LocoNetMessageException();
                     }
                     // message is complete, dispatch it !!
+                    msg.setReceivedTime(System.nanoTime());
                     {
                         log.trace("message complete: {}", msg);
 

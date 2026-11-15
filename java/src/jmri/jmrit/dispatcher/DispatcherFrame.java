@@ -372,6 +372,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             }
             at.setTrainDetection(info.getTrainDetection());
             at.setMaxTrainLengthMM((long) (info.getMaxTrainLengthScaleMeters() * 1000.0 * getScale().getScaleFactor()));
+            ActiveTrainRecords.link(at);
             at.setAllocateMethod(info.getAllocationMethod());
             at.setDelayedStart(info.getDelayedStart()); //this is a code: NODELAY, TIMEDDELAY, SENSORDELAY
             at.setDepartureTimeHr(info.getDepartureTimeHr()); // hour of day (fast-clock) to start this train
@@ -547,6 +548,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     private boolean _TrustKnownTurnouts = false;
     private boolean _UseOccupiedTrackSpeed = false;
     private boolean _useStrictTrainTracking = true;
+    private boolean _WaitWhereTrainsCanStop = false;
     private boolean _useTurnoutConnectionDelay = false;
     private boolean _ShortActiveTrainNames = false;
     private boolean _ShortNameInBlock = true;
@@ -1865,12 +1867,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             // handled would otherwise find the train with no Sections
             at.setTerminating();
         }
-        // terminate the train - remove any allocation requests
-        for (int k = allocationRequests.size(); k > 0; k--) {
-            if (at == allocationRequests.get(k - 1).getActiveTrain()) {
-                allocationRequests.get(k - 1).dispose();
-                allocationRequests.remove(k - 1);
-            }
+        // terminate the train - remove any allocation requests. With automatic
+        // allocation, a full terminate removes them on the allocation thread
+        // (below), where they may be being worked on.
+        if (autoAllocate == null || !terminateNow) {
+            removeAllocationRequests(at);
         }
         // remove any allocated sections
         // except occupied if not a full termination
@@ -1901,6 +1902,14 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         }
         if (autoAllocate != null) {
             queueReleaseOfReservedSections(at.getTrainName());
+            if (terminateNow) {
+                // An allocation for this train may already be under way on the
+                // allocation thread. Once every task queued so far is done, no
+                // more can be made for it (it is terminating), so release
+                // whatever it was given in the meantime.
+                autoAllocate.scanAllocationRequests(new TaskAllocateRelease(TaskAction.BARRIER,
+                        () -> releaseTerminatedTrain(at)));
+            }
         }
         // terminate the train
         if (terminateNow) {
@@ -1937,6 +1946,40 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             allocatedSectionTableModel.fireTableDataChanged();
         }
         allocationRequestTableModel.fireTableDataChanged();
+    }
+
+    private void removeAllocationRequests(ActiveTrain at) {
+        for (int k = allocationRequests.size(); k > 0; k--) {
+            if (at == allocationRequests.get(k - 1).getActiveTrain()) {
+                allocationRequests.get(k - 1).dispose();
+                allocationRequests.remove(k - 1);
+            }
+        }
+    }
+
+    /**
+     * Remove what a terminated train still has: its allocation requests, and
+     * any Section allocated to it while it was being terminated. Run on the
+     * allocation thread, after every task queued before the train was
+     * terminated.
+     *
+     * @param at the terminated train
+     */
+    private void releaseTerminatedTrain(ActiveTrain at) {
+        removeAllocationRequests(at);
+        for (AllocatedSection as : new ArrayList<>(allocatedSections)) {
+            if (as.getActiveTrain() == at) {
+                log.debug("{}: releasing [{}], allocated while the train was terminated",
+                        at.getTrainName(), as.getSectionName());
+                doReleaseAllocatedSection(as, true);
+            }
+        }
+        ThreadingUtil.runOnGUIEventually(() -> {
+            allocationRequestTableModel.fireTableDataChanged();
+            if (allocatedSectionTableModel != null) {
+                allocatedSectionTableModel.fireTableDataChanged();
+            }
+        });
     }
 
     /**
@@ -1977,6 +2020,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                         JmriJOptionPane.ERROR_MESSAGE);
             }
             log.error("Missing Section specification in allocation request from {}", activeTrain.getActiveTrainName());
+            return false;
+        }
+        if (activeTrain.isTerminating()) {
+            log.debug("{}: terminating, no allocation of [{}] requested", activeTrain.getTrainName(),
+                    section.getDisplayName(USERSYS));
             return false;
         }
         if (((seqNumber <= 0) || (seqNumber > (activeTrain.getTransit().getMaxSequence()))) && (seqNumber != -99)) {
@@ -2101,6 +2149,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         int nextSectionSeqNo = 0;
         ActiveTrain at = ar.getActiveTrain();
         Section s = ar.getSection();
+        if (at.isTerminating()) {
+            log.debug("{}: terminating, [{}] not allocated", at.getTrainName(), s.getDisplayName(USERSYS));
+            return null;
+        }
         if (at.reachedRestartPoint()) {
             log.debug("{}: waiting for restart, [{}] not allocated", at.getTrainName(), s.getDisplayName(USERSYS));
             return null;
@@ -2407,6 +2459,19 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         return as;
     }
 
+    /*
+     * Run a change to the layout on the layout thread (Swing thread), waiting
+     * for it when called from another thread, such as the auto allocator's.
+     * The auto allocator's thread holds no lock that the layout thread takes.
+     */
+    private static void onLayoutThread(Runnable change) {
+        if (ThreadingUtil.isLayoutThread()) {
+            change.run();
+        } else {
+            ThreadingUtil.runOnLayout(change::run);
+        }
+    }
+
     private AllocatedSection allocateSection(ActiveTrain at, Section s, int seqNum, Section nextSection,
             int nextSectionSeqNo, int direction, List<LayoutTrackExpectedState<LayoutTurnout>> expectedTurnOutStates) {
         AllocatedSection as = null;
@@ -2416,39 +2481,44 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             as.addPropertyChangeListener(InstanceManager.getDefault(jmri.jmrit.vsdecoder.VSDecoderManager.class));
         }
 
-        s.setState(direction/*ar.getSectionDirection()*/);
-        // record which train holds the Section, cleared when it is set FREE
-        s.setAllocatedTo(at);
-        if (getSignalType() == SIGNALMAST) {
-            String property = "forwardMast";
-            if (s.getState() == Section.REVERSE) {
-                property = "reverseMast";
-            }
-            Object smProperty = s.getProperty(property);
-            if (smProperty != null) {
-                SignalMast toHold = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(smProperty.toString());
-                if (toHold != null) {
-                    if (!toHold.getHeld()) {
-                        heldMasts.add(new HeldMastDetails(toHold, at));
-                        toHold.setHeld(true);
+        // Setting the Section's direction and holding or releasing Signal Masts runs
+        // their listeners, so it is done on the layout thread (Swing thread), also
+        // when the auto allocator's thread allocates the Section.
+        onLayoutThread(() -> {
+            s.setState(direction/*ar.getSectionDirection()*/);
+            // record which train holds the Section, cleared when it is set FREE
+            s.setAllocatedTo(at);
+            if (getSignalType() == SIGNALMAST) {
+                String property = "forwardMast";
+                if (s.getState() == Section.REVERSE) {
+                    property = "reverseMast";
+                }
+                Object smProperty = s.getProperty(property);
+                if (smProperty != null) {
+                    SignalMast toHold = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(smProperty.toString());
+                    if (toHold != null) {
+                        if (!toHold.getHeld()) {
+                            heldMasts.add(new HeldMastDetails(toHold, at));
+                            toHold.setHeld(true);
+                        }
                     }
+
                 }
 
-            }
-
-            Section lastOccSec = at.getLastAllocatedSection();
-            if (lastOccSec != null) {
-                smProperty = lastOccSec.getProperty(property);
-                if ( smProperty != null) {
-                    SignalMast toRelease = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(smProperty.toString());
-                    if (toRelease != null && isMastHeldByDispatcher(toRelease, at)) {
-                        removeHeldMast(toRelease, at);
-                        //heldMasts.remove(toRelease);
-                        toRelease.setHeld(false);
+                Section lastOccSec = at.getLastAllocatedSection();
+                if (lastOccSec != null) {
+                    smProperty = lastOccSec.getProperty(property);
+                    if ( smProperty != null) {
+                        SignalMast toRelease = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(smProperty.toString());
+                        if (toRelease != null && isMastHeldByDispatcher(toRelease, at)) {
+                            removeHeldMast(toRelease, at);
+                            //heldMasts.remove(toRelease);
+                            toRelease.setHeld(false);
+                        }
                     }
                 }
             }
-        }
+        });
         as.setAutoTurnoutsResponse(expectedTurnOutStates);
         at.addAllocatedSection(as);
         allocatedSections.add(as);
@@ -3090,8 +3160,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 allocatedSections.remove(i - 1);
             }
         }
-        as.getActiveTrain().releaseAllocatedSection(as);
-        as.dispose();
+        // setting the Section free runs its listeners, so do it on the layout thread
+        onLayoutThread(() -> {
+            as.getActiveTrain().releaseAllocatedSection(as);
+            as.dispose();
+        });
         if (allocatedSectionTableModel != null) {
             allocatedSectionTableModel.fireTableDataChanged();
         }
@@ -3336,6 +3409,22 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
     protected void setUseOccupiedTrackSpeed(boolean set) {
         _UseOccupiedTrackSpeed = set;
+    }
+
+    /**
+     * Whether automatic allocation keeps an automatic train waiting in a
+     * Section it can stop in, when the next Section is one it can't stop in
+     * and the Sections beyond that are not free as far as one it can stop in.
+     *
+     * @return true to keep the train waiting; false, the default, to allocate
+     *         the next Section whatever lies beyond it
+     */
+    protected boolean getWaitWhereTrainsCanStop() {
+        return _WaitWhereTrainsCanStop;
+    }
+
+    protected void setWaitWhereTrainsCanStop(boolean set) {
+        _WaitWhereTrainsCanStop = set;
     }
 
     protected boolean getUseStrictTrainTracking() {

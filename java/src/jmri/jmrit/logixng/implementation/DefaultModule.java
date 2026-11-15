@@ -5,6 +5,7 @@ import java.util.*;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.JmriUncheckedException;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.NamedBeanUsageReport;
@@ -141,7 +142,7 @@ public class DefaultModule extends AbstractBase
                 if (p.isInput() && p.isOutput()) inOutParams.add(p.getName());
                 else if (p.isInput()) inParams.add(p.getName());
                 else if (p.isOutput()) outParams.add(p.getName());
-                else throw new RuntimeException("Parameter "+p.getName()+" is neither in or out");
+                else throw new JmriUncheckedException("Parameter "+p.getName()+" is neither in or out");
             }
             sb.append(" ::: ");
 
@@ -244,7 +245,7 @@ public class DefaultModule extends AbstractBase
 /*
     @Override
     public void setRootSocketType(FemaleSocketManager.SocketType socketType) {
-        if ((_femaleRootSocket != null) && _femaleRootSocket.isConnected()) throw new RuntimeException("Cannot set root socket when it's connected");
+        if ((_femaleRootSocket != null) && _femaleRootSocket.isConnected()) throw new JmriUncheckedException("Cannot set root socket when it's connected");
 
         _rootSocketType = socketType;
         _femaleRootSocket = socketType.createSocket(this, this, "Root");
@@ -348,7 +349,7 @@ public class DefaultModule extends AbstractBase
                     }
                 } catch (SocketAlreadyConnectedException ex) {
                     // This shouldn't happen and is a runtime error if it does.
-                    throw new RuntimeException("socket is already connected");
+                    throw new JmriUncheckedException("socket is already connected");
                 }
             }
         } else {

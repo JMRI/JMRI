@@ -91,6 +91,10 @@
 
         <li>a checkbox to use this Sensor as Inverted (Inactive will be interpreted as Active and
         vice versa)</li>
+
+        <li>what the Sensor's detector sees of a train, its <a href=
+        "SensorTable.shtml#detects">Detects</a> setting: Wheels (the default), Vehicle body, or
+        Tag or magnet</li>
       </ul>
       <a href="images/SensorEditDelaysTab.png"><img src="images/SensorEditDelaysTab.png" height=
       "248" width="515" class="floatRight" alt="Sensor Edit Debounce Delays pane"></a>

@@ -147,6 +147,8 @@ public class ExpressionBlockTest extends AbstractDigitalExpressionTestBase {
         assertEquals( "some other state", ExpressionBlock.BlockState.Other.toString(), "String matches");
         assertEquals( "Allocated", ExpressionBlock.BlockState.Allocated.toString(), "String matches");
         assertEquals( "equal to", ExpressionBlock.BlockState.ValueMatches.toString(), "String matches");
+        assertEquals( "allocated value equal to", ExpressionBlock.BlockState.AllocatedValueMatches.toString(), "String matches");
+        assertEquals( "display value equal to", ExpressionBlock.BlockState.DisplayValueMatches.toString(), "String matches");
 
         assertEquals( Block.UNOCCUPIED, ExpressionBlock.BlockState.NotOccupied.getID(), "ID matches");
         assertEquals( Block.OCCUPIED, ExpressionBlock.BlockState.Occupied.getID(), "ID matches");
@@ -174,6 +176,97 @@ public class ExpressionBlockTest extends AbstractDigitalExpressionTestBase {
         assertEquals("Block \"IB1\" is not not Occupied", expressionBlock.getLongDescription());
         expressionBlock.getSelectEnum().setEnum(ExpressionBlock.BlockState.Other);
         assertEquals("Block \"IB1\"  some other state", expressionBlock.getLongDescription());
+    }
+
+    /** Whether the expression, set to compare one of the Block's values with "AAA", is true. */
+    private boolean matchesAAA(ExpressionBlock.BlockState state) throws JmriException {
+        expressionBlock.getSelectEnum().setEnum(state);
+        return expressionBlock.evaluate();
+    }
+
+    @Test
+    public void testValueAllocatedValueAndDisplayValue() throws JmriException {
+        conditionalNG.setEnabled(false);
+        expressionBlock.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionBlock.getSelectBlockValue().setValue("AAA");
+
+        // allocated to AAA, which isn't in it: as Dispatcher leaves an empty allocated Block
+        block.setValue(null);
+        block.setAllocatedValue("AAA");
+        assertFalse( matchesAAA(ExpressionBlock.BlockState.ValueMatches), "value");
+        assertTrue( matchesAAA(ExpressionBlock.BlockState.AllocatedValueMatches), "allocated value");
+        assertTrue( matchesAAA(ExpressionBlock.BlockState.DisplayValueMatches), "display value, the allocated value");
+
+        // BBB in it, while it is still allocated to AAA
+        block.setValue("BBB");
+        assertFalse( matchesAAA(ExpressionBlock.BlockState.ValueMatches), "value");
+        assertTrue( matchesAAA(ExpressionBlock.BlockState.AllocatedValueMatches), "allocated value");
+        assertFalse( matchesAAA(ExpressionBlock.BlockState.DisplayValueMatches), "display value, the value");
+
+        // AAA in it, not allocated
+        block.setValue("AAA");
+        block.setAllocatedValue(null);
+        assertTrue( matchesAAA(ExpressionBlock.BlockState.ValueMatches), "value");
+        assertFalse( matchesAAA(ExpressionBlock.BlockState.AllocatedValueMatches), "allocated value");
+        assertTrue( matchesAAA(ExpressionBlock.BlockState.DisplayValueMatches), "display value, the value");
+
+        expressionBlock.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+        assertFalse( matchesAAA(ExpressionBlock.BlockState.DisplayValueMatches), "is not");
+        assertTrue( matchesAAA(ExpressionBlock.BlockState.AllocatedValueMatches), "is not");
+    }
+
+    @Test
+    public void testValueChangesThatExecute() {
+        // with "is not" and nothing matching, each execution sets the flag; executed every time, not only on a change
+        conditionalNG.setEnabled(false);
+        Base ifThenElse = conditionalNG.getChild(0).getConnectedSocket();
+        while (ifThenElse instanceof MaleSocket) {
+            ifThenElse = ((MaleSocket) ifThenElse).getObject();
+        }
+        ((IfThenElse) ifThenElse).setExecuteType(IfThenElse.ExecuteType.AlwaysExecute);
+        expressionBlock.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+        expressionBlock.getSelectBlockValue().setValue("AAA");
+
+        expressionBlock.getSelectEnum().setEnum(ExpressionBlock.BlockState.ValueMatches);
+        conditionalNG.setEnabled(true);
+        atomicBoolean.set(false);
+        block.setAllocatedValue("BBB");
+        assertFalse( atomicBoolean.get(), "the value doesn't listen to the allocated value");
+        block.setValue("CCC");
+        assertTrue( atomicBoolean.get(), "the value listens to the value");
+
+        conditionalNG.setEnabled(false);
+        expressionBlock.getSelectEnum().setEnum(ExpressionBlock.BlockState.AllocatedValueMatches);
+        conditionalNG.setEnabled(true);
+        atomicBoolean.set(false);
+        block.setValue("DDD");
+        assertFalse( atomicBoolean.get(), "the allocated value doesn't listen to the value");
+        block.setAllocatedValue("EEE");
+        assertTrue( atomicBoolean.get(), "the allocated value listens to the allocated value");
+
+        conditionalNG.setEnabled(false);
+        expressionBlock.getSelectEnum().setEnum(ExpressionBlock.BlockState.DisplayValueMatches);
+        conditionalNG.setEnabled(true);
+        atomicBoolean.set(false);
+        block.setValue("FFF");
+        assertTrue( atomicBoolean.get(), "the display value listens to the value");
+        atomicBoolean.set(false);
+        block.setAllocatedValue("GGG");
+        assertTrue( atomicBoolean.get(), "the display value listens to the allocated value");
+    }
+
+    @Test
+    public void testValueDescriptions() {
+        conditionalNG.setEnabled(false);
+        expressionBlock.set_Is_IsNot(Is_IsNot_Enum.Is);
+        expressionBlock.getSelectBlockValue().setValue("AAA");
+        expressionBlock.getSelectEnum().setEnum(ExpressionBlock.BlockState.ValueMatches);
+        assertEquals("Block \"IB1\" value is equal to \"AAA\"", expressionBlock.getLongDescription());
+        expressionBlock.getSelectEnum().setEnum(ExpressionBlock.BlockState.AllocatedValueMatches);
+        assertEquals("Block \"IB1\" allocated value is equal to \"AAA\"", expressionBlock.getLongDescription());
+        expressionBlock.set_Is_IsNot(Is_IsNot_Enum.IsNot);
+        expressionBlock.getSelectEnum().setEnum(ExpressionBlock.BlockState.DisplayValueMatches);
+        assertEquals("Block \"IB1\" display value is not equal to \"AAA\"", expressionBlock.getLongDescription());
     }
 
     private void setBlockStatus(Block b, int status) {

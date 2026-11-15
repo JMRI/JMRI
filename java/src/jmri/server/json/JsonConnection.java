@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.jmris.JmriConnection;
@@ -59,6 +60,24 @@ public class JsonConnection extends JmriConnection {
      * @throws IOException if unable to send the message
      */
     public void sendMessage(@Nonnull JsonNode message, @Nonnull JsonRequest request) throws IOException {
+        sendMessage(message, request, null);
+    }
+
+    /**
+     * Send a JsonNode to the instantiated connection, replacing a message with
+     * the same key that is still waiting to be sent.
+     * <p>
+     * Use a key for a message that gives the whole state of one thing, such
+     * as a bean, so that a client that is behind gets only the latest.
+     * Otherwise as {@link #sendMessage(JsonNode, JsonRequest)}.
+     *
+     * @param message the object or array to send as a message
+     * @param request the JSON request
+     * @param key     the thing the message gives the whole state of, or null
+     * @throws IOException if unable to send the message
+     */
+    public void sendMessage(@Nonnull JsonNode message, @Nonnull JsonRequest request, @CheckForNull Object key)
+            throws IOException {
         if (preferences.getValidateServerMessages()) {
             try {
                 schemas.validateMessage(message, true, request);
@@ -67,7 +86,7 @@ public class JsonConnection extends JmriConnection {
                 return;
             }
         }
-        super.sendMessage(getObjectMapper().writeValueAsString(message));
+        super.sendMessage(getObjectMapper().writeValueAsString(message), key);
     }
 
     /**

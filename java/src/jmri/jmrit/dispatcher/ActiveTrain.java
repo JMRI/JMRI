@@ -19,6 +19,7 @@ import jmri.Section;
 import jmri.Sensor;
 import jmri.Transit;
 import jmri.Transit.TransitType;
+import jmri.TrainRecord;
 import jmri.TransitSection;
 import jmri.Section.SectionType;
 import jmri.beans.PropertyChangeProvider;
@@ -306,6 +307,16 @@ public class ActiveTrain implements PropertyChangeProvider {
         return mStarted;
     }
 
+    /**
+     * Get the Dispatcher that runs this train.
+     *
+     * @return the Dispatcher, or null if not set
+     */
+    @CheckForNull
+    public DispatcherFrame getDispatcher() {
+        return mDispatcher;
+    }
+
     public void setDispatcher(DispatcherFrame df) {
         mDispatcher = df;
         mSignalType = df.getSignalType();
@@ -468,6 +479,7 @@ public class ActiveTrain implements PropertyChangeProvider {
      */
     public void setTrainDetection(TrainDetection value) {
         trainDetection = value;
+        copyToTrainRecord();
     }
 
     /**
@@ -480,6 +492,65 @@ public class ActiveTrain implements PropertyChangeProvider {
 
     private long maxTrainLengthMM = 0;
     private boolean noLengthWarningGiven = false;
+    private TrainRecord trainRecord = null;
+
+    /**
+     * The record of this train, which is kept when this Active Train is
+     * terminated, so that the next Active Train for the same train refers to
+     * it again.
+     *
+     * @return the record, or null if none has been given
+     */
+    @CheckForNull
+    public TrainRecord getTrainRecord() {
+        return trainRecord;
+    }
+
+    /**
+     * Give this Active Train its record, and record in it the Train Detection
+     * and Max Train Length entered for this train. They are recorded again
+     * whenever they are changed.
+     *
+     * @param record the record
+     */
+    void setTrainRecord(@Nonnull TrainRecord record) {
+        trainRecord = record;
+        copyToTrainRecord();
+    }
+
+    /**
+     * Record this train's Train Detection, unless the record has a custom
+     * list of detection markers, which Train Detection can't express, and
+     * its Max Train Length as the entered length.
+     */
+    private void copyToTrainRecord() {
+        if (trainRecord == null || trainRecord.isDisposed()) {
+            return;
+        }
+        if (trainRecord.getDetection() != TrainRecord.Detection.CUSTOM) {
+            trainRecord.setDetection(toRecordDetection(trainDetection));
+        }
+        trainRecord.setLength(TrainRecord.LengthSource.ENTERED,
+                maxTrainLengthMM > 0 ? Double.valueOf(maxTrainLengthMM) : null);
+    }
+
+    /**
+     * @param detection a Train Detection setting
+     * @return the train record's equivalent
+     */
+    @Nonnull
+    static TrainRecord.Detection toRecordDetection(@Nonnull TrainDetection detection) {
+        switch (detection) {
+            case TRAINDETECTION_WHOLETRAIN:
+                return TrainRecord.Detection.ENTIRE_TRAIN;
+            case TRAINDETECTION_HEADONLY:
+                return TrainRecord.Detection.HEAD_ONLY;
+            case TRAINDETECTION_HEADANDTAIL:
+                return TrainRecord.Detection.HEAD_AND_TAIL;
+            default:
+                throw new IllegalArgumentException("unknown Train Detection " + detection);
+        }
+    }
 
     /**
      * Set the train length, used for any train whose tail is not always
@@ -489,6 +560,7 @@ public class ActiveTrain implements PropertyChangeProvider {
      */
     public void setMaxTrainLengthMM(long lengthMM) {
         maxTrainLengthMM = Math.max(0, lengthMM);
+        copyToTrainRecord();
     }
 
     /**
@@ -972,10 +1044,7 @@ public class ActiveTrain implements PropertyChangeProvider {
             }
             if (mDispatcher.getNameInAllocatedBlock()) {
                 LoggingUtil.infoOnce(log, ALLOCATED_VALUE_NOTE);
-                Object allocatedValue = getAllocatedBlockValue();
-                for (Block b : as.getSection().getBlockList()) {
-                    b.setAllocatedValue(allocatedValue);
-                }
+                as.getSection().setAllocatedValue(getAllocatedBlockValue());
             }
             if (mDispatcher.getExtraColorForAllocated()) {
                 as.getSection().setAlternateColorFromActiveBlock(true);

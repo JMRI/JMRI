@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JComboBox;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.JList;
 
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -60,7 +62,7 @@ public class RosterEntryToGroupAction extends JmriAbstractAction {
     }
 
     Component _who;
-    JComboBox<String> rosterEntry = new JComboBox<String>();
+    JComboBox<RosterEntry> rosterEntry = new JComboBox<>();
     RosterGroupComboBox selections;
     Roster roster;
     String lastGroupSelect = null;
@@ -88,15 +90,17 @@ public class RosterEntryToGroupAction extends JmriAbstractAction {
         int retval = JmriJOptionPane.showOptionDialog(_who,
                 Bundle.getMessage("AddEntryToGroupDialog"), Bundle.getMessage("AddEntryToGroupTitle"),
                 JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.INFORMATION_MESSAGE, null,
-                new Object[]{Bundle.getMessage("ButtonDone"), Bundle.getMessage("ButtonOK"), selections, rosterEntry}, null);
+                new Object[]{Bundle.getMessage("ButtonClose"), Bundle.getMessage("ButtonAdd"), selections, rosterEntry}, null);
         log.debug("Dialog value {} selected {}:{}, {}:{}", retval, selections.getSelectedIndex(), selections.getSelectedItem(), rosterEntry.getSelectedIndex(), rosterEntry.getSelectedItem());
-        if (retval != 1) { // not array position 1, ButtonOK
+        if (retval != 1) { // array position 1, ButtonAdd?
             return;
         }
 
-        String selEntry = (String) rosterEntry.getSelectedItem();
+        RosterEntry re = (RosterEntry) rosterEntry.getSelectedItem();
+        if (re == null) {
+            return;
+        }
         lastGroupSelect = selections.getSelectedItem();
-        RosterEntry re = roster.entryFromTitle(selEntry);
         String selGroup = Roster.getRosterGroupProperty(selections.getSelectedItem());
         re.putAttribute(selGroup, "yes");
         Roster.getDefault().writeRoster();
@@ -107,12 +111,26 @@ public class RosterEntryToGroupAction extends JmriAbstractAction {
     }
 
     void rosterEntryUpdate() {
-        if (rosterEntry != null) {
-            rosterEntry.removeAllItems();
+        if (rosterEntry == null) {
+            log.warn("Unexpected null RosterEntry in rosterEntryUpdate", new Exception("traceback"));
+            return;
         }
+        
+        rosterEntry.removeAllItems();
+        rosterEntry.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index,
+                    boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                setText(value instanceof RosterEntry ? ((RosterEntry) value).titleString() : "");
+                return this;
+            }
+        });
         String group = Roster.ROSTER_GROUP_PREFIX + selections.getSelectedItem();
-        roster.getAllEntries().stream().filter((r) -> (r.getAttribute(group) == null)).forEachOrdered((r) -> {
-            rosterEntry.addItem(r.titleString());
+        roster.getAllEntries().stream()
+                .filter((r) -> r.getAttribute(group) == null || r == preSelectedEntry)
+                .forEachOrdered((r) -> {
+            rosterEntry.addItem(r);
         });
         
         // lock the preselected entry if there is one

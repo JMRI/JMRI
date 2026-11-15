@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import jmri.JmriException;
+import jmri.JmriUncheckedException;
 import jmri.jmrit.logixng.SymbolTable;
 import jmri.jmrit.logixng.util.parser.*;
 import jmri.util.TypeConversionUtil;
@@ -81,7 +82,7 @@ public class JavaFunctions implements FunctionFactory {
                     else if ((paramTypes[i] == Short.TYPE) && (params[i] instanceof Long)) newParam = (short)(long)params[i];
                     else if ((paramTypes[i] == Integer.TYPE) && (params[i] instanceof Long)) newParam = (int)(long)params[i];
                     else if ((paramTypes[i] == Float.TYPE) && (params[i] instanceof Double)) newParam = (float)(double)params[i];
-                    else throw new RuntimeException(String.format("%s cannot be assigned to %s", params[i].getClass().getName(), paramTypes[i].getName()));
+                    else throw new JmriUncheckedException(String.format("%s cannot be assigned to %s", params[i].getClass().getName(), paramTypes[i].getName()));
                     newParams[i] = newParam;
                 }
                 return constructor.newInstance(newParams);

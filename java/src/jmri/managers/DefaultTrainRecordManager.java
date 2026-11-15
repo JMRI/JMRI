@@ -8,6 +8,8 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.BasicRosterEntry;
+import jmri.Block;
+import jmri.Disposable;
 import jmri.IdTag;
 import jmri.InvokeOnLayoutThread;
 import jmri.NamedBean;
@@ -15,6 +17,9 @@ import jmri.TrainRecord;
 import jmri.TrainRecordManager;
 import jmri.beans.PropertyChangeSupport;
 import jmri.implementation.DefaultTrainRecord;
+import jmri.implementation.TrainRecordMakeupWatcher;
+import jmri.implementation.TrainRecordSpeedWatcher;
+import jmri.implementation.TrainRecordWatcher;
 
 /**
  * The default {@link TrainRecordManager}, made by the
@@ -24,9 +29,80 @@ import jmri.implementation.DefaultTrainRecord;
  * @author Keith Bruce Copyright (C) 2026
  * @since 5.19.1
  */
-public class DefaultTrainRecordManager extends PropertyChangeSupport implements TrainRecordManager {
+public class DefaultTrainRecordManager extends PropertyChangeSupport implements TrainRecordManager, Disposable {
 
     private final List<DefaultTrainRecord> records = new ArrayList<>();
+    private final TrainRecordWatcher watcher;
+    private final TrainRecordSpeedWatcher speedWatcher = new TrainRecordSpeedWatcher(() -> new ArrayList<>(records));
+    private final TrainRecordMakeupWatcher makeupWatcher = new TrainRecordMakeupWatcher(() -> new ArrayList<>(records));
+    private boolean disposed = false;
+    private final java.util.Map<Block, java.util.Deque<BlockEvent>> blockHistories = new java.util.HashMap<>();
+    private final java.beans.PropertyChangeListener historyListener = this::historyChanged;
+
+    /**
+     * Make the manager, which starts following the layout's Blocks: their
+     * values always, their sensors while any record is placed. It follows
+     * speed commands while any record has a loco address, and what trains
+     * are made up of (from Operations, say) while there is any record.
+     */
+    public DefaultTrainRecordManager() {
+        watcher = new TrainRecordWatcher(() -> new ArrayList<>(records), new TrainRecordWatcher.Placer() {
+            @Override
+            public void valueSet(@Nonnull Block block, @Nonnull Object value) {
+                placeFromValue(block, value);
+            }
+
+            @Override
+            public TrainRecord recordFor(Object value) {
+                return getByValue(value);
+            }
+        });
+        watcher.start();
+    }
+
+    /**
+     * Stop following the layout. Called when the InstanceManager is cleared.
+     */
+    @Override
+    public void dispose() {
+        if (!disposed) {
+            disposed = true;
+            watcher.dispose();
+            speedWatcher.dispose();
+            makeupWatcher.dispose();
+        }
+    }
+
+    /**
+     * A Block's value was set while it was occupied, or the Block went
+     * occupied with a value it had just taken: place the record the
+     * value identifies there if that record is not placed. A roster entry or
+     * ID tag with no record gets one, named after it; a String names an
+     * existing record only.
+     */
+    private void placeFromValue(Block block, Object value) {
+        TrainRecord r = getByValue(value);
+        if (r == null) {
+            String name = null;
+            if (value instanceof BasicRosterEntry) {
+                name = ((BasicRosterEntry) value).getId();
+            } else if (value instanceof IdTag) {
+                name = ((IdTag) value).getDisplayName();
+            }
+            if (name == null || name.trim().isEmpty() || getByName(name) != null) {
+                return;
+            }
+            r = newRecord(name);
+            if (value instanceof BasicRosterEntry) {
+                r.insertFirstRosterEntry((BasicRosterEntry) value);
+            } else {
+                r.addIdTag((IdTag) value);
+            }
+        }
+        if (!r.isPlaced()) {
+            r.place(List.of(block), false, TrainRecord.Reason.Rule.PLACED_BY_VALUE);
+        }
+    }
 
     private final DefaultTrainRecord.Registry registry = new DefaultTrainRecord.Registry() {
         @Override
@@ -44,6 +120,21 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
                 throw new IllegalArgumentException("roster entry " + entry.getId()
                         + " already belongs to train " + other.getName());
             }
+        }
+
+        @Override
+        public void placementChanged(@Nonnull TrainRecord record) {
+            watcher.placementChanged();
+        }
+
+        @Override
+        public void rosterEntriesChanged(@Nonnull TrainRecord record) {
+            speedWatcher.update();
+        }
+
+        @Override
+        public void nameChanged(@Nonnull TrainRecord record) {
+            makeupWatcher.update();
         }
 
         @Override
@@ -66,7 +157,9 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
             throw new IllegalArgumentException("a train record named " + n + " already exists");
         }
         DefaultTrainRecord r = new DefaultTrainRecord(n, registry);
+        r.addPropertyChangeListener(TrainRecord.PROPERTY_HISTORY, historyListener);
         records.add(r);
+        makeupWatcher.update();
         firePropertyChange(PROPERTY_RECORDS, null, r);
         return r;
     }
@@ -76,7 +169,7 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
     @InvokeOnLayoutThread
     public void remove(@Nonnull TrainRecord record) {
         Objects.requireNonNull(record, "record");
-        if (record.isRemoved()) {
+        if (record.isDisposed()) {
             return;
         }
         if (!(record instanceof DefaultTrainRecord) || !records.contains(record)) {
@@ -84,8 +177,44 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
         }
         DefaultTrainRecord r = (DefaultTrainRecord) record;
         records.remove(r);
-        r.markRemoved();
+        r.removePropertyChangeListener(TrainRecord.PROPERTY_HISTORY, historyListener);
+        r.dispose();
+        watcher.placementChanged();
+        speedWatcher.update();
+        makeupWatcher.update();
         firePropertyChange(PROPERTY_RECORDS, r, null);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @Nonnull
+    public List<BlockEvent> getHistory(@Nonnull Block block) {
+        java.util.Deque<BlockEvent> h = blockHistories.get(block);
+        return h == null ? new ArrayList<>() : new ArrayList<>(h);
+    }
+
+    private void historyChanged(java.beans.PropertyChangeEvent e) {
+        if (!(e.getSource() instanceof TrainRecord) || !(e.getNewValue() instanceof TrainRecord.Reason)) {
+            return;
+        }
+        TrainRecord.Reason reason = (TrainRecord.Reason) e.getNewValue();
+        String train = ((TrainRecord) e.getSource()).getName();
+        List<Block> blocks = new ArrayList<>();
+        if (reason.getBlock() != null) {
+            blocks.add(reason.getBlock());
+        }
+        for (Block b : reason.getThrough()) {
+            if (!blocks.contains(b)) {
+                blocks.add(b);
+            }
+        }
+        for (Block b : blocks) {
+            java.util.Deque<BlockEvent> h = blockHistories.computeIfAbsent(b, k -> new java.util.ArrayDeque<>());
+            h.addFirst(new BlockEvent(train, reason));
+            while (h.size() > BLOCK_HISTORY_LENGTH) {
+                h.removeLast();
+            }
+        }
     }
 
     /** {@inheritDoc} */
@@ -132,6 +261,22 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
             if (r.getIdTags().contains(tag)) {
                 return r;
             }
+        }
+        return null;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @CheckForNull
+    public TrainRecord getByValue(@CheckForNull Object value) {
+        if (value instanceof BasicRosterEntry) {
+            return getByRosterEntry((BasicRosterEntry) value);
+        }
+        if (value instanceof IdTag) {
+            return getByIdTag((IdTag) value);
+        }
+        if (value instanceof String && !((String) value).trim().isEmpty()) {
+            return getByName((String) value);
         }
         return null;
     }

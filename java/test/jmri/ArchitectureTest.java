@@ -4,9 +4,14 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
 
 import java.io.File;
+import java.util.Map;
+import java.util.Set;
 
 import org.junit.jupiter.api.*;
 
+import com.tngtech.archunit.base.DescribedPredicate;
+import com.tngtech.archunit.core.domain.JavaClass;
+import com.tngtech.archunit.core.domain.JavaMethodCall;
 import com.tngtech.archunit.junit.*;
 import com.tngtech.archunit.lang.ArchRule;
 
@@ -103,7 +108,7 @@ public class ArchitectureTest {
                                 .doNotHaveFullyQualifiedName("jmri.jmrix.dccpp.swing.ConfigBaseStationFrame$5").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrix.dccpp.swing.ConfigBaseStationFrame").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrix.ecos.utilities.EcosLocoToRoster$4").and()
-                                .doNotHaveFullyQualifiedName("jmri.jmrix.ecos.utilities.EcosLocoToRoster$6").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrix.ecos.utilities.EcosLocoToRoster$5").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrix.rps.trackingpanel.RpsTrackingPanel").and()
                                 .doNotHaveFullyQualifiedName("jmri.profile.ProfileManagerDialog").and()
                                 .doNotHaveFullyQualifiedName("jmri.profile.ProfileManagerDialog$1").and()
@@ -514,6 +519,98 @@ public class ArchitectureTest {
             .should()
             .dependOnClassesThat().haveFullyQualifiedName("jmri.jmrit.logixng.NamedBeanAddressing");
 
+
+    /**
+     * Classes JMRI's simulated trains must not use: the logic they test.
+     * The simulator works out routes, decoder momentum, speeds, crossings and
+     * occupancy itself, so that a fault in JMRI's own logic shows as a
+     * difference instead of both agreeing. It may read configuration and data
+     * (Blocks, Paths, the Layout Editor drawing, OBlocks with their manager,
+     * OPaths and Portals, roster entries and the speed profile's stored
+     * measurements).
+     */
+    private static final DescribedPredicate<JavaClass> LOGIC_SIMULATION_TESTS =
+        DescribedPredicate.describe("logic simulated trains test", (JavaClass c) ->
+            c.getPackageName().startsWith("jmri.jmrit.dispatcher")
+            || c.getPackageName().startsWith("jmri.jmrit.entryexit")
+            || c.getPackageName().startsWith("jmri.jmrit.signalling")
+            || (c.getPackageName().startsWith("jmri.jmrit.logix")
+                    && !c.getPackageName().startsWith("jmri.jmrit.logixng")
+                    && !Set.of("jmri.jmrit.logix.OBlock", "jmri.jmrit.logix.OPath", "jmri.jmrit.logix.Portal",
+                            "jmri.jmrit.logix.OBlockManager")
+                            .contains(c.getName()))
+            || Set.of("jmri.SignalMastLogic", "jmri.SignalMastLogicManager",
+                    "jmri.implementation.DefaultSignalMastLogic", "jmri.managers.DefaultSignalMastLogicManager",
+                    "jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools",
+                    "jmri.jmrit.display.layoutEditor.ConnectivityUtil",
+                    "jmri.jmrit.display.layoutEditor.LayoutEditorAuxTools",
+                    "jmri.jmrix.can.cbus.CbusAddress", "jmri.jmrix.can.cbus.CbusSensor")
+                    .contains(c.getName()));
+
+    /**
+     * Methods simulated trains must not call: calculations and state they
+     * test, on classes they may otherwise read. Of RosterSpeedProfile only the
+     * stored measurements may be read.
+     */
+    private static final Map<Class<?>, Set<String>> CALLS_SIMULATION_TESTS = Map.of(
+        jmri.Path.class, Set.of("checkPathSet", "getLengthMm"),
+        jmri.BeanSetting.class, Set.of("check"),
+        jmri.Block.class, Set.of("getState", "setState", "goingActive", "goingInactive", "goingUnknown",
+                "goingInconsistent", "findFromPath", "getValue", "setValue", "getDirection", "setDirection"),
+        jmri.jmrit.display.layoutEditor.LayoutTurnout.class, Set.of("getState", "isInContinuingSenseState",
+                "getTurnout", "getSecondTurnout", "getSlipState", "getTurnoutB"));
+
+    private static final DescribedPredicate<JavaMethodCall> CALL_SIMULATION_TESTS =
+        DescribedPredicate.describe("a calculation simulated trains test", (JavaMethodCall call) -> {
+            JavaClass owner = call.getTarget().getOwner();
+            if (owner.isAssignableTo(jmri.jmrit.roster.RosterSpeedProfile.class)) {
+                return !call.getName().equals("getProfileSpeeds");
+            }
+            for (Map.Entry<Class<?>, Set<String>> e : CALLS_SIMULATION_TESTS.entrySet()) {
+                if (owner.isAssignableTo(e.getKey()) && e.getValue().contains(call.getName())) {
+                    return true;
+                }
+            }
+            return false;
+        });
+
+    /**
+     * Simulated trains don't use the classes of the logic they test.
+     * This rule fails if no class is in jmri.jmrit.simulation (ArchUnit's
+     * archRule.failOnEmptyShould default), so it can't pass by checking nothing.
+     */
+    @ArchTest
+    public static final ArchRule checkSimulationIndependentOfClassesItTests = noClasses()
+        .that().resideInAPackage("jmri.jmrit.simulation..")
+        .should().dependOnClassesThat(LOGIC_SIMULATION_TESTS);
+
+    /**
+     * Simulated trains don't call the calculations they test.
+     */
+    @ArchTest
+    public static final ArchRule checkSimulationIndependentOfCallsItTests = noClasses()
+        .that().resideInAPackage("jmri.jmrit.simulation..")
+        .should().callMethodWhere(CALL_SIMULATION_TESTS);
+
+    /**
+     * The packages that may use simulated trains, besides the simulator
+     * itself. Nothing else in JMRI depends on them, so a simulator can't
+     * change how JMRI behaves on a real layout. A system's adapter, which
+     * takes that system's commands to simulated trains and reports their
+     * detection in that system's messages, is added here with its package.
+     */
+    private static final String[] SIMULATION_USERS = {"jmri.jmrit.simulation..",
+        "jmri.jmrix.can.cbus.simulator.."}; // CBUS on CAN Simulation
+
+    /**
+     * Only the simulator and the packages in {@code SIMULATION_USERS} use
+     * simulated trains. Tests are not checked, as this test reads only
+     * JMRI's own classes.
+     */
+    @ArchTest
+    public static final ArchRule checkOnlySimulationUsersUseSimulation = noClasses()
+        .that().resideOutsideOfPackages(SIMULATION_USERS)
+        .should().dependOnClassesThat().resideInAPackage("jmri.jmrit.simulation..");
 
     @Test
     public void testHelpFileNamesUseShtml(){
