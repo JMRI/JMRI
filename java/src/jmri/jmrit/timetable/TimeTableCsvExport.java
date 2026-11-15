@@ -4,11 +4,13 @@ import java.io.File;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
@@ -52,7 +54,7 @@ public class TimeTableCsvExport {
     public boolean exportCsv(File file, int layoutId, int segmentId, int scheduleId) throws IOException {
         // Create CSV file
         errorOccurred = false;
-        fileWriter = new FileWriter(file);
+        fileWriter = new FileWriter(file, StandardCharsets.UTF_8);
         bufferedWriter = new BufferedWriter(fileWriter);
         csvFile = new CSVPrinter(bufferedWriter, CSVFormat.DEFAULT);
 
@@ -126,12 +128,12 @@ public class TimeTableCsvExport {
                     int idx = trainEntry.getTrainIndex();
                     int lastStop = trainEntry.getLastStation();
                     String direction = trainEntry.getDirection();
-                    
+
                     // Collect required stop data
                     int thisStop = stop.getSeq();
                     int arrive = stop.getArriveTime();
                     int depart = stop.getDepartTime();
-                    
+
                     if (thisStop != 1 && thisStop != lastStop) {
                         // neither first nor last stop
                         if (arrive == depart) {
