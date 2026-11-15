@@ -146,7 +146,6 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
     }
 
     @BeforeAll
-    @SuppressWarnings("deprecation") // OlcbInterface(NodeID, Connection)
     public static void preClassInit() {
        // this test is run separately because it leaves a lot of threads behind
         org.junit.Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
@@ -164,7 +163,7 @@ public class OlcbLightManagerTest extends jmri.managers.AbstractLightMgrTestBase
 
         memo = new OlcbSystemConnectionMemoScaffold(); // this self-registers as 'M'
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
-        memo.setInterface(new OlcbInterface(nodeID, connection) {
+        memo.setInterface(new OlcbInterface(nodeID, connection, new OlcbTestThreadPool()) {
             @Override
             public Connection getOutputConnection() {
                 return connection;

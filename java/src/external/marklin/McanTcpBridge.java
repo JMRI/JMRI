@@ -1,7 +1,11 @@
 package external.marklin;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import external.ExternalDirectJSerialPort;
+
 import jmri.jmrix.marklin.MarklinMessageFormatter;
+
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.core.LoggerContext;
 import org.apache.logging.log4j.core.config.builder.api.AppenderComponentBuilder;
@@ -621,6 +625,8 @@ public class McanTcpBridge {
     /**
      * Single bridge instance for one serial port.
      */
+    @SuppressFBWarnings(value = {"AT_UNSAFE_RESOURCE_ACCESS_IN_THREAD"},
+            justification = "Better to suppress it in one class than to suppress it everywhere in JMRI")
     static class BridgeInstance {
         private static final int BUFFER_SIZE = 1024;
         private static final int RECONNECT_DELAY_MS = 5000; // 5 seconds
