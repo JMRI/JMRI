@@ -2,7 +2,6 @@ package jmri.jmrix.powerline.cp290;
 
 import jmri.jmrix.powerline.SerialMessage;
 import jmri.jmrix.powerline.X10Sequence;
-import jmri.util.StringUtil;
 
 /**
  * Contains the data payload of a serial packet.
@@ -37,17 +36,6 @@ public class SpecificMessage extends SerialMessage {
      */
     public SpecificMessage(String m, int l) {
         super(m, l);
-    }
-
-    /**
-     * This ctor interprets the byte array as a sequence of characters to send.
-     * @deprecated 5.13.5, unused, requires further development.
-     * @param a Array of bytes to send
-     * @param l length of expected reply
-     */
-    @Deprecated( since="5.13.5", forRemoval=true)
-    public SpecificMessage(byte[] a, int l) {
-        super(StringUtil.hexStringFromBytes(a).replaceAll("\\s", ""), l);
     }
 
     /**

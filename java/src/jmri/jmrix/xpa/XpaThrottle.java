@@ -40,11 +40,6 @@ public class XpaThrottle extends AbstractThrottle {
         log.debug("XpaThrottle constructor called for address {}", address);
     }
 
-    @Deprecated (since="5.13.3", forRemoval=true)
-    public XpaThrottle(LocoAddress address, XpaTrafficController t) {
-        this(address, t, jmri.InstanceManager.getDefault(jmri.jmrix.xpa.XpaSystemConnectionMemo.class));
-    }
-
     /**
      * Set the speed and direction.
      * <p>
@@ -89,7 +84,7 @@ public class XpaThrottle extends AbstractThrottle {
         this.speedvalue = value;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -103,14 +98,14 @@ public class XpaThrottle extends AbstractThrottle {
         }
         tc.sendXpaMessage(m, null);
     }
-    
-    /** 
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public void setFunction(int func, boolean value){
         if ( func>=0 && func<13 && getFunction(func)!=value){
-            updateFunction(func,value);    
+            updateFunction(func,value);
             tc.sendXpaMessage(XpaMessage.getFunctionMsg(address, 0), null);
         }
         else {
@@ -118,14 +113,14 @@ public class XpaThrottle extends AbstractThrottle {
         }
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
     public void sendFunctionGroup1() {
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -139,7 +134,7 @@ public class XpaThrottle extends AbstractThrottle {
     public void sendFunctionGroup3() {
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -147,7 +142,7 @@ public class XpaThrottle extends AbstractThrottle {
         return new DccLocoAddress(address, XpaThrottleManager.isLongAddress(address));
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override

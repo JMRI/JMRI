@@ -336,19 +336,6 @@ public class AutoActiveTrain implements ThrottleListener {
         }
     }
 
-    /**
-     * @deprecated Use {@code ActiveTrain.setTrainDetection(TrainDetection value } insteadUse
-     * @param set True if entire train is detectable
-     */
-    @Deprecated (since="5.7.6",forRemoval=true)
-    public void setResistanceWheels(boolean set) {
-        if (set) {
-            _activeTrain.setTrainDetection(TrainDetection.TRAINDETECTION_WHOLETRAIN);
-        } else {
-            _activeTrain.setTrainDetection(TrainDetection.TRAINDETECTION_HEADONLY);
-        }
-    }
-
     public boolean getRunInReverse() {
         return _runInReverse;
     }

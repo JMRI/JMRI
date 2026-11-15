@@ -97,13 +97,13 @@ public class TrainInfo {
     private float waitTime = 3.0f; //seconds:  required only by dispatcher system to pause train at beginning of transit (station)
 
     private String blockName = ""; //required only by Dispatcher System to inhibit running of transit if this block is occupied
-    
+
     private Float stopByDistanceMm = 0.0f;
     private StopReference stopByDistanceRef = StopReference.HEAD; // default choice
-    
+
     // Physics: additional train weight, stored as metric tonnes (t)
     private float additionalTrainWeightMetricTonnes = 0.0f;
-    
+
     private boolean useStopSensor = true;
 
     public enum StopReference { HEAD, TAIL }
@@ -164,11 +164,11 @@ public class TrainInfo {
     public String getRosterId() {
         return rosterID;
     }
-    
+
     public boolean getUseStopSensor() {
         return useStopSensor;
     }
-    
+
     public void setUseStopSensor(boolean value) {
         this.useStopSensor = value;
     }
@@ -240,19 +240,19 @@ public class TrainInfo {
     public void setDestinationBlockId(String s) {
         destinationBlockId = s;
     }
-    
+
     public void setStopByDistanceMm(float value) {
         stopByDistanceMm = value;
     }
-    
+
     public void setStopByDistanceRef(StopReference value) {
         stopByDistanceRef = value;
     }
-    
+
     public float getStopByDistanceMm() {
         return stopByDistanceMm;
     }
-    
+
     public StopReference getStopByDistanceRef() {
         return stopByDistanceRef;
     }
@@ -611,7 +611,7 @@ public class TrainInfo {
     public Float getMaxSpeed() {
         return maxSpeed;
     }
-    
+
     /**
      * Sets the maximum speed in scale km/h. Use 0.0f to disable and fall back to throttle percent.
      * @param kmh scale kilometers per hour
@@ -654,31 +654,6 @@ public class TrainInfo {
      */
     public TrainDetection getTrainDetection() {
         return trainDetection;
-    }
-
-    /**
-     * @deprecated use {@link #setTrainDetection}
-     * @param b true or false
-     */
-    @Deprecated (since="5.7.6",forRemoval=true)
-    public void setResistanceWheels(boolean b) {
-        if (b) {
-            trainDetection = TrainDetection.TRAINDETECTION_WHOLETRAIN;
-        } else {
-            trainDetection = TrainDetection.TRAINDETECTION_HEADONLY;
-        }
-    }
-
-    /**
-     * @deprecated use {@link #getTrainDetection}
-     * @return true or false
-     */
-    @Deprecated (since="5.7.6",forRemoval=true)
-    public boolean getResistanceWheels() {
-        if (trainDetection == TrainDetection.TRAINDETECTION_WHOLETRAIN) {
-            return true;
-        }
-        return false;
     }
 
     public void setRunInReverse(boolean b) {
@@ -743,26 +718,6 @@ public class TrainInfo {
      */
     public int getFNumberHorn() {
         return fNumberHorn;
-    }
-
-    /**
-     * @deprecated use {@link #setMaxTrainLengthScaleMeters}
-     *               or {@link #setMaxTrainLengthScaleMeters}
-     * @param f train length
-     */
-    @Deprecated (since="5.9.7",forRemoval=true)
-    public void setMaxTrainLength(float f) {
-        maxTrainLength = f;
-    }
-
-    /**
-     * @deprecated use {@link #getMaxTrainLengthScaleMeters}
-     *              or {@link #getMaxTrainLengthScaleFeet}
-     * @return train length of in units of the writing application
-     */
-    @Deprecated (since="5.9.7",forRemoval=true)
-    public float getMaxTrainLength() {
-        return maxTrainLength;
     }
 
     /**
@@ -831,7 +786,7 @@ public class TrainInfo {
      private float rollingResistanceCoeff = 0.002f;
      public void setRollingResistanceCoeff(float value) { rollingResistanceCoeff = Math.max(0.0f, value); }
      public float getRollingResistanceCoeff() { return rollingResistanceCoeff; }
-     
+
 
      // --- Physics: driver's applied power/regulator during acceleration (0.0..1.0); default 1.0 (=100%)
      private float driverPowerPercent = 1.0f;
