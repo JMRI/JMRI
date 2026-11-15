@@ -27,7 +27,7 @@ import jmri.managers.ProxySensorManager;
  * measured is of the simulated trains, not of a layout.
  *
  * @author Keith Bruce Copyright (C) 2026
- * @since 5.19.1
+ * @since 5.19.2
  */
 public final class TrainTrackingDetectors {
 

@@ -53,7 +53,7 @@ import jmri.jmrit.roster.RosterSpeedProfile;
  * It only measures: nothing uses the measurements yet.
  *
  * @author Keith Bruce Copyright (C) 2026
- * @since 5.19.1
+ * @since 5.19.2
  */
 public class TrainTrackingMeasurements extends PropertyChangeSupport implements InstanceManagerAutoDefault, Disposable {
 
