@@ -295,6 +295,24 @@ code {
 					<td>list all configured power connections, one entry per connection</td>
 				</tr>
 				<tr>
+					<td><code>{"type":"trainRecord","data":{"name":"Express"}}</code></td>
+					<td><code>{"type":"trainRecord","data":{"name":"Express","rosterEntry":"Class 47","placed":true,"blocks":["IB12","IB11"],"frontKnown":true,"confidence":"CONFIRMED"}}</code></td>
+					<td>where train tracking places the train "Express": the Blocks it is in, front first, and how sure it is
+						(CONFIRMED, ESTIMATED, AMBIGUOUS, STALLED or LOST); sent again whenever it changes</td>
+				</tr>
+				<tr>
+					<td><code>{"type":"trainRecord","method":"post","data":{"name":"Express","block":"Platform 2"}}</code></td>
+					<td><code>{"type":"trainRecord","data":{"name":"Express","rosterEntry":"Class 47","placed":true,"blocks":["IB20"],"frontKnown":false,"confidence":"CONFIRMED"}}</code></td>
+					<td>correct train tracking: the train is in this Block alone. <code>"emptyBlock"</code> instead says no
+						train is in a Block. Corrections need the Correct where trains are permission: with the permission
+						system on, log in with <code>sessionLogin</code> and send its token as <code>"token"</code></td>
+				</tr>
+				<tr>
+					<td><code>{"list":"trainRecords"}</code></td>
+					<td><code>[{"type":"trainRecord","data":{"name":"Express", ...}}]</code></td>
+					<td>list every train record; each is sent again whenever it changes</td>
+				</tr>
+				<tr>
 					<td><code>{"type":"memory","data":{"name":"IMCURRENTTIME"}}</code></td>
 					<td><code>{"type":"memory","data":{"name":"IMCURRENTTIME","userName":null,"comment":null,"value":"2:53
 							PM"}}</code></td>
