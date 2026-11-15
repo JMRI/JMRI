@@ -623,7 +623,7 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
-            <li></li>
+            <li>Removed the unused, never-finished web preferences page (<code>/config</code>) and its templates.</li>
         </ul>
 
     <h3>Where Used</h3>
