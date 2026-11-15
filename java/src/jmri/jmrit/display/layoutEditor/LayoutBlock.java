@@ -3388,6 +3388,181 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * The metric, hop count and length of a route as advertised to a
      * neighbour.
      */
+    /**
+     * Work out from scratch the routes every block should hold, from the
+     * neighbours and through paths of all the blocks, and bring each block's
+     * table into line with them.
+     * <p>
+     * The routes passed from block to block can miss a way to a destination
+     * or keep one that has gone: a route withdrawn while it only went round
+     * a loop is not offered again once a way out is learnt, and a route
+     * round a loop that no longer leads anywhere can be left part way to the
+     * hop count limit. This finds the lowest metric, hop count and length of
+     * each route a block can take, as a block would advertise them, and
+     * adds, corrects or removes routes to match.
+     *
+     * @param blocks the layout blocks to work out routes for
+     * @return true if any table was changed
+     */
+    static boolean bringRoutesInLine(@Nonnull Collection<LayoutBlock> blocks) {
+        Map<Block, LayoutBlock> byBlock = new IdentityHashMap<>();
+        for (LayoutBlock lb : blocks) {
+            byBlock.put(lb.getBlock(), lb);
+        }
+        // for each block, by destination, the cost via each next block
+        Map<LayoutBlock, Map<Block, Map<Block, WorkedOutCost>>> expected = new IdentityHashMap<>();
+        for (LayoutBlock lb : blocks) {
+            expected.put(lb, new IdentityHashMap<>());
+        }
+        for (LayoutBlock destLb : blocks) {
+            workOutRoutes(byBlock, destLb, expected);
+        }
+        boolean any = false;
+        for (LayoutBlock lb : blocks) {
+            any |= lb.bringRoutesInLine(expected.get(lb));
+        }
+        return any;
+    }
+
+    // the lowest metric, hop count and length of a route, each on its own
+    private static final class WorkedOutCost {
+
+        int metric;
+        int hopCount;
+        float length;
+
+        WorkedOutCost(int metric, int hopCount, float length) {
+            this.metric = metric;
+            this.hopCount = hopCount;
+            this.length = length;
+        }
+    }
+
+    private static void workOutRoutes(Map<Block, LayoutBlock> byBlock, LayoutBlock destLb,
+            Map<LayoutBlock, Map<Block, Map<Block, WorkedOutCost>>> expected) {
+        Block dest = destLb.getBlock();
+        Deque<LayoutBlock> changedBlocks = new ArrayDeque<>();
+        Deque<Block> changedVia = new ArrayDeque<>();
+
+        // a route straight to the destination costs its metric and one hop
+        for (LayoutBlock lb : byBlock.values()) {
+            Adjacencies adj = lb.getAdjacency(dest);
+            if (adj != null && receivesFrom(adj)) {
+                expected.get(lb).computeIfAbsent(dest, x -> new IdentityHashMap<>())
+                        .put(dest, new WorkedOutCost(destLb.getBlockMetric(), 1, dest.getLengthMm()));
+                changedBlocks.add(lb);
+                changedVia.add(dest);
+            }
+        }
+        // then onwards: a block "from" can go via its neighbour "next" when
+        // "next" has a through path from "from" to where its own route goes
+        while (!changedBlocks.isEmpty()) {
+            LayoutBlock next = changedBlocks.poll();
+            Block onward = changedVia.poll();
+            if (next == destLb) {
+                continue;
+            }
+            WorkedOutCost onwardCost = expected.get(next).get(dest).get(onward);
+            for (ThroughPaths tp : next.throughPaths) {
+                if (tp.getDestinationBlock() != onward) {
+                    continue;
+                }
+                Block fromBlock = tp.getSourceBlock();
+                LayoutBlock from = byBlock.get(fromBlock);
+                if (from == null || fromBlock == dest) {
+                    continue;
+                }
+                Adjacencies adj = from.getAdjacency(next.getBlock());
+                if (adj == null || !adj.isMutual() || !receivesFrom(adj)) {
+                    continue;
+                }
+                int metric = next.getBlockMetric() + onwardCost.metric;
+                int hops = onwardCost.hopCount + 1;
+                float length = next.getBlock().getLengthMm() + onwardCost.length;
+                Map<Block, WorkedOutCost> fromRoutes = expected.get(from).computeIfAbsent(dest, x -> new IdentityHashMap<>());
+                WorkedOutCost cost = fromRoutes.get(next.getBlock());
+                boolean better = false;
+                if (cost == null) {
+                    fromRoutes.put(next.getBlock(), new WorkedOutCost(metric, hops, length));
+                    better = true;
+                } else {
+                    if (metric < cost.metric) {
+                        cost.metric = metric;
+                        better = true;
+                    }
+                    if (hops < cost.hopCount) {
+                        cost.hopCount = hops;
+                        better = true;
+                    }
+                    if (length < cost.length) {
+                        cost.length = length;
+                        better = true;
+                    }
+                }
+                if (better) {
+                    changedBlocks.add(from);
+                    changedVia.add(next.getBlock());
+                }
+            }
+        }
+    }
+
+    // the neighbour sends us routes unless we only transmit to it
+    private static boolean receivesFrom(Adjacencies adj) {
+        return adj.getPacketFlow() != TXONLY && adj.getPacketFlow() != NONE;
+    }
+
+    // make this block's routes those worked out: by destination, the cost via each next block
+    private boolean bringRoutesInLine(Map<Block, Map<Block, WorkedOutCost>> expected) {
+        boolean any = false;
+        Map<Block, Set<Block>> held = new IdentityHashMap<>();
+        for (int i = routes.size() - 1; i >= 0; i--) {
+            Routes ro = routes.get(i);
+            Block dest = ro.getDestBlock();
+            // a route straight to a neighbour has this block as its next block
+            Block via = (ro.getNextBlock() == getBlock()) ? dest : ro.getNextBlock();
+            Map<Block, WorkedOutCost> toDest = expected.get(dest);
+            WorkedOutCost cost = (toDest == null) ? null : toDest.get(via);
+            if (cost == null || !held.computeIfAbsent(dest, x -> new HashSet<>()).add(via)) {
+                routes.remove(i).dispose();
+                firePropertyChange(PROPERTY_LENGTH, null, null);
+                any = true;
+                continue;
+            }
+            if (ro.getMetric() != cost.metric) {
+                ro.setMetric(cost.metric);
+                any = true;
+            }
+            if (ro.getHopCount() != cost.hopCount) {
+                ro.setHopCount(cost.hopCount);
+                any = true;
+            }
+            if (!MathUtil.equals(ro.getLength(), cost.length)) {
+                ro.setLength(cost.length);
+                any = true;
+            }
+        }
+        for (Map.Entry<Block, Map<Block, WorkedOutCost>> d : expected.entrySet()) {
+            Block dest = d.getKey();
+            Set<Block> already = held.getOrDefault(dest, Set.of());
+            for (Map.Entry<Block, WorkedOutCost> e : d.getValue().entrySet()) {
+                Block via = e.getKey();
+                WorkedOutCost cost = e.getValue();
+                if (already.contains(via) || cost.hopCount > MAX_HOP_COUNT) {
+                    continue;
+                }
+                Adjacencies adj = getAdjacency(via);
+                if (adj == null) {
+                    continue;
+                }
+                routes.add(new Routes(dest, via == dest ? getBlock() : via, cost.hopCount, adj.getDirection(),
+                        cost.metric, cost.length));
+                any = true;
+            }
+        }
+        return any;
+    }
+
     private static final class RouteCost {
 
         final int metric;
@@ -3692,7 +3867,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                as seperate entries then we only need to forward the new route to those
                source blocks that have a desination of the next hop*/
             if (throughPaths.get(i).getDestinationBlock() == nextHop) {
-                if (getAdjacency(throughPaths.get(i).getSourceBlock()).isMutual()) {
+                Adjacencies source = getAdjacency(throughPaths.get(i).getSourceBlock());
+                // a through path can outlast its neighbour while a connection is taken away
+                if (source != null && source.isMutual()) {
                     validBlock = InstanceManager.getDefault(
                             LayoutBlockManager.class).
                             getLayoutBlock(throughPaths.get(i).getSourceBlock());
