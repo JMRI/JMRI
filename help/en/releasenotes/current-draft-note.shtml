@@ -634,6 +634,9 @@
     <h3>LogixNG</h3>
         <a id="LogixNG" name="LogixNG"></a>
         <ul>
+          <li>Clock and Time Since Midnight expressions on the system clock
+              are now checked at the start of each minute, not up to 59 s
+              later.</li>
           <li>LogixNG Tables are now loaded using UTF-8 encoding.
               If you are using Windows and have Java 11 or Java 17 and if you
               are using non English characters in LogixNG Tables, the
