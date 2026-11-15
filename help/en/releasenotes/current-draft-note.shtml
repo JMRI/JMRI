@@ -487,6 +487,10 @@
             <li>A large panel using Layout Block routing no longer stops with
                 a StackOverflowError while the routing tables are built
                 (new in 5.17.5).</li>
+            <li>Layout Block routing tables are now complete and correct on
+                large panels with loops, and after a connection is taken
+                away: routes that were missed are learnt, and routes that no
+                longer lead anywhere are withdrawn.</li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>

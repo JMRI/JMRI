@@ -46,21 +46,11 @@ public class LayoutBlockRoutingLoopTest {
         for (int i = 0; i < inLoop.getNumberOfNeighbours(); i++) {
             assertFalse(inLoop.getNeighbourAtIndex(i) == from.getBlock(), "connection removed");
         }
-        // Every route that can still reach its destination has the right
-        // cost. Routes that went round the loop and can no longer get out are
-        // withdrawn at the hop count limit or left with a high hop count, so
-        // they are never preferred. Taking a connection away does not make
-        // blocks learn new routes in place of the ones withdrawn, as before.
-        int[] count = {0};
-        for (String wrong : checker.wrongRoutes(count)) {
-            if (wrong.startsWith("unreachable ")) {
-                int hops = Integer.parseInt(wrong.substring(wrong.lastIndexOf(' ') + 1));
-                assertTrue(hops >= 200, "route that can not get out of the loop has a high hop count: " + wrong);
-            } else {
-                assertTrue(wrong.startsWith("missing "), "route has the right cost after removing the connection from "
-                        + from.getDisplayName() + " to " + inLoop.getDisplayName() + ": " + wrong);
-            }
-        }
+        // Routes that went round the loop and can no longer get out are
+        // withdrawn, and routes still possible another way are kept or
+        // learnt again.
+        checker.assertTablesCorrect("after removing the connection from " + from.getDisplayName() + " to "
+                + inLoop.getDisplayName());
         for (LayoutBlock lb : lbm.getNamedBeanSet()) {
             for (int i = 0; i < lb.getNumberOfRoutes(); i++) {
                 assertTrue(lb.getRouteHopCountAtIndex(i) < 254, "route at the hop count limit withdrawn at "

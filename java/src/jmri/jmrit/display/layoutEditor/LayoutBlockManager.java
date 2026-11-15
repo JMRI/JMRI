@@ -2712,6 +2712,50 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
     private volatile long lastRoutingChange;
 
+    // a check of every routing table is waiting to run on the layout thread
+    private volatile boolean routeCheckQueued;
+    private boolean checkingRoutes;
+
+    /**
+     * Check every block's routing table on the layout thread (Swing thread),
+     * once the routing work now under way is done.
+     * <p>
+     * Several changes made together give one check.
+     */
+    private void checkRoutesSoon() {
+        if (checkingRoutes || routeCheckQueued) {
+            return;
+        }
+        routeCheckQueued = true;
+        ThreadingUtil.runOnLayoutEventually(this::checkRoutes);
+    }
+
+    /**
+     * Bring every block's routing table into line with the routes worked out
+     * from the blocks' neighbours and through paths, for every destination.
+     *
+     * @see LayoutBlock#bringRoutesInLine(java.util.Collection)
+     */
+    void checkRoutes() {
+        routeCheckQueued = false;
+        if (!isAdvancedRoutingEnabled()) {
+            return;
+        }
+        List<LayoutBlock> blocks = new ArrayList<>(getNamedBeanSet());
+        boolean changed = false;
+        checkingRoutes = true;
+        try {
+            blocks.removeIf(lb -> lb.getBlock() == null);
+            changed = LayoutBlock.bringRoutesInLine(blocks);
+            if (changed) {
+                log.debug("routing tables corrected");
+                setLastRoutingChange();
+            }
+        } finally {
+            checkingRoutes = false;
+        }
+    }
+
     /**
      * A piece of routing work that may cause more: telling the neighbours of a
      * block of a change to one of its routes, one at a time, or withdrawing a
@@ -2799,6 +2843,7 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
     void setLastRoutingChange() {
         log.debug("setLastRoutingChange");
+        checkRoutesSoon();
         synchronized (stabilisedLock) {
             lastRoutingChange = System.nanoTime();
             stabilised = false;
