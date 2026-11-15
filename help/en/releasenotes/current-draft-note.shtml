@@ -440,6 +440,10 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
+             <li>The Auto Allocator no longer stops allocating for a moment, with
+                 an IndexOutOfBoundsException in the log, when an allocation
+                 request is added or removed while it is looking at the list of
+                 requests.</li>
              <li></li>
                  held for good by a meet planned after it had already been given
                  the road beyond its meeting place. Two trains running the same
