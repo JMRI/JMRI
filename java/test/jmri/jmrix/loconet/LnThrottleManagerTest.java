@@ -254,6 +254,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
     public void testCreateLnThrottleStealScenario3() {
 
         ThrottleListen throtListen = new ThrottleListen();
+        ((LnThrottleManager) tm).retryIntervalMs = 1000; // this test looks for the request being repeated
         tm.requestThrottle(85, throtListen, true);
 
         assertEquals("BF 00 55 00",
@@ -277,6 +278,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
         ThrottleListenStealWhenDecision throtListen = new ThrottleListenStealWhenDecision();
         Assertions.assertNull(throtListen.getThrottle());
+        ((LnThrottleManager) tm).retryIntervalMs = 1000; // this test looks for the request being repeated
         tm.requestThrottle(256, throtListen, true);
 
         assertEquals( "BF 02 00 00",
@@ -834,6 +836,10 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         // (the meters' query 85 ms after they are made, the power manager's
         // slot 0 read): the tests count from here.
         lnis.outbound.clear();
+        // A slot request with no reply is sent again after a second. Most
+        // tests count the messages sent, so on a slow machine a repeat would
+        // upset them; the tests that look for the repeat set this back.
+        ((LnThrottleManager) tm).retryIntervalMs = 60000;
     }
 
     @AfterEach
