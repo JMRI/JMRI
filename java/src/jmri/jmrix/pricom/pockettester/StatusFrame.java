@@ -1,9 +1,12 @@
 package jmri.jmrix.pricom.pockettester;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Hashtable;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -150,7 +153,7 @@ public class StatusFrame extends jmri.util.JmriJFrame implements DataListener {
             return;
         }
 
-        source.sendBytes(prompt.getBytes());
+        source.sendBytes(prompt.getBytes(StandardCharsets.UTF_8));
 
     }
 

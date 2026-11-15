@@ -267,14 +267,14 @@ public class DccConsist implements Consist, ProgListener {
 
         if (directionNormal) {
             try {
-                opsProg.writeCV("19", consistAddress.getNumber(), this);
+                opsProg.writeCV("19", consistAddress.getNumber(), cv19Listener(address));
             } catch (ProgrammerException e) {
                 // Don't do anything with this yet
                 log.warn("Exception writing CV19 while adding from consist", e);
             }
         } else {
             try {
-                opsProg.writeCV("19", consistAddress.getNumber() + 128, this);
+                opsProg.writeCV("19", consistAddress.getNumber() + 128, cv19Listener(address));
             } catch (ProgrammerException e) {
                 // Don't do anything with this yet
                 log.warn("Exception writing CV19 while adding to consist", e);
@@ -299,7 +299,7 @@ public class DccConsist implements Consist, ProgListener {
         }
 
         try {
-            opsProg.writeCV("19", 0, this);
+            opsProg.writeCV("19", 0, cv19Listener(address));
         } catch (ProgrammerException e) {
             // Don't do anything with this yet
             log.warn("Exception writing CV19 while removing from consist", e);
@@ -609,12 +609,26 @@ public class DccConsist implements Consist, ProgListener {
         });
     }
 
+    /**
+     * @param address the loco whose CV19 is being written
+     * @return a listener that tells the consist listeners how the write went,
+     *         for that loco
+     */
+    private ProgListener cv19Listener(DccLocoAddress address) {
+        return (value, status) -> {
+            log.debug("CV19 write for {} done, status is {}", address, status);
+            notifyConsistListeners(address, status == ProgListener.OK
+                    ? ConsistListener.OPERATION_SUCCESS : ConsistListener.CONSIST_ERROR);
+        };
+    }
+
     // This class is to be registered as a programmer listener, so we
     // include the programmingOpReply() function
     @Override
     public void programmingOpReply(int value, int status) {
         log.debug("Programming Operation reply received, value is {}, status is {}", value, status);
-        notifyConsistListeners(new DccLocoAddress(0, false), ConsistListener.OPERATION_SUCCESS);
+        notifyConsistListeners(new DccLocoAddress(0, false), status == ProgListener.OK
+                ? ConsistListener.OPERATION_SUCCESS : ConsistListener.CONSIST_ERROR);
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DccConsist.class);

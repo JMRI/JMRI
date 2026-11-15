@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
@@ -92,8 +93,8 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
             return; // Canceled
         }
         File f = fc.getSelectedFile();
-        
-        try (BufferedReader in = new BufferedReader(new FileReader(f))) {
+
+        try (BufferedReader in = new BufferedReader(new FileReader(f, StandardCharsets.UTF_8))) {
 
             // create a status frame
             JPanel ps = new JPanel();
@@ -149,7 +150,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
                     log.error("Macro addr in restore file should be {} Macro addr read {}", macroAddr, macroLine[0]); // NOI18N
                     break;
                 }
-                
+
                 // check for macroLine our of range
                 macroMemAddr = Integer.parseUnsignedInt(macroLine[0].replace(":", ""), 16);
                 if (macroMemAddr < macroMemMim) {
@@ -214,7 +215,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
             }
 
             in.close();
-            
+
             // kill status panel
             fstatus.dispose();
 
