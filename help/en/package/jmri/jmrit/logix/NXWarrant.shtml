@@ -259,7 +259,9 @@
 
       <ul>
         <li><strong>Layout Scale</strong> - Setting the modeling scale of your layout is essential
-        so conversion to scale speeds is correct.</li>
+        so conversion to scale speeds is correct. The scales offered are JMRI's list of scales, the
+        one Dispatcher's Options and the Timetable also offer. For any other ratio, choose
+        <strong>Custom</strong> and type it.</li>
 
         <li>The default search depth (<strong>Max. Number of Blocks in Route</strong>) as mentioned
         above when looking for routes.</li>
