@@ -406,6 +406,34 @@ public class AutoActiveTrain implements ThrottleListener {
     public float getStopBySpeedProfileAdjust() {
         return _stopBySpeedProfileAdjust;
     }
+
+    /**
+     * Check whether this train can be stopped short of the far end of a
+     * Section: by the Section's stopping sensor for the direction it is
+     * entered in, by its speed profile, or because the train fits in it.
+     * <p>
+     * A Section whose length is not known is taken to be one the train can
+     * stop in, as is any Section when the train's length is not known.
+     *
+     * @param section   the Section
+     * @param direction the direction the train runs through it,
+     *                  {@link Section#FORWARD} or {@link Section#REVERSE}
+     * @return false if the train would have to be stopped at once on entering
+     *         the Section, so that it may run on past its far end
+     */
+    public boolean canStopIn(Section section, int direction) {
+        Sensor stopSensor = (direction == Section.REVERSE)
+                ? section.getReverseStoppingSensor() : section.getForwardStoppingSensor();
+        if (stopSensor != null && _activeTrain.getUseStopSensor()) {
+            return true;
+        }
+        if (getUseSpeedProfile() && getStopBySpeedProfile()) {
+            return true;
+        }
+        long sectionLength = section.getActualLength();
+        long trainLength = getMaxTrainLengthMM();
+        return sectionLength <= 0 || trainLength <= 0 || sectionLength >= trainLength;
+    }
     /**
      * Set the F-Number for the light
      * @param value F-Number

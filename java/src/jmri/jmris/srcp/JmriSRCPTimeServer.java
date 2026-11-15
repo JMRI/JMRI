@@ -2,10 +2,12 @@ package jmri.jmris.srcp;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 
 import jmri.JmriException;
 import jmri.TimebaseRateException;
 import jmri.jmris.AbstractTimeServer;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,12 +38,14 @@ public class JmriSRCPTimeServer extends AbstractTimeServer {
         java.util.GregorianCalendar cal = new java.util.GregorianCalendar();
         cal.setTime(timebase.getTime());
         long day = jmri.util.DateUtil.julianDayFromCalendar(cal);
-        output.write(("100 INFO 0 TIME " + day + " " + sdf.format(timebase.getTime()) + "\n\r").getBytes());
+        output.write(("100 INFO 0 TIME " + day + " " + sdf.format(timebase.getTime()) + "\n\r")
+                .getBytes(StandardCharsets.UTF_8));
     }
 
     @Override
     public void sendRate() throws IOException {
-        output.write(("101 INFO 0 TIME " + modelrate + " " + realrate + "\n\r").getBytes());
+        output.write(("101 INFO 0 TIME " + modelrate + " " + realrate + "\n\r")
+                .getBytes(StandardCharsets.UTF_8));
     }
 
     @Override
@@ -120,7 +124,7 @@ public class JmriSRCPTimeServer extends AbstractTimeServer {
             // and start the timeListener.
             listenToTimebase(true);
             try {
-                output.write("200 Ok\n\r".getBytes());
+                output.write("200 Ok\n\r".getBytes(StandardCharsets.UTF_8));
             } catch (IOException ie) {
                 log.warn("Unable to send message to client: {}", ie.getMessage());
             }
