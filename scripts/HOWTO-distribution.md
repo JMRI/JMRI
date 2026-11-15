@@ -442,7 +442,7 @@ If you're developing any additional (post-5.17.5) changes that you want in the J
 
 - The build will start shortly (or click "Build Now"). Wait for it to complete.
 
-- Check the [signing-wget.log](https://builds.jmri.org/jenkins/job/testreleases/job/5.17.5/ws/%20signing-wget.log) file in the job’s workspace to make sure all the return codes are zero. This is the macOS signing process. A non-zero code indicates a problem with the signature. If there is a non-zero code, resolve that and rebuild before proceeding!
+- Check the [signing-wget.log](https://builds.jmri.org/jenkins/job/testreleases/job/5.17.5/ws/signing-wget.log) file in the job’s workspace to make sure all the return codes are zero. This is the macOS signing process. A non-zero code indicates a problem with the signature. If there is a non-zero code, resolve that and rebuild before proceeding!
 
 ================================================================================
 
