@@ -235,7 +235,9 @@ public class ExpressionClock extends AbstractDigitalExpression implements Proper
                 propertyChange(null);
             }
         };
-        TimerUtil.schedule(timerTask, System.currentTimeMillis() % milisInAMinute, milisInAMinute);
+        // first at the start of the next minute, then every minute
+        long toNextMinute = milisInAMinute - System.currentTimeMillis() % milisInAMinute;
+        TimerUtil.scheduleAtFixedRate(timerTask, toNextMinute, milisInAMinute);
     }
 
     /** {@inheritDoc} */
