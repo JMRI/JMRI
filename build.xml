@@ -2845,7 +2845,7 @@
             <arg value="--dns-timeout=10"/>     <!-- default is wait forever -->
             <arg value="--connect-timeout=10"/> <!-- default is wait forever -->
             <arg value="--read-timeout=3600"/>  <!-- wait a long time for the process to run and data return -->
-            <arg value="-O signing-wget.log"/>
+            <arg value="-Osigning-wget.log"/>
             <arg value="http://${env.signinghost}/selfsign.php?get=${dist.release}/JMRI.${release.version-encoded-string}%2bunsigned.dmg&amp;rel=${release.version-encoded-string}&amp;put=${dist.release}/JMRI.${release.version-encoded-string}.dmg"/>
         </exec>
         <chmod perm="go-w" dir="${dist.release}"/>
