@@ -953,6 +953,9 @@
                 set, they are added to the Blocks it is in, and they are left
                 when it is seen to leave a detected Block in front of them. It
                 only watches.</li>
+            <li>A fault in one of JMRI's timed tasks no longer stops every
+                later delayed action until JMRI is restarted: JMRI now starts
+                its common timer again, and logs an error saying so.</li>
             <li></li>
             <li>Monitors and the system console: a full window no longer
                 slows down as each line is added; it now keeps up to a
