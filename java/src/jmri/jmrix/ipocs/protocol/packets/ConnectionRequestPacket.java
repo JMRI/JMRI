@@ -1,6 +1,7 @@
 package jmri.jmrix.ipocs.protocol.packets;
 
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Client sends this when initiating a connection.
@@ -23,7 +24,7 @@ public class ConnectionRequestPacket extends Packet {
   protected byte[] serializeSpecific() {
     ByteBuffer buffer = ByteBuffer.allocate(2 + siteDataVersion.length() + 1);
     buffer.putShort(protocolVersion);
-    buffer.put(siteDataVersion.getBytes());
+    buffer.put(siteDataVersion.getBytes(StandardCharsets.UTF_8));
     buffer.put((byte)0);
     buffer.rewind();
     return buffer.array();
