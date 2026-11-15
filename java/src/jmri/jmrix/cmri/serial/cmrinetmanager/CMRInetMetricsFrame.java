@@ -6,15 +6,19 @@ import java.awt.event.ActionEvent;
 import javax.swing.border.Border;
 import javax.swing.*;
 import javax.swing.table.*;
+
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintStream;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+
 import javax.swing.border.TitledBorder;
+
 import jmri.jmrix.cmri.serial.cmrinetmetrics.CMRInetMetricsData;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 
@@ -67,7 +71,7 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
         networkMetricsBorderTitled = BorderFactory.createTitledBorder(networkMetricsBorder, "Error Metrics", TitledBorder.LEFT, TitledBorder.ABOVE_TOP);
 
         // Set up the CMRInet ERROR metrics table
-        //---------------------------------------       
+        //---------------------------------------
         networkMetricsPanel = new JPanel();
         networkMetricsPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
@@ -77,7 +81,7 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
         netMetricsTableModel = new NetMetricsTableModel();
         netMetricsTable = new JTable(netMetricsTableModel);
 
-        netMetricsTable.setPreferredScrollableViewportSize(new Dimension(400, 150));  //400 150                  
+        netMetricsTable.setPreferredScrollableViewportSize(new Dimension(400, 150));  //400 150
         netMetricsTable.setFillsViewportHeight(true);
 
         netMetricsTable.setShowGrid(false);
@@ -139,7 +143,7 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
 
         //--------------------------------------
         // Set up the CMRInet metrics DATA table
-        //--------------------------------------       
+        //--------------------------------------
         networkMetricsDataPanel = new JPanel();
         networkMetricsDataPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
@@ -149,7 +153,7 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
         netMetricsDataTableModel = new NetMetricsDataTableModel();
         netMetricsDataTable = new JTable(netMetricsDataTableModel);
 
-        netMetricsDataTable.setPreferredScrollableViewportSize(new Dimension(400, 150));  //400 150                  
+        netMetricsDataTable.setPreferredScrollableViewportSize(new Dimension(400, 150));  //400 150
         netMetricsDataTable.setFillsViewportHeight(true);
 
         netMetricsDataTable.setShowGrid(false);
@@ -203,7 +207,7 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
         add(networkMetricsDataPanel);
 
         // Main button panel
-        //------------------ 
+        //------------------
         JPanel mainButtons = new JPanel();
         mainButtons.setLayout(new FlowLayout(FlowLayout.CENTER));
         mainButtons.setPreferredSize(new Dimension(845, 50));
@@ -267,9 +271,9 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
      * Save Metrics button handler.
      * <p>
      * Metric data is saved to a text file named
-     * CMRInetMetrics_YYYYMMDD_HHMMSS 
+     * CMRInetMetrics_YYYYMMDD_HHMMSS
      * The file is text lines, one for each metric displayed and the count.
-     * 
+     *
      * @param e unused.
      */
     public void saveMetricsButtonActionPerformed(ActionEvent e) {
@@ -287,7 +291,9 @@ public class CMRInetMetricsFrame extends jmri.util.JmriJFrame {
             try {
                 // Open the file and write the metric data
                 //----------------------------------------
-                logStream = new PrintStream(new FileOutputStream(metricsSaveChooser.getSelectedFile()));
+                logStream = new PrintStream(
+                        new FileOutputStream(metricsSaveChooser.getSelectedFile()),
+                        false, StandardCharsets.UTF_8);
                 logStream.println("-----  CMRInet Error Metrics  -----");
                 for (int i = 0; i != CMRInetMetricsData.CMRInetMetricErrLAST; i++) {
                     logStream.println(String.format("%-30s %d",

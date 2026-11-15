@@ -181,9 +181,20 @@ public class OlcbTestInterface {
     // Filled in only if called constructor with the argument to create the system connection memo.
     public CanSystemConnectionMemo systemConnectionMemo;
 
+    /**
+     * Shut the interfaces down. The CanInterface goes first: it made the
+     * thread pool the OlcbInterface also uses, and its dispose() gives the
+     * pool's tasks up to 10 seconds to end, where OlcbInterface.dispose()
+     * gives them 200 ms and logs "Pool did not terminate" if one is still
+     * running, as on a busy test machine. The OlcbInterface then finds the
+     * pool already shut down and disposes the rest: its timer, datagram
+     * buffer, memory configuration service and node store.
+     */
     public void dispose(){
-        // terminate the OlcbInterface (and terminate thread)
-        Thread thread = new Thread(iface::dispose,"OLCB Test Interface dispose thread");
+        Thread thread = new Thread(() -> {
+            canInterface.dispose();
+            iface.dispose();
+        }, "OLCB Test Interface dispose thread");
         thread.start();
         JUnitUtil.waitThreadTerminated(thread);
         configurationManager.olcbEventNameStore.deregisterShutdownTask();

@@ -248,8 +248,8 @@
 
       <h3 id="jquery3">Updating Custom Pages to jQuery 3</h3>
 
-      <p>As of JMRI 5.19.1, the web server's pages use jQuery 3.7.1, and the older jQuery 2.2.4
-      is no longer included. If you have your own web pages that load
+      <p>As of JMRI 5.19.1, the web server's pages use jQuery 3.7.1, and the older copies of
+      jQuery (1.11.2, 2.0.3 and 2.2.4) are no longer included. If you have your own web pages that load
       jQuery, or edited copies of JMRI files like <code>panel.js</code> or
       <code>webThrottle.js</code> in a <code>web/js</code> directory under your User Files,
       profile or settings directory, they may need a few changes.</p>
@@ -272,6 +272,19 @@
 
         <li>Once the console is clear, remove the Migrate line.</li>
       </ol>
+
+      <h4 id="jquery2compat">Pages Used With More Than One Version of JMRI</h4>
+
+      <p>A page that loads <code>/js/jquery-2.2.4.min.js</code> still works: in place of jQuery
+      2.2.4, which is no longer included, JMRI loads jQuery 3.7.1 and jQuery Migrate, and the
+      browser's console says so. Earlier versions of JMRI still have the real jQuery 2.2.4. So if
+      you run the same profile, with the same custom pages, on this and an earlier version of
+      JMRI, leave your pages loading <code>/js/jquery-2.2.4.min.js</code> until you no longer use
+      the earlier version, then change them as above. A page changed to load
+      <code>/js/jquery-3.7.1.min.js</code> only works with this and later versions.</p>
+
+      <p>This replacement for <code>jquery-2.2.4.min.js</code> is temporary and will be removed
+      in a later version of JMRI.</p>
 
       <p>For edited copies of JMRI files, it's often easier to start again from the new JMRI
       version of the file and re-apply your changes to it.</p>

@@ -1,11 +1,14 @@
 package jmri.jmrit.dispatcher;
 
 import java.awt.GraphicsEnvironment;
+import java.io.File;
+import java.nio.file.Files;
 
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 import org.junit.Assert;
 import org.junit.Assume;
 
@@ -39,6 +42,37 @@ public class OptionsFileTest {
         (new org.netbeans.jemmy.operators.JFrameOperator(Bundle.getMessage("TitleDispatcher"))).requestClose();
         JUnitUtil.dispose(d);
 
+    }
+
+    @Test
+    public void testWaitWhereTrainsCanStopIsOffUnlessSavedOn(@TempDir File tempDir) throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // a copy of an options file written before the option existed
+        File file = new File(tempDir, "dispatcheroptions.xml");
+        Files.copy(new File("java/test/jmri/jmrit/dispatcher/dispatcheroptions.xml").toPath(), file.toPath());
+        OptionsFile.setDefaultFileName(file.getPath());
+        try {
+            DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
+            Assert.assertFalse("off when the file does not say", d.getWaitWhereTrainsCanStop());
+
+            OptionsFile options = InstanceManager.getDefault(OptionsFile.class);
+            d.setWaitWhereTrainsCanStop(true);
+            options.writeDispatcherOptions(d);
+            d.setWaitWhereTrainsCanStop(false);
+            options.readDispatcherOptions(d);
+            Assert.assertTrue("on when saved on", d.getWaitWhereTrainsCanStop());
+
+            d.setWaitWhereTrainsCanStop(false);
+            options.writeDispatcherOptions(d);
+            d.setWaitWhereTrainsCanStop(true);
+            options.readDispatcherOptions(d);
+            Assert.assertFalse("off when saved off", d.getWaitWhereTrainsCanStop());
+
+            (new org.netbeans.jemmy.operators.JFrameOperator(Bundle.getMessage("TitleDispatcher"))).requestClose();
+            JUnitUtil.dispose(d);
+        } finally {
+            OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/dispatcheroptions.xml");
+        }
     }
 
     @BeforeEach
