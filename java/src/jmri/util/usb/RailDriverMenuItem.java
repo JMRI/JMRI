@@ -1,6 +1,8 @@
 package jmri.util.usb;
 
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -33,6 +35,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author George Warner Copyright (c) 2017-2018
  */
+@SuppressFBWarnings(value = {"AT_UNSAFE_RESOURCE_ACCESS_IN_THREAD"},
+        justification = "Better to suppress it in one class than to suppress it everywhere in JMRI")
 public class RailDriverMenuItem extends JMenuItem implements HidServicesListener, PropertyChangeListener {
 
     private static final short VENDOR_ID = 0x05F3;
@@ -518,7 +522,7 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
                     activeThrottleFrame = (ThrottleFrame) object;
                     throttleWindow = activeThrottleFrame.getThrottleControllersContainer();
                     throttleWindow.addPropertyChangeListener(this);
-                    activeThrottleFrame.addPropertyChangeListener(this);                   
+                    activeThrottleFrame.addPropertyChangeListener(this);
                 }
                 break;
             case "Value":
@@ -618,7 +622,7 @@ public class RailDriverMenuItem extends JMenuItem implements HidServicesListener
                         switch (fNum) {
                             case 28: {  // zoom/rocker button up
                                 if (isDown)  {
-                                    activeThrottleFrame.getRosterEntrySelector().setSelectedRosterEntry();                                    
+                                    activeThrottleFrame.getRosterEntrySelector().setSelectedRosterEntry();
                                     DccLocoAddress a = activeThrottleFrame.getAddress();
                                     ledString = "sel " + ((a != null) ? a.toString() : "null");
                                 }

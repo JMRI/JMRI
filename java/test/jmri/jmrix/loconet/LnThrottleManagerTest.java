@@ -830,6 +830,10 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         memo.getSensorManager().dispose(); // get rid of sensor manager to prevent it from sending interrogation messages
         memo.getPowerManager().dispose(); // get rid of power manager to prevent it from sending slot 0 read message
         memo.getPredefinedMeters().dispose(); // get rid of meter to prevent it reading slots
+        // On a slow machine they may already have sent their first message
+        // (the meters' query 85 ms after they are made, the power manager's
+        // slot 0 read): the tests count from here.
+        lnis.outbound.clear();
     }
 
     @AfterEach

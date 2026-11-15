@@ -4,9 +4,11 @@ import java.io.File;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -92,7 +94,7 @@ public class TimeTableCsvImport {
         tdm.setLockCalculate(true);
         errorOccurred = false;
         try {
-            fileReader = new FileReader(file);
+            fileReader = new FileReader(file, StandardCharsets.UTF_8);
             bufferedReader = new BufferedReader(fileReader);
             csvFile = new CSVParser(bufferedReader, CSVFormat.DEFAULT);
             for (CSVRecord record : csvFile.getRecords()) {

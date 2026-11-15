@@ -171,7 +171,8 @@ public class MultipartMessage {
         // check server status code first
         int status = httpConn.getResponseCode();
         if (status == HttpURLConnection.HTTP_OK) {
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(httpConn.getInputStream()))) {
+            try (BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(httpConn.getInputStream(), charSet))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
                     response.add(line);
