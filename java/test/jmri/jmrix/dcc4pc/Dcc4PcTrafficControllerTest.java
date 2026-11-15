@@ -171,10 +171,12 @@ public class Dcc4PcTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         dsr.set(false);
         t.join(5000);
         Assertions.assertTrue(done.get(), "reply complete once DSR is low");
+        // loadChars looks at DSR every few milliseconds; the margin allows for
+        // a busy CI machine (126 ms seen on Windows with Java 25)
         Assertions.assertEquals(1, lowSeen.get(), "returned at the first look that found DSR low");
         long ms = (returnedAt.get() - lowSeenAt.get()) / 1000000;
         log.info("returned {} ms after seeing DSR low", ms);
-        Assertions.assertTrue(ms < 50, "returned " + ms + " ms after seeing DSR low");
+        Assertions.assertTrue(ms < 500, "returned " + ms + " ms after seeing DSR low");
         Assertions.assertEquals(2, reply.getNumDataElements());
     }
 
