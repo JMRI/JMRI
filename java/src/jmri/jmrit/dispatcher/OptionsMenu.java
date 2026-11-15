@@ -439,7 +439,7 @@ public class OptionsMenu extends JMenu {
         Scale scale = (Scale) layoutScaleBox.getSelectedItem();
         if (scale != null && isCustom(scale)) {
             double ratio = ((Number) customRatioSpinner.getValue()).doubleValue();
-            if (ratio != scale.getScaleRatio() && !setCustomRatio(scale, ratio)) {
+            if (Double.compare(ratio, scale.getScaleRatio()) != 0 && !setCustomRatio(scale, ratio)) {
                 JmriJOptionPane.showMessageDialog(optionsFrame,
                         Bundle.getMessage("CustomScaleRatioNotChanged", ratio, scale.getScaleRatio()),
                         Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);

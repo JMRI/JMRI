@@ -593,7 +593,6 @@
              <li><code>Section.setNameInBlocks</code> is no longer used
                  either; it still works, but logs a warning the first time it
                  is used, and will be removed.</li>
-             <li>x</li>
         </ul>
 
     <h3>Dispatcher System</h3>
