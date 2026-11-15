@@ -2,9 +2,11 @@ package jmri.jmrit.symbolicprog;
 
 import java.awt.event.ActionEvent;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
+
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 
@@ -64,7 +66,8 @@ public class TcsExportAction extends AbstractAction {
             frame.getRosterPane().update(rosterEntry);
             frame.getFnLabelPane().update(rosterEntry);
 
-            try ( PrintStream str = new PrintStream(new FileOutputStream(file)); ) {
+            try ( PrintStream str = new PrintStream(
+                    new FileOutputStream(file), false, StandardCharsets.UTF_8); ) {
                 formatTcsVirtualNodeDefinition(str, rosterEntry, mModel, vModel);
             } catch (IOException ex) {
                 log.error("Error writing file", ex);
