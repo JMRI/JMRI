@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-5-5-5.xsd">
+  <!-- The test panel from JMRI/JMRI#15894 (jmriusers files, ProblemsBeingWorkedOn/Pete Hilton),
+       with internal sensors and turnouts in place of LocoNet ones and the panel's labels and icons left out. -->
+  <jmriversion>
+    <major>5</major>
+    <minor>14</minor>
+    <test>0</test>
+    <modifier />
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>inactive</defaultInitialState>
+    <sensor inverted="false">
+      <systemName>IS20</systemName>
+      <userName>Block1</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS21</systemName>
+      <userName>Block2</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS22</systemName>
+      <userName>Block3</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS23</systemName>
+      <userName>Block4</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS24</systemName>
+      <userName>Block5</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS25</systemName>
+      <userName>TO_L</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS26</systemName>
+      <userName>TO_R</userName>
+    </sensor>
+  </sensors>
+  <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT4</systemName>
+      <userName>TRANSIT_TEST_L</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT5</systemName>
+      <userName>TRANSIT_TEST_R</userName>
+    </turnout>
+  </turnouts>
+  <blocks class="jmri.configurexml.BlockManagerXml">
+    <defaultspeed>Normal</defaultspeed>
+    <block systemName="IB:AUTO:0018">
+      <systemName>IB:AUTO:0018</systemName>
+      <userName>Block1</userName>
+    </block>
+    <block systemName="IB:AUTO:0019">
+      <systemName>IB:AUTO:0019</systemName>
+      <userName>Block2</userName>
+    </block>
+    <block systemName="IB:AUTO:0020">
+      <systemName>IB:AUTO:0020</systemName>
+      <userName>Block3</userName>
+    </block>
+    <block systemName="IB:AUTO:0021">
+      <systemName>IB:AUTO:0021</systemName>
+      <userName>Block4</userName>
+    </block>
+    <block systemName="IB:AUTO:0022">
+      <systemName>IB:AUTO:0022</systemName>
+      <userName>Block5</userName>
+    </block>
+    <block systemName="IB:AUTO:0023">
+      <systemName>IB:AUTO:0023</systemName>
+      <userName>TO_L</userName>
+    </block>
+    <block systemName="IB:AUTO:0024">
+      <systemName>IB:AUTO:0024</systemName>
+      <userName>TO_R</userName>
+    </block>
+    <block systemName="IB:AUTO:0018" length="0.0" curve="0">
+      <systemName>IB:AUTO:0018</systemName>
+      <userName>Block1</userName>
+      <permissive>no</permissive>
+      <occupancysensor>IS20</occupancysensor>
+      <path todir="64" fromdir="128" block="IB:AUTO:0023">
+        <beansetting setting="2">
+          <turnout systemName="TRANSIT_TEST_L" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB:AUTO:0019" length="0.0" curve="0">
+      <systemName>IB:AUTO:0019</systemName>
+      <userName>Block2</userName>
+      <permissive>no</permissive>
+      <occupancysensor>IS21</occupancysensor>
+      <path todir="64" fromdir="128" block="IB:AUTO:0020" />
+      <path todir="128" fromdir="64" block="IB:AUTO:0023" />
+    </block>
+    <block systemName="IB:AUTO:0020" length="0.0" curve="0">
+      <systemName>IB:AUTO:0020</systemName>
+      <userName>Block3</userName>
+      <permissive>no</permissive>
+      <occupancysensor>IS22</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0019" />
+      <path todir="64" fromdir="128" block="IB:AUTO:0021" />
+    </block>
+    <block systemName="IB:AUTO:0021" length="0.0" curve="0">
+      <systemName>IB:AUTO:0021</systemName>
+      <userName>Block4</userName>
+      <permissive>no</permissive>
+      <occupancysensor>IS23</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0020" />
+      <path todir="64" fromdir="128" block="IB:AUTO:0024" />
+    </block>
+    <block systemName="IB:AUTO:0022" length="0.0" curve="0">
+      <systemName>IB:AUTO:0022</systemName>
+      <userName>Block5</userName>
+      <permissive>no</permissive>
+      <occupancysensor>IS24</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0024">
+        <beansetting setting="2">
+          <turnout systemName="TRANSIT_TEST_R" />
+        </beansetting>
+      </path>
+    </block>
+    <block systemName="IB:AUTO:0023" length="0.0" curve="0">
+      <systemName>IB:AUTO:0023</systemName>
+      <userName>TO_L</userName>
+      <permissive>no</permissive>
+      <occupancysensor>IS25</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0018">
+        <beansetting setting="2">
+          <turnout systemName="TRANSIT_TEST_L" />
+        </beansetting>
+      </path>
+      <path todir="64" fromdir="128" block="IB:AUTO:0019" />
+    </block>
+    <block systemName="IB:AUTO:0024" length="0.0" curve="0">
+      <systemName>IB:AUTO:0024</systemName>
+      <userName>TO_R</userName>
+      <permissive>no</permissive>
+      <occupancysensor>IS26</occupancysensor>
+      <path todir="128" fromdir="64" block="IB:AUTO:0021" />
+      <path todir="64" fromdir="128" block="IB:AUTO:0022">
+        <beansetting setting="2">
+          <turnout systemName="TRANSIT_TEST_R" />
+        </beansetting>
+      </path>
+    </block>
+  </blocks>
+  <layoutblocks class="jmri.jmrit.display.layoutEditor.configurexml.LayoutBlockManagerXml">
+    <layoutblock systemName="ILB7" occupancysensor="IS20" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB7</systemName>
+      <userName>Block1</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB18" occupancysensor="IS21" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB18</systemName>
+      <userName>Block2</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB19" occupancysensor="IS22" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB19</systemName>
+      <userName>Block3</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB20" occupancysensor="IS23" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB20</systemName>
+      <userName>Block4</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB21" occupancysensor="IS24" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB21</systemName>
+      <userName>Block5</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB22" occupancysensor="IS25" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB22</systemName>
+      <userName>TO_L</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB23" occupancysensor="IS26" occupiedsense="2" trackcolor="darkGray" occupiedcolor="red" extracolor="white">
+      <systemName>ILB23</systemName>
+      <userName>TO_R</userName>
+    </layoutblock>
+  </layoutblocks>
+  <sections class="jmri.configurexml.SectionManagerXml">
+    <section systemName="IY:AUTO:0021" userName="Block2" creationtype="userdefined">
+      <systemName>IY:AUTO:0021</systemName>
+      <userName>Block2</userName>
+      <blockentry sName="IB:AUTO:0019" order="0" />
+      <entrypoint fromblock="IB:AUTO:0023" toblock="IB:AUTO:0019" direction="4" fixed="no" fromblockdirection="East" />
+      <entrypoint fromblock="IB:AUTO:0020" toblock="IB:AUTO:0019" direction="8" fixed="no" fromblockdirection="West" />
+    </section>
+    <section systemName="IY:AUTO:0022" userName="Block3" creationtype="userdefined">
+      <systemName>IY:AUTO:0022</systemName>
+      <userName>Block3</userName>
+      <blockentry sName="IB:AUTO:0020" order="0" />
+      <entrypoint fromblock="IB:AUTO:0019" toblock="IB:AUTO:0020" direction="4" fixed="no" fromblockdirection="East" />
+      <entrypoint fromblock="IB:AUTO:0021" toblock="IB:AUTO:0020" direction="8" fixed="no" fromblockdirection="West" />
+    </section>
+    <section systemName="IY:AUTO:0023" userName="Block4" creationtype="userdefined">
+      <systemName>IY:AUTO:0023</systemName>
+      <userName>Block4</userName>
+      <blockentry sName="IB:AUTO:0021" order="0" />
+      <entrypoint fromblock="IB:AUTO:0020" toblock="IB:AUTO:0021" direction="4" fixed="no" fromblockdirection="East" />
+      <entrypoint fromblock="IB:AUTO:0024" toblock="IB:AUTO:0021" direction="8" fixed="no" fromblockdirection="West" />
+    </section>
+    <section systemName="IY:AUTO:0024" userName="Block5+Turnout" creationtype="userdefined">
+      <systemName>IY:AUTO:0024</systemName>
+      <userName>Block5+Turnout</userName>
+      <blockentry sName="IB:AUTO:0024" order="0" />
+      <blockentry sName="IB:AUTO:0022" order="1" />
+      <entrypoint fromblock="IB:AUTO:0021" toblock="IB:AUTO:0024" direction="4" fixed="no" fromblockdirection="East" />
+    </section>
+    <section systemName="IY:AUTO:0025" userName="Block1+Turnout" creationtype="userdefined">
+      <systemName>IY:AUTO:0025</systemName>
+      <userName>Block1+Turnout</userName>
+      <blockentry sName="IB:AUTO:0018" order="0" />
+      <blockentry sName="IB:AUTO:0023" order="1" />
+      <entrypoint fromblock="IB:AUTO:0019" toblock="IB:AUTO:0023" direction="8" fixed="no" fromblockdirection="West" />
+    </section>
+    <section systemName="IY:AUTO:0026" userName="DN:Block5+Turnout" creationtype="userdefined">
+      <systemName>IY:AUTO:0026</systemName>
+      <userName>DN:Block5+Turnout</userName>
+      <blockentry sName="IB:AUTO:0022" order="0" />
+      <blockentry sName="IB:AUTO:0024" order="1" />
+      <entrypoint fromblock="IB:AUTO:0021" toblock="IB:AUTO:0024" direction="8" fixed="no" fromblockdirection="East" />
+    </section>
+    <section systemName="IY:AUTO:0027" userName="DN:Block4" creationtype="userdefined">
+      <systemName>IY:AUTO:0027</systemName>
+      <userName>DN:Block4</userName>
+      <blockentry sName="IB:AUTO:0021" order="0" />
+      <entrypoint fromblock="IB:AUTO:0024" toblock="IB:AUTO:0021" direction="4" fixed="no" fromblockdirection="West" />
+      <entrypoint fromblock="IB:AUTO:0020" toblock="IB:AUTO:0021" direction="8" fixed="no" fromblockdirection="East" />
+    </section>
+    <section systemName="IY:AUTO:0028" userName="DN:Block3" creationtype="userdefined">
+      <systemName>IY:AUTO:0028</systemName>
+      <userName>DN:Block3</userName>
+      <blockentry sName="IB:AUTO:0020" order="0" />
+      <entrypoint fromblock="IB:AUTO:0021" toblock="IB:AUTO:0020" direction="4" fixed="no" fromblockdirection="West" />
+      <entrypoint fromblock="IB:AUTO:0019" toblock="IB:AUTO:0020" direction="8" fixed="no" fromblockdirection="East" />
+    </section>
+    <section systemName="IY:AUTO:0029" userName="DN:Block2" creationtype="userdefined">
+      <systemName>IY:AUTO:0029</systemName>
+      <userName>DN:Block2</userName>
+      <blockentry sName="IB:AUTO:0019" order="0" />
+      <entrypoint fromblock="IB:AUTO:0020" toblock="IB:AUTO:0019" direction="4" fixed="no" fromblockdirection="West" />
+      <entrypoint fromblock="IB:AUTO:0023" toblock="IB:AUTO:0019" direction="8" fixed="no" fromblockdirection="East" />
+    </section>
+    <section systemName="IY:AUTO:0030" userName="DN:Block1+Turnout" creationtype="userdefined">
+      <systemName>IY:AUTO:0030</systemName>
+      <userName>DN:Block1+Turnout</userName>
+      <blockentry sName="IB:AUTO:0023" order="0" />
+      <blockentry sName="IB:AUTO:0018" order="1" />
+      <entrypoint fromblock="IB:AUTO:0019" toblock="IB:AUTO:0023" direction="4" fixed="no" fromblockdirection="West" />
+    </section>
+    <section systemName="IY:AUTO:0032" userName="Block5" creationtype="userdefined">
+      <systemName>IY:AUTO:0032</systemName>
+      <userName>Block5</userName>
+      <blockentry sName="IB:AUTO:0022" order="0" />
+      <entrypoint fromblock="IB:AUTO:0024" toblock="IB:AUTO:0022" direction="4" fixed="no" fromblockdirection="East" />
+    </section>
+  </sections>
+  <transits class="jmri.configurexml.TransitManagerXml">
+    <transit systemName="IZ:AUTO:0010" userName="Blocks FWD">
+      <systemName>IZ:AUTO:0010</systemName>
+      <userName>Blocks FWD</userName>
+      <transitsection sectionname="IY:AUTO:0025" sequence="1" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0021" sequence="2" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0022" sequence="3" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0023" sequence="4" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+    </transit>
+    <transit systemName="IZ:AUTO:0011" userName="Blocks REV">
+      <systemName>IZ:AUTO:0011</systemName>
+      <userName>Blocks REV</userName>
+      <transitsection sectionname="IY:AUTO:0024" sequence="1" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0023" sequence="2" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0022" sequence="3" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0021" sequence="4" direction="8" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+    </transit>
+    <transit systemName="IZ:AUTO:0012" userName="DN:Blocks FWD">
+      <systemName>IZ:AUTO:0012</systemName>
+      <userName>DN:Blocks FWD</userName>
+      <transitsection sectionname="IY:AUTO:0026" sequence="1" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0027" sequence="2" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0028" sequence="3" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+      <transitsection sectionname="IY:AUTO:0029" sequence="4" direction="4" alternate="no" safe="no" stopallocatingsensor="" fwdstoppercent="1.0" revstoppercent="1.0" />
+    </transit>
+  </transits>
+  <LayoutEditor class="jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml" name="My Layout" x="8" y="31" windowheight="600" windowwidth="800" panelheight="444" panelwidth="1050" sliders="no" scrollable="none" editable="yes" positionable="yes" controlling="yes" animating="yes" showhelpbar="no" drawgrid="yes" snaponadd="yes" snaponmove="yes" antialiasing="no" turnoutcircles="no" tooltipsnotedit="no" tooltipsinedit="yes" mainlinetrackwidth="4" xscale="1.0" yscale="1.0" sidetrackwidth="2" defaulttrackcolor="darkGray" defaultoccupiedtrackcolor="red" defaultalternativetrackcolor="white" defaulttextcolor="black" turnoutcirclecolor="black" turnoutcirclethrowncolor="yellow" turnoutcirclesize="1" turnoutdrawunselectedleg="yes" turnoutbx="20.0" turnoutcx="20.0" turnoutwid="10.0" xoverlong="30.0" xoverhwid="10.0" xovershort="10.0" autoblkgenerate="no" redBackground="192" greenBackground="192" blueBackground="192" gridSize="10" gridSize2nd="10" openDispatcher="no" useDirectTurnoutControl="no">
+    <layoutturnout ident="TO4" type="LH_TURNOUT" hidden="no" disabled="no" disableWhenOccupied="no" showtooltip="yes" continuing="2" xcen="220.0" ycen="350.0" xa="260.0" ya="350.0" xb="180.0" yb="350.0" xc="200.0" yc="360.0" xd="260.0" yd="350.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutLHTurnoutXml" turnoutname="TRANSIT_TEST_L" blockname="TO_L" connectaname="T17" connectbname="T16" connectcname="T18" />
+    <layoutturnout ident="TO5" type="RH_TURNOUT" hidden="no" disabled="no" disableWhenOccupied="no" showtooltip="yes" continuing="2" xcen="540.0" ycen="350.0" xa="500.0" ya="350.0" xb="580.0" yb="350.0" xc="560.0" yc="360.0" xd="500.0" yd="350.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutRHTurnoutXml" turnoutname="TRANSIT_TEST_R" blockname="TO_R" connectaname="T21" connectbname="T19" connectcname="T22" />
+    <tracksegment ident="T20" blockname="Block3" connect1name="A13" type1="POS_POINT" connect2name="A12" type2="POS_POINT" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T16" blockname="Block1" connect1name="EB1" type1="POS_POINT" connect2name="TO4" type2="TURNOUT_B" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T17" blockname="Block2" connect1name="TO4" type1="TURNOUT_A" connect2name="A13" type2="POS_POINT" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T18" connect1name="TO4" type1="TURNOUT_C" connect2name="EB6" type2="POS_POINT" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T19" blockname="Block5" connect1name="TO5" type1="TURNOUT_B" connect2name="EB2" type2="POS_POINT" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T21" blockname="Block4" connect1name="TO5" type1="TURNOUT_A" connect2name="A12" type2="POS_POINT" dashed="no" mainline="yes" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <tracksegment ident="T22" connect1name="TO5" type1="TURNOUT_C" connect2name="EB7" type2="POS_POINT" dashed="no" mainline="no" hidden="no" class="jmri.jmrit.display.layoutEditor.configurexml.TrackSegmentXml" />
+    <positionablepoint ident="EB1" type="END_BUMPER" x="100.0" y="350.0" connect1name="T16" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB2" type="END_BUMPER" x="660.0" y="350.0" connect1name="T19" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A12" type="ANCHOR" x="420.0" y="350.0" connect1name="T20" connect2name="T21" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A13" type="ANCHOR" x="340.0" y="350.0" connect1name="T20" connect2name="T17" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB6" type="END_BUMPER" x="170.0" y="390.0" connect1name="T18" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB7" type="END_BUMPER" x="590.0" y="390.0" connect1name="T22" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+  </LayoutEditor>
+</layout-config>
