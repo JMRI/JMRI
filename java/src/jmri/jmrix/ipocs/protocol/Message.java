@@ -1,6 +1,7 @@
 package jmri.jmrix.ipocs.protocol;
 
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,7 +69,7 @@ public class Message {
   public ByteBuffer serialize() {
     ByteBuffer buffer = ByteBuffer.allocate(1 + objectName.length() + 1);
     buffer.put(length);
-    buffer.put(objectName.getBytes());
+    buffer.put(objectName.getBytes(StandardCharsets.UTF_8));
     buffer.put((byte)0);
     for (Packet packet : packets) {
       ByteBuffer serPacket = packet.serialize();

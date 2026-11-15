@@ -1,6 +1,8 @@
 package jmri.jmrix.xpa;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +33,7 @@ public class XpaMessage implements jmri.jmrix.Message {
             log.error("zero length string in call to ctor");
         }
         _nDataChars = s.length();
-        _dataChars = s.getBytes();
+        _dataChars = s.getBytes(StandardCharsets.UTF_8);
     }
 
     // create a new one with default MAX_SIZE

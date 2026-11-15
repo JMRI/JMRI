@@ -81,6 +81,14 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
          */
         default void rosterEntriesChanged(@Nonnull TrainRecord record) {
         }
+
+        /**
+         * Told after the record is renamed.
+         *
+         * @param record the record
+         */
+        default void nameChanged(@Nonnull TrainRecord record) {
+        }
     }
 
     private final Registry registry;
@@ -150,6 +158,7 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
         registry.checkName(this, n);
         String old = this.name;
         this.name = n;
+        registry.nameChanged(this);
         firePropertyChange(PROPERTY_NAME, old, n);
     }
 
