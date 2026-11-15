@@ -23,7 +23,7 @@ import jmri.jmrit.simulation.VirtualTrain;
  * it.
  *
  * @author Keith Bruce Copyright (C) 2026
- * @since 5.19.1
+ * @since 5.19.2
  */
 final class PlaceTrainModel {
 

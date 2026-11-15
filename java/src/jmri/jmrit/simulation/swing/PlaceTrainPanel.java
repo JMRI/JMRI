@@ -26,7 +26,7 @@ import jmri.jmrit.simulation.VirtualTrain;
  * with what is known so that the usual answer is OK.
  *
  * @author Keith Bruce Copyright (C) 2026
- * @since 5.19.1
+ * @since 5.19.2
  */
 final class PlaceTrainPanel extends JPanel {
 

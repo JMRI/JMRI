@@ -20,7 +20,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * the local resource bundle name.
  *
  * @author Bob Jacobsen Copyright (C) 2012
- * @since 5.19.1
+ * @since 5.19.2
  */
 public class Bundle extends jmri.jmrit.simulation.Bundle {
 

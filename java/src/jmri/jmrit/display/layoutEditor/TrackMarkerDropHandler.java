@@ -21,7 +21,7 @@ import jmri.jmrit.display.LocoIcon;
  * where the train is.
  *
  * @author Keith Bruce Copyright (C) 2026
- * @since 5.19.1
+ * @since 5.19.2
  */
 public interface TrackMarkerDropHandler {
 
