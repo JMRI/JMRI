@@ -163,6 +163,16 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         mFlashOn = true;
     }
 
+    /**
+     * Stop flashing, so that a deleted head no longer drives its outputs.
+     */
+    @Override
+    public void dispose() {
+        stopFlash();
+        timer = null;
+        super.dispose();
+    }
+
     private static final int[] VALID_STATES = new int[]{
         DARK,
         RED,

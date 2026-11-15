@@ -1,10 +1,15 @@
 package jmri.jmrit.jython;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.io.File;
 import java.io.FileReader;
+import java.nio.charset.StandardCharsets;
+
 import javax.script.ScriptEngine;
+
 import jmri.script.JmriScriptEngineManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,7 +43,7 @@ public class JynstrumentFactory {
         ScriptEngine engine = JmriScriptEngineManager.getDefault().getEngine(JmriScriptEngineManager.JYTHON);
         Jynstrument jyns;
         try {
-            FileReader fr = new FileReader(jyFile);
+            FileReader fr = new FileReader(jyFile, StandardCharsets.UTF_8);
             try {
                 engine.eval(fr);
                 engine.eval(instanceName + " = " + className + "()");
@@ -66,7 +71,7 @@ public class JynstrumentFactory {
             // catch, log, and continue, we don't want to break the ongoing workflow
             log.error("Error starting Jynstrument.",e);
             return null;
-        }        
+        }
         return jyns;
     }
 
