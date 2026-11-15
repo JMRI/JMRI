@@ -1,6 +1,8 @@
 package jmri.jmrit.display.layoutEditor;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 import java.util.Set;
 import javax.annotation.CheckForNull;
@@ -2720,6 +2722,44 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     private final LayoutBlockConnectivityTools lbct = new LayoutBlockConnectivityTools();
 
     private volatile long lastRoutingChange;
+
+    // route changes being passed on, the latest last: each holds the
+    // neighbours of a block still to be told of a change to its route to a
+    // destination
+    private final Deque<LayoutBlock.RouteChange> routeChanges = new ArrayDeque<>();
+
+    /**
+     * Pass a change to a route held by a block on to its neighbours, and any
+     * change that causes to theirs, until the tables agree.
+     * <p>
+     * A neighbour whose route changes in turn passes the change on to its own
+     * neighbours before the next neighbour of the first block is told, as it
+     * would if each block called the next. The neighbours still to be told
+     * are kept here instead of in nested calls, so the number of nested calls
+     * does not grow with the number of blocks the change spreads across; on a
+     * large panel it would otherwise run out of stack. The outermost call
+     * returns once every neighbour has been told.
+     *
+     * @param from the block whose route has changed
+     * @param dest the destination of the route
+     */
+    void advertiseRouteChange(@Nonnull LayoutBlock from, @Nonnull Block dest) {
+        boolean outermost = routeChanges.isEmpty();
+        routeChanges.push(from.newRouteChange(dest));
+        if (!outermost) {
+            return;
+        }
+        try {
+            while (!routeChanges.isEmpty()) {
+                LayoutBlock.RouteChange change = routeChanges.peek();
+                if (!change.tellNextNeighbour()) {
+                    routeChanges.pop();
+                }
+            }
+        } finally {
+            routeChanges.clear();
+        }
+    }
 
     void setLastRoutingChange() {
         log.debug("setLastRoutingChange");

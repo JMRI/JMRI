@@ -3487,13 +3487,47 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * this block up to date with what we now advertise to that neighbour.
      * Only a neighbour whose route changes passes the change on, so this
      * stops once every table agrees.
+     * <p>
+     * The change is passed on by the {@link LayoutBlockManager}, one block at
+     * a time, rather than by each neighbour calling the next; a change that
+     * spreads across a large panel would otherwise nest one call per block
+     * and could run out of stack.
      *
      * @param dest the destination block
      */
     void advertiseRouteChange(Block dest) {
-        for (Adjacencies adj : new ArrayList<>(neighbours)) {
-            advertiseRouteChange(adj, dest);
+        InstanceManager.getDefault(LayoutBlockManager.class).advertiseRouteChange(this, dest);
+    }
+
+    /**
+     * The neighbours still to be told of a change to our route to a
+     * destination, worked through by the {@link LayoutBlockManager}.
+     */
+    final class RouteChange {
+
+        private final Block dest;
+        private final Iterator<Adjacencies> toTell = new ArrayList<>(neighbours).iterator();
+
+        private RouteChange(Block dest) {
+            this.dest = dest;
         }
+
+        /**
+         * Tell the next neighbour what we now advertise to it.
+         *
+         * @return false if every neighbour had already been told
+         */
+        boolean tellNextNeighbour() {
+            if (!toTell.hasNext()) {
+                return false;
+            }
+            advertiseRouteChange(toTell.next(), dest);
+            return true;
+        }
+    }
+
+    RouteChange newRouteChange(Block dest) {
+        return new RouteChange(dest);
     }
 
     private void advertiseRouteChange(Adjacencies adj, Block dest) {
