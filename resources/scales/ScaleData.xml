@@ -17,6 +17,11 @@
       <scale_ratio>87.1</scale_ratio>
     </scale>
     <scale>
+      <scale_name>L</scale_name>
+      <user_name>L</user_name>
+      <scale_ratio>38.0</scale_ratio>
+    </scale>
+    <scale>
       <scale_name>N</scale_name>
       <user_name>N</user_name>
       <scale_ratio>160.0</scale_ratio>

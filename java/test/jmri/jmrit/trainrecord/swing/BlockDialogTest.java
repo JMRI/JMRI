@@ -9,8 +9,10 @@ import java.util.List;
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.InstanceManager;
+import jmri.TrainMakeupSource;
 import jmri.TrainRecord;
 import jmri.TrainRecordManager;
+import jmri.beans.PropertyChangeSupport;
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
 import jmri.util.junit.annotations.DisabledIfHeadless;
@@ -55,6 +57,37 @@ public class BlockDialogTest {
 
         new JButtonOperator(f, Bundle.getMessage("BlockDialogClose")).doClick();
         JUnitUtil.waitFor(() -> !f.isVisible(), "closed");
+    }
+
+    /** Knows train STF only: one stop ahead, North Industries. */
+    private static final class StfSource extends PropertyChangeSupport implements TrainMakeupSource {
+
+        @Override
+        public TrainMakeupSource.TrainMakeup getMakeup(String trainName) {
+            return "STF".equals(trainName)
+                    ? new TrainMakeupSource.TrainMakeup(List.of(new TrainRecord.TrainComponent("Southport", 300.0)),
+                            List.of(new TrainMakeupSource.Work("North Industries", 1, 2)))
+                    : null;
+        }
+    }
+
+    @Test
+    public void testShowsWorkAtNextStop() {
+        Block a = InstanceManager.getDefault(BlockManager.class).provideBlock("IB1");
+        InstanceManager.store(new StfSource(), TrainMakeupSource.class);
+        TrainRecordManager manager = InstanceManager.getDefault(TrainRecordManager.class);
+        TrainRecord stf = ThreadingUtil.runOnGUIwithReturn(() -> manager.newRecord("STF"));
+        TrainRecord other = ThreadingUtil.runOnGUIwithReturn(() -> manager.newRecord("Other"));
+        ThreadingUtil.runOnGUI(() -> {
+            stf.place(List.of(a), false);
+            other.place(List.of(a), false);
+        });
+
+        ThreadingUtil.runOnGUI(() -> BlockDialog.open(a, true));
+        JFrameOperator f = new JFrameOperator(Bundle.getMessage("BlockDialogTitle", a.getDisplayName()));
+        new JLabelOperator(f, Bundle.getMessage("BlockDialogNextStopWork", "North Industries", 1, 2));
+        assertEquals("", BlockDialog.work(other), "no line for a train no source knows");
+        JUnitUtil.dispose(f.getWindow());
     }
 
     @Test

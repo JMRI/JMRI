@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 import javax.script.ScriptException;
 import javax.swing.*;
@@ -197,7 +198,7 @@ public class InputWindow extends JPanel {
                     scriptEngineSelectorSwing.updateSetComboBoxSelection();
                 }
                 StringBuilder fileData = new StringBuilder(1024);
-                try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                try (BufferedReader reader = new BufferedReader(new FileReader(file, StandardCharsets.UTF_8))) {
                     char[] buf = new char[1024];
                     int numRead;
                     while ((numRead = reader.read(buf)) != -1) {
@@ -241,7 +242,7 @@ public class InputWindow extends JPanel {
                 }
 
                 StringBuilder fileData = new StringBuilder(area.getText());
-                try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, StandardCharsets.UTF_8))) {
                     writer.append(fileData);
                 }
                 results = true;
