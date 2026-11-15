@@ -467,6 +467,15 @@
                  another train, a train has taken the other's track, or a
                  train is already past the meeting place. Allocating by hand
                  was needed to free the train.</li>
+             <li>Allocate Extra and the script call extendActiveTrainsPath now
+                 give a Section beyond the end of a train's Transit in the
+                 direction the train enters it. A train running its Transit's
+                 Sections in their reverse direction was given an extra Section
+                 forward, and extendActiveTrainsPath refused to extend its path at
+                 all. With automatic allocation on, the extra Section is now
+                 allocated by the Auto Allocator, so it no longer logs errors
+                 about the request with signal masts, or fails part way when the
+                 request is allocated while it is looking at it (JMRI/JMRI#15894).</li>
         </ul>
 
     <h3>Dispatcher System</h3>
