@@ -842,7 +842,7 @@ public class EventTableDataModel extends AbstractTableModel {
     }
 
     void csvReadOperation(File file) {
-        try (Reader in = new FileReader(file)) {
+        try (Reader in = new FileReader(file, StandardCharsets.UTF_8)) {
             boolean first = true;
             Iterable<CSVRecord> records = CSVFormat.RFC4180.parse(in);
 

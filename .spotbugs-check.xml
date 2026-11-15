@@ -53,15 +53,6 @@
            <Bug pattern="NN_NAKED_NOTIFY" />
            <Bug pattern="AT_NONATOMIC_OPERATIONS_ON_SHARED_VARIABLE" />
            <Bug pattern="AT_STALE_THREAD_WRITE_OF_PRIMITIVE" />
-           <Bug pattern="SF_SWITCH_FALLTHROUGH" />
-        </Or>
-     </Match>
-     <Match>
-        <Confidence value="3" /> <!-- 3 is low priority, 2 is medium priority, 1 is high priority -->
-        <Or>
-		   <!-- Temporary disable these until we have decided what to do about them -->
-           <Bug pattern="THROWS_METHOD_THROWS_CLAUSE_BASIC_EXCEPTION" />
-           <Bug pattern="AT_UNSAFE_RESOURCE_ACCESS_IN_THREAD" />
         </Or>
      </Match>
     
@@ -73,12 +64,9 @@
           worth the effort -->
 
      <Match>
-       <!-- Minor clarity issue -->
-       <Bug pattern="RI_REDUNDANT_INTERFACES" />
-     </Match>
-
-     <Match>
        <!-- Design issue -->
+       <!-- We prefer anonymous inner classes over static inner classes. -->
+       <!-- An anonymous inner classes cannot be static. -->
        <Bug pattern="SIC_INNER_SHOULD_BE_STATIC_ANON" />
      </Match>
 
@@ -95,11 +83,11 @@
      </Match>
 
      <Match>
-       <!-- Most of these are non-I18N, JMRI-specific file operations.
-            We should find the I18N ones, but it seems excessive
-            to track down and annotate all the others first thing.
-            Suppressed for now to focus attention on
-            other high-priority items.  -->
+       <Or>
+         <Class name="jmri.jmris.simpleserver.parser.SimpleCharStream" />
+         <Class name="jmri.jmris.srcp.parser.SimpleCharStream" />
+         <Class name="jmri.jmrix.srcp.parser.SimpleCharStream" />
+       </Or>
        <Bug pattern="DM_DEFAULT_ENCODING" />
      </Match>
 
