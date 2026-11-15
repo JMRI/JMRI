@@ -16,7 +16,7 @@ import jmri.InvokeOnLayoutThread;
  * needs to know nothing of the parts of JMRI they check.
  *
  * @author Keith Bruce Copyright (C) 2026
- * @since 5.19.1
+ * @since 5.19.2
  */
 public interface SetUpCheck {
 

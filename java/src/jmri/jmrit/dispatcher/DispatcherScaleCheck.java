@@ -26,7 +26,7 @@ import org.openide.util.lookup.ServiceProvider;
  * when it starts.
  *
  * @author Keith Bruce Copyright (C) 2026
- * @since 5.19.1
+ * @since 5.19.2
  */
 @ServiceProvider(service = SetUpCheck.class)
 public class DispatcherScaleCheck implements SetUpCheck {
