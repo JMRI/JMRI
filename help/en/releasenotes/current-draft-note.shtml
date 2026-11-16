@@ -680,6 +680,10 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
+            <li>The first-time start-up wizard finds its list of languages
+                into a list of its own, so building that page twice at
+                once can no longer break the sort with "Comparison method
+                violates its general contract".</li>
             <li></li>
         </ul>
 
