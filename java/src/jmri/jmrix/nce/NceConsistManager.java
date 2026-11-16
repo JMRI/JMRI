@@ -264,6 +264,23 @@ public class NceConsistManager extends AbstractConsistManager {
         return numbers;
     }
 
+    // The background check runs on its own thread, but consistTable is only
+    // changed on the layout thread; read and add to it there.
+    private Consist consistOnLayout(int number) {
+        Consist[] found = new Consist[1];
+        jmri.util.ThreadingUtil.runOnLayout(() -> found[0] = consistTable.get(new DccLocoAddress(number, false)));
+        return found[0];
+    }
+
+    private void addConsistOnLayout(NceConsist consist) {
+        jmri.util.ThreadingUtil.runOnLayout(() -> {
+            if (!consistTable.containsKey(consist.getConsistAddress())) {
+                log.info("Consist {} found on the command station, added in JMRI", consist.getConsistAddress().getNumber());
+                addConsist(consist);
+            }
+        });
+    }
+
     /*
      * First consist number of each block read needed to cover these numbers
      * (lowest first), with perBlock consists in a block.
@@ -326,7 +343,7 @@ public class NceConsistManager extends AbstractConsistManager {
         // command station, or mids in JMRI's copy
         java.util.List<Integer> withMids = new java.util.ArrayList<>();
         for (int n : numbers) {
-            Consist c = consistTable.get(new DccLocoAddress(n, false));
+            Consist c = consistOnLayout(n);
             if (rears[n] != NO_LOCO || (c != null && c.getConsistList() != null && c.getConsistList().size() > 2)) {
                 withMids.add(n);
             }
@@ -342,7 +359,7 @@ public class NceConsistManager extends AbstractConsistManager {
         }
         // consists that no longer match: full check
         for (int n : numbers) {
-            Consist c = consistTable.get(new DccLocoAddress(n, false));
+            Consist c = consistOnLayout(n);
             if (c instanceof NceConsist && differs((NceConsist) c, leads[n], rears[n], mids[n])) {
                 log.debug("Consist {} differs from the command station, checking it", n);
                 checkAndWait((NceConsist) c);
@@ -357,9 +374,8 @@ public class NceConsistManager extends AbstractConsistManager {
             }
             NceConsist consist = new NceConsist(n, memo);
             waitValid(consist);
-            if (!consist.getConsistList().isEmpty() && !consistTable.containsKey(consist.getConsistAddress())) {
-                log.info("Consist {} found on the command station, added in JMRI", n);
-                addConsist(consist);
+            if (!consist.getConsistList().isEmpty()) {
+                addConsistOnLayout(consist);
             }
         }
     }
