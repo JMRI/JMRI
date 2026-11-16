@@ -19,6 +19,11 @@ jobs:
     - name: yarn install
       run:
         yarn install
+    # ubuntu-latest is ubuntu-26.04 from November 2026, and its image no longer
+    # installs TypeScript; ubuntu-24.04 had the latest version installed globally
+    - name: install TypeScript
+      run:
+        npm install -g typescript
     - name: check changes
       run: |
         ant typescript
