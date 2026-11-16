@@ -333,6 +333,21 @@ public interface TrainRecord extends PropertyChangeProvider {
     boolean isPlaced();
 
     /**
+     * Whether which train this is was last decided by a Block's value: it
+     * was placed where a Block's value named it, or a Block's value chose it
+     * from several trains that could have entered a Block, and it has not
+     * been placed since by the operator, Dispatcher or code. A Block's value
+     * can follow the wrong train where trains run close together, so such a
+     * record may not be where its train is.
+     *
+     * @return true if a Block's value last decided which train this is
+     * @since 5.19.2
+     */
+    default boolean isIdentifiedByValue() {
+        return false;
+    }
+
+    /**
      * Say where the train is: the Blocks it is in. Its trail starts again
      * from here, and its confidence becomes {@link Confidence#CONFIRMED}.
      *

@@ -1,6 +1,7 @@
 package jmri.jmrit.trainrecord;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -65,9 +66,88 @@ public class TrainTrackingWarningsTest {
 
     @Test
     public void testOverdue() {
+        TrainRecord r = shunterEntersB(false);
+        TrainTrackingWarnings warnings = InstanceManager.getDefault(TrainTrackingWarnings.class);
+        long entered = r.getTrail().get(r.getTrail().size() - 1).getTimeNanos();
+
+        // 200 mm/s: the front reaches the end of B's 400 mm after 2 s
+        ThreadingUtil.runOnGUI(() -> warnings.checkOverdue(entered + 1 * S));
+        ThreadingUtil.runOnGUI(() -> warnings.checkOverdue(entered + 3 * S));
+        assertEquals(Confidence.CONFIRMED, r.getConfidence(), "past the end, but not for long");
+        ThreadingUtil.runOnGUI(() -> warnings.checkOverdue(entered + 3 * S
+                + TrainTrackingWarnings.OVERDUE_SECONDS * S));
+        assertEquals(Confidence.STALLED, r.getConfidence(), "its lead loco told to move, not seen to leave B");
+        JUnitUtil.waitFor(() -> warnings.getWarnings().size() == 1, "a warning");
+        assertEquals(Warning.Kind.STALLED, warnings.getWarnings().get(0).getKind());
+        assertSame(r, warnings.getWarnings().get(0).getRecord());
+
+        ThreadingUtil.runOnGUI(() -> r.place(List.of(b), true));
+        JUnitUtil.waitFor(() -> warnings.getWarnings().isEmpty(), "found again");
+    }
+
+    /**
+     * A train kept in a Block after the Block went empty was seen to leave,
+     * only not where it went: it is not "not seen to leave", so it is not
+     * reported stalled however long it is overdue.
+     */
+    @Test
+    public void testNotOverdueOnceItsBlockWentEmpty() {
+        TrainRecord r = shunterEntersB(false);
+        TrainTrackingWarnings warnings = InstanceManager.getDefault(TrainTrackingWarnings.class);
         SensorManager sm = InstanceManager.getDefault(SensorManager.class);
-        Block a = new Block("IB1", "A");
-        Block b = new Block("IB2", "B");
+        long entered = r.getTrail().get(r.getTrail().size() - 1).getTimeNanos();
+
+        ThreadingUtil.runOnLayout(() -> sm.provideSensor("IS1").setCommandedState(Sensor.INACTIVE));
+        JUnitUtil.waitFor(() -> r.getBlocks().equals(List.of(b)), "the rear left A");
+        ThreadingUtil.runOnLayout(() -> sm.provideSensor("IS2").setCommandedState(Sensor.INACTIVE));
+        JUnitUtil.waitFor(() -> r.getConfidence() == Confidence.ESTIMATED, "B went empty: kept there, estimated");
+
+        ThreadingUtil.runOnGUI(() -> warnings.checkOverdue(entered + 3 * S));
+        ThreadingUtil.runOnGUI(() -> warnings.checkOverdue(entered + 3 * S
+                + TrainTrackingWarnings.OVERDUE_SECONDS * S));
+        assertEquals(Confidence.ESTIMATED, r.getConfidence(), "still estimated, not stalled");
+        assertTrue(warnings.getWarnings().isEmpty(), "no warning");
+    }
+
+    /**
+     * A train placed where a Block's value named it may not be the train in
+     * that Block: the value can follow another train. It is not reported
+     * stalled, however long it is overdue.
+     */
+    @Test
+    public void testNotOverdueWhenIdentifiedByValue() {
+        TrainRecord r = shunterEntersB(true);
+        TrainTrackingWarnings warnings = InstanceManager.getDefault(TrainTrackingWarnings.class);
+        assertTrue(r.isIdentifiedByValue(), "placed by the Block's value");
+        assertEquals(Confidence.CONFIRMED, r.getConfidence(), "seen to enter B");
+        long entered = r.getTrail().get(r.getTrail().size() - 1).getTimeNanos();
+
+        ThreadingUtil.runOnGUI(() -> warnings.checkOverdue(entered + 3 * S));
+        ThreadingUtil.runOnGUI(() -> warnings.checkOverdue(entered + 3 * S
+                + TrainTrackingWarnings.OVERDUE_SECONDS * S));
+        assertEquals(Confidence.CONFIRMED, r.getConfidence(), "not stalled");
+        assertTrue(warnings.getWarnings().isEmpty(), "no warning");
+
+        ThreadingUtil.runOnGUI(() -> r.place(List.of(b), true));
+        assertFalse(r.isIdentifiedByValue(), "placed by code: no longer identified by a value");
+    }
+
+    private Block a;
+    private Block b;
+
+    /**
+     * Blocks A (1000 mm) and B (400 mm), joined; a train whose lead loco has
+     * a speed profile, placed in A and told to move at 200 mm/s, seen to
+     * enter B.
+     *
+     * @param byValue true to place the train where A's value names it, false
+     *                to place it by code
+     * @return the train
+     */
+    private TrainRecord shunterEntersB(boolean byValue) {
+        SensorManager sm = InstanceManager.getDefault(SensorManager.class);
+        a = new Block("IB1", "A");
+        b = new Block("IB2", "B");
         a.setLength(1000);
         b.setLength(400);
         a.setSensor("IS1");
@@ -91,14 +171,19 @@ public class TrainTrackingWarningsTest {
         second.setDccAddress("8");
 
         TrainRecordManager manager = InstanceManager.getDefault(TrainRecordManager.class);
-        TrainTrackingWarnings warnings = InstanceManager.getDefault(TrainTrackingWarnings.class);
+        InstanceManager.getDefault(TrainTrackingWarnings.class);
         TrainRecord r = ThreadingUtil.runOnGUIwithReturn(() -> {
             sm.provideSensor("IS1").setCommandedState(Sensor.ACTIVE);
             TrainRecord t = manager.newRecord("Shunter");
             t.setRosterEntries(List.of(entry, second));
-            t.place(List.of(a), true);
+            if (byValue) {
+                a.setValue(entry);
+            } else {
+                t.place(List.of(a), true);
+            }
             return t;
         });
+        JUnitUtil.waitFor(r::isPlaced, "placed in A");
         long start = System.nanoTime();
         jmri.LocoSpeedSource source = new jmri.LocoSpeedSource() {
             @Override
@@ -117,21 +202,7 @@ public class TrainTrackingWarningsTest {
         JUnitUtil.waitFor(() -> r.getCommands().size() == 3, "the commands reached the record");
         ThreadingUtil.runOnLayout(() -> sm.provideSensor("IS2").setCommandedState(Sensor.ACTIVE));
         JUnitUtil.waitFor(() -> r.getBlocks().size() == 2, "the front entered B");
-        long entered = r.getTrail().get(r.getTrail().size() - 1).getTimeNanos();
-
-        // 200 mm/s: the front reaches the end of B's 400 mm after 2 s
-        ThreadingUtil.runOnGUI(() -> warnings.checkOverdue(entered + 1 * S));
-        ThreadingUtil.runOnGUI(() -> warnings.checkOverdue(entered + 3 * S));
-        assertEquals(Confidence.CONFIRMED, r.getConfidence(), "past the end, but not for long");
-        ThreadingUtil.runOnGUI(() -> warnings.checkOverdue(entered + 3 * S
-                + TrainTrackingWarnings.OVERDUE_SECONDS * S));
-        assertEquals(Confidence.STALLED, r.getConfidence(), "its lead loco told to move, not seen to leave B");
-        JUnitUtil.waitFor(() -> warnings.getWarnings().size() == 1, "a warning");
-        assertEquals(Warning.Kind.STALLED, warnings.getWarnings().get(0).getKind());
-        assertSame(r, warnings.getWarnings().get(0).getRecord());
-
-        ThreadingUtil.runOnGUI(() -> r.place(List.of(b), true));
-        JUnitUtil.waitFor(() -> warnings.getWarnings().isEmpty(), "found again");
+        return r;
     }
 
     @BeforeEach

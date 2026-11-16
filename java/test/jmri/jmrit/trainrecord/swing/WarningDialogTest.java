@@ -46,16 +46,17 @@ public class WarningDialogTest {
         Warning lost = new Warning(Warning.Kind.LOST, b, r);
 
         assertFalse(WarningDialog.opensWindow(unexplained), "unexplained occupancy: listed, no window");
-        assertTrue(WarningDialog.opensWindow(stalled), "stalled: a window by default");
-        assertTrue(WarningDialog.opensWindow(lost), "lost: a window by default");
+        assertFalse(WarningDialog.opensWindow(stalled), "stalled: no window unless turned on");
+        assertFalse(WarningDialog.opensWindow(lost), "lost: no window unless turned on");
 
         UserPreferencesManager p = InstanceManager.getDefault(UserPreferencesManager.class);
-        p.setPreferenceState(WarningDialog.Preferences.class.getName(), WarningDialog.HIDE_WINDOWS, true);
-        assertFalse(WarningDialog.opensWindow(stalled), "stalled: no window once turned off");
-        assertFalse(WarningDialog.opensWindow(lost), "lost: no window once turned off");
+        p.setPreferenceState(WarningDialog.Preferences.class.getName(), WarningDialog.SHOW_WINDOWS, true);
+        assertTrue(WarningDialog.opensWindow(stalled), "stalled: a window once turned on");
+        assertTrue(WarningDialog.opensWindow(lost), "lost: a window once turned on");
+        assertFalse(WarningDialog.opensWindow(unexplained), "unexplained occupancy: still no window");
 
-        p.setPreferenceState(WarningDialog.Preferences.class.getName(), WarningDialog.HIDE_WINDOWS, false);
-        assertTrue(WarningDialog.opensWindow(stalled), "stalled: a window again once turned back on");
+        p.setPreferenceState(WarningDialog.Preferences.class.getName(), WarningDialog.SHOW_WINDOWS, false);
+        assertFalse(WarningDialog.opensWindow(stalled), "stalled: no window once turned off again");
     }
 
     @Test
@@ -63,8 +64,8 @@ public class WarningDialogTest {
         UserPreferencesManager p = InstanceManager.getDefault(UserPreferencesManager.class);
         new WarningDialog.Preferences().setMessagePreferencesDetails();
         assertEquals(Bundle.getMessage("WarningPreferences"), new WarningDialog.Preferences().getClassDescription());
-        assertEquals(Bundle.getMessage("WarningHideWindows"),
-                p.getPreferenceItemDescription(WarningDialog.Preferences.class.getName(), WarningDialog.HIDE_WINDOWS));
+        assertEquals(Bundle.getMessage("WarningShowWindows"),
+                p.getPreferenceItemDescription(WarningDialog.Preferences.class.getName(), WarningDialog.SHOW_WINDOWS));
     }
 
     @Test

@@ -709,11 +709,12 @@
                 once can no longer break the sort with "Comparison method
                 violates its general contract".</li>
             <li></li>
-            <li>While trains are placed, train tracking now warns, in a window of
-                its own, when a train hasn't been seen to reach the next Block
-                in time (stalled if its lead loco was told to move, otherwise
-                lost). These windows can be turned off in Preferences &gt;
-                Messages.
+            <li>While trains are placed, train tracking now warns when a train
+                whose place it is sure of (not placed only because a Block's
+                value named it) hasn't been seen to reach the next
+                Block in time (stalled if its lead loco was told to move,
+                otherwise lost). A window can open for each such train; it is
+                off unless turned on in Preferences &gt; Messages.
                 Tools &gt; Train Tracking &gt; Warnings lists the warnings still
                 open, and also each Block whose detector shows it occupied when
                 no train could have entered it; there, "Nothing: Detector Stuck"

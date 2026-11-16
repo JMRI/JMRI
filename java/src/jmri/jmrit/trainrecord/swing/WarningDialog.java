@@ -30,7 +30,8 @@ import jmri.util.ThreadingUtil;
  * itself when what caused the warning is over.
  * <p>
  * {@link #start()} opens one for each new warning about a train that has
- * stalled or is lost, unless that is turned off in Preferences &gt; Messages.
+ * stalled or is lost, if that is turned on in Preferences &gt; Messages. It
+ * is off unless turned on.
  * Occupancy that no train explains opens no window: it is listed in
  * Tools &gt; Train Tracking &gt; Warnings, where its answers are, since a
  * train JMRI isn't following, or a parked train on a detector that drops out,
@@ -42,10 +43,10 @@ import jmri.util.ThreadingUtil;
 public class WarningDialog extends JmriJFrame {
 
     /**
-     * The preference item, in Preferences &gt; Messages, that stops a window
-     * opening for a stalled or lost train.
+     * The preference item, in Preferences &gt; Messages, that opens a window
+     * for each stalled or lost train. Off unless turned on.
      */
-    public static final String HIDE_WINDOWS = "hideWarningWindows"; // NOI18N
+    public static final String SHOW_WINDOWS = "showWarningWindows"; // NOI18N
 
     private static final Map<Warning, WarningDialog> OPEN = new HashMap<>();
     private static PropertyChangeListener notifier = null;
@@ -97,15 +98,16 @@ public class WarningDialog extends JmriJFrame {
      * Whether a new warning opens a window by itself.
      *
      * @param w the warning
-     * @return true for a stalled or lost train, unless windows are turned off
-     *         in Preferences &gt; Messages; false for unexplained occupancy
+     * @return true for a stalled or lost train if windows are turned on in
+     *         Preferences &gt; Messages; false otherwise, and always for
+     *         unexplained occupancy
      */
     static boolean opensWindow(@Nonnull Warning w) {
         if (w.getKind() == Warning.Kind.UNEXPLAINED) {
             return false;
         }
         UserPreferencesManager p = InstanceManager.getNullableDefault(UserPreferencesManager.class);
-        return p == null || !p.getPreferenceState(Preferences.class.getName(), HIDE_WINDOWS);
+        return p != null && p.getPreferenceState(Preferences.class.getName(), SHOW_WINDOWS);
     }
 
     /**
@@ -243,7 +245,7 @@ public class WarningDialog extends JmriJFrame {
          */
         public void setMessagePreferencesDetails() {
             InstanceManager.getDefault(UserPreferencesManager.class).setPreferenceItemDetails(
-                    Preferences.class.getName(), HIDE_WINDOWS, Bundle.getMessage("WarningHideWindows"));
+                    Preferences.class.getName(), SHOW_WINDOWS, Bundle.getMessage("WarningShowWindows"));
         }
     }
 }

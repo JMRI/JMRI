@@ -122,6 +122,7 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     private final Deque<Reason> history = new ArrayDeque<>();
     private final Map<Block, Reason> blockReasons = new HashMap<>();
     private Reason confidenceReason = null;
+    private boolean identifiedByValue = false;
 
     /**
      * Normalise a train name as for a user name.
@@ -489,6 +490,7 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
         List<Block> old = getBlocks();
         this.blocks.clear();
         this.blocks.addAll(blocks);
+        identifiedByValue = rule == Reason.Rule.PLACED_BY_VALUE;
         long now = System.nanoTime();
         Instant time = Instant.now();
         trail.clear();
@@ -509,6 +511,12 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
         firePropertyChange(PROPERTY_BLOCKS, old, getBlocks());
         addToHistory(reason);
         registry.placementChanged(this);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean isIdentifiedByValue() {
+        return identifiedByValue;
     }
 
     /** {@inheritDoc} */
@@ -696,6 +704,9 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
         addToTrail(entry);
         Reason.Rule rule = settled ? Reason.Rule.SETTLED_BY_VALUE
                 : through.isEmpty() ? Reason.Rule.ENTERED : Reason.Rule.ENTERED_THROUGH_DARK;
+        if (settled) {
+            identifiedByValue = true;
+        }
         Reason reason = new Reason(rule, block, from, block.getSensor(), through, time);
         blockReasons.put(block, reason);
         for (Block b : through) {

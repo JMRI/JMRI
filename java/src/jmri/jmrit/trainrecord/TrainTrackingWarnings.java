@@ -36,7 +36,14 @@ import jmri.util.ThreadingUtil;
  * estimated position has been past the end of its Block for
  * {@value #OVERDUE_SECONDS} seconds. Such a train is reported to the
  * {@link TrainRecordManager} as stalled, if a command to move is in force,
- * or lost.
+ * or lost. Only a train whose place is
+ * {@link Confidence#CONFIRMED confirmed} is checked: one kept in a Block
+ * after the Block went empty, or one of several that could have entered a
+ * Block, already has its own reason, and was not "not seen to leave". Nor is
+ * a train {@link TrainRecord#isIdentifiedByValue() identified by a Block's
+ * value}: the value may have followed another train, so the record may not
+ * be where its train is, and its loco's commands say nothing of the train
+ * in that Block.
  * <p>
  * A warning stays until what caused it is over (the Block empties, the train
  * is seen again or placed) or the operator answers it. "Later" keeps it in
@@ -215,8 +222,9 @@ public class TrainTrackingWarnings extends PropertyChangeSupport implements Inst
     }
 
     /**
-     * Report each placed train whose slowest estimate has been past the end
-     * of its Block for {@value #OVERDUE_SECONDS} seconds.
+     * Report each placed train, its place confirmed and not identified by a
+     * Block's value, whose slowest estimate has been past the end of its
+     * Block for {@value #OVERDUE_SECONDS} seconds.
      *
      * @param nowNanos the moment, on the {@link System#nanoTime()} scale
      */
@@ -224,7 +232,7 @@ public class TrainTrackingWarnings extends PropertyChangeSupport implements Inst
     void checkOverdue(long nowNanos) {
         for (TrainRecord r : manager.getRecords()) {
             Confidence c = r.getConfidence();
-            if (!r.isPlaced() || c == Confidence.STALLED || c == Confidence.LOST) {
+            if (!r.isPlaced() || c != Confidence.CONFIRMED || r.isIdentifiedByValue()) {
                 pastEndSince.remove(r);
                 continue;
             }
