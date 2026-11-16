@@ -922,7 +922,7 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                     // fixed numbers: every card is there, an Input port stays Input
                     for (int i = 0; i < 64; i++) {
                         boolean in = i < ESP32NODE_IOX_CARDS && Bundle.getMessage("CardTypeInput").equals(cardType[i]);
-                        cardType[i] = Bundle.getMessage(i >= ESP32NODE_CARDS ? "CardTypeNone" : (in ? "CardTypeInput" : "CardTypeOutput"));
+                        cardType[i] = Bundle.getMessage(in ? "CardTypeInput" : "CardTypeOutput");
                     }
                 }
                 /*
@@ -1550,12 +1550,6 @@ public class NodeConfigManagerFrame extends jmri.util.JmriJFrame {
                     log.warn("ESP32CPNode {} card {} set to {} (fixed numbers)", curNode.getNodeAddress(), i + 1, type);
                 }
                 cardType[i] = type;
-            }
-            for (int i = ESP32NODE_CARDS; i < 64; i++) {
-                if (curNode.isOutputCard(i) || curNode.isInputCard(i)) {
-                    log.warn("ESP32CPNode {} has no card {}; set to No Card", curNode.getNodeAddress(), i + 1);
-                }
-                cardType[i] = Bundle.getMessage("CardTypeNone");
             }
         }
         if (cpnodeConfigModel != null) {
