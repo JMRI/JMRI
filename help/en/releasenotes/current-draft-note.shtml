@@ -440,7 +440,6 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li></li>
              <li>Allocate Extra and the script call extendActiveTrainsPath now
                  give a Section beyond the end of a train's Transit in the
                  direction the train enters it. A train running its Transit's
@@ -450,6 +449,15 @@
                  allocated by the Auto Allocator, so it no longer logs errors
                  about the request with signal masts, or fails part way when the
                  request is allocated while it is looking at it (JMRI/JMRI#15894).</li>
+             <li></li>
+             <li>With automatic allocation, an automatic train is no longer
+                 held for good by a meet planned after it had already been given
+                 the road beyond its meeting place. Two trains running the same
+                 way round a circuit could be taken for trains coming towards
+                 each other; one was then told to wait in a station for the
+                 other, which needed track the waiting train already held.
+                 Dispatcher now drops such a meet, as it does when a train is
+                 already past the meeting place.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -596,6 +604,10 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
+            <li>JMRI no longer freezes when a throttle window shows that a
+                loco couldn't be acquired (for example a LocoNet slot refused
+                or timed out) while another throttle request is answered or a
+                throttle window is opened or closed.</li>
             <li></li>
         </ul>
 
@@ -614,6 +626,8 @@
     <h3>Turnouts, Lights, Sensors and other elements</h3>
         <a id="TLae" name="TLae"></a>
         <ul>
+            <li>With a debounce set, a sensor state the hardware reports
+                twice no longer skips the debounce.</li>
             <li></li>
         </ul>
 
@@ -632,6 +646,8 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
+            <li>Web panels: a panel showing a sensor as text no longer
+                reloads in the browser each time the sensor changes.</li>
             <li></li>
         </ul>
 
