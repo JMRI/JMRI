@@ -635,7 +635,11 @@ public class PositionablePopupUtil {
         notifyWebPanelDisplayOptionsChanged();
     }
 
-    private void notifyWebPanelDisplayOptionsChanged() {
+    /**
+     * Tell web clients showing the panel that a display option has changed,
+     * unless notifications are suppressed.
+     */
+    void notifyWebPanelDisplayOptionsChanged() {
         if (WEB_NOTIFICATION_SUPPRESSION.get() == 0) {
             _parent.getEditor().notifyWebPanelDisplayOptionsChanged();
         }

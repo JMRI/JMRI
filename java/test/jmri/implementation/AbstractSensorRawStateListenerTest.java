@@ -64,6 +64,18 @@ public class AbstractSensorRawStateListenerTest {
     }
 
     @Test
+    public void testRepeatedReportWaitsForTheDebounce() {
+        s.setSensorDebounceGoingActiveTimer(60_000);
+        s.setOwnState(Sensor.ACTIVE, 1000L);
+        s.setOwnState(Sensor.ACTIVE, 2000L); // reported again, as a resent ACON or a status reply is
+        assertEquals(Sensor.INACTIVE, s.getKnownState(), "still waiting for the debounce");
+        s.setOwnState(Sensor.INACTIVE, 3000L); // so the flicker never reaches the known state
+        assertEquals(Sensor.INACTIVE, s.getKnownState());
+        assertEquals(List.of("raw 4->2", "raw 2->4"), order, "raw listeners told of each change, once");
+        assertEquals(List.of(1000L, 3000L), times, "with the times of the changes, not of the repeat");
+    }
+
+    @Test
     public void testSetWithoutATimeIsDatedNow() {
         long before = System.nanoTime();
         s.setOwnState(Sensor.ACTIVE);

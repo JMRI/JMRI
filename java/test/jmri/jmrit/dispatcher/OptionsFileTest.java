@@ -75,6 +75,37 @@ public class OptionsFileTest {
         }
     }
 
+    @Test
+    public void testPreventDeadlockIsOffUnlessSavedOn(@TempDir File tempDir) throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // a copy of an options file written before the option existed
+        File file = new File(tempDir, "dispatcheroptions.xml");
+        Files.copy(new File("java/test/jmri/jmrit/dispatcher/dispatcheroptions.xml").toPath(), file.toPath());
+        OptionsFile.setDefaultFileName(file.getPath());
+        try {
+            DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
+            Assert.assertFalse("off when the file does not say", d.getPreventDeadlock());
+
+            OptionsFile options = InstanceManager.getDefault(OptionsFile.class);
+            d.setPreventDeadlock(true);
+            options.writeDispatcherOptions(d);
+            d.setPreventDeadlock(false);
+            options.readDispatcherOptions(d);
+            Assert.assertTrue("on when saved on", d.getPreventDeadlock());
+
+            d.setPreventDeadlock(false);
+            options.writeDispatcherOptions(d);
+            d.setPreventDeadlock(true);
+            options.readDispatcherOptions(d);
+            Assert.assertFalse("off when saved off", d.getPreventDeadlock());
+
+            (new org.netbeans.jemmy.operators.JFrameOperator(Bundle.getMessage("TitleDispatcher"))).requestClose();
+            JUnitUtil.dispose(d);
+        } finally {
+            OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/dispatcheroptions.xml");
+        }
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

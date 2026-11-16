@@ -12,6 +12,10 @@
 
     <div id="mainContent">
       <h1>CI Status</h1>
+      <p><strong>
+        Our Jenkins server is being rebuilt.  The Jenkins links
+        on this page are not currently accessible.
+      </strong></p>
       <p>See also the <a href="https://builds.jmri.org/jenkins/view/CI%20Status/">Jenkins status
       page</a>
       <p>
