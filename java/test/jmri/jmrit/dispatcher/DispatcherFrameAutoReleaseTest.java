@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jmri.Section;
+import jmri.Sensor;
 import jmri.jmrit.dispatcher.ActiveTrain.TrainDetection;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
@@ -210,17 +211,61 @@ public class DispatcherFrameAutoReleaseTest {
     }
 
     @Test
-    public void testHeadAndTailMeasuredToTheHeadNotTheTail() {
+    public void testHeadAndTailReleasedBehindTheDetectedTail() {
         buildTransit(500);
         when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADANDTAIL);
         when(at.getAutoActiveTrain()).thenReturn(null);
         when(at.getMaxTrainLengthMM()).thenReturn(800L);
         headIn(2);
         tailIn(1);
-        assertFalse(releaseA(), "tail in B, head in C: only B (500) beyond A, train is 800");
-        headIn(3);
-        tailIn(1);
-        assertTrue(releaseA(), "tail in B, head in D: B and C (1000) beyond A");
+        assertTrue(releaseA(), "tail seen in B, head in C: A is behind the tail, whatever the length");
+        headIn(2);
+        assertFalse(releaseA(), "tail not seen: by length, as Head Only, only B (500) beyond A");
+    }
+
+    /**
+     * Stop an automatic train, by sensor or speed profile.
+     * @param byProfile true if stopped by its speed profile
+     */
+    private void stopped(AutoActiveTrain aat, boolean byProfile) {
+        when(aat.getAutoEngineer().isStopped()).thenReturn(true);
+        when(aat.getStopBySpeedProfile()).thenReturn(byProfile);
+    }
+
+    @Test
+    public void testStoppedCountsOnlyTheStoppingSensorForItsDirection() {
+        buildTransit(1000);
+        when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADONLY);
+        stopped(autoTrain(800), false);
+        headIn(1);
+        when(allocated.get(1).getDirection()).thenReturn(Section.FORWARD);
+        Sensor reverse = mock(Sensor.class);
+        when(sections.get(1).getReverseStoppingSensor()).thenReturn(reverse);
+        assertFalse(releaseA(), "running forward through B: B's reverse stopping sensor doesn't stop it there");
+        Sensor forward = mock(Sensor.class);
+        when(sections.get(1).getForwardStoppingSensor()).thenReturn(forward);
+        assertTrue(releaseA(), "stopped at B's forward stopping sensor, and fits in B");
+        when(allocated.get(1).getDirection()).thenReturn(Section.REVERSE);
+        when(sections.get(1).getForwardStoppingSensor()).thenReturn(null);
+        assertTrue(releaseA(), "running in reverse through B: stopped at B's reverse stopping sensor");
+    }
+
+    @Test
+    public void testStoppedCountsOnlyIfTheTrainFits() {
+        buildTransit(500);
+        when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADONLY);
+        stopped(autoTrain(800), true);
+        headIn(2);
+        assertFalse(releaseA(), "stopped in C, but the train (800) is longer than C (500): only B counts");
+    }
+
+    @Test
+    public void testStoppedByProfileAndFitsCounts() {
+        buildTransit(1000);
+        when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADONLY);
+        stopped(autoTrain(800), true);
+        headIn(1);
+        assertTrue(releaseA(), "stopped in B by its speed profile, and fits in B (1000)");
     }
 
     @Test
