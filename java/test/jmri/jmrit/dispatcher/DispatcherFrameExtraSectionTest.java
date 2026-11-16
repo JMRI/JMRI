@@ -1,6 +1,7 @@
 package jmri.jmrit.dispatcher;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -63,6 +64,18 @@ public class DispatcherFrameExtraSectionTest {
         assertTrue(extend(at, "Block5+Turnout"), "Block5+Turnout added to the train's path");
         assertEquals(Section.FORWARD, section("Block5+Turnout").getState());
         assertEquals(Turnout.CLOSED, turnout("TRANSIT_TEST_R").getKnownState(), "TO_R set for the train");
+    }
+
+    // A Section that has no entry point from the train's last Section, in
+    // either direction, is still refused, and the train's Transit and the
+    // Section are left as they were.
+    @Test
+    public void testExtendRefusesSectionNotAdjoining() {
+        ActiveTrain at = startTrain("Blocks REV", "Block5", "Block2", "Block5");
+        int transitLength = at.getTransit().getTransitSectionList().size();
+        assertFalse(extend(at, "Block5"), "Block5 does not adjoin the train's last Section, Block2");
+        assertEquals(transitLength, at.getTransit().getTransitSectionList().size(), "the Transit is unchanged");
+        assertEquals(Section.FREE, section("Block5").getState(), "Block5 is not allocated");
     }
 
     // With signal masts, the Auto Allocator logged errors when it came across
