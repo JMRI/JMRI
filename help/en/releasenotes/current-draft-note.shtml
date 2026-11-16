@@ -441,6 +441,7 @@
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
              <li></li>
+             <li>With automatic allocation, an automatic train is no longer
                  held for good by a meet planned after it had already been given
                  the road beyond its meeting place. Two trains running the same
                  way round a circuit could be taken for trains coming towards
@@ -448,7 +449,6 @@
                  other, which needed track the waiting train already held.
                  Dispatcher now drops such a meet, as it does when a train is
                  already past the meeting place.</li>
-             <li>With automatic allocation, an automatic train is no longer
         </ul>
 
     <h3>Dispatcher System</h3>
