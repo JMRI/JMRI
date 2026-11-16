@@ -33,6 +33,7 @@ public class InternalDateTime extends AbstractTimeProvider
     private long _startTimeMillisec;
     private final Object _lock = new Object();
     private boolean _isTimerTaskStarted;
+    private boolean _isTimeSet;
 
 
     private TimerTask getTimerTask() {
@@ -104,6 +105,7 @@ public class InternalDateTime extends AbstractTimeProvider
     }
 
     private void resetLast() {
+        _startTimeMillisec = System.currentTimeMillis();
         _lastDateTime = _time;
         _lastUpdatedDateTime = _time;
         _lastSec = _lastDateTime.getSecond();
@@ -156,25 +158,49 @@ public class InternalDateTime extends AbstractTimeProvider
         return true;
     }
 
+    // Bring _time up to date before the run state or the rate changes
+    private void catchUpTime() {
+        if (_isRunning && _isTimerTaskStarted && !_isLockedFromRunning && _rate.getRate() >= 0.0001) {
+            long time = System.currentTimeMillis() - _startTimeMillisec;
+            _time = _lastDateTime.plus(Math.round(time * _rate.getRate()), ChronoUnit.MILLIS);
+        }
+    }
+
     @Override
     public void start() throws UnsupportedOperationException {
+        boolean wasRunning;
         synchronized(_lock) {
-            if (!_isTimerTaskStarted && !_isLockedFromRunning) {
-                _time = ZonedDateTime.now();
+            wasRunning = _isRunning;
+            if (!_isRunning) {
+                if (!_isTimeSet && !_isTimerTaskStarted) {
+                    _time = ZonedDateTime.now();
+                }
                 resetLast();
-                _startTimeMillisec = System.currentTimeMillis();
+            }
+            if (!_isTimerTaskStarted && !_isLockedFromRunning) {
                 TimerUtil.schedule(_timerTask, _100_MILLISECONDS, _100_MILLISECONDS);
                _isTimerTaskStarted = true;
             }
             _isRunning = true;
         }
+        firePropertyChange(PROPERTY_CHANGE_RUN, wasRunning, true);
     }
 
     @Override
     public void stop() throws UnsupportedOperationException {
+        boolean wasRunning;
+        ZonedDateTime oldTime;
         synchronized(_lock) {
+            wasRunning = _isRunning;
+            oldTime = _lastUpdatedDateTime;
+            catchUpTime();
+            resetLast();
             _isRunning = false;
         }
+        if (oldTime != null) {
+            timeIsUpdated(oldTime);
+        }
+        firePropertyChange(PROPERTY_CHANGE_RUN, wasRunning, false);
     }
 
     @Override
@@ -187,6 +213,7 @@ public class InternalDateTime extends AbstractTimeProvider
         synchronized(_lock) {
             ZonedDateTime oldTime = this._time;
             _time = ZonedDateTime.of(_time.toLocalDate(), time, _time.getZone());
+            _isTimeSet = true;
             resetLast();
             timeIsUpdated(oldTime);
         }
@@ -197,6 +224,7 @@ public class InternalDateTime extends AbstractTimeProvider
         synchronized(_lock) {
             ZonedDateTime oldTime = this._time;
             this._time = time;
+            _isTimeSet = true;
             resetLast();
             timeIsUpdated(oldTime);
         }
@@ -216,7 +244,13 @@ public class InternalDateTime extends AbstractTimeProvider
     public void setRate(double rate) {
         synchronized(_lock) {
             double oldRate = _rate.getRate();
+            ZonedDateTime oldTime = _lastUpdatedDateTime;
+            catchUpTime();
+            resetLast();
             _rate.setRate(rate);
+            if (oldTime != null) {
+                timeIsUpdated(oldTime);
+            }
             firePropertyChange(PROPERTY_CHANGE_RATE, oldRate, _rate.getRate());
         }
     }
