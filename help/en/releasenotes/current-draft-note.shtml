@@ -637,6 +637,8 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
+            <li>Web panels: a panel showing a sensor as text no longer
+                reloads in the browser each time the sensor changes.</li>
             <li></li>
         </ul>
 
