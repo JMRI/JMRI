@@ -1,6 +1,8 @@
 package jmri.jmrit.display.layoutEditor;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.List;
 import java.util.Set;
 import javax.annotation.CheckForNull;
@@ -2710,8 +2712,138 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
 
     private volatile long lastRoutingChange;
 
+    // a check of every routing table is waiting to run on the layout thread
+    private volatile boolean routeCheckQueued;
+    private boolean checkingRoutes;
+
+    /**
+     * Check every block's routing table on the layout thread (Swing thread),
+     * once the routing work now under way is done.
+     * <p>
+     * Several changes made together give one check.
+     */
+    private void checkRoutesSoon() {
+        if (checkingRoutes || routeCheckQueued) {
+            return;
+        }
+        routeCheckQueued = true;
+        ThreadingUtil.runOnLayoutEventually(this::checkRoutes);
+    }
+
+    /**
+     * Bring every block's routing table into line with the routes worked out
+     * from the blocks' neighbours and through paths, for every destination.
+     *
+     * @see LayoutBlock#bringRoutesInLine(java.util.Collection)
+     */
+    void checkRoutes() {
+        routeCheckQueued = false;
+        if (!isAdvancedRoutingEnabled()) {
+            return;
+        }
+        List<LayoutBlock> blocks = new ArrayList<>(getNamedBeanSet());
+        boolean changed = false;
+        checkingRoutes = true;
+        try {
+            blocks.removeIf(lb -> lb.getBlock() == null);
+            changed = LayoutBlock.bringRoutesInLine(blocks);
+            if (changed) {
+                log.debug("routing tables corrected");
+                setLastRoutingChange();
+            }
+        } finally {
+            checkingRoutes = false;
+        }
+    }
+
+    /**
+     * A piece of routing work that may cause more: telling the neighbours of a
+     * block of a change to one of its routes, one at a time, or withdrawing a
+     * route a neighbour no longer offers.
+     */
+    interface RoutingStep {
+
+        /**
+         * Do the next part of the work.
+         *
+         * @return false if there was nothing left to do
+         */
+        boolean next();
+    }
+
+    // the routing work under way, the latest first; work that another piece
+    // of work causes is done before that piece goes on, as it would be if
+    // each block called the next
+    private final Deque<RoutingStep> routingSteps = new ArrayDeque<>();
+    // work caused by the part of a step being done now, in the order asked
+    private final List<RoutingStep> causedSteps = new ArrayList<>();
+    private boolean doingRoutingStep;
+
+    /**
+     * Pass a change to a route held by a block on to its neighbours, and any
+     * change that causes to theirs, until the tables agree.
+     * <p>
+     * A neighbour whose route changes in turn passes the change on to its own
+     * neighbours before the next neighbour of the first block is told, as it
+     * would if each block called the next. The neighbours still to be told
+     * are kept here instead of in nested calls, so the number of nested calls
+     * does not grow with the number of blocks the change spreads across; on a
+     * large panel it would otherwise run out of stack. The outermost call
+     * returns once every neighbour has been told.
+     *
+     * @param from the block whose route has changed
+     * @param dest the destination of the route
+     */
+    void advertiseRouteChange(@Nonnull LayoutBlock from, @Nonnull Block dest) {
+        doRoutingStep(from.newRouteChange(dest));
+    }
+
+    /**
+     * Withdraw the route a block holds via a neighbour to a destination, and
+     * pass the withdrawal on as far as it goes.
+     * <p>
+     * If other routing work is under way, the withdrawal is made once the
+     * work that asked for it has finished its current part, rather than in a
+     * nested call. The outermost call returns once all the work is done.
+     *
+     * @param lb     the block holding the route
+     * @param src    the neighbour that no longer offers the route
+     * @param update the removal packet from the neighbour
+     */
+    void removeRouteFromNeighbour(@Nonnull LayoutBlock lb, @Nonnull LayoutBlock src, @Nonnull LayoutBlock.RoutingPacket update) {
+        doRoutingStep(lb.newRouteRemoval(src, update));
+    }
+
+    private void doRoutingStep(RoutingStep step) {
+        if (doingRoutingStep) {
+            causedSteps.add(step);
+            return;
+        }
+        doingRoutingStep = true;
+        routingSteps.push(step);
+        try {
+            while (!routingSteps.isEmpty()) {
+                RoutingStep next = routingSteps.peek();
+                boolean more = next.next();
+                if (!more) {
+                    routingSteps.pop();
+                }
+                // what this part asked for is done next, first asked first
+                for (int i = causedSteps.size() - 1; i >= 0; i--) {
+                    routingSteps.push(causedSteps.get(i));
+                }
+                causedSteps.clear();
+            }
+        } finally {
+            routingSteps.clear();
+            causedSteps.clear();
+            doingRoutingStep = false;
+        }
+    }
+
     void setLastRoutingChange() {
         log.debug("setLastRoutingChange");
+        checkRoutesSoon();
         synchronized (stabilisedLock) {
             lastRoutingChange = System.nanoTime();
             stabilised = false;
