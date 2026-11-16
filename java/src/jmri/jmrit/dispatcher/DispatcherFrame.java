@@ -547,6 +547,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     private boolean _AutoTurnouts = false;
     private boolean _TrustKnownTurnouts = false;
     private boolean _UseOccupiedTrackSpeed = false;
+    private boolean _PreventDeadlock = false;
     private boolean _useStrictTrainTracking = true;
     private boolean _WaitWhereTrainsCanStop = false;
     private boolean _useTurnoutConnectionDelay = false;
@@ -3477,6 +3478,21 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
     protected void setTrustKnownTurnouts(boolean set) {
         _TrustKnownTurnouts = set;
+    }
+
+    /**
+     * Whether automatic allocation gives trains track only where they can all
+     * keep running, from standing place to standing place.
+     *
+     * @return true to prevent deadlock; false, the default, to allocate as
+     *         before
+     */
+    protected boolean getPreventDeadlock() {
+        return _PreventDeadlock;
+    }
+
+    protected void setPreventDeadlock(boolean set) {
+        _PreventDeadlock = set;
     }
 
     protected boolean getUseOccupiedTrackSpeed() {

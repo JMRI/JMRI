@@ -332,10 +332,10 @@ you've committed all your local changes.
 
       <h3 id="release">After Your Pull Request Is Merged</h3>
       Once the changes in your PR has been merged onto the master branch, it will be included in
-      the <a href="https://builds.jmri.org/jenkins/job/development/job/packages/">next development
-      release</a> built by <a href="ContinuousIntegration.shtml">our CI system</a>. These packages
+      the <a href="https://jmri.org/packages/">next development
+      build</a> that's built by <a href="ContinuousIntegration.shtml">our CI system</a>. These packages
       can be downloaded and run to check that everything is working. You can also refer users to
-      <a href="https://builds.jmri.org/jenkins/job/development/job/packages/">the built
+      <a href="https://jmri.org/packages/">the built
       installers</a> so they can test your changes.
       <p>Approximately once a month, the contents of the master branch are taken and used to build
       a test release. These are announced to the user community to simultaneously make new features

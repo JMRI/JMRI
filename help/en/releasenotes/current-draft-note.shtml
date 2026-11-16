@@ -1,7 +1,17 @@
 
     <h3>Hardware Support</h3>
         <ul>
+          <li>A serial connection that recovers from a failure (such as a
+              CANUSB4 or other GridConnect adapter, or a LocoBuffer) is now
+              set up again when the port reopens at the first attempt; before,
+              it showed as connected but sent and received nothing. An error
+              opening the port at the first attempt no longer stops the
+              retries.</li>
           <li></li>
+          <li>Connections (NCE, C/MRI, CAN, XpressNet and others): after a
+              connection recovers from a failure, messages are no longer
+              sent out of turn or their replies given to the wrong
+              listener.</li>
         </ul>
 
         <h4>Acela CTI</h4>
@@ -440,6 +450,17 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
+             <li>With automatic allocation and the new option
+                 <a href="https://www.jmri.org/help/en/package/jmri/jmrit/dispatcher/Options.shtml#PreventDeadlock">Prevent
+                 Deadlock</a>, off unless checked, Active Trains can no longer
+                 end up waiting for each other for good, such as two trains
+                 each holding half of a single line. A train is then given
+                 track from one place it can stop to the next, all at once,
+                 and only where every Active Train can still run its Transit.
+                 A train waiting for track gains a step of priority for each
+                 minute it waits. Trains started where they can't all run
+                 their Transits are named in a warning. Unchecked, Sections
+                 are allocated as before.</li>
              <li>Allocate Extra and the script call extendActiveTrainsPath now
                  give a Section beyond the end of a train's Transit in the
                  direction the train enters it. A train running its Transit's
@@ -678,6 +699,10 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
+            <li>The first-time start-up wizard finds its list of languages
+                into a list of its own, so building that page twice at
+                once can no longer break the sort with "Comparison method
+                violates its general contract".</li>
             <li></li>
         </ul>
 
