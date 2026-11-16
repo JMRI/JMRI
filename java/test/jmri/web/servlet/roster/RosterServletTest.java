@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -30,24 +31,49 @@ public class RosterServletTest {
 
     private static final String UPLOAD_NAME = "RosterServletTest-upload.png";
 
+    private Path target;
+
     @Test
     public void testCtor() {
         RosterServlet a = new RosterServlet();
         Assertions.assertNotNull(a);
     }
 
-    // java.io.tmpdir and the test profile are normally on one filesystem, so these don't hit the tmpfs case (checked on a Pi)
+    // java.io.tmpdir and the test profile are normally on one filesystem, so these don't hit the tmpfs case
     @Test
     public void testUploadNewImage() throws IOException, ServletException {
-        File target = new File(new File(Roster.getDefault().getRosterLocation(), "roster"), UPLOAD_NAME);
-        Assertions.assertFalse(target.exists());
+        String response = upload(false);
+        Assertions.assertTrue(response.contains("file added"), response);
+        Assertions.assertEquals("new image", Files.readString(target));
+    }
 
+    @Test
+    public void testUploadReplacesImage() throws IOException, ServletException {
+        Files.writeString(target, "old image");
+        String response = upload(true);
+        Assertions.assertTrue(response.contains("file replaced"), response);
+        Assertions.assertEquals("new image", Files.readString(target));
+    }
+
+    @Test
+    public void testUploadMoveFails() throws IOException, ServletException {
+        // a non-empty directory at the target can't be deleted or replaced, so the move fails
+        Files.createDirectories(target.resolve("blocker"));
+        String response = upload(true);
+        Assertions.assertTrue(response.contains("upload FAILED"), response);
+        Assertions.assertTrue(Files.isDirectory(target));
+        Assertions.assertFalse(new File(System.getProperty("java.io.tmpdir"), UPLOAD_NAME).exists());
+        JUnitAppender.assertWarnMessageStartingWith("Unable to move");
+        JUnitAppender.assertErrorMessage("upload FAILED for '" + UPLOAD_NAME + "', could not rename existing file. : Rename Failed");
+    }
+
+    // posts one image the way the roster page does and returns the JSON reply
+    private String upload(boolean replace) throws IOException, ServletException {
         MockServletExchange exchange = new MockServletExchange(MockServletExchange.POST, "/roster/")
-                .withRequestContentType("multipart/form-data; boundary=test")
-                .withParameter("fileReplace", "false");
+                .withParameter("fileReplace", Boolean.toString(replace));
         Part part = mock(Part.class);
         when(part.getContentType()).thenReturn("image/png");
-        when(part.getHeader("content-disposition")).thenReturn("form-data; name=\"files[]\"; filename=\"" + UPLOAD_NAME + "\"");
+        when(part.getHeader("content-disposition")).thenReturn("form-data; filename=\"" + UPLOAD_NAME + "\"");
         when(part.getInputStream()).thenReturn(new ByteArrayInputStream("new image".getBytes(StandardCharsets.UTF_8)));
         when(exchange.getRequest().getParts()).thenReturn(List.of(part));
         // init() only creates the JSON mapper when running under /roster
@@ -56,64 +82,7 @@ public class RosterServletTest {
         RosterServlet servlet = new RosterServlet();
         servlet.init(exchange.getConfig());
         servlet.doPost(exchange.getRequest(), exchange.getResponse());
-
-        Assertions.assertTrue(exchange.getResponseContentAsString().contains("file added"), exchange.getResponseContentAsString());
-        Assertions.assertTrue(target.exists());
-        Assertions.assertEquals("new image", Files.readString(target.toPath()));
-    }
-
-    @Test
-    public void testUploadReplacesImage() throws IOException, ServletException {
-        File rosterFolder = new File(Roster.getDefault().getRosterLocation(), "roster");
-        Files.createDirectories(rosterFolder.toPath());
-        File target = new File(rosterFolder, UPLOAD_NAME);
-        Files.writeString(target.toPath(), "old image");
-
-        MockServletExchange exchange = new MockServletExchange(MockServletExchange.POST, "/roster/")
-                .withRequestContentType("multipart/form-data; boundary=test")
-                .withParameter("fileReplace", "true");
-        Part part = mock(Part.class);
-        when(part.getContentType()).thenReturn("image/png");
-        when(part.getHeader("content-disposition")).thenReturn("form-data; name=\"files[]\"; filename=\"" + UPLOAD_NAME + "\"");
-        when(part.getInputStream()).thenReturn(new ByteArrayInputStream("new image".getBytes(StandardCharsets.UTF_8)));
-        when(exchange.getRequest().getParts()).thenReturn(List.of(part));
-        when(exchange.getConfig().getServletContext().getContextPath()).thenReturn("/roster");
-
-        RosterServlet servlet = new RosterServlet();
-        servlet.init(exchange.getConfig());
-        servlet.doPost(exchange.getRequest(), exchange.getResponse());
-
-        Assertions.assertTrue(exchange.getResponseContentAsString().contains("file replaced"), exchange.getResponseContentAsString());
-        Assertions.assertEquals("new image", Files.readString(target.toPath()));
-    }
-
-    @Test
-    public void testUploadMoveFails() throws IOException, ServletException {
-        // a non-empty directory at the target can't be deleted or replaced, so the move fails
-        File rosterFolder = new File(Roster.getDefault().getRosterLocation(), "roster");
-        File target = new File(rosterFolder, UPLOAD_NAME);
-        Files.createDirectories(target.toPath());
-        Files.writeString(new File(target, "blocker").toPath(), "blocker");
-
-        MockServletExchange exchange = new MockServletExchange(MockServletExchange.POST, "/roster/")
-                .withRequestContentType("multipart/form-data; boundary=test")
-                .withParameter("fileReplace", "true");
-        Part part = mock(Part.class);
-        when(part.getContentType()).thenReturn("image/png");
-        when(part.getHeader("content-disposition")).thenReturn("form-data; name=\"files[]\"; filename=\"" + UPLOAD_NAME + "\"");
-        when(part.getInputStream()).thenReturn(new ByteArrayInputStream("new image".getBytes(StandardCharsets.UTF_8)));
-        when(exchange.getRequest().getParts()).thenReturn(List.of(part));
-        when(exchange.getConfig().getServletContext().getContextPath()).thenReturn("/roster");
-
-        RosterServlet servlet = new RosterServlet();
-        servlet.init(exchange.getConfig());
-        servlet.doPost(exchange.getRequest(), exchange.getResponse());
-
-        Assertions.assertTrue(exchange.getResponseContentAsString().contains("upload FAILED"), exchange.getResponseContentAsString());
-        Assertions.assertTrue(target.isDirectory());
-        Assertions.assertFalse(new File(System.getProperty("java.io.tmpdir"), UPLOAD_NAME).exists());
-        JUnitAppender.assertWarnMessageStartingWith("Unable to move");
-        JUnitAppender.assertErrorMessage("upload FAILED for '" + UPLOAD_NAME + "', could not rename existing file. : Rename Failed");
+        return exchange.getResponseContentAsString();
     }
 
     @BeforeEach
@@ -121,10 +90,13 @@ public class RosterServletTest {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder));
         JUnitUtil.initRosterConfigManager();
+        target = Path.of(Roster.getDefault().getRosterLocation(), "roster", UPLOAD_NAME);
+        Files.createDirectories(target.getParent());
     }
 
     @AfterEach
     public void tearDown() {
+        target = null;
         JUnitUtil.tearDown();
     }
 }
