@@ -199,7 +199,7 @@ public class TableForEach extends AbstractDigitalAction
      * @param rowOrColumnName name of row or column
      */
     public void setRowOrColumnName(@Nonnull String rowOrColumnName) {
-        if (rowOrColumnName == null) throw new RuntimeException("Daniel");
+        if (rowOrColumnName == null) throw new JmriUncheckedException("Daniel");
         _rowOrColumnName = rowOrColumnName;
     }
 
@@ -374,7 +374,7 @@ public class TableForEach extends AbstractDigitalAction
             }
         } catch (SocketAlreadyConnectedException ex) {
             // This shouldn't happen and is a runtime error if it does.
-            throw new RuntimeException("socket is already connected");
+            throw new JmriUncheckedException("socket is already connected");
         }
     }
 

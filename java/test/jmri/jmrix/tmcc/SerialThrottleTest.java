@@ -14,6 +14,7 @@ import org.junit.jupiter.api.*;
  * with edits/additions by
  * @author Timothy Jump Copyright (C) 2025
  */
+@SuppressWarnings("deprecation")
 public class SerialThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     @Test

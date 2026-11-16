@@ -290,7 +290,10 @@
       of the screen.</p>
 
       <p>The Throttle button at the bottom of the screen can be used to bring up a JMRI throttle
-      for this Consist address.</p>
+      for this Consist address.<br>
+      In the throttle window, a consist functions panel is available through the View menu that 
+      allows to independently control the functions of each locomotive in the consist. The regular throttle
+      function panel will send commands to the consist adress (head unit or specific consist address depending on consist setup) </p>
 
       <p>To add a new Consist, select the first, blank entry in the drop-down box next to the
       current consist's ID:</p>

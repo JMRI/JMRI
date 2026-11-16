@@ -10,6 +10,7 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender Copyright (C) 2017
  */
+@SuppressWarnings("deprecation")
 public class TamsThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     private TamsTrafficController tc;
@@ -42,7 +43,7 @@ public class TamsThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         SpeedStepMode result = instance.getSpeedStepMode();
         Assert.assertEquals(expResult, result);
     }
-    
+
     /**
      * Test of getSpeedIncrement method, of class AbstractThrottle.
      */

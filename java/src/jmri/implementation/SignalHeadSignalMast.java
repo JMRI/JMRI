@@ -1,15 +1,16 @@
 package jmri.implementation;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import javax.annotation.Nonnull;
+import javax.annotation.concurrent.GuardedBy;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.SignalHead;
 import jmri.SignalMast;
+import jmri.util.ThreadingUtil;
 
 /**
  * SignalMast implemented via one SignalHead object.
@@ -181,7 +182,11 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
             log.debug("No delay set");
             //can be considered normal if does not exists or is invalid
         }
-        HashMap<SignalHead, Integer> delayedSet = new HashMap<>(heads.size());
+        int generation;
+        synchronized (this) {
+            generation = ++appearanceGeneration; // stops any earlier delayed steps
+        }
+        List<HeadStep> delayedSteps = new ArrayList<>(heads.size());
         for (int i = 0; i < heads.size(); i++) {
             // some extensive checking
             boolean error = false;
@@ -208,7 +213,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
                         log.debug("Setting {} to {}", head.getSystemName(),
                                 head.getAppearanceName(toSet));
                     } else {
-                        delayedSet.put(head, toSet);
+                        delayedSteps.add(new HeadStep(head, toSet));
                     }
                 } else {
                     log.error("     head '{}' appearance not set for aspect '{}'", head.getSystemName(), aspect);
@@ -217,50 +222,51 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
                 log.error("     head appearance not set due to above error");
             }
         }
-        if (delay != 0) {
-            // If a delay is required we will fire this off into a seperate thread and let it get on with it.
-            final HashMap<SignalHead, Integer> thrDelayedSet = delayedSet;
-            final int thrDelay = delay;
-            Runnable r = () -> setDelayedAppearances(thrDelayedSet, thrDelay);
-            Thread thr = jmri.util.ThreadingUtil.newThread(r);
-            thr.setName(getDisplayName() + " delayed set appearance");
-            thr.setDaemon(true);
-            try {
-                thr.start();
-            } catch (java.lang.IllegalThreadStateException ex) {
-                log.error("Illegal Thread Sate: {}",getDisplayName(), ex);
-            }
+        if (delay != 0 && !delayedSteps.isEmpty()) {
+            // set the heads in order, the delay apart, on the layout thread
+            final int stepDelay = delay;
+            ThreadingUtil.runOnLayoutEventually(() -> setDelayedAppearances(delayedSteps, 0, stepDelay, generation));
         }
     }
 
-    private void setDelayedAppearances(final HashMap<SignalHead, Integer> delaySet, final int delay) {
-        for (SignalHead head : delaySet.keySet()) {
-            final SignalHead thrHead = head;
-            Runnable r = new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        thrHead.setAppearance(delaySet.get(thrHead));
-                        if (log.isDebugEnabled()) {
-                            log.debug("Setting {} to {}", thrHead.getSystemName(),
-                                    thrHead.getAppearanceName(delaySet.get(thrHead)));
-                        }
-                        Thread.sleep(delay);
-                    } catch (InterruptedException ex) {
-                        Thread.currentThread().interrupt();
-                    }
-                }
-            };
+    /**
+     * One head's appearance, waiting to be set.
+     */
+    private static final class HeadStep {
+        final SignalHead head;
+        final int appearance;
 
-            Thread thr = jmri.util.ThreadingUtil.newThread(r);
-            thr.setName(getDisplayName());
-            thr.setDaemon(true);
-            try {
-                thr.start();
-                thr.join();
-            } catch (java.lang.IllegalThreadStateException | InterruptedException ex) {
-                log.error("Exception: ", ex);
+        HeadStep(SignalHead head, int appearance) {
+            this.head = head;
+            this.appearance = appearance;
+        }
+    }
+
+    /**
+     * Counts the calls to {@link #setAppearances(String)}, so that delayed
+     * steps left from an earlier aspect stop when a new one is set.
+     */
+    @GuardedBy("this")
+    private int appearanceGeneration = 0;
+
+    /**
+     * Set one head of an aspect with a delay, on the layout thread, then
+     * come back after the delay for the next head. Stops if another aspect
+     * has been set since.
+     */
+    private void setDelayedAppearances(List<HeadStep> steps, int index, int delay, int generation) {
+        synchronized (this) {
+            if (generation != appearanceGeneration) {
+                return; // a later aspect has been set
             }
+        }
+        HeadStep step = steps.get(index);
+        step.head.setAppearance(step.appearance);
+        if (log.isDebugEnabled()) {
+            log.debug("Setting {} to {}", step.head.getSystemName(), step.head.getAppearanceName(step.appearance));
+        }
+        if (index + 1 < steps.size()) {
+            ThreadingUtil.runOnLayoutDelayed(() -> setDelayedAppearances(steps, index + 1, delay, generation), delay);
         }
     }
 

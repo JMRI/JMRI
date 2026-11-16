@@ -9,14 +9,15 @@ import org.junit.jupiter.api.*;
 
 /**
  * Tests for the BiDiBThrottle class
- * 
+ *
  * @author  Bob Jacobsen Copyright 2008, 2010, 2011
  * @author  Eckart Meyer  Copyright (C) 2020
  */
+@SuppressWarnings("deprecation")
 public class BiDiBThrottleTest  extends jmri.jmrix.AbstractThrottleTest {
-    
+
     BiDiBSystemConnectionMemo memo;
-    
+
     /**
      * Test of getSpeedIncrement method, of class AbstractThrottle.
      */
@@ -27,7 +28,7 @@ public class BiDiBThrottleTest  extends jmri.jmrix.AbstractThrottleTest {
         float result = instance.getSpeedIncrement();
         Assert.assertEquals(expResult, result, 0.0);
     }
-    
+
     /**
      * Test of getSpeedStepMode method, of class AbstractThrottle.
      */
@@ -394,7 +395,7 @@ public class BiDiBThrottleTest  extends jmri.jmrix.AbstractThrottleTest {
         jmri.InstanceManager.setDefault(jmri.ThrottleManager.class,new BiDiBThrottleManager(memo));
         instance = new BiDiBThrottle(memo, new DccLocoAddress(42,true));
     }
-    
+
     @Override
     @AfterEach
     public void tearDown() {

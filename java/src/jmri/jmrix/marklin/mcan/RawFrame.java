@@ -15,22 +15,39 @@ public final class RawFrame {
         this.bytes = raw13.clone();
     }
 
-    /** Zero-indexed byte access, value in range 0x00–0xFF. */
+    /**
+     * Zero-indexed byte access, value in range 0x00–0xFF.
+     *
+     * @param index the byte offset into the 13-byte frame (0–12)
+     * @return the unsigned byte at that offset
+     */
     public int byteAt(int index) {
         return bytes[index] & 0xFF;
     }
 
-    /** Data length code: byte[4] masked to 4 bits (0–8). */
+    /**
+     * Data length code: byte[4] masked to 4 bits (0–8).
+     *
+     * @return the data length code
+     */
     public int dlc() {
         return bytes[4] & 0x0F;
     }
 
-    /** Defensive copy of the raw 13-byte array. */
+    /**
+     * Defensive copy of the raw 13-byte array.
+     *
+     * @return a copy of the raw 13-byte frame
+     */
     public int[] toArray() {
         return bytes.clone();
     }
 
-    /** Space-separated upper-case hex bytes, e.g. {@code "00 31 0A 80 ..."}. */
+    /**
+     * Space-separated upper-case hex bytes, e.g. {@code "00 31 0A 80 ..."}.
+     *
+     * @return a human-readable representation of the frame
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder(13 * 3);

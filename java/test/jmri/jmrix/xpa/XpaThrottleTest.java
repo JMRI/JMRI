@@ -14,6 +14,7 @@ import org.junit.jupiter.api.*;
  *
  * @author Paul Bender
  */
+@SuppressWarnings("deprecation")
 public class XpaThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     private XpaTrafficController tc = null;

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import jmri.JmriUncheckedException;
+
 /**
  * Parses and calculates an expression, for example "sin(2*pi*x)/3"
  *
@@ -202,7 +204,7 @@ public class Tokenizer {
                     break;
 
                 default:
-                    throw new RuntimeException("unknown token type: "+nextToken.name());
+                    throw new JmriUncheckedException("unknown token type: "+nextToken.name());
             }
 
             if (currentToken._tokenType != TokenType.SPACE) {

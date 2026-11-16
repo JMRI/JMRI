@@ -321,6 +321,12 @@ public final class Cs2DecoderCommands {
     /**
      * Parses a decoder command frame into a typed result.
      * Called by {@link Cs2FrameParser} after command resolution.
+     *
+     * @param header the parsed CS2 frame header
+     * @param data   the frame payload bytes
+     * @param raw    the originating raw CAN frame
+     * @return the typed decoder-command frame for the sub-command or a generic
+     *         {@link Cs2Frame} for an unrecognised sub-command
      */
     static Cs2Frame parse(Cs2Header header, Cs2Data data, RawFrame raw) {
         switch (header.resolvedCommand()) {
@@ -379,7 +385,11 @@ public final class Cs2DecoderCommands {
     public static final class LocoEmergencyStopFrame extends Cs2Frame {
         LocoEmergencyStopFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** The 32-bit Loc-ID of the target loco. */
+        /**
+         * Returns the 32-bit Loc-ID of the target loco.
+         *
+         * @return the locomotive address
+         */
         public long locoAddress() { return data().int32At(0); }
     }
 
@@ -387,10 +397,18 @@ public final class Cs2DecoderCommands {
     public static final class LocoSpeedFrame extends Cs2Frame {
         LocoSpeedFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** The 32-bit loco address. */
+        /**
+         * Returns the 32-bit loco address.
+         *
+         * @return the locomotive address
+         */
         public long locoAddress() { return data().int32At(0); }
 
-        /** The requested speed (0–1023). Returns -1 for query frames (DLC=4). */
+        /**
+         * Returns the requested speed (0–1023). Returns -1 for query frames (DLC=4).
+         *
+         * @return the requested speed (0–1023) or -1 for a query frame (DLC=4)
+         */
         public int speed() { return header().dlc() >= 6 ? data().int16At(4) : -1; }
     }
 
@@ -398,10 +416,18 @@ public final class Cs2DecoderCommands {
     public static final class LocoSpeedReplyFrame extends Cs2Frame {
         LocoSpeedReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** The 32-bit loco address. */
+        /**
+         * Returns the 32-bit loco address.
+         *
+         * @return the locomotive address
+         */
         public long locoAddress() { return data().int32At(0); }
 
-        /** The 16-bit speed value (0–1023). */
+        /**
+         * Returns the 16-bit speed value (0–1023).
+         *
+         * @return the current speed value (0–1023)
+         */
         public int speed() { return data().int16At(4); }
     }
 
@@ -409,10 +435,18 @@ public final class Cs2DecoderCommands {
     public static final class LocoDirectionReplyFrame extends Cs2Frame {
         LocoDirectionReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** The 32-bit loco address. */
+        /**
+         * Returns the 32-bit loco address.
+         *
+         * @return the locomotive address
+         */
         public long locoAddress() { return data().int32At(0); }
 
-        /** The direction value (0=keep, 1=fwd, 2=rev, 3=toggle). */
+        /**
+         * Returns the direction value (0=keep, 1=fwd, 2=rev, 3=toggle).
+         *
+         * @return the current direction (0=keep, 1=fwd, 2=rev, 3=toggle)
+         */
         public int direction() { return data().byteAt(4); }
     }
 
@@ -420,10 +454,18 @@ public final class Cs2DecoderCommands {
     public static final class LocoDirectionFrame extends Cs2Frame {
         LocoDirectionFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** The 32-bit loco address. */
+        /**
+         * Returns the 32-bit loco address.
+         *
+         * @return the locomotive address
+         */
         public long locoAddress() { return data().int32At(0); }
 
-        /** The requested direction (0=keep, 1=fwd, 2=rev, 3=toggle). Returns -1 for query (DLC=4). */
+        /**
+         * Returns the requested direction (0=keep, 1=fwd, 2=rev, 3=toggle). Returns -1 for query (DLC=4).
+         *
+         * @return the requested direction (0=keep, 1=fwd, 2=rev, 3=toggle) or -1 for a query frame (DLC=4)
+         */
         public int direction() { return header().dlc() >= 5 ? data().byteAt(4) : -1; }
     }
 
@@ -431,13 +473,25 @@ public final class Cs2DecoderCommands {
     public static final class LocoFunctionReplyFrame extends Cs2Frame {
         LocoFunctionReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** The 32-bit loco address. */
+        /**
+         * Returns the 32-bit loco address.
+         *
+         * @return the locomotive address
+         */
         public long locoAddress() { return data().int32At(0); }
 
-        /** The function number (0–31). */
+        /**
+         * Returns the function number (0–31).
+         *
+         * @return the function number (0–31)
+         */
         public int function() { return data().byteAt(4); }
 
-        /** True if the function is currently active. */
+        /**
+         * Returns whether the function is currently active.
+         *
+         * @return true if the function is currently active, false otherwise
+         */
         public boolean active() { return data().byteAt(5) != 0; }
     }
 
@@ -445,13 +499,25 @@ public final class Cs2DecoderCommands {
     public static final class LocoFunctionFrame extends Cs2Frame {
         LocoFunctionFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** The 32-bit loco address. */
+        /**
+         * Returns the 32-bit loco address.
+         *
+         * @return the locomotive address
+         */
         public long locoAddress() { return data().int32At(0); }
 
-        /** The function number (0–31). */
+        /**
+         * Returns the function number (0–31).
+         *
+         * @return the function number (0–31)
+         */
         public int function() { return data().byteAt(4); }
 
-        /** True if the function is requested active. Returns false for query frames (DLC=5). */
+        /**
+         * Returns whether the function is requested active. Returns false for query frames (DLC=5).
+         *
+         * @return true if the function is requested active, false for off or query frames (DLC=5)
+         */
         public boolean active() { return header().dlc() >= 6 && data().byteAt(5) != 0; }
     }
 
@@ -464,16 +530,32 @@ public final class Cs2DecoderCommands {
     public static final class ReadConfigReplyFrame extends Cs2Frame {
         ReadConfigReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** The 32-bit loco/decoder address. */
+        /**
+         * Returns the 32-bit loco/decoder address.
+         *
+         * @return the locomotive address
+         */
         public long locoAddress() { return data().int32At(0); }
 
-        /** CV-Index (6-bit, upper bits of data byte 4). Only meaningful for MFX. */
+        /**
+         * Returns the CV-Index (6-bit, upper bits of data byte 4). Only meaningful for MFX.
+         *
+         * @return the 6-bit CV index (MFX only)
+         */
         public int cvIndex() { return (data().byteAt(4) >> 2) & 0x3F; }
 
-        /** CV number (10-bit: lower 2 bits of byte 4 + all of byte 5). */
+        /**
+         * Returns the CV number (10-bit: lower 2 bits of byte 4 + all of byte 5).
+         *
+         * @return the 10-bit CV number
+         */
         public int cvNumber() { return ((data().byteAt(4) & 0x03) << 8) | data().byteAt(5); }
 
-        /** The byte value read from the CV. */
+        /**
+         * Returns the byte value read from the CV.
+         *
+         * @return the byte value read from the CV
+         */
         public int value() { return data().byteAt(6); }
     }
 
@@ -483,16 +565,32 @@ public final class Cs2DecoderCommands {
     public static final class ReadConfigFrame extends Cs2Frame {
         ReadConfigFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** The 32-bit loco/decoder address. */
+        /**
+         * Returns the 32-bit loco/decoder address.
+         *
+         * @return the locomotive address
+         */
         public long locoAddress() { return data().int32At(0); }
 
-        /** CV-Index (6-bit, upper bits of data byte 4). Only meaningful for MFX. */
+        /**
+         * Returns the CV-Index (6-bit, upper bits of data byte 4). Only meaningful for MFX.
+         *
+         * @return the 6-bit CV index (MFX only)
+         */
         public int cvIndex() { return (data().byteAt(4) >> 2) & 0x3F; }
 
-        /** CV number (10-bit: lower 2 bits of byte 4 + all of byte 5). */
+        /**
+         * Returns the CV number (10-bit: lower 2 bits of byte 4 + all of byte 5).
+         *
+         * @return the 10-bit CV number
+         */
         public int cvNumber() { return ((data().byteAt(4) & 0x03) << 8) | data().byteAt(5); }
 
-        /** Number of bytes requested (data byte 6). */
+        /**
+         * Returns the number of bytes requested (data byte 6).
+         *
+         * @return the number of bytes requested
+         */
         public int count() { return data().byteAt(6); }
     }
 
@@ -502,22 +600,46 @@ public final class Cs2DecoderCommands {
     public static final class WriteConfigReplyFrame extends Cs2Frame {
         WriteConfigReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** The 32-bit loco/decoder address. */
+        /**
+         * Returns the 32-bit loco/decoder address.
+         *
+         * @return the locomotive address
+         */
         public long locoAddress() { return data().int32At(0); }
 
-        /** CV-Index (6-bit). Only meaningful for MFX. */
+        /**
+         * Returns the CV-Index (6-bit). Only meaningful for MFX.
+         *
+         * @return the 6-bit CV index (MFX only)
+         */
         public int cvIndex() { return (data().byteAt(4) >> 2) & 0x3F; }
 
-        /** CV number (10-bit). */
+        /**
+         * Returns the CV number (10-bit).
+         *
+         * @return the 10-bit CV number
+         */
         public int cvNumber() { return ((data().byteAt(4) & 0x03) << 8) | data().byteAt(5); }
 
-        /** The byte value that was written. */
+        /**
+         * Returns the byte value that was written.
+         *
+         * @return the byte value that was written
+         */
         public int value() { return data().byteAt(6); }
 
-        /** True if the decoder acknowledged the write. */
+        /**
+         * Returns whether the decoder acknowledged the write.
+         *
+         * @return true if the decoder acknowledged the write, false otherwise
+         */
         public boolean writeAcknowledged() { return (data().byteAt(7) & 0x80) != 0; }
 
-        /** True if the post-write read-back verify succeeded. */
+        /**
+         * Returns whether the post-write read-back verify succeeded.
+         *
+         * @return true if the post-write read-back verify succeeded, false otherwise
+         */
         public boolean verifySucceeded() { return (data().byteAt(7) & 0x40) != 0; }
     }
 
@@ -527,19 +649,39 @@ public final class Cs2DecoderCommands {
     public static final class WriteConfigFrame extends Cs2Frame {
         WriteConfigFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** The 32-bit loco/decoder address. */
+        /**
+         * Returns the 32-bit loco/decoder address.
+         *
+         * @return the locomotive address
+         */
         public long locoAddress() { return data().int32At(0); }
 
-        /** CV-Index (6-bit). Only meaningful for MFX. */
+        /**
+         * Returns the CV-Index (6-bit). Only meaningful for MFX.
+         *
+         * @return the 6-bit CV index (MFX only)
+         */
         public int cvIndex() { return (data().byteAt(4) >> 2) & 0x3F; }
 
-        /** CV number (10-bit). */
+        /**
+         * Returns the CV number (10-bit).
+         *
+         * @return the 10-bit CV number
+         */
         public int cvNumber() { return ((data().byteAt(4) & 0x03) << 8) | data().byteAt(5); }
 
-        /** The byte value to write. */
+        /**
+         * Returns the byte value to write.
+         *
+         * @return the byte value to write
+         */
         public int value() { return data().byteAt(6); }
 
-        /** Byte index within the CV (data byte 7). */
+        /**
+         * Returns the byte index within the CV (data byte 7).
+         *
+         * @return the byte index within the CV
+         */
         public int byteIndex() { return data().byteAt(7); }
     }
 
@@ -549,10 +691,18 @@ public final class Cs2DecoderCommands {
     public static final class MfxBindReplyFrame extends Cs2Frame {
         MfxBindReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** 32-bit MFX UID. */
+        /**
+         * Returns the 32-bit MFX UID.
+         *
+         * @return the MFX UID
+         */
         public long mfxUid() { return data().int32At(0); }
 
-        /** 16-bit MFX track SID that was assigned. */
+        /**
+         * Returns the 16-bit MFX track SID that was assigned.
+         *
+         * @return the MFX SID that was assigned
+         */
         public int mfxSid() { return data().int16At(4); }
     }
 
@@ -564,19 +714,33 @@ public final class Cs2DecoderCommands {
     public static final class MfxVerifyReplyFrame extends Cs2Frame {
         MfxVerifyReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** 32-bit MFX UID from the request. */
+        /**
+         * Returns the 32-bit MFX UID from the request.
+         *
+         * @return the MFX UID
+         */
         public long mfxUid() { return data().int32At(0); }
 
-        /** 16-bit MFX SID: 0x0000 means negative (decoder not found). */
+        /**
+         * Returns the 16-bit MFX SID: 0x0000 means negative (decoder not found).
+         *
+         * @return the MFX SID or 0x0000 when the decoder was not found
+         */
         public int mfxSid() { return data().int16At(4); }
 
-        /** True if the decoder was found (SID != 0). */
+        /**
+         * Returns whether the decoder was found (SID != 0).
+         *
+         * @return true if the decoder was found (SID != 0), false otherwise
+         */
         public boolean positive() { return data().int16At(4) != 0; }
 
         /**
          * ASK signal quality ratio (0–255).
          * Only valid when {@link #positive()} is true (DLC=7).
          * Returns 0 for negative replies.
+         *
+         * @return the ASK signal quality ratio (0–255) or 0 for a negative reply
          */
         public int askRatio() { return header().dlc() == 7 ? data().byteAt(6) : 0; }
     }
@@ -585,10 +749,18 @@ public final class Cs2DecoderCommands {
     public static final class MfxBindFrame extends Cs2Frame {
         MfxBindFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** 32-bit MFX UID. */
+        /**
+         * Returns the 32-bit MFX UID.
+         *
+         * @return the MFX UID
+         */
         public long mfxUid() { return data().int32At(0); }
 
-        /** 16-bit MFX track SID to assign. */
+        /**
+         * Returns the 16-bit MFX track SID to assign.
+         *
+         * @return the MFX SID to assign
+         */
         public int mfxSid() { return data().int16At(4); }
     }
 
@@ -596,13 +768,25 @@ public final class Cs2DecoderCommands {
     public static final class MfxVerifyFrame extends Cs2Frame {
         MfxVerifyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** 32-bit MFX UID to look up. */
+        /**
+         * Returns the 32-bit MFX UID to look up.
+         *
+         * @return the MFX UID to look up
+         */
         public long mfxUid() { return data().int32At(0); }
 
-        /** 16-bit MFX SID. */
+        /**
+         * Returns the 16-bit MFX SID.
+         *
+         * @return the MFX SID
+         */
         public int mfxSid() { return data().int16At(4); }
 
-        /** ASK signal quality ratio (0–255). Only present for DLC=8 frames; returns 0 for DLC=6. */
+        /**
+         * ASK signal quality ratio (0–255). Only present for DLC=8 frames; returns 0 for DLC=6.
+         *
+         * @return the ASK signal quality ratio (0–255) or 0 for a DLC=6 frame
+         */
         public int askRatio() { return header().dlc() == 8 ? data().byteAt(6) : 0; }
     }
 

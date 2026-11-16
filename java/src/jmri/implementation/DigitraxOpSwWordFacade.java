@@ -17,7 +17,7 @@ import jmri.util.ThreadingUtil;
  * format in LOCONETBDOPSWMODE mode only:
  * <ul>
  * <li> 115.25.16<br>
- * The 115 is the device type (115 is a DS64); 25 is the first OpSw for 
+ * The 115 is the device type (115 is a DS64); 25 is the first OpSw for
  * setting the offset address; 16 is the address to be written.
  * This will write/read 32 bits from the associated Op Switch word.
  * </ul>
@@ -39,15 +39,13 @@ public class DigitraxOpSwWordFacade extends AbstractProgrammerFacade implements 
     }
 
     String _cv;  // the CV being processed
-    int _val;    // value to be written or being read
     ProgState state = ProgState.NOTPROGRAMMING;
-    
-    int accumulator;   // when accumulating a value during read
+
     String typeValue;  // device type value
-    int pageAddress;   // if > 0, this is the OpSw to start writing the page number, 
+    int pageAddress;   // if > 0, this is the OpSw to start writing the page number,
                           // else this is an unpaged access
     int pageNumber;    // the page number to be written to the address
-    
+
     // members for handling the programmer interface
     static class OpSwCommand {
         OpSwCommand(String cv, int value, boolean read) {
@@ -60,12 +58,12 @@ public class DigitraxOpSwWordFacade extends AbstractProgrammerFacade implements 
         boolean read;  // write if false
         int bit; // 0-31 number to shift the returned bit
     }
-    
+
     Deque<OpSwCommand> commands = new ArrayDeque<OpSwCommand>();
 
     private void parseCV(String cv) throws IllegalArgumentException {
         pageAddress = -1;
-        
+
         if (cv.contains(".")) {
             String[] splits = cv.split("\\.");
             if (splits.length == 3) {
@@ -91,9 +89,6 @@ public class DigitraxOpSwWordFacade extends AbstractProgrammerFacade implements 
         return result;
     }
 
-    int offsetConstant = 33-0;  // OpsSwitch number for LSB of data value
-                                // could also be pageAddress+8
-
     OpSwCommand oneBit(String typeValue, int swNum, int data, boolean read) {
         int bitNum = swNum-33; // is this a constant?
         int bit = (data>>bitNum)&0x01;
@@ -102,12 +97,11 @@ public class DigitraxOpSwWordFacade extends AbstractProgrammerFacade implements 
         retval.bit = bitNum;
         return retval;
     }
-    
+
     // programming interface
     @Override
     synchronized public void writeCV(String CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         log.debug("writeCV with {}", p);
-        _val = val;
         useProgrammer(p);
         pageAddress= -1;
         parseCV(CV);
@@ -116,13 +110,13 @@ public class DigitraxOpSwWordFacade extends AbstractProgrammerFacade implements 
             prog.writeCV(_cv, val, this);
         } else {
             commands = new ArrayDeque<OpSwCommand>();
-            
+
             commands.addAll(addressToCommands(typeValue, pageNumber));
-            
+
             for (int i = 46; i <= 48; i++) commands.add(oneBit(typeValue, i, val, false));
-            
+
             for (int i = 33; i <= 45; i++) commands.add(oneBit(typeValue, i, val, false));
-            
+
             for (int i = 62; i <= 64; i++) commands.add(oneBit(typeValue, i, val, false));
 
             for (int i = 49; i <= 61; i++) commands.add(oneBit(typeValue, i, val, false));
@@ -150,13 +144,13 @@ public class DigitraxOpSwWordFacade extends AbstractProgrammerFacade implements 
             prog.readCV(_cv, this, val);
         } else {
             commands = new ArrayDeque<OpSwCommand>();
-            
+
             commands.addAll(addressToCommands(typeValue, pageNumber));
-            
+
             for (int i = 46; i <= 48; i++) commands.add(oneBit(typeValue, i, val, true));
-            
+
             for (int i = 33; i <= 45; i++) commands.add(oneBit(typeValue, i, val, true));
-            
+
             for (int i = 62; i <= 64; i++) commands.add(oneBit(typeValue, i, val, true));
 
             for (int i = 49; i <= 61; i++) commands.add(oneBit(typeValue, i, val, true));
@@ -176,13 +170,13 @@ public class DigitraxOpSwWordFacade extends AbstractProgrammerFacade implements 
             prog.confirmCV(_cv, val, this);
         } else {
             commands = new ArrayDeque<OpSwCommand>();
-            
+
             commands.addAll(addressToCommands(typeValue, pageNumber));
-            
+
             for (int i = 46; i <= 48; i++) commands.add(oneBit(typeValue, i, val, true));
-            
+
             for (int i = 33; i <= 45; i++) commands.add(oneBit(typeValue, i, val, true));
-            
+
             for (int i = 62; i <= 64; i++) commands.add(oneBit(typeValue, i, val, true));
 
             for (int i = 49; i <= 61; i++) commands.add(oneBit(typeValue, i, val, true));
@@ -191,14 +185,14 @@ public class DigitraxOpSwWordFacade extends AbstractProgrammerFacade implements 
             prog.confirmCV(commands.getFirst().cv, commands.getFirst().value, this);
         }
     }
-    
+
     private jmri.ProgListener _usingProgrammer = null;
 
     // internal method to remember who's using the programmer
     protected void useProgrammer(jmri.ProgListener p) throws jmri.ProgrammerException {
         log.debug("useProgrammer for {} with {}", p, _usingProgrammer, new Exception("traceback"));
         // test for only one!
-        if (_usingProgrammer != null && _usingProgrammer != p) {        
+        if (_usingProgrammer != null && _usingProgrammer != p) {
             log.debug("programmer already in use by {}", _usingProgrammer);
             throw new jmri.ProgrammerException("programmer in use");
         } else {
@@ -215,7 +209,7 @@ public class DigitraxOpSwWordFacade extends AbstractProgrammerFacade implements 
     }
 
     public static int delayInterval = 10; // public static so can be changed in a script
-    
+
     /** {@inheritDoc}
      * Note this assumes that there's only one phase to the operation
      */
@@ -228,15 +222,15 @@ public class DigitraxOpSwWordFacade extends AbstractProgrammerFacade implements 
             state = ProgState.NOTPROGRAMMING;
             return;
         }
-        
-        // Complete processing later 
+
+        // Complete processing later
         final int myValue = value;
         final int myStatus = status;
         ThreadingUtil.runOnGUIDelayed(() -> {
             processProgrammingOpReply(myValue, myStatus);
         }, delayInterval);
     }
-    
+
     // After a delay, this processes the reply on the Layout Thread
     protected void processProgrammingOpReply(int value, int status) {
         if (status != OK) {
@@ -276,17 +270,17 @@ public class DigitraxOpSwWordFacade extends AbstractProgrammerFacade implements 
                     log.debug("_usingProgrammer: {}", _usingProgrammer);
                     temp.programmingOpReply(accumulation, status);
                     return;
-                    
+
                 } else {
                     // send that one
                     try {
                         prog.writeCV(next.cv, next.value, this);
                     } catch (jmri.ProgrammerException e) {
                         log.error("Exception doing write OpSw", e);
-                    }   
+                    }
                 }
                 return;
-      
+
             case SENDREADSEQUENCE:
                 // drop last-sent item
                 var last = commands.pollFirst();
@@ -307,7 +301,7 @@ public class DigitraxOpSwWordFacade extends AbstractProgrammerFacade implements 
                     log.debug("_usingProgrammer: {}", _usingProgrammer);
                     temp.programmingOpReply(accumulation, status);
                     return;
-                    
+
                 } else {
                     // send that one
                     try {
@@ -318,10 +312,10 @@ public class DigitraxOpSwWordFacade extends AbstractProgrammerFacade implements 
                         }
                     } catch (jmri.ProgrammerException e) {
                         log.error("Exception doing write OpSw", e);
-                    }   
+                    }
                 }
                 return;
-        
+
             default:
                 log.error("Unexpected state on reply: {}", state);
                 // clean up as much as possible

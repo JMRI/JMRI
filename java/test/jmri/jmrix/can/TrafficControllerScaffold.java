@@ -81,6 +81,19 @@ public class TrafficControllerScaffold extends TrafficController {
         inbound.addElement(r);
     }
 
+    /**
+     * Act as a connection that has just written a message: give it its sent
+     * time and tell its sent listener, as a real traffic controller does.
+     * Messages are only recorded in {@link #outbound}, never written, until
+     * this is called.
+     *
+     * @param m         the message, usually one from {@link #outbound}
+     * @param timeNanos when it was written, on the System.nanoTime() scale
+     */
+    public void markWritten(CanMessage m, long timeNanos) {
+        messageSent(m, timeNanos);
+    }
+
     public void sendToListeners(CanReply r) {
         for ( AbstractMRListener listener : cmdListeners ) {
             ((CanListener) listener).reply(r);

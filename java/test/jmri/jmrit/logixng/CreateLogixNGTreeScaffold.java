@@ -1252,6 +1252,16 @@ public class CreateLogixNGTreeScaffold {
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
         actionLocalVariable = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
+        actionLocalVariable.setComment("The allocated value of a block");
+        actionLocalVariable.setLocalVariable("result");
+        actionLocalVariable.setVariableOperation(ActionLocalVariable.VariableOperation.CopyBlockToVariable);
+        actionLocalVariable.getSelectBlockNamedBean().setNamedBean(block1);
+        actionLocalVariable.setBlockValueType(BlockValueType.AllocatedValue);
+        actionLocalVariable.setListenToBlock(true);
+        maleSocket = digitalActionManager.registerAction(actionLocalVariable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionLocalVariable = new ActionLocalVariable(digitalActionManager.getAutoSystemName(), null);
         actionLocalVariable.setComment("A comment");
         actionLocalVariable.setLocalVariable("result");
         actionLocalVariable.setVariableOperation(ActionLocalVariable.VariableOperation.CopyReporterToVariable);
@@ -2223,6 +2233,15 @@ public class CreateLogixNGTreeScaffold {
         actionTable.getSelectBlockNamedBean().setNamedBean(block1);
         actionTable.getSelectReporterNamedBean().setNamedBean(reporter1);
         actionTable.setFormula("a+b");
+        maleSocket = digitalActionManager.registerAction(actionTable);
+        actionManySocket.getChild(indexAction++).connect(maleSocket);
+
+        actionTable = new ActionTable(digitalActionManager.getAutoSystemName(), null);
+        actionTable.setComment("The display value of a block");
+        set_LogixNG_SelectTable_Data(csvTable, actionTable.getSelectTable(), NamedBeanAddressing.LocalVariable);
+        actionTable.setVariableOperation(ActionTable.VariableOperation.CopyBlockToVariable);
+        actionTable.getSelectBlockNamedBean().setNamedBean(block1);
+        actionTable.setBlockValueType(BlockValueType.DisplayValue);
         maleSocket = digitalActionManager.registerAction(actionTable);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -4312,6 +4331,42 @@ public class CreateLogixNGTreeScaffold {
 
         expressionBlock.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
         expressionBlock.getSelectEnum().setEnum(ExpressionBlock.BlockState.ValueMatches);
+
+        expressionBlock.getSelectBlockValue().setAddressing(NamedBeanAddressing.Direct);
+        expressionBlock.getSelectBlockValue().setValue("XYZ");
+
+        maleSocket = digitalExpressionManager.registerExpression(expressionBlock);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+// Direct / Direct / Direct :: AllocatedValueMatches
+        expressionBlock = new ExpressionBlock(digitalExpressionManager.getAutoSystemName(), null);
+        expressionBlock.setComment("Direct / Direct / Direct :: AllocatedValueMatches");
+
+        expressionBlock.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionBlock.getSelectNamedBean().setNamedBean(block1);
+
+        expressionBlock.set_Is_IsNot(Is_IsNot_Enum.Is);
+
+        expressionBlock.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
+        expressionBlock.getSelectEnum().setEnum(ExpressionBlock.BlockState.AllocatedValueMatches);
+
+        expressionBlock.getSelectBlockValue().setAddressing(NamedBeanAddressing.Direct);
+        expressionBlock.getSelectBlockValue().setValue("XYZ");
+
+        maleSocket = digitalExpressionManager.registerExpression(expressionBlock);
+        and.getChild(indexExpr++).connect(maleSocket);
+
+// Direct / Direct / Direct :: DisplayValueMatches
+        expressionBlock = new ExpressionBlock(digitalExpressionManager.getAutoSystemName(), null);
+        expressionBlock.setComment("Direct / Direct / Direct :: DisplayValueMatches");
+
+        expressionBlock.getSelectNamedBean().setAddressing(NamedBeanAddressing.Direct);
+        expressionBlock.getSelectNamedBean().setNamedBean(block1);
+
+        expressionBlock.set_Is_IsNot(Is_IsNot_Enum.Is);
+
+        expressionBlock.getSelectEnum().setAddressing(NamedBeanAddressing.Direct);
+        expressionBlock.getSelectEnum().setEnum(ExpressionBlock.BlockState.DisplayValueMatches);
 
         expressionBlock.getSelectBlockValue().setAddressing(NamedBeanAddressing.Direct);
         expressionBlock.getSelectBlockValue().setValue("XYZ");

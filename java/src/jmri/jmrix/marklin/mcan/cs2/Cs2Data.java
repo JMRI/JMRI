@@ -20,6 +20,9 @@ public final class Cs2Data {
 
     /**
      * Extracts the 8 data bytes from a raw 13-byte frame (bytes 5–12).
+     *
+     * @param frame the raw 13-byte CAN frame to extract data bytes from
+     * @return a new {@code Cs2Data} wrapping bytes 5–12 of the frame
      */
     public static Cs2Data from(RawFrame frame) {
         int[] d = new int[8];
@@ -32,6 +35,9 @@ public final class Cs2Data {
 
     /**
      * Returns the data byte at {@code index} (0–7), value 0x00–0xFF.
+     *
+     * @param index the data byte position (0–7)
+     * @return the unsigned byte value (0x00–0xFF) at that position
      */
     public int byteAt(int index) {
         return data[index] & 0xFF;
@@ -39,6 +45,9 @@ public final class Cs2Data {
 
     /**
      * Returns a big-endian unsigned 16-bit value from data[index..index+1].
+     *
+     * @param index the first data byte position of the 16-bit value
+     * @return the unsigned 16-bit value (0–65535) decoded big-endian
      */
     public int int16At(int index) {
         return ((data[index] & 0xFF) << 8) | (data[index + 1] & 0xFF);
@@ -47,6 +56,9 @@ public final class Cs2Data {
     /**
      * Returns a big-endian unsigned 32-bit value from data[index..index+3]
      * as a long to avoid sign issues.
+     *
+     * @param index the first data byte position of the 32-bit value
+     * @return the unsigned 32-bit value decoded big-endian, as a long
      */
     public long int32At(int index) {
         return ((long)(data[index]     & 0xFF) << 24)
@@ -65,7 +77,11 @@ public final class Cs2Data {
         return McanUid.of(int32At(index));
     }
 
-    /** Returns a defensive copy of all 8 data bytes. */
+    /**
+     * Returns a defensive copy of all 8 data bytes.
+     *
+     * @return a copy of the backing byte array
+     */
     public int[] toArray() {
         return data.clone();
     }

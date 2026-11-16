@@ -58,7 +58,6 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
     protected Hashtable<String, List<String>> trackLists;
     TagMonitorPane parentPane = null;
     CarEditFrame cef;
-    AssociateFrame associateFrame;
 
     public void setForceSetLocation(boolean forceSetLocation) {
         this.forceSetLocation = forceSetLocation;
@@ -316,11 +315,8 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
        // tableParent.getCellEditor().stopCellEditing();
     }
 
-    private void doSetTag(String thisTag, TagCarItem thisRow) {
+    private void doSetTag(String thisTag) {
         // associate tag
-        if (associateFrame != null) {
-            associateFrame.dispose();
-        }
         SwingUtilities.invokeLater(() -> new AssociateFrame(new AssociateTag(thisTag),
                 Bundle.getMessage("AssociateTitle") + " " + thisTag).initComponents());
     }
@@ -551,7 +547,7 @@ public class TableDataModel extends javax.swing.table.AbstractTableModel impleme
         for (TagCarItem thisRow : tagList) {
             if (e.getSource().equals(thisRow.getAction1())) {
                 if (thisRow.getCurrentCar() == null) {
-                    doSetTag(thisRow.getTag(), thisRow);
+                    doSetTag(thisRow.getTag());
                 } else {
                     setCarLocation(thisRow.getCurrentCar(), thisRow);
                 }

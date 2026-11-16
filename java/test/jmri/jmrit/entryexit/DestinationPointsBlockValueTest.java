@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import jmri.*;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
@@ -35,7 +36,8 @@ public class DestinationPointsBlockValueTest {
 
     private void setRoute() {
         ThreadingUtil.runOnLayout(() -> eep.setSingleSegmentRoute(dp.getSystemName()));
-        JUnitUtil.waitFor(() -> lbm.getLayoutBlock("B-Alpha-Main").getUseExtraColor(), "route set");
+        JUnitUtil.waitFor(() -> Objects.requireNonNull(lbm.getLayoutBlock("B-Alpha-Main"), "B-Alpha-Main")
+                .getUseExtraColor(), "route set");
         JUnitUtil.waitFor(() -> !routeSettingInProgress(), "route setting finished");
         assertTrue(dp.isActive(), "route active");
     }
@@ -45,8 +47,7 @@ public class DestinationPointsBlockValueTest {
     }
 
     private static void occupy(Block b) throws JmriException {
-        Sensor s = b.getSensor();
-        assertNotNull(s, b.getDisplayName());
+        Sensor s = Objects.requireNonNull(b.getSensor(), b.getDisplayName());
         s.setState(Sensor.ACTIVE);
     }
 
@@ -96,8 +97,7 @@ public class DestinationPointsBlockValueTest {
         east.setValue("Train 4");
         occupy(east);
 
-        LayoutBlock other = lbm.getLayoutBlock("B-Alpha-Side");
-        assertNotNull(other);
+        LayoutBlock other = Objects.requireNonNull(lbm.getLayoutBlock("B-Alpha-Side"), "B-Alpha-Side");
         other.getBlock().setValue("Train 5");
         dp.removeBlockFromRoute(other);
         JUnitAppender.assertErrorMessage("Block B-Alpha-Side went active but it is not part of our NX path");
@@ -150,8 +150,8 @@ public class DestinationPointsBlockValueTest {
                 sm.getSensor("NX-AW-Main"), panels.get("Alpha"), eep);
         assertNotNull(dp);
 
-        east = lbm.getLayoutBlock("B-Alpha-East").getBlock();
-        main = lbm.getLayoutBlock("B-Alpha-Main").getBlock();
+        east = Objects.requireNonNull(lbm.getLayoutBlock("B-Alpha-East"), "B-Alpha-East").getBlock();
+        main = Objects.requireNonNull(lbm.getLayoutBlock("B-Alpha-Main"), "B-Alpha-Main").getBlock();
         waitForPanelReset();
     }
 

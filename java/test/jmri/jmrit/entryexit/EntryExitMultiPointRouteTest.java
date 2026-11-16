@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 import jmri.*;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
@@ -40,8 +41,7 @@ public class EntryExitMultiPointRouteTest {
      * @param name the name of the sensor
      */
     private void pressButton(String name) {
-        Sensor sensor = sm.getSensor(name);
-        assertNotNull(sensor, name);
+        Sensor sensor = Objects.requireNonNull(sm.getSensor(name), name);
         ThreadingUtil.runOnLayout(() -> sensor.setCommandedState(
                 sensor.getKnownState() == Sensor.ACTIVE ? Sensor.INACTIVE : Sensor.ACTIVE));
     }

@@ -28,8 +28,6 @@ public class PrintStagingAndSchedulesByTypeAndLoad {
     int trackMax = locationManager.getMaxTrackNameLength();
     int scheduleMax = Control.max_len_string_location_name - 3;
     int locationMax = locationManager.getMaxLocationNameLength();
-    int carTypeMax = InstanceManager.getDefault(CarTypes.class).getMaxNameSubStringLength();
-    int carRoadMax = InstanceManager.getDefault(CarRoads.class).getMaxNameSubStringLength();
     int carLoadMax = carLoads.getMaxNameLength();
     int optionsMax = 23;
 

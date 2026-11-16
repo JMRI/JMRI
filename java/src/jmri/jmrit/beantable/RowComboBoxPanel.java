@@ -8,13 +8,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.EventObject;
+
 import javax.annotation.Nonnull;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.ListCellRenderer;
-import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.table.TableCellRenderer;
 
@@ -54,11 +54,6 @@ public abstract class RowComboBoxPanel
      * The table.
      */
     protected JTable table;
-
-    /**
-     *  To request the focus for the combobox (with SwingUtilities.invokeLater())
-     */
-    protected Runnable comboBoxFocusRequester;
 
     /**
      *  The current row.
@@ -336,7 +331,6 @@ public abstract class RowComboBoxPanel
     protected void eventEditorMousePressed() {
         this.editor.add(getEditorBox(table.convertRowIndexToModel(this.currentRow))); // add editorBox to JPanel
         this.editor.revalidate();
-        SwingUtilities.invokeLater(this.comboBoxFocusRequester);
         log.debug("eventEditorMousePressed in row {}; me = {})", this.currentRow, this.toString());
     }
 

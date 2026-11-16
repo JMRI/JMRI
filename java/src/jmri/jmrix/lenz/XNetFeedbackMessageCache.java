@@ -90,7 +90,7 @@ public class XNetFeedbackMessageCache implements XNetListener {
         int numDataBytes = l.getElement(0) & 0x0f;
         for (int i = 1; i < numDataBytes; i += 2) {
             // cache the message for later requests
-            int nibbleIndex = l.getElement(i) * 2 + (l.getElement(i + 1) & 0x10) >> 4;
+            int nibbleIndex = l.getElement(i) * 2 + ((l.getElement(i + 1) & 0x10) >> 4);
             messageCache[nibbleIndex] = l;
         }
     }
@@ -116,5 +116,4 @@ public class XNetFeedbackMessageCache implements XNetListener {
     private static final Logger log = LoggerFactory.getLogger(XNetFeedbackMessageCache.class);
 
 }
-
 

@@ -87,7 +87,7 @@ public abstract class AbstractSensorTestBase {
         t.dispose();
         assertEquals( 0, numListeners(), "controller listeners remaining");
     }
-    
+
     @Test
     public void testRemoveListenerOnDispose() {
         assertEquals( 0, t.getNumPropertyChangeListeners(), "starts 0 listeners");
@@ -119,14 +119,14 @@ public abstract class AbstractSensorTestBase {
         assertEquals( Sensor.ACTIVE, t.getState(), "Sensor goes active");
         checkActiveMsgSent();
     }
-    
+
     @Test
     public void testCommandSentInactive() throws JmriException {
         t.setState(Sensor.INACTIVE);
         assertEquals( Sensor.INACTIVE, t.getState(), "sensor goes inactive");
         checkInactiveMsgSent();
     }
-    
+
     @Test
     public void testInvertAfterInactive() throws JmriException {
         assumeTrue(t.canInvert(), "Sensor does not invert");
@@ -183,12 +183,36 @@ public abstract class AbstractSensorTestBase {
 
     }
 
+    @Test
+    public void testDetects() {
+        Assertions.assertEquals(Sensor.Detects.WHEELS, t.getDetects(), "wheels until set");
+        java.util.List<java.beans.PropertyChangeEvent> events = new java.util.ArrayList<>();
+        java.beans.PropertyChangeListener l = e -> {
+            if (Sensor.PROPERTY_DETECTS.equals(e.getPropertyName())) {
+                events.add(e);
+            }
+        };
+        t.addPropertyChangeListener(l);
+
+        t.setDetects(Sensor.Detects.BODY);
+        Assertions.assertEquals(Sensor.Detects.BODY, t.getDetects());
+        t.setDetects(Sensor.Detects.BODY);
+        t.setDetects(Sensor.Detects.TAG);
+        Assertions.assertEquals(Sensor.Detects.TAG, t.getDetects());
+        t.setDetects(Sensor.Detects.WHEELS);
+        Assertions.assertEquals(Sensor.Detects.WHEELS, t.getDetects());
+        Assertions.assertFalse(t.getPropertyKeys().contains(Sensor.PROPERTY_DETECTS),
+                "the default isn't kept, so nothing is stored for it");
+        t.setDetects(Sensor.Detects.WHEELS);
+
+        Assertions.assertEquals(3, events.size(), "one event for each change, none when unchanged");
+        Assertions.assertEquals("tag", events.get(1).getNewValue(), "the stored name");
+        Assertions.assertEquals("wheels", events.get(2).getNewValue(), "back to the default");
+        t.removePropertyChangeListener(l);
+    }
+
     private void disposeAndWaitForDebounceThread(AbstractSensor t) {
-        Thread debounce = t.thr;
         t.dispose();
-        if ( debounce !=null ) {
-            JUnitUtil.waitFor( ()-> { return !debounce.isAlive(); }, debounce.getName() + " did not close");
-        }
     }
 
     @Test
@@ -232,12 +256,12 @@ public abstract class AbstractSensorTestBase {
         JUnitUtil.waitFor( ()-> t.getCommandedState() == Sensor.OFF, "commanded state = OFF");
         assertEquals( Sensor.OFF, t.getCommandedState(), "Sensor is ON");
     }
-    
+
     @Test
     public void testSensorSetKnownState() throws JmriException {
 
         // Assert.assertEquals("ACTIVE", t.describeState(Sensor.ACTIVE), t.describeState(t.getState()));
-        
+
         t.setKnownState(Sensor.ACTIVE);
         assertEquals( Sensor.ACTIVE, t.getState(), "ACTIVE");
 

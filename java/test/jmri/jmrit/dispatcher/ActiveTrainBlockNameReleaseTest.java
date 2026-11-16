@@ -1,13 +1,14 @@
 package jmri.jmrit.dispatcher;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
+import java.util.Objects;
 
 import jmri.Block;
 import jmri.InstanceManager;
@@ -101,8 +102,8 @@ public class ActiveTrainBlockNameReleaseTest {
 
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         for (int i = 1; i <= 3; i++) {
-            LayoutBlock lb = lbm.createNewLayoutBlock(null, "Block " + i);
-            assertNotNull(lb);
+            LayoutBlock lb = Objects.requireNonNull(lbm.createNewLayoutBlock(null, "Block " + i),
+                    "LayoutBlock Block " + i);
             lb.initializeLayoutBlock();
             memories[i] = InstanceManager.memoryManagerInstance().provideMemory("IMBLOCK" + i);
             lb.setMemory(memories[i], "IMBLOCK" + i);

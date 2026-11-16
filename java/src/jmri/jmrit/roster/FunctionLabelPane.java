@@ -71,7 +71,6 @@ public class FunctionLabelPane extends javax.swing.JPanel {
         // allow drag'n drop of rows to reorder display order
         functionsTable.setDragEnabled(true);
         functionsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        functionsTable.setDropMode(DropMode.INSERT_ROWS);
         functionsTable.getTableHeader().setReorderingAllowed(false); // forbid columns reodering
         functionsTable.setTransferHandler(new FunctionTableRowTransferHandler(functionsTable));
         // column width and tooltips on columns titles

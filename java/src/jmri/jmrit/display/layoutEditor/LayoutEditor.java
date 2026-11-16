@@ -3090,6 +3090,95 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
     }
 
     /**
+     * Redraw the part of this panel drawn in a layout block's colours, after a
+     * change to that block. In edit mode, where selections, labels and edit
+     * controls can reach outside a block's tracks, the whole panel is redrawn.
+     *
+     * @param layoutBlock the layout block that changed
+     */
+    public void redrawLayoutBlock(@Nonnull LayoutBlock layoutBlock) {
+        if ((getTargetPanel() == null) || isEditable()) {
+            redrawPanel();
+        } else if (ThreadingUtil.isGUIThread()) {
+            repaintLayoutBlockArea(layoutBlock);
+        } else {
+            // the tracks are read and drawn on the GUI thread
+            ThreadingUtil.runOnGUIEventually(() -> repaintLayoutBlockArea(layoutBlock));
+        }
+    }
+
+    @InvokeOnGuiThread
+    private void repaintLayoutBlockArea(@Nonnull LayoutBlock layoutBlock) {
+        Rectangle area = getLayoutBlockRepaintArea(layoutBlock);
+        JComponent targetPanel = getTargetPanel();
+        if ((area != null) && (targetPanel != null)) {
+            targetPanel.repaint(area);
+        }
+    }
+
+    /**
+     * Get the part of the drawing that holds everything drawn in a layout
+     * block's colours, allowing for the width of the lines, in the coordinates
+     * of the target panel (that is, zoomed).
+     *
+     * @param layoutBlock the layout block
+     * @return the area, or null if nothing on this panel is drawn in that
+     *         block's colours
+     */
+    @InvokeOnGuiThread
+    @CheckForNull
+    public Rectangle getLayoutBlockRepaintArea(@Nonnull LayoutBlock layoutBlock) {
+        Rectangle2D area = null;
+        for (LayoutTrackView view : getLayoutTrackViews()) {
+            if (view.usesLayoutBlock(layoutBlock)) {
+                Rectangle2D bounds = view.getRepaintBounds();
+                if (area == null) {
+                    area = bounds;
+                } else {
+                    area.add(bounds);
+                }
+            }
+        }
+        if (area == null) {
+            return null;
+        }
+        double margin = getWidestTrackLineReach() + REPAINT_MARGIN;
+        double zoom = getZoom();
+        int left = (int) Math.floor((area.getMinX() - margin) * zoom);
+        int top = (int) Math.floor((area.getMinY() - margin) * zoom);
+        int right = (int) Math.ceil((area.getMaxX() + margin) * zoom);
+        int bottom = (int) Math.ceil((area.getMaxY() + margin) * zoom);
+        return new Rectangle(left, top, right - left, bottom - top);
+    }
+
+    /**
+     * Pixels (before zooming) added to a repaint area for antialiasing and
+     * rounding, beyond the widest track line.
+     */
+    private static final double REPAINT_MARGIN = 2.0;
+
+    /**
+     * Get how far the widest line drawn for a track reaches either side of the
+     * track's centre line: ballast, ties, the rails or the block line, on main
+     * or side track, whichever is widest.
+     */
+    private double getWidestTrackLineReach() {
+        LayoutTrackDrawingOptions options = getLayoutTrackDrawingOptions();
+        double reach = 0;
+        reach = Math.max(reach, options.getMainBallastWidth() / 2.0);
+        reach = Math.max(reach, options.getSideBallastWidth() / 2.0);
+        reach = Math.max(reach, options.getMainTieLength() / 2.0);
+        reach = Math.max(reach, options.getSideTieLength() / 2.0);
+        reach = Math.max(reach, options.getMainBlockLineWidth() / 2.0);
+        reach = Math.max(reach, options.getSideBlockLineWidth() / 2.0);
+        // two rails are drawn either side of the centre line, each the rail
+        // width wide and half the gap plus the rail width from the centre
+        reach = Math.max(reach, 1.5 * options.getMainRailWidth() + options.getMainRailGap() / 2.0);
+        reach = Math.max(reach, 1.5 * options.getSideRailWidth() + options.getSideRailGap() / 2.0);
+        return reach;
+    }
+
+    /**
      * Allow external set/reset of awaitingIconChange
      */
     public void setAwaitingIconChange() {
@@ -3438,6 +3527,11 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
                 delayedPopupTrigger = true;
                 log.debug("mousePressed: ++ Window/Linux mast popup delay");
              }
+
+            // not in edit mode - the popup for the Block of the track is shown when the button is released
+            if (event.isPopupTrigger() && blockOfTrackAt(dLoc) != null) {
+                delayedPopupTrigger = true;
+            }
             if (selectedObject == null) {
                     selectedObject = checkBlockContentsPopUps(dLoc);
                     if (selectedObject != null) {
@@ -3460,6 +3554,11 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
                 delayedPopupTrigger = true;
                 log.debug("mousePressed: ++ MAC mast popup delay");
              }
+
+            // not in edit mode - the popup for the Block of the track is shown when the button is released
+            if (event.isPopupTrigger() && blockOfTrackAt(dLoc) != null) {
+                delayedPopupTrigger = true;
+            }
 
         }
 
@@ -3594,6 +3693,72 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
             result = true;
         }
         return result;
+    }
+
+    /**
+     * In operating mode, a popup menu for the Block of the track at a point,
+     * if there is one: it opens the Block dialog.
+     *
+     * @param loc   the point, in panel coordinates
+     * @param event the mouse event
+     */
+    private void showTrackBlockPopUp(@Nonnull Point2D loc, @Nonnull JmriMouseEvent event) {
+        jmri.Block block = blockOfTrackAt(loc);
+        if (block == null) {
+            return;
+        }
+        JPopupMenu popup = new JPopupMenu();
+        JMenuItem header = new JMenuItem(block.getDisplayName());
+        header.setEnabled(false);
+        popup.add(header);
+        popup.add(new AbstractAction(jmri.jmrit.trainrecord.swing.BlockDialog.menuItemText(block)) {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jmri.jmrit.trainrecord.swing.BlockDialog.open(block, true, allControlling());
+            }
+        });
+        popup.show(event.getComponent(), event.getX(), event.getY());
+    }
+
+    /**
+     * @param loc a point, in panel coordinates
+     * @return the Block of the track drawn there, or null
+     */
+    @CheckForNull
+    jmri.Block blockOfTrackAt(@Nonnull Point2D loc) {
+        java.awt.Stroke hit = new java.awt.BasicStroke((float) (2 * SIZE * getTurnoutCircleSize()));
+        for (TrackSegmentView tsv : getTrackSegmentViews()) {
+            if (hit.createStrokedShape(tsv.getCentreLine()).contains(loc)) {
+                LayoutBlock lb = tsv.getTrackSegment().getLayoutBlock();
+                return lb == null ? null : lb.getBlock();
+            }
+        }
+        return null;
+    }
+
+    /**
+     * In operating mode, a loco marker was dragged onto the track of a
+     * Block: the train is there, for train tracking.
+     *
+     * @param marker the marker
+     * @param loc    where it was dropped, in panel coordinates
+     */
+    void markerDropped(@Nonnull LocoIcon marker, @Nonnull Point2D loc) {
+        jmri.Block block = blockOfTrackAt(loc);
+        if (block == null || !jmri.jmrit.trainrecord.PermissionsTrainTracking.mayCorrect()) {
+            return;
+        }
+        String name = marker.getText();
+        if (name == null || name.isEmpty()) {
+            name = marker.getUnRotatedText();
+        }
+        String text = name;
+        jmri.util.ThreadingUtil.runOnLayout(() -> {
+            jmri.TrainRecord r = jmri.jmrit.trainrecord.TrainCorrections.recordForMarker(marker.getRosterEntry(), text);
+            if (r != null) {
+                jmri.jmrit.trainrecord.TrainCorrections.trainIsHere(r, block);
+            }
+        });
     }
 
     private TrackSegment checkTrackSegmentPopUps(@Nonnull Point2D loc) {
@@ -4185,6 +4350,9 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
                         PositionableLabel im = checkLabelImagePopUps(dLoc);
                         if (im != null) {
                             showPopUp(im, event);
+                        } else if (foundHitPointType == HitPointType.NONE || foundHitPointType == HitPointType.TRACK) {
+                            // nothing else here, or the track itself: the Block of the track
+                            showTrackBlockPopUp(dLoc, event);
                         }
                     }
                 }
@@ -4205,6 +4373,11 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
             if (!selections.isEmpty()) {
                 selections.get(0).doMouseDragged(event);
             }
+        }
+
+        if (!isEditable() && isDragging && selectedHitPointType == HitPointType.MARKER
+                && selectedObject instanceof LocoIcon && allControlling()) {
+            markerDropped((LocoIcon) selectedObject, dLoc);
         }
 
         if (selectedObject != null) {

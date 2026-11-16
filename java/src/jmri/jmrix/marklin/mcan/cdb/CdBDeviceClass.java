@@ -90,21 +90,35 @@ public enum CdBDeviceClass {
         this.hardwareCapability  = hardwareCapability;
     }
 
-    /** The 8-bit class ID used in CAN ID construction. */
+    /**
+     * The 8-bit class ID used in CAN ID construction.
+     *
+     * @return the 8-bit class ID
+     */
     public int getClassId() { return classId; }
 
-    /** Human-readable vendor product name. */
+    /**
+     * Human-readable vendor product name.
+     *
+     * @return the display name
+     */
     public String getDisplayName() { return displayName; }
 
     public ProtocolGeneration getProtocolGeneration() { return protocolGeneration; }
 
-    /** Whether this class has a single known hardware generation or multiple ambiguous ones. */
+    /**
+     * Whether this class has a single known hardware generation or multiple ambiguous ones.
+     *
+     * @return the hardware capability
+     */
     public HardwareCapability getHardwareCapability() { return hardwareCapability; }
 
     /**
      * The 29-bit base (ping) CAN ID for this device class with broadcast module slot.
      * Formula: {@code ((classId >> 4) << 21) | ((classId & 0xF) << 12) | 0x0A80 | 0x80}
      * (0x80 encodes moduleId=0 in the hash low byte).
+     *
+     * @return the 29-bit base (ping) CAN ID
      */
     public int getPingId() {
         return ((classId >> 4) << 21) | ((classId & 0xF) << 12) | 0x0A80 | 0x80;

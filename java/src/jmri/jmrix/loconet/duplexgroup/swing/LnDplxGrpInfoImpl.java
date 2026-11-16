@@ -775,13 +775,11 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      * @return true if message is an IPL device report indicating a UR92
      *         present, else return false.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE",
-                justification = "False positive on the implied local variable in numUr92++")
     private boolean handleMessageIplResult(LocoNetMessage m) {
         if (LnIPLImplementation.isIplUr92IdentityReportMessage(m) ||
                 LnIPLImplementation.isIplUr93IdentityReportMessage(m) ||
                 LnIPLImplementation.isIplLnwiIdentityReportMessage(m)) {
-            numUr92CompatibleType++;
+            ++numUr92CompatibleType;
             thisone.firePropertyChange(DPLX_PC_STAT_LN_UPDATE, " ", " ");
             thisone.firePropertyChange(DPLX_IPL_DEVICE_DETAILS, "", new BasicIPLDeviceInfo(m));
             waitingForIplReply = false;
@@ -822,7 +820,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
             gr_ch = extractDuplexGroupChannel(m);
             gr_id = extractDuplexGroupID(m);
             // always report details to table
-            thisone.firePropertyChange(DPLX_IPL_DEVICE_RESPONSE_DETAILS, "", 
+            thisone.firePropertyChange(DPLX_IPL_DEVICE_RESPONSE_DETAILS, "",
                     new BasicIPLDeviceResponseInfo(gr_name,Integer.toString(gr_ch) + " (WiFi " + Integer.toString(gr_ch - 10) + ")",gr_password,Integer.toString(gr_id)));
 
             if (awaitingGroupReadReport) {

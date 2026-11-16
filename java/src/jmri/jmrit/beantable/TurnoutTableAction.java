@@ -94,7 +94,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
     // initially allow any 20 char string, updated to prefixBox selection by canAddRange()
     JTextField userNameTextField = new JTextField(40);
     ManagerComboBox<Turnout> prefixBox = new ManagerComboBox<>();
-    SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 100, 1); // maximum 100 items
+    SpinnerNumberModel rangeSpinner = new SpinnerNumberModel(1, 1, 1000, 1); // maximum 1000 items, e.g. a whole C/MRI node
     JSpinner numberToAddSpinner = new JSpinner(rangeSpinner);
     JCheckBox rangeBox = new JCheckBox(Bundle.getMessage("AddRangeBox"));
     String systemSelectionCombo = this.getClass().getName() + ".SystemSelected";
@@ -462,7 +462,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         if (rangeBox.isSelected()) {
             numberOfTurnouts = (Integer) numberToAddSpinner.getValue();
         }
-        if (numberOfTurnouts >= 65 // limited by JSpinnerModel to 100
+        if (numberOfTurnouts >= 65 // limited by JSpinnerModel to 1000
             && JmriJOptionPane.showConfirmDialog(addFrame,
                 Bundle.getMessage("WarnExcessBeans", Bundle.getMessage("Turnouts"), numberOfTurnouts),
                 Bundle.getMessage("WarningTitle"),

@@ -7,6 +7,7 @@ import jmri.SpeedStepMode;
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
 
+@SuppressWarnings("deprecation")
 public class LocoNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     @Test
@@ -134,7 +135,7 @@ public class LocoNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         // set speed step mode to 128.
         instance.setSpeedStepMode(jmri.SpeedStepMode.NMRA_DCC_128);
         super.testGetSpeed_float();
-        
+
         // set speed step mode to 28
         instance.setSpeedStepMode(jmri.SpeedStepMode.NMRA_DCC_28);
         Assert.assertEquals("Idle", 0, ((LocoNetThrottle)instance).intSpeed(0.0F));

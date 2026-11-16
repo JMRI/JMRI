@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.*;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.util.*;
@@ -596,6 +597,22 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
     }
 
     /**
+     * Clear the Comment of every Turnout whose Comment starts with prefix,
+     * e.g. the mast or head name JMRI wrote there when it was set up. The
+     * Turnouts themselves stay; Comments typed in by the user are left alone.
+     *
+     * @param prefix start of the Comment JMRI wrote
+     */
+    public static void clearTurnoutComments(@Nonnull String prefix) {
+        for (Turnout t : InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet()) {
+            String comment = t.getComment();
+            if (comment != null && comment.startsWith(prefix)) {
+                t.setComment(null);
+            }
+        }
+    }
+
+    /**
      * Configure a table to have our standard rows and columns. This is
      * optional, in that other table formats can use this table model. But we
      * put it here to help keep it consistent.
@@ -802,10 +819,10 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
     /**
      * Export the contents of table to a CSV file.
-     * <p> 
+     * <p>
      * The content is exported in column order from the table model
      * <p>
-     * If the provided file name is null, the user will be 
+     * If the provided file name is null, the user will be
      * prompted with a file dialog.
      * @param file file
      */
@@ -821,19 +838,19 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 return;  // give up if no file selected
             }
             file = chooser.getSelectedFile();
-        }        
-        
+        }
+
         try {
-            var fileWriter = new java.io.FileWriter(file);
+            var fileWriter = new java.io.FileWriter(file, StandardCharsets.UTF_8);
             var bufferedWriter = new java.io.BufferedWriter(fileWriter);
-            var csvFile = new org.apache.commons.csv.CSVPrinter(bufferedWriter, 
+            var csvFile = new org.apache.commons.csv.CSVPrinter(bufferedWriter,
                                     org.apache.commons.csv.CSVFormat.DEFAULT);
-    
+
             for (int i = 0; i < getColumnCount(); i++) {
                 csvFile.print(getColumnName(i));
             }
             csvFile.println();
-        
+
             for (int i = 0; i < getRowCount(); i++) {
                 for (int j = 0; j < getColumnCount(); j++) {
                     var value = getValueAt(i, j);
@@ -844,7 +861,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 }
                 csvFile.println();
             }
-    
+
             csvFile.flush();
             csvFile.close();
 
@@ -1350,7 +1367,7 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
 
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            
+
             Component rendererComponent = _existingRenderer.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
             TableModel mod = table.getModel();
             if ( rendererComponent instanceof JLabel && mod instanceof BeanTableDataModel<?> ) { // Set the cell ToolTip
@@ -1462,8 +1479,8 @@ abstract public class BeanTableDataModel<T extends NamedBean> extends AbstractTa
                 container.setAlignmentX(Component.CENTER_ALIGNMENT);
                 container.setAlignmentY(Component.CENTER_ALIGNMENT);
                 String[] options = new String[]{JmriJOptionPane.YES_STRING, JmriJOptionPane.NO_STRING};
-                int result = JmriJOptionPane.showOptionDialog(null, container, Bundle.getMessage("WarningTitle"), 
-                    JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.WARNING_MESSAGE, null, 
+                int result = JmriJOptionPane.showOptionDialog(null, container, Bundle.getMessage("WarningTitle"),
+                    JmriJOptionPane.DEFAULT_OPTION, JmriJOptionPane.WARNING_MESSAGE, null,
                     options, JmriJOptionPane.NO_STRING);
 
                 if ( result == 0 ){ // first item in Array is Yes

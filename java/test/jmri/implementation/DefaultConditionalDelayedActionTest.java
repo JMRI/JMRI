@@ -2,11 +2,14 @@ package jmri.implementation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+
+import javax.swing.Timer;
 
 import jmri.*;
 import jmri.util.JUnitUtil;
@@ -63,8 +66,8 @@ public class DefaultConditionalDelayedActionTest {
         assertTrue(delayedSensor.isTimerActive(), "timer of a kept action still runs");
 
         // the timer expires
-        assertNotNull(delayedSensor.getListener());
-        delayedSensor.getListener().actionPerformed(null);
+        ActionListener listener = Objects.requireNonNull(delayedSensor.getListener(), "delayed sensor listener");
+        listener.actionPerformed(null);
         assertEquals(Sensor.ACTIVE, InstanceManager.sensorManagerInstance().provideSensor("IS2").getKnownState(),
                 "delayed sensor set");
         assertEquals(Sensor.INACTIVE, InstanceManager.sensorManagerInstance().provideSensor("IS3").getKnownState(),
@@ -91,7 +94,8 @@ public class DefaultConditionalDelayedActionTest {
         reordered.add(delayedTurnout);
         c.setAction(reordered);
 
-        delayedTurnout.getListener().actionPerformed(null);
+        ActionListener listener = Objects.requireNonNull(delayedTurnout.getListener(), "delayed turnout listener");
+        listener.actionPerformed(null);
         assertEquals(Turnout.THROWN, InstanceManager.turnoutManagerInstance().provideTurnout("IT1").getCommandedState(),
                 "delayed turnout set");
         assertEquals(Turnout.CLOSED, InstanceManager.turnoutManagerInstance().provideTurnout("IT2").getCommandedState(),
@@ -114,7 +118,8 @@ public class DefaultConditionalDelayedActionTest {
         replacement.add(delayed(Conditional.Action.DELAYED_SENSOR, "IS2", Sensor.ACTIVE));
         c.setAction(replacement);
         assertFalse(delayedSensor.isTimerActive(), "timer of the replaced action is stopped");
-        assertFalse(delayedSensor.getTimer().isRunning(), "Swing timer of the replaced action is stopped");
+        Timer timer = Objects.requireNonNull(delayedSensor.getTimer(), "timer of the replaced action");
+        assertFalse(timer.isRunning(), "Swing timer of the replaced action is stopped");
     }
 
     @BeforeEach

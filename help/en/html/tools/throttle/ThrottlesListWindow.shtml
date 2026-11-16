@@ -16,14 +16,21 @@
     <div id="mainContent">
       <h1>Throttles List Window</h1>
 
-      <p><img src="images/ThrottleListWindow.png" alt="">
+      <p><img src="images/ThrottleListWindow.png" alt=""><br>      
+      Above screenshot shows the Throttles List window with 2 Throttle windows opened (2 columns), one with 7 throttles and the other with 5 throttles.<br>
+      The visible throttles are BB 37504 on the first window, and 631 on the second window.<br>
+      3 locomotives are running, 2 in the first window and 1 in the second window. One of them is running in reverse in the first window.<br>
+      4 have been emergency stopped, 2 in the first window and 2 in the second window.<br>
+      4 locomotives are stopped, 3 in the first window and 1 in the second window.<br>
+      631 and 486 don't have a roster entry, but 631 being a consist, an icon has been generated from each of its member roster entries.<br>
+      One throttle is opened in the second window, but not assigned to any locomotive, hence no icon or speed information is displayed for it.<br>
       </p>
       This window is accessible from the <a href="ThrottleToolBar.shtml">Throttle pane
       toolbar.</a><br><br>
       The Throttles List shows all currently opened Throttles in JMRI, with their respective direction and speed. <br>
-      Each column represents a different throttle window, with all throttles in that window as rows in that column<br>
-      Drag'n drop of a throttle from one column to another is supported, the matching throttle frame will be moved from one window to the other<br>
-      Drag'n drop od roster entrie(s) from the DecoderPro main window is also supported, a throttle for each roster entry will assigned in the matching Throttle Window<br>
+      Each column represents a different throttle window, with all throttles in that window as rows in that column.<br>
+      Drag'n drop of a throttle from one column to another is supported, the matching throttle frame will be moved from one window to the other.<br>
+      Drag'n drop of roster entrie(s) from the DecoderPro main window is also supported, for each dropped roster entry, a new throttle will be assigned in the matching Throttle Window.<br>
       If an <a href="RostersMediaPane.shtml">icon is available for that roster entry</a>, it will be used.<br>
       If large speed sliders are enabled in  <a href="ThrottlesPreferencesPane.shtml">Throttles Preferences</a>, speed and direction
       will show graphicaly. <br>
@@ -33,7 +40,7 @@
 
       <h3>New button</h3>
       This button creates a new Throttle window (hence different from clicking the "New" button in
-      <a href="ThrottleToolBar.shtml">Throttle Window toolbar</a>).<br>
+      <a href="ThrottleToolBar.shtml">Throttle Window toolbar</a> which creates a new throttle within the existing window).<br>
 
       <h3>Stop button</h3>
       Will emergency stop all JMRI managed throttles.<br>

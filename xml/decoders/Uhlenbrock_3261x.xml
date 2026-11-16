@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2014 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+  <version author="Ronald Kuhn" version="1.0" lastUpdated="2026/11/09"/>
+  <!--   Initial Version 1.0 is created as a clone from Uhlenbrock_32500.xml -->
+  <decoder>
+    <family name="IntelliSound 6 Module" mfg="Uhlenbrock Elektronik" comment="Auxiliary Sound module for all locomotive decoders with SUSI connector">
+      <model model="32610" comment="IntelliSound 6-Module">
+        <size length="15.0" width="9.5" height="3.3" units="mm"/>
+      </model>
+      <model model="32614" comment="IntelliSound 6-Module with sound">
+        <size length="15.0" width="9.5" height="3.3" units="mm"/>
+      </model>
+      <model model="32615" comment="IntelliSound 6-Module with microSUSI">
+        <size length="15.0" width="9.5" height="3.3" units="mm"/>
+      </model>
+      <model model="32616" comment="IntelliSound 6-Module with microSUSI and sound">
+        <size length="15.0" width="9.5" height="3.3" units="mm"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes">
+      <capability>
+        <name>Indexed CV access</name>
+        <parameter name="PI">1021</parameter>
+        <parameter name="SI">0</parameter> <!-- Not used, but need to be declared for cvFirst to be read -->
+        <parameter name="cvFirst">true</parameter>
+      </capability>
+    </programming>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/soundVars7outputs.xml"/>
+    </variables>
+  </decoder>
+  <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/soundPane7outputs.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/uhlenbrock/fmapPane7outputs.xml"/>
+</decoder-config>

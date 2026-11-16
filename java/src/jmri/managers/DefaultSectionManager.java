@@ -60,9 +60,18 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
     }
 
     final void addListeners() {
-        InstanceManager.getDefault(SensorManager.class).addVetoableChangeListener(this);
-        InstanceManager.getDefault(BlockManager.class).addVetoableChangeListener(this);
+        sensorManager = InstanceManager.getDefault(SensorManager.class);
+        sensorManager.addVetoableChangeListener(this);
+        blockManager = InstanceManager.getDefault(BlockManager.class);
+        blockManager.addVetoableChangeListener(this);
     }
+
+    /**
+     * The SensorManager and BlockManager this manager listens to for deletions, so that {@link #dispose()}
+     * stops listening to those, not to whatever the InstanceManager holds by then.
+     */
+    private SensorManager sensorManager;
+    private BlockManager blockManager;
 
     @Override
     public int getXMLOrder() {
@@ -547,8 +556,8 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
 
     @Override
     public void dispose(){
-        InstanceManager.getDefault(SensorManager.class).removeVetoableChangeListener(this);
-        InstanceManager.getDefault(BlockManager.class).removeVetoableChangeListener(this);
+        sensorManager.removeVetoableChangeListener(this);
+        blockManager.removeVetoableChangeListener(this);
         super.dispose();
     }
 

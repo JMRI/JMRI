@@ -1,11 +1,14 @@
 package jmri.jmrit.ussctc;
 
-import java.beans.*;
-import java.util.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-import jmri.*;
-import jmri.util.*;
+import jmri.InstanceManager;
+import jmri.SignalHead;
 import jmri.util.JUnitAppender;
+import jmri.util.JUnitUtil;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.*;
@@ -363,7 +366,7 @@ public class SignalHeadSectionTest {
     // common infrastructure
 
     CodeLine codeline;
-    Station station = null;
+    Station<CodeGroupThreeBits, CodeGroupThreeBits> station = null;
     boolean requestIndicationStart;
 
     private SignalHead ih1 = null;

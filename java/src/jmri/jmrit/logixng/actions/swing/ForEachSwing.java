@@ -188,14 +188,14 @@ public class ForEachSwing extends AbstractDigitalActionSwing {
                         throw new IllegalArgumentException("_tabbedPaneUserSpecifiedSource has unknown selection");
                     }
                 } catch (ParserException e) {
-                    throw new RuntimeException("ParserException: "+e.getMessage(), e);
+                    throw new JmriUncheckedException("ParserException: "+e.getMessage(), e);
                 }
 
             } else {
                 throw new IllegalArgumentException("_tabbedPaneUserSpecifiedSource has unknown selection");
             }
         } catch (ParserException e) {
-            throw new RuntimeException("ParserException: "+e.getMessage(), e);
+            throw new JmriUncheckedException("ParserException: "+e.getMessage(), e);
         }
 
         action.setLocalVariableName(_localVariable.getText());

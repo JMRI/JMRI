@@ -1,12 +1,12 @@
 package jmri.jmrit.display.layoutEditor;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.SortedSet;
 
 import jmri.Block;
@@ -31,8 +31,8 @@ public class LayoutBlockManagerBlockLookupTest {
     public void testLookupByBlock() {
         List<LayoutBlock> layoutBlocks = new ArrayList<>();
         for (int i = 1; i <= 200; i++) {
-            LayoutBlock lb = lbm.createNewLayoutBlock("ILB" + i, "Lookup Block " + i);
-            assertNotNull(lb);
+            LayoutBlock lb = Objects.requireNonNull(lbm.createNewLayoutBlock("ILB" + i, "Lookup Block " + i),
+                    "LayoutBlock Lookup Block " + i);
             lb.initializeLayoutBlock();
             layoutBlocks.add(lb);
         }

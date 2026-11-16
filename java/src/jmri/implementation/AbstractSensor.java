@@ -106,9 +106,6 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
         return useDefaultTimerSettings;
     }
 
-    protected Thread thr;
-    protected Runnable r;
-
     /**
      * Counts the raw state changes, so that a debounce timer started for an
      * earlier raw state does nothing once the raw state has changed again.
@@ -252,6 +249,8 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
                 _rawState = s;
                 fireRawStateChanged(oldRawState, s, timeNanos);
             }
+        } else if (debouncePending) {
+            return; // the same state reported again: the debounce still decides
         }
         if (_knownState != s) {
             int oldState = _knownState;

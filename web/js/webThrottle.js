@@ -699,7 +699,7 @@ var jmriReady = function(jsonVersion, jmriVersion, railroadName) {
             document.title+= ' (panel: ' + $paramPanelName + ')';
             var iframeAux = $('<div>').attr('id', 'iframeAux');
             var panel = $('<iframe>').attr('src', '/panel/' + $paramPanelName).addClass('panel');
-            panel.load(function() {
+            panel.on('load', function() {
                 var bodyFrameOuter = $('#bodyFrameOuter');
                 var bodyFrameInner = $('#bodyFrameInner');
                 var panel = $('.panel');

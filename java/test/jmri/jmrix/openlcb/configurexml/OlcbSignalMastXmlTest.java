@@ -5,6 +5,7 @@ import jmri.util.JUnitUtil;
 import jmri.jmrix.openlcb.OlcbSignalMast;
 import jmri.jmrix.openlcb.OlcbSystemConnectionMemoScaffold;
 import jmri.jmrix.openlcb.OlcbEventNameStore;
+import jmri.jmrix.openlcb.OlcbTestThreadPool;
 
 import org.openlcb.AbstractConnection;
 import org.openlcb.Connection;
@@ -67,7 +68,6 @@ public class OlcbSignalMastXmlTest {
     }
 
     @BeforeAll
-    @SuppressWarnings("deprecation") // OlcbInterface(NodeID, Connection)
     public static void preClassInit() {
         JUnitUtil.setUp();
        // this test is run separately because it leaves a lot of threads behind
@@ -84,7 +84,7 @@ public class OlcbSignalMastXmlTest {
 
         memo = new OlcbSystemConnectionMemoScaffold(); // this self-registers as 'M'
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
-        memo.setInterface(new OlcbInterface(nodeID, connection) {
+        memo.setInterface(new OlcbInterface(nodeID, connection, new OlcbTestThreadPool()) {
             @Override
             public Connection getOutputConnection() {
                 return connection;

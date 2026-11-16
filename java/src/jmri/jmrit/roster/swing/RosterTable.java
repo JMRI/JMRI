@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
@@ -65,8 +66,10 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
     private final XTableColumnModel columnModel = new XTableColumnModel();
     private RosterGroupSelector rosterGroupSource = null;
     protected transient ListSelectionListener tableSelectionListener;
-    private RosterEntry[] selectedRosterEntries = null;
-    private RosterEntry[] sortedRosterEntries = null;
+    // Unmodifiable, and stored only once complete, so a thread other than the layout thread (Swing thread)
+    // that reads a cached list sees it whole
+    private volatile List<RosterEntry> selectedRosterEntries = null;
+    private volatile List<RosterEntry> sortedRosterEntries = null;
     private RosterEntry re = null;
 
     private static final String ATTRIBUTE_OPERATING_DURATION = Bundle.getMessage(RosterEntry.ATTRIBUTE_OPERATING_DURATION); //avoid lots of lookups
@@ -310,31 +313,41 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
     }
 
     // cache selectedRosterEntries so that multiple calls to this
-    // between selection changes will not require the creation of a new array
+    // between selection changes will not require the creation of a new array.
+    // The cache is made from the table, so on the layout thread (Swing thread);
+    // once made, it can be read from any thread.
     @Override
     public RosterEntry[] getSelectedRosterEntries() {
-        if (selectedRosterEntries == null) {
+        List<RosterEntry> entries = selectedRosterEntries;
+        if (entries == null) {
             int[] rows = dataTable.getSelectedRows();
-            selectedRosterEntries = new RosterEntry[rows.length];
+            RosterEntry[] found = new RosterEntry[rows.length];
             for (int idx = 0; idx < rows.length; idx++) {
-                selectedRosterEntries[idx] = Roster.getDefault().getEntryForId(
+                found[idx] = Roster.getDefault().getEntryForId(
                     dataModel.getValueAt(sorter.convertRowIndexToModel(rows[idx]), RosterTableModel.IDCOL).toString());
             }
+            // cached only once every entry has been looked up
+            entries = Collections.unmodifiableList(Arrays.asList(found));
+            selectedRosterEntries = entries;
         }
-        return Arrays.copyOf(selectedRosterEntries, selectedRosterEntries.length);
+        return entries.toArray(new RosterEntry[entries.size()]);
     }
 
     // cache getSortedRosterEntries so that multiple calls to this
     // between selection changes will not require the creation of a new array
     public RosterEntry[] getSortedRosterEntries() {
-        if (sortedRosterEntries == null) {
-            sortedRosterEntries = new RosterEntry[sorter.getModelRowCount()];
-            for (int idx = 0; idx < sorter.getModelRowCount(); idx++) {
-                sortedRosterEntries[idx] = Roster.getDefault().getEntryForId(
+        List<RosterEntry> entries = sortedRosterEntries;
+        if (entries == null) {
+            RosterEntry[] found = new RosterEntry[sorter.getModelRowCount()];
+            for (int idx = 0; idx < found.length; idx++) {
+                found[idx] = Roster.getDefault().getEntryForId(
                     dataModel.getValueAt(sorter.convertRowIndexToModel(idx), RosterTableModel.IDCOL).toString());
             }
+            // cached only once every entry has been looked up, as for the selected entries
+            entries = Collections.unmodifiableList(Arrays.asList(found));
+            sortedRosterEntries = entries;
         }
-        return Arrays.copyOf(sortedRosterEntries, sortedRosterEntries.length);
+        return entries.toArray(new RosterEntry[entries.size()]);
     }
 
     public void setEditable(boolean editable) {

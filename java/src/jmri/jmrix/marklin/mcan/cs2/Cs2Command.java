@@ -91,8 +91,12 @@ public enum Cs2Command {
     public boolean response() { return response; }
 
     /**
-     * Resolves a raw command code and response flag to the matching enum constant,
+     * Resolves a raw command code and response flag to the matching enum constant
      * or {@link #UNKNOWN} if no match exists.
+     *
+     * @param commandCode raw CS2 command code from the frame header
+     * @param response    response (reply) flag from the frame header
+     * @return the matching command constant or {@link #UNKNOWN} if none matches
      */
     public static Cs2Command from(int commandCode, boolean response) {
         for (Cs2Command c : values()) {

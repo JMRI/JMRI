@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Objects;
 
 import jmri.DccThrottle;
 import jmri.InstanceManager;
@@ -68,7 +69,8 @@ public class EngineerThrottleRampTest {
         };
         ArrayList<BlockOrder> orders = new ArrayList<>();
         orders.add(new BlockOrder(bA, "AtoB", null, "AB"));
-        orders.add(new BlockOrder(InstanceManager.getDefault(OBlockManager.class).getOBlock("B"), "BfromA", "AB", null));
+        orders.add(new BlockOrder(Objects.requireNonNull(InstanceManager.getDefault(OBlockManager.class).getOBlock("B"),
+                "OBlock B"), "BfromA", "AB", null));
         warrant.setBlockOrders(orders);
         warrant.setThrottleCommands(new ArrayList<>());
         for (int i = 0; i < commands.length; i += 3) {
@@ -201,9 +203,8 @@ public class EngineerThrottleRampTest {
 
         OBlockManager blockMgr = InstanceManager.getDefault(OBlockManager.class);
         bA = blockMgr.createNewOBlock("OB1", "A");
-        OBlock bB = blockMgr.createNewOBlock("OB2", "B");
+        OBlock bB = Objects.requireNonNull(blockMgr.createNewOBlock("OB2", "B"), "OBlock B");
         assertNotNull(bA);
-        assertNotNull(bB);
 
         PortalManager portalMgr = InstanceManager.getDefault(PortalManager.class);
         Portal pAB = portalMgr.createNewPortal("AB");

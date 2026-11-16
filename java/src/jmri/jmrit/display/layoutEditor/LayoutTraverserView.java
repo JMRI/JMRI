@@ -118,6 +118,42 @@ public class LayoutTraverserView extends LayoutTrackView {
     }
 
     /**
+     * {@inheritDoc}
+     * <p>
+     * The deck is drawn in the traverser's block's colours, and each slot in
+     * the colours of the block of the track joined to it.
+     */
+    @Override
+    public boolean usesLayoutBlock(@Nonnull LayoutBlock layoutBlock) {
+        if (getLayoutBlock() == layoutBlock) {
+            return true;
+        }
+        for (int k = 0; k < getNumberSlots(); k++) {
+            TrackSegment ts = getSlotConnectOrdered(k);
+            if ((ts != null) && (ts.getLayoutBlock() == layoutBlock)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * The slots reach out from the edges of the deck, so their ends are added
+     * to the deck's bounds.
+     */
+    @Override
+    @Nonnull
+    public Rectangle2D getRepaintBounds() {
+        Rectangle2D result = getBounds();
+        for (int k = 0; k < getNumberSlots(); k++) {
+            result.add(getSlotCoordsOrdered(k));
+        }
+        return result;
+    }
+
+    /**
      * Get the center of the control point, which is on an edge of the traverser.
      * @return The center point for the control circles.
      */
@@ -409,8 +445,6 @@ public class LayoutTraverserView extends LayoutTrackView {
         return result;
     }
 
-    public String tLayoutBlockName = "";
-
     public boolean isTurnoutControlled() {
         return traverser.isTurnoutControlled();
     }
@@ -600,7 +634,7 @@ public class LayoutTraverserView extends LayoutTrackView {
             g2.draw(getBounds());
 
             // Draw the control circles with the standard track width
-            
+
             double circleRadius = Math.max(traverser.getDeckWidth() / 8.f, trackWidth * 2);
             double circleDiameter = circleRadius * 2.f;
             Point2D center = getControlPointCenter();

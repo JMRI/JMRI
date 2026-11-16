@@ -7,6 +7,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.Objects;
+
 import jmri.IdTag;
 import jmri.Reporter;
 import jmri.ReporterManager;
@@ -208,8 +210,8 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
         m.setElement(7, 0x00);
         tcis.sendToListeners(m);
 
-        CbusReporter r7 = (CbusReporter)memo.get(ReporterManager.class).getBySystemName("MR7");
-        assertNotNull(r7, "reporter 7 created");
+        CbusReporter r7 = (CbusReporter)Objects.requireNonNull(memo.get(ReporterManager.class).getBySystemName("MR7"),
+            "reporter 7 created");
         assertEquals(CbusReporterManager.CBUS_REPORTER_TYPE_DDES_DESCRIBING, r7.getCbusReporterType(),
             "new reporter from RailCom DDES is self-describing");
         assertTrue(r7.getCurrentReport() instanceof jmri.RailCom, "RailCom report");
@@ -225,8 +227,8 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
         m.setElement(2, 0x08); // reporter 8 does not exist yet
         m.setElement(3, 0x41);
         tcis.sendToListeners(m);
-        CbusReporter r8 = (CbusReporter)memo.get(ReporterManager.class).getBySystemName("MR8");
-        assertNotNull(r8, "reporter 8 created");
+        CbusReporter r8 = (CbusReporter)Objects.requireNonNull(memo.get(ReporterManager.class).getBySystemName("MR8"),
+            "reporter 8 created");
         assertEquals(CbusReporterManager.CBUS_REPORTER_TYPE_CLASSIC, r8.getCbusReporterType(),
             "new reporter from ACDAT stays Classic");
 

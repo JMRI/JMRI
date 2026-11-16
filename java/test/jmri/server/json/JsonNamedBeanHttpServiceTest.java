@@ -96,6 +96,7 @@ public class JsonNamedBeanHttpServiceTest extends JsonNamedBeanHttpServiceTestBa
      * @throws JsonException on unexpected JsonException
      */
     @Test
+    @SuppressWarnings("deprecation")
     public void testGetNamedBeanWithProperties() throws JsonException {
         String name = "IT1";
         // retain turnout as NamedBean to ensure only "generic" NamedBean
@@ -148,7 +149,7 @@ public class JsonNamedBeanHttpServiceTest extends JsonNamedBeanHttpServiceTestBa
             ex.getLocalizedMessage(), "Error message is HTTP \"not found\"");
         assertEquals( 42, ex.getId(), "Message Id");
     }
-    
+
     @Test
     @Override
     public void testDoDelete() {

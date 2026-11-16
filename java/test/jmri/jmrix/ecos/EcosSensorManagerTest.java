@@ -1,11 +1,11 @@
 package jmri.jmrix.ecos;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import jmri.InstanceManager;
 import jmri.Sensor;
@@ -35,8 +35,7 @@ public class EcosSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         EcosSensorManager m = (EcosSensorManager) l;
         // the ECoS lists its feedback modules: module 100 has 8 ports
         m.reply(new EcosReply("<REPLY queryObjects(26, ports)>\n100 ports[8]\n<END 0 (OK)>\n"));
-        Sensor s = m.getSensor("US100:01");
-        assertNotNull(s, "port 1 of module 100");
+        Sensor s = Objects.requireNonNull(m.getSensor("US100:01"), "port 1 of module 100");
 
         List<Long> times = new ArrayList<>();
         List<Integer> states = new ArrayList<>();

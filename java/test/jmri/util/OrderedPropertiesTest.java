@@ -9,7 +9,7 @@ import org.junit.jupiter.api.*;
 public class OrderedPropertiesTest {
 
     @Test
-    @SuppressWarnings("deprecation") // class is marked for removal, so this doesn't work
+    @SuppressWarnings({"deprecation","removal"})
     public void testCTor() {
         var t = new OrderedProperties();
         Assertions.assertNotNull( t, "exists");

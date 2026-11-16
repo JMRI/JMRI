@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.NotApplicable;
@@ -60,6 +61,31 @@ public class LnSensorTest extends jmri.implementation.AbstractSensorTestBase {
         m.setElement(3, 0x78);
         s.messageFromManager(m);
         assertEquals( jmri.Sensor.ACTIVE, s.getKnownState(), "Known state after activate ");
+    }
+
+    @Test
+    public void testIncomingReportGivesItsReceivedTime() {
+        LnSensor s = new LnSensor("LS044", lnis, "L");
+        java.util.List<Long> times = new java.util.ArrayList<>();
+        java.util.List<Integer> states = new java.util.ArrayList<>();
+        s.addRawStateListener((sensor, oldState, newState, timeNanos) -> {
+            states.add(newState);
+            times.add(timeNanos);
+        });
+
+        LocoNetMessage high = new LocoNetMessage(new int[]{0xB2, 0x15, 0x70, 0x28});
+        high.setReceivedTime(1234L);
+        s.messageFromManager(high);
+        assertEquals(jmri.Sensor.ACTIVE, s.getKnownState());
+
+        long before = System.nanoTime();
+        s.messageFromManager(new LocoNetMessage(new int[]{0xB2, 0x15, 0x60, 0x38})); // not stamped
+        long after = System.nanoTime();
+
+        assertEquals(java.util.List.of(jmri.Sensor.ACTIVE, jmri.Sensor.INACTIVE), states);
+        assertEquals(1234L, times.get(0), "the time the report was received");
+        assertTrue(times.get(1) - before >= 0 && after - times.get(1) >= 0, "not stamped: dated when set");
+        s.dispose();
     }
 
     @BeforeEach

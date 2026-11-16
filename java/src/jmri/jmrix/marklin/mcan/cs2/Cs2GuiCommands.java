@@ -217,10 +217,18 @@ public final class Cs2GuiCommands {
     public static final class StatusDataConfigRequestFrame extends Cs2Frame {
         StatusDataConfigRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** 32-bit target device UID. */
+        /**
+         * 32-bit target device UID.
+         *
+         * @return the 32-bit target device UID
+         */
         public McanUid deviceUid() { return data().uidAt(0); }
 
-        /** Channel index to query (0 = device description). */
+        /**
+         * Channel index to query (0 = device description).
+         *
+         * @return the channel index to query
+         */
         public int index() { return data().byteAt(4); }
     }
 
@@ -231,7 +239,11 @@ public final class Cs2GuiCommands {
     public static final class RequestConfigDataRequestFrame extends Cs2Frame {
         RequestConfigDataRequestFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** The 8-byte ASCII filename. */
+        /**
+         * The 8-byte ASCII filename.
+         *
+         * @return the requested config filename
+         */
         public String filename() {
             byte[] buf = new byte[FILENAME_MAX_BYTES];
             int len = 0;
@@ -253,13 +265,25 @@ public final class Cs2GuiCommands {
     public static final class StatusDataConfigReplyFrame extends Cs2Frame {
         StatusDataConfigReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** 32-bit target device UID. */
+        /**
+         * 32-bit target device UID.
+         *
+         * @return the 32-bit target device UID
+         */
         public McanUid deviceUid() { return data().uidAt(0); }
 
-        /** Channel index this reply relates to. */
+        /**
+         * Channel index this reply relates to.
+         *
+         * @return the channel index this reply relates to
+         */
         public int index() { return data().byteAt(4); }
 
-        /** Number of stream packets that were sent. */
+        /**
+         * Number of stream packets that were sent.
+         *
+         * @return the number of stream packets that were sent
+         */
         public int packetCount() { return data().byteAt(5); }
     }
 
@@ -269,7 +293,11 @@ public final class Cs2GuiCommands {
     public static final class RequestConfigDataReplyFrame extends Cs2Frame {
         RequestConfigDataReplyFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** The 8-byte filename from the acknowledged request. */
+        /**
+         * The 8-byte filename from the acknowledged request.
+         *
+         * @return the acknowledged config filename
+         */
         public String filename() {
             byte[] buf = new byte[FILENAME_MAX_BYTES];
             int len = 0;
@@ -289,10 +317,18 @@ public final class Cs2GuiCommands {
     public static final class ConfigDataStreamHeaderFrame extends Cs2Frame {
         ConfigDataStreamHeaderFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** Total byte count of the config data stream. */
+        /**
+         * Total byte count of the config data stream.
+         *
+         * @return the total byte count of the config data stream
+         */
         public long fileLength() { return data().int32At(0); }
 
-        /** 16-bit CRC of the complete data (polynomial 0x1021, seed 0xFFFF). */
+        /**
+         * 16-bit CRC of the complete data (polynomial 0x1021, seed 0xFFFF).
+         *
+         * @return the 16-bit CRC of the complete data
+         */
         public int crc() { return data().int16At(4); }
     }
 
@@ -303,7 +339,11 @@ public final class Cs2GuiCommands {
     public static final class ConfigDataStreamPacketFrame extends Cs2Frame {
         ConfigDataStreamPacketFrame(Cs2Header h, Cs2Data d, RawFrame p) { super(h, d, p); }
 
-        /** The receiver or sender hash retained throughout the stream. */
+        /**
+         * The receiver or sender hash retained throughout the stream.
+         *
+         * @return the transaction hash identifying the stream
+         */
         public int transactionHash() { return header().hash(); }
 
         /**

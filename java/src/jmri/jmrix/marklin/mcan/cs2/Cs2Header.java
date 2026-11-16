@@ -44,6 +44,8 @@ public final class Cs2Header {
     /**
      * Upper 2 bits of the 4-bit priority field (bits 28–27 of the CAN ID).
      * Controls bus-level arbitration on the physical CAN segment.
+     *
+     * @return the 2-bit bus priority
      */
     public int busPriority() { return (priority >> 2) & 0b11; }
 
@@ -56,6 +58,8 @@ public final class Cs2Header {
      *   <li>2  -  Locomotive halt</li>
      *   <li>3  -  Locomotive / accessory commands</li>
      * </ol>
+     *
+     * @return the 2-bit application-level message priority tier
      */
     public int messagePriority() { return priority & 0b11; }
 
@@ -64,6 +68,9 @@ public final class Cs2Header {
      * Returns {@code null}  -  without throwing  -  if the frame is too short,
      * the CS2 fingerprint is absent or the DLC is out of range.
      * Callers treat a null return as "not a CS2 frame".
+     *
+     * @param packet the raw CAN frame bytes to parse
+     * @return the parsed header, or {@code null} if the frame is not a valid CS2 frame
      */
     public static Cs2Header tryParse(int[] packet) {
         if (packet == null || packet.length < 5) return null;
@@ -88,12 +95,20 @@ public final class Cs2Header {
     /**
      * True when bits 7–9 of the hash equal {@code 0b110},
      * which is the mandatory Märklin CS2 fingerprint.
+     *
+     * @param hash the 16-bit hash field from the CAN header
+     * @return true if the hash carries the CS2 fingerprint
      */
     public static boolean hasCs2Fingerprint(int hash) {
         return ((hash >> 7) & 0b111) == 0b110;
     }
 
-    /** True when DLC is in the valid range 0–8. */
+    /**
+     * True when DLC is in the valid range 0–8.
+     *
+     * @param dlc the data length code to check
+     * @return true if the DLC is within the valid range 0–8
+     */
     public static boolean isValidDlc(int dlc) {
         return dlc >= 0 && dlc <= 8;
     }

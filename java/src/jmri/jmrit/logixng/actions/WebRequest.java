@@ -9,6 +9,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -324,7 +325,7 @@ public class WebRequest extends AbstractDigitalAction
                     reply = con.getInputStream().readAllBytes();
                 } else if (replyType == ReplyType.String || replyType == ReplyType.ListOfStrings) {
                     List<String> list = new ArrayList<>();
-                    try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()))) {
+                    try (BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream(), StandardCharsets.UTF_8))) {
                         String input;
                         while ((input = br.readLine()) != null) {
     //                        System.out.println(input);
@@ -469,7 +470,7 @@ public class WebRequest extends AbstractDigitalAction
                 bundleKey = "ShowDialog_Long_StringFormat";
                 break;
             default:
-                throw new RuntimeException("_formatType has unknown value: "+_formatType.name());
+                throw new JmriUncheckedException("_formatType has unknown value: "+_formatType.name());
         }
         return Bundle.getMessage(locale, bundleKey, _format);
 */
@@ -515,7 +516,7 @@ public class WebRequest extends AbstractDigitalAction
             }
         } catch (SocketAlreadyConnectedException ex) {
             // This shouldn't happen and is a runtime error if it does.
-            throw new RuntimeException("socket is already connected");
+            throw new JmriUncheckedException("socket is already connected");
         }
     }
 
