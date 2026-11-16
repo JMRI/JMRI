@@ -124,7 +124,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
 
         // this should agree with help/en/html/tools/scripting/Start.shtml
         Bindings bindings = new SimpleBindings();
-        
+
         bindings.put("sensors", InstanceManager.getNullableDefault(SensorManager.class));
         bindings.put("turnouts", InstanceManager.getNullableDefault(TurnoutManager.class));
         bindings.put("lights", InstanceManager.getNullableDefault(LightManager.class));
@@ -147,7 +147,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
         bindings.put("sections", InstanceManager.getNullableDefault(SectionManager.class));
         bindings.put("transits", InstanceManager.getNullableDefault(TransitManager.class));
         bindings.put("beans", InstanceManager.getNullableDefault(NamedBeanHandleManager.class));
-        
+
         bindings.put("CLOSED", Turnout.CLOSED);
         bindings.put("THROWN", Turnout.THROWN);
         bindings.put("CABLOCKOUT", Turnout.CABLOCKOUT);
@@ -169,9 +169,9 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
         bindings.put("FLASHYELLOW", SignalHead.FLASHYELLOW);
         bindings.put("FLASHGREEN", SignalHead.FLASHGREEN);
         bindings.put("FLASHLUNAR", SignalHead.FLASHLUNAR);
-        
+
         bindings.put("FileUtil", FileUtilSupport.getDefault());
-        
+
         this.context = new SimpleScriptContext();
         this.context.setBindings(bindings, ScriptContext.GLOBAL_SCOPE);
         this.context.setBindings(bindings, ScriptContext.ENGINE_SCOPE);
@@ -447,9 +447,9 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
             log.warn("*** Scripting with JavaScript/ECMAscript is being deprecated ***");
             log.warn("*** and may soon be removed.  If you are using this, please  ***");
             log.warn("*** contact us on the jmriusers group for assistance.        ***");
-            
+
             if (! java.awt.GraphicsEnvironment.isHeadless()) {
-                jmri.util.swing.JmriJOptionPane.showMessageDialog(null, 
+                jmri.util.swing.JmriJOptionPane.showMessageDialog(null,
                     "<html>"+
                     "Scripting with JavaScript/ECMAscript is being deprecated <br/>"+
                     "and may soon be removed.  If you are using this, please<br/>"+
@@ -464,7 +464,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
             justification = "Public accessibility for script to override warning")
     public static boolean dontWarnJavaScript = false;
             // The jython/DontWarnJavaScript.py script will disable the warning
-    
+
     /**
      * Get the default {@link javax.script.ScriptContext} for all
      * {@link javax.script.ScriptEngine}s.
@@ -628,7 +628,7 @@ public final class JmriScriptEngineManager implements InstanceManagerAutoDefault
                 jython = newPythonInterpreter();
             }
             if (is != null) {
-                python.eval(new InputStreamReader(is));
+                python.eval(new InputStreamReader(is, StandardCharsets.UTF_8));
                 if (this.jython != null) {
                     this.jython.execfile(is);
                 }

@@ -214,7 +214,7 @@ public class ExpressionDispatcherSwing extends AbstractDigitalExpressionSwing {
 
             _selectEnumSwing.updateObject(expression.getSelectEnum());
         } catch (ParserException e) {
-            throw new RuntimeException("ParserException: " + e.getMessage(), e);
+            throw new JmriUncheckedException("ParserException: " + e.getMessage(), e);
         }
     }
 

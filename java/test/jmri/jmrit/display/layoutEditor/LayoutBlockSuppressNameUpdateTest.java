@@ -18,7 +18,7 @@ import org.junit.jupiter.api.*;
  *
  * @author Keith Bruce 2026
  */
-@SuppressWarnings("deprecation") // setSuppressNameUpdate is deprecated, but still works until removed
+@SuppressWarnings("removal") // setSuppressNameUpdate is deprecated, but still works until removed
 public class LayoutBlockSuppressNameUpdateTest {
 
     private Block block;

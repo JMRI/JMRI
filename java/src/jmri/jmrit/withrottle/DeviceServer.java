@@ -96,6 +96,7 @@ import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.util.ClientMessageSender;
 import jmri.util.ThreadingUtil;
 import jmri.web.server.WebServerPreferences;
 import jmri.web.servlet.ServletUtil;
@@ -113,6 +114,12 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     String newLine = System.getProperty("line.separator");
     BufferedReader in = null;
     PrintStream out = null;
+
+    /**
+     * Sends to the device without making the layout thread (Swing thread)
+     * wait for it; closes the socket if the device stops reading.
+     */
+    private final ClientMessageSender sender;
     private final ArrayList<DeviceListener> listeners = new ArrayList<>();
     String deviceName = "Unknown";
     String deviceUDID;
@@ -144,6 +151,8 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     DeviceServer(Socket socket, DeviceManager manager) {
         this.device = socket;
         this.manager = manager;
+        this.sender = new ClientMessageSender("WiThrottle " + socket.getRemoteSocketAddress(),
+                this::writeToDevice, this::closeSocket);
 
         try {
             if (log.isDebugEnabled()) {
@@ -650,13 +659,32 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         if (message == null) {
             return; //  Do not send a null.
         }
-        out.println(message + newLine);
+        try {
+            sender.send(message);
+        } catch (IOException ex) {
+            log.debug("Not sent to {}: {}", getName(), ex.getMessage());
+            return;
+        }
         if (log.isDebugEnabled()) {
             String s = message + "                    "; //pad output so messages form columns
             s = s.substring(0, Math.max(message.length(), 20));
             log.debug("Sent: {}  to  {}{}", s, getName(), device.getRemoteSocketAddress());
         }
     }
+
+    /**
+     * Write a message to the device, waiting if the device is behind.
+     *
+     * @param message the message
+     * @throws IOException if the message can't be written
+     */
+    private void writeToDevice(String message) throws IOException {
+        out.println(message + newLine);
+        if (out.checkError()) {
+            throw new IOException("Sending to " + getName() + " failed");
+        }
+    }
+
     /**
      * Send an Alert message (simple text string) to this client
      * @param message

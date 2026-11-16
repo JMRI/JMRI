@@ -122,7 +122,10 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             try {
-                connection.sendMessage(service.doGet(this.bean, this.bean.getSystemName(), service.getType(), new JsonRequest(getLocale(), getVersion(), JSON.GET, 0)), 0);
+                JsonRequest request = new JsonRequest(getLocale(), getVersion(), JSON.GET, 0);
+                // the bean's whole state: a client that is behind needs only the latest
+                connection.sendMessage(service.doGet(this.bean, this.bean.getSystemName(), service.getType(), request),
+                        request, this);
             } catch (
                     IOException |
                     JsonException ex) {

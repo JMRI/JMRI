@@ -9,6 +9,7 @@ import javax.swing.Timer;
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.ThreadSafe;
 
+import jmri.JmriUncheckedException;
 import jmri.util.*;
 
 import jmri.util.ThreadingUtil.ThreadAction;
@@ -252,7 +253,7 @@ public class LogixNG_Thread {
                 }
             }
         } else {
-            throw new RuntimeException("LogixNG thread not started. ThreadID: "+Integer.toString(_threadID));
+            throw new JmriUncheckedException("LogixNG thread not started. ThreadID: "+Integer.toString(_threadID));
         }
     }
 
@@ -275,7 +276,7 @@ public class LogixNG_Thread {
         if (_logixNGThread != null) {
             addEvent(new ThreadEvent(ta));
         } else {
-            throw new RuntimeException("LogixNG thread not started");
+            throw new JmriUncheckedException("LogixNG thread not started");
         }
     }
 
@@ -311,7 +312,7 @@ public class LogixNG_Thread {
             timer.start();
             return timer;
         } else {
-            throw new RuntimeException("LogixNG thread not started");
+            throw new JmriUncheckedException("LogixNG thread not started");
         }
     }
 
@@ -345,7 +346,7 @@ public class LogixNG_Thread {
         if (_logixNGThread != null) {
             return _logixNGThread == Thread.currentThread();
         } else {
-            throw new RuntimeException("LogixNG thread not started");
+            throw new JmriUncheckedException("LogixNG thread not started");
         }
     }
 
@@ -386,10 +387,10 @@ public class LogixNG_Thread {
                 try {
                     _logixNGThread.join(0);
                 } catch (InterruptedException e) {
-                    throw new RuntimeException("stopLogixNGThread() was interrupted");
+                    throw new JmriUncheckedException("stopLogixNGThread() was interrupted");
                 }
                 if (_logixNGThread.getState() != Thread.State.TERMINATED) {
-                    throw new RuntimeException("Could not stop logixNGThread. Current state: "+_logixNGThread.getState().name());
+                    throw new JmriUncheckedException("Could not stop logixNGThread. Current state: "+_logixNGThread.getState().name());
                 }
                 _threads.remove(_threadID);
                 _threadNames.remove(_name);
@@ -417,7 +418,7 @@ public class LogixNG_Thread {
                 }
             }
             if (aThreadIsRunning) {
-                throw new RuntimeException("logixNGThread is running");
+                throw new JmriUncheckedException("logixNGThread is running");
             }
         }
     }

@@ -187,7 +187,7 @@ public class ExpressionEntryExitSwing extends AbstractDigitalExpressionSwing {
                 throw new IllegalArgumentException("_tabbedPaneEntryExitState has unknown selection");
             }
         } catch (ParserException e) {
-            throw new RuntimeException("ParserException: "+e.getMessage(), e);
+            throw new JmriUncheckedException("ParserException: "+e.getMessage(), e);
         }
     }
 

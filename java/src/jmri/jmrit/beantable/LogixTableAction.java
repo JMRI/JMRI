@@ -1339,7 +1339,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
                     logix.getDisplayName()), Bundle.getMessage("TitleLogixExportSuccess"),
                     JmriJOptionPane.INFORMATION_MESSAGE);
             } catch (JmriException e) {
-                throw new RuntimeException("Unexpected error: "+e.getMessage(), e);
+                throw new JmriUncheckedException("Unexpected error: "+e.getMessage(), e);
             }
         } else {
             errorMessage.append("</table></html>");

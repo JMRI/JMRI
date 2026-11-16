@@ -1,6 +1,7 @@
 package jmri.jmrix.mqtt;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import javax.annotation.Nonnull;
@@ -130,7 +131,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         if (! getOptionState("LastWillTopic").isEmpty()
                 && ! getOptionState("LastWillMessage").isEmpty()) {
             mqttConnOpts.setWill(baseTopic + getOptionState("LastWillTopic"),
-                    getOptionState("LastWillMessage").getBytes(),
+                    getOptionState("LastWillMessage").getBytes(StandardCharsets.UTF_8),
                     qosflag,
                     true);
         }
@@ -305,7 +306,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
      */
     @API(status=API.Status.MAINTAINED)
     public void publish(@Nonnull String topic, @Nonnull String payload) {
-        publish(topic, payload.getBytes());
+        publish(topic, payload.getBytes(StandardCharsets.UTF_8));
     }
 
     /**
@@ -316,7 +317,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
      */
     @API(status=API.Status.MAINTAINED)
     public void publish(@Nonnull String topic, @Nonnull String payload, boolean retain) {
-        publish(topic, payload.getBytes(), retain);
+        publish(topic, payload.getBytes(StandardCharsets.UTF_8), retain);
     }
 
     public MqttClient getMQttClient() {

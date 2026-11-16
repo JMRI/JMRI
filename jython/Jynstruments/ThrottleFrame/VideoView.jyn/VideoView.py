@@ -41,7 +41,7 @@ class VideoView(Jynstrument, ItemListener):
 
     def getExpectedContextClassName(self):
         # This Jynstrument likes to be in a ThrottleFrame and not anywhere else
-        return "jmri.jmrit.throttle.UIImplementation.ThrottleFrame"
+        return "jmri.jmrit.throttle.implementation.ThrottleFrame"
 
     def init(self):
         self.setLayout( BorderLayout() )        

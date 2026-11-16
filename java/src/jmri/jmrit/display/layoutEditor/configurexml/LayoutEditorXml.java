@@ -1,5 +1,7 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.awt.Color;
 import java.util.List;
 
@@ -210,6 +212,8 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
      * @param shared Top level Element to unpack.
      */
     @Override
+    @SuppressFBWarnings(value = {"THROWS_METHOD_THROWS_RUNTIMEEXCEPTION"},
+            justification = "We rethrow exception if it's a runtime exception")
     public boolean load(Element shared, Element perNode) {
         if (java.awt.GraphicsEnvironment.isHeadless()) {
             return true;
@@ -626,7 +630,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             adapterName = jmri.configurexml.ConfigXmlManager.currentClassName(adapterName);
 
             if (log.isDebugEnabled()) {
-                String id = "<null>";
+                String id;
                 try {
                     id = item.getAttribute("name").getValue();
                     log.debug("Load {} for [{}] via {}", id, panel.getName(), adapterName);
@@ -714,7 +718,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                 popup.setFontStyle(popup.getFontStyle());
             }
         }
-        
+
         panel.resetDirty();
 
         // register the resulting panel for later configuration

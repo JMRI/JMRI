@@ -1,6 +1,5 @@
 package jmri.jmrit.operations.rollingstock;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
@@ -114,7 +113,6 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
 
     abstract protected void delete();
 
-    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Checks for null")
     @Override
     public void initComponents() {
 
@@ -381,7 +379,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
             }
         }
         ownerComboBox.setSelectedItem(rs.getOwnerName());
-        
+
         // color attribute
         if (!InstanceManager.getDefault(CarColors.class).containsName(rs.getColorName())) {
             if (JmriJOptionPane.showConfirmDialog(this, Bundle.getMessage("colorNameNotExist",
@@ -485,7 +483,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
 
     protected boolean check(RollingStock rs) {
         String roadNum = roadNumberTextField.getText();
-        // hyphen feature needs at least one character to work properly        
+        // hyphen feature needs at least one character to work properly
         if (roadNum.contains(TrainCommon.HYPHEN) && roadNum.split(TrainCommon.HYPHEN).length == 0) {
             JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("HyphenFeature"), Bundle.getMessage("roadNumNG"),
                     JmriJOptionPane.ERROR_MESSAGE);

@@ -10,6 +10,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 
+import jmri.JmriUncheckedException;
 import jmri.jmrit.logixng.SymbolTable.InitialValueType;
 import jmri.jmrit.logixng.actions.WebRequest;
 import jmri.util.swing.JComboBoxUtil;
@@ -182,7 +183,7 @@ public class WebRequestTableModel extends AbstractTableModel {
                 }
                 setText(((InitialValueType) value).toString());
             } else {
-                throw new RuntimeException("Unknown column: "+Integer.toString(column));
+                throw new JmriUncheckedException("Unknown column: "+Integer.toString(column));
             }
             return this;
         }

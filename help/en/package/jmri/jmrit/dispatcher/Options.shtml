@@ -117,6 +117,24 @@
         </li>
 
         <li>
+          <a id="WaitWhereTrainsCanStop" name="WaitWhereTrainsCanStop"></a>
+          <p>Check <strong>Wait Where Trains Can Stop</strong> if automatic trains run on past
+          the end of short Sections they are stopped in. An automatic train can be stopped short
+          of the end of a Section by the Section's stopping sensor, by its speed profile, or
+          because the Section is at least as long as the train. In any other Section, such as a
+          short turnout Section, it is stopped at once on entering, and its momentum may carry it
+          on into the next Section, which may be held by another train. With this checked,
+          automated allocation gives a train such a Section only when the Sections beyond it are
+          free as far as one the train can stop in, and then gives it all of them together, with
+          the turnouts set for them. Until then the train waits in the Section before, provided
+          that is one it can stop in. A train waiting in a Section it can't stop in either is
+          given its next Section as usual, as keeping it back would gain nothing. Unchecked, the
+          default, Sections are allocated whatever lies beyond them. Sections and trains whose
+          lengths are not known are allocated as usual, so this needs the Max Train Length of each
+          train and the lengths of the Blocks.</p>
+        </li>
+
+        <li>
           <p>Check <strong>Use short Active Train names</strong> to use the train name as the
           Active Train name in tables and selection boxes where Active Trains are referenced.
           Uncheck to use the full Active Train name in those locations.</p>

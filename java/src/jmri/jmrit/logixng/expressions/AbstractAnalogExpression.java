@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.expressions;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.JmriUncheckedException;
 import jmri.Manager;
 import jmri.jmrit.logixng.implementation.AbstractBase;
 import jmri.jmrit.logixng.Base;
@@ -87,7 +88,7 @@ public abstract class AbstractAnalogExpression extends AbstractBase
             }
             x++;
         }
-        throw new RuntimeException("Unable to find a new socket name");
+        throw new JmriUncheckedException("Unable to find a new socket name");
     }
 
 

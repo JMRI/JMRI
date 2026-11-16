@@ -417,7 +417,10 @@ public class PointDetails {
                 } catch (InterruptedException ex) {
                     log.debug("[nxButtonTimeOut] Flash timer cancelled");  // NOI18N
                 }
-                setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
+                // setting the button's sensor runs its listeners, so do it on the
+                // layout thread (Swing thread), where routes are set and cleared
+                jmri.util.ThreadingUtil.runOnLayoutEventually(
+                        () -> setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE));
             }
         }
         ButtonTimeOut t = new ButtonTimeOut();

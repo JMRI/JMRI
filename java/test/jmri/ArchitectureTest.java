@@ -108,7 +108,7 @@ public class ArchitectureTest {
                                 .doNotHaveFullyQualifiedName("jmri.jmrix.dccpp.swing.ConfigBaseStationFrame$5").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrix.dccpp.swing.ConfigBaseStationFrame").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrix.ecos.utilities.EcosLocoToRoster$4").and()
-                                .doNotHaveFullyQualifiedName("jmri.jmrix.ecos.utilities.EcosLocoToRoster$6").and()
+                                .doNotHaveFullyQualifiedName("jmri.jmrix.ecos.utilities.EcosLocoToRoster$5").and()
                                 .doNotHaveFullyQualifiedName("jmri.jmrix.rps.trackingpanel.RpsTrackingPanel").and()
                                 .doNotHaveFullyQualifiedName("jmri.profile.ProfileManagerDialog").and()
                                 .doNotHaveFullyQualifiedName("jmri.profile.ProfileManagerDialog$1").and()
@@ -599,7 +599,8 @@ public class ArchitectureTest {
      * takes that system's commands to simulated trains and reports their
      * detection in that system's messages, is added here with its package.
      */
-    private static final String[] SIMULATION_USERS = {"jmri.jmrit.simulation.."};
+    private static final String[] SIMULATION_USERS = {"jmri.jmrit.simulation..",
+        "jmri.jmrix.can.cbus.simulator.."}; // CBUS on CAN Simulation
 
     /**
      * Only the simulator and the packages in {@code SIMULATION_USERS} use

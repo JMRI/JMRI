@@ -1,7 +1,5 @@
 package jmri.jmrix.rfid;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
 /**
  * Contains the data payload of a serial reply packet. Note that it's _only_ the
  * payload.
@@ -12,7 +10,6 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  */
 abstract public class RfidReply extends jmri.jmrix.AbstractMRReply {
 
-    @SuppressFBWarnings(value = "URF_UNREAD_FIELD", justification = "used by derived classes to fetch protocol in use")
     protected RfidTrafficController tc = null;
 
     // create a new one

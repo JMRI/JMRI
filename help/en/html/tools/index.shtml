@@ -235,6 +235,15 @@
           <!-- Add ID Tags Routing -->
 
           <dd>
+            <h3><a href="simulatedtrains/index.shtml">Simulated Trains</a>
+            </h3>
+          </dd>
+
+          <dd>Virtual trains that run on the layout's track as JMRI knows it, with no layout
+          connected, and set occupancy sensors as they pass, for trying out Dispatcher, Warrants,
+          Logix, LogixNG, scripts and panels.</dd>
+
+          <dd>
             <h3><a href="speedometer/index.shtml">Speedometer</a>
             </h3>
           </dd>

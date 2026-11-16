@@ -304,6 +304,16 @@ public class ActiveTrain implements PropertyChangeProvider {
         return mStarted;
     }
 
+    /**
+     * Get the Dispatcher that runs this train.
+     *
+     * @return the Dispatcher, or null if not set
+     */
+    @CheckForNull
+    public DispatcherFrame getDispatcher() {
+        return mDispatcher;
+    }
+
     public void setDispatcher(DispatcherFrame df) {
         mDispatcher = df;
         mSignalType = df.getSignalType();
@@ -484,7 +494,7 @@ public class ActiveTrain implements PropertyChangeProvider {
      * its Max Train Length as the entered length.
      */
     private void copyToTrainRecord() {
-        if (trainRecord == null || trainRecord.isRemoved()) {
+        if (trainRecord == null || trainRecord.isDisposed()) {
             return;
         }
         if (trainRecord.getDetection() != TrainRecord.Detection.CUSTOM) {
@@ -1003,10 +1013,7 @@ public class ActiveTrain implements PropertyChangeProvider {
             }
             if (mDispatcher.getNameInAllocatedBlock()) {
                 LoggingUtil.infoOnce(log, ALLOCATED_VALUE_NOTE);
-                Object allocatedValue = getAllocatedBlockValue();
-                for (Block b : as.getSection().getBlockList()) {
-                    b.setAllocatedValue(allocatedValue);
-                }
+                as.getSection().setAllocatedValue(getAllocatedBlockValue());
             }
             if (mDispatcher.getExtraColorForAllocated()) {
                 as.getSection().setAlternateColorFromActiveBlock(true);

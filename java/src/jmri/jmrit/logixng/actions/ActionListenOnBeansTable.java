@@ -83,7 +83,7 @@ public class ActionListenOnBeansTable extends AbstractDigitalAction
      * @param namedBeanType the type of the named beans
      */
     public void setNamedBeanType(@Nonnull NamedBeanType namedBeanType) {
-        if (namedBeanType == null) throw new RuntimeException("Daniel");
+        if (namedBeanType == null) throw new JmriUncheckedException("Daniel");
         _namedBeanType = namedBeanType;
     }
 

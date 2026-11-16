@@ -175,7 +175,7 @@ public class ExpressionConditionalSwing extends AbstractDigitalExpressionSwing {
                 throw new IllegalArgumentException("_tabbedPaneConditionalState has unknown selection");
             }
         } catch (ParserException e) {
-            throw new RuntimeException("ParserException: "+e.getMessage(), e);
+            throw new JmriUncheckedException("ParserException: "+e.getMessage(), e);
         }
     }
 

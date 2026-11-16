@@ -8,9 +8,9 @@ import jmri.*;
 
 /**
  * Model for a SignalHeadTable.
- * 
+ *
  * Code originally located within SignalHeadTableAction.java
- * 
+ *
  * @author Bob Jacobsen Copyright (C) 2003,2006,2007, 2008, 2009
  * @author Petr Koud'a Copyright (C) 2007
  * @author Egbert Broerse Copyright (C) 2016
@@ -305,7 +305,6 @@ public class SignalHeadTableModel extends jmri.jmrit.beantable.BeanTableDataMode
         protected final void eventEditorMousePressed() {
             this.editor.add(getEditorBox(table.convertRowIndexToModel(this.currentRow))); // add editorBox to JPanel
             this.editor.revalidate();
-            SwingUtilities.invokeLater(this.comboBoxFocusRequester);
             log.debug("eventEditorMousePressed in row: {})", this.currentRow);
         }
 

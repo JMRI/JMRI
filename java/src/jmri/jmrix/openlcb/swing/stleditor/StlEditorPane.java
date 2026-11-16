@@ -31,7 +31,10 @@ import jmri.util.swing.JmriJOptionPane;
 import jmri.util.swing.JmriMouseAdapter;
 import jmri.util.swing.JmriMouseEvent;
 import jmri.util.swing.JmriMouseListener;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+import java.nio.charset.StandardCharsets;
 
 import static org.openlcb.MimicNodeStore.NodeMemo.UPDATE_PROP_SIMPLE_NODE_IDENT;
 
@@ -2152,24 +2155,14 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
 
     private List<CSVRecord> getCsvRecords(String fileName) {
         var recordList = new ArrayList<CSVRecord>();
-        FileReader fileReader;
-        try {
-            fileReader = new FileReader(_csvDirectoryPath + fileName);
+
+        try (FileReader fileReader = new FileReader(_csvDirectoryPath + fileName, StandardCharsets.UTF_8);
+                BufferedReader bufferedReader = new BufferedReader(fileReader);
+                CSVParser csvFile = new CSVParser(bufferedReader, CSVFormat.DEFAULT)) {
+            recordList.addAll(csvFile.getRecords());
         } catch (FileNotFoundException ex) {
             _csvMessages.add(Bundle.getMessage("ImportFileNotFound", fileName));
             return recordList;
-        }
-
-        BufferedReader bufferedReader;
-        CSVParser csvFile;
-
-        try {
-            bufferedReader = new BufferedReader(fileReader);
-            csvFile = new CSVParser(bufferedReader, CSVFormat.DEFAULT);
-            recordList.addAll(csvFile.getRecords());
-            csvFile.close();
-            bufferedReader.close();
-            fileReader.close();
         } catch (IOException iox) {
             _csvMessages.add(Bundle.getMessage("ImportFileIOError", iox.getMessage(), fileName));
         }
@@ -2213,7 +2206,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     private void exportGroupLogic() throws IOException {
-        var fileWriter = new FileWriter(_csvDirectoryPath + "group_logic.csv");
+        var fileWriter = new FileWriter(_csvDirectoryPath + "group_logic.csv", StandardCharsets.UTF_8);
         var bufferedWriter = new BufferedWriter(fileWriter);
         var csvFile = new CSVPrinter(bufferedWriter, CSVFormat.DEFAULT);
 
@@ -2247,7 +2240,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     private void exportInputs() throws IOException {
-        var fileWriter = new FileWriter(_csvDirectoryPath + "inputs.csv");
+        var fileWriter = new FileWriter(_csvDirectoryPath + "inputs.csv", StandardCharsets.UTF_8);
         var bufferedWriter = new BufferedWriter(fileWriter);
         var csvFile = new CSVPrinter(bufferedWriter, CSVFormat.DEFAULT);
 
@@ -2268,7 +2261,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     private void exportOutputs() throws IOException {
-        var fileWriter = new FileWriter(_csvDirectoryPath + "outputs.csv");
+        var fileWriter = new FileWriter(_csvDirectoryPath + "outputs.csv", StandardCharsets.UTF_8);
         var bufferedWriter = new BufferedWriter(fileWriter);
         var csvFile = new CSVPrinter(bufferedWriter, CSVFormat.DEFAULT);
 
@@ -2289,7 +2282,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     private void exportReceivers() throws IOException {
-        var fileWriter = new FileWriter(_csvDirectoryPath + "receivers.csv");
+        var fileWriter = new FileWriter(_csvDirectoryPath + "receivers.csv", StandardCharsets.UTF_8);
         var bufferedWriter = new BufferedWriter(fileWriter);
         var csvFile = new CSVPrinter(bufferedWriter, CSVFormat.DEFAULT);
 
@@ -2308,7 +2301,7 @@ public class StlEditorPane extends jmri.util.swing.JmriPanel
     }
 
     private void exportTransmitters() throws IOException {
-        var fileWriter = new FileWriter(_csvDirectoryPath + "transmitters.csv");
+        var fileWriter = new FileWriter(_csvDirectoryPath + "transmitters.csv", StandardCharsets.UTF_8);
         var bufferedWriter = new BufferedWriter(fileWriter);
         var csvFile = new CSVPrinter(bufferedWriter, CSVFormat.DEFAULT);
 

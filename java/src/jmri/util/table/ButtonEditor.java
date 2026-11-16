@@ -33,6 +33,12 @@ public class ButtonEditor extends BasicCellEditor
 
     public ButtonEditor(JButton button) {
         super(button);
+        // The button must not take the focus from the table when it is clicked. Its action often opens a
+        // window, and the table hands a click to the button just as the button starts editing; if the new
+        // window became active before the button had the focus, Java would give the focus back to the
+        // table, and the table's window would come to the front again, over the new window.
+        // A key press on the table still clicks the button, see editingStarted.
+        button.setFocusable(false);
         button.addActionListener(this);
         button.addMouseListener(JmriMouseListener.adapt(this));
         button.putClientProperty("JComponent.sizeVariant", "small");

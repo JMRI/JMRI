@@ -1,16 +1,18 @@
 package jmri.jmrix.dccpp.dccppovertcp;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
+
 import jmri.jmrix.dccpp.DCCppCommandStation;
 import jmri.jmrix.dccpp.DCCppListener;
 import jmri.jmrix.dccpp.DCCppMessage;
 import jmri.jmrix.dccpp.DCCppNetworkPortController;
 import jmri.jmrix.dccpp.DCCppPacketizer;
 import jmri.jmrix.dccpp.DCCppReply;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -80,7 +82,6 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
     @GuardedBy ("xmtHandler")
     protected LinkedList<DCCppMessage> xmtList = new LinkedList<>();
 
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "Only used during system initialization")
     public DCCppOverTcpPacketizer(DCCppCommandStation cs) {
         super(cs); // Don't need the command station (?)
 
@@ -103,7 +104,8 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
      */
     public void connectPort(DCCppNetworkPortController p) {
         istream = p.getInputStream();
-        istreamReader = new BufferedReader(new InputStreamReader(istream));
+        istreamReader = new BufferedReader(
+                new InputStreamReader(istream, StandardCharsets.UTF_8));
         ostream = p.getOutputStream();
         if (networkController != null) {
             log.warn("connectPort: connect called while connected");
@@ -328,7 +330,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
                                 log.debug("Write to LbServer: {}", packet.toString());
                             }
                             packet.append("\r\n");
-                            ostream.write(packet.toString().getBytes());
+                            ostream.write(packet.toString().getBytes(StandardCharsets.UTF_8));
                             ostream.flush();
                             log.debug("end write to stream");
                         } else {

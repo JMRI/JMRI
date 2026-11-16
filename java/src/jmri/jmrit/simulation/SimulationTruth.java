@@ -23,11 +23,16 @@ public final class SimulationTruth {
     private final long timeNanos;
     private final List<TrainTruth> trains;
     private final List<Collision> collisions;
+    private final List<DropOut> dropOuts;
+    private final List<String> faults;
 
-    SimulationTruth(long timeNanos, List<TrainTruth> trains, List<Collision> collisions) {
+    SimulationTruth(long timeNanos, List<TrainTruth> trains, List<Collision> collisions, List<DropOut> dropOuts,
+            List<String> faults) {
         this.timeNanos = timeNanos;
         this.trains = Collections.unmodifiableList(trains);
         this.collisions = Collections.unmodifiableList(collisions);
+        this.dropOuts = Collections.unmodifiableList(dropOuts);
+        this.faults = Collections.unmodifiableList(faults);
     }
 
     /**
@@ -71,6 +76,84 @@ public final class SimulationTruth {
         return collisions;
     }
 
+    /**
+     * @return every detector drop-out since the trains were placed, in the
+     *         order they began
+     * @see SimulatedFaults#dropOut
+     */
+    @Nonnull
+    @InvokeOnAnyThread
+    public List<DropOut> getDropOuts() {
+        return dropOuts;
+    }
+
+    /**
+     * @return the faults set, in words, in the order set; empty when there
+     *         are none
+     * @see SimulatedFaults
+     */
+    @Nonnull
+    @InvokeOnAnyThread
+    public List<String> getFaults() {
+        return faults;
+    }
+
+    /** A time a Block's detector didn't see the train in it. */
+    @javax.annotation.concurrent.Immutable
+    public static final class DropOut {
+
+        private final Block block;
+        private final VirtualTrain train;
+        private final long startNanos;
+        private final long endNanos;
+
+        DropOut(Block block, VirtualTrain train, long startNanos, long endNanos) {
+            this.block = block;
+            this.train = train;
+            this.startNanos = startNanos;
+            this.endNanos = endNanos;
+        }
+
+        /**
+         * @return the Block whose detector dropped out
+         */
+        @Nonnull
+        @InvokeOnAnyThread
+        public Block getBlock() {
+            return block;
+        }
+
+        /**
+         * @return the train it didn't see
+         */
+        @Nonnull
+        @InvokeOnAnyThread
+        public VirtualTrain getTrain() {
+            return train;
+        }
+
+        /**
+         * @return when the detector stopped seeing the train, on the
+         *         {@link System#nanoTime()} scale
+         */
+        @InvokeOnAnyThread
+        public long getStartNanos() {
+            return startNanos;
+        }
+
+        /**
+         * @return when it saw the train again, or 0 while it still doesn't
+         */
+        @InvokeOnAnyThread
+        public long getEndNanos() {
+            return endNanos;
+        }
+
+        DropOut ended(long when) {
+            return new DropOut(block, train, startNanos, when);
+        }
+    }
+
     /** Where one train is. */
     @javax.annotation.concurrent.Immutable
     public static final class TrainTruth {
@@ -80,16 +163,20 @@ public final class SimulationTruth {
         private final double frontPositionMm;
         private final double speedMmPerSecond;
         private final boolean crashed;
+        private final boolean stalled;
+        private final boolean derailed;
         @CheckForNull
         private final String heldReason;
 
         TrainTruth(VirtualTrain train, List<Block> blocks, double frontPositionMm, double speedMmPerSecond,
-                boolean crashed, @CheckForNull String heldReason) {
+                boolean crashed, boolean stalled, boolean derailed, @CheckForNull String heldReason) {
             this.train = train;
             this.blocks = Collections.unmodifiableList(blocks);
             this.frontPositionMm = frontPositionMm;
             this.speedMmPerSecond = speedMmPerSecond;
             this.crashed = crashed;
+            this.stalled = stalled;
+            this.derailed = derailed;
             this.heldReason = heldReason;
         }
 
@@ -145,6 +232,26 @@ public final class SimulationTruth {
         @InvokeOnAnyThread
         public boolean isCrashed() {
             return crashed;
+        }
+
+        /**
+         * @return true if the train is stalled, so does not move whatever its
+         *         locos are told
+         * @see SimulatedFaults#stall
+         */
+        @InvokeOnAnyThread
+        public boolean isStalled() {
+            return stalled;
+        }
+
+        /**
+         * @return true if the train has derailed, because the points were moved
+         *         under it, and is stopped
+         * @see SimulatedFaults#rerail
+         */
+        @InvokeOnAnyThread
+        public boolean isDerailed() {
+            return derailed;
         }
 
         /**

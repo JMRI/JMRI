@@ -328,7 +328,6 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         return sv.hasCurrentLimit();
     }
 
-    @SuppressFBWarnings(value = "IS2_INCONSISTENT_SYNC")
     // Called from synchronised code
     public boolean isBlueLineSupportPossible() {
         return sv.hasBlueLine();

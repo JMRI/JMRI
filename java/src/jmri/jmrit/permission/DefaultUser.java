@@ -1,6 +1,7 @@
 package jmri.jmrit.permission;
 
 import java.awt.GraphicsEnvironment;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.*;
@@ -16,9 +17,6 @@ import jmri.util.swing.JmriJOptionPane;
  *
  * @author Daniel Bergqvist (C) 2024
  */
-@edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="DMI_RANDOM_USED_ONLY_ONCE",
-    justification = "False positive. The Random instance is kept by the iterator.")
-
 public class DefaultUser implements User {
 
     private final String _username;
@@ -179,14 +177,12 @@ public class DefaultUser implements User {
     private String getPasswordSHA256(String password) throws NoSuchAlgorithmException {
         String passwd = this._seed + password;
         MessageDigest md = MessageDigest.getInstance("SHA-256");
-        md.update(passwd.getBytes());
+        md.update(passwd.getBytes(StandardCharsets.UTF_8));
         return DatatypeConverter
                 .printHexBinary(md.digest()).toUpperCase();
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings( value="SLF4J_FORMAT_SHOULD_BE_CONST",
-        justification="The text is from an exception")
     public void setPassword(String newPassword) {
         PermissionManager pMngr = InstanceManager.getDefault(PermissionManager.class);
 
@@ -208,7 +204,7 @@ public class DefaultUser implements User {
         } catch (NoSuchAlgorithmException e) {
             String msg = "MD5 algoritm doesn't exists";
             log.error(msg);
-            throw new RuntimeException(msg);
+            throw new JmriUncheckedException(msg);
         }
     }
 
@@ -252,7 +248,7 @@ public class DefaultUser implements User {
                 } catch (NoSuchAlgorithmException e) {
                     String msg = "MD5 algoritm doesn't exists";
                     log.error(msg);
-                    throw new RuntimeException(msg);
+                    throw new JmriUncheckedException(msg);
                 }
             }
         } else {
@@ -277,7 +273,7 @@ public class DefaultUser implements User {
         } catch (NoSuchAlgorithmException e) {
             String msg = "MD5 algoritm doesn't exists";
             log.error(msg);
-            throw new RuntimeException(msg);
+            throw new JmriUncheckedException(msg);
         }
     }
 

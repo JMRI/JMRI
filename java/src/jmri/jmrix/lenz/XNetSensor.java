@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz;
 
+import jmri.JmriUncheckedException;
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
 import org.slf4j.Logger;
@@ -15,10 +16,10 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
     private boolean statusRequested = false;
 
     private int address;
-    private int baseaddress; /* The result of integer division of the 
+    private int baseaddress; /* The result of integer division of the
      sensor address by 8 */
 
-    private int nibble;      /* Is this sensor in the upper or lower 
+    private int nibble;      /* Is this sensor in the upper or lower
      nibble for the feedback encoder */
 
     private String systemName;
@@ -72,9 +73,9 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
     public void requestUpdateFromLayout() {
         // To do this, we send an XpressNet Accessory Decoder Information
         // Request.
-        // The generated message works for Feedback modules and turnouts 
-        // with feedback, but the address passed is translated as though it 
-        // is a turnout address.  As a result, we substitute our base 
+        // The generated message works for Feedback modules and turnouts
+        // with feedback, but the address passed is translated as though it
+        // is a turnout address.  As a result, we substitute our base
         // address in for the address. after the message is returned.
         XNetMessage msg = XNetMessage.getFeedbackRequestMsg(baseaddress,
                 (nibble == 0x00));
@@ -141,7 +142,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
             }
             return (reply.getElement(i + 1) & (1 << ((address - 1) % 4))) != 0;
         }
-        throw new RuntimeException("No feedback message found for address " + address + " in message: " + reply);
+        throw new JmriUncheckedException("No feedback message found for address " + address + " in message: " + reply);
     }
 
     /**

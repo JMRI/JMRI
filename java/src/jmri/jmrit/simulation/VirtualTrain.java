@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import jmri.InvokeOnAnyThread;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 /**
@@ -32,6 +33,8 @@ public final class VirtualTrain {
     private final double speedFactorPercent;
     private final double lengthOffsetMm;
     private final boolean adjustmentOutsideConsist;
+    @CheckForNull
+    private final String idTag;
 
     private VirtualTrain(Builder b) {
         name = b.name;
@@ -41,6 +44,43 @@ public final class VirtualTrain {
         speedFactorPercent = b.speedFactorPercent;
         lengthOffsetMm = b.lengthOffsetMm;
         adjustmentOutsideConsist = b.adjustmentOutsideConsist;
+        idTag = b.idTag;
+    }
+
+    /**
+     * Unpowered stock: the part of a train left behind by a breakaway, with no
+     * loco. Made only by {@link SimulatedFaults#breakaway}.
+     *
+     * @param name     its name
+     * @param lengthMm its length, mm
+     */
+    private VirtualTrain(String name, double lengthMm) {
+        this.name = name;
+        locos = Collections.emptyList();
+        this.lengthMm = lengthMm;
+        detection = Detection.entireTrain();
+        speedFactorPercent = 0;
+        lengthOffsetMm = 0;
+        adjustmentOutsideConsist = false;
+        idTag = null;
+    }
+
+    /**
+     * @param name     its name
+     * @param lengthMm its length, mm
+     * @return unpowered stock
+     */
+    static VirtualTrain stock(String name, double lengthMm) {
+        return new VirtualTrain(name, lengthMm);
+    }
+
+    /**
+     * @return true for unpowered stock, which has no loco: the rear of a
+     *         train after a breakaway
+     */
+    @InvokeOnAnyThread
+    public boolean isStock() {
+        return locos.isEmpty();
     }
 
     /**
@@ -57,6 +97,8 @@ public final class VirtualTrain {
 
         private final String name;
         private final List<SimulatedLoco> locos = new ArrayList<>();
+        @CheckForNull
+        private String idTag;
         private double lengthMm;
         private Detection detection = Detection.entireTrain();
         private double speedFactorPercent;
@@ -137,6 +179,18 @@ public final class VirtualTrain {
         }
 
         /**
+         * @param tagId the ID tag the train's front carries, such as an RFID
+         *              tag's 10 hex digits or a RailCom address, read by the
+         *              Blocks' reporters as it comes in; none unless set
+         * @return this builder
+         */
+        @InvokeOnAnyThread
+        public Builder idTag(@CheckForNull String tagId) {
+            this.idTag = tagId;
+            return this;
+        }
+
+        /**
          * @return the train
          * @throws IllegalArgumentException with a message for the user if it
          *                                  has no loco, no length, needs a loco
@@ -172,7 +226,7 @@ public final class VirtualTrain {
     }
 
     /**
-     * @return the train's locos, the first at the front
+     * @return the train's locos, the first at the front; none for stock
      */
     @Nonnull
     @InvokeOnAnyThread
@@ -230,6 +284,16 @@ public final class VirtualTrain {
     @InvokeOnAnyThread
     public boolean isAdjustmentAppliedOutsideConsist() {
         return adjustmentOutsideConsist;
+    }
+
+    /**
+     * @return the ID tag the train's front carries, which Blocks' reporters
+     *         read as it comes in, or null if it carries none
+     */
+    @CheckForNull
+    @InvokeOnAnyThread
+    public String getIdTag() {
+        return idTag;
     }
 
     /**

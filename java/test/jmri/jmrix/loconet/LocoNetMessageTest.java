@@ -33,6 +33,26 @@ import org.junit.jupiter.api.*;
 public class LocoNetMessageTest {
 
     @Test
+    public void testReceivedTime() {
+        LocoNetMessage m = new LocoNetMessage(new int[]{0xB2, 0x15, 0x70, 0x28});
+        Assertions.assertFalse(m.hasReceivedTime(), "not recorded");
+        long before = System.nanoTime();
+        long t = m.getReceivedTime();
+        Assertions.assertTrue(t - before >= 0 && System.nanoTime() - t >= 0, "not recorded: now");
+
+        m.setReceivedTime(1234L);
+        Assertions.assertTrue(m.hasReceivedTime(), "recorded");
+        Assertions.assertEquals(1234L, m.getReceivedTime());
+
+        LocoNetMessage copy = new LocoNetMessage(m);
+        Assertions.assertTrue(copy.hasReceivedTime(), "copied");
+        Assertions.assertEquals(1234L, copy.getReceivedTime(), "copied");
+        LocoNetMessage same = new LocoNetMessage(new int[]{0xB2, 0x15, 0x70, 0x28});
+        Assertions.assertEquals(same, m, "not part of the contents");
+        Assertions.assertEquals(same.hashCode(), m.hashCode());
+    }
+
+    @Test
     public void testCtor() {
         LocoNetMessage m = new LocoNetMessage(3);
         Assert.assertEquals("length", 3, m.getNumDataElements());

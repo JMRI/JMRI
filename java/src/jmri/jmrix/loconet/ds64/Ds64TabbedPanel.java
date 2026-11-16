@@ -914,7 +914,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                             // have written a value for output2 - update GUI
                             outAddr2.setLastQueriedValue(outAddr2.getText());
                             outAddr2.repaint();
-                            indexToRead++;
+                            ++indexToRead;
                             read = false;
                             setOpSwIndex(indexToRead);
                             return 25;
@@ -943,7 +943,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                             } catch (NumberFormatException e) {
                                 routeA2[effectiveIndex].setIsUnused();
                             }
-                            indexToRead++;
+                            ++indexToRead;
                             read = false;
                             setOpSwIndex(indexToRead);
                             return 25;
@@ -964,7 +964,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                             } catch (NumberFormatException e) {
                                 routeA4[effectiveIndex].setIsUnused();
                             }
-                            indexToRead++;
+                            ++indexToRead;
                             read = false;
                             setOpSwIndex(indexToRead);
                             return 25;
@@ -985,7 +985,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                             } catch (NumberFormatException e) {
                                 routeA6[effectiveIndex].setIsUnused();
                             }
-                            indexToRead++;
+                            ++indexToRead;
                             read = false;
                             setOpSwIndex(indexToRead);
                             return 25;
@@ -1006,7 +1006,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                             } catch (NumberFormatException e) {
                                 routeA8[effectiveIndex].setIsUnused();
                             }
-                            indexToRead++;
+                            ++indexToRead;
                             read = false;
                             setOpSwIndex(indexToRead);
                             return 0;
@@ -1032,8 +1032,6 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE",
-                justification = "False positive on the implied local variable in indexToRead++")
     private int determineNextStateForRead() {
         switch (indexToRead) {
             case 1: {
@@ -1069,7 +1067,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
             case 42:
             case 46: {
                 // have read a value for Route n.  go to next value if necessary
-                indexToRead++;
+                ++indexToRead;
                 read = false;
                 setOpSwIndex(indexToRead);
                 return 25;
@@ -1083,7 +1081,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
             case 43:
             case 47: {
                 // have read last values for Route n.  No next value so stop.
-                indexToRead++;
+                ++indexToRead;
                 read = false;
                 setOpSwIndex(indexToRead);
                 return 0;
@@ -2681,7 +2679,6 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
 
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE", justification = "Cannot catch an exception without grabbing the exception, but we don't do anything with the exception details.")
     private void updateGuiFromOpSws49_64() {
         Integer readValue;
         boolean isUsed = true;
@@ -2692,7 +2689,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                 readValue = (readValue << 1) + (opsw[i] ? 1 : 0);
             }
         }
-        readValue++; // account for physical/user numbering difference
+        ++readValue; // account for physical/user numbering difference
 
         String readValueString = readValue.toString();
         if ((opsw[63] == true) && (opsw[64] == true)) {
@@ -2830,7 +2827,6 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
         }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE", justification = "Cannot catch an exception without grabbing the exception, but we don't do anything with the exception details.")
     void updateGuiFromOpSws33_48() {
         Integer readValue;
         boolean isUsed = true;
@@ -2841,7 +2837,7 @@ public class Ds64TabbedPanel extends AbstractBoardProgPanel {
                 readValue = (readValue << 1) + (opsw[i] ? 1 : 0);
             }
         }
-        readValue++; // account for physical/user numbering difference
+        ++readValue; // account for physical/user numbering difference
 
         String readValueString = readValue.toString();
         if ((opsw[47] == true) && (opsw[48] == true)) {
