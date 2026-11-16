@@ -126,9 +126,9 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
                 String name = entry.getKey();
                 String borderName = ItemPalette.convertText(name);
                 for (String state : states) {
-                    if (borderName.equals(state) || name.equals("SignalHeadStateDark") 
-                            || name.equals(ItemPalette.convertText("SignalHeadStateDark")) 
-                            || name.equals("SignalHeadStateHeld") 
+                    if (borderName.equals(state) || name.equals("SignalHeadStateDark")
+                            || name.equals(ItemPalette.convertText("SignalHeadStateDark"))
+                            || name.equals("SignalHeadStateHeld")
                             || name.equals(ItemPalette.convertText("SignalHeadStateHeld"))) {
                         iconMap.put(name, entry.getValue());
                         break;
@@ -184,7 +184,7 @@ public class SignalHeadItemPanel extends TableItemPanel<SignalHead> {
                 sh.setSignalHead(bean.getDisplayName());
                 HashMap<String, NamedIcon> map = getFilteredIconMap(iMap);
                 for (Entry<String, NamedIcon> ent : map.entrySet()) {
-                    sh.setIcon(ent.getKey(), new NamedIcon(ent.getValue()));
+                    sh.setIcon(ent.getKey(), ent.getValue().cloneMe());
                 }
                 sh.setFamily(_family);
                 sh.setLevel(Editor.SIGNALS);

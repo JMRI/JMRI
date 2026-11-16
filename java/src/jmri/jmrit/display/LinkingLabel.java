@@ -34,7 +34,7 @@ public class LinkingLabel extends PositionableLabel implements LinkingObject {
     public Positionable deepClone() {
         PositionableLabel pos;
         if (_icon) {
-            NamedIcon icon = new NamedIcon((NamedIcon) getIcon());
+            NamedIcon icon = ((NamedIcon) getIcon()).cloneMe();
             pos = new LinkingLabel(icon, _editor, url);
         } else {
             pos = new LinkingLabel(_unRotatedText, _editor, url);
