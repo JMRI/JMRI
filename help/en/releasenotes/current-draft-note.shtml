@@ -595,6 +595,10 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
+            <li>JMRI no longer freezes when a throttle window shows that a
+                loco couldn't be acquired (for example a LocoNet slot refused
+                or timed out) while another throttle request is answered or a
+                throttle window is opened or closed.</li>
             <li></li>
         </ul>
 
