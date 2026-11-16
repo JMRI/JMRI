@@ -639,6 +639,9 @@
         <ul>
             <li>Web panels: a panel showing a sensor as text no longer
                 reloads in the browser each time the sensor changes.</li>
+            <li>Web roster: uploading files from the roster page no longer
+                fails on Linux systems where /tmp is a separate filesystem,
+                such as Raspberry Pi OS trixie.</li>
             <li></li>
         </ul>
 
