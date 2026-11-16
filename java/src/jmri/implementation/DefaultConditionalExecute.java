@@ -106,7 +106,7 @@ public class DefaultConditionalExecute {
         } else {
             int act = action.getActionData();
             if (act == Route.TOGGLE) {
-                if (tl.getLocked(Turnout.CABLOCKOUT)) {
+                if (tl.isLocked()) {
                     act = Turnout.UNLOCKED;
                 } else {
                     act = Turnout.LOCKED;

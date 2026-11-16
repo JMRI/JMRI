@@ -88,7 +88,8 @@ public interface Route extends NamedBean {
     boolean getLocked();
 
     /**
-     * Has at least one lockable turnout.
+     * Has at least one lockable turnout. JMRI can lock any turnout against
+     * its own commands, so this is true for a Route with an output turnout.
      *
      * @return true if lockable; false otherwise
      */

@@ -275,9 +275,9 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
     /** {@inheritDoc} */
     @Override
     public boolean canLock() {
+        // JMRI locks a turnout against its own commands on every system
         for ( OutputTurnout oto : _outputTurnoutList){
-            Turnout to = oto.getTurnout();
-            if ( to !=null && to.canLock(Turnout.CABLOCKOUT)) {
+            if ( oto.getTurnout() != null) {
                 return true;
             }
         }

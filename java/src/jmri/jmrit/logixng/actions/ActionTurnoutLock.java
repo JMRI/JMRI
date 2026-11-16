@@ -65,7 +65,7 @@ public class ActionTurnoutLock extends AbstractDigitalAction {
         TurnoutLock lock = _selectEnum.evaluateEnum(getConditionalNG());
 
         if (lock == TurnoutLock.Toggle) {
-            if (turnout.getLocked(Turnout.CABLOCKOUT)) {
+            if (turnout.isLocked()) {
                 lock = TurnoutLock.Unlock;
             } else {
                 lock = TurnoutLock.Lock;

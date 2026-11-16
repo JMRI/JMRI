@@ -57,8 +57,9 @@
         <dt>Locked</dt>
 
         <dd>
-          When checked the Route is locked. This means that Turnouts included in the Route that can
-          be locked by JMRI will not respond to commands from cabs or pushbuttons to change. For
+          When checked the Route is locked. This means that JMRI refuses its own commands to move
+          the Turnouts included in the Route, on every system, and Turnouts that can be locked out
+          in hardware will not respond to commands from cabs or pushbuttons to change either. For
           more information see the <a href="TurnoutTable.shtml#Lock%20Mode">Lock Mode section</a>
           on the <a href="TurnoutTable.shtml">Turnout Table help page</a> and the Route Add/Edit
           <a href="RouteAddEdit.shtml#Turnout%20lock%20feature">Turnout Lock feature</a>.
