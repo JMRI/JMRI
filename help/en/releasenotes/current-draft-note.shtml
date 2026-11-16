@@ -2,6 +2,10 @@
     <h3>Hardware Support</h3>
         <ul>
           <li></li>
+          <li>Connections (NCE, C/MRI, CAN, XpressNet and others): after a
+              connection recovers from a failure, messages are no longer
+              sent out of turn or their replies given to the wrong
+              listener.</li>
         </ul>
 
         <h4>Acela CTI</h4>
