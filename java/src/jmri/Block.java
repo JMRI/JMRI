@@ -295,6 +295,16 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     public static final String PROPERTY_VALUE = "value";
 
     /**
+     * Property name for the Block's value, unchanged, becoming set rather than
+     * passed along, or the other way round; see {@link #isValueFollowed()}.
+     * The values are Booleans. A change of value fires {@link #PROPERTY_VALUE}
+     * instead.
+     *
+     * @since 5.19.2
+     */
+    public static final String PROPERTY_VALUE_FOLLOWED = "valueFollowed";
+
+    /**
      * String constant for property changes to direction.
      */
     public static final String PROPERTY_DIRECTION = "direction";
@@ -547,12 +557,48 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      * @param value The new Object resident in this block, or null if none
      */
     public void setValue(Object value) {
+        boolean wasFollowed = _valueFollowed;
+        _valueFollowed = _following && value != null;
+        if (wasFollowed != _valueFollowed && value == _value) {
+            // the same value, now set rather than passed along
+            firePropertyChange(PROPERTY_VALUE_FOLLOWED, wasFollowed, _valueFollowed);
+        }
         //ignore if unchanged
         if (value != _value) {
             log.debug("Block {} value changed from '{}' to '{}'", getDisplayName(), _value, value);
             _previousValue = _value;
             _value = value;
             firePropertyChange(PROPERTY_VALUE, _previousValue, _value); // NOI18N
+        }
+    }
+
+    /**
+     * Whether the Block's value was passed along by the Block itself rather
+     * than set by {@link #setValue(Object)}: taken from a neighbouring Block
+     * as a train entered, or restored after the Block was unoccupied only
+     * briefly. Where trains run close together a value passed along can be
+     * another train's, since which neighbour a train came from is a guess.
+     *
+     * @return true if the value was passed along; false if it was set, or
+     *         there is none
+     * @since 5.19.2
+     */
+    public boolean isValueFollowed() {
+        return _valueFollowed;
+    }
+
+    /**
+     * Take a value passed along: from a neighbouring Block as a train
+     * enters, or the value restored after a brief drop-out.
+     *
+     * @param value the value
+     */
+    private void followValue(Object value) {
+        _following = true;
+        try {
+            setValue(value);
+        } finally {
+            _following = false;
         }
     }
 
@@ -1243,6 +1289,8 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     private PropertyChangeListener _sensorListener = null;
     private Object _value;
     private Object _previousValue;
+    private boolean _valueFollowed = false;
+    private boolean _following = false;
     private int _direction;
     private int _curvature = NONE;
     private float _length = 0.0f;  // always stored in millimeters
@@ -1350,7 +1398,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
     }
 
     private void takeValueFrom(Path from) {
-        setValue(from.getBlock().getValue());
+        followValue(from.getBlock().getValue());
         setDirection(from.getFromBlockDirection());
         log.debug("Block {} gets new value '{}' from {}, direction {}",
                 getDisplayName(), getValue(), from.getBlock().getDisplayName(), Path.decodeDirection(getDirection()));
@@ -1450,7 +1498,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                 getDisplayName(), entrant.getBlock().getDisplayName(),
                 Path.decodeDirection(entrant.getFromBlockDirection()));
         }
-        setValue(entrant.getBlock().getValue());
+        followValue(entrant.getBlock().getValue());
         setDirection(entrant.getFromBlockDirection());
     }
 
@@ -1601,7 +1649,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                     BlockManager bm = InstanceManager.getDefault(BlockManager.class);
                     if ( bm.timeSinceLastLayoutPowerOn() < 5000 ||
                         (_timeLastInactive != null && tn.toEpochMilli() - _timeLastInactive.toEpochMilli() < 2000)) {
-                        setValue(_previousValue);
+                        followValue(_previousValue);
                         if (infoMessageCount < MAXINFOMESSAGES) {
                             log.debug("Sensor ACTIVE came out of nowhere, no neighbors active for block {}."
                                 +" Restoring previous value.", getDisplayName());
@@ -1631,7 +1679,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
                 // simple case
                 if ((next != null) && (next.getBlock() != null)) {
                     // normal case, transfer value object
-                    setValue(next.getBlock().getValue());
+                    followValue(next.getBlock().getValue());
                     setDirection(next.getFromBlockDirection());
                     log.debug("Block {} gets new value '{}' from {}, direction={}",
                             getDisplayName(),

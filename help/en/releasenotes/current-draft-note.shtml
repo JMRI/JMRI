@@ -731,5 +731,13 @@
                 dropped marker does what it did before. See the <a href=
                 "https://www.jmri.org/help/en/html/tools/simulatedtrains/index.shtml#placing">Simulated
                 Trains</a> page.</li>
+            <li>Train tracking no longer places a train, or decides which of
+                several trains entered a Block, from a value the Block passed
+                along itself as it went occupied: where trains run close
+                together, such a value can be another train's, and trains were
+                shown in Blocks they had never been in. Values set on a Block,
+                by you, Dispatcher, a script or a reporter, are used as before.
+                To use values passed along as well, check Tools &gt; Train
+                Tracking &gt; Place Trains from Values Blocks Pass Along.</li>
         </ul>
 

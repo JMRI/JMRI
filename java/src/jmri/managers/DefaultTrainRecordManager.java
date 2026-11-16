@@ -11,10 +11,12 @@ import jmri.BasicRosterEntry;
 import jmri.Block;
 import jmri.Disposable;
 import jmri.IdTag;
+import jmri.InstanceManager;
 import jmri.InvokeOnLayoutThread;
 import jmri.NamedBean;
 import jmri.TrainRecord;
 import jmri.TrainRecordManager;
+import jmri.UserPreferencesManager;
 import jmri.beans.PropertyChangeSupport;
 import jmri.implementation.DefaultTrainRecord;
 import jmri.implementation.TrainRecordMakeupWatcher;
@@ -51,6 +53,15 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
     };
 
     /**
+     * The name of the user preference that keeps
+     * {@link #isFollowedValuesUsed()}.
+     *
+     * @since 5.19.2
+     */
+    public static final String FOLLOWED_VALUES_PREFERENCE = DefaultTrainRecordManager.class.getName()
+            + ".followedValuesUsed"; // NOI18N
+
+    /**
      * Make the manager, which starts following the layout's Blocks: their
      * values always, their sensors while any record is placed. It follows
      * speed commands while any record has a loco address, and what trains
@@ -77,8 +88,32 @@ public class DefaultTrainRecordManager extends PropertyChangeSupport implements 
             public boolean isUntrusted(@Nonnull Block block) {
                 return untrusted.contains(block);
             }
+
+            @Override
+            public boolean useFollowedValues() {
+                return isFollowedValuesUsed();
+            }
         });
         watcher.start();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean isFollowedValuesUsed() {
+        return InstanceManager.getOptionalDefault(UserPreferencesManager.class)
+                .map(p -> p.getSimplePreferenceState(FOLLOWED_VALUES_PREFERENCE)).orElse(false);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @InvokeOnLayoutThread
+    public void setFollowedValuesUsed(boolean use) {
+        boolean old = isFollowedValuesUsed();
+        InstanceManager.getDefault(UserPreferencesManager.class).setSimplePreferenceState(FOLLOWED_VALUES_PREFERENCE,
+                use);
+        if (old != use) {
+            firePropertyChange(PROPERTY_FOLLOWED_VALUES_USED, old, use);
+        }
     }
 
     /**

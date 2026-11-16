@@ -206,6 +206,7 @@ public class ToolsMenu extends JMenu {
         // train tracking, with its windows
         JMenu trainTrackingMenu = new JMenu(jmri.jmrit.trainrecord.swing.SetUpChecksFrame.menuText());
         trainTrackingMenu.add(new jmri.jmrit.trainrecord.swing.WarningsFrame.Action());
+        trainTrackingMenu.add(new jmri.jmrit.trainrecord.swing.FollowedValuesMenuItem());
         trainTrackingMenu.add(new jmri.jmrit.trainrecord.swing.SetUpChecksFrame.Action());
         trainTrackingMenu.add(new jmri.jmrit.trainrecord.swing.MeasurementsFrame.Action());
         add(trainTrackingMenu);

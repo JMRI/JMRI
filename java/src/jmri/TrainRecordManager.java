@@ -42,6 +42,38 @@ public interface TrainRecordManager extends PropertyChangeProvider {
     String PROPERTY_UNTRUSTED = "untrusted"; // NOI18N
 
     /**
+     * Property name for {@link #isFollowedValuesUsed()} changing; the values
+     * are Booleans.
+     *
+     * @since 5.19.2
+     */
+    String PROPERTY_FOLLOWED_VALUES_USED = "followedValuesUsed"; // NOI18N
+
+    /**
+     * Whether a Block value the Block passed along itself (see
+     * {@link jmri.Block#isValueFollowed()}) places a train's record, or says
+     * which of several trains entered a Block. Off unless turned on: where
+     * trains run close together, a value passed along can be another
+     * train's. Values set on a Block, by the operator, Dispatcher, a script
+     * or a reporter, are used either way.
+     *
+     * @return true if values passed along are used
+     * @since 5.19.2
+     */
+    boolean isFollowedValuesUsed();
+
+    /**
+     * Use, or don't use, Block values passed along; kept in the user's
+     * preferences.
+     *
+     * @param use true to use them
+     * @see #isFollowedValuesUsed()
+     * @since 5.19.2
+     */
+    @InvokeOnLayoutThread
+    void setFollowedValuesUsed(boolean use);
+
+    /**
      * Create a record for a train. It is one component with no length,
      * detected as Entire Train, with no roster entries and no ID tags.
      *

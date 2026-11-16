@@ -324,6 +324,7 @@ public class TrainRecordWatcherTest {
 
     @Test
     public void testValueArrivingWithOccupancyPlaces() {
+        ThreadingUtil.runOnLayout(() -> manager.setFollowedValuesUsed(true));
         Block[] b = line("A", "B");
         occupy(b[0]);
         ThreadingUtil.runOnLayout(() -> b[0].setValue("Goods"));
@@ -332,6 +333,58 @@ public class TrainRecordWatcherTest {
         occupy(b[1]); // B takes A's value as it goes occupied
         assertEquals("Goods", b[1].getValue());
         assertEquals(List.of(b[1]), r.getBlocks(), "placed where the value arrived with the train");
+    }
+
+    @Test
+    public void testFollowedValuePlacesNothingUnlessTurnedOn() {
+        assertFalse(manager.isFollowedValuesUsed(), "off unless turned on");
+        Block[] b = line("A", "B");
+        occupy(b[0]);
+        ThreadingUtil.runOnLayout(() -> b[0].setValue("Goods"));
+        TrainRecord r = manager.newRecord("Goods"); // made after A's value was set: not placed
+        occupy(b[1]); // B takes A's value as it goes occupied
+        assertEquals("Goods", b[1].getValue());
+        assertTrue(b[1].isValueFollowed());
+        assertFalse(r.isPlaced(), "a value passed along may be another train's: not placed by it");
+
+        ThreadingUtil.runOnLayout(() -> b[1].setValue("Goods"));
+        assertEquals(List.of(b[1]), r.getBlocks(), "the same value set on the Block places it");
+    }
+
+    @Test
+    public void testFollowedValueSettlesNothingUnlessTurnedOn() {
+        Block[] b = line("A", "B", "C");
+        TrainRecord left = manager.newRecord("Left");
+        TrainRecord right = manager.newRecord("Right");
+        place(left, true, b[0]);
+        place(right, true, b[2]);
+        ThreadingUtil.runOnLayout(() -> b[2].setValue("Right"));
+        occupy(b[1]); // B takes C's value, the only neighbour value
+        assertEquals("Right", b[1].getValue());
+        assertTrue(b[1].isValueFollowed());
+        assertEquals(Confidence.AMBIGUOUS, left.getConfidence(), "a value passed along doesn't say which");
+        assertEquals(Confidence.AMBIGUOUS, right.getConfidence());
+
+        clear(b[1]);
+        ThreadingUtil.runOnLayout(() -> manager.setFollowedValuesUsed(true));
+        occupy(b[1]);
+        assertEquals(List.of(b[1], b[2]), right.getBlocks(), "turned on: the value passed along says which");
+        assertEquals(Confidence.CONFIRMED, left.getConfidence());
+    }
+
+    @Test
+    public void testFollowedValuesUsedKeptAndAnnounced() {
+        List<Object> heard = new ArrayList<>();
+        manager.addPropertyChangeListener(TrainRecordManager.PROPERTY_FOLLOWED_VALUES_USED,
+                e -> heard.add(e.getNewValue()));
+        ThreadingUtil.runOnLayout(() -> manager.setFollowedValuesUsed(true));
+        ThreadingUtil.runOnLayout(() -> manager.setFollowedValuesUsed(true));
+        assertTrue(manager.isFollowedValuesUsed());
+        assertTrue(InstanceManager.getDefault(jmri.UserPreferencesManager.class)
+                .getSimplePreferenceState(jmri.managers.DefaultTrainRecordManager.FOLLOWED_VALUES_PREFERENCE),
+                "kept in the user's preferences");
+        ThreadingUtil.runOnLayout(() -> manager.setFollowedValuesUsed(false));
+        assertEquals(List.of(true, false), heard, "each change once");
     }
 
     @Test
@@ -625,6 +678,7 @@ public class TrainRecordWatcherTest {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initIdTagManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
         manager = InstanceManager.getDefault(TrainRecordManager.class);
     }
 

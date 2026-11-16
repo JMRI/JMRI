@@ -27,6 +27,14 @@
       when a Block at its rear becomes empty, it has left it. A Block with no occupancy sensor has
       no detector: a train is followed through it when it is seen in the next detected Block.</p>
 
+      <p id="followedValues">When a Block becomes occupied it takes the value of the neighbour the
+      train seems to have come from. Where trains run close together, as in a yard, that can be
+      another train's value. So train tracking places a train, or decides which of several trains
+      entered a Block, only from a value set on the Block (by you, Dispatcher, a script or a
+      reporter), not from one the Block passed along itself. To use values passed along as
+      well, check <strong>Tools &gt; Train Tracking &gt; Place Trains from Values Blocks Pass
+      Along</strong>; it is off unless checked.</p>
+
       <p>For each train, train tracking records how sure it is of where the train is:</p>
       <ul>
         <li><strong>Confirmed</strong>: just seen by a detector, or placed.</li>

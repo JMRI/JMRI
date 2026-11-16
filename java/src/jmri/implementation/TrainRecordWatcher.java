@@ -57,7 +57,11 @@ import jmri.util.ThreadingUtil;
  * </ul>
  * It also places a record when a Block's value is set to something that
  * identifies it, and makes a record for a roster entry or ID tag value that
- * has none.
+ * has none. A value the Block passed along itself, from a neighbour as a
+ * train entered (see {@link Block#isValueFollowed()}), is used for this, and
+ * to say which of several trains entered a Block, only if the
+ * {@link Placer} says so: where trains run close together it can be another
+ * train's.
  * <p>
  * Everything is handled on the layout thread (Swing thread), in the order
  * it happened.
@@ -116,6 +120,17 @@ public class TrainRecordWatcher {
          * @return true if its detector is not to be believed
          */
         default boolean isUntrusted(@Nonnull Block block) {
+            return false;
+        }
+
+        /**
+         * @return true if a value a Block passed along itself (see
+         *         {@link Block#isValueFollowed()}) is used to place a
+         *         record or say which train entered a Block; false if only
+         *         values set on a Block are
+         * @since 5.19.2
+         */
+        default boolean useFollowedValues() {
             return false;
         }
     }
@@ -284,7 +299,7 @@ public class TrainRecordWatcher {
                 c.record.setConfidence(Confidence.AMBIGUOUS, reason(rule, block, time));
             }
             ambiguous.put(block, candidates);
-            settleByValue(block, block.getValue());
+            settleByValue(block, usable(block));
         } else {
             placer.unexplained(block, true);
         }
@@ -405,6 +420,21 @@ public class TrainRecordWatcher {
         c.record.entered(c.through(atFirst), block, atFirst, c.timeNanos, c.time, settled);
         beforeAmbiguity.remove(c.record);
         leaveEmptyFarEnd(c.record);
+    }
+
+    /**
+     * A Block's value, if it may say which train is there: a value set on
+     * the Block, or one the Block passed along itself if those are used.
+     *
+     * @param block the Block
+     * @return the value, or null if there is none or it isn't to be used
+     */
+    @CheckForNull
+    private Object usable(Block block) {
+        if (block.isValueFollowed() && !placer.useFollowedValues()) {
+            return null;
+        }
+        return block.getValue();
     }
 
     private static Reason reason(Reason.Rule rule, Block block, Instant time) {
@@ -757,15 +787,16 @@ public class TrainRecordWatcher {
                     }
                 });
             } else if (Block.PROPERTY_STATE.equals(name)) {
-                Object value = block.getValue();
+                Object value = usable(block);
                 boolean nowOccupied = Integer.valueOf(Block.OCCUPIED).equals(e.getNewValue());
                 onLayoutThread(() -> {
                     if (nowOccupied && value != null) {
                         placer.valueSet(block, value); // Block sets a value it takes before it goes occupied
                     }
                 });
-            } else if (Block.PROPERTY_VALUE.equals(name)) {
-                Object value = e.getNewValue();
+            } else if (Block.PROPERTY_VALUE.equals(name) || Block.PROPERTY_VALUE_FOLLOWED.equals(name)) {
+                // a new value, or the same value now set on the Block rather than passed along
+                Object value = usable(block);
                 onLayoutThread(() -> {
                     if (value != null) {
                         settleByValue(block, value);

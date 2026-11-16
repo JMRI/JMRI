@@ -152,6 +152,45 @@ public class BlockTest {
         assertEquals( "b2 contents", b1.getValue(), "Value transferred");
     }
 
+    // A value passed along from a neighbour is marked as followed; one set is not
+    @Test
+    public void testValueFollowed() throws JmriException {
+        SensorManager sm = new InternalSensorManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+
+        Block b1 = new Block("SystemName1");
+
+        Block b2 = new Block("SystemName2");
+        Sensor s2 = sm.provideSensor("IS2");
+        b2.setNamedSensor(InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle("IS2", s2));
+        s2.setState(Sensor.ACTIVE);
+        b2.setValue("b2 contents");
+        assertFalse(b2.isValueFollowed(), "a value set is not followed");
+
+        Path p = new Path();
+        p.setBlock(b2);
+        b1.addPath(p);
+
+        List<Boolean> followedWhenChanged = new ArrayList<>();
+        b1.addPropertyChangeListener(Block.PROPERTY_VALUE, e -> followedWhenChanged.add(b1.isValueFollowed()));
+        b1.goingActive();
+        assertEquals("b2 contents", b1.getValue(), "Value transferred");
+        assertTrue(b1.isValueFollowed(), "passed along from the neighbour");
+        assertEquals(List.of(true), followedWhenChanged, "already marked when listeners hear of it");
+
+        List<Object> followedEvents = new ArrayList<>();
+        b1.addPropertyChangeListener(Block.PROPERTY_VALUE_FOLLOWED, e -> followedEvents.add(e.getNewValue()));
+        b1.setValue(b1.getValue());
+        assertFalse(b1.isValueFollowed(), "the same value set: no longer followed");
+        assertEquals(List.of(false), followedEvents, "announced, as no value change is");
+        assertEquals(List.of(true), followedWhenChanged, "the value itself didn't change");
+
+        b1.setValue("set by hand");
+        assertFalse(b1.isValueFollowed(), "set: not followed");
+        assertEquals(List.of(false), followedEvents, "a new value: announced as a value change only");
+        b1.setValue(null);
+        assertFalse(b1.isValueFollowed(), "no value: not followed");
+    }
+
     // Test going active with two neighbors, one active.
     // b2 is between b1 and b3. b1 contains a train
     @Test
