@@ -440,6 +440,17 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
+             <li>With automatic allocation and the new option
+                 <a href="https://www.jmri.org/help/en/package/jmri/jmrit/dispatcher/Options.shtml#PreventDeadlock">Prevent
+                 Deadlock</a>, off unless checked, Active Trains can no longer
+                 end up waiting for each other for good, such as two trains
+                 each holding half of a single line. A train is then given
+                 track from one place it can stop to the next, all at once,
+                 and only where every Active Train can still run its Transit.
+                 A train waiting for track gains a step of priority for each
+                 minute it waits. Trains started where they can't all run
+                 their Transits are named in a warning. Unchecked, Sections
+                 are allocated as before.</li>
              <li></li>
                  held for good by a meet planned after it had already been given
                  the road beyond its meeting place. Two trains running the same

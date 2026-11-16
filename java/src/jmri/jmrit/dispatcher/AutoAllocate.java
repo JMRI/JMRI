@@ -86,6 +86,7 @@ public class AutoAllocate implements Runnable {
             return;
         }
         taskList = new LinkedBlockingQueue<>();
+        avoidance = new DeadlockAvoidance(_dispatcher, reservedSections, DeadlockCheck.DEFAULT_BUDGET);
     }
 
     // operational variables
@@ -96,6 +97,9 @@ public class AutoAllocate implements Runnable {
     private final List<AllocationRequest> orderedRequests = new ArrayList<>();
     private List<AllocationRequest> allocationRequests = null;
     private final Map<String, String> reservedSections = new HashMap<String, String>();
+    private DeadlockAvoidance avoidance = null;
+    // when each request was first seen, for its waiting time
+    private final Map<AllocationRequest, Long> firstSeen = new HashMap<>();
 
     private boolean abort = false;
 
@@ -158,12 +162,20 @@ public class AutoAllocate implements Runnable {
                             break;
                         case RELEASE_RESERVED:
                             removeAllReservesForTrain(task.getTrainName());
+                            if (_dispatcher.getPreventDeadlock()) {
+                                // the trains left are a new set: search now, not when one of them asks
+                                avoidance.prepare(task.getTrainName());
+                            }
                             break;
                         case SCAN_REQUESTS:
                             scanAllocationRequestList(allocationRequests);
                             break;
                         case ALLOCATE_IMMEDIATE:
+                            ActiveTrain started = task.getAllocationRequest().getActiveTrain();
                             _dispatcher.allocateSection(task.getAllocationRequest(), null);
+                            if (_dispatcher.getPreventDeadlock() && started != null) {
+                                avoidance.checkNow(started);
+                            }
                             break;
                         case ABORT:
                             abort = true; //belt an braces
@@ -234,6 +246,20 @@ public class AutoAllocate implements Runnable {
                     // apparently holdAllocation() is not set when holding !!!
                     if (activeTrain.getSignalType() == DispatcherFrame.SIGNALMAST &&
                             isSignalHeldAtStartOfSection(ar)) {
+                        continue;
+                    }
+                    if (_dispatcher.getPreventDeadlock()) {
+                        // standing place to standing place, and only if every train can keep running
+                        if (avoidance.mayAllocate(ar)) {
+                            Section section = ar.getSection();  // allocating disposes of the request
+                            firstSeen.remove(ar);
+                            if (_dispatcher.allocateSection(ar, null) != null) {
+                                avoidance.allocated(activeTrain, section);
+                            } else {
+                                log.trace("{}: [{}] may be allocated but Dispatcher did not allocate it", trainName,
+                                        section.getDisplayName(USERSYS));
+                            }
+                        }
                         continue;
                     }
                     // this already reserved for the train, allocate.
@@ -491,6 +517,9 @@ public class AutoAllocate implements Runnable {
      * @param trainName remove reserved spaces for this train
      */
     protected void removeAllReservesForTrain(String trainName) {
+        if (avoidance != null) {
+            avoidance.forget(trainName);
+        }
         Iterator<Entry<String, String>> iterRS = reservedSections.entrySet().iterator();
         while (iterRS.hasNext()) {
             Map.Entry<String, String> pair = iterRS.next();
@@ -657,6 +686,21 @@ public class AutoAllocate implements Runnable {
         // copy across and then sort...
         for (int i = 0; i < list.size(); i++) {
             orderedRequests.add(list.get(i));
+        }
+        if (_dispatcher.getPreventDeadlock()) {
+            // priority rises by one for each minute a request has waited, so none waits for ever
+            long now = System.currentTimeMillis();
+            firstSeen.keySet().retainAll(orderedRequests);
+            Map<AllocationRequest, Long> rank = new HashMap<>();
+            for (AllocationRequest ar : orderedRequests) {
+                long waited = (now - firstSeen.computeIfAbsent(ar, x -> now)) / 60000L;
+                rank.put(ar, ar.getActiveTrain().getPriority() + waited);
+            }
+            orderedRequests.sort((AllocationRequest e1, AllocationRequest e2) -> {
+                int c = Long.compare(rank.get(e2), rank.get(e1));
+                return c != 0 ? c : e1.getActiveTrain().getTrainName().compareTo(e2.getActiveTrain().getTrainName());
+            });
+            return;
         }
         orderedRequests.sort((AllocationRequest e1, AllocationRequest e2) -> {
             if (e1.getActiveTrain().getPriority() < e2.getActiveTrain().getPriority()) {
