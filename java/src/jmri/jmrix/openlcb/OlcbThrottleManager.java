@@ -14,11 +14,6 @@ import org.slf4j.LoggerFactory;
  */
 public class OlcbThrottleManager extends AbstractThrottleManager {
 
-    @Deprecated (since="5.13.3", forRemoval=true)
-    public OlcbThrottleManager() {
-        this(jmri.InstanceManager.getDefault(jmri.jmrix.can.CanSystemConnectionMemo.class));
-    }
-
     /**
      * Constructor.
      * @param memo system connection memo

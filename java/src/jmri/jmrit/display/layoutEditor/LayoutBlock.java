@@ -74,16 +74,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     private static final java.util.concurrent.atomic.AtomicInteger lastPacketID =
             new java.util.concurrent.atomic.AtomicInteger();
 
-    @Deprecated (since="5.11.2",forRemoval=true) // please use the SLF4J categories.
-    public void enableDeleteRouteLog() {
-        jmri.util.LoggingUtil.warnOnce( log, "Deprecated, please use the SLF4J categories");
-    }
-
-    @Deprecated (since="5.11.2",forRemoval=true) // please use the SLF4J categories.
-    public void disableDeleteRouteLog() {
-        jmri.util.LoggingUtil.warnOnce( log, "Deprecated, please use the SLF4J categories");
-    }
-
     // constants
     public static final int OCCUPIED = Block.OCCUPIED;
     public static final int EMPTY = Block.UNOCCUPIED;
@@ -2184,7 +2174,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     // could still hold a valid through path.
                     for (int i = neighbours.size() - 1; i > -1; i--) {
                         // Need to ignore if the dest block is our neighour in this instance
-                        if ((neighbours.get(i).getBlock() != destBlock) && (neighbours.get(i).getBlock() != nextHop) 
+                        if ((neighbours.get(i).getBlock() != destBlock) && (neighbours.get(i).getBlock() != nextHop)
                             && validThroughPath(notifyingblk, neighbours.get(i).getBlock())) {
                             Block neighblock = neighbours.get(i).getBlock();
 
@@ -2340,7 +2330,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             addRouteLog.debug("Block {} is a traverser block. Skipping through path generation in addThroughPath(Adjacencies).", getDisplayName());
             return; // Do not create through paths for a traverser
         }
-        
+
         Block newAdj = adj.getBlock();
         int packetFlow = adj.getPacketFlow();
 

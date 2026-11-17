@@ -709,6 +709,8 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
+            <li>Some Java methods that have been deprecated since
+                JMRI 5.13 series have been removed.</li>
             <li>Tools &gt; Train Tracking &gt; Measurements lists, for each Block
                 and way through it, how many times trains have crossed it this
                 session, their average speed, how that compares with their

@@ -35,11 +35,6 @@ public class Throttle extends AbstractThrottle {
         this.isForward = true;
     }
 
-    @Deprecated (since="5.13.3", forRemoval=true)
-    public Throttle(DccLocoAddress address, CommandStation tc) {
-        this(address, tc, jmri.InstanceManager.getDefault(SystemConnectionMemo.class));
-    }
-
     DccLocoAddress address;
 
     @Override

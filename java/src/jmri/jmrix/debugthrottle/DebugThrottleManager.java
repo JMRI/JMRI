@@ -14,11 +14,6 @@ import jmri.jmrix.AbstractThrottleManager;
  */
 public class DebugThrottleManager extends AbstractThrottleManager {
 
-    @Deprecated( since="5.13.3", forRemoval=true)
-    public DebugThrottleManager() {
-        this(jmri.InstanceManager.getDefault(jmri.jmrix.internal.InternalSystemConnectionMemo.class));
-    }
-
     /**
      * Constructor.
      * @param memo system connection.
