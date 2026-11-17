@@ -343,13 +343,13 @@ This section describes in detail the process for creating the release note for a
 ```
         git checkout master
         git pull
-        sed -i.bak s/5.17.4-SNAPSHOT/5.19.1-SNAPSHOT/g pom.xml
+        sed -i.bak s/5.17.5-SNAPSHOT/5.19.1-SNAPSHOT/g pom.xml
         head -10 pom.xml
 ```
 
 - Update the release.build property in `release.properties` to this release (numbers have to be manually updated to the last field now, so check the numbers in the following line)
 ```
-        sed -i.bak s/release.build=4/release.build=5/g release.properties
+        sed -i.bak s/release.build=5/release.build=1/g release.properties
         head -10 release.properties
 ```
  - Check that both those edits left 5.19.1 defined in the two files
@@ -604,9 +604,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.5.19.1+Rd898332e23.dmg](https://github.com/JMRI/JMRI/releases/download/v5.19.1/JMRI.5.19.1+Rd898332e23.dmg) | 2d208c16606397a36396a4dd77759e5f85e4e2b28f9aff1e6de1f28911fdbffd
-[JMRI.5.19.1+Rd898332e23.exe](https://github.com/JMRI/JMRI/releases/download/v5.19.1/JMRI.5.19.1+Rd898332e23.exe) | 73983020153bfe8c78ec903a311598cf5c9927fd4d73774282963d96c248195a
-[JMRI.5.19.1+Rd898332e23.tgz](https://github.com/JMRI/JMRI/releases/download/v5.19.1/JMRI.5.19.1+Rd898332e23.tgz) | c83d8b3e675cef125cedf1d2c71c1fb4d42bbc4eb9c32843ce35ae0734f75865
+[JMRI.5.19.1+R873303dbb6.dmg](https://github.com/JMRI/JMRI/releases/download/v5.19.1/JMRI.5.19.1+R873303dbb6.dmg) | 4decb3122488310af90d908fec44492b88777d7c8acfa8460b729fd847781d7a
+[JMRI.5.19.1+R873303dbb6.exe](https://github.com/JMRI/JMRI/releases/download/v5.19.1/JMRI.5.19.1+R873303dbb6.exe) | 6aa47b0cc527597728bb67946a312b11f78f55ccaec087c93b10b87e0440cf7b
+[JMRI.5.19.1+R873303dbb6.tgz](https://github.com/JMRI/JMRI/releases/download/v5.19.1/JMRI.5.19.1+R873303dbb6.tgz) | ca888b16e4b6cfccc2c1a0a898611f83a38da8e9a2cbabce1224e69b89634af6
 
 ```
 

@@ -413,6 +413,59 @@ public class AutoAllocateMeetTest {
                 "A is no longer steered to the track B is in");
     }
 
+    /*
+     * Two trains run the same way round a circuit S1 - S2 - S3 - (P2 or P1) -
+     * S5 - S6 - S7 and start again, A from S1 and B from S7. A is in P2 and
+     * already holds S5 beyond it when B, behind it in S7, asks for S1. B
+     * finds A ahead of it in the station, and A finds B ahead of it after S6,
+     * so Dispatcher takes them for trains coming towards each other and
+     * plans a crossing meet in the station: A to stay in P2, B to go to P1.
+     * A has already been given the road beyond P2, so it cannot be held in
+     * P2 and must not be refused the next Section.
+     */
+    @Test
+    public void testNoMeetForTrainAlreadyGivenTheRoadBeyondItsTarget() {
+        s1 = section("S1");
+        s2 = section("S2");
+        Section s3 = section("S3");
+        Section p1 = section("P1");
+        Section p2 = section("P2");
+        s5 = section("S5");
+        Section s6 = section("S6");
+        Section s7 = section("S7");
+        Transit fromS1 = new DefaultTransit("From S1");
+        fromS1.addTransitSection(new TransitSection(s1, 1, Section.FORWARD));
+        fromS1.addTransitSection(new TransitSection(s2, 2, Section.FORWARD));
+        fromS1.addTransitSection(new TransitSection(s3, 3, Section.FORWARD));
+        fromS1.addTransitSection(new TransitSection(p2, 4, Section.FORWARD));
+        fromS1.addTransitSection(new TransitSection(p1, 4, Section.FORWARD, true));
+        fromS1.addTransitSection(new TransitSection(s5, 5, Section.FORWARD));
+        fromS1.addTransitSection(new TransitSection(s6, 6, Section.FORWARD));
+        fromS1.addTransitSection(new TransitSection(s7, 7, Section.FORWARD));
+        Transit fromS7 = new DefaultTransit("From S7");
+        fromS7.addTransitSection(new TransitSection(s7, 1, Section.FORWARD));
+        fromS7.addTransitSection(new TransitSection(s1, 2, Section.FORWARD));
+        fromS7.addTransitSection(new TransitSection(s2, 3, Section.FORWARD));
+        fromS7.addTransitSection(new TransitSection(s3, 4, Section.FORWARD));
+        fromS7.addTransitSection(new TransitSection(p2, 5, Section.FORWARD));
+        fromS7.addTransitSection(new TransitSection(p1, 5, Section.FORWARD, true));
+        fromS7.addTransitSection(new TransitSection(s5, 6, Section.FORWARD));
+        fromS7.addTransitSection(new TransitSection(s6, 7, Section.FORWARD));
+        ActiveTrain a = train("A", fromS1, ActiveTrain.DISPATCHED);
+        ActiveTrain b = train("B", fromS7, ActiveTrain.DISPATCHED);
+        when(a.getResetWhenDone()).thenReturn(true);
+        when(b.getResetWhenDone()).thenReturn(true);
+        at(a, p2, 4, s5);
+        at(b, s7, 1);
+
+        AllocationRequest bToS1 = request(b, s1, 2);
+        scan(bToS1);
+        verify(df).allocateSection(bToS1, null);
+        AllocationRequest aToS6 = request(a, s6, 6);
+        scan(aToS6);
+        verify(df).allocateSection(aToS6, null);
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
