@@ -1,11 +1,6 @@
 
     <!-- contains new warnings for the release under development -->
-    <li>Train tracking no longer places a train from a Block value the Block
-        passed along from a neighbour as it went occupied, since such a value
-        can be another train's. A train that was placed that way is now placed
-        only when its value is set on a Block, or when Dispatcher starts it. To
-        keep the old behaviour, check Tools &gt; Train Tracking &gt; Place Trains
-        from Values Blocks Pass Along.
+    <li>
     </li>
     <li>
     </li>
