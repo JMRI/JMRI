@@ -1,13 +1,15 @@
 
     <h3>Hardware Support</h3>
         <ul>
+          <li>XpressNet, Roco Z21 and DCC4PC: a "busy" answer during a
+              burst of commands no longer leaves messages and their
+              replies out of step until JMRI is restarted.</li>
           <li>A serial connection that recovers from a failure (such as a
               CANUSB4 or other GridConnect adapter, or a LocoBuffer) is now
               set up again when the port reopens at the first attempt; before,
               it showed as connected but sent and received nothing. An error
               opening the port at the first attempt no longer stops the
               retries.</li>
-          <li></li>
           <li>Connections (NCE, C/MRI, CAN, XpressNet and others): after a
               connection recovers from a failure, messages are no longer
               sent out of turn or their replies given to the wrong
@@ -664,6 +666,7 @@
         <ul>
             <li>Web panels: a panel showing a sensor as text no longer
                 reloads in the browser each time the sensor changes.</li>
+            <li>Removed the unused, never-finished web preferences page (<code>/config</code>) and its templates.</li>
             <li></li>
         </ul>
 
@@ -696,10 +699,28 @@
         <ul>
             <li>Some Java methods that have been deprecated since
                 JMRI 5.13 series have been removed.</li>
+            <li>Tools &gt; Train Tracking &gt; Measurements lists, for each Block
+                and way through it, how many times trains have crossed it this
+                session, their average speed, how that compares with their
+                lead locos' speed profiles, and how often its detector dropped
+                out under a train. A Block whose occupancy sensor is an
+                internal sensor is followed but not measured, except with
+                simulated trains. Nothing uses the measurements yet.</li>
             <li>The first-time start-up wizard finds its list of languages
                 into a list of its own, so building that page twice at
                 once can no longer break the sort with "Comparison method
                 violates its general contract".</li>
             <li></li>
+            <li>In a profile whose connections are all simulators, a loco
+                marker dragged onto a Block's track on a Layout Editor
+                panel, in operating mode, places a
+                simulated train there: a window asks for its length, how it
+                is detected, the way it faces and where its front is, filled
+                in so that OK is usually enough, and offers to tell train
+                tracking the train is there as well. The Block's menu takes
+                the train off again. With any connection to a layout, a
+                dropped marker does what it did before. See the <a href=
+                "https://www.jmri.org/help/en/html/tools/simulatedtrains/index.shtml#placing">Simulated
+                Trains</a> page.</li>
         </ul>
 
