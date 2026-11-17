@@ -1260,53 +1260,112 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             return;
         }
         ActiveTrain at = activeTrainsList.get(atSelectedIndex);
-        Transit t = at.getTransit();
         Section s = extraBoxList.get(index);
-        //Section ns = null;
-        AllocationRequest ar = null;
-        boolean requested = false;
-        if (t.containsSection(s)) {
-            if (s == at.getNextSectionToAllocate()) {
-                // this is a request that the next section in the transit be allocated
-                allocateNextRequested(atSelectedIndex);
-                return;
-            } else {
-                // requesting allocation of a section in the Transit, but not the next Section
-                int seq = -99;
-                List<Integer> seqList = t.getSeqListBySection(s);
-                if (seqList.size() > 0) {
-                    seq = seqList.get(0);
-                }
-                if (seqList.size() > 1) {
-                    // this section is in the Transit multiple times
-                    int test = at.getNextSectionSeqNumber() - 1;
-                    int diff = java.lang.Math.abs(seq - test);
-                    for (int i = 1; i < seqList.size(); i++) {
-                        if (diff > java.lang.Math.abs(test - seqList.get(i))) {
-                            seq = seqList.get(i);
-                            diff = java.lang.Math.abs(seq - test);
-                        }
-                    }
-                }
-                requested = requestAllocation(at, s, at.getAllocationDirectionFromSectionAndSeq(s, seq),
-                        seq, true, extraFrame);
-                ar = findAllocationRequestInQueue(s, seq,
-                        at.getAllocationDirectionFromSectionAndSeq(s, seq), at);
-            }
-        } else {
-            // requesting allocation of a section outside of the Transit, direction set arbitrary
-            requested = requestAllocation(at, s, Section.FORWARD, -99, true, extraFrame);
-            ar = findAllocationRequestInQueue(s, -99, Section.FORWARD, at);
+        if (s == at.getNextSectionToAllocate() && at.getTransit().containsSection(s)) {
+            // this is a request that the next section in the transit be allocated
+            allocateNextRequested(atSelectedIndex);
+            return;
         }
-        // if allocation request is OK, allocate the Section, if not already allocated
-        if (requested && (ar != null)) {
-            allocateSection(ar, null);
-        }
+        allocateExtraSection(at, s, extraFrame);
         if (extraFrame != null) {
             extraFrame.setVisible(false);
             extraFrame.dispose();   // prevent listing in the Window menu.
             extraFrame = null;
         }
+    }
+
+    /**
+     * Allocate a Section to a train as Allocate Extra does, other than the
+     * next Section of its Transit.
+     *
+     * @param at    the train
+     * @param s     the Section
+     * @param frame the window asking, for messages; may be null
+     */
+    void allocateExtraSection(ActiveTrain at, Section s, JmriJFrame frame) {
+        Transit t = at.getTransit();
+        AllocationRequest ar = null;
+        boolean requested = false;
+        if (t.containsSection(s)) {
+            // requesting allocation of a section in the Transit, but not the next Section
+            int seq = -99;
+            List<Integer> seqList = t.getSeqListBySection(s);
+            if (seqList.size() > 0) {
+                seq = seqList.get(0);
+            }
+            if (seqList.size() > 1) {
+                // this section is in the Transit multiple times
+                int test = at.getNextSectionSeqNumber() - 1;
+                int diff = java.lang.Math.abs(seq - test);
+                for (int i = 1; i < seqList.size(); i++) {
+                    if (diff > java.lang.Math.abs(test - seqList.get(i))) {
+                        seq = seqList.get(i);
+                        diff = java.lang.Math.abs(seq - test);
+                    }
+                }
+            }
+            requested = requestAllocation(at, s, at.getAllocationDirectionFromSectionAndSeq(s, seq),
+                    seq, true, frame);
+            ar = findAllocationRequestInQueue(s, seq,
+                    at.getAllocationDirectionFromSectionAndSeq(s, seq), at);
+        } else {
+            // requesting allocation of a section outside of the Transit, in
+            // the direction the train would enter it from its allocated track
+            int direction = getExtraSectionDirection(s, at);
+            requested = requestAllocation(at, s, direction, -99, true, frame);
+            ar = findAllocationRequestInQueue(s, -99, direction, at);
+        }
+        // if allocation request is OK, allocate the Section, if not already allocated
+        if (requested && (ar != null)) {
+            allocateExtraRequest(ar);
+        }
+    }
+
+    /**
+     * Allocate an extra Section asked for from the Dispatcher window or by
+     * {@link #extendActiveTrainsPath}. With automatic allocation on, the
+     * request is already in the list the Auto Allocator scans, so it is
+     * allocated by the Auto Allocator, in turn with its scan, and this waits
+     * for it; allocating it here at the same time could find it half done, or
+     * dispose of it while the Auto Allocator is looking at it.
+     *
+     * @param ar the request
+     */
+    private void allocateExtraRequest(@Nonnull AllocationRequest ar) {
+        if (_AutoAllocate && autoAllocate != null && autoAllocateThread != null
+                && autoAllocateThread.isAlive() && Thread.currentThread() != autoAllocateThread) {
+            queueAllocate(ar);
+            queueWaitForEmpty();
+        } else {
+            allocateSection(ar, null);
+        }
+    }
+
+    /**
+     * Get the direction a train would travel through a Section that is not in
+     * its Transit, entering it from the track allocated to it: the direction
+     * whose entry points include one from the train's most recently allocated
+     * Section that adjoins it. A train running its Transit's Sections in their
+     * reverse direction enters an adjoining Section in its reverse direction
+     * too, if that is how the Section is defined.
+     *
+     * @param s  the Section to be allocated
+     * @param at the train
+     * @return {@link Section#FORWARD} or {@link Section#REVERSE};
+     *         {@link Section#FORWARD} if no allocated Section leads into it
+     */
+    int getExtraSectionDirection(Section s, ActiveTrain at) {
+        List<AllocatedSection> allocated = at.getAllocatedSectionList();
+        for (int i = allocated.size() - 1; i >= 0; i--) {
+            Section from = allocated.get(i).getSection();
+            if (s.getEntryPointFromSection(from, Section.FORWARD) != null) {
+                return Section.FORWARD;
+            }
+            if (s.getEntryPointFromSection(from, Section.REVERSE) != null) {
+                return Section.REVERSE;
+            }
+        }
+        return Section.FORWARD;
     }
 
     /**
@@ -1319,24 +1378,36 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * @return true if section was allocated; false otherwise
      */
     public boolean extendActiveTrainsPath(Section s, ActiveTrain at, JmriJFrame jFrame) {
-        if (s.getEntryPointFromSection(at.getEndBlockSection(), Section.FORWARD) != null
-                && at.getNextSectionToAllocate() == null) {
+        // the train enters the new Section from its end Section, in the
+        // Section's forward direction or in its reverse direction
+        Section endSection = at.getEndBlockSection();
+        if (endSection == null) {
+            return false;
+        }
+        int direction;
+        if (s.getEntryPointFromSection(endSection, Section.FORWARD) != null) {
+            direction = Section.FORWARD;
+        } else if (s.getEntryPointFromSection(endSection, Section.REVERSE) != null) {
+            direction = Section.REVERSE;
+        } else {
+            return false;
+        }
+        if (at.getNextSectionToAllocate() == null) {
 
             int seq = at.getEndBlockSectionSequenceNumber() + 1;
             if (!at.addEndSection(s, seq)) {
                 return false;
             }
-            jmri.TransitSection ts = new jmri.TransitSection(s, seq, Section.FORWARD);
+            jmri.TransitSection ts = new jmri.TransitSection(s, seq, direction);
             ts.setTemporary(true);
             at.getTransit().addTransitSection(ts);
 
-            // requesting allocation of a section outside of the Transit, direction set arbitrary
-            boolean requested = requestAllocation(at, s, Section.FORWARD, seq, true, jFrame);
+            boolean requested = requestAllocation(at, s, direction, seq, true, jFrame);
 
-            AllocationRequest ar = findAllocationRequestInQueue(s, seq, Section.FORWARD, at);
+            AllocationRequest ar = findAllocationRequestInQueue(s, seq, direction, at);
             // if allocation request is OK, force an allocation the Section so that the dispatcher can then allocate futher paths through
             if (requested && (ar != null)) {
-                allocateSection(ar, null);
+                allocateExtraRequest(ar);
                 return true;
             }
         }
@@ -2158,6 +2229,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * @return the allocated section or null if not successful
      */
     public AllocatedSection allocateSection(@Nonnull AllocationRequest ar, Section ns) {
+        if (ar.getActiveTrain() == null || ar.getSection() == null) {
+            // already allocated, or cancelled, and disposed of: for example
+            // an extra Section allocated by a scan queued before this request
+            return null;
+        }
         log.trace("{}: Checking Section [{}]", ar.getActiveTrain().getTrainName(), (ns != null ? ns.getDisplayName(USERSYS) : "auto"));
         AllocatedSection as = null;
         Section nextSection = null;
