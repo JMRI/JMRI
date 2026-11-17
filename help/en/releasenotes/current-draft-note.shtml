@@ -697,6 +697,13 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
+            <li>Tools &gt; Train Tracking &gt; Measurements lists, for each Block
+                and way through it, how many times trains have crossed it this
+                session, their average speed, how that compares with their
+                lead locos' speed profiles, and how often its detector dropped
+                out under a train. A Block whose occupancy sensor is an
+                internal sensor is followed but not measured, except with
+                simulated trains. Nothing uses the measurements yet.</li>
             <li>The first-time start-up wizard finds its list of languages
                 into a list of its own, so building that page twice at
                 once can no longer break the sort with "Comparison method

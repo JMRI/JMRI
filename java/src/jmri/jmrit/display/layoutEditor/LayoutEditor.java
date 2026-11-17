@@ -410,6 +410,9 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
         super.setDefaultToolTip(new ToolTip(null, 0, 0, new Font("SansSerif", Font.PLAIN, 12),
                 Color.black, new Color(215, 225, 255), Color.black, null));
 
+        // measure trains as they run while panels are open
+        InstanceManager.getDefault(jmri.jmrit.trainrecord.TrainTrackingMeasurements.class);
+
         // setup help bar
         helpBar.setLayout(new BoxLayout(helpBar, BoxLayout.PAGE_AXIS));
         JTextArea helpTextArea1 = new JTextArea(Bundle.getMessage("Help1"));
