@@ -664,6 +664,7 @@
         <ul>
             <li>Web panels: a panel showing a sensor as text no longer
                 reloads in the browser each time the sensor changes.</li>
+            <li>Removed the unused, never-finished web preferences page (<code>/config</code>) and its templates.</li>
             <li></li>
         </ul>
 
