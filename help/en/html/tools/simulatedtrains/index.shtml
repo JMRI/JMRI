@@ -75,7 +75,59 @@
 
       <h2 id="placing">Placing a train</h2>
 
-      <p>There is no window for simulated trains yet: they are placed by scripts. The sample script
+      <p>On a <a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor</a>
+      panel, in a profile whose connections are all simulators:</p>
+
+      <ol>
+        <li>Take the panel out of edit mode, and add a loco marker from the panel's
+        <strong>Marker</strong> menu, from the roster or by typing its name.</li>
+
+        <li>Drag the marker onto the track of the Block the train is to be in. The <strong>Place
+        Simulated Train</strong> window opens, filled in with what is known. Usually OK is all
+        that is needed.</li>
+      </ol>
+
+      <p>The window asks for:</p>
+
+      <ul>
+        <li><strong>DCC address</strong>, for a marker with no roster entry. A number the marker's
+        name starts with is offered. A marker from the roster uses its entry's address, speed
+        profile and momentum.</li>
+
+        <li><strong>Train length</strong>. Lengths in this window are in the units chosen for
+        Block lengths in the <a href="../../../package/jmri/jmrit/beantable/BlockTable.shtml">Block
+        table</a>: whole millimetres when Blocks are in centimetres, or inches to 1/32 inch, shown
+        and typed as a whole number and a fraction such as <code>7 3/16</code>, when Blocks are in
+        inches.</li>
+
+        <li><strong>Detected</strong>: the entire train, the head only (the loco, whose length is
+        then asked), or the head and tail (the loco and a marker at the rear, whose length is also
+        asked).</li>
+
+        <li><strong>Rear towards</strong>: the neighbouring Block the train's rear is towards, or
+        the end of the track. This is the way the train faces: running forward, it leaves by the
+        Block's other end.</li>
+
+        <li><strong>Front, into the Block</strong>: how far the train's front is into the Block,
+        measured from the end its rear is towards. The middle of the Block is offered. A train
+        longer than that reaches back into the Block behind.</li>
+
+        <li><strong>Also tell train tracking it is here</strong>: ticked, the drop also tells
+        <a href="../../../package/jmri/jmrit/trainrecord/TrainTracking.shtml">train tracking</a>
+        where the train is, as a dropped marker does on a real layout. Unticked, train tracking is
+        left to find the train from its detectors.</li>
+      </ul>
+
+      <p>If the train can't be placed there, the window says why and asks again. Dropping the
+      marker of a train that is already placed moves it. To take a train off, right-click the
+      track of a Block it is in and choose <strong>Remove Simulated Train</strong>.</p>
+
+      <p>In a profile with a connection to a layout, a dropped marker never places a simulated
+      train: it only tells train tracking where the train is.</p>
+
+      <h3 id="scripts">From a script</h3>
+
+      <p>Trains can also be placed by scripts. The sample script
       <a href="../../../../../jython/SimulatedTrains.py">SimulatedTrains.py</a> (<strong>Scripting
       &rArr; Run Script...</strong>, in a profile whose connections are all simulators, such as one
       with only the Internal connection) builds a short

@@ -460,6 +460,11 @@
                  with its ratio in a box beside the scale list, for a
                  layout whose scale isn't in the list. There is one CUSTOM
                  scale, shared with the Timetable.</li>
+             <li>Tools &gt; Train Tracking &gt; Set-up Checks now says when
+                 Dispatcher's Layout Scale, in its Options, is not the
+                 Layout Scale in Preferences &gt; Warrants. Speed profiles
+                 give scale speeds at the Warrants scale, while Dispatcher
+                 works out scale lengths and speeds at its own.</li>
              <li>With automatic allocation and the new option
                  <a href="https://www.jmri.org/help/en/package/jmri/jmrit/dispatcher/Options.shtml#PreventDeadlock">Prevent
                  Deadlock</a>, off unless checked, Active Trains can no longer
@@ -472,6 +477,7 @@
                  their Transits are named in a warning. Unchecked, Sections
                  are allocated as before.</li>
              <li></li>
+             <li>With automatic allocation, an automatic train is no longer
                  held for good by a meet planned after it had already been given
                  the road beyond its meeting place. Two trains running the same
                  way round a circuit could be taken for trains coming towards
@@ -479,7 +485,6 @@
                  other, which needed track the waiting train already held.
                  Dispatcher now drops such a meet, as it does when a train is
                  already past the meeting place.</li>
-             <li>With automatic allocation, an automatic train is no longer
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -670,6 +675,9 @@
         <ul>
             <li>Web panels: a panel showing a sensor as text no longer
                 reloads in the browser each time the sensor changes.</li>
+            <li>Web roster: uploading files from the roster page no longer
+                fails on Linux systems where /tmp is a separate filesystem,
+                such as Raspberry Pi OS trixie.</li>
             <li>Removed the unused, never-finished web preferences page (<code>/config</code>) and its templates.</li>
             <li></li>
         </ul>
@@ -701,10 +709,28 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
+            <li>Tools &gt; Train Tracking &gt; Measurements lists, for each Block
+                and way through it, how many times trains have crossed it this
+                session, their average speed, how that compares with their
+                lead locos' speed profiles, and how often its detector dropped
+                out under a train. A Block whose occupancy sensor is an
+                internal sensor is followed but not measured, except with
+                simulated trains. Nothing uses the measurements yet.</li>
             <li>The first-time start-up wizard finds its list of languages
                 into a list of its own, so building that page twice at
                 once can no longer break the sort with "Comparison method
                 violates its general contract".</li>
             <li></li>
+            <li>In a profile whose connections are all simulators, a loco
+                marker dragged onto a Block's track on a Layout Editor
+                panel, in operating mode, places a
+                simulated train there: a window asks for its length, how it
+                is detected, the way it faces and where its front is, filled
+                in so that OK is usually enough, and offers to tell train
+                tracking the train is there as well. The Block's menu takes
+                the train off again. With any connection to a layout, a
+                dropped marker does what it did before. See the <a href=
+                "https://www.jmri.org/help/en/html/tools/simulatedtrains/index.shtml#placing">Simulated
+                Trains</a> page.</li>
         </ul>
 
