@@ -27,10 +27,6 @@
         <h4>CBUS</h4>
             <ul>
                 <li></li>
-                <li>CBUS Node Manager: a CANSERVO with firmware 2H is now
-                    put in learn mode for each NV it is sent, as
-                    CANSERVO8C and CANMIO-SVO already are, since that
-                    firmware takes NV writes only in learn mode.</li>
             </ul>
 
         <h4>C/MRI</h4>
