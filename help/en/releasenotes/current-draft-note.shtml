@@ -456,10 +456,6 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>The Auto Allocator no longer stops allocating for a moment, with
-                 an IndexOutOfBoundsException in the log, when an allocation
-                 request is added or removed while it is looking at the list of
-                 requests.</li>
              <li>With automatic allocation and the new option
                  <a href="https://www.jmri.org/help/en/package/jmri/jmrit/dispatcher/Options.shtml#PreventDeadlock">Prevent
                  Deadlock</a>, off unless checked, Active Trains can no longer
