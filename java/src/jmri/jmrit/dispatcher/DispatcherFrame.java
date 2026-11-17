@@ -12,6 +12,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -572,7 +573,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     private final List<ActiveTrain> delayedTrains = new ArrayList<>();  // list of delayed Active Trains
     private final List<ActiveTrain> restartingTrainsList = new ArrayList<>();  // list of Active Trains with restart requests
     private final TransitManager transitManager = InstanceManager.getDefault(jmri.TransitManager.class);
-    private final List<AllocationRequest> allocationRequests = new ArrayList<>();  // List of AllocatedRequest objects
+    // List of AllocatedRequest objects. Changed by the layout thread (Swing
+    // thread), the Auto Allocator and throttle threads, and read by the Auto
+    // Allocator and the requests table, so each change is made whole and each
+    // reader works on a copy taken at one moment.
+    private final List<AllocationRequest> allocationRequests = new CopyOnWriteArrayList<>();
     protected final List<AllocatedSection> allocatedSections = new ArrayList<>();  // List of AllocatedSection objects
     private boolean optionsRead = false;
     private AutoTurnouts autoTurnouts = null;
@@ -1950,10 +1955,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     }
 
     private void removeAllocationRequests(ActiveTrain at) {
-        for (int k = allocationRequests.size(); k > 0; k--) {
-            if (at == allocationRequests.get(k - 1).getActiveTrain()) {
-                allocationRequests.get(k - 1).dispose();
-                allocationRequests.remove(k - 1);
+        for (AllocationRequest ar : allocationRequests) {
+            if (at == ar.getActiveTrain() && allocationRequests.remove(ar)) {
+                ar.dispose();
             }
         }
     }
@@ -2075,8 +2079,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
     // ensures there will not be any duplicate allocation requests
     protected AllocationRequest findAllocationRequestInQueue(Section s, int seq, int dir, ActiveTrain at) {
-        for (int i = 0; i < allocationRequests.size(); i++) {
-            AllocationRequest ar = allocationRequests.get(i);
+        for (AllocationRequest ar : allocationRequests) {
             if ((ar.getActiveTrain() == at) && (ar.getSection() == s) && (ar.getSectionSeqNumber() == seq)
                     && (ar.getSectionDirection() == dir)) {
                 return ar;
@@ -2086,10 +2089,22 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     }
 
     private void cancelAllocationRequest(int index) {
-        AllocationRequest ar = allocationRequests.get(index);
-        allocationRequests.remove(index);
-        ar.dispose();
+        AllocationRequest ar = getAllocationRequest(index);
+        if (ar != null && allocationRequests.remove(ar)) {
+            ar.dispose();
+        }
         allocationRequestTableModel.fireTableDataChanged();
+    }
+
+    /**
+     * Get the allocation request at a row of the requests table.
+     *
+     * @param index the row
+     * @return the request, or null if there is no longer one at that row
+     */
+    private AllocationRequest getAllocationRequest(int index) {
+        Object[] requests = allocationRequests.toArray();
+        return (index >= 0 && index < requests.length) ? (AllocationRequest) requests[index] : null;
     }
 
     /**
@@ -2098,15 +2113,17 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * @param ar the allocation request to cancel
      */
     protected void cancelAllocationRequest(AllocationRequest ar) {
-        int index = allocationRequests.indexOf(ar);
-        if (index >= 0) {
-            cancelAllocationRequest(index);
+        if (allocationRequests.remove(ar)) {
+            ar.dispose();
+            allocationRequestTableModel.fireTableDataChanged();
         }
     }
 
     private void allocateRequested(int index) {
-        AllocationRequest ar = allocationRequests.get(index);
-        allocateSection(ar, null);
+        AllocationRequest ar = getAllocationRequest(index);
+        if (ar != null) {
+            allocateSection(ar, null);
+        }
     }
 
     protected void addDelayedTrain(ActiveTrain at, int restartType, Sensor delaySensor, boolean resetSensor) {
@@ -2435,15 +2452,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 }
             }
         }
-        int ix = -1;
-        for (int i = 0; i < allocationRequests.size(); i++) {
-            if (ar == allocationRequests.get(i)) {
-                ix = i;
-            }
-        }
-        if (ix != -1) {
-            allocationRequests.remove(ix);
-        }
+        allocationRequests.remove(ar);
         ar.dispose();
         allocationRequestTableModel.fireTableDataChanged();
         activeTrainsTableModel.fireTableDataChanged();
@@ -4073,11 +4082,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
         @Override
         public Object getValueAt(int r, int c) {
-            int rx = r;
-            if (rx >= allocationRequests.size()) {
+            AllocationRequest ar = getAllocationRequest(r);
+            if (ar == null) {
                 return null;
             }
-            AllocationRequest ar = allocationRequests.get(rx);
             switch (c) {
                 case TRANSIT_COLUMN:
                     return (ar.getActiveTrain().getTransit().getSystemName());
