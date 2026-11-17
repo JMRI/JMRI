@@ -133,11 +133,15 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * appropriate, starts a TurnoutOperator to do its thing. If there is no
      * TurnoutOperator (not required or nothing suitable) then just tell the
      * layout and hope for the best.
+     * <p>
+     * This method is final, so that the turnout's lock is always checked: a
+     * subclass that sets its state its own way overrides
+     * {@link #setCommandedStateInternal(int)} instead.
      *
      * @param s commanded state to set
      */
     @Override
-    public void setCommandedState(int s) {
+    public final void setCommandedState(int s) {
         if (refusedByLock(s)) {
             return;
         }
