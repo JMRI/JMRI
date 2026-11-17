@@ -1,8 +1,10 @@
 package jmri.jmrit.dispatcher;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -11,11 +13,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import jmri.Block;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.Section;
+import jmri.Sensor;
 import jmri.Transit;
 import jmri.implementation.DefaultSection;
 import jmri.util.JUnitUtil;
@@ -249,6 +254,68 @@ public class AllocatedSectionBlockEventsTest {
             b.setState(Block.UNOCCUPIED);
             waitForQueue();
         }
+    }
+
+    /**
+     * An auto train that holds each Block change it is given until it is let
+     * go, as a slow computer can take some time over one.
+     */
+    private static class SlowTrain extends AutoActiveTrain {
+
+        final CountDownLatch started = new CountDownLatch(1);
+        final CountDownLatch letGo = new CountDownLatch(1);
+
+        SlowTrain(ActiveTrain at) {
+            super(at);
+        }
+
+        @Override
+        protected void handleBlockStateChange(AllocatedSection as, Block b, int state) {
+            started.countDown();
+            try {
+                letGo.await(10, TimeUnit.SECONDS);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+    }
+
+    /**
+     * A train entering the Block a signal protects has passed that signal, and
+     * the signal going to stop behind it is to be ignored, from the moment the
+     * Block is occupied: also while the train is still handling its entry into
+     * the Block, before it has moved on to the next signal.
+     *
+     * @throws Exception if the Block's sensor can't be set
+     */
+    @Test
+    public void testSignalJustPassedWhileItsBlockEntryIsHandled() throws Exception {
+        SlowTrain aat = new SlowTrain(at);
+        Block b1 = block("B1");
+        Block b2 = block("B2");
+        Sensor s2 = InstanceManager.sensorManagerInstance().provideSensor("IS2");
+        s2.setKnownState(Sensor.INACTIVE);
+        b2.setSensor("IS2");
+        AllocatedSection as1 = allocate("TS1", 1, b1);
+        allocate("TS2", 2, b2);
+        assertFalse(AutoActiveTrain.hasJustPassed(b2, at.getAllocatedSectionList(), null),
+                "B2 not entered yet: the signal protecting it is ahead");
+
+        s2.setKnownState(Sensor.ACTIVE);   // the train enters B2, past the signal
+        assertTrue(aat.started.await(10, TimeUnit.SECONDS), "the entry is being handled");
+        assertTrue(AutoActiveTrain.hasJustPassed(b2, at.getAllocatedSectionList(), null),
+                "B2 entered, its change still being handled: the signal has just been passed");
+
+        aat.letGo.countDown();
+        waitForQueue();
+        assertFalse(AutoActiveTrain.hasJustPassed(b2, at.getAllocatedSectionList(), null),
+                "entry handled: by then the train watches the next signal");
+        assertTrue(AutoActiveTrain.hasJustPassed(b2, Collections.singletonList(as1), b2Section()),
+                "B2 in the train's next Section, occupied: passed");
+    }
+
+    private Section b2Section() {
+        return sections.get(1).getSection();
     }
 
     @BeforeEach
