@@ -703,10 +703,28 @@
                 cleared as soon as the Reporter stops seeing the train's tag,
                 while the train is still in the Block, so the train's name is
                 lost.</li>
+            <li>Tools &gt; Train Tracking &gt; Measurements lists, for each Block
+                and way through it, how many times trains have crossed it this
+                session, their average speed, how that compares with their
+                lead locos' speed profiles, and how often its detector dropped
+                out under a train. A Block whose occupancy sensor is an
+                internal sensor is followed but not measured, except with
+                simulated trains. Nothing uses the measurements yet.</li>
             <li>The first-time start-up wizard finds its list of languages
                 into a list of its own, so building that page twice at
                 once can no longer break the sort with "Comparison method
                 violates its general contract".</li>
             <li></li>
+            <li>In a profile whose connections are all simulators, a loco
+                marker dragged onto a Block's track on a Layout Editor
+                panel, in operating mode, places a
+                simulated train there: a window asks for its length, how it
+                is detected, the way it faces and where its front is, filled
+                in so that OK is usually enough, and offers to tell train
+                tracking the train is there as well. The Block's menu takes
+                the train off again. With any connection to a layout, a
+                dropped marker does what it did before. See the <a href=
+                "https://www.jmri.org/help/en/html/tools/simulatedtrains/index.shtml#placing">Simulated
+                Trains</a> page.</li>
         </ul>
 
