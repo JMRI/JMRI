@@ -461,17 +461,7 @@
                  minute it waits. Trains started where they can't all run
                  their Transits are named in a warning. Unchecked, Sections
                  are allocated as before.</li>
-             <li>Allocate Extra and the script call extendActiveTrainsPath now
-                 give a Section beyond the end of a train's Transit in the
-                 direction the train enters it. A train running its Transit's
-                 Sections in their reverse direction was given an extra Section
-                 forward, and extendActiveTrainsPath refused to extend its path at
-                 all. With automatic allocation on, the extra Section is now
-                 allocated by the Auto Allocator, so it no longer logs errors
-                 about the request with signal masts, or fails part way when the
-                 request is allocated while it is looking at it (JMRI/JMRI#15894).</li>
              <li></li>
-             <li>With automatic allocation, an automatic train is no longer
                  held for good by a meet planned after it had already been given
                  the road beyond its meeting place. Two trains running the same
                  way round a circuit could be taken for trains coming towards
@@ -479,6 +469,7 @@
                  other, which needed track the waiting train already held.
                  Dispatcher now drops such a meet, as it does when a train is
                  already past the meeting place.</li>
+             <li>With automatic allocation, an automatic train is no longer
         </ul>
 
     <h3>Dispatcher System</h3>
