@@ -456,6 +456,10 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
+             <li>Dispatcher's Options now offer the CUSTOM layout scale,
+                 with its ratio in a box beside the scale list, for a
+                 layout whose scale isn't in the list. There is one CUSTOM
+                 scale, shared with the Timetable.</li>
              <li>Tools &gt; Train Tracking &gt; Set-up Checks now says when
                  Dispatcher's Layout Scale, in its Options, is not the
                  Layout Scale in Preferences &gt; Warrants. Speed profiles
