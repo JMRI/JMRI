@@ -129,7 +129,7 @@ public class OptionsMenu extends JMenu {
     JCheckBox supportVSDecoderCheckBox = new JCheckBox(Bundle.getMessage("SupportVSDecoder"));
     JComboBox<Scale> layoutScaleBox = new JComboBox<>();
     // the CUSTOM scale's ratio, N in 1:N, shown and editable only while CUSTOM is chosen
-    JSpinner customRatioSpinner = new JSpinner(new SpinnerNumberModel(87.1, 1.0, 10000.0, 0.1));
+    JSpinner customRatioSpinner = new JSpinner(new SpinnerNumberModel(87.1, 1.0, 1000.0, 0.1));
     JRadioButton scaleFeet = new JRadioButton(Bundle.getMessage("ScaleFeet"));
     JRadioButton scaleMeters = new JRadioButton(Bundle.getMessage("ScaleMeters"));
     JCheckBox openDispatcherWithPanel = new JCheckBox(Bundle.getMessage("OpenDispatcherWithPanelBox"));
