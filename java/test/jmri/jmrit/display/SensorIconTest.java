@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Rectangle;
 
@@ -98,6 +99,42 @@ public class SensorIconTest extends PositionableIconTest {
                 "state change posts a bounded repaint instead of repainting the frame");
         Assertions.assertTrue( scaffold.lastRepaintRect.contains(new Rectangle(12, 17, 20, 30)),
                 "dirty area covers the icon bounds");
+    }
+
+    @Test
+    @DisabledIfHeadless
+    public void testTextStateChangeIsNotADisplayOptionChange() throws JmriException {
+        int[] notified = {0};
+        Editor counting = new EditorScaffold() {
+            @Override
+            public void notifyWebPanelDisplayOptionsChanged() {
+                notified[0]++;
+            }
+        };
+        SensorIcon text = new SensorIcon("  ", counting); // as SensorIconXml makes a text icon
+        text.setSensor(new jmri.NamedBeanHandle<>("IS1", s));
+        Assertions.assertTrue(text.isText());
+        notified[0] = 0;
+
+        s.setKnownState(Sensor.ACTIVE);
+        s.setKnownState(Sensor.INACTIVE);
+        Assertions.assertEquals(Color.yellow, text.getForeground(), "the state's colors are shown");
+        Assertions.assertEquals(0, notified[0], "a state change doesn't make web clients load the panel again");
+
+        text.setTextInActive(Color.green);
+        Assertions.assertEquals(Color.green, text.getForeground());
+        Assertions.assertEquals(1, notified[0], "editing a state's color still tells web clients");
+        text.setTextActive(Color.green);
+        text.setTextUnknown(Color.green);
+        text.setTextInconsistent(Color.green);
+        text.setBackgroundActive(Color.green);
+        text.setBackgroundInActive(Color.green);
+        text.setBackgroundUnknown(Color.green);
+        text.setBackgroundInconsistent(Color.green);
+        Assertions.assertEquals(8, notified[0], "once for each edit");
+
+        text.dispose();
+        jmri.util.JUnitUtil.dispose(counting);
     }
 
     Sensor s;
