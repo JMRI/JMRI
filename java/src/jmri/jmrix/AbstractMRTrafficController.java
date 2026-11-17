@@ -801,8 +801,9 @@ public abstract class AbstractMRTrafficController {
                             Thread.currentThread().interrupt(); // retain if needed later
                             log.error("retry wait interrupted");
                         }
-                    } else {
-                        log.warn("sendMessage: port not ready for data sending: {}", Arrays.toString(msg));
+                        if (m.getRetries() < 0) {
+                            portNotReadyWarn(m, Arrays.toString(msg));
+                        }
                     }
                 }
             } else {  // ostream is null
@@ -833,6 +834,7 @@ public abstract class AbstractMRTrafficController {
      * @since 5.19.1
      */
     protected void messageSent(@Nonnull AbstractMRMessage m, long timeNanos) {
+        portNotReadyWarned = false;
         m.setSentTime(timeNanos);
         AbstractMRMessage.SentListener l = m.getSentListener();
         if (l != null) {
@@ -843,6 +845,31 @@ public abstract class AbstractMRTrafficController {
                     log.error("Sent listener of message {} failed", m, e);
                 }
             });
+        }
+    }
+
+    // true from a message being dropped because the port was not ready to
+    // send, until a message is next written
+    private volatile boolean portNotReadyWarned = false;
+
+    /**
+     * Report a message that was not sent because the port was still not
+     * ready to send when its retries ran out. The first such message after
+     * one was written is logged as a warning; any more, until a message is
+     * written again, are logged at debug level, so a connection that stays
+     * unready doesn't fill the log.
+     *
+     * @param m     the message not sent
+     * @param bytes the bytes that would have been written, for the log
+     * @since 5.19.2
+     */
+    protected void portNotReadyWarn(@Nonnull AbstractMRMessage m, String bytes) {
+        if (!portNotReadyWarned) {
+            portNotReadyWarned = true;
+            log.warn("sendMessage: {} port not ready, message not sent after retrying: {} [{}]; "
+                    + "more until one is sent are logged at debug level", this.getClass().getName(), m, bytes);
+        } else {
+            log.debug("sendMessage: port not ready, message not sent: {} [{}]", m, bytes);
         }
     }
 

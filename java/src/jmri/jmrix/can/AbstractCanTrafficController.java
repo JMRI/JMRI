@@ -134,8 +134,9 @@ abstract public class AbstractCanTrafficController
                             Thread.currentThread().interrupt(); // retain if needed later
                             log.error("retry wait interrupted");
                         }
-                    } else {
-                        log.warn("sendMessage: port not ready for data sending: {}", Arrays.toString(msg));
+                        if (hm.getRetries() < 0) {
+                            portNotReadyWarn(m, Arrays.toString(msg));
+                        }
                     }
                 }
             } else {
