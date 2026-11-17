@@ -709,5 +709,16 @@
                 once can no longer break the sort with "Comparison method
                 violates its general contract".</li>
             <li></li>
+            <li>In a profile whose connections are all simulators, a loco
+                marker dragged onto a Block's track on a Layout Editor
+                panel, in operating mode, places a
+                simulated train there: a window asks for its length, how it
+                is detected, the way it faces and where its front is, filled
+                in so that OK is usually enough, and offers to tell train
+                tracking the train is there as well. The Block's menu takes
+                the train off again. With any connection to a layout, a
+                dropped marker does what it did before. See the <a href=
+                "https://www.jmri.org/help/en/html/tools/simulatedtrains/index.shtml#placing">Simulated
+                Trains</a> page.</li>
         </ul>
 
