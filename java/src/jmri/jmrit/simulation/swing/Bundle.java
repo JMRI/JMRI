@@ -1,4 +1,4 @@
-package jmri.web.servlet.config;
+package jmri.jmrit.simulation.swing;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
@@ -20,12 +20,12 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * the local resource bundle name.
  *
  * @author Bob Jacobsen Copyright (C) 2012
- * @since 3.3.1
+ * @since 5.19.2
  */
-public class Bundle extends jmri.web.servlet.Bundle {
+public class Bundle extends jmri.jmrit.simulation.Bundle {
 
     @CheckForNull
-    private static final String name = "jmri.web.servlet.config.Bundle"; // NOI18N
+    private static final String name = "jmri.jmrit.simulation.swing.Bundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly
@@ -41,20 +41,6 @@ public class Bundle extends jmri.web.servlet.Bundle {
      */
     static String getMessage(String key) {
         return getBundle().handleGetMessage(key);
-    }
-
-    /**
-     * Provides a translated string for a given key in a given locale from the
-     * package resource bundle or parent.
-     * <p>
-     * Note that this is intentionally package-local access.
-     *
-     * @param locale The locale to be used
-     * @param key    Bundle key to be translated
-     * @return Internationalized text
-     */
-    static String getMessage(Locale locale, String key) {
-        return getBundle().handleGetMessage(locale, key);
     }
 
     /**
