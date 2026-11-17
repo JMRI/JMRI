@@ -174,7 +174,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
      * @param speed Number from 0 to 1, or less than zero for emergency stop
      */
     @Override
-    public void setSpeedSetting(float speed) {
+    protected void sendSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
         float oldSpeed;
         synchronized(this) {
             oldSpeed = this.speedSetting;
@@ -224,7 +224,7 @@ public class MrcThrottle extends AbstractThrottle implements MrcTrafficListener 
         boolean old = isForward;
         isForward = forward;
         synchronized(this) {
-            setSpeedSetting(speedSetting);  // send the command
+            sendSpeedSetting(speedSetting, false, false);  // send the command
         }
         log.debug("setIsForward= {}", forward);
         firePropertyChange(ISFORWARD, old, isForward);

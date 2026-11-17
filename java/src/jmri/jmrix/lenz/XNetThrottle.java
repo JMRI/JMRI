@@ -462,9 +462,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
      * Notify listeners and send the new speed to the command station.
      */
     @Override
-    public synchronized void setSpeedSetting(float speed) {
+    protected synchronized void sendSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
         log.debug("set Speed to: {} Current step mode is: {}", speed, this.speedStepMode);
-        super.setSpeedSetting(speed);
+        speedSettingChanged(speed);
         if (speed < 0) {
             /* we're sending an emergency stop to this locomotive only */
             sendEmergencyStop();
@@ -500,7 +500,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     public void setIsForward(boolean forward) {
         super.setIsForward(forward);
         synchronized(this) {
-            setSpeedSetting(this.speedSetting);
+            sendSpeedSetting(this.speedSetting, false, false);
         }
     }
 
@@ -516,7 +516,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
         // On a Lenz system, we need to send the speed to make sure the
         // command station knows about the change.
         synchronized(this) {
-            setSpeedSetting(this.speedSetting);
+            sendSpeedSetting(this.speedSetting, false, false);
         }
     }
 

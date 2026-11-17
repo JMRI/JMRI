@@ -87,7 +87,7 @@ public class DebugThrottle extends AbstractThrottle {
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     @Override
-    public synchronized void setSpeedSetting(float speed) {
+    protected synchronized void sendSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
         log.debug("setSpeedSetting: float speed: {} for address {}", speed, this.address);
         float oldSpeed = this.speedSetting;
         if (speed > 1.0) {

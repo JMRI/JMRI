@@ -85,7 +85,7 @@ public class Throttle extends AbstractThrottle {
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     @Override
-    public synchronized void setSpeedSetting(float speed) {
+    protected synchronized void sendSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
         int value = (int) ((127 - 1) * speed); // -1 for rescale to avoid estop
@@ -121,7 +121,7 @@ public class Throttle extends AbstractThrottle {
         boolean old = isForward;
         isForward = forward;
         synchronized(this) {
-            setSpeedSetting(speedSetting);  // send the command
+            sendSpeedSetting(speedSetting, false, false);  // send the command
         }
         firePropertyChange(ISFORWARD, old, isForward);
     }

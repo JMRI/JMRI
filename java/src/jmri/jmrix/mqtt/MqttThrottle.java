@@ -113,9 +113,9 @@ import java.util.regex.*;
      * {@inheritDoc}
      */
     @Override
-    public void setSpeedSetting(float speed) {
+    protected void sendSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
 
-        super.setSpeedSetting(speed);
+        speedSettingChanged(speed);
 
         if (speed < 0) {
             speed = 0;
@@ -123,7 +123,7 @@ import java.util.regex.*;
             jmri.util.ThreadingUtil.runOnLayout(() -> {
                 mqttAdapter.publish(this.sendDirectionTopic.replaceFirst("\\{0\\}", String.valueOf(address)), "STOP");
             });
-            super.setSpeedSetting(0);
+            speedSettingChanged(0);
             log.debug("sent address {} direction {}", address, "STOP");
         }
 
@@ -279,7 +279,7 @@ import java.util.regex.*;
                 speed = -1.0f;
             }
 
-            super.setSpeedSetting(speed);
+            speedSettingChanged(speed);
 
         } else if (receivedTopic.endsWith(this.rcvDirectionTopic.replaceFirst("\\{0\\}",
                     String.valueOf(address)))) {
@@ -292,7 +292,7 @@ import java.util.regex.*;
                     break;
                 case "STOP":
                 case "":
-                    super.setSpeedSetting(-1);
+                    speedSettingChanged(-1);
                     break;
                 default:
                     log.error("Invalid message {}", message);
