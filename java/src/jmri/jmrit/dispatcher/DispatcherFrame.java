@@ -3059,11 +3059,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * <p>
      * The first occupied Section holds the train's head. The exited Sections
      * in front of the one being released must be at least as long as the
-     * train. The first occupied Section counts too when the train
-     * is stopped in it, at its stopping sensor for the direction it is
-     * travelling or by its speed profile, and the train fits in it: the whole
-     * train is then in that Section. If the train length is not known the
-     * Section is kept.
+     * train. The first occupied Section counts too when the train has stopped
+     * in it, however it was stopped, and fits in it: the whole train is then
+     * in that Section. If the train length is not known the Section is kept.
      */
     private static boolean isClearByLength(ActiveTrain at, AllocatedSection as) {
         long trainLengthMM = getTrainLengthMM(at);
@@ -3107,23 +3105,16 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     }
 
     /*
-     * Whether an automatic train has stopped in a Section, at the stopping
-     * sensor for the direction it is travelling through it or by its speed
-     * profile, and is no longer than the Section, so that the whole train is
-     * in it.
+     * Whether an automatic train has stopped in a Section and is no longer
+     * than the Section, so that the whole train is in it. Where in the Section
+     * it stopped is not known, so how it was stopped doesn't matter.
      */
     private static boolean isStoppedAndFitsIn(ActiveTrain at, AllocatedSection tas, long trainLengthMM) {
         AutoActiveTrain aat = at.getAutoActiveTrain();
         if (aat == null || aat.getAutoEngineer() == null || !aat.getAutoEngineer().isStopped()) {
             return false;
         }
-        Section section = tas.getSection();
-        Sensor stoppingSensor = tas.getDirection() == Section.REVERSE ? section.getReverseStoppingSensor()
-                : section.getForwardStoppingSensor();
-        if (!aat.getStopBySpeedProfile() && stoppingSensor == null) {
-            return false;
-        }
-        return trainLengthMM <= section.getActualLength();
+        return trainLengthMM <= tas.getSection().getActualLength();
     }
 
     /**
