@@ -56,7 +56,10 @@ import jmri.jmrit.roster.RosterSpeedProfile;
  * commanded;</li>
  * <li>two detected Blocks joined through Blocks with no detector by more
  * than one shortest way that no turnout chooses between, as with parallel
- * tracks sharing a detector, so which way a train went can't be told.</li>
+ * tracks sharing a detector, so which way a train went can't be told;</li>
+ * <li>a Block's detector that waits more than
+ * {@link #ACTIVE_DEBOUNCE_LIMIT_MS} before it shows the Block occupied, so
+ * every train is placed, timed and measured late there.</li>
  * </ul>
  * Other parts of JMRI add their own checks as {@link SetUpCheck}s, such as
  * settings of theirs that disagree with others train tracking relies on.
@@ -68,6 +71,15 @@ public final class TrainTrackingChecks {
 
     private TrainTrackingChecks() {
     }
+
+    /**
+     * The longest going-active debounce, in milliseconds, a Block's detector
+     * may have before it is reported: at 300 mm a second, about 90 km/h in
+     * HO, a train goes 30 mm in 100 ms.
+     *
+     * @since 5.19.2
+     */
+    public static final long ACTIVE_DEBOUNCE_LIMIT_MS = 100;
 
     /**
      * The kinds of finding, in the order they are listed.
@@ -95,6 +107,12 @@ public final class TrainTrackingChecks {
         DARK_BLOCK_TURNOUT_NO_FEEDBACK,
         /** Detected Blocks joined through dark Blocks by several ways no turnout chooses between. */
         DARK_RUN_SEVERAL_WAYS,
+        /**
+         * A Block's detector that is slow to show the Block occupied.
+         *
+         * @since 5.19.2
+         */
+        DETECTOR_SLOW_TO_SHOW_OCCUPIED,
         /** Settings in different parts of JMRI that disagree, from a {@link SetUpCheck}. */
         SETTINGS_DISAGREE
     }
@@ -210,6 +228,14 @@ public final class TrainTrackingChecks {
             }
         }
         bySensor.forEach((s, users) -> {
+            long debounce = s.getSensorDebounceGoingActiveTimer();
+            if (debounce > ACTIVE_DEBOUNCE_LIMIT_MS) {
+                // the sensor shows a train only once it has been there this
+                // long; a drop-out is better covered by going-inactive debounce
+                found.add(new Finding(Kind.DETECTOR_SLOW_TO_SHOW_OCCUPIED, s, new ArrayList<>(users),
+                        Bundle.getMessage("CheckDetectorSlowToShowOccupied", s.getDisplayName(), names(users),
+                                debounce)));
+            }
             if (users.size() > 1) {
                 users.sort(Comparator.comparing(Block::getDisplayName));
                 found.add(new Finding(Kind.SENSOR_SHARED, s, new ArrayList<>(users),

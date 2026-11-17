@@ -12,6 +12,7 @@ import jmri.Block;
 import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.Path;
+import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.TrainRecord;
 import jmri.TrainRecordManager;
@@ -153,6 +154,40 @@ public class TrainTrackingChecksTest {
         assertEquals(Kind.SENSOR_SHARED, found.get(0).getKind());
         assertEquals("Sensor \"ISA\" is the detector of more than one Block: A, B.", found.get(0).getMessage());
         assertEquals(List.of(a, b), found.get(0).getRelated());
+    }
+
+    @Test
+    public void testDetectorSlowToShowOccupied() {
+        Block a = detected("A", 1000);
+        Block b = detected("B", 1000);
+        join(a, b);
+        Sensor s = a.getSensor();
+        s.setSensorDebounceGoingActiveTimer(TrainTrackingChecks.ACTIVE_DEBOUNCE_LIMIT_MS);
+        b.getSensor().setSensorDebounceGoingInActiveTimer(2000);
+        assertTrue(run(List.of()).isEmpty(), "at the limit, and a long going-inactive delay: nothing to report");
+
+        s.setSensorDebounceGoingActiveTimer(500);
+        List<Finding> found = run(List.of());
+        assertEquals(1, found.size());
+        assertEquals(Kind.DETECTOR_SLOW_TO_SHOW_OCCUPIED, found.get(0).getKind());
+        assertSame(s, found.get(0).getSubject());
+        assertEquals(List.of(a), found.get(0).getRelated());
+        assertTrue(found.get(0).getMessage().startsWith(
+                "Sensor \"ISA\", the detector of Block A, waits 500 ms before it shows a train"),
+                found.get(0).getMessage());
+    }
+
+    @Test
+    public void testDetectorSlowToShowOccupiedByGlobalDelay() {
+        InstanceManager.getDefault(SensorManager.class).setDefaultSensorDebounceGoingActive(300);
+        Block a = detected("A", 1000);
+        Block b = detected("B", 1000);
+        join(a, b);
+        a.getSensor().setUseDefaultTimerSettings(true);
+        List<Finding> found = run(List.of());
+        assertEquals(1, found.size());
+        assertEquals(Kind.DETECTOR_SLOW_TO_SHOW_OCCUPIED, found.get(0).getKind());
+        assertSame(a.getSensor(), found.get(0).getSubject());
     }
 
     @Test
