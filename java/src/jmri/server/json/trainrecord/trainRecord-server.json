@@ -1,0 +1,52 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "jmri-json-trainRecord-server-message",
+    "type": "object",
+    "description": "Data portion of message from JMRI to client for type \"trainRecord\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "The train's name"
+        },
+        "rosterEntry": {
+            "type": ["string", "null"],
+            "description": "The id of the lead loco's roster entry, or null if it has none"
+        },
+        "placed": {
+            "type": "boolean",
+            "description": "True if the train is on the layout"
+        },
+        "blocks": {
+            "type": "array",
+            "description": "System names of the Blocks the train is in, front first when the front is known",
+            "items": {
+                "type": "string"
+            }
+        },
+        "frontKnown": {
+            "type": "boolean",
+            "description": "True if the first Block is known to hold the train's front"
+        },
+        "confidence": {
+            "type": ["string", "null"],
+            "description": "How sure train tracking is of where the train is; null if it is not on the layout",
+            "enum": [
+                "CONFIRMED",
+                "ESTIMATED",
+                "AMBIGUOUS",
+                "STALLED",
+                "LOST",
+                null
+            ]
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "name",
+        "rosterEntry",
+        "placed",
+        "blocks",
+        "frontKnown",
+        "confidence"
+    ]
+}

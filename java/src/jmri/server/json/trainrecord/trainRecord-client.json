@@ -1,0 +1,28 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "jmri-json-trainRecord-client-message",
+    "type": "object",
+    "description": "Data portion of message from client to JMRI for type \"trainRecord\"",
+    "properties": {
+        "name": {
+            "type": "string",
+            "description": "The train's name"
+        },
+        "block": {
+            "type": "string",
+            "description": "Correction: the train is in this Block alone (system or user name)"
+        },
+        "emptyBlock": {
+            "type": "string",
+            "description": "Correction: no train is in this Block (system or user name)"
+        },
+        "token": {
+            "type": "string",
+            "description": "The session token from sessionLogin, needed for a correction when the permission system is on"
+        }
+    },
+    "additionalProperties": false,
+    "required": [
+        "name"
+    ]
+}
