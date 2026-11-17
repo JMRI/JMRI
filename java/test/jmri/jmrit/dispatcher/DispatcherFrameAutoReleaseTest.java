@@ -199,28 +199,36 @@ public class DispatcherFrameAutoReleaseTest {
     }
 
     @Test
-    public void testHeadAndTailHeldWhileHeadInNextSectionAndTailUndetected() {
-        // A has cleared, the head is in B, and the tail has lost detection,
-        // so it may still be in A
-        buildTransit(1000);
-        when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADANDTAIL);
-        when(at.getAutoActiveTrain()).thenReturn(null);
-        when(at.getMaxTrainLengthMM()).thenReturn(800L);
-        headIn(1);
-        assertFalse(releaseA(), "head in B, nothing beyond A is known to hold the train");
-    }
-
-    @Test
-    public void testHeadAndTailReleasedBehindTheDetectedTail() {
+    public void testHeadAndTailNotHeldByLength() {
+        // the tail is detected, and the earlier checks keep any Section
+        // ahead of the last occupied one, so length is not used
         buildTransit(500);
         when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADANDTAIL);
         when(at.getAutoActiveTrain()).thenReturn(null);
         when(at.getMaxTrainLengthMM()).thenReturn(800L);
-        headIn(2);
+        headIn(1);
+        assertTrue(releaseA(), "head in B: only B (500) beyond A, train is 800, but A is not checked by length");
         tailIn(1);
-        assertTrue(releaseA(), "tail seen in B, head in C: A is behind the tail, whatever the length");
         headIn(2);
-        assertFalse(releaseA(), "tail not seen: by length, as Head Only, only B (500) beyond A");
+        assertTrue(releaseA(), "tail in B, head in C");
+    }
+
+    @Test
+    public void testHeadAndTailAutoNotHeldByLength() {
+        buildTransit(500);
+        when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADANDTAIL);
+        autoTrain(800);
+        headIn(1);
+        assertTrue(releaseA(), "head in B: A is not checked by length");
+    }
+
+    @Test
+    public void testHeadAndTailWithoutLengthIsNotHeld() {
+        buildTransit(1000);
+        when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADANDTAIL);
+        when(at.getAutoActiveTrain()).thenReturn(null);
+        headIn(1);
+        assertTrue(releaseA(), "no train length needed, and no warning");
     }
 
     /**
@@ -266,42 +274,6 @@ public class DispatcherFrameAutoReleaseTest {
         stopped(autoTrain(800), true);
         headIn(1);
         assertTrue(releaseA(), "stopped in B by its speed profile, and fits in B (1000)");
-    }
-
-    @Test
-    public void testHeadAndTailHeldWhenTailLostDetectionAndNoLength() {
-        buildTransit(1000);
-        when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADANDTAIL);
-        when(at.getAutoActiveTrain()).thenReturn(null);
-        when(at.firstNoLengthWarning()).thenReturn(true, false);
-        headIn(2);
-        assertFalse(releaseA(), "tail lost detection in A");
-        headIn(3);
-        assertFalse(releaseA(), "still no tail seen, train length unknown");
-        JUnitAppender.assertWarnMessage("Test: has no Max Train Length, Sections behind it will not be released automatically.");
-    }
-
-    @Test
-    public void testHeadAndTailDispatchedLostDetectionReleasedByLength() {
-        buildTransit(500);
-        when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADANDTAIL);
-        when(at.getAutoActiveTrain()).thenReturn(null);
-        when(at.getMaxTrainLengthMM()).thenReturn(800L);
-        headIn(2);
-        assertFalse(releaseA(), "only B (500) beyond A, train is 800");
-        headIn(3);
-        assertTrue(releaseA(), "B and C (1000) beyond A");
-    }
-
-    @Test
-    public void testHeadAndTailAutoLostDetectionReleasedByLength() {
-        buildTransit(500);
-        when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADANDTAIL);
-        autoTrain(800);
-        headIn(2);
-        assertFalse(releaseA(), "only B (500) beyond A, train is 800");
-        headIn(3);
-        assertTrue(releaseA(), "B and C (1000) beyond A");
     }
 
     private TrainInfo trainInfo(TrainDetection detection, float lengthScaleMeters) {
