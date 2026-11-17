@@ -102,7 +102,11 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>New USB connection for the Uhlenbrock "LocoNet-USB and WLAN
+                    Interface" 63860, listed under the "Uhlenbrock" system
+                    manufacturer. See the
+                    <a href="https://www.jmri.org/help/en/html/hardware/loconet/Uhlenbrock.shtml#63860">Uhlenbrock
+                    help page</a>.</li>
             </ul>
 
         <h4>Maple</h4>
