@@ -39,6 +39,12 @@ public class InternalSensorManager extends jmri.managers.AbstractSensorManager {
             }
 
             @Override
+            public boolean isPhysicalSensor() {
+                // an internal sensor sends nothing to the layout
+                return false;
+            }
+
+            @Override
             public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, NamedBean n) {
                 return (new PreferNumericComparator()).compare(suffix1, suffix2);
             }
