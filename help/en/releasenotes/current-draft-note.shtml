@@ -1,7 +1,19 @@
 
     <h3>Hardware Support</h3>
         <ul>
-          <li></li>
+          <li>XpressNet, Roco Z21 and DCC4PC: a "busy" answer during a
+              burst of commands no longer leaves messages and their
+              replies out of step until JMRI is restarted.</li>
+          <li>A serial connection that recovers from a failure (such as a
+              CANUSB4 or other GridConnect adapter, or a LocoBuffer) is now
+              set up again when the port reopens at the first attempt; before,
+              it showed as connected but sent and received nothing. An error
+              opening the port at the first attempt no longer stops the
+              retries.</li>
+          <li>Connections (NCE, C/MRI, CAN, XpressNet and others): after a
+              connection recovers from a failure, messages are no longer
+              sent out of turn or their replies given to the wrong
+              listener.</li>
         </ul>
 
         <h4>Acela CTI</h4>
@@ -26,6 +38,10 @@
 
         <h4>CBUS</h4>
             <ul>
+                <li>CBUS Node Manager: dragging the divider between the
+                    node table and the tabs no longer writes all of CBUS's
+                    preferences to disk for every pixel it moves. Where it
+                    is left is saved once it stops.</li>
                 <li></li>
             </ul>
 
@@ -440,6 +456,17 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
+             <li>With automatic allocation and the new option
+                 <a href="https://www.jmri.org/help/en/package/jmri/jmrit/dispatcher/Options.shtml#PreventDeadlock">Prevent
+                 Deadlock</a>, off unless checked, Active Trains can no longer
+                 end up waiting for each other for good, such as two trains
+                 each holding half of a single line. A train is then given
+                 track from one place it can stop to the next, all at once,
+                 and only where every Active Train can still run its Transit.
+                 A train waiting for track gains a step of priority for each
+                 minute it waits. Trains started where they can't all run
+                 their Transits are named in a warning. Unchecked, Sections
+                 are allocated as before.</li>
              <li></li>
                  held for good by a meet planned after it had already been given
                  the road beyond its meeting place. Two trains running the same
@@ -642,6 +669,7 @@
             <li>Web roster: uploading files from the roster page no longer
                 fails on Linux systems where /tmp is a separate filesystem,
                 such as Raspberry Pi OS trixie.</li>
+            <li>Removed the unused, never-finished web preferences page (<code>/config</code>) and its templates.</li>
             <li></li>
         </ul>
 
@@ -672,6 +700,10 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
+            <li>The first-time start-up wizard finds its list of languages
+                into a list of its own, so building that page twice at
+                once can no longer break the sort with "Comparison method
+                violates its general contract".</li>
             <li></li>
         </ul>
 
