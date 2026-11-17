@@ -250,13 +250,12 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * Set the speed, as {@link #setSpeedSetting(float, boolean, boolean)}
      * does with duplicates suppressed.
      * <p>
-     * A system's throttle implements {@link #sendSpeedSetting(float, boolean,
-     * boolean)} rather than overriding this: overriding it is deprecated, and
-     * a throttle that does is not limited by a
-     * {@link jmri.ThrottleSpeedLimiter}.
+     * This is final, so that every speed request is kept and limited: a
+     * system's throttle implements {@link #sendSpeedSetting(float, boolean,
+     * boolean)} instead.
      */
     @Override
-    public void setSpeedSetting(float speed) {
+    public final void setSpeedSetting(float speed) {
         setSpeedSetting(speed, false, false);
     }
 
@@ -266,10 +265,9 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * ({@link #applySpeedLimit(float)}), and sends the result with
      * {@link #sendSpeedSetting(float, boolean, boolean)}.
      * <p>
-     * A system's throttle implements {@link #sendSpeedSetting(float, boolean,
-     * boolean)} rather than overriding this: overriding it is deprecated, and
-     * a throttle that does is not limited by a
-     * {@link jmri.ThrottleSpeedLimiter}.
+     * This is final, so that every speed request is kept and limited: a
+     * system's throttle implements {@link #sendSpeedSetting(float, boolean,
+     * boolean)} instead.
      *
      * @param speed                 the new speed
      * @param allowDuplicates       don't suppress messages
@@ -277,7 +275,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      *                              'stop'
      */
     @Override
-    public void setSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
+    public final void setSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
         requestedSpeed = speed;
         sendSpeedSetting(applySpeedLimit(speed), allowDuplicates, allowDuplicatesOnStop);
     }
@@ -310,7 +308,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * @param speed the speed setting
      * @since 5.19.2
      */
-    protected synchronized void speedSettingChanged(float speed) {
+    protected final synchronized void speedSettingChanged(float speed) {
         if (Math.abs(this.speedSetting - speed) > 0.0001) {
             firePropertyChange(SPEEDSETTING, this.speedSetting, this.speedSetting = speed);
         }
@@ -323,7 +321,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * @return the speed requested, from -1 to 1
      * @since 5.19.2
      */
-    protected float getRequestedSpeed() {
+    protected final float getRequestedSpeed() {
         return requestedSpeed;
     }
 
@@ -338,7 +336,7 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * @return the speed to send
      * @since 5.19.2
      */
-    protected float applySpeedLimit(float speed) {
+    protected final float applySpeedLimit(float speed) {
         if (!(speed > 0)) {
             return speed; // stop, emergency stop, or NaN: unchanged
         }
