@@ -79,6 +79,13 @@ public final class TrainTrackingChecks {
         TRAIN_NO_SPEED_PROFILE,
         /** A Block on the layout with no length. */
         BLOCK_NO_LENGTH,
+        /**
+         * A Section's stop point far from the last place before it where a
+         * train is seen, from a {@link SetUpCheck}.
+         *
+         * @since 5.19.2
+         */
+        STOP_POINT_FAR_FROM_FIX,
         /** A detected Block with no paths to other Blocks. */
         BLOCK_NO_PATHS,
         /** A path from one Block to another with no path back. */
