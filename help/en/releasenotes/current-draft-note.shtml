@@ -640,12 +640,6 @@
             <li>Web panels: a panel showing a sensor as text no longer
                 reloads in the browser each time the sensor changes.</li>
             <li></li>
-            <li>The JSON server has a new type, <code>trainRecord</code>: where train
-                tracking places each train (the Blocks it is in, and how sure it
-                is), sent again to a WebSocket client whenever it changes, and
-                the operator's corrections ("the train is here", "this Block is
-                empty"), which need the Correct where trains are permission.
-                See the JSON help page for examples.</li>
         </ul>
 
     <h3>Where Used</h3>
