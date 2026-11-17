@@ -102,13 +102,6 @@
         <h4>MERG</h4>
             <ul>
                 <li></li>
-                <li>When a message to a connection can't be sent because the
-                    connection still isn't ready to take it after its retries,
-                    JMRI now logs a warning instead of dropping it without a
-                    word. Further messages dropped before one is sent again are
-                    logged at debug level only. This applies to CAN connections,
-                    MERG CBUS among them, and to the other connections that use
-                    JMRI's common serial and network code.</li>
             </ul>
 
         <h4>MQTT</h4>
