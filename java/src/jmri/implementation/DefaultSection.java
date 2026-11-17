@@ -2662,6 +2662,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      */
     @Override
     @Deprecated(since="5.19.1", forRemoval=true)
+    @SuppressWarnings("removal")    // We need to keep this method until Section.setNameInBlocks() is removed.
     public void setNameInBlocks(String name) {
         jmri.util.LoggingUtil.deprecationWarning(log, "Section.setNameInBlocks");
         setValueInBlocks(name);
@@ -2674,6 +2675,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      */
     @Override
     @Deprecated(since="5.19.1", forRemoval=true)
+    @SuppressWarnings("removal")    // We need to keep this method until Section.setNameInBlocks() is removed.
     public void setNameInBlocks(Object value) {
         jmri.util.LoggingUtil.deprecationWarning(log, "Section.setNameInBlocks");
         setValueInBlocks(value);
@@ -2694,6 +2696,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      */
     @Override
     @Deprecated(since="5.19.1", forRemoval=true)
+    @SuppressWarnings("removal")    // We need to keep this method until Section.setNameFromActiveBlock() is removed.
     public void setNameFromActiveBlock(Object value) {
         jmri.util.LoggingUtil.deprecationWarning(log, "Section.setNameFromActiveBlock");
         boolean beenSet = false;
@@ -2755,6 +2758,7 @@ public class DefaultSection extends AbstractNamedBean implements Section {
      */
     @Override
     @Deprecated(since="5.19.1", forRemoval=true)
+    @SuppressWarnings("removal")    // We need to keep this method until Section.suppressNameUpdate() is removed.
     public void suppressNameUpdate(boolean set) {
         jmri.util.LoggingUtil.deprecationWarning(log, "Section.suppressNameUpdate");
         for (Block b : mBlockEntries) {

@@ -23,8 +23,8 @@
       <a href="https://www.jmri.org/download/">test release</a>.
       If you don't want to wait for a monthly test release, you can also 
       pick up a 
-      <a href="https://builds.jmri.org/jenkins/job/development/job/packages/">development release</a>. 
-      Development releases are available within a day of the new decoder definition being
+      <a href="https://jmri.org/packages/">development builds</a>. 
+      Development builds are available within a day or so of the new decoder definition being
       merged into JMRI.
       
       <p>Sometimes, a user will put a new/updated definition in the <a href=
