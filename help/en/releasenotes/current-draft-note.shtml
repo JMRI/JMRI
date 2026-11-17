@@ -81,10 +81,7 @@
 
         <h4>Lenz XPressNet</h4>
             <ul>
-                <li>A turnout commanded straight after the other turnout of
-                    its feedback pair (for example XT1 and XT2, as a Route
-                    does) no longer returns to its old position because of
-                    feedback that was sent before its own command.</li>
+                <li></li>
             </ul>
 
         <h4>LocoNet</h4>
