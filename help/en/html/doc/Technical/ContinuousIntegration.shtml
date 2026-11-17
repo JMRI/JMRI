@@ -165,6 +165,11 @@
       up to date as changes are committed, building installer packages from development builds, and
       building final releases.</p>
 
+      <p><strong>
+        Our Jenkins server is being rebuilt.  The Jenkins links
+        on this page are not currently accessible.
+      </strong></p>
+
       <p>Our primary Jenkins engine is at <a href=
       "https://builds.jmri.org/jenkins/">https://builds.jmri.org/jenkins/</a>. Because it's hosted
       outside the US, we force its Java locale to US English by setting the <code>LC_ALL</code>

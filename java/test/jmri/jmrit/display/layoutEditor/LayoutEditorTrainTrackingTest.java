@@ -66,6 +66,13 @@ public class LayoutEditorTrainTrackingTest {
         JUnitUtil.resetProfileManager();
         JUnitUtil.initLayoutBlockManager();
         le = ThreadingUtil.runOnGUIwithReturn(() -> new LayoutEditor("Train Tracking Test"));
+        // A connection to a layout, so the profile is not a simulated one, where a
+        // dropped marker places a simulated train first (LayoutEditorSimulatedTrainTest).
+        // After the panel is made: making the first window sets up the preferences,
+        // which brings a connection manager of its own.
+        JUnitUtil.initConnectionConfigManager();
+        InstanceManager.getDefault(jmri.jmrix.ConnectionConfigManager.class)
+                .add(new jmri.jmrix.can.adapters.gridconnect.canusb.serialdriver.ConnectionConfig());
     }
 
     @AfterEach
