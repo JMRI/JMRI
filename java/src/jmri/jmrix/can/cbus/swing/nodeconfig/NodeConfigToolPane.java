@@ -42,6 +42,11 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
     public JTable nodeTable;
     private CbusPreferences preferences;
 
+    /** How long after the divider stops moving its place is saved, ms. */
+    static final int SPLIT_SAVE_DELAY_MS = 500;
+    private javax.swing.Timer splitSaveTimer;
+    private int splitToSave = -1;
+
     protected CbusNodeTablePane nodeTablePane;
     private CbusNodeRestoreFcuFrame fcuFrame;
     private CbusNodeEditEventFrame _editEventFrame;
@@ -190,7 +195,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
             JSplitPane sourceSplitPane = (JSplitPane) changeEvent.getSource();
             String propertyName = changeEvent.getPropertyName();
             if (propertyName.equals(JSplitPane.DIVIDER_LOCATION_PROPERTY)) {
-                preferences.setNodeTableSplit(sourceSplitPane.getDividerLocation());
+                saveSplitSoon(sourceSplitPane.getDividerLocation());
             }
         });
 
@@ -552,10 +557,38 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
     }
 
     /**
+     * Save where the divider between the node table and the tabs is, once it
+     * has stopped moving. The split pane reports every pixel of a drag, and
+     * each save writes all of CBUS's preferences to disk.
+     *
+     * @param pixels the divider's place
+     */
+    private void saveSplitSoon(int pixels) {
+        splitToSave = pixels;
+        if (splitSaveTimer == null) {
+            splitSaveTimer = new javax.swing.Timer(SPLIT_SAVE_DELAY_MS, e -> saveSplit());
+            splitSaveTimer.setRepeats(false);
+        }
+        splitSaveTimer.restart();
+    }
+
+    private void saveSplit() {
+        if (splitToSave >= 0) {
+            preferences.setNodeTableSplit(splitToSave);
+            splitToSave = -1;
+        }
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
     public void dispose() {
+
+        if (splitSaveTimer != null) {
+            splitSaveTimer.stop();
+        }
+        saveSplit();
 
         if (_toNode!=null){
             _toNode.removePropertyChangeListener(this);

@@ -139,6 +139,7 @@ public class OptionsMenu extends JMenu {
     JCheckBox useTurnoutConnectionDelayCheckBox = new JCheckBox(Bundle.getMessage("useTurnoutConnectionDelay"));
     JComboBox<String> stoppingSpeedBox = new JComboBox<>();
     JCheckBox useOccupiedTrackSpeedCheckBox = new JCheckBox(Bundle.getMessage("useOccupiedTrackSpeed"));
+    JCheckBox preventDeadlockCheckBox = new JCheckBox(Bundle.getMessage("preventDeadlock"));
     JCheckBox useStrictTrainTrackingBox = new JCheckBox(Bundle.getMessage("useStrictTrackChecking"));
     JCheckBox waitWhereTrainsCanStopCheckBox = new JCheckBox(Bundle.getMessage("waitWhereTrainsCanStop"));
 
@@ -209,6 +210,11 @@ public class OptionsMenu extends JMenu {
             p4.add(autoAllocateCheckBox);
             autoAllocateCheckBox.setToolTipText(Bundle.getMessage("AutoAllocateBoxHint"));
             optionsPane.add(p4);
+            JPanel p4a = new JPanel();
+            p4a.setLayout(new FlowLayout());
+            p4a.add(preventDeadlockCheckBox);
+            preventDeadlockCheckBox.setToolTipText(Bundle.getMessage("preventDeadlockHint"));
+            optionsPane.add(p4a);
             JPanel p5 = new JPanel();
             p5.setLayout(new FlowLayout());
             p5.add(autoTurnoutsCheckBox);
@@ -377,6 +383,7 @@ public class OptionsMenu extends JMenu {
         autoTurnoutsCheckBox.setSelected(dispatcher.getAutoTurnouts());
         trustKnownTurnoutsCheckBox.setSelected(dispatcher.getTrustKnownTurnouts());
         useOccupiedTrackSpeedCheckBox.setSelected(dispatcher.getUseOccupiedTrackSpeed());
+        preventDeadlockCheckBox.setSelected(dispatcher.getPreventDeadlock());
         useStrictTrainTrackingBox.setSelected(dispatcher.getUseStrictTrainTracking());
         waitWhereTrainsCanStopCheckBox.setSelected(dispatcher.getWaitWhereTrainsCanStop());
         useTurnoutConnectionDelayCheckBox.setSelected(dispatcher.getUseTurnoutConnectionDelay());
@@ -421,6 +428,7 @@ public class OptionsMenu extends JMenu {
         autoTurnoutsItem.setSelected(autoTurnoutsCheckBox.isSelected());
         dispatcher.setTrustKnownTurnouts(trustKnownTurnoutsCheckBox.isSelected());
         dispatcher.setUseOccupiedTrackSpeed(useOccupiedTrackSpeedCheckBox.isSelected());
+        dispatcher.setPreventDeadlock(preventDeadlockCheckBox.isSelected());
         dispatcher.setUseStrictTrainTracking(useStrictTrainTrackingBox.isSelected());
         dispatcher.setWaitWhereTrainsCanStop(waitWhereTrainsCanStopCheckBox.isSelected());
         dispatcher.setUseTurnoutConnectionDelay(useTurnoutConnectionDelayCheckBox.isSelected());
