@@ -83,6 +83,51 @@ public class DefaultLogixManagerTest extends AbstractManagerTestBase<LogixManage
     @Disabled("No manager-specific system name validation at present")
     public void testMakeSystemNameWithPrefixNotASystemName() {}
 
+    /**
+     * A Logix that records whether it was activated.
+     */
+    private static class RecordingLogix extends jmri.implementation.DefaultLogix {
+        boolean activated = false;
+
+        RecordingLogix(String systemName) {
+            super(systemName);
+        }
+
+        @Override
+        public void activateLogix() {
+            activated = true;
+            super.activateLogix();
+        }
+    }
+
+    @Test
+    public void testInitializerNotActivatedWhenLoadedDisabled() {
+        RecordingLogix init = new RecordingLogix(jmri.jmrit.beantable.LRouteTableAction.getLogixInitializer());
+        RecordingLogix other = new RecordingLogix("IX1");
+        l.register(init);
+        l.register(other);
+        l.setLoadDisabled(true);
+        l.activateAllLogixs();
+        jmri.util.JUnitAppender.suppressWarnMessageStartsWith("load disabled set");
+        jmri.util.JUnitAppender.suppressWarnMessageStartsWith("load disabled set");
+        assertFalse(other.activated, "other Logix not activated");
+        assertFalse(init.activated, "LRoute initializer not activated either");
+        assertFalse(init.getEnabled());
+    }
+
+    @Test
+    public void testDisabledInitializerNotActivated() {
+        RecordingLogix init = new RecordingLogix(jmri.jmrit.beantable.LRouteTableAction.getLogixInitializer());
+        init.setEnabled(false);
+        l.register(init);
+        l.activateAllLogixs();
+        assertFalse(init.activated, "a disabled initializer stays inactive");
+        RecordingLogix enabled = new RecordingLogix("IX2");
+        l.register(enabled);
+        l.activateAllLogixs();
+        Assertions.assertTrue(enabled.activated);
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
