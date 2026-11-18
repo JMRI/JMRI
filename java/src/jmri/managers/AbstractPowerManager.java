@@ -61,14 +61,11 @@ abstract public class AbstractPowerManager<M extends SystemConnectionMemo> exten
     public class TimeKeeper implements PropertyChangeListener {
         @Override
         public void propertyChange(PropertyChangeEvent e) {
-            if (POWER.equals(e.getPropertyName())) {
-                int newPowerState = getPower();
-                if (newPowerState != power) {
-                    power = newPowerState;
-                    if (newPowerState == ON) {
-                        lastOn = Instant.now();
-                    }
-                }
+            // the state has already been set when the event is fired, so
+            // compare the event's old and new values
+            if (POWER.equals(e.getPropertyName()) && Integer.valueOf(ON).equals(e.getNewValue())
+                    && !Integer.valueOf(ON).equals(e.getOldValue())) {
+                lastOn = Instant.now();
             }
         }
     }
