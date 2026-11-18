@@ -17,10 +17,12 @@ import jmri.TrainRecord;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.roster.RosterEntry;
 
 /**
  * Operations' trains as a {@link TrainMakeupSource}: what a built train is
@@ -184,35 +186,55 @@ public class OperationsTrainMakeupSource extends PropertyChangeSupport implement
      * Divide a train's rolling stock, in Operations' order, into components
      * where the stop each is set out at changes. Each is named after that
      * stop, and its length is the sum of its rolling stock's lengths, or not
-     * known if one of them has no length.
+     * known if one of them has no length. Its wheel overhang at each end is
+     * the roster entry's of the engine at that end, where it is an engine
+     * whose roster entry gives one.
      *
      * @param inTrain the rolling stock in the train now, in Operations' order
      * @return the components, front first
      */
     static List<TrainRecord.TrainComponent> components(List<RollingStock> inTrain) {
         List<TrainRecord.TrainComponent> components = new ArrayList<>();
+        List<RollingStock> part = new ArrayList<>();
         RouteLocation stop = null;
-        String name = "";
-        Double length = null;
-        boolean first = true;
         for (RollingStock rs : inTrain) {
             RouteLocation dest = rs.getRouteDestination();
-            if (first || dest != stop) {
-                if (!first) {
-                    components.add(new TrainRecord.TrainComponent(name, length));
-                }
-                first = false;
-                stop = dest;
-                name = dest != null ? dest.getName() : "";
-                length = 0.0;
+            if (!part.isEmpty() && dest != stop) {
+                components.add(component(stop, part));
+                part.clear();
             }
+            stop = dest;
+            part.add(rs);
+        }
+        if (!part.isEmpty()) {
+            components.add(component(stop, part));
+        }
+        return components;
+    }
+
+    private static TrainRecord.TrainComponent component(@CheckForNull RouteLocation stop, List<RollingStock> part) {
+        Double length = 0.0;
+        for (RollingStock rs : part) {
             Double mm = millimetres(rs.getTotalLength());
             length = (length == null || mm == null) ? null : length + mm;
         }
-        if (!first) {
-            components.add(new TrainRecord.TrainComponent(name, length));
+        return new TrainRecord.TrainComponent(stop != null ? stop.getName() : "", length,
+                wheelOverhang(part.get(0), true), wheelOverhang(part.get(part.size() - 1), false));
+    }
+
+    /**
+     * @param rs    rolling stock at one end of a component
+     * @param front true for its front, false for its rear
+     * @return its wheel overhang at that end from its roster entry, if it is
+     *         an engine whose roster entry gives one, or null
+     */
+    @CheckForNull
+    static Double wheelOverhang(RollingStock rs, boolean front) {
+        if (!(rs instanceof Engine)) {
+            return null;
         }
-        return components;
+        RosterEntry entry = ((Engine) rs).getRosterEntry();
+        return entry == null ? null : entry.getWheelOverhangMm(front);
     }
 
     /**

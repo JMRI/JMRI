@@ -93,6 +93,17 @@
       The Block dialog shows the train's work at its next stop: how many cars and engines it is
       to set out and pick up there.</p>
 
+      <h2>Wheel overhang</h2>
+
+      <p>Detection sees wheels, never buffers, so train tracking places a train's real ends
+      beyond its detected wheels by its <strong>wheel overhang</strong>: how far the buffer beam
+      reaches beyond the outer axle. Enter it for a loco in its roster entry, as
+      <strong>Wheel Overhang (mm)</strong>, front and rear, in millimetres on the model. It is
+      used for the engine at each end of each part of an Operations train, and for the front of
+      a train whose Train Detection is Head Only or Head and Tail, which its lead loco leads.
+      Where none is known, a generous default for the layout's scale is used (4 m at full size,
+      about 46 mm in HO), so a missing value holds a little more track, never less.</p>
+
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

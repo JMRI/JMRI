@@ -96,6 +96,27 @@ public class RosterEntryPaneTest {
     }
 
     @Test
+    public void testWheelOverhang() {
+        rOld.setWheelOverhangMm(true, 21.0);
+        RosterEntryPane p = new RosterEntryPane(rOld);
+        Assert.assertEquals("front shown", "21", p.frontOverhang.getText());
+        Assert.assertEquals("rear blank: not known", "", p.rearOverhang.getText());
+        Assert.assertFalse("unchanged", p.guiChanged(rOld));
+
+        p.rearOverhang.setText("18.5");
+        Assert.assertTrue("a rear overhang entered", p.guiChanged(rOld));
+        p.frontOverhang.setText("");
+        p.update(rOld);
+        Assert.assertNull("front cleared", rOld.getWheelOverhangMm(true));
+        Assert.assertEquals("rear kept", 18.5, rOld.getWheelOverhangMm(false), 0.001);
+        Assert.assertFalse("unchanged after update", p.guiChanged(rOld));
+
+        p.frontOverhang.setText("not a length");
+        p.update(rOld);
+        Assert.assertNull("not a length is not known", rOld.getWheelOverhangMm(true));
+    }
+
+    @Test
     public void testGuiChanged1() {
         RosterEntryPane p = new RosterEntryPane(rOld);
 

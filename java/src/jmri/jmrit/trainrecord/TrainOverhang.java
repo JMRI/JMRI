@@ -12,6 +12,7 @@ import jmri.TrainRecord;
 import jmri.TrainRecord.DetectionMarker;
 import jmri.TrainRecord.TrainComponent;
 import jmri.implementation.SignalSpeedMap;
+import jmri.jmrit.roster.RosterEntry;
 
 /**
  * How far a train reaches beyond its detected part at one end: its overhang
@@ -26,8 +27,11 @@ import jmri.implementation.SignalSpeedMap;
  * only by a loco in its middle has a large overhang at both ends.
  * <p>
  * The overhangs follow from the train's markers and components, so nothing
- * about them is entered separately. An end component whose wheel overhang is
- * not known is given a generous default, so that a missing value holds a
+ * about them is entered separately. An end component's wheel overhang is its
+ * own; Operations gives it from the roster entry of an engine at that end.
+ * Without one, the front's is the lead loco's roster entry's, where the
+ * train's Detection says the loco leads (Head Only, or Head and Tail). Otherwise it is given
+ * a generous default, so that a missing value holds a
  * little more track, never less. Where a marker's offset or length is not
  * known, the overhang is the range of what it could be, which needs the
  * train's length: without it there is no overhang to give.
@@ -116,11 +120,14 @@ public final class TrainOverhang {
                 : components.get(front ? 0 : components.size() - 1);
         Double own = endComponent == null ? null
                 : (front ? endComponent.getFrontOverhang() : endComponent.getRearOverhang());
-        double wheels = own != null ? own : defaultMm;
         if (markers.isEmpty()) {
             return null;
         }
         DetectionMarker m = markers.get(front ? 0 : markers.size() - 1);
+        if (own == null) {
+            own = locoOverhang(record, front);
+        }
+        double wheels = own != null ? own : defaultMm;
         Double length = record.getHoldingLength();
         Double markerLength = m.getLength();
         switch (m.getPlacement()) {
@@ -154,6 +161,31 @@ public final class TrainOverhang {
                 return new TrainOverhang(wheels,
                         Math.max(wheels, length - (markerLength != null ? markerLength : 0)));
         }
+    }
+
+    /**
+     * The wheel overhang at a train's front from its lead loco's roster entry
+     * (the first of its roster entries), where its Detection says the loco
+     * leads: Head Only, or Head and Tail. Elsewhere which vehicle is at the
+     * end isn't known, so none is taken: a loco's overhang at an end that is
+     * really a wagon's could hold less track than the default.
+     *
+     * @param record the train's record
+     * @param front  true for the front
+     * @return the overhang in millimetres, or null if not known
+     */
+    @CheckForNull
+    private static Double locoOverhang(TrainRecord record, boolean front) {
+        TrainRecord.Detection detection = record.getDetection();
+        if (!front || (detection != TrainRecord.Detection.HEAD_ONLY
+                && detection != TrainRecord.Detection.HEAD_AND_TAIL)) {
+            return null;
+        }
+        List<jmri.BasicRosterEntry> locos = record.getRosterEntries();
+        if (locos.isEmpty() || !(locos.get(0) instanceof RosterEntry)) {
+            return null;
+        }
+        return ((RosterEntry) locos.get(0)).getWheelOverhangMm(true);
     }
 
     /**

@@ -538,6 +538,22 @@ public class RosterEntryTest {
             RosterEntryImplementations.id3().toString());
     }
 
+    @Test
+    public void testWheelOverhang() {
+        RosterEntry r = new RosterEntry("file here");
+        Assertions.assertNull(r.getWheelOverhangMm(true), "not known at first");
+        r.setWheelOverhangMm(true, 21.5);
+        r.setWheelOverhangMm(false, 0.0);
+        Assertions.assertEquals(21.5, r.getWheelOverhangMm(true), "front");
+        Assertions.assertEquals(0.0, r.getWheelOverhangMm(false), "rear, none");
+        Assertions.assertEquals("21.5", r.getAttribute(RosterEntry.ATTRIBUTE_FRONT_OVERHANG), "kept as an attribute");
+        r.setWheelOverhangMm(true, null);
+        Assertions.assertNull(r.getAttribute(RosterEntry.ATTRIBUTE_FRONT_OVERHANG), "removed");
+        r.putAttribute(RosterEntry.ATTRIBUTE_REAR_OVERHANG, "about 20");
+        Assertions.assertNull(r.getWheelOverhangMm(false), "an attribute that isn't a length");
+        Assertions.assertThrows(IllegalArgumentException.class, () -> r.setWheelOverhangMm(true, -1.0));
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
