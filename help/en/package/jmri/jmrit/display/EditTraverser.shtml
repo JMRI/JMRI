@@ -12,7 +12,7 @@
 
   <div id="mBody">
     <div id="mainContent" class="no-sidebar">
-      <h1><span class="since">updated 5.19.1</span>Edit Traverser</h1>
+      <h1><span class="since">updated 5.19.2</span>Edit Traverser</h1>
 
       <p>A Layout Editor <strong>Traverser</strong> is a schematic representation of a
       <em>traverser / transfer table</em> on the layout. The traverser is drawn as a rectangle with
