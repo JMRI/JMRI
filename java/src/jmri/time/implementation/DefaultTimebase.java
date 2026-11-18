@@ -510,6 +510,7 @@ public class DefaultTimebase extends AbstractTimebase {
             String name = evt.getPropertyName();
             if (TimeProvider.PROPERTY_CHANGE_DATETIME.equals(name)) {
                 if (!(evt.getOldValue() instanceof ZonedDateTime) || !(evt.getNewValue() instanceof ZonedDateTime)) {
+                    log.warn("Unexpected values in datetime event: {} -> {}", evt.getOldValue(), evt.getNewValue());
                     return;
                 }
                 ZonedDateTime oldTime = (ZonedDateTime) evt.getOldValue();
