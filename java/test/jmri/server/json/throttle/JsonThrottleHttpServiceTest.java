@@ -1,5 +1,7 @@
 package jmri.server.json.throttle;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpServiceTestBase;
@@ -55,6 +57,12 @@ public class JsonThrottleHttpServiceTest extends JsonHttpServiceTestBase<JsonThr
             "Expected exception not thrown.");
         assertEquals( 400, ex.getCode(), "Error code is HTTP Bad Request");
         assertEquals( "throttle cannot be listed.", ex.getMessage(), "Error message");
+    }
+
+    @Test
+    public void testClientSchemaAcceptsSpeed() {
+        ObjectNode data = mapper.createObjectNode().put(JSON.NAME, "42").put(JSON.SPEED, 0.5);
+        validateData(JsonThrottle.THROTTLE, data, false);
     }
 
     @BeforeEach
