@@ -303,6 +303,72 @@ public class TrainRecordWatcherTest {
         assertTrue(manager.getUnexplained().contains(c), "C's occupancy is unexplained");
     }
 
+    /** A train whose lead loco was last told this speed at this time. */
+    private TrainRecord train(String name, int address, Float speed, long atNanos) {
+        TrainRecord r = manager.newRecord(name);
+        jmri.jmrit.roster.RosterEntry entry = new jmri.jmrit.roster.RosterEntry();
+        entry.setId(name);
+        entry.setDccAddress(Integer.toString(address));
+        ThreadingUtil.runOnLayout(() -> r.insertFirstRosterEntry(entry));
+        if (speed != null) {
+            ThreadingUtil.runOnLayout(() -> ((DefaultTrainRecord) r).commanded(new TrainRecord.SpeedCommand(
+                    entry.getDccLocoAddress(), speed, true, false, atNanos, java.time.Instant.now())));
+        }
+        return r;
+    }
+
+    @Test
+    public void testOnlyTheMovingTrainEntered() {
+        // two trains side by side in a passing place, both next to B: one was told to move, the other stopped long ago
+        Block[] b = line("A", "B", "C");
+        TrainRecord moving = train("Moving", 3, 0.4f, nanos);
+        TrainRecord standing = train("Standing", 4, 0f, nanos - 60_000_000_000L);
+        place(moving, true, b[0]);
+        place(standing, true, b[2]);
+        occupy(b[1]);
+        assertEquals(List.of(b[1], b[0]), moving.getBlocks(), "the moving train entered B");
+        assertEquals(Confidence.CONFIRMED, moving.getConfidence());
+        assertEquals(TrainRecord.Reason.Rule.SETTLED_BY_MOVEMENT, moving.getReason(b[1]).getRule());
+        assertEquals(List.of(b[2]), standing.getBlocks(), "the standing one is where it was");
+        assertEquals(Confidence.CONFIRMED, standing.getConfidence(), "and not in doubt");
+    }
+
+    @Test
+    public void testNotSettledByMovementWhenAStopIsRecent() {
+        Block[] b = line("A", "B", "C");
+        TrainRecord moving = train("Moving", 3, 0.4f, nanos);
+        // told to stop only 5 seconds before: with momentum it may still be rolling
+        TrainRecord stopping = train("Stopping", 4, 0f, nanos - 5_000_000_000L + 2_000_000_000L);
+        place(moving, true, b[0]);
+        place(stopping, true, b[2]);
+        occupy(b[1]);
+        assertEquals(Confidence.AMBIGUOUS, moving.getConfidence(), "either could have entered B");
+        assertEquals(Confidence.AMBIGUOUS, stopping.getConfidence());
+    }
+
+    @Test
+    public void testNotSettledByMovementWithoutCommands() {
+        // the other train's throttle isn't one JMRI hears: it may have moved
+        Block[] b = line("A", "B", "C");
+        TrainRecord moving = train("Moving", 3, 0.4f, nanos);
+        TrainRecord unknown = train("Unknown", 4, null, 0);
+        place(moving, true, b[0]);
+        place(unknown, true, b[2]);
+        occupy(b[1]);
+        assertEquals(Confidence.AMBIGUOUS, moving.getConfidence());
+        assertEquals(Confidence.AMBIGUOUS, unknown.getConfidence());
+    }
+
+    @Test
+    public void testIsMoving() {
+        TrainRecord r = train("T1", 3, 0f, 1_000_000_000L);
+        assertEquals(null, TrainRecordWatcher.isMoving(r, 10_000_000_000L), "stopped 9 s before: may still roll");
+        assertEquals(Boolean.FALSE, TrainRecordWatcher.isMoving(r, 40_000_000_000L), "stopped 39 s before");
+        assertEquals(null, TrainRecordWatcher.isMoving(r, 500_000_000L), "no command before then");
+        TrainRecord none = train("T2", 4, null, 0);
+        assertEquals(null, TrainRecordWatcher.isMoving(none, 40_000_000_000L), "no commands at all");
+    }
+
     @Test
     public void testTwoTrainsAmbiguousThenSettledByValue() {
         Block[] b = line("A", "B", "C");

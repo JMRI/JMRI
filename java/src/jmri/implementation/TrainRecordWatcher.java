@@ -35,9 +35,12 @@ import jmri.util.ThreadingUtil;
  * train, along a path that is set, that train has entered it at that end.
  * It is dated by when the sensor first reported it (its raw state), not by
  * when any debounce let it through.</li>
- * <li>When it is next to an end of several trains, each becomes
- * {@link Confidence#AMBIGUOUS} until the Block's value says which train it
- * is.</li>
+ * <li>When it is next to an end of several trains, and only one of them was
+ * moving, its lead loco told to move while the others' were told to stop
+ * long enough before (see {@link #isMoving}), that one has entered it.
+ * Otherwise each becomes {@link Confidence#AMBIGUOUS} until the Block's value
+ * says which train it is. A train with no speed command known, as one driven
+ * by a throttle JMRI doesn't hear, is never ruled out this way.</li>
  * <li>When it is next to no train's end, but can be reached from an end of
  * one train through a run of Blocks with no detector (each joined to the
  * next along a path that is set, by the one shortest way), that train has
@@ -287,8 +290,15 @@ public class TrainRecordWatcher {
         if (candidates.isEmpty()) {
             candidates = throughDarkBlocks(block, timeNanos, time);
         }
+        Candidate moving = candidates.size() > 1 ? onlyOneMoving(candidates, timeNanos) : null;
         if (candidates.size() == 1 && candidates.get(0).end() != null) {
             enter(block, candidates.get(0), false);
+        } else if (moving != null) {
+            Candidate c = moving;
+            c.record.entered(c.through(Objects.requireNonNull(c.end(), "end")), block, c.end(), c.timeNanos, c.time,
+                    Reason.Rule.SETTLED_BY_MOVEMENT);
+            beforeAmbiguity.remove(c.record);
+            leaveEmptyFarEnd(c.record);
         } else if (!candidates.isEmpty()) {
             // one train alone here is next to both of its ends, and which leads isn't known
             Reason.Rule rule = candidates.size() == 1 ? Reason.Rule.ENTERED_END_UNKNOWN : Reason.Rule.AMBIGUOUS;
@@ -303,6 +313,82 @@ public class TrainRecordWatcher {
         } else {
             placer.unexplained(block, true);
         }
+    }
+
+    /**
+     * How long after a train is told to stop it is taken to have stopped, in
+     * seconds: a decoder whose deceleration (CV4) is up to 33 stops from full
+     * speed within it, by NMRA S-9.2.2.
+     */
+    static final double STOPPED_AFTER_SECONDS = 30;
+
+    /**
+     * How long after an emergency stop a train is taken to have stopped, in
+     * seconds: it stops at once, but its detector may report it late.
+     */
+    static final double STOPPED_AFTER_EMERGENCY_SECONDS = 2;
+
+    /**
+     * Of several trains that could have entered a Block, the one that was
+     * moving, if it alone was and the others are known to have stopped.
+     *
+     * @param candidates the trains that could have entered it
+     * @param timeNanos  when it went occupied
+     * @return the moving one, if it could have entered at one end only; or
+     *         null if that can't be said
+     */
+    @CheckForNull
+    private static Candidate onlyOneMoving(@Nonnull List<Candidate> candidates, long timeNanos) {
+        Candidate moving = null;
+        for (Candidate c : candidates) {
+            Boolean m = isMoving(c.record, timeNanos);
+            if (m == null) {
+                return null; // not known: it may have been driven by a throttle JMRI doesn't hear
+            }
+            if (m) {
+                if (moving != null) {
+                    return null;
+                }
+                moving = c;
+            }
+        }
+        return moving != null && moving.end() != null ? moving : null;
+    }
+
+    /**
+     * Whether a train was moving at a moment, from the last speed command to
+     * its lead loco before it.
+     *
+     * @param r         the train
+     * @param timeNanos the moment
+     * @return true if told to move; false if told to stop long enough before
+     *         for it to have stopped; null if not known, as with no command,
+     *         a released throttle, or a stop too recent
+     */
+    @CheckForNull
+    static Boolean isMoving(@Nonnull TrainRecord r, long timeNanos) {
+        jmri.BasicRosterEntry entry = r.getFirstRosterEntry();
+        jmri.LocoAddress lead = entry == null ? null : entry.getDccLocoAddress();
+        if (lead == null) {
+            return null;
+        }
+        TrainRecord.SpeedCommand last = null;
+        for (TrainRecord.SpeedCommand c : r.getCommands(lead)) {
+            if (c.getTimeNanos() <= timeNanos) {
+                last = c;
+            }
+        }
+        if (last == null || last.isRelease()) {
+            return null;
+        }
+        double since = (timeNanos - last.getTimeNanos()) / 1e9;
+        if (last.isEmergencyStop()) {
+            return since >= STOPPED_AFTER_EMERGENCY_SECONDS ? Boolean.FALSE : null;
+        }
+        if (last.getSpeedSetting() > 0) {
+            return true;
+        }
+        return since >= STOPPED_AFTER_SECONDS ? Boolean.FALSE : null;
     }
 
     /**

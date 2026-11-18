@@ -776,6 +776,14 @@ public interface TrainRecord extends PropertyChangeProvider {
             ENTERED_END_UNKNOWN,
             /** The Block's value named it as the train that entered. */
             SETTLED_BY_VALUE,
+            /**
+             * Of the trains that could have entered the Block, it alone was
+             * moving: the others' last commands stopped them, long enough
+             * before for their momentum.
+             *
+             * @since 5.19.2
+             */
+            SETTLED_BY_MOVEMENT,
             /** Another train was named as the one that entered: no longer in doubt. */
             AMBIGUITY_CLEARED,
             /** Left a Block at one of its ends: its sensor went unoccupied. */
