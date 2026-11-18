@@ -75,6 +75,29 @@ public class DeviceServerTest {
         }
     }
 
+    @Test
+    @Timeout(value = 60, unit = TimeUnit.SECONDS, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
+    public void testBadMessageKeepsReading() throws java.io.IOException {
+        FacelessServer f = new FacelessServer(){
+           @Override
+           public void listen(){
+           }
+        };
+        InetAddress loopback = InetAddress.getLoopbackAddress();
+        try (ServerSocket listener = new ServerSocket(0, 1, loopback);
+                Socket device = new Socket()) {
+            device.connect(new InetSocketAddress(loopback, listener.getLocalPort()));
+            try (Socket socket = listener.accept()) {
+                DeviceServer server = new DeviceServer(socket, f);
+                device.getOutputStream().write("TL12x\nQ\n".getBytes("UTF8"));
+
+                // run() returns only if it reads past the bad messages to the Quit
+                server.run();
+                JUnitAppender.assertWarnMessageStartsWith("Bad message 'TL12x' from device");
+            }
+        }
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
