@@ -382,9 +382,9 @@ public final class TrainPositionEstimator {
         boolean toA = false;
         boolean toB = false;
         for (Path p : block.getPaths()) {
-            if (p.getBlock() == a && p.checkPathSet()) {
+            if (p.getBlock() == a && block.isPathSet(p)) {
                 toA = true;
-            } else if (p.getBlock() == b && p.checkPathSet()) {
+            } else if (p.getBlock() == b && block.isPathSet(p)) {
                 toB = true;
             }
         }

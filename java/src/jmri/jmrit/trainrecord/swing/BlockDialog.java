@@ -347,7 +347,7 @@ public class BlockDialog extends JmriJFrame {
         Block next = null;
         for (Path p : block.getPaths()) {
             Block b = p.getBlock();
-            if (b == null || b == block || b == last.getFrom() || !p.checkPathSet()) {
+            if (b == null || b == block || b == last.getFrom() || !block.isPathSet(p)) {
                 continue;
             }
             if (next != null && next != b) {

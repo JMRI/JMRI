@@ -649,44 +649,13 @@ public class TrainRecordWatcher {
     }
 
     /**
-     * Whether a train can pass between two Blocks as the turnouts lie now.
-     * Each Block's path to the other names only the turnouts in that Block
-     * (as Layout Editor makes them), so both are checked: a path with no
-     * turnouts is always set, and must not let a train past a turnout in the
-     * other Block that is set against it.
-     *
      * @param from a Block
      * @param to   another
-     * @return true if they are joined by a path, and each of them that has
-     *         paths to the other has one of them set
+     * @return true if a train can pass between them as the turnouts lie now
+     *         (see {@link Block#isJoinedBySetPath(Block)})
      */
     static boolean joinedBySetPath(@Nonnull Block from, @Nonnull Block to) {
-        Boolean fromSet = pathSetTo(from, to);
-        Boolean toSet = pathSetTo(to, from);
-        if (fromSet == null && toSet == null) {
-            return false;
-        }
-        return !Boolean.FALSE.equals(fromSet) && !Boolean.FALSE.equals(toSet);
-    }
-
-    /**
-     * @param from a Block
-     * @param to   another
-     * @return null if {@code from} has no path to {@code to}; otherwise
-     *         whether one of its paths to it is set
-     */
-    @CheckForNull
-    private static Boolean pathSetTo(Block from, Block to) {
-        Boolean set = null;
-        for (Path p : from.getPaths()) {
-            if (p.getBlock() == to) {
-                if (p.checkPathSet()) {
-                    return true;
-                }
-                set = false;
-            }
-        }
-        return set;
+        return from.isJoinedBySetPath(to);
     }
 
     /**

@@ -1516,8 +1516,9 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      * @param p one of this Block's paths
      * @return true if the path is set, and the neighbour, if it has paths
      *         back to this Block, has one of them set
+     * @since 5.19.2
      */
-    private boolean isPathSet(Path p) {
+    public boolean isPathSet(@Nonnull Path p) {
         if (!p.checkPathSet()) {
             return false;
         }
@@ -1535,6 +1536,36 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
             }
         }
         return !anyBack;
+    }
+
+    /**
+     * Whether a train can pass between this Block and another as the
+     * turnouts lie now (see {@link #isPathSet(Path)}).
+     *
+     * @param other another Block
+     * @return true if one of this Block's paths to it is set, or, if this
+     *         Block has none, one of its paths back to this Block is
+     * @since 5.19.2
+     */
+    public boolean isJoinedBySetPath(@Nonnull Block other) {
+        boolean any = false;
+        for (Path p : getPaths()) {
+            if (p.getBlock() == other) {
+                if (isPathSet(p)) {
+                    return true;
+                }
+                any = true;
+            }
+        }
+        if (any) {
+            return false;
+        }
+        for (Path back : other.getPaths()) {
+            if (back.getBlock() == this && back.checkPathSet()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static final AtomicLong OCCUPIED_COUNT = new AtomicLong();
