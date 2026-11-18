@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- mXion LLM light bar (Lichtleiste) with integrated function decoder.    -->
+<!-- Based on: "LLM Bedienungsanleitung / User manual" (micron-dynamics,    -->
+<!-- 2023-04).                                                              -->
+<decoder-config showEmptyPanes="no" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+	<copyright xmlns="http://docbook.org/ns/docbook">
+		<year>2026</year>
+		<holder>JMRI</holder>
+	</copyright>
+	<authorgroup xmlns="http://docbook.org/ns/docbook">
+		<author>
+			<personname>
+				<firstname>detami01</firstname>
+			</personname>
+		</author>
+	</authorgroup>
+	<revhistory xmlns="http://docbook.org/ns/docbook">
+		<revision>
+			<revnumber>1</revnumber>
+			<date>2026-11-18</date>
+			<authorinitials>detami01</authorinitials>
+			<revremark>Initial creation for mXion LLM (from LLM manual 2023-04), tested on hardware, released with permission of the manufacturer</revremark>
+		</revision>
+	</revhistory>
+	<decoder>
+		<family name="mXion" mfg="MD Electronics" comment="mXion function decoders">
+			<model model="LLM" numOuts="2" numFns="28" connector="Wires" comment="Lichtleiste mit integriertem Funktionsdecoder">
+				<output name="1" label="A1 LED" connection="wire" maxcurrent="500 mA"/>
+				<output name="2" label="A2" connection="wire" maxcurrent="500 mA"/>
+				<size length="335" width="5" height="5" units="mm"/>
+			</model>
+		</family>
+		<programming direct="yes" paged="no" register="yes" ops="yes"/>
+		<variables>
+			<!-- CVs 1, 17, 18, 29 bit 5 -->
+			<xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+			<!-- CVs 7, 8 -->
+			<xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+			<!-- CV 11 -->
+			<variable item="Analog Timeout" CV="11" default="30">
+				<decVal min="30" max="255"/>
+				<label>Analog timeout [ms]</label>
+				<label xml:lang="de">Analogwechsel [ms]</label>
+			</variable>
+			<!-- CV 15/16 programming lock -->
+			<variable item="Lock Key" CV="15" default="245">
+				<decVal/>
+				<label>Programming lock key (CV 15)</label>
+				<label xml:lang="de">Programmiersperre Schlüssel (CV 15)</label>
+				<tooltip>Programming only possible if CV15 = CV16. To lock, change only CV15.</tooltip>
+			</variable>
+			<variable item="Lock Lock" CV="16" default="245">
+				<decVal/>
+				<label>Programming lock (CV 16)</label>
+				<label xml:lang="de">Programmiersperre Schloss (CV 16)</label>
+				<tooltip>Writing CV16 also changes CV15.</tooltip>
+			</variable>
+			<!-- CV 19 -->
+			<xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+			<!-- CV 29 -->
+			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+			<variable item="Addressing Mode" CV="29" mask="VXXXXXXX" default="0">
+				<enumVal>
+					<enumChoice value="0"><choice>Loco address</choice><choice xml:lang="de">Lokadresse</choice></enumChoice>
+					<enumChoice value="1"><choice>Switch (accessory) address (from V1.1)</choice><choice xml:lang="de">Weichenadresse (ab V1.1)</choice></enumChoice>
+				</enumVal>
+				<label>Control via (CV29 bit 7)</label>
+				<label xml:lang="de">Ansteuerung per (CV29 Bit 7)</label>
+			</variable>
+			<!-- CV 48 -->
+			<variable item="Switch Address Calculation" CV="48" default="0">
+				<enumVal>
+					<enumChoice value="0"><choice>According to NMRA standard</choice><choice xml:lang="de">Nach Norm</choice></enumChoice>
+					<enumChoice value="1"><choice>Like Roco / Fleischmann</choice><choice xml:lang="de">Wie Roco / Fleischmann</choice></enumChoice>
+				</enumVal>
+				<label>Switch address calculation (CV 48)</label>
+				<label xml:lang="de">Weichenadressberechnung (CV 48)</label>
+			</variable>
+			<!-- Output A1: CV 120-124 -->
+			<variable mask="XXVVVVVV" item="A1 Function Key" CV="120" default="1">
+				<enumVal>
+					<enumChoice value="0"><choice>F0 (light key)</choice><choice xml:lang="de">F0 (Lichttaste)</choice></enumChoice>
+					<enumChoice value="1"><choice>F1</choice></enumChoice>
+					<enumChoice value="2"><choice>F2</choice></enumChoice>
+					<enumChoice value="3"><choice>F3</choice></enumChoice>
+					<enumChoice value="4"><choice>F4</choice></enumChoice>
+					<enumChoice value="5"><choice>F5</choice></enumChoice>
+					<enumChoice value="6"><choice>F6</choice></enumChoice>
+					<enumChoice value="7"><choice>F7</choice></enumChoice>
+					<enumChoice value="8"><choice>F8</choice></enumChoice>
+					<enumChoice value="9"><choice>F9</choice></enumChoice>
+					<enumChoice value="10"><choice>F10</choice></enumChoice>
+					<enumChoice value="11"><choice>F11</choice></enumChoice>
+					<enumChoice value="12"><choice>F12</choice></enumChoice>
+					<enumChoice value="13"><choice>F13</choice></enumChoice>
+					<enumChoice value="14"><choice>F14</choice></enumChoice>
+					<enumChoice value="15"><choice>F15</choice></enumChoice>
+					<enumChoice value="16"><choice>F16</choice></enumChoice>
+					<enumChoice value="17"><choice>F17</choice></enumChoice>
+					<enumChoice value="18"><choice>F18</choice></enumChoice>
+					<enumChoice value="19"><choice>F19</choice></enumChoice>
+					<enumChoice value="20"><choice>F20</choice></enumChoice>
+					<enumChoice value="21"><choice>F21</choice></enumChoice>
+					<enumChoice value="22"><choice>F22</choice></enumChoice>
+					<enumChoice value="23"><choice>F23</choice></enumChoice>
+					<enumChoice value="24"><choice>F24</choice></enumChoice>
+					<enumChoice value="25"><choice>F25</choice></enumChoice>
+					<enumChoice value="26"><choice>F26</choice></enumChoice>
+					<enumChoice value="27"><choice>F27</choice></enumChoice>
+					<enumChoice value="28"><choice>F28</choice></enumChoice>
+				</enumVal>
+				<label>A1 function key (CV 120)</label>
+				<label xml:lang="de">A1 Funktionstaste (CV 120)</label>
+			</variable>
+			<variable mask="VVXXXXXX" item="A1 Function" CV="120" default="0">
+				<enumVal>
+					<enumChoice value="0"><choice>Normal (via function key)</choice><choice xml:lang="de">Normal (per Funktionstaste)</choice></enumChoice>
+					<enumChoice value="1"><choice>Permanently off (+64)</choice><choice xml:lang="de">Dauerhaft aus (+64)</choice></enumChoice>
+					<enumChoice value="2"><choice>Permanently on (+128)</choice><choice xml:lang="de">Dauerhaft an (+128)</choice></enumChoice>
+				</enumVal>
+				<label>A1 mode</label>
+				<label xml:lang="de">A1 Schaltart</label>
+			</variable>
+			<variable item="A1 Switch Address" CV="120" default="1">
+				<decVal min="0" max="255"/>
+				<label>A1 switch address (only if CV29 bit 7 = 1)</label>
+				<label xml:lang="de">A1 Weichenadresse (nur wenn CV29 Bit 7 = 1)</label>
+			</variable>
+			<variable item="A1 Dimming Value" CV="121" default="255">
+				<decVal min="0" max="255"/>
+				<label>A1 dimming value (CV 121)</label>
+				<label xml:lang="de">A1 Dimmwert (CV 121)</label>
+			</variable>
+			<variable item="A1 Condition" CV="122" default="0">
+				<enumVal>
+					<enumChoice value="0"><choice>Permanent (normal function)</choice><choice xml:lang="de">Dauerbetrieb (normale Funktion)</choice></enumChoice>
+					<enumChoice value="1"><choice>Forward only</choice><choice xml:lang="de">Nur bei Vorwärtsfahrt</choice></enumChoice>
+					<enumChoice value="2"><choice>Backward only</choice><choice xml:lang="de">Nur bei Rückwärtsfahrt</choice></enumChoice>
+					<enumChoice value="3"><choice>Standing only</choice><choice xml:lang="de">Nur im Stand</choice></enumChoice>
+					<enumChoice value="4"><choice>Standing 'forward' only</choice><choice xml:lang="de">Nur im Stand „vorwärts“</choice></enumChoice>
+					<enumChoice value="5"><choice>Standing 'backward' only</choice><choice xml:lang="de">Nur im Stand „rückwärts“</choice></enumChoice>
+					<enumChoice value="6"><choice>Driving only</choice><choice xml:lang="de">Nur bei Fahrt</choice></enumChoice>
+					<enumChoice value="7"><choice>Driving 'forward' only</choice><choice xml:lang="de">Nur bei Fahrt „vorwärts“</choice></enumChoice>
+					<enumChoice value="8"><choice>Driving 'backward' only</choice><choice xml:lang="de">Nur bei Fahrt „rückwärts“</choice></enumChoice>
+				</enumVal>
+				<label>A1 condition (CV 122)</label>
+				<label xml:lang="de">A1 Bedingung (CV 122)</label>
+			</variable>
+			<variable item="A1 Special Function" CV="123" default="0">
+				<enumVal>
+					<enumChoice value="0"><choice>No special function (normal output)</choice><choice xml:lang="de">Keine Sonderfunktion (normaler Ausgang)</choice></enumChoice>
+					<enumChoice value="1"><choice>Flash symmetric (time 0.1 s/step)</choice><choice xml:lang="de">Blinken symmetrisch (Zeit 0,1 s/Wert)</choice></enumChoice>
+					<enumChoice value="2"><choice>Flash asymmetric short ON 1:4 (time 0.1 s/step)</choice><choice xml:lang="de">Blinken asymm. kurz AN 1:4 (Zeit 0,1 s/Wert)</choice></enumChoice>
+					<enumChoice value="3"><choice>Flash asymmetric long ON 4:1 (time 0.1 s/step)</choice><choice xml:lang="de">Blinken asymm. lang AN 4:1 (Zeit 0,1 s/Wert)</choice></enumChoice>
+					<enumChoice value="4"><choice>Photographer flash (time 0.25 s/step)</choice><choice xml:lang="de">Fotoblitz (Zeit 0,25 s/Wert)</choice></enumChoice>
+					<enumChoice value="5"><choice>Monoflop / auto switch-off (time 0.1 s/step)</choice><choice xml:lang="de">Monoflop / autom. Abschaltung (Zeit 0,1 s/Wert)</choice></enumChoice>
+					<enumChoice value="6"><choice>Switch-on delay (time 0.1 s/step)</choice><choice xml:lang="de">Einschaltverzögerung (Zeit 0,1 s/Wert)</choice></enumChoice>
+					<enumChoice value="7"><choice>Firebox / campfire</choice><choice xml:lang="de">Feuersimulation (Kesselfeuer, Lagerfeuer)</choice></enumChoice>
+					<enumChoice value="8"><choice>TV flickering</choice><choice xml:lang="de">TV-Simulation</choice></enumChoice>
+					<enumChoice value="9"><choice>Petroleum flickering</choice><choice xml:lang="de">Petroleumsimulation</choice></enumChoice>
+					<enumChoice value="10"><choice>Fluorescent tube start</choice><choice xml:lang="de">Neonröhre Einschaltflackern</choice></enumChoice>
+					<enumChoice value="11"><choice>Defective fluorescent tube</choice><choice xml:lang="de">Defekte Neonröhre</choice></enumChoice>
+					<enumChoice value="12"><choice>Alternating flash with paired output (A1 &amp; A2)</choice><choice xml:lang="de">Wechselblinker zu gepaartem Ausgang (A1 &amp; A2)</choice></enumChoice>
+					<enumChoice value="13"><choice>US strobe light (time 0.1 s/step)</choice><choice xml:lang="de">US strobe light (Zeit 0,1 s/Wert)</choice></enumChoice>
+					<enumChoice value="14"><choice>US double strobe light (time 0.1 s/step)</choice><choice xml:lang="de">US double strobe light (Zeit 0,1 s/Wert)</choice></enumChoice>
+				</enumVal>
+				<label>A1 special function (CV 123)</label>
+				<label xml:lang="de">A1 Sonderfunktion (CV 123)</label>
+			</variable>
+			<variable item="A1 Time For Special Function" CV="124" default="5">
+				<decVal min="1" max="255"/>
+				<label>A1 time value (CV 124)</label>
+				<label xml:lang="de">A1 Zeitwert für Sonderfunktion (CV 124)</label>
+			</variable>
+			<variable mask="XXXVXXXX" item="A1 Fading" CV="49" default="0">
+				<enumVal>
+					<enumChoice value="0"><choice>Off</choice><choice xml:lang="de">Aus</choice></enumChoice>
+					<enumChoice value="1"><choice>On</choice><choice xml:lang="de">Ein</choice></enumChoice>
+				</enumVal>
+				<label>A1 fade in/out (CV49, from V1.4)</label>
+				<label xml:lang="de">A1 auf-/abdimmen (CV49, ab V1.4)</label>
+			</variable>
+			<variable mask="XVXXXXXX" item="A1 Inverse" CV="49" default="0">
+				<enumVal>
+					<enumChoice value="0"><choice>Off</choice><choice xml:lang="de">Aus</choice></enumChoice>
+					<enumChoice value="1"><choice>On</choice><choice xml:lang="de">Ein</choice></enumChoice>
+				</enumVal>
+				<label>A1 inverse (CV49, from V1.1)</label>
+				<label xml:lang="de">A1 invers (CV49, ab V1.1)</label>
+			</variable>
+			<variable mask="XXXXXXXV" item="A1 Analog" CV="13" default="1">
+				<enumVal>
+					<enumChoice value="0"><choice>Off</choice><choice xml:lang="de">Aus</choice></enumChoice>
+					<enumChoice value="1"><choice>On</choice><choice xml:lang="de">Ein</choice></enumChoice>
+				</enumVal>
+				<label>A1 on in analog mode (CV13)</label>
+				<label xml:lang="de">A1 im Analogbetrieb an (CV13)</label>
+			</variable>
+			<variable mask="XXXXXXXV" item="A1 Random" CV="98" default="0">
+				<enumVal>
+					<enumChoice value="0"><choice>Off</choice><choice xml:lang="de">Aus</choice></enumChoice>
+					<enumChoice value="1"><choice>On</choice><choice xml:lang="de">Ein</choice></enumChoice>
+				</enumVal>
+				<label>A1 random generator (CV98, from V1.1)</label>
+				<label xml:lang="de">A1 Zufallsgenerator (CV98, ab V1.1)</label>
+			</variable>
+			<!-- Output A2: CV 125-129 -->
+			<variable mask="XXVVVVVV" item="A2 Function Key" CV="125" default="2">
+				<enumVal>
+					<enumChoice value="0"><choice>F0 (light key)</choice><choice xml:lang="de">F0 (Lichttaste)</choice></enumChoice>
+					<enumChoice value="1"><choice>F1</choice></enumChoice>
+					<enumChoice value="2"><choice>F2</choice></enumChoice>
+					<enumChoice value="3"><choice>F3</choice></enumChoice>
+					<enumChoice value="4"><choice>F4</choice></enumChoice>
+					<enumChoice value="5"><choice>F5</choice></enumChoice>
+					<enumChoice value="6"><choice>F6</choice></enumChoice>
+					<enumChoice value="7"><choice>F7</choice></enumChoice>
+					<enumChoice value="8"><choice>F8</choice></enumChoice>
+					<enumChoice value="9"><choice>F9</choice></enumChoice>
+					<enumChoice value="10"><choice>F10</choice></enumChoice>
+					<enumChoice value="11"><choice>F11</choice></enumChoice>
+					<enumChoice value="12"><choice>F12</choice></enumChoice>
+					<enumChoice value="13"><choice>F13</choice></enumChoice>
+					<enumChoice value="14"><choice>F14</choice></enumChoice>
+					<enumChoice value="15"><choice>F15</choice></enumChoice>
+					<enumChoice value="16"><choice>F16</choice></enumChoice>
+					<enumChoice value="17"><choice>F17</choice></enumChoice>
+					<enumChoice value="18"><choice>F18</choice></enumChoice>
+					<enumChoice value="19"><choice>F19</choice></enumChoice>
+					<enumChoice value="20"><choice>F20</choice></enumChoice>
+					<enumChoice value="21"><choice>F21</choice></enumChoice>
+					<enumChoice value="22"><choice>F22</choice></enumChoice>
+					<enumChoice value="23"><choice>F23</choice></enumChoice>
+					<enumChoice value="24"><choice>F24</choice></enumChoice>
+					<enumChoice value="25"><choice>F25</choice></enumChoice>
+					<enumChoice value="26"><choice>F26</choice></enumChoice>
+					<enumChoice value="27"><choice>F27</choice></enumChoice>
+					<enumChoice value="28"><choice>F28</choice></enumChoice>
+				</enumVal>
+				<label>A2 function key (CV 125)</label>
+				<label xml:lang="de">A2 Funktionstaste (CV 125)</label>
+			</variable>
+			<variable mask="VVXXXXXX" item="A2 Function" CV="125" default="0">
+				<enumVal>
+					<enumChoice value="0"><choice>Normal (via function key)</choice><choice xml:lang="de">Normal (per Funktionstaste)</choice></enumChoice>
+					<enumChoice value="1"><choice>Permanently off (+64)</choice><choice xml:lang="de">Dauerhaft aus (+64)</choice></enumChoice>
+					<enumChoice value="2"><choice>Permanently on (+128)</choice><choice xml:lang="de">Dauerhaft an (+128)</choice></enumChoice>
+				</enumVal>
+				<label>A2 mode</label>
+				<label xml:lang="de">A2 Schaltart</label>
+			</variable>
+			<variable item="A2 Switch Address" CV="125" default="2">
+				<decVal min="0" max="255"/>
+				<label>A2 switch address (only if CV29 bit 7 = 1)</label>
+				<label xml:lang="de">A2 Weichenadresse (nur wenn CV29 Bit 7 = 1)</label>
+			</variable>
+			<variable item="A2 Dimming Value" CV="126" default="255">
+				<decVal min="0" max="255"/>
+				<label>A2 dimming value (CV 126)</label>
+				<label xml:lang="de">A2 Dimmwert (CV 126)</label>
+			</variable>
+			<variable item="A2 Condition" CV="127" default="0">
+				<enumVal>
+					<enumChoice value="0"><choice>Permanent (normal function)</choice><choice xml:lang="de">Dauerbetrieb (normale Funktion)</choice></enumChoice>
+					<enumChoice value="1"><choice>Forward only</choice><choice xml:lang="de">Nur bei Vorwärtsfahrt</choice></enumChoice>
+					<enumChoice value="2"><choice>Backward only</choice><choice xml:lang="de">Nur bei Rückwärtsfahrt</choice></enumChoice>
+					<enumChoice value="3"><choice>Standing only</choice><choice xml:lang="de">Nur im Stand</choice></enumChoice>
+					<enumChoice value="4"><choice>Standing 'forward' only</choice><choice xml:lang="de">Nur im Stand „vorwärts“</choice></enumChoice>
+					<enumChoice value="5"><choice>Standing 'backward' only</choice><choice xml:lang="de">Nur im Stand „rückwärts“</choice></enumChoice>
+					<enumChoice value="6"><choice>Driving only</choice><choice xml:lang="de">Nur bei Fahrt</choice></enumChoice>
+					<enumChoice value="7"><choice>Driving 'forward' only</choice><choice xml:lang="de">Nur bei Fahrt „vorwärts“</choice></enumChoice>
+					<enumChoice value="8"><choice>Driving 'backward' only</choice><choice xml:lang="de">Nur bei Fahrt „rückwärts“</choice></enumChoice>
+				</enumVal>
+				<label>A2 condition (CV 127)</label>
+				<label xml:lang="de">A2 Bedingung (CV 127)</label>
+			</variable>
+			<variable item="A2 Special Function" CV="128" default="0">
+				<enumVal>
+					<enumChoice value="0"><choice>No special function (normal output)</choice><choice xml:lang="de">Keine Sonderfunktion (normaler Ausgang)</choice></enumChoice>
+					<enumChoice value="1"><choice>Flash symmetric (time 0.1 s/step)</choice><choice xml:lang="de">Blinken symmetrisch (Zeit 0,1 s/Wert)</choice></enumChoice>
+					<enumChoice value="2"><choice>Flash asymmetric short ON 1:4 (time 0.1 s/step)</choice><choice xml:lang="de">Blinken asymm. kurz AN 1:4 (Zeit 0,1 s/Wert)</choice></enumChoice>
+					<enumChoice value="3"><choice>Flash asymmetric long ON 4:1 (time 0.1 s/step)</choice><choice xml:lang="de">Blinken asymm. lang AN 4:1 (Zeit 0,1 s/Wert)</choice></enumChoice>
+					<enumChoice value="4"><choice>Photographer flash (time 0.25 s/step)</choice><choice xml:lang="de">Fotoblitz (Zeit 0,25 s/Wert)</choice></enumChoice>
+					<enumChoice value="5"><choice>Monoflop / auto switch-off (time 0.1 s/step)</choice><choice xml:lang="de">Monoflop / autom. Abschaltung (Zeit 0,1 s/Wert)</choice></enumChoice>
+					<enumChoice value="6"><choice>Switch-on delay (time 0.1 s/step)</choice><choice xml:lang="de">Einschaltverzögerung (Zeit 0,1 s/Wert)</choice></enumChoice>
+					<enumChoice value="7"><choice>Firebox / campfire</choice><choice xml:lang="de">Feuersimulation (Kesselfeuer, Lagerfeuer)</choice></enumChoice>
+					<enumChoice value="8"><choice>TV flickering</choice><choice xml:lang="de">TV-Simulation</choice></enumChoice>
+					<enumChoice value="9"><choice>Petroleum flickering</choice><choice xml:lang="de">Petroleumsimulation</choice></enumChoice>
+					<enumChoice value="10"><choice>Fluorescent tube start</choice><choice xml:lang="de">Neonröhre Einschaltflackern</choice></enumChoice>
+					<enumChoice value="11"><choice>Defective fluorescent tube</choice><choice xml:lang="de">Defekte Neonröhre</choice></enumChoice>
+					<enumChoice value="12"><choice>Alternating flash with paired output (A1 &amp; A2)</choice><choice xml:lang="de">Wechselblinker zu gepaartem Ausgang (A1 &amp; A2)</choice></enumChoice>
+					<enumChoice value="13"><choice>US strobe light (time 0.1 s/step)</choice><choice xml:lang="de">US strobe light (Zeit 0,1 s/Wert)</choice></enumChoice>
+					<enumChoice value="14"><choice>US double strobe light (time 0.1 s/step)</choice><choice xml:lang="de">US double strobe light (Zeit 0,1 s/Wert)</choice></enumChoice>
+				</enumVal>
+				<label>A2 special function (CV 128)</label>
+				<label xml:lang="de">A2 Sonderfunktion (CV 128)</label>
+			</variable>
+			<variable item="A2 Time For Special Function" CV="129" default="5">
+				<decVal min="1" max="255"/>
+				<label>A2 time value (CV 129)</label>
+				<label xml:lang="de">A2 Zeitwert für Sonderfunktion (CV 129)</label>
+			</variable>
+			<variable mask="XXVXXXXX" item="A2 Fading" CV="49" default="0">
+				<enumVal>
+					<enumChoice value="0"><choice>Off</choice><choice xml:lang="de">Aus</choice></enumChoice>
+					<enumChoice value="1"><choice>On</choice><choice xml:lang="de">Ein</choice></enumChoice>
+				</enumVal>
+				<label>A2 fade in/out (CV49, from V1.4)</label>
+				<label xml:lang="de">A2 auf-/abdimmen (CV49, ab V1.4)</label>
+			</variable>
+			<variable mask="VXXXXXXX" item="A2 Inverse" CV="49" default="0">
+				<enumVal>
+					<enumChoice value="0"><choice>Off</choice><choice xml:lang="de">Aus</choice></enumChoice>
+					<enumChoice value="1"><choice>On</choice><choice xml:lang="de">Ein</choice></enumChoice>
+				</enumVal>
+				<label>A2 inverse (CV49, from V1.1)</label>
+				<label xml:lang="de">A2 invers (CV49, ab V1.1)</label>
+			</variable>
+			<variable mask="XXXXXXVX" item="A2 Analog" CV="13" default="1">
+				<enumVal>
+					<enumChoice value="0"><choice>Off</choice><choice xml:lang="de">Aus</choice></enumChoice>
+					<enumChoice value="1"><choice>On</choice><choice xml:lang="de">Ein</choice></enumChoice>
+				</enumVal>
+				<label>A2 on in analog mode (CV13)</label>
+				<label xml:lang="de">A2 im Analogbetrieb an (CV13)</label>
+			</variable>
+			<variable mask="XXXXXXVX" item="A2 Random" CV="98" default="0">
+				<enumVal>
+					<enumChoice value="0"><choice>Off</choice><choice xml:lang="de">Aus</choice></enumChoice>
+					<enumChoice value="1"><choice>On</choice><choice xml:lang="de">Ein</choice></enumChoice>
+				</enumVal>
+				<label>A2 random generator (CV98, from V1.1)</label>
+				<label xml:lang="de">A2 Zufallsgenerator (CV98, ab V1.1)</label>
+			</variable>
+		</variables>
+		<resets>
+			<factReset label="Basic settings (CV 1,11-13,17-19,29-119): CV7=11" CV="7" default="11">
+				<label xml:lang="de">Grundfunktionen (CV 1,11-13,17-19,29-119): CV7=11</label>
+			</factReset>
+			<factReset label="Programming lock (CV 15/16): CV7=16" CV="7" default="16">
+				<label xml:lang="de">Programmiersperre (CV 15/16): CV7=16</label>
+			</factReset>
+			<factReset label="Function outputs (CV 120-129): CV7=33" CV="7" default="33">
+				<label xml:lang="de">Funktionsausgänge (CV 120-129): CV7=33</label>
+			</factReset>
+		</resets>
+	</decoder>
+	<pane>
+		<name>mXion LLM Outputs</name>
+		<name xml:lang="de">mXion LLM Ausgänge</name>
+		<grid>
+			<griditem gridx="0" gridy="0">
+				<column>
+					<label><text>Ausgang A1</text></label>
+					<display item="A1 Function Key"/>
+					<display item="A1 Function"/>
+					<display item="A1 Switch Address"/>
+					<display item="A1 Dimming Value"/>
+					<display item="A1 Condition"/>
+					<display item="A1 Special Function"/>
+					<display item="A1 Time For Special Function"/>
+					<display item="A1 Fading"/>
+					<display item="A1 Inverse"/>
+					<display item="A1 Analog"/>
+					<display item="A1 Random"/>
+				</column>
+			</griditem>
+			<griditem gridx="1" gridy="0">
+				<column>
+					<label><text>Ausgang A2</text></label>
+					<display item="A2 Function Key"/>
+					<display item="A2 Function"/>
+					<display item="A2 Switch Address"/>
+					<display item="A2 Dimming Value"/>
+					<display item="A2 Condition"/>
+					<display item="A2 Special Function"/>
+					<display item="A2 Time For Special Function"/>
+					<display item="A2 Fading"/>
+					<display item="A2 Inverse"/>
+					<display item="A2 Analog"/>
+					<display item="A2 Random"/>
+				</column>
+			</griditem>
+		</grid>
+	</pane>
+	<pane>
+		<name>mXion LLM Settings</name>
+		<name xml:lang="de">mXion LLM Einstellungen</name>
+		<column>
+			<display item="Addressing Mode"/>
+			<display item="Switch Address Calculation"/>
+			<separator/>
+			<display item="Analog Timeout"/>
+			<separator/>
+			<display item="Lock Key"/>
+			<display item="Lock Lock"/>
+			<label><text>Hinweis: Mit Puffer (Supercap an P+/P-) CV29 = 2 setzen (Analog aus).</text></label>
+		</column>
+	</pane>
+</decoder-config>
