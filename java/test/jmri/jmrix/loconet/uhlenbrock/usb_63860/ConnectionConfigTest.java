@@ -18,7 +18,6 @@ public class ConnectionConfigTest extends jmri.jmrix.AbstractSerialConnectionCon
 
         JUnitUtil.initDefaultUserMessagePreferences();
         cc = new ConnectionConfig();
-        ((ConnectionConfig)cc).setInstance(); // create an adapter assumed to exist in tests
    }
 
    @AfterEach
