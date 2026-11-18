@@ -2121,7 +2121,14 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
     private void allocateRequested(int index) {
         AllocationRequest ar = getAllocationRequest(index);
-        if (ar != null) {
+        if (ar == null) {
+            return;
+        }
+        if (_AutoAllocate && autoAllocate != null) {
+            // the auto allocator may be scanning this very request: allocate it
+            // in its turn, on the allocator's thread
+            queueAllocate(ar);
+        } else {
             allocateSection(ar, null);
         }
     }
