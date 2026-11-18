@@ -253,6 +253,57 @@ public class TrainRecordWatcherTest {
     }
 
     @Test
+    public void testPointsInTheBlockEnteredRuleOutTheTrainTheyAreSetAgainst() {
+        // a passing place: B starts with points, set for loop L1; L2's path to B, as Layout Editor
+        // makes it, names no turnout, as the points are in B
+        Block l1 = block("L1");
+        Block l2 = block("L2");
+        Block b = block("B");
+        Turnout t = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
+        t.setCommandedState(Turnout.CLOSED);
+        Path toL1 = new Path(l1, 0, 0);
+        toL1.addSetting(new BeanSetting(t, Turnout.CLOSED));
+        b.addPath(toL1);
+        Path toL2 = new Path(l2, 0, 0);
+        toL2.addSetting(new BeanSetting(t, Turnout.THROWN));
+        b.addPath(toL2);
+        l1.addPath(new Path(b, 0, 0));
+        l2.addPath(new Path(b, 0, 0));
+        TrainRecord first = manager.newRecord("First");
+        TrainRecord second = manager.newRecord("Second");
+        place(first, true, l1);
+        place(second, true, l2);
+        occupy(b);
+        assertEquals(Confidence.CONFIRMED, first.getConfidence(), "only the train the points are set for");
+        assertEquals(Confidence.CONFIRMED, second.getConfidence(), "the points are set against this one");
+        assertEquals(List.of(b, l1), first.getBlocks(), "it entered B");
+        assertEquals(List.of(l2), second.getBlocks());
+    }
+
+    @Test
+    public void testPathWithNoTurnoutsDoesNotGetPastPointsSetAgainst() {
+        // as testPathSetAgainstNotFollowed, with C's path back to A naming no turnout
+        Block a = block("A");
+        Block b = block("B");
+        Block c = block("C");
+        Turnout t = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
+        t.setCommandedState(Turnout.CLOSED);
+        Path ab = new Path(b, 0, 0);
+        ab.addSetting(new BeanSetting(t, Turnout.CLOSED));
+        a.addPath(ab);
+        Path ac = new Path(c, 0, 0);
+        ac.addSetting(new BeanSetting(t, Turnout.THROWN));
+        a.addPath(ac);
+        b.addPath(new Path(a, 0, 0));
+        c.addPath(new Path(a, 0, 0));
+        TrainRecord r = manager.newRecord("T1");
+        place(r, true, a);
+        occupy(c);
+        assertEquals(List.of(a), r.getBlocks(), "points set for B: C isn't entered from A");
+        assertTrue(manager.getUnexplained().contains(c), "C's occupancy is unexplained");
+    }
+
+    @Test
     public void testTwoTrainsAmbiguousThenSettledByValue() {
         Block[] b = line("A", "B", "C");
         TrainRecord left = manager.newRecord("Left");
