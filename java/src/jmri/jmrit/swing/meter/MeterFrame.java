@@ -657,7 +657,8 @@ public class MeterFrame extends JmriJFrame {
     public void dispose() {
         if (meter != null) {
             meter.disable();
-            meter.removePropertyChangeListener(propertyChangeListener);
+            // added under the property name, so removed under it
+            meter.removePropertyChangeListener(NamedBean.PROPERTY_STATE, propertyChangeListener);
         }
         MeterFrameManager.getInstance().deregister(this);
         super.dispose();
