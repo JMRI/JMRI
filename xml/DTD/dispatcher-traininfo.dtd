@@ -14,7 +14,7 @@
 
 <!ELEMENT traininfofile (traininfo)>
 
-<!ELEMENT traininfo EMPTY >
+<!ELEMENT traininfo (detectionmarkers?) >
     <!ATTLIST traininfo version                 CDATA "1">
     <!ATTLIST traininfo transitname             CDATA #REQUIRED>
     <!ATTLIST traininfo transitid               CDATA "-1">
@@ -81,3 +81,9 @@
     <!ATTLIST traininfo viablockname            CDATA #IMPLIED>
     <!ATTLIST traininfo traindetection          CDATA #IMPLIED>
 
+<!-- The train's own detection markers, for train tracking (since 5.19.2) -->
+<!ELEMENT detectionmarkers (marker*) >
+<!ELEMENT marker EMPTY >
+    <!ATTLIST marker placement                 (WHOLE_TRAIN|FRONT|REAR|OFFSET) #REQUIRED>
+    <!ATTLIST marker offset                    CDATA #IMPLIED>
+    <!ATTLIST marker length                    CDATA #IMPLIED>

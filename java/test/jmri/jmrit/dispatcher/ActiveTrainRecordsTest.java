@@ -134,6 +134,19 @@ public class ActiveTrainRecordsTest {
     }
 
     @Test
+    public void testTrainsOwnMarkersGiveACustomList() {
+        ActiveTrain at = userTrain("1A23");
+        at.setTrainDetection(TrainDetection.TRAINDETECTION_HEADONLY);
+        TrainRecord r = ActiveTrainRecords.link(at);
+        assertEquals(Detection.HEAD_ONLY, r.getDetection());
+        List<DetectionMarker> markers = List.of(DetectionMarker.front(220.0), DetectionMarker.atOffset(600.0, 250.0));
+        at.setDetectionMarkers(markers);
+        assertEquals(Detection.CUSTOM, r.getDetection(), "the train's own markers");
+        assertEquals(markers, r.getMarkers());
+        assertEquals(TrainDetection.TRAINDETECTION_HEADONLY, at.getTrainDetection(), "Dispatcher's own setting is kept");
+    }
+
+    @Test
     public void testRemovedRecordNotChanged() {
         ActiveTrain at = userTrain("1A23");
         TrainRecord r = ActiveTrainRecords.link(at);

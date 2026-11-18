@@ -14,7 +14,10 @@ import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.CheckForNull;
+
 import jmri.InstanceManager;
+import jmri.TrainRecord;
 import jmri.configurexml.AbstractXmlAdapter.EnumIO;
 import jmri.configurexml.AbstractXmlAdapter.EnumIoNamesNumbers;
 import jmri.jmrit.dispatcher.ActiveTrain.TrainDetection;
@@ -341,6 +344,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                             tInfo.setTrainDetection(TrainDetection.TRAINDETECTION_HEADONLY);
                         }
                     }
+                    tInfo.setDetectionMarkers(readMarkers(traininfo.getChild("detectionmarkers")));
                     if (traininfo.getAttribute("runinreverse") != null) {
                         tInfo.setRunInReverse(true);
                         if (traininfo.getAttribute("runinreverse").getValue().equals("no")) {
@@ -641,6 +645,21 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         traininfo.setAttribute("trainfromsetlater", "" + (tf.getTrainFromSetLater() ? "yes" : "no"));
         traininfo.setAttribute("priority", Integer.toString(tf.getPriority()));
         traininfo.setAttribute("traindetection", trainsdectionFromEnumMap.outputFromEnum(tf.getTrainDetection()));
+        if (!tf.getDetectionMarkers().isEmpty()) {
+            Element markers = new Element("detectionmarkers");
+            for (TrainRecord.DetectionMarker dm : tf.getDetectionMarkers()) {
+                Element marker = new Element("marker");
+                marker.setAttribute("placement", dm.getPlacement().name());
+                if (dm.getOffset() != null) {
+                    marker.setAttribute("offset", dm.getOffset().toString());
+                }
+                if (dm.getLength() != null) {
+                    marker.setAttribute("length", dm.getLength().toString());
+                }
+                markers.addContent(marker);
+            }
+            traininfo.addContent(markers);
+        }
         traininfo.setAttribute("resetwhendone", "" + (tf.getResetWhenDone() ? "yes" : "no"));
         switch (tf.getDelayedRestart()) {
             case ActiveTrain.SENSORDELAY:
@@ -812,6 +831,48 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         if (!f.delete()) { // delete file and check success
             log.error("failed to delete TrainInfo file - {}", name);
         }
+    }
+
+    /**
+     * The detection markers kept in a train info file.
+     *
+     * @param markers the detectionmarkers element, or null if there is none
+     * @return the markers, front first; empty if there are none, or if any
+     *         can't be read, so the train's Train Detection is used
+     */
+    static List<TrainRecord.DetectionMarker> readMarkers(@CheckForNull Element markers) {
+        if (markers == null) {
+            return List.of();
+        }
+        List<TrainRecord.DetectionMarker> list = new ArrayList<>();
+        try {
+            for (Element m : markers.getChildren("marker")) {
+                Double offset = m.getAttribute("offset") == null ? null
+                        : Double.valueOf(m.getAttributeValue("offset"));
+                Double length = m.getAttribute("length") == null ? null
+                        : Double.valueOf(m.getAttributeValue("length"));
+                switch (TrainRecord.DetectionMarker.Placement.valueOf(m.getAttributeValue("placement"))) {
+                    case WHOLE_TRAIN:
+                        list.add(TrainRecord.DetectionMarker.wholeTrain());
+                        break;
+                    case FRONT:
+                        list.add(TrainRecord.DetectionMarker.front(length));
+                        break;
+                    case REAR:
+                        list.add(TrainRecord.DetectionMarker.rear(length));
+                        break;
+                    case OFFSET:
+                    default:
+                        list.add(TrainRecord.DetectionMarker.atOffset(offset, length));
+                        break;
+                }
+            }
+        } catch (IllegalArgumentException | NullPointerException e) {
+            log.warn("Detection markers in the train info file can't be read, so Train Detection is used: {}",
+                    e.getMessage());
+            return List.of();
+        }
+        return list;
     }
 
     private static final Logger log = LoggerFactory.getLogger(TrainInfoFile.class);
