@@ -691,7 +691,10 @@
    <h3>WiThrottle Server</h3>
         <a id="WS" name="WS"></a>
         <ul>
-            <li></li>
+            <li>The WiThrottle server no longer stops responding to a client
+                that sends an unrecognized speed step mode or a malformed
+                number. The bad message is logged and ignored, and an
+                unrecognized speed step mode is answered with the current mode.</li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
