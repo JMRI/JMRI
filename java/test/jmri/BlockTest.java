@@ -280,6 +280,43 @@ public class BlockTest {
 
     }
 
+    // Two occupied neighbours, but points in one of them are set away from this Block:
+    // only the other one's train can have entered. The neighbour's own path to this Block
+    // names its points; this Block's path back, as Layout Editor makes it, names none.
+    @Test
+    public void testNeighbourWithPointsSetAwayIsNotAnEntrant() throws JmriException {
+        SensorManager sm = new InternalSensorManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
+        t.setCommandedState(Turnout.CLOSED);
+
+        Block b1 = new Block("SystemName1");
+        Block b2 = new Block("SystemName2");
+        Block b3 = new Block("SystemName3");
+
+        Sensor s1 = sm.provideSensor("IS1");
+        b1.setNamedSensor(InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle("IS1", s1));
+        s1.setState(Sensor.ACTIVE);
+        b1.setValue("b1 contents");
+        b1.setDirection(Path.RIGHT);
+        b1.addPath(new Path(b2, Path.RIGHT, Path.LEFT, new BeanSetting(t, Turnout.THROWN)));
+
+        Sensor s2 = sm.provideSensor("IS2");
+        b2.setNamedSensor(InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle("IS2", s2));
+        s2.setState(Sensor.INACTIVE);
+
+        Sensor s3 = sm.provideSensor("IS3");
+        b3.setNamedSensor(InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle("IS3", s3));
+        s3.setState(Sensor.ACTIVE);
+        b3.setValue("b3 contents");
+        b3.setDirection(Path.LEFT);
+
+        b2.addPath(new Path(b1, Path.RIGHT, Path.LEFT));
+        b2.addPath(new Path(b3, Path.LEFT, Path.RIGHT));
+
+        b2.goingActive();
+        assertEquals( "b3 contents", b2.getValue(), "only b3's train can have entered");
+    }
+
     // Test going active with two neighbors, both active, where FROM is a combination direction.
     // b2 is between b1 and b3. 
     @Test

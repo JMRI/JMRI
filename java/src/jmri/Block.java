@@ -1458,7 +1458,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         Object train = getValue();
         for (Path p : paths) {
             Block other = p.getBlock();
-            if (other == null || other == entered || other.getState() != OCCUPIED || !p.checkPathSet()) {
+            if (other == null || other == entered || other.getState() != OCCUPIED || !isPathSet(p)) {
                 continue;
             }
             if (other.occupiedOrder > entered.occupiedOrder
@@ -1506,6 +1506,37 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
      * Counts Blocks becoming occupied, so that the order in which two Blocks
      * became occupied can be told without comparing times.
      */
+    /**
+     * Whether a train can pass along one of this Block's paths as the
+     * turnouts lie now. A path names only the turnouts in its own Block, as
+     * Layout Editor makes them, so the neighbour's paths back to this Block
+     * are checked as well: points in the neighbour set away from this Block
+     * close the way, even though this Block's path names none.
+     *
+     * @param p one of this Block's paths
+     * @return true if the path is set, and the neighbour, if it has paths
+     *         back to this Block, has one of them set
+     */
+    private boolean isPathSet(Path p) {
+        if (!p.checkPathSet()) {
+            return false;
+        }
+        Block other = p.getBlock();
+        if (other == null || other == this) {
+            return true;
+        }
+        boolean anyBack = false;
+        for (Path back : other.getPaths()) {
+            if (back.getBlock() == this) {
+                if (back.checkPathSet()) {
+                    return true;
+                }
+                anyBack = true;
+            }
+        }
+        return !anyBack;
+    }
+
     private static final AtomicLong OCCUPIED_COUNT = new AtomicLong();
 
     /** The value of {@link #OCCUPIED_COUNT} when this Block last became occupied. */
@@ -1623,7 +1654,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         int[] pFromDir = new int[currPathCnt];
         for (int i = 0; i < currPathCnt; i++) {
             pList[i] = paths.get(i);
-            isSet[i] = pList[i].checkPathSet();
+            isSet[i] = isPathSet(pList[i]);
             Block b = pList[i].getBlock();
             if (b != null) {
                 isActive[i] = b.getState() == OCCUPIED;
@@ -1724,7 +1755,7 @@ public class Block extends AbstractNamedBean implements PhysicalLocationReporter
         int[] pFromDir = new int[currPathCnt];
         for (int i = 0; i < currPathCnt; i++) {
             pList[i] = paths.get(i);
-            isSet[i] = pList[i].checkPathSet();
+            isSet[i] = isPathSet(pList[i]);
             Block b = pList[i].getBlock();
             if (b != null) {
                 isActive[i] = b.getState() == OCCUPIED;
