@@ -54,6 +54,20 @@ public interface Sensor extends DigitalIO {
     default boolean isConsistentState() {
         return true;
     }
+
+    /**
+     * Say whether this sensor is on the layout, so that setting it sends a
+     * command over a connection.
+     * <p>
+     * Code that spaces out commands to a connection, such as a Route setting
+     * its output sensors, can leave out the gap for a sensor that is not
+     * physical.
+     *
+     * @return false if the sensor exists only inside JMRI; true by default
+     */
+    default boolean isPhysicalSensor() {
+        return true;
+    }
     
     /** {@inheritDoc} */
     @Override
