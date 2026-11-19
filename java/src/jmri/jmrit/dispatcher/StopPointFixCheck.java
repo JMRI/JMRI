@@ -25,6 +25,14 @@ import org.openide.util.lookup.ServiceProvider;
  * the further that place is from the stop point, the further off the stop can
  * be. A stop point with a stopping sensor for its direction is not checked:
  * the sensor is where the train stops.
+ * <p>
+ * How far is too far is a scale distance, {@value #NEAR_ENOUGH_SCALE_MM}
+ * scale millimetres, worked out for the layout's scale (Warrants' layout
+ * scale, as Dispatcher's set-up check keeps it): 100 mm in HO, about 200 mm
+ * in O and 55 mm in N, since a stop a few millimetres out matters as much in
+ * one scale as the same scale distance does in another. It doesn't depend on
+ * the train: it is how far a train's position is reckoned, not how far it
+ * takes to stop.
  *
  * @author Keith Bruce Copyright (C) 2026
  * @since 5.19.2
@@ -32,8 +40,22 @@ import org.openide.util.lookup.ServiceProvider;
 @ServiceProvider(service = SetUpCheck.class)
 public class StopPointFixCheck implements SetUpCheck {
 
-    /** How far, in mm, the last place a train is seen may be before a stop point. */
-    public static final float NEAR_ENOUGH_MM = 100.0f;
+    /**
+     * How far, in scale millimetres, the last place a train is seen may be
+     * before a stop point: 8.7 m, which is 100 mm in HO (1:87).
+     */
+    public static final float NEAR_ENOUGH_SCALE_MM = 8700.0f;
+
+    /**
+     * How far, in millimetres on the layout, the last place a train is seen
+     * may be before a stop point, for the layout's scale.
+     *
+     * @return {@link #NEAR_ENOUGH_SCALE_MM} in the layout's scale
+     */
+    public static float nearEnoughMm() {
+        float scale = InstanceManager.getDefault(jmri.implementation.SignalSpeedMap.class).getLayoutScale();
+        return NEAR_ENOUGH_SCALE_MM / (scale > 0 ? scale : 87.1f);
+    }
 
     /** The part of the distance reckoned a stop may be out by: 2%. */
     static final float SPEED_SPREAD = 0.02f;
@@ -92,10 +114,11 @@ public class StopPointFixCheck implements SetUpCheck {
             return;
         }
         float distance = stopMm - seenMm;
-        if (distance > NEAR_ENOUGH_MM) {
+        float nearEnough = nearEnoughMm();
+        if (distance > nearEnough) {
             found.add(new Finding(Kind.STOP_POINT_FAR_FROM_FIX, s, List.<NamedBean>of(seenAt),
                     Bundle.getMessage("CheckStopPointFarFromFix", s.getDisplayName(), dir, mm(distance),
-                            seenAt.getDisplayName(), mm(distance * SPEED_SPREAD), mm(NEAR_ENOUGH_MM))));
+                            seenAt.getDisplayName(), mm(distance * SPEED_SPREAD), mm(nearEnough))));
         }
     }
 

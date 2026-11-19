@@ -126,6 +126,32 @@ public class StopPointFixCheckTest {
         assertTrue(check(s, Section.FORWARD).isEmpty(), "can't be placed by distance at all");
     }
 
+    /**
+     * How far is too far is a scale distance: 100 mm in HO, twice that in O
+     * (1:43.5), and about 55 mm in N (1:160).
+     */
+    @Test
+    public void testNearEnoughDependsOnTheLayoutScale() {
+        jmri.implementation.SignalSpeedMap map = InstanceManager.getDefault(jmri.implementation.SignalSpeedMap.class);
+        Section s = section("Platform 1", block("Road", 1000, true), block("Dark", 300, false));
+        s.setStopPointMm(Section.FORWARD, 150);
+        assertEquals(100, StopPointFixCheck.nearEnoughMm(), 0.5, "HO, the default");
+        assertEquals(1, check(s, Section.FORWARD).size(), "150 mm is too far in HO");
+
+        map.setLayoutScale(43.5f);
+        assertEquals(200, StopPointFixCheck.nearEnoughMm(), 0.5);
+        assertTrue(check(s, Section.FORWARD).isEmpty(), "150 mm is near enough in O");
+        s.setStopPointMm(Section.FORWARD, 250);
+        assertTrue(check(s, Section.FORWARD).get(0).getMessage().endsWith(
+                "within 200 mm before the stop point would place it to a few mm."),
+                check(s, Section.FORWARD).get(0).getMessage());
+
+        map.setLayoutScale(160f);
+        assertEquals(54.4, StopPointFixCheck.nearEnoughMm(), 0.1);
+        s.setStopPointMm(Section.FORWARD, 60);
+        assertEquals(1, check(s, Section.FORWARD).size(), "60 mm is too far in N");
+    }
+
     @Test
     public void testListedInSetUpChecks() {
         Section s = section("Platform 1", block("Road", 1000, true), block("Dark", 300, false));
