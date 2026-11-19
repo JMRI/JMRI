@@ -190,6 +190,54 @@ public class TrainTrackingChecksTest {
         assertSame(a.getSensor(), found.get(0).getSubject());
     }
 
+    /**
+     * A detector on layout hardware: not one of the internal sensors, with
+     * the given wait before it shows its Block empty.
+     */
+    private Block hardwareDetected(String name, long inactiveMs) {
+        Block b = dark(name, 1000);
+        Sensor s = org.mockito.Mockito.mock(Sensor.class);
+        org.mockito.Mockito.when(s.getSystemName()).thenReturn("MS" + name);
+        org.mockito.Mockito.when(s.getDisplayName()).thenReturn("MS" + name);
+        org.mockito.Mockito.when(s.getState()).thenReturn(Sensor.INACTIVE);
+        org.mockito.Mockito.when(s.getSensorDebounceGoingInActiveTimer()).thenReturn(inactiveMs);
+        b.setNamedSensor(InstanceManager.getDefault(jmri.NamedBeanHandleManager.class)
+                .getNamedBeanHandle("MS" + name, s));
+        return b;
+    }
+
+    @Test
+    public void testDetectorWithNoEmptyWait() {
+        JUnitUtil.initConnectionConfigManager();
+        jmri.jmrix.ConnectionConfig hardware = org.mockito.Mockito.mock(jmri.jmrix.ConnectionConfig.class);
+        org.mockito.Mockito.when(hardware.isSimulator()).thenReturn(false);
+        InstanceManager.getDefault(jmri.jmrix.ConnectionConfigManager.class).add(hardware);
+        Block waits = hardwareDetected("Waits", 1000);
+        Block noWait = hardwareDetected("NoWait", 0);
+        join(waits, noWait);
+        Block internal = detected("Internal", 1000); // set by logic on a layout with hardware: not a detector
+        join(noWait, internal);
+
+        List<Finding> found = run(List.of());
+        assertEquals(1, found.size(), found.toString());
+        assertEquals(Kind.DETECTOR_NO_EMPTY_WAIT, found.get(0).getKind());
+        assertSame(noWait.getSensor(), found.get(0).getSubject());
+        assertEquals(List.of(noWait), found.get(0).getRelated());
+        assertTrue(found.get(0).getMessage().startsWith(
+                "Sensor \"MSNoWait\", the detector of Block NoWait, shows its Block empty the moment"),
+                found.get(0).getMessage());
+    }
+
+    @Test
+    public void testSimulatedDetectorsNeedNoEmptyWait() {
+        JUnitUtil.initConnectionConfigManager(); // no connections: no layout hardware, so simulated trains
+        Block a = detected("A", 1000);
+        Block b = detected("B", 1000);
+        join(a, b);
+        assertTrue(TrainTrackingDetectors.isDetector(a));
+        assertTrue(run(List.of()).isEmpty(), "a simulated train's detector drops out only when told to");
+    }
+
     @Test
     public void testDarkBlockWithTurnoutWithoutFeedback() {
         Block a = detected("A", 1000);

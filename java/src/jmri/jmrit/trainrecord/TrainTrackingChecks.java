@@ -59,7 +59,9 @@ import jmri.jmrit.roster.RosterSpeedProfile;
  * tracks sharing a detector, so which way a train went can't be told;</li>
  * <li>a Block's detector that waits more than
  * {@link #ACTIVE_DEBOUNCE_LIMIT_MS} before it shows the Block occupied, so
- * every train is placed, timed and measured late there.</li>
+ * every train is placed, timed and measured late there;</li>
+ * <li>a Block's detector on layout hardware with no wait before it shows
+ * the Block empty, so a dirty wheel can release a Block under a train.</li>
  * </ul>
  * Other parts of JMRI add their own checks as {@link SetUpCheck}s, such as
  * settings of theirs that disagree with others train tracking relies on.
@@ -113,6 +115,13 @@ public final class TrainTrackingChecks {
          * @since 5.19.2
          */
         DETECTOR_SLOW_TO_SHOW_OCCUPIED,
+        /**
+         * A Block's detector on layout hardware with no wait before it shows
+         * the Block empty.
+         *
+         * @since 5.19.2
+         */
+        DETECTOR_NO_EMPTY_WAIT,
         /** Settings in different parts of JMRI that disagree, from a {@link SetUpCheck}. */
         SETTINGS_DISAGREE
     }
@@ -235,6 +244,13 @@ public final class TrainTrackingChecks {
                 found.add(new Finding(Kind.DETECTOR_SLOW_TO_SHOW_OCCUPIED, s, new ArrayList<>(users),
                         Bundle.getMessage("CheckDetectorSlowToShowOccupied", s.getDisplayName(), names(users),
                                 debounce)));
+            }
+            if (s.getSensorDebounceGoingInActiveTimer() <= 0 && TrainTrackingDetectors.isDetector(users.get(0))
+                    && !TrainTrackingDetectors.isSimulated()) {
+                // only layout hardware: an internal sensor is set by logic, or
+                // is a simulated train's, and drops out only when told to
+                found.add(new Finding(Kind.DETECTOR_NO_EMPTY_WAIT, s, new ArrayList<>(users),
+                        Bundle.getMessage("CheckDetectorNoEmptyWait", s.getDisplayName(), names(users))));
             }
             if (users.size() > 1) {
                 users.sort(Comparator.comparing(Block::getDisplayName));
