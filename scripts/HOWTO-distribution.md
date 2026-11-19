@@ -787,7 +787,7 @@ git push github
 
 If you can't use Jenkins for the actual build, you can create the files locally. This will make the Windows and Linux installs correctly, but will leave the macOS installer unsigned.
 
-If you have a Developer ID Application certificate in your keychain, you can sign the macOS installer yourself with `scripts/macos-sign-dmg.sh` (run it with no arguments for usage). It also notarizes when `NOTARY_KEY_PATH`, `NOTARY_KEY_ID` and `NOTARY_ISSUER` are set to an App Store Connect API key. Passing `-` as the identity gives an ad-hoc signature, which is handy for testing but won't pass Gatekeeper. `scripts/macos-verify-dmg.sh` checks the result. The "Build Installers" GitHub Actions workflow uses the same scripts.
+If you have a Developer ID Application certificate in your keychain, you can sign the macOS installer yourself with `scripts/macos-sign-dmg.sh` (run it with no arguments for usage). It takes either the unsigned disk image or the `dist/MacOSX` folder from `ant dist-macosx`. It also notarizes when `NOTARY_KEY_PATH`, `NOTARY_KEY_ID` and `NOTARY_ISSUER` are set to an App Store Connect API key. Passing `-` as the identity gives an ad-hoc signature, which is handy for testing but won't pass Gatekeeper. `scripts/macos-verify-dmg.sh` checks the result. The "Build Installers" GitHub Actions workflow uses the same scripts.
 
 If you're building locally:
 

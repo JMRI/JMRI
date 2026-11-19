@@ -165,6 +165,9 @@
       the Linux, Windows and macOS installers for a branch. It doesn't run on PRs; it's started by
       hand from the Actions tab, and can be given a branch, tag or commit to build.</p>
 
+      <p>Everything is built on Linux in one step (ant packages-ci), including the macOS folder.
+      Only the signing step runs on a Mac, since GitHub's macOS runners are often hard to get.</p>
+
       <p>The macOS disk image is signed and notarized by scripts/macos-sign-dmg.sh, and checked by
       scripts/macos-verify-dmg.sh. Those scripts always come from the workflow's own commit, not
       from the branch being built. Without a signing certificate (for example, in a fork) the
