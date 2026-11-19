@@ -78,6 +78,16 @@ jobs:
       run: command -v ant || brew install ant
     - name: Build unsigned disk image
       run: ant package-macosx
+    # signing scripts come from this workflow's commit, not the branch being built
+    - name: Check out signing scripts
+      uses: actions/checkout@v7
+      with:
+        path: signing
+        persist-credentials: false
+        sparse-checkout: |
+          scripts/macos-sign-dmg.sh
+          scripts/macos-verify-dmg.sh
+        sparse-checkout-cone-mode: false
 
     - name: Set up signing keychain
       if: env.HAS_SIGNING_CERT == 'true'
@@ -125,17 +135,17 @@ jobs:
         unsigned=$(ls dist/release/*+unsigned.dmg)
         if [ -n "${SIGNING_IDENTITY:-}" ]; then
           output="${unsigned%+unsigned.dmg}.dmg"
-          scripts/macos-sign-dmg.sh "$unsigned" "$output" "$SIGNING_IDENTITY" "$SIGNING_KEYCHAIN"
+          signing/scripts/macos-sign-dmg.sh "$unsigned" "$output" "$SIGNING_IDENTITY" "$SIGNING_KEYCHAIN"
           rm "$unsigned"
         else
           echo "::notice::No signing certificate available, so the disk image gets an ad-hoc signature and isn't notarized"
           output="$unsigned"
-          scripts/macos-sign-dmg.sh "$unsigned" "$RUNNER_TEMP/adhoc.dmg" -
+          signing/scripts/macos-sign-dmg.sh "$unsigned" "$RUNNER_TEMP/adhoc.dmg" -
           mv "$RUNNER_TEMP/adhoc.dmg" "$output"
         fi
         echo "SIGNED_DMG=$output" >> "$GITHUB_ENV"
     - name: Verify signatures
-      run: scripts/macos-verify-dmg.sh "$SIGNED_DMG"
+      run: signing/scripts/macos-verify-dmg.sh "$SIGNED_DMG"
     - uses: actions/upload-artifact@v7
       with:
         name: installer-macos
