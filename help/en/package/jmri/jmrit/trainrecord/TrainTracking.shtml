@@ -52,14 +52,14 @@
       <h2 id="measurements">Measurements</h2>
 
       <p><strong>Tools &gt; Train Tracking &gt; Measurements</strong> lists what train tracking
-      has measured this session, for each Block and way through it (the Blocks it was entered
+      has measured this session, on three tabs. The <strong>Blocks</strong> tab is for each Block and way through it (the Blocks it was entered
       from and left for): how many times a train's leading end has crossed it, how fast on
       average (the length of that way through the Block divided by the time from entering it to
       entering the next), and, for trains whose lead loco has a speed profile and whose speed
       wasn't changed on the way, how that compares with the speed the profile gives. A Block
       much slower or faster than its trains' profiles may have the wrong length. It also counts
       how often each Block's detector stopped seeing a train that train tracking was sure was
-      there. Nothing uses the measurements yet.</p>
+      there.</p>
 
       <p>Once a way through a Block has been crossed, at a steady speed, at least three times
       at speeds far enough apart (the slowest taking at least half as long again as the
@@ -71,10 +71,29 @@
       a second is normal; a larger one points at the detector, and a percentage well away
       from 100% at the profile or the Block's length.</p>
 
+      <p>The <strong>Boundaries</strong> tab is for each boundary a train's rear has crossed:
+      how much later the Block left behind was known to be empty than the train's passing
+      explains. That is the time from the train's leading end entering the next Block to the
+      Block behind going empty, less the time the detected part of the train took to pass at
+      the speed its profile gives. Detectors usually report a Block empty later than they report
+      one occupied, and many wait on purpose so that a dirty wheel doesn't show an empty Block;
+      this is how long a Block is still held after a train has gone. <strong>Varies By</strong>
+      is how much it changes from one train to the next: a large spread points at a train's
+      length or profile rather than the detector. Only trains whose detected length is known are
+      measured: a train detected throughout, with its length and the wheel overhangs at both
+      ends entered, and a steady speed command while it passed.</p>
+
+      <p>The <strong>Trains</strong> tab is for each train whose crossings could be compared
+      with its speed profile: how much later, on average, it arrived at each next Block than
+      its profile predicted, and how much that varies. A train that arrives close to its
+      prediction every time has a profile that can be trusted between detectors; one whose
+      arrivals vary widely does not.</p>
+
       <p>Only detectors are measured from. A Block whose occupancy sensor is an internal
       sensor, set by a script, Logix or LogixNG rather than by hardware on the layout, is
       followed but not measured. With simulated trains, where there is no layout hardware, the
-      window says that what it lists was measured from simulated trains.</p>
+      window says that what it lists was measured from simulated trains. Nothing uses the
+      measurements yet.</p>
 
       <h2 id="blockTable">The Block Table</h2>
 

@@ -358,6 +358,132 @@ public class TrainTrackingMeasurementsTest {
         assertEquals(List.of(a), measurements.getDropOutBlocks());
     }
 
+    /**
+     * A train whose lead loco's profile gives 200 mm/s for the half-speed
+     * command sent to it at a moment.
+     */
+    private TrainRecord profiledTrain(String name, long commandNanos, List<TrainRecord.TrainComponent> components) {
+        RosterEntry entry = new RosterEntry();
+        entry.setId(name);
+        entry.setDccAddress("7");
+        RosterSpeedProfile profile = new RosterSpeedProfile(entry);
+        profile.setSpeed(1000, 400, 400);
+        profile.setSpeed(500, 200, 200);
+        entry.setSpeedProfile(profile);
+        TrainRecordManager manager = InstanceManager.getDefault(TrainRecordManager.class);
+        TrainRecord r = ThreadingUtil.runOnGUIwithReturn(() -> {
+            TrainRecord t = manager.newRecord(name);
+            t.setRosterEntries(List.of(entry));
+            if (components != null) {
+                t.setTrainComponents(components);
+            }
+            return t;
+        });
+        jmri.LocoSpeedSource source = new jmri.LocoSpeedSource() {
+            @Override
+            public void addLocoSpeedListener(jmri.LocoSpeedSource.Listener listener) {
+                listener.speedCommanded(new jmri.DccLocoAddress(7, false), 0.5f, true, commandNanos);
+            }
+
+            @Override
+            public void removeLocoSpeedListener(jmri.LocoSpeedSource.Listener listener) {
+            }
+        };
+        ThreadingUtil.runOnLayout(() -> InstanceManager.store(source, jmri.LocoSpeedSource.class));
+        JUnitUtil.waitFor(() -> r.getLastCommand() != null, "the command reached the record");
+        return r;
+    }
+
+    @Test
+    public void testArrivalsAgainstPrediction() {
+        Block a = block("A", 1, 1000);
+        Block b = block("B", 2, 400);
+        Block c = block("C", 3, 600);
+        long start = System.nanoTime();
+        TrainRecord r = profiledTrain("Shunter", start, null);
+        TrainTrackingMeasurements measurements = InstanceManager.getDefault(TrainTrackingMeasurements.class);
+        assertNull(measurements.getArrivals(r), "nothing compared yet");
+
+        // the profile predicts 400 mm at 200 mm/s, 2 s: 2.5 s is 25% late, 2 s on time
+        ThreadingUtil.runOnLayout(() -> measurements.measure(r, b, a, c, start + S, start + S + 5 * S / 2));
+        ThreadingUtil.runOnLayout(() -> measurements.measure(r, b, a, c, start + 5 * S, start + 7 * S));
+        TrainTrackingMeasurements.Arrivals arrivals = measurements.getArrivals(r);
+        assertNotNull(arrivals);
+        assertSame(r, arrivals.getRecord());
+        assertEquals(2, arrivals.getCount());
+        assertEquals(0.125, arrivals.getLate(), 0.0001, "12.5% late on average");
+        assertEquals(Math.sqrt(2 * 0.125 * 0.125), arrivals.getSpread(), 0.0001);
+        assertEquals(List.of(arrivals), measurements.getArrivals());
+
+        // before the command: no prediction to compare with
+        ThreadingUtil.runOnLayout(() -> measurements.measure(r, b, a, c, start - 3 * S, start - S));
+        assertEquals(2, arrivals.getCount());
+    }
+
+    @Test
+    public void testHowLongABlockIsHeldAfterATrainHasPassed() {
+        Block a = block("A", 1, 1000);
+        Block b = block("B", 2, 400);
+        join(a, b);
+        long start = System.nanoTime();
+        // 300 mm long, its wheels 20 mm in from each end: 260 mm detected, 1.3 s to pass at 200 mm/s
+        TrainRecord r = profiledTrain("Shunter", start,
+                List.of(new TrainRecord.TrainComponent("08", 300.0, 20.0, 20.0)));
+        TrainTrackingMeasurements measurements = InstanceManager.getDefault(TrainTrackingMeasurements.class);
+        assertEquals(260, TrainTrackingMeasurements.detectedLength(r), 0.001);
+        ThreadingUtil.runOnGUI(() -> {
+            sm.provideSensor("IS1").setCommandedState(Sensor.ACTIVE);
+            r.place(List.of(a), true);
+        });
+        ThreadingUtil.runOnLayout(() -> sm.provideSensor("IS2").setCommandedState(Sensor.ACTIVE));
+        JUnitUtil.waitFor(() -> r.getBlocks().size() == 2, "the front entered B");
+        TrainRecord.TrailEntry crossing = r.getTrail().get(r.getTrail().size() - 1);
+        assertSame(b, crossing.getBlock());
+
+        // A known empty 1.8 s after B occupied: 0.5 s more than the passing explains
+        TrainTrackingMeasurements.Boundary m = ThreadingUtil.runOnGUIwithReturn(
+                () -> measurements.left(r, a, crossing.getTime().plusMillis(1800)));
+        assertNotNull(m);
+        assertSame(a, m.getBehind());
+        assertSame(b, m.getAhead());
+        assertEquals(1, m.getCount());
+        assertEquals(0.5, m.getEmptyDelay(), 0.001);
+        assertEquals(0, m.getSpread(), 0.0, "one measurement doesn't vary");
+        ThreadingUtil.runOnLayout(() -> measurements.left(r, a, crossing.getTime().plusMillis(1600)));
+        assertEquals(2, m.getCount());
+        assertEquals(0.4, m.getEmptyDelay(), 0.001);
+        assertEquals(Math.sqrt(0.02), m.getSpread(), 0.001);
+        assertEquals(List.of(m), measurements.getBoundaries());
+
+        // and when A goes empty on the layout, it is measured again
+        ThreadingUtil.runOnLayout(() -> sm.provideSensor("IS1").setCommandedState(Sensor.INACTIVE));
+        JUnitUtil.waitFor(() -> m.getCount() == 3, "A going empty was measured");
+    }
+
+    @Test
+    public void testNoHoldingTimeWithoutAKnownDetectedLength() {
+        Block a = block("A", 1, 1000);
+        Block b = block("B", 2, 400);
+        join(a, b);
+        long start = System.nanoTime();
+        // wheel overhangs not entered: the default would only be a guess
+        TrainRecord r = profiledTrain("Shunter", start, List.of(new TrainRecord.TrainComponent("08", 300.0)));
+        assertNull(TrainTrackingMeasurements.detectedLength(r));
+        TrainTrackingMeasurements measurements = InstanceManager.getDefault(TrainTrackingMeasurements.class);
+        ThreadingUtil.runOnGUI(() -> {
+            sm.provideSensor("IS1").setCommandedState(Sensor.ACTIVE);
+            r.place(List.of(a), true);
+        });
+        ThreadingUtil.runOnLayout(() -> sm.provideSensor("IS2").setCommandedState(Sensor.ACTIVE));
+        JUnitUtil.waitFor(() -> r.getBlocks().size() == 2, "the front entered B");
+        TrainRecord.TrailEntry crossing = r.getTrail().get(r.getTrail().size() - 1);
+        assertNull(ThreadingUtil.runOnGUIwithReturn(
+                () -> measurements.left(r, a, crossing.getTime().plusMillis(1800))));
+        assertNull(ThreadingUtil.runOnGUIwithReturn(
+                () -> measurements.left(r, b, crossing.getTime().plusMillis(1800))), "not left out of B");
+        assertTrue(measurements.getBoundaries().isEmpty());
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
