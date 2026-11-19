@@ -4,8 +4,10 @@
 set -euo pipefail
 
 DMG=${1:-}
+NOTARIZED=${2:-}
 if [ -z "$DMG" ]; then
-    echo "usage: $0 IMAGE.dmg" 1>&2
+    echo "usage: $0 IMAGE.dmg [notarized]" 1>&2
+    echo "  with notarized, also checks the stapled tickets and Gatekeeper" 1>&2
     exit 1
 fi
 
@@ -62,6 +64,10 @@ echo "checked $checked signatures, $failures not valid"
 [ $failures -eq 0 ] || exit 1
 
 if [ "$adhoc" = true ]; then
+    if [ "$NOTARIZED" = notarized ]; then
+        echo "ad-hoc signed image can't be notarized" 1>&2
+        exit 1
+    fi
     echo "ad-hoc signature: skipping Developer ID, notarization and Gatekeeper checks"
     exit 0
 fi
@@ -69,6 +75,10 @@ fi
 if [[ "$dmg_info" != *"Authority=Developer ID Application"* ]]; then
     echo "not signed with a Developer ID" 1>&2
     exit 1
+fi
+if [ "$NOTARIZED" != notarized ]; then
+    echo "signed with a Developer ID; not checking notarization"
+    exit 0
 fi
 for app in "$jmri"/*.app; do
     xcrun stapler validate "$app"

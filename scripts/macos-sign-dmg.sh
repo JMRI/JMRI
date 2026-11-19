@@ -71,14 +71,16 @@ sign() {
 
 # one submission per file, never retried: repeated failures can get the developer account disabled
 submit() {
-    local result id status
+    local result id status rc=0
     echo "notarizing $(basename "$1")"
-    result=$(xcrun notarytool submit "$1" "${notary[@]}" --wait --timeout 1h --output-format json)
+    result=$(xcrun notarytool submit "$1" "${notary[@]}" --wait --timeout 1h --output-format json) || rc=$?
     echo "$result"
-    id=$(echo "$result" | plutil -extract id raw -o - -)
-    status=$(echo "$result" | plutil -extract status raw -o - -)
-    xcrun notarytool log "$id" "${notary[@]}" || true
-    if [ "$status" != "Accepted" ]; then
+    id=$(echo "$result" | plutil -extract id raw -o - - 2>/dev/null || true)
+    status=$(echo "$result" | plutil -extract status raw -o - - 2>/dev/null || true)
+    if [ -n "$id" ]; then
+        xcrun notarytool log "$id" "${notary[@]}" || true
+    fi
+    if [ $rc -ne 0 ] || [ "$status" != "Accepted" ]; then
         echo "notarization of $(basename "$1") failed: $status" 1>&2
         return 1
     fi

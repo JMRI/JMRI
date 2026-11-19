@@ -44,8 +44,36 @@ jobs:
         compression-level: 0
         if-no-files-found: error
 
-  macos:
+  macos-build:
+    name: macOS disk image (unsigned)
+    runs-on: macos-latest
+    timeout-minutes: 60
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        ref: ${{ inputs.ref }}
+        persist-credentials: false
+    - name: Set up JDK 11
+      uses: actions/setup-java@v6
+      with:
+        distribution: 'zulu'
+        java-version: 11
+    - name: Install Ant
+      run: command -v ant || brew install ant
+    - name: Build unsigned disk image
+      run: ant package-macosx
+    - uses: actions/upload-artifact@v7
+      with:
+        name: macos-unsigned
+        path: dist/release/*+unsigned.dmg
+        compression-level: 0
+        retention-days: 1
+        if-no-files-found: error
+
+  # this job never runs code from the branch being built, since it holds the signing secrets
+  macos-sign:
     name: macOS installer
+    needs: macos-build
     runs-on: macos-latest
     timeout-minutes: 120
     # secrets live in this environment; restrict it to protected branches
@@ -65,29 +93,18 @@ jobs:
           echo "::error::Signing secrets or variables are missing from the installer-signing environment"
           exit 1
         fi
-    - uses: actions/checkout@v7
-      with:
-        ref: ${{ inputs.ref }}
-        persist-credentials: false
-    - name: Set up JDK 11
-      uses: actions/setup-java@v6
-      with:
-        distribution: 'zulu'
-        java-version: 11
-    - name: Install Ant
-      run: command -v ant || brew install ant
-    - name: Build unsigned disk image
-      run: ant package-macosx
-    # signing scripts come from this workflow's commit, not the branch being built
     - name: Check out signing scripts
       uses: actions/checkout@v7
       with:
-        path: signing
         persist-credentials: false
         sparse-checkout: |
           scripts/macos-sign-dmg.sh
           scripts/macos-verify-dmg.sh
         sparse-checkout-cone-mode: false
+    - uses: actions/download-artifact@v8
+      with:
+        name: macos-unsigned
+        path: dist/release
 
     - name: Set up signing keychain
       if: env.HAS_SIGNING_CERT == 'true'
@@ -104,8 +121,10 @@ jobs:
         security unlock-keychain -p "$keychain_password" "$keychain"
         security import "$RUNNER_TEMP/cert.p12" -k "$keychain" -P "$MACOS_CERTIFICATE_PASSWORD" -T /usr/bin/codesign -T /usr/bin/security
         rm -f "$RUNNER_TEMP/cert.p12"
-        curl -fsSL -o "$RUNNER_TEMP/DeveloperIDG2CA.cer" https://www.apple.com/certificateauthority/DeveloperIDG2CA.cer
-        security import "$RUNNER_TEMP/DeveloperIDG2CA.cer" -k "$keychain" || true
+        for ca in DeveloperIDG2CA DeveloperIDCA; do
+          curl -fsSL -o "$RUNNER_TEMP/$ca.cer" "https://www.apple.com/certificateauthority/$ca.cer"
+          security import "$RUNNER_TEMP/$ca.cer" -k "$keychain" || echo "$ca not imported (may already be present)"
+        done
         security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$keychain_password" "$keychain" > /dev/null
         security list-keychains -d user -s "$keychain" login.keychain-db
         identity=$(security find-identity -v -p codesigning "$keychain" | sed -n 's/.*"\(Developer ID Application: .*\)"/\1/p' | head -1)
@@ -135,17 +154,22 @@ jobs:
         unsigned=$(ls dist/release/*+unsigned.dmg)
         if [ -n "${SIGNING_IDENTITY:-}" ]; then
           output="${unsigned%+unsigned.dmg}.dmg"
-          signing/scripts/macos-sign-dmg.sh "$unsigned" "$output" "$SIGNING_IDENTITY" "$SIGNING_KEYCHAIN"
+          scripts/macos-sign-dmg.sh "$unsigned" "$output" "$SIGNING_IDENTITY" "$SIGNING_KEYCHAIN"
           rm "$unsigned"
         else
           echo "::notice::No signing certificate available, so the disk image gets an ad-hoc signature and isn't notarized"
           output="$unsigned"
-          signing/scripts/macos-sign-dmg.sh "$unsigned" "$RUNNER_TEMP/adhoc.dmg" -
+          scripts/macos-sign-dmg.sh "$unsigned" "$RUNNER_TEMP/adhoc.dmg" -
           mv "$RUNNER_TEMP/adhoc.dmg" "$output"
         fi
         echo "SIGNED_DMG=$output" >> "$GITHUB_ENV"
     - name: Verify signatures
-      run: signing/scripts/macos-verify-dmg.sh "$SIGNED_DMG"
+      run: |
+        if [ -n "${NOTARY_KEY_PATH:-}" ]; then
+          scripts/macos-verify-dmg.sh "$SIGNED_DMG" notarized
+        else
+          scripts/macos-verify-dmg.sh "$SIGNED_DMG"
+        fi
     - uses: actions/upload-artifact@v7
       with:
         name: installer-macos
