@@ -1425,6 +1425,67 @@ public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRos
         return functionEntries.get(fn).isVisible();        
     }
 
+    /**
+     * The attribute holding a loco's wheel overhang at its front: how far its
+     * buffer beam reaches beyond its outer axle, in millimetres on the model.
+     *
+     * @since 5.19.2
+     */
+    public static final String ATTRIBUTE_FRONT_OVERHANG = "WheelOverhangFrontMm"; // NOI18N
+
+    /**
+     * The attribute holding a loco's wheel overhang at its rear, as
+     * {@link #ATTRIBUTE_FRONT_OVERHANG}.
+     *
+     * @since 5.19.2
+     */
+    public static final String ATTRIBUTE_REAR_OVERHANG = "WheelOverhangRearMm"; // NOI18N
+
+    /**
+     * A loco's wheel overhang at one end: how far its buffer beam reaches
+     * beyond its outer axle. Detection sees wheels, never buffers, so train
+     * tracking uses it to place a train's real end beyond its detected part.
+     *
+     * @param front true for the front, false for the rear
+     * @return the overhang in millimetres on the model, or null if not known
+     * @since 5.19.2
+     */
+    @CheckForNull
+    public Double getWheelOverhangMm(boolean front) {
+        String value = getAttribute(front ? ATTRIBUTE_FRONT_OVERHANG : ATTRIBUTE_REAR_OVERHANG);
+        if (value == null || value.isBlank()) {
+            return null;
+        }
+        try {
+            double mm = Double.parseDouble(value.trim());
+            return mm >= 0 && Double.isFinite(mm) ? mm : null;
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
+
+    /**
+     * Set a loco's wheel overhang at one end (see
+     * {@link #getWheelOverhangMm(boolean)}).
+     *
+     * @param front true for the front, false for the rear
+     * @param mm    the overhang in millimetres on the model, 0 or more, or
+     *              null if not known
+     * @throws IllegalArgumentException if mm is negative or not a number
+     * @since 5.19.2
+     */
+    public void setWheelOverhangMm(boolean front, @CheckForNull Double mm) {
+        String key = front ? ATTRIBUTE_FRONT_OVERHANG : ATTRIBUTE_REAR_OVERHANG;
+        if (mm == null) {
+            deleteAttribute(key);
+            return;
+        }
+        if (!(mm >= 0) || !Double.isFinite(mm)) {
+            throw new IllegalArgumentException("not an overhang: " + mm);
+        }
+        putAttribute(key, mm.toString());
+    }
+
     @Override
     public void putAttribute(String key, String value) {
         String oldValue = getAttribute(key);
