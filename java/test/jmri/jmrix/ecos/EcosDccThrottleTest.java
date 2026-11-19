@@ -80,6 +80,21 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
         Assert.assertEquals(speed, instance.getSpeedSetting(), 0.0);
     }
 
+    /**
+     * Test of setSpeedSettingAgain method, of class AbstractThrottle. As for
+     * setSpeedSetting: the ECoS throttle sends nothing, and stores nothing,
+     * until it has control of the loco.
+     */
+    @Test
+    @Disabled("needs response to see change?")
+    @ToDo("investigate what response needs to be sent to throttle after setSpeedSetting is called before the assert")
+    @Override
+    public void testSetSpeedSettingAgain() {
+        float speed = 1.0F;
+        instance.setSpeedSettingAgain(speed);
+        Assert.assertEquals(speed, instance.getSpeedSetting(), 0.0);
+    }
+
     @Test
     @Disabled("_haveControl boolean not true?")
     @ToDo("investigate what response needs to be sent to throttle after setSpeedSetting is called before the assert")

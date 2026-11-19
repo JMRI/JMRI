@@ -67,6 +67,24 @@ public class MqttThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      * Test sending speed and directions for expected message formats,
      *   various command station versions, fkeys, states.
      */
+    /**
+     * A speed limit is applied before the speed is published.
+     */
+    @Test
+    public void testSpeedMessageIsLimited() {
+        jmri.ThrottleSpeedLimiter limiter = address -> 0.5f;
+        jmri.InstanceManager.setDefault(jmri.ThrottleSpeedLimiter.class, limiter);
+        try {
+            int count = a.getPublishCount();
+            instance.setSpeedSetting(1.0f);
+            JUnitUtil.waitFor( ()->{ return a.getPublishCount() > count; }, "publish triggered");
+            assertEquals("cab/3/throttle", a.getLastTopic());
+            assertEquals("50", new String(a.getLastPayload()), "1.0 published as 0.5");
+        } finally {
+            jmri.InstanceManager.deregister(limiter, jmri.ThrottleSpeedLimiter.class);
+        }
+    }
+
     @Test
     public void testSpeedSettingAndDirection(){
 

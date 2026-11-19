@@ -1,6 +1,7 @@
 package jmri.jmrit.trainrecord;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -141,6 +142,45 @@ public class TrainTrackingMeasurementsTest {
         assertNull(TrainTrackingMeasurements.profileSpeed(r, start - S, start + S), "the command came during it");
         assertNull(ThreadingUtil.runOnGUIwithReturn(() -> measurements.measure(r, b, a, c, start, start)),
                 "no time taken");
+    }
+
+    @Test
+    public void testDetectorOffset() {
+        Block a = block("A", 1, 1000);
+        Block b = block("B", 2, 400);
+        Block c = block("C", 3, 600);
+        Measurement m = new Measurement(b, a, c);
+        // 400 mm at 80% of the profile's speed, with the far detector 0.3 s late
+        m.add(400 / (0.8 * 100) + 0.3, 400, 100.0);
+        m.add(400 / (0.8 * 200) + 0.3, 400, 200.0);
+        assertFalse(m.isFitted(), "two crossings are too few");
+        assertTrue(Double.isNaN(m.getDetectorOffset()));
+        assertEquals("", jmri.jmrit.trainrecord.swing.MeasurementsFrame.detectorOffset(m));
+
+        m.add(400 / (0.8 * 400) + 0.3, 400, 400.0);
+        m.add(2.0, 400, null); // not compared: no part in the fit
+        assertTrue(m.isFitted());
+        assertEquals(0.3, m.getDetectorOffset(), 1e-9);
+        assertEquals(0.8, m.getAgainstProfileWithoutOffset(), 1e-9);
+        assertEquals(4, m.getCrossings());
+        assertEquals(3, m.getCompared());
+        // the plain comparison has the offset in it: slower than 80% at every speed
+        assertTrue(m.getAgainstProfile() < 0.8);
+        assertEquals(String.format(java.util.Locale.getDefault(), "%+.2f s", 0.3),
+                jmri.jmrit.trainrecord.swing.MeasurementsFrame.detectorOffset(m));
+    }
+
+    @Test
+    public void testNoDetectorOffsetFromOneSpeed() {
+        Block a = block("A", 1, 1000);
+        Block b = block("B", 2, 400);
+        Block c = block("C", 3, 600);
+        Measurement m = new Measurement(b, a, c);
+        m.add(2.0, 400, 200.0);
+        m.add(2.1, 400, 200.0);
+        m.add(1.9, 400, 220.0);
+        assertFalse(m.isFitted(), "speeds too close together to tell an offset from a scale");
+        assertTrue(Double.isNaN(m.getAgainstProfileWithoutOffset()));
     }
 
     @Test

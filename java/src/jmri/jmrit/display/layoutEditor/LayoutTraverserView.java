@@ -25,7 +25,6 @@ import jmri.util.swing.JmriMouseEvent;
  */
 public class LayoutTraverserView extends LayoutTrackView {
 
-    // defined constants
     // operational instance variables (not saved between sessions)
     private final jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTraverserEditor editor;
 
@@ -157,7 +156,7 @@ public class LayoutTraverserView extends LayoutTrackView {
      * Get the center of the control point, which is on an edge of the traverser.
      * @return The center point for the control circles.
      */
-    private Point2D getControlPointCenter() {
+    public Point2D getControlPointCenter() {
         Point2D center = getCoordsCenter();
         Rectangle2D bounds = getBounds();
         if (getOrientation() == LayoutTraverser.HORIZONTAL) {
@@ -653,11 +652,7 @@ public class LayoutTraverserView extends LayoutTrackView {
             if (!traverser.isSlotDisabled(i)) { // Only draw if the slot is NOT disabled
                 Color slotColor = null;
                 TrackSegment ts = getSlotConnectOrdered(i);
-//                // A slot is mainline if the bridge is, or if the connected track is.
-//                boolean slotIsMain = false;
-//                if (ts != null) {
-//                    slotIsMain = ts.isMainline();
-//                }
+
                 // Set color for block, if any
                 if (isBlock) {
                     if (ts == null) {
@@ -685,8 +680,12 @@ public class LayoutTraverserView extends LayoutTrackView {
             }
         }
 
-        // Draw the sliding bridge
-        int currentPositionConnectionIndex = getPosition();
+        // Draw the sliding bridge`
+
+        // if the turnout is changed, we do not know what slot is being activated. we assumed the rh slot to set lastKnownIndex
+        // when we check whether the slot is activated we must check for both the rh and ls slot to check whether the slot should be drawn
+        int currentPositionConnectionIndex = getPosition();    //this is lastKnownIndex
+
         int orderedIndex = -1;
         if (currentPositionConnectionIndex != -1) {
             for (int i = 0; i < getNumberSlots(); i++) {
@@ -697,7 +696,10 @@ public class LayoutTraverserView extends LayoutTrackView {
             }
         }
         // Only draw the bridge if a slot is selected, it's not disabled, and its mainline status matches the current pass
-        if (orderedIndex != -1 && !traverser.isSlotDisabled(orderedIndex) && (isMain == traverser.isMainline())) {
+        // when we check whether the slot is activated we must check for both the rh and ls slot
+        if (orderedIndex != -1 &&
+                (!traverser.isSlotDisabled(orderedIndex) || !traverser.isSlotDisabled(orderedIndex - 1)) &&
+                        (isMain == traverser.isMainline())) {
             // Set color for bridge
             if (isBlock) {
                 LayoutBlock lb = getLayoutBlock();
@@ -718,23 +720,14 @@ public class LayoutTraverserView extends LayoutTrackView {
             Point2D center = getCoordsCenter();
             Rectangle2D pit = getBounds();
             double offset = getSlotOffsetValue(orderedIndex);
-            double gap = traverser.getDeckWidth() * 0.2;
-            boolean sideA = (orderedIndex % 2 == 0);
+            double gap = traverser.getDeckWidth() * 0.1;
 
             if (getOrientation() == LayoutTraverser.HORIZONTAL) {
                 double y = center.getY() + offset;
-                if (sideA) {
-                    g2.draw(new Line2D.Double(pit.getMinX(), y, pit.getMaxX() - gap, y));
-                } else {
-                    g2.draw(new Line2D.Double(pit.getMinX() + gap, y, pit.getMaxX(), y));
-                }
+                g2.draw(new Line2D.Double(pit.getMinX() + gap, y, pit.getMaxX() - gap, y));
             } else { // VERTICAL
                 double x = center.getX() + offset;
-                if (sideA) {
-                    g2.draw(new Line2D.Double(x, pit.getMinY(), x, pit.getMaxY() - gap));
-                } else {
-                    g2.draw(new Line2D.Double(x, pit.getMinY() + gap, x, pit.getMaxY()));
-                }
+                g2.draw(new Line2D.Double(x, pit.getMinY() + gap, x, pit.getMaxY() - gap));
             }
         }
         if (!layoutEditor.isEditable()) {

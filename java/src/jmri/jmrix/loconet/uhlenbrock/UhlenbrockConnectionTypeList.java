@@ -19,11 +19,12 @@ public class UhlenbrockConnectionTypeList implements jmri.jmrix.ConnectionTypeLi
     @Override
     @Nonnull
     public String[] getAvailableProtocolClasses() {
-        // replace existing LocoNet protocol list with just our three
+        // replace existing LocoNet protocol list with just our own
         String[] tempList = new String[]{
             "jmri.jmrix.loconet.uhlenbrock.ConnectionConfig", // NOI18N
             "jmri.jmrix.loconet.Intellibox.ConnectionConfig", // NOI18N
-            "jmri.jmrix.loconet.uhlenbrock.usb_63120.ConnectionConfig"}; // NOI18N
+            "jmri.jmrix.loconet.uhlenbrock.usb_63120.ConnectionConfig", // NOI18N
+            "jmri.jmrix.loconet.uhlenbrock.usb_63860.ConnectionConfig"}; // NOI18N
         return tempList;
     }
 

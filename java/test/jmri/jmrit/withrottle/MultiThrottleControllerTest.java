@@ -221,8 +221,8 @@ public class MultiThrottleControllerTest {
     public void testVelocityChangeSequence() {
         DccThrottle t = new DebugThrottle(new DccLocoAddress(1, false), memo) {
             @Override
-            public synchronized void setSpeedSetting(float s) {
-                // override so we can send property changes in sequence.
+            protected synchronized void sendSpeedSetting(float s, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
+                // send nothing, so the test can send property changes in sequence.
             }
         };
         controller.notifyThrottleFound(t);
