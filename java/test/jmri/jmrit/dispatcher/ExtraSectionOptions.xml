@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dispatcheroptions SYSTEM "/xml/DTD/dispatcher-options.dtd">
+<dispatcheroptions>
+  <options useconnectivity="yes" trainsfrom="TRAINSFROMUSER" autoallocate="yes" autorelease="no" autoturnouts="yes" trustknownturnouts="yes" useturnoutconnectiondelay="no" useoccupiedtrackSpeed="no" minthrottleinterval="100" fullramptime="10000" hasoccupancydetection="yes" sslcheckdirectionsensors="no" shortactivetrainnames="no" shortnameinblock="no" extracolorforallocated="yes" nameinallocatedblock="no" supportvsdecoder="no" layoutscale="UK-OO" usescalemeters="no" userosterentryinblock="no" stoppingspeedname="RestrictedSlow" usesignaltype="sectionsallocated" />
+</dispatcheroptions>
