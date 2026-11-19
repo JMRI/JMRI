@@ -629,12 +629,12 @@ public class CMRISystemConnectionMemo extends DefaultSystemConnectionMemo implem
         }
         int bit = getBitFromSystemName(systemName);
         if ((type == 'T') || (type == 'L')) {
-            if ((bit <= 0) || (bit > (node.numOutputCards() * node.getNumBitsPerCard()))) {
+            if ((bit <= 0) || (bit > node.numOutputBits())) {
                 // The bit is not valid for this defined Serial node
                 return false;
             }
         } else if (type == 'S') {
-            if ((bit <= 0) || (bit > (node.numInputCards() * node.getNumBitsPerCard()))) {
+            if ((bit <= 0) || (bit > node.numInputBits())) {
                 // The bit is not valid for this defined Serial node
                 return false;
             }

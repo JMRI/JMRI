@@ -62,11 +62,19 @@ public class SerialNode extends AbstractNode {
                                                  // output/input, no onboard I/O of its own -- unlike
                                                  // CPNODE/CPMEGA, its cardTypeLocation[] array has no
                                                  // reserved onboard-byte slots (index 0 IS the first real
-                                                 // card), but user-facing "Card N" numbers displayed in
-                                                 // DiagnosticFrame/NodeConfigManagerFrame are still 1-based
-                                                 // (Card 1 = 0x20/A) via a small +1 display offset there,
-                                                 // matching how people naturally count cards -- a smaller,
-                                                 // separate offset from CPNODE's +2 (2 onboard output bytes).
+                                                 // card), and user-facing "Card N" numbers in
+                                                 // DiagnosticFrame/NodeConfigManagerFrame are 0-based too
+                                                 // (Card 0 = 0x20/A), as in C/MRI.
+    // ESP32CPNode fixed numbers (firmware v2.11): every CT is locked to its card position
+    // (CT n001 = card 0 bit 0 ... n512 = card 63 bit 7, all 64 cards C/MRI allows), so a Transmit
+    // carries one byte per card position up to the last card with an output in use, not one
+    // per output card. The poll reply has one byte per MCP23017 port (CS n001 ... n128). Cards 0-15 MCP23017 0x20 A .. 0x27 B (Output or
+    // Input), 16-31 servo boards 0x40-0x47 (Output), 32-63 no pins (Output): CT n257-n512 the
+    // signal logic (every signal's Output Matrix outputs).
+    public static final int ESP32NODE_CARDS = 64;
+    public static final int ESP32NODE_LOGIC_FIRST = 257;   // CT n257: signal logic bit 1
+    public static final int ESP32NODE_LOGIC_BITS = 256;
+    public static final int ESP32NODE_INPUT_CARDS = 16;
 
     public static final int NDP_USICSUSIC24 = 78; // 'N' USIC/SUSIC 24 bit cards
     public static final int NDP_USICSUSIC32 = 88; // 'X' USIC/SUSIC 32 bit cards
@@ -87,6 +95,7 @@ public class SerialNode extends AbstractNode {
     protected int num2LSearchLights = 0;        // SMINI only, 'NS' number of two lead bicolor signals
     protected byte[] locSearchLightBits = new byte[MAXSEARCHLIGHTBYTES]; // SMINI only, 0 = not searchlight LED,
     //   1 = searchlight LED, 2*NS bits must be set to 1
+    private volatile int lastOutputByte = 0;   // ESP32CPNode: highest byte of outputArray set so far
     protected byte[] cardTypeLocation = new byte[MAXCARDLOCATIONBYTES]; // Varys on USIC/SUSIC. There must numInputCards bytes set to
     //   INPUT_CARD, and numOutputCards set to OUTPUT_CARD, with
     //   the remaining locations set to NO_CARD.  All
@@ -226,11 +235,14 @@ public class SerialNode extends AbstractNode {
         // locate in the outputArray
         int byteNumber = (bitNumber - 1) / 8;
         // validate that this byte number is defined
-        if (byteNumber > (numOutputCards() * (bitsPerCard / 8))) {
+        if (byteNumber > maxOutputBytes()) {
             warn("Output bit out-of-range for defined node");
         }
         if (byteNumber >= 256) {
             byteNumber = 255;
+        }
+        if (byteNumber > lastOutputByte && byteNumber < maxOutputBytes()) {
+            lastOutputByte = byteNumber;   // numOutputBytes() now reaches this card
         }
         // update the byte
         byte bit = (byte) (1 << ((bitNumber - 1) % 8));
@@ -255,7 +267,7 @@ public class SerialNode extends AbstractNode {
         // locate in the outputArray
         int byteNumber = (bitNumber - 1) / 8;
         // validate that this byte number is defined
-        if (byteNumber > (numOutputCards() * (bitsPerCard / 8))) {
+        if (byteNumber > maxOutputBytes()) {
             warn("Output bit out-of-range for defined node");
         }
         if (byteNumber >= 256) {
@@ -339,6 +351,23 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
+     * ESP32CPNode fixed numbers: make every card position Output, except a chip
+     * port (cards 0-15) that is Input. A node
+     * saved with fewer cards (e.g. 54) then has all its CTs as soon as it is
+     * loaded. Does nothing for other node types.
+     */
+    public void setEsp32FixedCards() {
+        if (nodeType != ESP32NODE) {
+            return;
+        }
+        for (int i = 0; i < ESP32NODE_CARDS; i++) {
+            if (i >= ESP32NODE_INPUT_CARDS || !isInputCard(i)) {
+                setCardTypeLocation(i, OUTPUT_CARD);
+            }
+        }
+    }
+
+    /**
      * Get number of output cards.
      * @return number of output cards.
      */
@@ -379,7 +408,7 @@ public class SerialNode extends AbstractNode {
            break;
            case ESP32NODE:
            if(result<1)
-             warn("ESP32Node with "+result+" OUTPUT cards");
+             warn("ESP32CPNode with "+result+" OUTPUT cards");
            break;
            default:
          }
@@ -499,13 +528,10 @@ public class SerialNode extends AbstractNode {
             // needed anywhere this type is handled (see DiagnosticFrame,
             // NodeConfigManagerFrame, which special-case CPNODE's onboard offset
             // and must NOT apply it to ESP32NODE).
-            for (int i=0;i<16;i++)
+            // Fixed numbers: all 64 cards (chips, servo boards, no-pin cards) start as OUTPUT.
+            for (int i=0;i<ESP32NODE_CARDS;i++)
             {
              cardTypeLocation[i] = OUTPUT_CARD;
-            }
-            for (int i=16;i<MAXCARDLOCATIONBYTES;i++)
-            {
-             cardTypeLocation[i] = NO_CARD;
             }
           break;
 
@@ -1201,11 +1227,14 @@ public class SerialNode extends AbstractNode {
                               initBytes[nInitBytes] = (byte)code;
                               nInitBytes++;
                            }
-                           // -------------------------------------
-                           // Configured input and output byte count
-                           // -------------------------------------
-                           initBytes[nInitBytes++] = (byte)numInputCards();
-                           initBytes[nInitBytes++] = (byte)numOutputCards();
+                           // -------------------------------------------------
+                           // Input and output byte count: the most this node
+                           // can have (fixed numbers, one byte per card
+                           // position); a Transmit may carry fewer, see
+                           // numOutputBytes()
+                           // -------------------------------------------------
+                           initBytes[nInitBytes++] = (byte)(numInputBits() / 8);
+                           initBytes[nInitBytes++] = (byte)(numOutputBits() / 8);
 
                            // --------------------------
                            // future to be defined bytes
@@ -1253,12 +1282,55 @@ public class SerialNode extends AbstractNode {
     }
 
     /**
+     * Number of output bytes this node can have: one per output card, or for
+     * an ESP32CPNode one per card position (fixed numbers).
+     * @return the most output bytes this node can be sent
+     */
+    private int maxOutputBytes() {
+        if (nodeType == ESP32NODE) {
+            return ESP32NODE_CARDS;
+        }
+        return numOutputCards() * (bitsPerCard / 8);
+    }
+
+    /**
+     * Number of output bytes in a Transmit: one per output card, or for an
+     * ESP32CPNode one per card position up to the last card with an output
+     * set, so a node that isn't filled out isn't sent cards it doesn't use.
+     * @return output bytes this node is sent
+     */
+    public int numOutputBytes() {
+        if (nodeType == ESP32NODE) {
+            return lastOutputByte + 1;
+        }
+        return maxOutputBytes();
+    }
+
+    /**
+     * Highest input bit number this node can have. Usually the input cards'
+     * bits; an ESP32CPNode's bits are fixed to their card positions, so an
+     * input on a later card still needs its own number in range.
+     * @return number of input bits
+     */
+    public int numInputBits() {
+        return nodeType == ESP32NODE ? ESP32NODE_INPUT_CARDS * 8 : numInputCards() * bitsPerCard;
+    }
+
+    /**
+     * Highest output bit number this node can have.
+     * @return number of output bits
+     */
+    public int numOutputBits() {
+        return maxOutputBytes() * 8;
+    }
+
+    /**
      * Create an Transmit packet (SerialMessage)
      */
     @Override
     public AbstractMRMessage createOutPacket() {
         // Count the number of DLE's to be inserted
-        int nOutBytes = numOutputCards() * (bitsPerCard / 8);
+        int nOutBytes = numOutputBytes();
         int nDLE = 0;
         byte[] oA; // current values of the output bits for this node
         
@@ -1358,7 +1430,7 @@ public class SerialNode extends AbstractNode {
      */
     public void registerSensor(Sensor s, int i) {
         // validate the sensor ordinal
-        if ((i < 0) || (i > ((numInputCards() * bitsPerCard) - 1)) || (i > MAXSENSORS)) {
+        if ((i < 0) || (i > (numInputBits() - 1)) || (i > MAXSENSORS)) {
             log.error("Unexpected sensor ordinal in registerSensor: {}", Integer.toString(i + 1));
             return;
         }
