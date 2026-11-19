@@ -55,6 +55,9 @@ public class MeasurementsFrameTest {
         assertEquals("Yard Road 2", table.getValueAt(0, 0));
         assertEquals(0, table.getValueAt(0, 3), "no crossings");
         assertEquals(1, table.getValueAt(0, 6), "one drop-out");
+        assertEquals(Bundle.getMessage("MeasurementsDetectorOffset"), table.getColumnName(7));
+        assertEquals("", table.getValueAt(0, 7), "no detector offset without crossings");
+        assertEquals("", table.getValueAt(0, 8), "nor a comparison without it");
         JUnitUtil.dispose(f.getWindow());
     }
 

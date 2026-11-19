@@ -61,6 +61,16 @@
       how often each Block's detector stopped seeing a train that train tracking was sure was
       there. Nothing uses the measurements yet.</p>
 
+      <p>Once a way through a Block has been crossed, at a steady speed, at least three times
+      at speeds far enough apart (the slowest taking at least half as long again as the
+      fastest), two more columns are filled in. <strong>Detector Offset</strong> is a fixed time
+      added to every crossing whatever the speed: how much later the next Block's detector
+      reports a train than this Block's did, as a slow detector or a debounce delay on it
+      would make it. <strong>Against Profile, Offset Removed</strong> is how the trains' speed
+      compares with their profiles once that time is taken out. An offset of a few hundredths of
+      a second is normal; a larger one points at the detector, and a percentage well away
+      from 100% at the profile or the Block's length.</p>
+
       <p>Only detectors are measured from. A Block whose occupancy sensor is an internal
       sensor, set by a script, Logix or LogixNG rather than by hardware on the layout, is
       followed but not measured. With simulated trains, where there is no layout hardware, the
