@@ -1,5 +1,5 @@
 #!/bin/bash
-# Sign the JMRI macOS disk image made by diskimage.sh, and notarize it when an App Store Connect API key is set
+# Sign a JMRI macOS distribution (folder from ant dist-macosx, or disk image from diskimage.sh) into a disk image, notarizing when an API key is set
 
 set -euo pipefail
 
@@ -9,7 +9,8 @@ IDENTITY=${3:-}
 KEYCHAIN=${4:-}
 
 if [ -z "$INPUT" ] || [ -z "$OUTPUT" ] || [ -z "$IDENTITY" ]; then
-    echo "usage: $0 INPUT.dmg OUTPUT.dmg IDENTITY [KEYCHAIN]" 1>&2
+    echo "usage: $0 INPUT OUTPUT.dmg IDENTITY [KEYCHAIN]" 1>&2
+    echo "  INPUT is the unsigned disk image, or the folder holding JMRI/ (dist/MacOSX)" 1>&2
     echo "  IDENTITY is a Developer ID Application identity, or - for an ad-hoc signature (testing only)" 1>&2
     echo "  notarizes when NOTARY_KEY_PATH, NOTARY_KEY_ID and NOTARY_ISSUER are set" 1>&2
     exit 1
@@ -96,11 +97,22 @@ staple() {
     return 1
 }
 
-# copy the image contents to a folder, sign them there, then build the final image from the folder
-hdi attach "$INPUT" -mountpoint "$indir" -nobrowse -readonly
-volname=$(diskutil info "$indir" | sed -n 's/^ *Volume Name: *//p')
-ditto "$indir/JMRI" "$outdir/JMRI"
-hdi detach "$indir"
+# copy the distribution to a folder, sign it there, then build the final image from the folder
+if [ -d "$INPUT" ]; then
+    if [ ! -d "$INPUT/JMRI" ]; then
+        echo "no JMRI folder in $INPUT" 1>&2
+        exit 1
+    fi
+    # same volume name diskimage.sh uses, from an OUTPUT named JMRI.<version>.dmg
+    version=$(basename "$OUTPUT" .dmg)
+    volname="JMRI ${version#JMRI.}"
+    ditto "$INPUT/JMRI" "$outdir/JMRI"
+else
+    hdi attach "$INPUT" -mountpoint "$indir" -nobrowse -readonly
+    volname=$(diskutil info "$indir" | sed -n 's/^ *Volume Name: *//p')
+    ditto "$indir/JMRI" "$outdir/JMRI"
+    hdi detach "$indir"
+fi
 jmri="$outdir/JMRI"
 
 # native libraries inside jars: pull each one out, sign it, and put it back

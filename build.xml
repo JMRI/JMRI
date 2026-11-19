@@ -2776,8 +2776,8 @@
         </exec>
     </target>
 
-    <target name="package-macosx"
-            description="create a Mac OS X install package"
+    <target name="dist-macosx"
+            description="assemble the Mac OS X distribution folder without making a disk image"
             depends="get-version-string, jar, startup-scripts-macosx">
         <delete dir="${dist.macosx}"/>
         <mkdir dir="${dist.macosx}/JMRI"/>
@@ -2822,6 +2822,10 @@
         <chmod perm="ugo+rx">
             <fileset file="${dist.macosx}/JMRI/JmriFaceless.command"/>
         </chmod>
+    </target>
+    <target name="package-macosx"
+            description="create a Mac OS X install package"
+            depends="dist-macosx">
         <mkdir dir="${dist.release}"/>
         <exec executable="${scriptdir}/diskimage.sh"
               osFamily="unix"
