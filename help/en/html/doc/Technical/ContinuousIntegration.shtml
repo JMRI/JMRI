@@ -159,6 +159,32 @@
 
       <p>Code Climate is controlled by the .codeclimate.yml file.</p>
 
+      <h2 id="installers">Installer Builds</h2>
+
+      <p>The "Build Installers" GitHub Actions workflow (.github/workflows/installers.yml) builds
+      the Linux, Windows and macOS installers for a branch. It doesn't run on PRs; it's started by
+      hand from the Actions tab, and can be given a branch, tag or commit to build.</p>
+
+      <p>The macOS disk image is signed and notarized by scripts/macos-sign-dmg.sh, and checked by
+      scripts/macos-verify-dmg.sh. Those scripts always come from the workflow's own commit, not
+      from the branch being built. Without a signing certificate (for example, in a fork) the
+      workflow still runs, but gives the disk image an ad-hoc signature and skips notarization,
+      so the result won't pass Gatekeeper.</p>
+
+      <p>Signing uses the "installer-signing" environment in the JMRI/JMRI repository settings,
+      which should be limited to protected branches. It holds:</p>
+        <ul>
+          <li>MACOS_CERTIFICATE_P12_BASE64 (secret) - the Developer ID Application certificate
+            and its private key, exported as a .p12 file and base64 encoded</li>
+          <li>MACOS_CERTIFICATE_PASSWORD (secret) - the password for that .p12 file</li>
+          <li>APPLE_API_KEY_P8 (secret) - the contents of an App Store Connect API key (.p8 file),
+            used for notarization</li>
+          <li>APPLE_API_KEY_ID (variable) - that API key's ID</li>
+          <li>APPLE_API_ISSUER_ID (variable) - the team's issuer ID</li>
+        </ul>
+      <p>In JMRI/JMRI the workflow fails if any of these are missing. The finished installers are
+      attached to the workflow run as artifacts.</p>
+
       <h2 id="independent">Independent Checks with Jenkins</h2>
       <p>JMRI uses the <a href="https://www.jenkins.io/">Jenkins</a> continuous integration engine for
       integration and test builds. This includes keeping our <a href="WebSite.shtml">website</a>
