@@ -2,6 +2,8 @@ package jmri.jmrit.trainrecord;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -56,6 +58,19 @@ import jmri.jmrit.roster.RosterSpeedProfile;
  * slow to report or a debounce delay, from a profile that is out by a
  * proportion at every speed (see {@link Measurement#getDetectorOffset()}).
  * <p>
+ * When a train's rear end leaves a Block, the time since its leading end
+ * crossed the same boundary, less the time the train's detected part took
+ * to pass it at the speed its profile gives, is how much later JMRI knew
+ * the Block behind was empty than it knew the Block ahead was occupied (see
+ * {@link Boundary}). Detectors usually report empty later than occupied,
+ * and many delay it on purpose, so this is the time a Block is held after a
+ * train has gone.
+ * <p>
+ * Each crossing compared with a profile is also a prediction: the time the
+ * profile gives for it against the time it took. Kept for each train (see
+ * {@link Arrivals}), this says how far that train's speed model can be
+ * trusted.
+ * <p>
  * It only measures: nothing uses the measurements yet.
  *
  * @author Keith Bruce Copyright (C) 2026
@@ -69,6 +84,8 @@ public class TrainTrackingMeasurements extends PropertyChangeSupport implements 
     private final TrainRecordManager manager;
     private final Map<Key, Measurement> measurements = new LinkedHashMap<>();
     private final Map<Block, Integer> dropOuts = new HashMap<>();
+    private final Map<Key, Boundary> boundaries = new LinkedHashMap<>();
+    private final Map<TrainRecord, Arrivals> arrivals = new LinkedHashMap<>();
     /** The Block each train was last not seen in, until it is seen again or does something else. */
     private final Map<TrainRecord, Block> notSeenIn = new HashMap<>();
     private final PropertyChangeListener managerListener = this::managerChanged;
@@ -106,6 +123,7 @@ public class TrainTrackingMeasurements extends PropertyChangeSupport implements 
         if (e.getOldValue() instanceof TrainRecord) {
             TrainRecord r = (TrainRecord) e.getOldValue();
             notSeenIn.remove(r);
+            arrivals.remove(r);
             r.removePropertyChangeListener(TrainRecord.PROPERTY_TRAIL, recordListener);
             r.removePropertyChangeListener(TrainRecord.PROPERTY_HISTORY, recordListener);
         }
@@ -145,6 +163,11 @@ public class TrainTrackingMeasurements extends PropertyChangeSupport implements 
             case SEEN_AGAIN:
                 if (b != null && b == notSeen) {
                     droppedOut(b);
+                }
+                break;
+            case LEFT:
+                if (b != null) {
+                    left(r, b, reason.getTime());
                 }
                 break;
             default:
@@ -215,8 +238,93 @@ public class TrainTrackingMeasurements extends PropertyChangeSupport implements 
         Measurement m = measurements.computeIfAbsent(new Key(crossed, from, to),
                 k -> new Measurement(k.block, k.from, k.to));
         m.add(seconds, length, profile);
+        if (profile != null) {
+            arrivals.computeIfAbsent(r, Arrivals::new).add(length / profile, seconds);
+        }
         firePropertyChange(PROPERTY_MEASUREMENT, null, m);
         return m;
+    }
+
+    /**
+     * A train's rear end left a Block: if its leading end crossed the same
+     * boundary out of it, measure how much later the Block went empty than
+     * the train's passing explains.
+     *
+     * @param r        the train's record
+     * @param behind   the Block left
+     * @param leftTime when JMRI knew it was left
+     * @return the boundary's measurement, or null if nothing could be
+     *         measured: the leading end wasn't seen to cross out of the
+     *         Block, one of the two Blocks has no detector, the train's
+     *         detected length isn't known, or its speed can't be had from
+     *         a steady command and its profile
+     */
+    @CheckForNull
+    Boundary left(@Nonnull TrainRecord r, @Nonnull Block behind, @Nonnull Instant leftTime) {
+        TrailEntry crossing = null;
+        List<TrailEntry> trail = r.getTrail();
+        for (int i = trail.size() - 1; i >= 0; i--) {
+            TrailEntry t = trail.get(i);
+            if (t.getFrom() == behind && t.getEnd() != null) {
+                crossing = t;
+                break;
+            }
+        }
+        if (crossing == null) {
+            return null;
+        }
+        Block ahead = crossing.getBlock();
+        if (!TrainTrackingDetectors.isDetector(behind) || !TrainTrackingDetectors.isDetector(ahead)) {
+            return null;
+        }
+        long passNanos = Duration.between(crossing.getTime(), leftTime).toNanos();
+        Double detected = detectedLength(r);
+        if (passNanos <= 0 || detected == null) {
+            return null;
+        }
+        Double speed = profileSpeed(r, crossing.getTimeNanos(), crossing.getTimeNanos() + passNanos);
+        if (speed == null) {
+            return null;
+        }
+        Boundary m = boundaries.computeIfAbsent(new Key(null, behind, ahead), k -> new Boundary(k.from, k.to));
+        m.add(passNanos / 1e9 - detected / speed);
+        firePropertyChange(PROPERTY_MEASUREMENT, null, m);
+        return m;
+    }
+
+    /**
+     * The length of a train's detected part, from its first detected wheel to
+     * its last: its length less the overhang at each end, where both
+     * overhangs are known exactly. That needs the end components' own wheel
+     * overhangs: an overhang that rests on the default for one not entered
+     * isn't known, nor is one that is only a range, as for a train detected
+     * only at its head.
+     *
+     * @param r the train's record
+     * @return the length in millimetres, or null if not known
+     */
+    @CheckForNull
+    static Double detectedLength(@Nonnull TrainRecord r) {
+        Double length = r.getPlacingLength();
+        Double front = exactOverhang(r, TrainRecord.End.FRONT);
+        Double rear = exactOverhang(r, TrainRecord.End.REAR);
+        if (length == null || front == null || rear == null) {
+            return null;
+        }
+        double detected = length - front - rear;
+        return detected > 0 ? detected : null;
+    }
+
+    @CheckForNull
+    private static Double exactOverhang(TrainRecord r, TrainRecord.End end) {
+        // the same with no default and with a large one: it doesn't rest on the default
+        TrainOverhang without = TrainOverhang.of(r, end, 0);
+        TrainOverhang with = TrainOverhang.of(r, end, NOT_A_DEFAULT_MM);
+        if (without == null || with == null || Math.abs(without.getMaxMm() - with.getMaxMm()) > EXACT_MM
+                || without.getMaxMm() - without.getMinMm() > EXACT_MM) {
+            return null;
+        }
+        return without.getMaxMm();
     }
 
     /**
@@ -281,6 +389,36 @@ public class TrainTrackingMeasurements extends PropertyChangeSupport implements 
     }
 
     /**
+     * @return every boundary whose emptying delay has been measured, in the
+     *         order first measured; a copy
+     * @since 5.19.2
+     */
+    @Nonnull
+    public List<Boundary> getBoundaries() {
+        return new ArrayList<>(boundaries.values());
+    }
+
+    /**
+     * @return each train whose arrivals have been compared with its speed
+     *         profile, in the order first compared; a copy
+     * @since 5.19.2
+     */
+    @Nonnull
+    public List<Arrivals> getArrivals() {
+        return new ArrayList<>(arrivals.values());
+    }
+
+    /**
+     * @param r a train's record
+     * @return its arrivals compared with its speed profile, or null if none
+     * @since 5.19.2
+     */
+    @CheckForNull
+    public Arrivals getArrivals(@Nonnull TrainRecord r) {
+        return arrivals.get(r);
+    }
+
+    /**
      * @param block a Block
      * @return how many times its detector has dropped out under a train
      */
@@ -307,7 +445,15 @@ public class TrainTrackingMeasurements extends PropertyChangeSupport implements 
         }
         measurements.clear();
         dropOuts.clear();
+        boundaries.clear();
+        arrivals.clear();
+        notSeenIn.clear();
     }
+
+    /** How close, in millimetres, the two ends of an overhang's range are for it to count as known. */
+    static final double EXACT_MM = 1.0;
+    /** A default wheel overhang no component has, to tell whether an overhang rests on the default. */
+    private static final double NOT_A_DEFAULT_MM = 1e6;
 
     /** The fewest crossings compared with a profile to fit a detector offset from. */
     static final int MIN_FIT_CROSSINGS = 3;
@@ -498,6 +644,156 @@ public class TrainTrackingMeasurements extends PropertyChangeSupport implements 
          */
         public double getAgainstProfile() {
             return compared == 0 ? 0 : ratioSum / compared;
+        }
+    }
+
+    /**
+     * The spread of a set of values: their standard deviation.
+     */
+    private static double spread(int n, double sum, double sumSquares) {
+        if (n < 2) {
+            return 0;
+        }
+        double mean = sum / n;
+        return Math.sqrt(Math.max(0, (sumSquares - n * mean * mean) / (n - 1)));
+    }
+
+    /**
+     * How much later a Block was known to be empty, after trains left it for
+     * one neighbour, than the train's passing explains: the time from its
+     * leading end entering the neighbour to the Block going empty, less the
+     * time its detected part took to pass the boundary at the speed its
+     * profile gives.
+     * <p>
+     * What remains is how much later the Block's detector reports empty than
+     * the neighbour's reports occupied, debounce included, plus any error in
+     * the train's length or profile; over several trains and speeds those
+     * errors show as the spread.
+     *
+     * @since 5.19.2
+     */
+    public static final class Boundary {
+
+        private final Block behind;
+        private final Block ahead;
+        private int count = 0;
+        private double sum = 0;
+        private double sumSquares = 0;
+
+        Boundary(Block behind, Block ahead) {
+            this.behind = behind;
+            this.ahead = ahead;
+        }
+
+        void add(double seconds) {
+            count++;
+            sum += seconds;
+            sumSquares += seconds * seconds;
+        }
+
+        /**
+         * @return the Block left, whose going empty is timed
+         */
+        @Nonnull
+        public Block getBehind() {
+            return behind;
+        }
+
+        /**
+         * @return the Block it was left for, whose going occupied is timed
+         */
+        @Nonnull
+        public Block getAhead() {
+            return ahead;
+        }
+
+        /**
+         * @return how many times it was measured
+         */
+        public int getCount() {
+            return count;
+        }
+
+        /**
+         * @return the average delay, in seconds; positive where the Block
+         *         behind is known empty later than the passing explains
+         */
+        public double getEmptyDelay() {
+            return count == 0 ? 0 : sum / count;
+        }
+
+        /**
+         * @return how much the delay varies: its standard deviation in
+         *         seconds, 0 with fewer than two measurements
+         */
+        public double getSpread() {
+            return spread(count, sum, sumSquares);
+        }
+    }
+
+    /**
+     * A train's crossings compared with its speed profile, as predictions:
+     * how much longer each crossing took than the profile gives, as a
+     * fraction of the time it gives.
+     *
+     * @since 5.19.2
+     */
+    public static final class Arrivals {
+
+        private final TrainRecord record;
+        private int count = 0;
+        private double sum = 0;
+        private double sumSquares = 0;
+
+        Arrivals(TrainRecord record) {
+            this.record = record;
+        }
+
+        /**
+         * One crossing.
+         *
+         * @param predicted the time the profile gives, in seconds
+         * @param actual    the time it took, in seconds
+         */
+        void add(double predicted, double actual) {
+            double late = actual / predicted - 1;
+            count++;
+            sum += late;
+            sumSquares += late * late;
+        }
+
+        /**
+         * @return the train's record
+         */
+        @Nonnull
+        public TrainRecord getRecord() {
+            return record;
+        }
+
+        /**
+         * @return how many crossings were compared
+         */
+        public int getCount() {
+            return count;
+        }
+
+        /**
+         * @return how late the train arrived on average, as a fraction of
+         *         the time predicted: 0.1 for 10% later, -0.1 for 10%
+         *         earlier
+         */
+        public double getLate() {
+            return count == 0 ? 0 : sum / count;
+        }
+
+        /**
+         * @return how much the lateness varies, its standard deviation as a
+         *         fraction; 0 with fewer than two crossings. A train whose
+         *         arrivals vary widely is one whose speed model can't be
+         *         trusted far between fixes
+         */
+        public double getSpread() {
+            return spread(count, sum, sumSquares);
         }
     }
 }
