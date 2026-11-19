@@ -32,9 +32,14 @@ import jmri.util.ThreadingUtil;
  * stopped.
  * <p>
  * It also checks, once a second while any train record is placed, whether a
- * train is overdue: not seen to reach the next Block when even its slowest
- * estimated position has been past the end of its Block for
- * {@value #OVERDUE_SECONDS} seconds. Such a train is reported to the
+ * train is overdue: not seen to reach the next Block when even a train
+ * {@value #SLOWER_THAN_PROFILE} times slower than its speed profile would
+ * have had its first detected wheel there for {@value #OVERDUE_SECONDS}
+ * seconds. A profile is measured on one stretch of track, and trains are
+ * slower on grades and curves, with a load, or cold, so a train taking only a
+ * little longer than its profile says is not overdue; and the detector sees
+ * wheels, not buffers, so a train stopped with its front at the end of its
+ * Block is not overdue either. Such a train is reported to the
  * {@link TrainRecordManager} as stalled, if a command to move is in force,
  * or lost. Only a train whose place is
  * {@link Confidence#CONFIRMED confirmed} is checked: one kept in a Block
@@ -62,6 +67,16 @@ public class TrainTrackingWarnings extends PropertyChangeSupport implements Inst
      * the end of its Block before it is overdue.
      */
     public static final int OVERDUE_SECONDS = 5;
+
+    /**
+     * How many times longer than its speed profile says a train may take to
+     * reach the end of its Block before it can be overdue: trains run slower
+     * than their profiles on grades and curves, with a load, or cold, and a
+     * Block's length may be entered a little short.
+     *
+     * @since 5.19.2
+     */
+    public static final double SLOWER_THAN_PROFILE = 1.5;
 
     private final TrainRecordManager manager;
     private final List<Warning> warnings = new ArrayList<>();
@@ -223,8 +238,17 @@ public class TrainTrackingWarnings extends PropertyChangeSupport implements Inst
 
     /**
      * Report each placed train, its place confirmed and not identified by a
-     * Block's value, whose slowest estimate has been past the end of its
-     * Block for {@value #OVERDUE_SECONDS} seconds.
+     * Block's value, that even {@value #SLOWER_THAN_PROFILE} times slower than
+     * its slowest estimate would have reached the next Block, and has for
+     * {@value #OVERDUE_SECONDS} seconds.
+     * <p>
+     * What is compared with the Block's length is where its first detected
+     * wheel is, which is what the next Block's detector sees, not its front:
+     * a train standing with its buffers at the end of its Block, as Dispatcher
+     * stops one at the end of a Section, hasn't reached the next Block. And
+     * it is compared as a distance, not a time, so a train told to stop is
+     * overdue only where even the slowest train would have stopped beyond the
+     * next boundary, however long it stands.
      *
      * @param nowNanos the moment, on the {@link System#nanoTime()} scale
      */
@@ -236,10 +260,11 @@ public class TrainTrackingWarnings extends PropertyChangeSupport implements Inst
                 pastEndSince.remove(r);
                 continue;
             }
-            TrainPositionEstimator.Momentum momentum = momentumOf(r);
-            TrainPositionEstimate e = TrainPositionEstimator.estimate(r, momentum, nowNanos);
-            if (e == null || !e.isLimitedByBlock() || e.getBlock().getLengthMm() <= 0
-                    || e.getMinMm() < e.getBlock().getLengthMm()) {
+            TrainPositionEstimate e = TrainPositionEstimator.estimateDetected(r, momentumOf(r), nowNanos);
+            List<TrainRecord.TrailEntry> trail = r.getTrail();
+            double length = e == null || trail.isEmpty() ? 0
+                    : TrainPositionEstimator.lengthOn(e.getBlock(), trail.get(trail.size() - 1).getFrom());
+            if (e == null || length <= 0 || e.getUnlimitedMinMm() < SLOWER_THAN_PROFILE * length) {
                 pastEndSince.remove(r);
                 continue;
             }

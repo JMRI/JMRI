@@ -55,7 +55,11 @@
       while train tracking is sure where it is: a train kept in a Block after the Block went
       empty, one of several trains that could have entered a Block, or a train placed or chosen
       because a Block's value named it, is not reported stalled. Block values can follow the
-      wrong train where trains run close together.
+      wrong train where trains run close together. A train is taken to be "in time" while it is
+      no more than half as slow again as its speed profile says, and for five seconds after that:
+      trains run slower than their profiles on grades and curves, with a load, or cold. A train
+      that is reported stalled when it is only running slowly has a speed profile that is too
+      fast for it, or a Block length that is too short.
       To have a window open for each such train as well, turn it on in <strong>Preferences &gt;
       Messages &gt; Train Tracking Warnings</strong>; it is off unless turned on. In the window,
       <strong>Show Me</strong> opens the Block dialog and <strong>Later</strong> closes the

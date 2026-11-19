@@ -70,11 +70,18 @@ public class TrainTrackingWarningsTest {
         TrainTrackingWarnings warnings = InstanceManager.getDefault(TrainTrackingWarnings.class);
         long entered = r.getTrail().get(r.getTrail().size() - 1).getTimeNanos();
 
-        // 200 mm/s: the front reaches the end of B's 400 mm after 2 s
+        // 200 mm/s: the first detected wheel reaches the end of B's 400 mm after 2 s, and a train half as
+        // slow again would have reached it after 3 s, 600 mm at the profile's speed
         ThreadingUtil.runOnGUI(() -> warnings.checkOverdue(entered + 1 * S));
-        ThreadingUtil.runOnGUI(() -> warnings.checkOverdue(entered + 3 * S));
-        assertEquals(Confidence.CONFIRMED, r.getConfidence(), "past the end, but not for long");
+        ThreadingUtil.runOnGUI(() -> warnings.checkOverdue(entered + 29 * S / 10));
         ThreadingUtil.runOnGUI(() -> warnings.checkOverdue(entered + 3 * S
+                + TrainTrackingWarnings.OVERDUE_SECONDS * S));
+        assertEquals(Confidence.CONFIRMED, r.getConfidence(),
+                "a train slower than its profile would still be on its way at 2.9 s; first seen overdue at 8 s");
+        ThreadingUtil.runOnGUI(() -> warnings.checkOverdue(entered + 3 * S
+                + TrainTrackingWarnings.OVERDUE_SECONDS * S + S / 10));
+        assertEquals(Confidence.CONFIRMED, r.getConfidence(), "not for five seconds yet");
+        ThreadingUtil.runOnGUI(() -> warnings.checkOverdue(entered + 8 * S
                 + TrainTrackingWarnings.OVERDUE_SECONDS * S));
         assertEquals(Confidence.STALLED, r.getConfidence(), "its lead loco told to move, not seen to leave B");
         JUnitUtil.waitFor(() -> warnings.getWarnings().size() == 1, "a warning");
@@ -103,8 +110,7 @@ public class TrainTrackingWarningsTest {
         JUnitUtil.waitFor(() -> r.getConfidence() == Confidence.ESTIMATED, "B went empty: kept there, estimated");
 
         ThreadingUtil.runOnGUI(() -> warnings.checkOverdue(entered + 3 * S));
-        ThreadingUtil.runOnGUI(() -> warnings.checkOverdue(entered + 3 * S
-                + TrainTrackingWarnings.OVERDUE_SECONDS * S));
+        ThreadingUtil.runOnGUI(() -> warnings.checkOverdue(entered + 30 * S));
         assertEquals(Confidence.ESTIMATED, r.getConfidence(), "still estimated, not stalled");
         assertTrue(warnings.getWarnings().isEmpty(), "no warning");
     }
@@ -123,13 +129,67 @@ public class TrainTrackingWarningsTest {
         long entered = r.getTrail().get(r.getTrail().size() - 1).getTimeNanos();
 
         ThreadingUtil.runOnGUI(() -> warnings.checkOverdue(entered + 3 * S));
-        ThreadingUtil.runOnGUI(() -> warnings.checkOverdue(entered + 3 * S
-                + TrainTrackingWarnings.OVERDUE_SECONDS * S));
+        ThreadingUtil.runOnGUI(() -> warnings.checkOverdue(entered + 30 * S));
         assertEquals(Confidence.CONFIRMED, r.getConfidence(), "not stalled");
         assertTrue(warnings.getWarnings().isEmpty(), "no warning");
 
         ThreadingUtil.runOnGUI(() -> r.place(List.of(b), true));
         assertFalse(r.isIdentifiedByValue(), "placed by code: no longer identified by a value");
+    }
+
+    /**
+     * A train told to stop with its front at the end of its Block, as
+     * Dispatcher stops one at the end of a Section, hasn't reached the next
+     * Block: its first detected wheel is an overhang behind its front, and
+     * its profile may be a little fast. It is never reported lost, however
+     * long it stands.
+     */
+    @Test
+    public void testStoppedAtTheEndOfItsBlockIsNotOverdue() {
+        TrainRecord r = shunterEntersB(false);
+        TrainTrackingWarnings warnings = InstanceManager.getDefault(TrainTrackingWarnings.class);
+        long entered = r.getTrail().get(r.getTrail().size() - 1).getTimeNanos();
+        // told to stop after 2.1 s: by its profile, its wheel 20 mm past the end of B, its front further
+        stopAt(entered + 21 * S / 10);
+        JUnitUtil.waitFor(() -> r.getCommands().size() == 4, "the stop reached the record");
+        for (int s = 1; s <= 60; s++) {
+            long at = entered + s * S;
+            ThreadingUtil.runOnGUI(() -> warnings.checkOverdue(at));
+        }
+        assertEquals(Confidence.CONFIRMED, r.getConfidence(), "standing at the end of B, not lost");
+        assertTrue(warnings.getWarnings().isEmpty(), "no warning");
+    }
+
+    /**
+     * A train told to stop where even a train half as slow again as its
+     * profile would have been well into the next Block, and not seen there,
+     * is lost.
+     */
+    @Test
+    public void testStoppedBeyondTheNextBoundaryIsLost() {
+        TrainRecord r = shunterEntersB(false);
+        TrainTrackingWarnings warnings = InstanceManager.getDefault(TrainTrackingWarnings.class);
+        long entered = r.getTrail().get(r.getTrail().size() - 1).getTimeNanos();
+        stopAt(entered + 4 * S); // 800 mm at the profile's speed: past 600
+        JUnitUtil.waitFor(() -> r.getCommands().size() == 4, "the stop reached the record");
+        ThreadingUtil.runOnGUI(() -> warnings.checkOverdue(entered + 5 * S));
+        ThreadingUtil.runOnGUI(() -> warnings.checkOverdue(entered + 10 * S));
+        assertEquals(Confidence.LOST, r.getConfidence(), "nothing tells it to move: lost");
+    }
+
+    /** The lead loco of {@link #shunterEntersB} told to stop at a moment. */
+    private static void stopAt(long nanos) {
+        jmri.LocoSpeedSource stop = new jmri.LocoSpeedSource() {
+            @Override
+            public void addLocoSpeedListener(jmri.LocoSpeedSource.Listener listener) {
+                listener.speedCommanded(new jmri.DccLocoAddress(7, false), 0f, true, nanos);
+            }
+
+            @Override
+            public void removeLocoSpeedListener(jmri.LocoSpeedSource.Listener listener) {
+            }
+        };
+        ThreadingUtil.runOnLayout(() -> InstanceManager.store(stop, jmri.LocoSpeedSource.class));
     }
 
     private Block a;
