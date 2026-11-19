@@ -30,6 +30,33 @@ public class CbusOpCodesTest {
     // no testCtor as class only supplies static methods
 
     @Test
+    public void testIsTooShort() {
+        // ACON: opcode and 4 data bytes
+        assertFalse(CbusOpCodes.isTooShort(new CanReply(new int[]{CbusConstants.CBUS_ACON, 0, 1, 0, 2}, 0x12)),
+            "whole");
+        assertFalse(CbusOpCodes.isTooShort(new CanReply(new int[]{CbusConstants.CBUS_ACON, 0, 1, 0, 2, 9}, 0x12)),
+            "longer: no byte missing");
+        assertTrue(CbusOpCodes.isTooShort(new CanReply(new int[]{CbusConstants.CBUS_ACON, 0, 1, 0}, 0x12)),
+            "a byte missing");
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Dropped CBUS frame [12] 90 00 01 00: ACON needs 5 bytes, the frame has 4");
+        assertFalse(CbusOpCodes.isTooShort(new CanReply(new int[]{0x18}, 0x12)),
+            "an opcode not in the table is not checked");
+        CanReply extended = new CanReply(new int[]{CbusConstants.CBUS_ACON}, 0x12);
+        extended.setExtended(true);
+        assertFalse(CbusOpCodes.isTooShort(extended), "extended frames are not CBUS opcodes");
+    }
+
+    @Test
+    public void testIsTooShortLogsEachOpcodeOnce() {
+        CanReply r = new CanReply(new int[]{CbusConstants.CBUS_NUMEV, 0x01, 0x02}, 0x12);
+        assertTrue(CbusOpCodes.isTooShort(r), "short");
+        assertTrue(CbusOpCodes.isTooShort(r), "short, checked by another listener");
+        assertTrue(CbusOpCodes.isTooShort(new CanReply(new int[]{CbusConstants.CBUS_NUMEV, 0x01}, 0x12)),
+            "another short frame, same opcode");
+        jmri.util.JUnitAppender.assertWarnMessageStartingWith("Dropped CBUS frame [12] 74 01 02: NUMEV needs 4 bytes, the frame has 3");
+    }
+
+    @Test
     public void testDecode() {
         CanMessage m = new CanMessage( new int[]{CbusConstants.CBUS_RESTP },0x12 ); // request e stop
         assertEquals("",CbusOpCodes.decode(m),"CbusOpCodes.decode");
