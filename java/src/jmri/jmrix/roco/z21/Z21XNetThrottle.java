@@ -39,7 +39,7 @@ public class Z21XNetThrottle extends jmri.jmrix.roco.RocoXNetThrottle {
      * {@inheritDoc}
      */
     @Override
-    synchronized public void setSpeedSetting(float speed) {
+    protected synchronized void sendSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
         log.debug("set Speed to: {} Current step mode is: {}",speed,this.speedStepMode);
         synchronized(this) {
             this.speedSetting = speed;
@@ -62,16 +62,6 @@ public class Z21XNetThrottle extends jmri.jmrix.roco.RocoXNetThrottle {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
-        synchronized(this) {
-            this.speedSetting = speed;
-        }
-        record(speed);
-    }
 
     /**
      * Send a request to get the speed, direction and function status from

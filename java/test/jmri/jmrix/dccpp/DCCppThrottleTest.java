@@ -64,6 +64,45 @@ public class DCCppThrottleTest extends jmri.jmrix.AbstractThrottleTest {
      *   Set up commandstation to set version, set speed and direction,
      *   then verify the syntax of the last message added to the queue
      */
+    /**
+     * Setting the speed again sends it again, as setting it with duplicates
+     * allowed does.
+     */
+    @Test
+    public void testSpeedSettingAgainIsSent() {
+        DCCppCommandStation cs = tc.getCommandStation();
+        cs.setCommandStationInfo(DCCppReply.parseDCCppReply(
+                "iDCC-EX V-4.0.1 / FireBoxMK1 / FIREBOX_MK1 / G-9db6d36"));
+        instance.setIsForward(true);
+        instance.setSpeedSetting(0.5f);
+        int n = tc.outbound.size();
+        instance.setSpeedSettingAgain(0.5f);
+        Assertions.assertEquals(n + 1, tc.outbound.size(), "sent again");
+        Assertions.assertEquals("t 3 63 1", tc.outbound.get(n).toString());
+        instance.setSpeedSetting(0.25f, true, true);
+        Assertions.assertEquals(n + 2, tc.outbound.size(), "sent with duplicates allowed");
+    }
+
+    /**
+     * A speed limit is applied before the speed message is built.
+     */
+    @Test
+    public void testSpeedMessageIsLimited() {
+        DCCppCommandStation cs = tc.getCommandStation();
+        cs.setCommandStationInfo(DCCppReply.parseDCCppReply(
+                "iDCC-EX V-4.0.1 / FireBoxMK1 / FIREBOX_MK1 / G-9db6d36"));
+        instance.setIsForward(true);
+        jmri.ThrottleSpeedLimiter limiter = address -> 0.5f;
+        jmri.InstanceManager.setDefault(jmri.ThrottleSpeedLimiter.class, limiter);
+        try {
+            instance.setSpeedSetting(1.0f);
+            DCCppMessage lm = tc.outbound.get(tc.outbound.size()-1);
+            Assertions.assertEquals( "t 3 63 1", lm.toString(), "1.0 sent as 0.5");
+        } finally {
+            jmri.InstanceManager.deregister(limiter, jmri.ThrottleSpeedLimiter.class);
+        }
+    }
+
     @Test
     public void testSpeedSettingAndDirection(){
         DCCppCommandStation cs = tc.getCommandStation();

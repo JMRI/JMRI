@@ -120,7 +120,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     @Override
-    public synchronized void setSpeedSetting(float speed) {
+    protected synchronized void sendSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
 
@@ -233,7 +233,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
                     case 0x01:
                         if (!isForward) {
                             speedSetting = 0.0f;
-                            super.setSpeedSetting(speedSetting);
+                            speedSettingChanged(speedSetting);
                             isForward = true;
                             firePropertyChange(ISFORWARD, false, isForward);
                         }
@@ -241,14 +241,14 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
                     case 0x02:
                         if (isForward) {
                             speedSetting = 0.0f;
-                            super.setSpeedSetting(speedSetting);
+                            speedSettingChanged(speedSetting);
                             isForward = false;
                             firePropertyChange(ISFORWARD, true, isForward);
                         }
                         return;
                     case 0x03:
                         speedSetting = 0.0f;
-                        super.setSpeedSetting(speedSetting);
+                        speedSettingChanged(speedSetting);
                         isForward = !isForward;
                         firePropertyChange(ISFORWARD, !isForward, isForward);
                         return;
@@ -266,7 +266,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
             }
             float newSpeed = floatSpeed(f.speed());
             log.debug("Speed raw {} float {}", f.speed(), newSpeed);
-            super.setSpeedSetting(newSpeed);
+            speedSettingChanged(newSpeed);
         }
 
         if (frame instanceof Cs2DecoderCommands.LocoFunctionReplyFrame) {

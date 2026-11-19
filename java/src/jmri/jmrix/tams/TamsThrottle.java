@@ -165,7 +165,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     @Override
-    public synchronized void setSpeedSetting(float speed) {
+    protected synchronized void sendSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
 
@@ -210,7 +210,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
         boolean old = isForward;
         isForward = forward;
         synchronized(this) {
-            setSpeedSetting(speedSetting);  // send the command
+            sendSpeedSetting(speedSetting, false, false);  // send the command
         }
         firePropertyChange(ISFORWARD, old, isForward);
     }
@@ -290,7 +290,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
                 try {
                     StringBuilder sb = new StringBuilder();
                     Float newSpeed = floatSpeed(tr.getElement(0));
-                    super.setSpeedSetting(newSpeed);
+                    speedSettingChanged(newSpeed);
                     log.trace("f0 = {}", tr.getElement(3) & 0x40);
                     
                     appendFuncString(0,sb,((tr.getElement(3) & 0x40) == 64));
@@ -329,7 +329,7 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener {
                     log.trace("ASCII address = {}", address.getNumber());
                     String[] lines = tr.toString().split(" ");
                     Float newSpeed = floatSpeed(Integer.parseInt(lines[2]));
-                    super.setSpeedSetting(newSpeed);
+                    speedSettingChanged(newSpeed);
                     updateFunction(0,lines[3].equals("1"));
                     
                     if (lines[4].equals("r") && isForward) {

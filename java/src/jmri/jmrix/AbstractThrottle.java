@@ -239,23 +239,35 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     }
 
     /**
-     * setSpeedSetting - Implementing functions should override this function,
-     * but should either make a call to super.setSpeedSetting() to notify the
-     * listeners at the end of their work, or should notify the listeners
-     * themselves.
+     * The speed last requested through {@link #setSpeedSetting(float)},
+     * {@link #setSpeedSetting(float, boolean, boolean)} or
+     * {@link #setSpeedSettingAgain(float)}, before any limit: what the user,
+     * or the program driving the loco, asked for.
+     */
+    private volatile float requestedSpeed = 0.0f;
+
+    /**
+     * Set the speed, as {@link #setSpeedSetting(float, boolean, boolean)}
+     * does with duplicates suppressed.
+     * <p>
+     * This is final, so that every speed request is kept and limited: a
+     * system's throttle implements {@link #sendSpeedSetting(float, boolean,
+     * boolean)} instead.
      */
     @Override
-    public void setSpeedSetting(float speed) {
+    public final void setSpeedSetting(float speed) {
         setSpeedSetting(speed, false, false);
-        record(speed);
     }
 
     /**
-     * setSpeedSetting - Implementations should override this method only if
-     * they normally suppress messages to the system if, as far as JMRI can
-     * tell, the new message would make no difference to the system state (eg.
-     * the speed is the same, or effectivly the same, as the existing speed).
-     * Then, the boolean options can affect this behaviour.
+     * Set the speed: the one way in for every speed requested of this
+     * throttle. Keeps the request, applies any speed limit
+     * ({@link #applySpeedLimit(float)}), and sends the result with
+     * {@link #sendSpeedSetting(float, boolean, boolean)}.
+     * <p>
+     * This is final, so that every speed request is kept and limited: a
+     * system's throttle implements {@link #sendSpeedSetting(float, boolean,
+     * boolean)} instead.
      *
      * @param speed                 the new speed
      * @param allowDuplicates       don't suppress messages
@@ -263,11 +275,84 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      *                              'stop'
      */
     @Override
-    public synchronized void setSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
+    public final void setSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
+        requestedSpeed = speed;
+        sendSpeedSetting(applySpeedLimit(speed), allowDuplicates, allowDuplicatesOnStop);
+    }
+
+    /**
+     * Send a speed to the layout. Each system's throttle implements this with
+     * its own messages, and then stores the speed and tells listeners, as
+     * {@link #speedSettingChanged(float)} does. Implementations that normally
+     * suppress a message that would make no difference to the system state
+     * (the speed is the same, or effectively the same, as the existing speed)
+     * send it anyway as the two flags say.
+     * <p>
+     * This one, for a throttle with no layout to send to, only stores the speed
+     * and tells listeners.
+     *
+     * @param speed                 the speed to send, already limited
+     * @param allowDuplicates       don't suppress messages
+     * @param allowDuplicatesOnStop don't suppress messages if the new speed is
+     *                              'stop'
+     * @since 5.19.2
+     */
+    protected void sendSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
+        speedSettingChanged(speed);
+    }
+
+    /**
+     * Store a new speed setting and tell listeners, as for a speed sent or
+     * reported by the layout.
+     *
+     * @param speed the speed setting
+     * @since 5.19.2
+     */
+    protected final synchronized void speedSettingChanged(float speed) {
         if (Math.abs(this.speedSetting - speed) > 0.0001) {
             firePropertyChange(SPEEDSETTING, this.speedSetting, this.speedSetting = speed);
         }
         record(speed);
+    }
+
+    /**
+     * The speed last requested, before any limit.
+     *
+     * @return the speed requested, from -1 to 1
+     * @since 5.19.2
+     */
+    protected final float getRequestedSpeed() {
+        return requestedSpeed;
+    }
+
+    /**
+     * The speed to send for a requested speed: the request itself, unless a
+     * {@link jmri.ThrottleSpeedLimiter} is registered in the InstanceManager
+     * and limits this throttle's locomotive to less. A stop (0) or emergency
+     * stop (less than 0) is never changed, and the result is never more than
+     * the request or less than 0.
+     *
+     * @param speed the requested speed, from -1 to 1
+     * @return the speed to send
+     * @since 5.19.2
+     */
+    protected final float applySpeedLimit(float speed) {
+        if (!(speed > 0)) {
+            return speed; // stop, emergency stop, or NaN: unchanged
+        }
+        jmri.ThrottleSpeedLimiter limiter = InstanceManager.getNullableDefault(jmri.ThrottleSpeedLimiter.class);
+        if (limiter == null) {
+            return speed;
+        }
+        LocoAddress address = getLocoAddress();
+        if (address == null) {
+            return speed;
+        }
+        float limit = limiter.getSpeedLimit(address);
+        if (Float.isNaN(limit) || limit >= speed) {
+            return speed;
+        }
+        return Math.max(0.0f, limit);
     }
 
     /**

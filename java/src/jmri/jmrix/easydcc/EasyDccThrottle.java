@@ -126,7 +126,7 @@ public class EasyDccThrottle extends AbstractThrottle {
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     @Override
-    public void setSpeedSetting(float speed) {
+    protected void sendSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
         float oldSpeed;
         synchronized (this) {
             oldSpeed = this.speedSetting;
@@ -207,7 +207,7 @@ public class EasyDccThrottle extends AbstractThrottle {
         boolean old = isForward;
         isForward = forward;
         synchronized (this) {
-            setSpeedSetting(speedSetting);  // send the command
+            sendSpeedSetting(speedSetting, false, false);  // send the command
         }
         firePropertyChange(ISFORWARD, old, isForward);
     }

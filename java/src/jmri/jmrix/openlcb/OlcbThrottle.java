@@ -124,7 +124,7 @@ public class OlcbThrottle extends AbstractThrottle {
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     @Override
-    public synchronized void setSpeedSetting(float speed) {
+    protected synchronized void sendSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
         float oldSpeed = this.speedSetting;
         if (speed > 1.0) {
             log.warn("Speed was set too high: {}", speed);
