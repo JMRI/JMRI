@@ -77,7 +77,7 @@ public class TrainTrackingChecksLengthsTest {
     private static TrainTrackingMeasurements.Measurement measured(Block b, Block from, Block to, double... ratios) {
         TrainTrackingMeasurements.Measurement m = new TrainTrackingMeasurements.Measurement(b, from, to);
         for (double ratio : ratios) {
-            m.add(300 * ratio, 300.0);
+            m.add(1.0, 300 * ratio, 300.0); // a speed of 300 * ratio mm/s against a profile of 300
         }
         return m;
     }
