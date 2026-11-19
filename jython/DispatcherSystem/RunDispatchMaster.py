@@ -78,11 +78,15 @@ class RunDispatcherMaster(jmri.jmrit.automat.AbstractAutomaton ):
             scheduler_master.setName('Scheduler Master')
             scheduler_master.start()
 
-        monitorTrack_master = MonitorTrackMaster()
-        instanceList.append(monitorTrack_master)
-        if monitorTrack_master.setup():
-            monitorTrack_master.setName('Monitor Track Master')
-            monitorTrack_master.start()
+# MonitorTrackMaster is supposed to improve monitoring of trains on track.
+        # Should enable train to recover if loses contact with track.
+        # Needs improvement. Commented out for now as does not work with several trains running simultaneously.
+
+        # monitorTrack_master = MonitorTrackMaster()
+        # instanceList.append(monitorTrack_master)
+        # if monitorTrack_master.setup():
+        #     monitorTrack_master.setName('Monitor Track Master')
+        #     monitorTrack_master.start()
 
         off_action_master = OffActionMaster()
         instanceList.append(off_action_master)
