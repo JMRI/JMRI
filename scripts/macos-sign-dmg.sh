@@ -45,7 +45,6 @@ outdir="$workdir/out"
 mkdir "$indir" "$outdir"
 
 cleanup() {
-    hdiutil detach "$outdir" -force -quiet 2>/dev/null || true
     hdiutil detach "$indir" -force -quiet 2>/dev/null || true
     rm -rf "$workdir"
 }
@@ -54,11 +53,14 @@ trap cleanup EXIT
 # hdiutil sometimes fails with "Resource busy" on GitHub's Mac runners (actions/runner-images#7522), so retry it
 hdi() {
     local attempt
-    for attempt in 1 2 3 4 5; do
+    for attempt in 1 2 3 4; do
         hdiutil "$@" && return 0
         echo "hdiutil $1 failed, attempt $attempt" 1>&2
-        sleep 5
+        sleep 10
     done
+    if [ "$1" = detach ]; then
+        hdiutil "$@" -force && return 0
+    fi
     return 1
 }
 
@@ -92,14 +94,11 @@ staple() {
     return 1
 }
 
-# copy the image contents into a new writable image with room to spare
-hdi attach "$INPUT" -mountpoint "$indir" -nobrowse -readonly -quiet
+# copy the image contents to a folder, sign them there, then build the final image from the folder
+hdi attach "$INPUT" -mountpoint "$indir" -nobrowse -readonly
 volname=$(diskutil info "$indir" | sed -n 's/^ *Volume Name: *//p')
-size=$(( $(du -ms "$indir" | awk '{print $1}') + 80 ))
-hdi create -ov -size ${size}m -fs HFS+ -layout SPUD -volname "$volname" "$workdir/rw.dmg" -quiet
-hdi attach "$workdir/rw.dmg" -mountpoint "$outdir" -nobrowse -quiet
 ditto "$indir/JMRI" "$outdir/JMRI"
-hdi detach "$indir" -quiet
+hdi detach "$indir"
 jmri="$outdir/JMRI"
 
 # native libraries inside jars: pull each one out, sign it, and put it back
@@ -145,9 +144,8 @@ if [ "$notarize" = true ]; then
 fi
 
 ln -s /Applications "$outdir/Applications"
-hdi detach "$outdir" -quiet
 rm -f "$OUTPUT"
-hdi convert "$workdir/rw.dmg" -ov -format UDZO -imagekey zlib-level=9 -o "$OUTPUT" -quiet
+hdi create -ov -srcfolder "$outdir" -volname "$volname" -fs HFS+ -format UDZO -imagekey zlib-level=9 "$OUTPUT"
 hdiutil verify "$OUTPUT" -quiet
 codesign "${dmg_args[@]}" "$OUTPUT"
 echo "signed $OUTPUT"
