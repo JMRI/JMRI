@@ -2,13 +2,12 @@ package jmri.util;
 
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.DisplayMode;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.IllegalComponentStateException;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.Window;
-//import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,50 +18,40 @@ import jmri.InstanceManagerAutoDefault;
  * Position a Window relative to a component in another window so as
  * to not obscure a component in that window. Typically, the Component
  * is being edited by actions done in the target Window.\p
- * Note the assumption in multiple screen environments is the screens
- * are configured horizontally.
+ * With more than one screen, each screen's own bounds are used, as the
+ * system arranges them: side by side or stacked, of different sizes, with
+ * the main screen anywhere among them. A window is placed on the screen its
+ * parent is on, and is always kept on that screen.
  *
  * @author Pete Cressman Copyright (C) 2018
  * @since 4.13.1
  */
 public class PlaceWindow implements InstanceManagerAutoDefault {
-    static final GraphicsEnvironment _environ = GraphicsEnvironment.getLocalGraphicsEnvironment();
 
-    // Each instance keeps its own screen sizes, complete before the
+    // Each instance keeps its own screen bounds, complete before the
     // constructor returns, so making a new instance (as each test does)
     // never changes those another instance, perhaps on another thread, is
     // using.
-    private final Dimension[] _screenSize;
-    private final Dimension _totalScreenDim;
+    private final Rectangle[] _screenBounds;
 
     public PlaceWindow() {
-        GraphicsDevice[] gd = _environ.getScreenDevices();
-        Dimension[] screenSize = new Dimension[gd.length];
-        int totalWidth = 0;
-        int maxHeight = 0;
+        this(GraphicsEnvironment.getLocalGraphicsEnvironment());
+    }
+
+    /**
+     * Place windows on a given set of screens.
+     *
+     * @param environ the graphics environment whose screens to use
+     */
+    PlaceWindow(GraphicsEnvironment environ) {
+        GraphicsDevice[] gd = environ.getScreenDevices();
+        Rectangle[] bounds = new Rectangle[gd.length];
         for (int i = 0; i < gd.length; i++) {
-            String deviceID = gd[i].getIDstring();
-            DisplayMode dm = gd[i].getDisplayMode();
-            screenSize[i] = new Dimension(dm.getWidth(), dm.getHeight());
-            totalWidth += dm.getWidth();                     // assuming screens are horizontal
-            maxHeight = Math.max(maxHeight, dm.getHeight()); // use maximum height
-            if (log.isDebugEnabled()) {
-                log.debug("\"Screen # {} deviceID= {}: width= {}, height= {}",
-                        i, deviceID, dm.getWidth(), dm.getHeight());
-            }
+            // where the system puts this screen among the others
+            bounds[i] = new Rectangle(gd[i].getDefaultConfiguration().getBounds());
+            log.debug("Screen # {} deviceID= {}: {}", i, gd[i].getIDstring(), bounds[i]);
         }
-        _screenSize = screenSize;
-        _totalScreenDim = new Dimension(totalWidth, maxHeight);
-        if (log.isDebugEnabled()) {
-            try {
-                GraphicsDevice dgd = _environ.getDefaultScreenDevice();
-                DisplayMode dm = dgd.getDisplayMode();
-                log.debug("\"DefaultScreen= {}: width= {}, height= {}", dgd.getIDstring(), dm.getWidth(), dm.getHeight());
-                log.debug("\"Total Screen size: width= {}, height= {}", _totalScreenDim.width, _totalScreenDim.height);
-             } catch (java.awt.IllegalComponentStateException icse ) {
-                 log.debug( "unable to construct debug information due to illegal component state");
-             }
-        }
+        _screenBounds = bounds;
     }
 
     public static PlaceWindow getDefault() {
@@ -72,57 +61,70 @@ public class PlaceWindow implements InstanceManagerAutoDefault {
     }
 
     /**
-     * In a possibly multi-monitor environment, find the screen displaying
-     * the window and return its dimensions.
-     * \p
-     * getLocation() and getLocationOnScreen() return the same Point which
-     * has coordinates in the total display area, i.e. all screens combined.
-     * Note DefaultScreen is NOT this total combined display area.
-     *
-     * We assume monitors are aligned horizontally - at least this is the only
-     * configuration possible from Windows settings.
+     * Find the screen a window is on: the one holding the middle of its top
+     * edge, or, if that is on no screen, the screen nearest it.
      *
      * @param window a window
-     * @return Screen number of window location
+     * @return the screen's number, 0 if there are no screens
      */
     public int getScreenNum(Window window) {
-        /* this always has window on device  #0 ??
-        GraphicsDevice windowDevice = window.getGraphicsConfiguration().getDevice();
-        DisplayMode windowDM = windowDevice.getDisplayMode();
-        GraphicsDevice[] gd = _environ.getScreenDevices();
-        for (int i = 0; i < gd.length; i++) {
-            if (gd[i].getDisplayMode().equals(windowDM)) {
-               return i;
-            }
-        }*/
-        int x = 0;
+        Point p;
         try {
-            for (int i = 0;  i < _screenSize.length; i++) {
-                x += _screenSize[i].width;
-                if (window.getLocation().x < x) {
-                    return i;
-                }
-            }
-
+            Point loc = window.getLocation();
+            p = new Point(loc.x + window.getWidth() / 2, loc.y);
         } catch (IllegalComponentStateException icse) {
             return 0;
         }
-        return 0;
+        int nearest = 0;
+        long nearestDistance = Long.MAX_VALUE;
+        for (int i = 0; i < _screenBounds.length; i++) {
+            Rectangle r = _screenBounds[i];
+            if (r.contains(p)) {
+                return i;
+            }
+            long dx = Math.max(Math.max(r.x - p.x, p.x - (r.x + r.width - 1)), 0);
+            long dy = Math.max(Math.max(r.y - p.y, p.y - (r.y + r.height - 1)), 0);
+            long distance = dx * dx + dy * dy;
+            if (distance < nearestDistance) {
+                nearestDistance = distance;
+                nearest = i;
+            }
+        }
+        return nearest;
     }
 
+    /**
+     * @param screenNum a screen's number
+     * @return its size, or 0 x 0 if there is no such screen
+     */
     public Dimension getScreenSize(int screenNum) {
-        if (screenNum >= 0 && screenNum < _screenSize.length) {
-            return _screenSize[screenNum];
+        if (screenNum >= 0 && screenNum < _screenBounds.length) {
+            return _screenBounds[screenNum].getSize();
         }
         return new Dimension(0, 0);
     }
+
+    /**
+     * @param screenNum a screen's number
+     * @return where the screen is among the others, and its size, or an
+     *         empty rectangle at 0, 0 if there is no such screen
+     * @since 5.19.2
+     */
+    public Rectangle getScreenBounds(int screenNum) {
+        if (screenNum >= 0 && screenNum < _screenBounds.length) {
+            return new Rectangle(_screenBounds[screenNum]);
+        }
+        return new Rectangle(0, 0, 0, 0);
+    }
+
     /**
      * Find the best place to position the target window next to the component but not
      * obscuring it. Positions target to the Left, Right, Below or Above. Tries in
      * that order to keep target within the parent window. If not possible, tries
-     * to keep the target window within the parent's screen. Failing that, will
-     * minimize the amount the target window is off screen.  The method guarantees
-     * a non-null component will not be obscured.\p
+     * to keep the target window within the parent's screen. Failing that, it is
+     * placed beside the component as far as it can be while staying on the
+     * parent's screen, so that it is always on a screen, and covers as little of
+     * the component as it can.\p
      * If the component is null, the target window is placed beside the parent
      * window, to the Left, Right, Below or Above it.\b
      * Should be called after target is packed and <strong>before</strong> target is
@@ -138,19 +140,18 @@ public class PlaceWindow implements InstanceManagerAutoDefault {
             return new Point(0, 0);
         }
         Point loc = findLocation(parent, comp, target);
-        if (log.isDebugEnabled()) {
-            log.debug("return target location: X= {}, Y= {}", loc.x, loc.y);
-        }
+        log.debug("return target location: X= {}, Y= {}", loc.x, loc.y);
         target.setLocation(loc);
         return loc;
     }
 
     private Point findLocation(Window parent, Component comp, Window target) {
-        Point loc;
         Point parentLoc = parent.getLocation();
         Dimension parentDim = parent.getSize();
-        int screenNum = getScreenNum(parent);
-        Dimension parentScreen =getScreenSize(screenNum);
+        Rectangle screen = getScreenBounds(getScreenNum(parent));
+        if (screen.isEmpty()) {
+            screen = new Rectangle(parentLoc, parentDim); // no screens known: keep to the parent
+        }
         Dimension targetDim = target.getPreferredSize();
         Point compLoc;
         Dimension compDim;
@@ -169,118 +170,76 @@ public class PlaceWindow implements InstanceManagerAutoDefault {
             compDim = parentDim;
             margin = 0;
         }
-        int num = screenNum - 1;
-        int screenLeft = 0;
-        while (num >= 0) {
-            screenLeft += getScreenSize(num).width;
-            num--;
-        }
-        int screenRight = screenLeft + parentScreen.width;
-        if (log.isDebugEnabled()) {
-            log.debug("parent at loc ({}, {}) is on screen #{}. Size: width= {}, height= {}",
-                    parentLoc.x, parentLoc.y, screenNum, parentDim.width, parentDim.height);
-            log.debug("Component at loc ({}, {}). Size: width= {}, height= {}",
-                    compLoc.x, compLoc.y, compDim.width, compDim.height);
-            log.debug("targetDim: width= {}, height= {}. screenLeft= {}, screen= {} x {}",
-                    targetDim.width, targetDim.height, screenLeft, parentScreen.width, parentScreen.height);
-        }
+        int screenRight = screen.x + screen.width;
+        int screenBottom = screen.y + screen.height;
+        log.debug("parent at {} size {}, on screen {}; component at {} size {}; target {}",
+                parentLoc, parentDim, screen, compLoc, compDim, targetDim);
 
-        // try left or right of Component
+        // left or right of the component, centred on it, kept to the screen's height
         int xr = compLoc.x + compDim.width + margin;
         int xl = compLoc.x - targetDim.width - margin;
-        // compute the corresponding vertical offset
-        int hOff = compLoc.y + (compDim.height -  targetDim.height)/2;
-        if (hOff + targetDim.height > parentScreen.height) {
-            hOff = parentScreen.height - targetDim.height;
-        }
-        if (hOff < 0) {
-            hOff = 0;
-        }
-        // try above or below Component
+        int hOff = within(compLoc.y + (compDim.height - targetDim.height) / 2, screen.y,
+                screenBottom - targetDim.height);
+        // below or above the component, centred on it, kept to the screen's width
         int yb = compLoc.y + compDim.height + margin;
         int ya = compLoc.y - targetDim.height - margin;
-        // compute the corresponding horizontal offset
-        int vOff = compLoc.x + (compDim.width -  targetDim.width)/2;
-        if (vOff + targetDim.width > parentScreen.width - targetDim.width) {
-            vOff = parentScreen.width - targetDim.width;
-        }
-        if (vOff < screenLeft) {
-            vOff = screenLeft;
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("UpperleftCorners: xl=({},{}), xr=({},{}), yb=({},{}), ya=({},{})",
-                    xl,hOff, xr,hOff, vOff,yb, vOff,ya);
-        }
+        int vOff = within(compLoc.x + (compDim.width - targetDim.width) / 2, screen.x,
+                screenRight - targetDim.width);
+        log.debug("UpperleftCorners: xl=({},{}), xr=({},{}), yb=({},{}), ya=({},{})",
+                xl, hOff, xr, hOff, vOff, yb, vOff, ya);
 
         // try to keep completely within the parent window
-        if (xl >= parentLoc.x){
+        if (xl >= parentLoc.x) {
             return new Point(xl, hOff);
-        } else if ((xr + targetDim.width <= parentLoc.x + parentDim.width)) {
+        } else if (xr + targetDim.width <= parentLoc.x + parentDim.width) {
             return new Point(xr, hOff);
         } else if (yb + targetDim.height <= parentLoc.y + parentDim.height) {
             return new Point(vOff, yb);
         } else if (ya >= parentLoc.y) {
-            if (ya < 0) {
-                ya = 0;
-            }
-            return new Point(vOff, ya);
+            return new Point(vOff, Math.max(ya, screen.y));
         }
-        // none were entirely within the parent window
 
-        // try to keep completely within the parent screen
-        if (log.isDebugEnabled()) {
-            log.debug("Off screen: left= {}, right = {}, below= {}, above= {}",
-                    xl, xr, yb, ya);
-        }
-        if (xl > screenLeft){
+        // then completely within the parent's screen (to the left only if
+        // not right against the screen's edge, as before)
+        if (xl > screen.x) {
             return new Point(xl, hOff);
         } else if (xr + targetDim.width <= screenRight) {
             return new Point(xr, hOff);
-        } else if (yb + targetDim.height <= parentScreen.height) {
+        } else if (yb + targetDim.height <= screenBottom) {
             return new Point(vOff, yb);
-        } else if (ya >= 0) {
+        } else if (ya >= screen.y) {
             return new Point(vOff, ya);
         }
 
-        // none were entirely within the parent screen.
-        // position, but insure target stays on the total screen
-        if (log.isDebugEnabled()) log.debug("Outside: widthUpToParent= {},  _totalScreenWidth= {}, screenHeight={}",
-                parentLoc.x, _totalScreenDim.width, parentScreen.height);
-        int offScreen = screenLeft - xl;
-        int minOff = offScreen;
-        log.debug("offScreen= {} minOff= {}, xl= {}", offScreen, minOff, xl);
-        if (xl < 0) {
-            xl = 0;
+        // none fits beside it on the screen: the side that would be least
+        // off the screen, moved back onto it
+        int offLeft = screen.x - xl;
+        int offRight = xr + targetDim.width - screenRight;
+        int offBelow = yb + targetDim.height - screenBottom;
+        int offAbove = screen.y - ya;
+        int least = Math.min(Math.min(offLeft, offRight), Math.min(offBelow, offAbove));
+        Point loc;
+        if (least == offLeft) {
+            loc = new Point(screen.x, hOff);
+        } else if (least == offRight) {
+            loc = new Point(screenRight - targetDim.width, hOff);
+        } else if (least == offBelow) {
+            loc = new Point(vOff, screenBottom - targetDim.height);
+        } else {
+            loc = new Point(vOff, screen.y);
         }
-        loc = new Point(xl, hOff);
-
-        offScreen = xr + targetDim.width - screenRight;
-        xr = screenRight - targetDim.width;
-        log.debug("offScreen= {}  minOff= {}, xr= {}", offScreen, minOff, xr);
-        if (offScreen < minOff) {
-            minOff = offScreen;
-            loc = new Point(xr, hOff);
-        }
-
-        offScreen = (yb + targetDim.height) - parentScreen.height;
-        yb = parentScreen.height - targetDim.height;
-        log.debug("offScreen= {} minOff = {}, yb= {}", offScreen, minOff, yb);
-        if (offScreen < minOff) {
-            minOff = offScreen;
-            if (yb < 0) {
-                yb = 0;
-            }
-            loc = new Point(vOff, yb);
-        }
-
-        offScreen = -ya;        // !(ya >= 0)
-        log.debug("offScreen= {} minOff = {}, ya= {}", offScreen, minOff, ya);
-        if (offScreen < minOff) {
-            ya = 0;
-            loc = new Point(vOff, ya);
-        }
-
+        // a target bigger than the screen keeps its top left corner on it
+        loc.x = within(loc.x, screen.x, screenRight - targetDim.width);
+        loc.y = within(loc.y, screen.y, screenBottom - targetDim.height);
         return loc;
+    }
+
+    /**
+     * @return value, moved to lie between low and high; low where high is
+     *         less than low
+     */
+    private static int within(int value, int low, int high) {
+        return Math.max(low, Math.min(value, high));
     }
 
     private static final Logger log = LoggerFactory.getLogger(PlaceWindow.class);
