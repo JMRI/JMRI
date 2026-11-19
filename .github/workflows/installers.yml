@@ -31,14 +31,12 @@ jobs:
         java-version: 11
     - name: Install Ant and NSIS
       run: sudo apt-get update -q && sudo apt-get install -y -q ant nsis
-    - name: Build Linux installer
-      run: ant package-linux
-    - name: Build Windows installer
-      run: ant package-windows
-    # the Mac folder is built here too, since macOS runners are scarce; a tar keeps the launchers executable
-    - name: Build macOS folder
+    # one ant call so every installer gets the same version string; the Mac folder is built here since macOS runners are scarce
+    - name: Build Linux and Windows installers and macOS folder
+      run: ant package-linux package-windows dist-macosx
+    # a tar keeps the Mac launchers executable
+    - name: Pack macOS folder
       run: |
-        ant dist-macosx
         version=$(basename dist/release/JMRI.*.tgz .tgz)
         version=${version#JMRI.}
         tar -C dist/MacOSX -cf "dist/release/JMRI.$version+macos.tar" JMRI
