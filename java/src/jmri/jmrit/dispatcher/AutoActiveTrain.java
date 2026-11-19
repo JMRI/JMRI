@@ -1542,24 +1542,88 @@ public class AutoActiveTrain implements ThrottleListener {
      * @return true if no errors else false
      */
     private boolean checkTurn(AllocatedSection as) {
-        if (as != null && as.getAutoTurnoutsResponse() != null) {
-            if (_turnoutStateNeeded  != null && _turnoutStateListener != null) {
-                _turnoutStateNeeded.removePropertyChangeListener("KnownState",_turnoutStateListener);
-                _turnoutStateNeeded = null;
-                _turnoutStateListener =null;
+        return checkTurn(as, _dispatcher.getAutoTurnoutsHelper());
+    }
+
+    /**
+     * Check that all turnouts in a section have finished setting, as
+     * {@link #checkTurn(AllocatedSection)}.
+     *
+     * @param as     Allocated section whose turnouts need to be checked.
+     * @param helper the Dispatcher's turnout checker
+     * @return true if no errors else false
+     */
+    // package access for testing
+    synchronized boolean checkTurn(AllocatedSection as, AutoTurnouts helper) {
+        stopWaitingForTurnout();
+        if (as == null || as.getAutoTurnoutsResponse() == null) {
+            return true;
+        }
+        while (true) {
+            Turnout to = helper.checkStateAgainstList(as.getAutoTurnoutsResponse());
+            if (to == null) {
+                return true;
             }
-            _turnoutStateNeeded = _dispatcher.getAutoTurnoutsHelper().checkStateAgainstList(as.getAutoTurnoutsResponse());
-            if (_turnoutStateNeeded != null) {
-                _turnoutStateNeeded.addPropertyChangeListener("KnownState",_turnoutStateListener = (PropertyChangeEvent e) -> {
-                    _turnoutStateNeeded.removePropertyChangeListener("KnownState",_turnoutStateListener);
-                    _turnoutStateListener=null;
-                    _turnoutStateNeeded=null;
-                    setSpeedBySignal();
-                });
+            waitForTurnout(to);
+            // it may have finished between the check and the listener being added,
+            // and then would not be heard of again
+            if (helper.checkStateAgainstList(as.getAutoTurnoutsResponse()) == to) {
                 return false;
             }
+            stopWaitingForTurnout();
         }
-        return true;
+    }
+
+    /**
+     * Listen for a turnout the train is waiting for to change. The listener
+     * knows its own turnout, so it doesn't depend on fields another thread
+     * may have changed by the time it is called.
+     *
+     * @param to the turnout
+     */
+    private synchronized void waitForTurnout(Turnout to) {
+        PropertyChangeListener listener = new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent e) {
+                turnoutChanged(to, this);
+            }
+        };
+        _turnoutStateNeeded = to;
+        _turnoutStateListener = listener;
+        to.addPropertyChangeListener("KnownState", listener);
+    }
+
+    /**
+     * Stop listening for the turnout the train is waiting for, if any.
+     */
+    private synchronized void stopWaitingForTurnout() {
+        if (_turnoutStateNeeded != null && _turnoutStateListener != null) {
+            _turnoutStateNeeded.removePropertyChangeListener("KnownState", _turnoutStateListener);
+        }
+        _turnoutStateNeeded = null;
+        _turnoutStateListener = null;
+    }
+
+    /**
+     * A turnout the train waited for has changed. Only the listener still
+     * waited on sets the speed again; one already replaced, or one left from
+     * before the train was disposed, just stops listening.
+     *
+     * @param to       the turnout
+     * @param listener the listener that heard the change
+     */
+    private synchronized void turnoutChanged(Turnout to, PropertyChangeListener listener) {
+        if (listener != _turnoutStateListener) {
+            to.removePropertyChangeListener("KnownState", listener);
+            return;
+        }
+        stopWaitingForTurnout();
+        setSpeedBySignal();
+    }
+
+    // package access for testing
+    synchronized Turnout getTurnoutWaitedFor() {
+        return _turnoutStateNeeded;
     }
 
     private void setSpeedBySignalMast() {
@@ -2803,11 +2867,7 @@ public class AutoActiveTrain implements ThrottleListener {
         }
         _controllingSignalMast = null;
         _conSignalMastListener = null;
-        if (_turnoutStateNeeded != null && _turnoutStateListener != null) {
-            _turnoutStateNeeded.removePropertyChangeListener(_turnoutStateListener);
-        }
-        _turnoutStateNeeded = null;
-        _turnoutStateListener = null;
+        stopWaitingForTurnout();
     }
 
     // the wait for the train to stop whose stop tasks are still to run, null if none

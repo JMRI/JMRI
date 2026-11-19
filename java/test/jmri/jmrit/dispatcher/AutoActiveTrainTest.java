@@ -2,6 +2,7 @@ package jmri.jmrit.dispatcher;
 
 import jmri.InstanceManager;
 import jmri.Transit;
+import jmri.Turnout;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.util.JUnitAppender;
@@ -93,9 +94,77 @@ public class AutoActiveTrainTest {
                 + " that does not cover this direction; using throttle % cap 1.0 instead");
     }
 
+    // checkTurn: waiting for a route's turnouts to finish setting
+
+    private AutoActiveTrain waitingTrain() {
+        DispatcherFrame df = Mockito.mock(DispatcherFrame.class);
+        InstanceManager.setDefault(DispatcherFrame.class, df);
+        Transit transit = new jmri.implementation.DefaultTransit("TT1");
+        ActiveTrain at = new ActiveTrain(transit, "Train", ActiveTrain.USER);
+        return new AutoActiveTrain(at);
+    }
+
+    private AllocatedSection sectionNeedingTurnouts() {
+        AllocatedSection as = Mockito.mock(AllocatedSection.class);
+        Mockito.when(as.getAutoTurnoutsResponse()).thenReturn(new java.util.ArrayList<>());
+        return as;
+    }
+
+    private static int knownStateListeners(Turnout to) {
+        return to.getPropertyChangeListeners("KnownState").length;
+    }
+
+    @Test
+    public void testDisposeStopsWaitingForTurnout() {
+        AutoActiveTrain t = waitingTrain();
+        Turnout to = InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
+        int before = knownStateListeners(to);
+        AutoTurnouts helper = Mockito.mock(AutoTurnouts.class);
+        Mockito.when(helper.checkStateAgainstList(Mockito.any())).thenReturn(to);
+
+        Assertions.assertFalse(t.checkTurn(sectionNeedingTurnouts(), helper), "turnout not yet set");
+        Assertions.assertEquals(to, t.getTurnoutWaitedFor());
+        Assertions.assertEquals(before + 1, knownStateListeners(to), "listening to the turnout");
+
+        t.dispose();
+        Assertions.assertEquals(before, knownStateListeners(to), "no longer listening after dispose");
+        // the turnout setting later must not reach the disposed train (it used to throw NullPointerException)
+        to.setCommandedState(Turnout.THROWN);
+        Assertions.assertNull(t.getTurnoutWaitedFor());
+    }
+
+    @Test
+    public void testTurnoutSetBeforeListenerAddedIsNotMissed() {
+        AutoActiveTrain t = waitingTrain();
+        Turnout to = InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
+        int before = knownStateListeners(to);
+        AutoTurnouts helper = Mockito.mock(AutoTurnouts.class);
+        // not set at the first check, set by the time the listener is in place
+        Mockito.when(helper.checkStateAgainstList(Mockito.any())).thenReturn(to, (Turnout) null);
+
+        Assertions.assertTrue(t.checkTurn(sectionNeedingTurnouts(), helper), "the turnout finished setting");
+        Assertions.assertNull(t.getTurnoutWaitedFor(), "not waiting for a turnout that is set");
+        Assertions.assertEquals(before, knownStateListeners(to), "not listening to it");
+    }
+
+    @Test
+    public void testTurnoutChangeStopsWaiting() {
+        AutoActiveTrain t = waitingTrain();
+        Turnout to = InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
+        int before = knownStateListeners(to);
+        AutoTurnouts helper = Mockito.mock(AutoTurnouts.class);
+        Mockito.when(helper.checkStateAgainstList(Mockito.any())).thenReturn(to);
+
+        Assertions.assertFalse(t.checkTurn(sectionNeedingTurnouts(), helper), "turnout not yet set");
+        to.setCommandedState(Turnout.THROWN);
+        Assertions.assertNull(t.getTurnoutWaitedFor(), "no longer waiting");
+        Assertions.assertEquals(before, knownStateListeners(to), "no longer listening");
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initInternalTurnoutManager();
     }
 
     @AfterEach
