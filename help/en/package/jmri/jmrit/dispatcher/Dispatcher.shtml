@@ -481,7 +481,10 @@
             (Automatically running trains only)</li>
 
             <li><strong>WAITING</strong> - Stopped waiting for a Section allocation. This is the
-            status the Active Train is in when it is created.</li>
+            status the Active Train is in when it is created. Where Dispatcher knows what the train
+            is waiting for, it says so, such as "WAITING: turnout LT5" for a train whose starting
+            Block has a turnout set against its route; Dispatcher doesn't move a turnout a train
+            may be standing on, so set it by hand and the train will go.</li>
 
             <li><strong>WORKING</strong> - Performing work under control of a human engineer. This
             is the status an Active Train assumes when an engineer is picking up or setting out
