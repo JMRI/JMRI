@@ -2713,6 +2713,11 @@
             depends="package-windows, package-macosx, package-linux">
     </target>
 
+    <target name="packages-ci"
+            description="create the Linux and Windows packages and the macOS folder, leaving the disk image for signing elsewhere"
+            depends="package-windows, dist-macosx, package-linux">
+    </target>
+
     <target name="launchjmri.exe"
             description="recreate the LaunchJMRI.exe used by the Windows release package">
         <exec executable="${nsis.home}makensis"

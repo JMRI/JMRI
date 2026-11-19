@@ -33,7 +33,7 @@ jobs:
       run: sudo apt-get update -q && sudo apt-get install -y -q ant nsis
     # one ant call so every installer gets the same version string; the Mac folder is built here since macOS runners are scarce
     - name: Build Linux and Windows installers and macOS folder
-      run: ant package-linux package-windows dist-macosx
+      run: ant packages-ci
     # a tar keeps the Mac launchers executable
     - name: Pack macOS folder
       run: |
