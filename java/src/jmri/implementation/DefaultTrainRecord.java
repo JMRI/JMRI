@@ -690,8 +690,9 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
      * @param rule      why it is taken to have entered:
      *                  {@link jmri.TrainRecord.Reason.Rule#ENTERED},
      *                  {@link jmri.TrainRecord.Reason.Rule#ENTERED_THROUGH_DARK},
-     *                  {@link jmri.TrainRecord.Reason.Rule#SETTLED_BY_VALUE} or
-     *                  {@link jmri.TrainRecord.Reason.Rule#SETTLED_BY_MOVEMENT}
+     *                  {@link jmri.TrainRecord.Reason.Rule#SETTLED_BY_VALUE},
+     *                  {@link jmri.TrainRecord.Reason.Rule#SETTLED_BY_MOVEMENT} or
+     *                  {@link jmri.TrainRecord.Reason.Rule#SETTLED_BY_DIRECTION}
      */
     @InvokeOnLayoutThread
     void entered(@Nonnull List<Block> through, @Nonnull Block block, boolean atFirst, long timeNanos,
@@ -827,7 +828,8 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
      * @return true if it places the train or moves it from Block to Block
      */
     private static boolean placesOrMoves(Reason.Rule rule) {
-        return PLACING_OR_MOVING.contains(rule) || rule == Reason.Rule.SETTLED_BY_MOVEMENT;
+        return PLACING_OR_MOVING.contains(rule) || rule == Reason.Rule.SETTLED_BY_MOVEMENT
+                || rule == Reason.Rule.SETTLED_BY_DIRECTION;
     }
 
     private void addToHistory(@CheckForNull Reason reason) {

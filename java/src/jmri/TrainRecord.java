@@ -784,6 +784,14 @@ public interface TrainRecord extends PropertyChangeProvider {
              * @since 5.19.2
              */
             SETTLED_BY_MOVEMENT,
+            /**
+             * Of the trains that could have entered the Block, it alone was
+             * heading towards it: it was next to the others' rear ends, and
+             * they had not been told to reverse.
+             *
+             * @since 5.19.2
+             */
+            SETTLED_BY_DIRECTION,
             /** Another train was named as the one that entered: no longer in doubt. */
             AMBIGUITY_CLEARED,
             /** Left a Block at one of its ends: its sensor went unoccupied. */

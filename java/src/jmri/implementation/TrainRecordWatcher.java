@@ -291,12 +291,15 @@ public class TrainRecordWatcher {
             candidates = throughDarkBlocks(block, timeNanos, time);
         }
         Candidate moving = candidates.size() > 1 ? onlyOneMoving(candidates, timeNanos) : null;
+        Candidate heading = candidates.size() > 1 && moving == null ? onlyOneHeadingThere(candidates, block, timeNanos)
+                : null;
+        Candidate settled = moving != null ? moving : heading;
         if (candidates.size() == 1 && candidates.get(0).end() != null) {
             enter(block, candidates.get(0), false);
-        } else if (moving != null) {
-            Candidate c = moving;
+        } else if (settled != null) {
+            Candidate c = settled;
             c.record.entered(c.through(Objects.requireNonNull(c.end(), "end")), block, c.end(), c.timeNanos, c.time,
-                    Reason.Rule.SETTLED_BY_MOVEMENT);
+                    moving != null ? Reason.Rule.SETTLED_BY_MOVEMENT : Reason.Rule.SETTLED_BY_DIRECTION);
             beforeAmbiguity.remove(c.record);
             leaveEmptyFarEnd(c.record);
         } else if (!candidates.isEmpty()) {
@@ -353,6 +356,109 @@ public class TrainRecordWatcher {
             }
         }
         return moving != null && moving.end() != null ? moving : null;
+    }
+
+    /**
+     * Of several trains that could have entered a Block, the one heading
+     * towards it, if every other one would have had to reverse to enter it
+     * and wasn't told to. Two trains following each other round a circuit
+     * are both next to each Block between them, one at its front and the
+     * other at its rear.
+     *
+     * @param candidates the trains that could have entered it
+     * @param block      the Block
+     * @param timeNanos  when it went occupied
+     * @return the one heading towards it, if it could have entered at one
+     *         end only; or null if that can't be said
+     */
+    @CheckForNull
+    private static Candidate onlyOneHeadingThere(@Nonnull List<Candidate> candidates, @Nonnull Block block,
+            long timeNanos) {
+        Candidate heading = null;
+        for (Candidate c : candidates) {
+            Boolean behind = isBehind(c, block, timeNanos);
+            if (behind == null) {
+                return null; // not known: it may have reversed
+            }
+            if (!behind) {
+                if (heading != null) {
+                    return null;
+                }
+                heading = c;
+            }
+        }
+        return heading != null && heading.end() != null ? heading : null;
+    }
+
+    /**
+     * Whether a Block a train is next to is behind it: on the side of the
+     * end that trailed when it last entered a Block, its lead loco not told
+     * to change direction since.
+     *
+     * @param c         the train, as a candidate to have entered the Block
+     * @param block     the Block
+     * @param timeNanos when it went occupied
+     * @return true if behind the train, false if ahead of it, null if not
+     *         known: the train's direction, or which end is next to the
+     *         Block, isn't known, or it may have reversed
+     */
+    @CheckForNull
+    private static Boolean isBehind(@Nonnull Candidate c, @Nonnull Block block, long timeNanos) {
+        DefaultTrainRecord r = c.record;
+        List<TrainRecord.TrailEntry> trail = r.getTrail();
+        List<Block> blocks = r.getBlocks();
+        if (trail.isEmpty() || blocks.isEmpty()) {
+            return null;
+        }
+        TrainRecord.TrailEntry last = trail.get(trail.size() - 1);
+        if (!sameDirectionSince(r, last.getTimeNanos(), timeNanos)) {
+            return null;
+        }
+        if (blocks.size() == 1) {
+            // a train in one Block came from the Block behind it
+            Block from = last.getFrom();
+            if (from == null || last.getBlock() != blocks.get(0)) {
+                return null;
+            }
+            return from == block;
+        }
+        TrainRecord.End leading = r.isFrontKnown() ? r.getLeadingEnd() : null;
+        if (leading == null || c.atFirst == c.atLast) {
+            return null;
+        }
+        // the Blocks are front first: the first leads if the front does
+        return c.atFirst != (leading == TrainRecord.End.FRONT);
+    }
+
+    /**
+     * @param r     a train
+     * @param since a moment
+     * @param until a later moment
+     * @return true if its lead loco was told one direction at the first
+     *         moment and nothing different until the second; false if it may
+     *         have changed direction, or no command is known
+     */
+    private static boolean sameDirectionSince(@Nonnull TrainRecord r, long since, long until) {
+        jmri.BasicRosterEntry entry = r.getFirstRosterEntry();
+        jmri.LocoAddress lead = entry == null ? null : entry.getDccLocoAddress();
+        if (lead == null) {
+            return false;
+        }
+        Boolean forward = null;
+        for (TrainRecord.SpeedCommand cmd : r.getCommands(lead)) {
+            if (cmd.getTimeNanos() > until) {
+                break;
+            }
+            if (cmd.isRelease()) {
+                return false; // driven by something JMRI may not hear
+            }
+            if (cmd.getTimeNanos() <= since) {
+                forward = cmd.isForward();
+            } else if (forward == null || cmd.isForward() != forward) {
+                return false;
+            }
+        }
+        return forward != null;
     }
 
     /**

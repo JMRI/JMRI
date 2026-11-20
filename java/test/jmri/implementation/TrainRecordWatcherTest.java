@@ -406,6 +406,59 @@ public class TrainRecordWatcherTest {
         assertEquals(Confidence.AMBIGUOUS, unknown.getConfidence());
     }
 
+    /**
+     * Two trains following each other round a circuit A - B - C - D - E -
+     * A, both told to move forward: the one ahead has just gone from B into
+     * C, the one behind from E into A.
+     *
+     * @return the circuit's Blocks, then the trains: the one behind, the one
+     *         ahead
+     */
+    private Object[] following() {
+        Block[] b = loop("A", "B", "C", "D", "E");
+        TrainRecord behind = train("Behind", 3, 0.4f, nanos);
+        TrainRecord ahead = train("Ahead", 4, 0.4f, nanos);
+        place(ahead, true, b[1]);
+        occupy(b[2]);
+        clear(b[1]);
+        place(behind, true, b[4]);
+        occupy(b[0]);
+        clear(b[4]);
+        assertEquals(List.of(b[2]), ahead.getBlocks());
+        assertEquals(List.of(b[0]), behind.getBlocks());
+        return new Object[]{b, behind, ahead};
+    }
+
+    @Test
+    public void testOnlyTheTrainHeadingThereEntered() {
+        // B is next to the front of the train behind, and to the rear of the one ahead
+        Object[] f = following();
+        Block[] b = (Block[]) f[0];
+        TrainRecord behind = (TrainRecord) f[1];
+        TrainRecord ahead = (TrainRecord) f[2];
+        occupy(b[1]);
+        assertEquals(List.of(b[1], b[0]), behind.getBlocks(), "the train behind entered B");
+        assertEquals(Confidence.CONFIRMED, behind.getConfidence());
+        assertEquals(TrainRecord.Reason.Rule.SETTLED_BY_DIRECTION, behind.getReason(b[1]).getRule());
+        assertEquals(List.of(b[2]), ahead.getBlocks(), "the one ahead is where it was");
+        assertEquals(Confidence.CONFIRMED, ahead.getConfidence(), "and not in doubt");
+    }
+
+    @Test
+    public void testNotSettledByDirectionWhenTheOtherWasToldToReverse() {
+        Object[] f = following();
+        Block[] b = (Block[]) f[0];
+        TrainRecord behind = (TrainRecord) f[1];
+        TrainRecord ahead = (TrainRecord) f[2];
+        jmri.LocoAddress a = Objects.requireNonNull(ahead.getFirstRosterEntry(), "roster entry").getDccLocoAddress();
+        long t = nanos + 500_000_000L;
+        ThreadingUtil.runOnLayout(() -> ((DefaultTrainRecord) ahead).commanded(
+                new TrainRecord.SpeedCommand(a, 0.4f, false, false, t, java.time.Instant.now())));
+        occupy(b[1]);
+        assertEquals(Confidence.AMBIGUOUS, behind.getConfidence(), "the one ahead may have backed into B");
+        assertEquals(Confidence.AMBIGUOUS, ahead.getConfidence());
+    }
+
     @Test
     public void testIsMoving() {
         TrainRecord r = train("T1", 3, 0f, 1_000_000_000L);
