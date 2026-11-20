@@ -633,6 +633,47 @@ final class LayoutEntry extends TrackEntry {
         }
     }
 
+    /**
+     * Where along a way through a Block it first changed: how far from where
+     * the Block is entered the first piece is whose way now differs, as a part
+     * of the way's length taken from the segments' drawn lengths.
+     *
+     * @param models the track models, for the drawing
+     * @param was    the way the train was taking
+     * @param now    the way as the turnouts are set now
+     * @param length the way's length, mm
+     * @return the distance, mm, or -1 if it can't be told (not a Layout
+     *         Editor way, or no drawn lengths)
+     */
+    static double changedAt(TrackModels models, Route was, Route now, double length) {
+        if (!(was instanceof LayoutRoute) || !(now instanceof LayoutRoute)) {
+            return -1.0;
+        }
+        List<Object> a = ((LayoutRoute) was).steps;
+        List<Object> b = ((LayoutRoute) now).steps;
+        int k = 0;
+        while (k < a.size() && k < b.size() && a.get(k).equals(b.get(k))) {
+            k++;
+        }
+        TrackSnapshot snap = models.snapshot();
+        double before = 0.0;
+        double total = 0.0;
+        for (int i = 0; i < a.size(); i++) {
+            if (a.get(i) instanceof SegmentStep) {
+                TrackSnapshot.Segment seg = snap.segment(((SegmentStep) a.get(i)).segment);
+                double d = seg == null ? 0.0 : seg.drawnLength;
+                total += d;
+                if (i < k) {
+                    before += d;
+                }
+            }
+        }
+        if (!(total > 0.0)) {
+            return -1.0;
+        }
+        return length * before / total;
+    }
+
     /** Running through a turnout, slip or crossing from one point to another. */
     static final class NodeStep {
 

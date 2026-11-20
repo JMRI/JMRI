@@ -30,9 +30,9 @@ final class TrainState {
     static final class Span {
 
         /** The way through the Block, followed front first. */
-        final Passage passage;
+        Passage passage;
         final double start;
-        final double end;
+        double end;
 
         Span(Passage passage, double start, double end) {
             this.passage = passage;
@@ -46,6 +46,17 @@ final class TrainState {
 
         double length() {
             return end - start;
+        }
+
+        /**
+         * The way through the Block changed ahead of the train's front: it
+         * follows the new way.
+         *
+         * @param p the new way
+         */
+        void replan(Passage p) {
+            passage = p;
+            end = start + p.length;
         }
     }
 
@@ -284,12 +295,15 @@ final class TrainState {
     boolean extendFront(TrackModels models) {
         Span f = front();
         if (f.start >= position) {
-            // planned ahead this step, not yet entered: check its way is still set
+            // planned ahead, not yet entered: it follows the way as set now
             Passage now = f.passage.entry.follow();
-            if (now.stop == Passage.Stop.BLOCKED || !now.route.sameAs(f.passage.route)) {
-                frontReason = (now.stop == Passage.Stop.BLOCKED) ? now.reason
-                        : models.message("WayChangedUnderTrain", models.name(f.block()));
+            if (now.stop == Passage.Stop.BLOCKED) {
+                spans.remove(spans.size() - 1);
+                frontReason = now.reason;
                 return false;
+            }
+            if (!now.route.sameAs(f.passage.route)) {
+                f.replan(now);
             }
         }
         TrackEntry next = f.passage.next;
@@ -348,10 +362,28 @@ final class TrainState {
         rearReason = null;
         double r = rearPosition();
         // a turnout moved under the train: it derails, and can't move either way until put back
-        for (Span s : spans) {
+        double heldAt = Double.POSITIVE_INFINITY;
+        Message heldBy = null;
+        for (int i = 0; i < spans.size(); i++) {
+            Span s = spans.get(i);
             if (s.start < position && s.end > r) {
                 Passage now = s.passage.entry.follow();
                 if (now.stop == Passage.Stop.BLOCKED || !now.route.sameAs(s.passage.route)) {
+                    double changed = (position <= s.end)
+                            ? LayoutEntry.changedAt(models, s.passage.route, now.route, s.passage.length) : -1.0;
+                    if (changed >= 0.0 && position < s.start + changed) {
+                        // ahead of the front, in the Block it is in: not under the train
+                        while (spans.size() > i + 1) {
+                            spans.remove(spans.size() - 1); // planned on the old way, not entered
+                        }
+                        if (now.stop == Passage.Stop.BLOCKED) {
+                            heldAt = s.start + changed; // it stops short of the points
+                            heldBy = now.reason;
+                        } else {
+                            s.replan(now);
+                        }
+                        break;
+                    }
                     derailed = true;
                     faultReason = models.message("WayChangedUnderTrain", models.name(s.block()));
                     frontLimit = position;
@@ -362,10 +394,15 @@ final class TrainState {
                 }
             }
         }
-        while (front().end < position + reach) {
-            if (!extendFront(models)) {
-                frontLimit = front().end;
-                break;
+        if (heldBy != null) {
+            frontLimit = heldAt;
+            frontReason = heldBy;
+        } else {
+            while (front().end < position + reach) {
+                if (!extendFront(models)) {
+                    frontLimit = front().end;
+                    break;
+                }
             }
         }
         while (rear().start > rearPosition() - reach) {
