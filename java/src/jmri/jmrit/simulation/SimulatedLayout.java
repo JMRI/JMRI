@@ -127,6 +127,8 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
     /** Sensors already warned about as having no output. */
     @GuardedBy("this")
     private final Set<Sensor> warnedNotReported = new HashSet<>();
+    @GuardedBy("this")
+    private boolean pointsGivenPositions = false;
     /**
      * Sensor reports, queued in order under this layout's lock and delivered
      * after it is released, so an output is never called with the lock held.
@@ -332,6 +334,10 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
      */
     private void withFreshSnapshot(Runnable placing) {
         TrackSnapshot fresh = TrackSnapshot.take(new ArrayList<>(outputs), new ArrayList<>(reporterOutputs));
+        if (givePointsPositions(fresh)) {
+            fresh.dispose();
+            fresh = TrackSnapshot.take(new ArrayList<>(outputs), new ArrayList<>(reporterOutputs));
+        }
         TrackSnapshot old;
         synchronized (this) {
             old = models.use(fresh);
@@ -442,6 +448,39 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
         });
         deliver();
         watchAddresses();
+    }
+
+    /**
+     * Real points are always in one position or the other. When the first
+     * train is placed, every turnout or slip drawn on a Layout Editor panel
+     * that JMRI doesn't yet know to be closed or thrown, as none has been set
+     * since start-up, is set closed; otherwise a simulated train stops at
+     * points nobody has touched.
+     *
+     * @param snapshot the layout's track, as drawn
+     * @return true if any was set
+     */
+    private boolean givePointsPositions(TrackSnapshot snapshot) {
+        synchronized (this) {
+            if (pointsGivenPositions) {
+                return false;
+            }
+            pointsGivenPositions = true;
+        }
+        List<String> set = new ArrayList<>();
+        ThreadingUtil.runOnLayout(() -> {
+            for (jmri.Turnout t : snapshot.turnouts()) {
+                if (t.getKnownState() == jmri.Turnout.UNKNOWN) {
+                    t.setCommandedState(jmri.Turnout.CLOSED);
+                    set.add(t.getDisplayName());
+                }
+            }
+        });
+        if (!set.isEmpty()) {
+            log.info("Simulated trains: {} turnouts not yet set since start-up were set closed, as real points are always "
+                    + "one way or the other: {}", set.size(), String.join(", ", set));
+        }
+        return !set.isEmpty();
     }
 
     private synchronized void checkCanPlace(VirtualTrain train) {
