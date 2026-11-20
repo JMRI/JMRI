@@ -86,6 +86,14 @@ public final class TrainTrackingChecks {
         /** A sensor used by more than one Block. */
         SENSOR_SHARED,
         /**
+         * Two routes from a turnout or crossover that lead into the same
+         * Block, from a {@link SetUpCheck}: which a train took can't be
+         * told from detection.
+         *
+         * @since 5.19.2
+         */
+        ROUTES_INTO_ONE_BLOCK,
+        /**
          * A Block that takes its value from its Reporter's current report.
          *
          * @since 5.19.2
