@@ -254,6 +254,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
     public void testCreateLnThrottleStealScenario3() {
 
         ThrottleListen throtListen = new ThrottleListen();
+        ((LnThrottleManager) tm).retryIntervalMs = 1000; // this test looks for the request being repeated
         tm.requestThrottle(85, throtListen, true);
 
         assertEquals("BF 00 55 00",
@@ -261,8 +262,10 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         memo.getSlotManager().message(lnis.outbound.elementAt(lnis.outbound.size()-1));
 
         // Throttle request messages may be missed on 1st send so we wait for
-        // the 2nd message sent ( in 5.13.5 it's 1000ms after the 1st)
-        JUnitUtil.waitFor( () -> lnis.outbound.size() == 2, "throttle request repeated");
+        // the 2nd message sent ( in 5.13.5 it's 1000ms after the 1st).
+        // The request goes on being repeated each interval, so on a slow
+        // machine more than one repeat may be sent before this looks.
+        JUnitUtil.waitFor( () -> lnis.outbound.size() >= 2, "throttle request repeated");
         assertEquals( lnis.outbound.get(0), lnis.outbound.get(1), "2nd request matches 1st" );
 
         LocoNetMessage cmdStationReply = new LocoNetMessage(new int[] {
@@ -277,6 +280,7 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
 
         ThrottleListenStealWhenDecision throtListen = new ThrottleListenStealWhenDecision();
         Assertions.assertNull(throtListen.getThrottle());
+        ((LnThrottleManager) tm).retryIntervalMs = 1000; // this test looks for the request being repeated
         tm.requestThrottle(256, throtListen, true);
 
         assertEquals( "BF 02 00 00",
@@ -284,8 +288,10 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         memo.getSlotManager().message(lnis.outbound.elementAt(lnis.outbound.size()-1));
 
         // Throttle request messages may be missed on 1st send so we wait for
-        // the 2nd message sent ( in 5.13.5 it's 1000ms after the 1st)
-        JUnitUtil.waitFor( () -> lnis.outbound.size() == 2, "throttle request repeated");
+        // the 2nd message sent ( in 5.13.5 it's 1000ms after the 1st).
+        // The request goes on being repeated each interval, so on a slow
+        // machine more than one repeat may be sent before this looks.
+        JUnitUtil.waitFor( () -> lnis.outbound.size() >= 2, "throttle request repeated");
         assertEquals( lnis.outbound.get(0), lnis.outbound.get(1), "2nd request matches 1st" );
 
         LocoNetMessage cmdStationReply = new LocoNetMessage(new int[] {
@@ -834,6 +840,10 @@ public class LnThrottleManagerTest extends jmri.managers.AbstractThrottleManager
         // (the meters' query 85 ms after they are made, the power manager's
         // slot 0 read): the tests count from here.
         lnis.outbound.clear();
+        // A slot request with no reply is sent again after a second. Most
+        // tests count the messages sent, so on a slow machine a repeat would
+        // upset them; the tests that look for the repeat set this back.
+        ((LnThrottleManager) tm).retryIntervalMs = 60000;
     }
 
     @AfterEach

@@ -536,27 +536,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         network.sendLocoNetMessage(msg, true);
     }
 
-    /**
-     * Send a LocoNet message to set the loco speed speed.
-     *
-     * @param speed Number from 0 to 1; less than zero is "emergency stop"
-     */
-    @Override
-    public void setSpeedSetting(float speed) {
-        setSpeedSetting(speed, false, false);
-    }
 
-    /**
-     * Set the Speed, ensuring that a LocoNet message is sent to update the slot
-     * even if the new speed is effectively the same as the current speed. Note: this
-     * can cause an increase in LocoNet traffic.
-     *
-     * @param speed Number from 0 to 1; less than zero is emergency stop
-     */
-    @Override
-    public void setSpeedSettingAgain(float speed) {
-        setSpeedSetting(speed, true, true);
-    }
 
     /**
      * Set the speed. No LocoNet message is sent if the new speed would
@@ -571,7 +551,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      *
      */
     @Override
-    public void setSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
+    protected void sendSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
         log.debug("setSpeedSetting: called with speed {} for LocoNet slot {} allowDup {} allowDupOnStop {}",
                     speed, slot.getSlot(), allowDuplicates, allowDuplicatesOnStop);
         if (LnConstants.CONSIST_MID == slot.consistStatus()
@@ -740,7 +720,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
             // clear the last known layout_spd so that we will actually send the
             // message.
             layout_spd = -1;
-            setSpeedSetting(speedSetting);
+            sendSpeedSetting(speedSetting, false, false);
         }
         else {
             log.debug("refresh timer time-out on a null slot");

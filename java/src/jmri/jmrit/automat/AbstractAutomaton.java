@@ -256,10 +256,6 @@ public class AbstractAutomaton implements Runnable {
         this.name = name;
     }
 
-    @Deprecated(since="5.13.6", forRemoval=true) // This doesn't seem to have a purpose...
-    void defaultName() {
-    }
-
     /**
      * User-provided initialization routine.
      * <p>

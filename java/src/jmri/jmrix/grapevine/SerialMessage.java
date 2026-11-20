@@ -55,19 +55,6 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         setBinary(true);
     }
 
-    /**
-     * Interpret the byte array as a sequence of characters to send.
-     * @deprecated 5.13.5, unused, requires further development.
-     * @param a Array of bytes to send
-     */
-    @Deprecated( since="5.13.5", forRemoval=true)
-    public SerialMessage(byte[] a) {
-        // super(String.valueOf(a)); // Spotbug toString on array
-        // requires further development to produce correct values for hardware type.
-        super(StringUtil.hexStringFromBytes(a).replaceAll("\\s", ""));
-        setBinary(true);
-    }
-
     // no replies expected, don't wait for them
     @Override
     public boolean replyExpected() {
@@ -90,8 +77,8 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
      * @return serial message to poll data.
      */
     public static SerialMessage getPoll(int addr) {
-        // eventually this will have to include logic for reading 
-        // various bytes on the card, but our supported 
+        // eventually this will have to include logic for reading
+        // various bytes on the card, but our supported
         // cards don't require that yet
         SerialMessage m = new SerialMessage();
         m.setElement(0, addr | 0x80);
@@ -243,7 +230,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         } else if ((b2 == 0x71) && ((b4 & 0xF0) == 0x00)) {
             result += "Initialize ASD sensors";
             return result;
-        } else // check various bank forms 
+        } else // check various bank forms
         if ((b4 & 0xF0) <= 0x30) {
             // Bank 0-3 - signal command
             result += "bank " + ((b4 & 0xF0) >> 4) + " signal " + ((b2 & 0x78) >> 3);

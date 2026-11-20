@@ -681,11 +681,20 @@ public class AutoAllocate implements Runnable {
     private Section savedSection = null;
 
     // private implementation methods
-    private void copyAndSortARs(List<AllocationRequest> list) {
+    // package access for tests
+    List<AllocationRequest> getOrderedRequests() {
+        return orderedRequests;
+    }
+
+    // package access for tests
+    void copyAndSortARs(List<AllocationRequest> list) {
         orderedRequests.clear();
-        // copy across and then sort...
-        for (int i = 0; i < list.size(); i++) {
-            orderedRequests.add(list.get(i));
+        // copy across in one step, as other threads may be changing the list,
+        // and then sort...
+        for (Object o : list.toArray()) {
+            if (o != null) {
+                orderedRequests.add((AllocationRequest) o);
+            }
         }
         if (_dispatcher.getPreventDeadlock()) {
             // priority rises by one for each minute a request has waited, so none waits for ever

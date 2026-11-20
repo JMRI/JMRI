@@ -406,14 +406,14 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
                         break;
 
                     case 'L': // Set a Long address.
-                        addressRelease();
                         int addr = Integer.parseInt(inPackage.substring(1));
+                        addressRelease();
                         setAddress(addr, true);
                         break;
 
                     case 'S': // Set a Short address.
-                        addressRelease();
                         addr = Integer.parseInt(inPackage.substring(1));
+                        addressRelease();
                         setAddress(addr, false);
                         break;
 
@@ -436,7 +436,12 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
                         break;
 
                     case 's':       //v>=2.0
-                        handleSpeedStepMode(decodeSpeedStepMode(inPackage.substring(1)));
+                        try {
+                            handleSpeedStepMode(decodeSpeedStepMode(inPackage.substring(1)));
+                        } catch (IllegalArgumentException e) {
+                            log.warn("Unknown speed step mode from client: {}", inPackage.substring(1));
+                            sendSpeedStepMode(throttle);
+                        }
                         break;
 
                     case 'm':       //v>=2.0

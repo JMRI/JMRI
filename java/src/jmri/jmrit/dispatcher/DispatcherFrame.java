@@ -12,6 +12,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -572,7 +573,11 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     private final List<ActiveTrain> delayedTrains = new ArrayList<>();  // list of delayed Active Trains
     private final List<ActiveTrain> restartingTrainsList = new ArrayList<>();  // list of Active Trains with restart requests
     private final TransitManager transitManager = InstanceManager.getDefault(jmri.TransitManager.class);
-    private final List<AllocationRequest> allocationRequests = new ArrayList<>();  // List of AllocatedRequest objects
+    // List of AllocatedRequest objects. Changed by the layout thread (Swing
+    // thread), the Auto Allocator and throttle threads, and read by the Auto
+    // Allocator and the requests table, so each change is made whole and each
+    // reader works on a copy taken at one moment.
+    private final List<AllocationRequest> allocationRequests = new CopyOnWriteArrayList<>();
     protected final List<AllocatedSection> allocatedSections = new ArrayList<>();  // List of AllocatedSection objects
     private boolean optionsRead = false;
     private AutoTurnouts autoTurnouts = null;
@@ -1950,10 +1955,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     }
 
     private void removeAllocationRequests(ActiveTrain at) {
-        for (int k = allocationRequests.size(); k > 0; k--) {
-            if (at == allocationRequests.get(k - 1).getActiveTrain()) {
-                allocationRequests.get(k - 1).dispose();
-                allocationRequests.remove(k - 1);
+        for (AllocationRequest ar : allocationRequests) {
+            if (at == ar.getActiveTrain() && allocationRequests.remove(ar)) {
+                ar.dispose();
             }
         }
     }
@@ -2075,8 +2079,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
     // ensures there will not be any duplicate allocation requests
     protected AllocationRequest findAllocationRequestInQueue(Section s, int seq, int dir, ActiveTrain at) {
-        for (int i = 0; i < allocationRequests.size(); i++) {
-            AllocationRequest ar = allocationRequests.get(i);
+        for (AllocationRequest ar : allocationRequests) {
             if ((ar.getActiveTrain() == at) && (ar.getSection() == s) && (ar.getSectionSeqNumber() == seq)
                     && (ar.getSectionDirection() == dir)) {
                 return ar;
@@ -2086,10 +2089,22 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     }
 
     private void cancelAllocationRequest(int index) {
-        AllocationRequest ar = allocationRequests.get(index);
-        allocationRequests.remove(index);
-        ar.dispose();
+        AllocationRequest ar = getAllocationRequest(index);
+        if (ar != null && allocationRequests.remove(ar)) {
+            ar.dispose();
+        }
         allocationRequestTableModel.fireTableDataChanged();
+    }
+
+    /**
+     * Get the allocation request at a row of the requests table.
+     *
+     * @param index the row
+     * @return the request, or null if there is no longer one at that row
+     */
+    private AllocationRequest getAllocationRequest(int index) {
+        Object[] requests = allocationRequests.toArray();
+        return (index >= 0 && index < requests.length) ? (AllocationRequest) requests[index] : null;
     }
 
     /**
@@ -2098,15 +2113,17 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * @param ar the allocation request to cancel
      */
     protected void cancelAllocationRequest(AllocationRequest ar) {
-        int index = allocationRequests.indexOf(ar);
-        if (index >= 0) {
-            cancelAllocationRequest(index);
+        if (allocationRequests.remove(ar)) {
+            ar.dispose();
+            allocationRequestTableModel.fireTableDataChanged();
         }
     }
 
     private void allocateRequested(int index) {
-        AllocationRequest ar = allocationRequests.get(index);
-        allocateSection(ar, null);
+        AllocationRequest ar = getAllocationRequest(index);
+        if (ar != null) {
+            allocateSection(ar, null);
+        }
     }
 
     protected void addDelayedTrain(ActiveTrain at, int restartType, Sensor delaySensor, boolean resetSensor) {
@@ -2435,15 +2452,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 }
             }
         }
-        int ix = -1;
-        for (int i = 0; i < allocationRequests.size(); i++) {
-            if (ar == allocationRequests.get(i)) {
-                ix = i;
-            }
-        }
-        if (ix != -1) {
-            allocationRequests.remove(ix);
-        }
+        allocationRequests.remove(ar);
         ar.dispose();
         allocationRequestTableModel.fireTableDataChanged();
         activeTrainsTableModel.fireTableDataChanged();
@@ -3004,18 +3013,18 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * If the earlier checks in checkAutoRelease() have already decided the
      * Section must be kept (foundOne false) that decision stands.
      * <p>
-     * For a "Head Only" or "Head and Tail" train the Section can only be
-     * released once the train must have cleared it, worked out from the train
-     * length. Seeing the Section clear is not enough: on a "Head Only" train
-     * the rest of the train is not detected, and on a "Head and Tail" train
-     * the tail may have lost detection while the head is in the next Section.
-     * See isClearByLength().
+     * For a "Head Only" train the Section can only be released once the train
+     * must have cleared it, worked out from the train length: seeing the
+     * Section clear is not enough, as the rest of the train is not detected.
+     * See isClearByLength(). A "Head and Tail" train's tail is detected, and
+     * the earlier checks don't release a Section ahead of its last occupied
+     * one, so, as for an "Entire Train" train, nothing more is needed.
      */
     static boolean sectionNotRequiredByTrainLength(boolean foundOne, ActiveTrain at, AllocatedSection as) {
         if (!foundOne) {
             return false;
         }
-        if (at.getTrainDetection() == TrainDetection.TRAINDETECTION_WHOLETRAIN) {
+        if (at.getTrainDetection() != TrainDetection.TRAINDETECTION_HEADONLY) {
             return true;
         }
         return isClearByLength(at, as);
@@ -3054,14 +3063,14 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     }
 
     /*
-     * Check, by length, whether a train whose tail is not always detected must
-     * have cleared a Section.
-     * Calculate the length of exited sections, subtract the length of section
-     * being released. If the train is moving do not include the length of the occupied section,
-     * if the train is stationary and was stopped by sensor or speed profile include the length
-     * of the occupied section. This is done as we dont know where the train is in the section block.
-     * A train that is not running automatically is always treated as moving.
-     * If the train length is not known the Section is kept.
+     * Check, by length, whether a "Head Only" train must have cleared a
+     * Section.
+     * <p>
+     * The first occupied Section holds the train's head. The exited Sections
+     * in front of the one being released must be at least as long as the
+     * train. The first occupied Section counts too when the train has stopped
+     * in it, however it was stopped, and fits in it: the whole train is then
+     * in that Section. If the train length is not known the Section is kept.
      */
     private static boolean isClearByLength(ActiveTrain at, AllocatedSection as) {
         long trainLengthMM = getTrainLengthMM(at);
@@ -3072,38 +3081,27 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             }
             return false;
         }
-        AutoActiveTrain aat = at.getAutoActiveTrain();
         List<AllocatedSection> trainSections = at.getAllocatedSectionList();
-        // Find the Section holding the head of the train. A "Head Only" train
-        // is only detected at its head, which is in the first occupied Section.
-        // A "Head and Tail" train may also be detected at its tail, in an
-        // earlier Section, so its head is in the last occupied Section.
-        int headIndex = -1;
+        int firstOccupied = -1;
         for (int i = 0; i < trainSections.size(); i++) {
             if (trainSections.get(i).getSection().getOccupancy() == Section.OCCUPIED) {
-                headIndex = i;
-                if (at.getTrainDetection() != TrainDetection.TRAINDETECTION_HEADANDTAIL) {
-                    break;
-                }
+                firstOccupied = i;
+                break;
             }
         }
         long allocatedLengthMM = 0;
         for (int i = 0; i < trainSections.size(); i++) {
             AllocatedSection tas = trainSections.get(i);
-            if (i == headIndex) {
-                if (aat != null && aat.getAutoEngineer() != null && aat.getAutoEngineer().isStopped() &&
-                        (aat.getStopBySpeedProfile() ||
-                                tas.getSection().getForwardStoppingSensor() != null ||
-                                tas.getSection().getReverseStoppingSensor() != null)) {
+            if (i == firstOccupied) {
+                if (isStoppedAndFitsIn(at, tas, trainLengthMM)) {
                     allocatedLengthMM += tas.getSection().getActualLength();
-                    log.debug("{}: isClearByLength Stopping at Secion [{}] including in length.",
-                            at.getTrainName(),tas.getSection().getDisplayName());
-                    break;
+                    log.debug("{}: isClearByLength stopped in Section [{}], including it in length.",
+                            at.getTrainName(), tas.getSection().getDisplayName());
                 } else {
-                    log.debug("{}: isClearByLength Stopping at Secion [{}] excluding from length.",
-                            at.getTrainName(),tas.getSection().getDisplayName());
-                    break;
+                    log.debug("{}: isClearByLength Section [{}] excluded from length.",
+                            at.getTrainName(), tas.getSection().getDisplayName());
                 }
+                break;
             }
             if (tas.getExited()) {
                 allocatedLengthMM += tas.getSection().getActualLength();
@@ -3113,6 +3111,19 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         log.debug("[{}]:Release Section [{}] by Length allocated [{}] release [{}] train [{}]",
                 at.getTrainName(), as.getSectionName(), allocatedLengthMM, releaseLengthMM, trainLengthMM);
         return (allocatedLengthMM - releaseLengthMM) >= trainLengthMM;
+    }
+
+    /*
+     * Whether an automatic train has stopped in a Section and is no longer
+     * than the Section, so that the whole train is in it. Where in the Section
+     * it stopped is not known, so how it was stopped doesn't matter.
+     */
+    private static boolean isStoppedAndFitsIn(ActiveTrain at, AllocatedSection tas, long trainLengthMM) {
+        AutoActiveTrain aat = at.getAutoActiveTrain();
+        if (aat == null || aat.getAutoEngineer() == null || !aat.getAutoEngineer().isStopped()) {
+            return false;
+        }
+        return trainLengthMM <= tas.getSection().getActualLength();
     }
 
     /**
@@ -4073,11 +4084,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
         @Override
         public Object getValueAt(int r, int c) {
-            int rx = r;
-            if (rx >= allocationRequests.size()) {
+            AllocationRequest ar = getAllocationRequest(r);
+            if (ar == null) {
                 return null;
             }
-            AllocationRequest ar = allocationRequests.get(rx);
             switch (c) {
                 case TRANSIT_COLUMN:
                     return (ar.getActiveTrain().getTransit().getSystemName());

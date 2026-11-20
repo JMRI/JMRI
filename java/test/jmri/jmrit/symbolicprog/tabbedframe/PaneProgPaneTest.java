@@ -65,6 +65,30 @@ public class PaneProgPaneTest {
         JUnitUtil.dispose(pFrame);
     }
 
+    // a pane disposed of twice does nothing the second time
+    @Test
+    public void testDisposeTwice() {
+        setupDoc();
+        PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
+                "test frame", "programmers/Basic.xml",
+                p, false) {
+            // dummy implementations
+            @Override
+            protected JPanel getModePane() {
+                return null;
+            }
+        };
+        JUnitUtil.waitFor(()->{return pFrame.threadCount.get() == 0;}, "PaneProgFrame threads done");
+        CvTableModel cvModel = new CvTableModel(new JLabel(), p);
+        String[] args = {"CV", "Name"};
+        VariableTableModel varModel = new VariableTableModel(null, args, cvModel);
+        PaneProgPane pane = new PaneProgPane(pFrame, "name", pane1, cvModel, varModel, null, null);
+
+        pane.dispose();
+        assertDoesNotThrow(pane::dispose, "second dispose");
+        JUnitUtil.dispose(pFrame);
+    }
+
     // test specifying variables in columns
     @Test
     public void testVariables() {

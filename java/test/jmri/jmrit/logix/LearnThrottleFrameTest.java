@@ -2,14 +2,13 @@ package jmri.jmrit.logix;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.awt.GraphicsEnvironment;
-
 import java.io.File;
 import java.io.IOException;
 
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
+import jmri.util.junit.annotations.DisabledIfHeadless;
 
-import org.junit.Assume;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -20,10 +19,11 @@ import org.junit.jupiter.api.io.TempDir;
 public class LearnThrottleFrameTest {
 
     @Test
+    @DisabledIfHeadless
     public void testCTor() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        WarrantFrame wf = new WarrantFrame(new Warrant("IW0", "AllTestWarrant"));
-        LearnThrottleFrame ltf = new LearnThrottleFrame(wf);
+        // made on the GUI (Swing) thread, as when a user opens them
+        WarrantFrame wf = ThreadingUtil.runOnGUIwithReturn(() -> new WarrantFrame(new Warrant("IW0", "AllTestWarrant")));
+        LearnThrottleFrame ltf = ThreadingUtil.runOnGUIwithReturn(() -> new LearnThrottleFrame(wf));
         assertThat(ltf).withFailMessage("exists").isNotNull();
         JUnitUtil.dispose(ltf);
         JUnitUtil.dispose(wf);

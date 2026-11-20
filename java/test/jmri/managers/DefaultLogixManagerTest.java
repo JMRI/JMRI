@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
@@ -24,6 +25,32 @@ public class DefaultLogixManagerTest extends AbstractManagerTestBase<LogixManage
     @Test
     public void testCtor() {
         assertNotNull( l, "exists");
+    }
+
+    @Test
+    public void testDisposeStopsListeningForDeletions() {
+        DefaultLogixManager m = new DefaultLogixManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        java.util.List<jmri.Manager<?>> listenedTo = java.util.List.of(
+                InstanceManager.getDefault(jmri.TurnoutManager.class),
+                InstanceManager.getDefault(jmri.SensorManager.class),
+                InstanceManager.getDefault(jmri.MemoryManager.class),
+                InstanceManager.getDefault(jmri.SignalHeadManager.class),
+                InstanceManager.getDefault(jmri.SignalMastManager.class),
+                InstanceManager.getDefault(jmri.BlockManager.class),
+                InstanceManager.getDefault(jmri.LightManager.class),
+                InstanceManager.getDefault(jmri.ConditionalManager.class),
+                InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class),
+                InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class),
+                InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class));
+        for (jmri.Manager<?> other : listenedTo) {
+            assertTrue(java.util.Arrays.asList(other.getVetoableChangeListeners()).contains(m),
+                    "listens to " + other.getClass().getSimpleName());
+        }
+        m.dispose();
+        for (jmri.Manager<?> other : listenedTo) {
+            assertFalse(java.util.Arrays.asList(other.getVetoableChangeListeners()).contains(m),
+                    "stopped listening to " + other.getClass().getSimpleName());
+        }
     }
 
     @Test
@@ -82,6 +109,51 @@ public class DefaultLogixManagerTest extends AbstractManagerTestBase<LogixManage
     @Override
     @Disabled("No manager-specific system name validation at present")
     public void testMakeSystemNameWithPrefixNotASystemName() {}
+
+    /**
+     * A Logix that records whether it was activated.
+     */
+    private static class RecordingLogix extends jmri.implementation.DefaultLogix {
+        boolean activated = false;
+
+        RecordingLogix(String systemName) {
+            super(systemName);
+        }
+
+        @Override
+        public void activateLogix() {
+            activated = true;
+            super.activateLogix();
+        }
+    }
+
+    @Test
+    public void testInitializerNotActivatedWhenLoadedDisabled() {
+        RecordingLogix init = new RecordingLogix(jmri.jmrit.beantable.LRouteTableAction.getLogixInitializer());
+        RecordingLogix other = new RecordingLogix("IX1");
+        l.register(init);
+        l.register(other);
+        l.setLoadDisabled(true);
+        l.activateAllLogixs();
+        jmri.util.JUnitAppender.suppressWarnMessageStartsWith("load disabled set");
+        jmri.util.JUnitAppender.suppressWarnMessageStartsWith("load disabled set");
+        assertFalse(other.activated, "other Logix not activated");
+        assertFalse(init.activated, "LRoute initializer not activated either");
+        assertFalse(init.getEnabled());
+    }
+
+    @Test
+    public void testDisabledInitializerNotActivated() {
+        RecordingLogix init = new RecordingLogix(jmri.jmrit.beantable.LRouteTableAction.getLogixInitializer());
+        init.setEnabled(false);
+        l.register(init);
+        l.activateAllLogixs();
+        assertFalse(init.activated, "a disabled initializer stays inactive");
+        RecordingLogix enabled = new RecordingLogix("IX2");
+        l.register(enabled);
+        l.activateAllLogixs();
+        Assertions.assertTrue(enabled.activated);
+    }
 
     @BeforeEach
     public void setUp() {

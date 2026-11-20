@@ -102,7 +102,11 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>New USB connection for the Uhlenbrock "LocoNet-USB and WLAN
+                    Interface" 63860, listed under the "Uhlenbrock" system
+                    manufacturer. See the
+                    <a href="https://www.jmri.org/help/en/html/hardware/loconet/Uhlenbrock.shtml#63860">Uhlenbrock
+                    help page</a>.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -297,7 +301,8 @@
 
         <h4>MD Electronics</h4>
              <ul>
-                <li></li>
+                <li>New decoder definition for the mXion LLM light bar with
+                    integrated function decoder.</li>
              </ul>
 
         <h4>MGP</h4>
@@ -456,6 +461,10 @@
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
+             <li>Dispatcher's Options now offer the CUSTOM layout scale,
+                 with its ratio in a box beside the scale list, for a
+                 layout whose scale isn't in the list. There is one CUSTOM
+                 scale, shared with the Timetable.</li>
              <li>Tools &gt; Train Tracking &gt; Set-up Checks now says when
                  Dispatcher's Layout Scale, in its Options, is not the
                  Layout Scale in Preferences &gt; Warrants. Speed profiles
@@ -687,7 +696,10 @@
    <h3>WiThrottle Server</h3>
         <a id="WS" name="WS"></a>
         <ul>
-            <li></li>
+            <li>The WiThrottle server no longer stops responding to a client
+                that sends an unrecognized speed step mode or a malformed
+                number. The bad message is logged and ignored, and an
+                unrecognized speed step mode is answered with the current mode.</li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
@@ -705,6 +717,8 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
+            <li>Some Java methods that have been deprecated since
+                JMRI 5.13 series have been removed.</li>
             <li>Tools &gt; Train Tracking &gt; Measurements lists, for each Block
                 and way through it, how many times trains have crossed it this
                 session, their average speed, how that compares with their

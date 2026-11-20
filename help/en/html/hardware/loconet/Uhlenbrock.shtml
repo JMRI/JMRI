@@ -162,8 +162,8 @@
       <ul>
         <li>Select "Uhlenbrock" as the System Manufacturer for your connection.</li>
 
-        <li>Select the appropriate System Connection for your hardware, either Intellibox-I or -II
-        or the 63120Adapter.</li>
+        <li>Select the appropriate System Connection for your hardware, either Intellibox-I or -II,
+        the 63120Adapter or the <a href="#63860">63860 interface</a> (USB).</li>
 
         <li>Select the serial port used for this connection.</li>
 
@@ -187,6 +187,26 @@
       </ul>
 
       <p>Save and restart.</p>
+
+      <h3 id="63860">LocoNet-USB and WLAN Interface 63860</h3>
+      <span class="since">Since <a href="https://www.jmri.org/releasenotes/jmri5.19.2.shtml"
+      target="_blank">JMRI 5.19.2</a></span>
+
+      <p>The Uhlenbrock "LocoNet-USB und WLAN Interface" part #63860 connects a computer to
+      any LocoNet system (Uhlenbrock, Digitrax, Fleischmann, PIKO, Tillig, ...) by USB or by
+      WLAN. It is powered from LocoNet.</p>
+
+      <p>For a USB connection select "Uhlenbrock" as the System Manufacturer and
+      <strong>"LocoNet-USB and WLAN Interface 63860 (USB)"</strong> as the System Connection.
+      The interface appears as a serial port using a Silicon Labs CP210x USB-to-UART bridge;
+      Windows 10/11, macOS and Linux include a driver for it. Select the port, the baud rate set
+      in the interface (LNCV 2: 1=19200, 2=38400, 3=57600, 4=115200; factory default 115,200) and
+      the command station on your LocoNet as "Command station type" (for example DCS100 or
+      Intellibox II).</p>
+
+      <p>The interface echoes every message it sends to LocoNet and expects the computer to wait
+      for that echo before sending the next one, so this connection defaults to the "Strict"
+      packetizer. The interface has no hardware handshake, so flow control is always off.</p>
 
       <h2 id="tools">JMRI Uhlenbrock Tools</h2>
 

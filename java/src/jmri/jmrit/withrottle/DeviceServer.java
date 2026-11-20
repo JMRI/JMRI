@@ -383,7 +383,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
             } catch (IOException exa) {
                 consecutiveErrors += 1;
                 log.warn("readLine from device '{}' failed, consecutive error # {}", getName(), consecutiveErrors);
-            } catch (IndexOutOfBoundsException exb) {
+            } catch (IndexOutOfBoundsException | IllegalArgumentException exb) {
                 log.warn("Bad message '{}' from device '{}'", inPackage, getName());
             }
             if (consecutiveErrors > 0) { //a read error was encountered

@@ -87,6 +87,31 @@ public class PaneProgFrameTest {
         p.dispatchEvent(new WindowEvent(p, WindowEvent.WINDOW_CLOSING));
     }
 
+    /**
+     * A frame disposed of twice, as when a script closes it and test clean-up
+     * then disposes of it again, does nothing the second time.
+     */
+    @Test
+    @DisabledIfHeadless
+    public void testDisposeTwice() {
+        setupDoc();
+        PaneProgFrame p = new PaneProgFrame(null, new RosterEntry(),
+                "test frame", "programmers/Basic.xml",
+                new jmri.progdebugger.ProgDebugger(), false) {
+            // dummy implementations
+            @Override
+            protected JPanel getModePane() {
+                return null;
+            }
+        };
+        p.readConfig(root, new RosterEntry());
+        JUnitUtil.waitFor(()->{return p.threadCount.get() == 0;}, "PaneProgFrame threads done");
+
+        jmri.util.ThreadingUtil.runOnGUI(p::dispose);
+        jmri.util.ThreadingUtil.runOnGUI(p::dispose); // without the fix, logs an error from the GUI thread
+        Assertions.assertFalse(p.isDisplayable(), "frame disposed of");
+    }
+
     @Test
     @DisabledIfHeadless
     public void testLoadDecoderFileUpdateMaxFnNum() {

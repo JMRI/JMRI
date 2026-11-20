@@ -336,19 +336,6 @@ public class AutoActiveTrain implements ThrottleListener {
         }
     }
 
-    /**
-     * @deprecated Use {@code ActiveTrain.setTrainDetection(TrainDetection value } insteadUse
-     * @param set True if entire train is detectable
-     */
-    @Deprecated (since="5.7.6",forRemoval=true)
-    public void setResistanceWheels(boolean set) {
-        if (set) {
-            _activeTrain.setTrainDetection(TrainDetection.TRAINDETECTION_WHOLETRAIN);
-        } else {
-            _activeTrain.setTrainDetection(TrainDetection.TRAINDETECTION_HEADONLY);
-        }
-    }
-
     public boolean getRunInReverse() {
         return _runInReverse;
     }
@@ -1759,9 +1746,8 @@ public class AutoActiveTrain implements ThrottleListener {
     private void checkForSignalPassedOrStop(String displayName) {
         // if current section is null we are in a pre transit block.
         if (_currentAllocatedSection != null) {
-            if ((_currentAllocatedSection.isInActiveBlockList(_conSignalProtectedBlock) ||
-                    (_nextSection != null && _activeTrain.isInAllocatedList(_nextSection) && _nextSection.containsBlock(_conSignalProtectedBlock)))
-                    && _conSignalProtectedBlock.getSensor().getState() == Block.OCCUPIED) {
+            Section next = (_nextSection != null && _activeTrain.isInAllocatedList(_nextSection)) ? _nextSection : null;
+            if (hasJustPassed(_conSignalProtectedBlock, _activeTrain.getAllocatedSectionList(), next)) {
                 // Train has just passed this signal - ignore this signal
                 log.debug("{}: _conSignalProtectedBlock [{}] for signal [{}] is the block just past so ignore.", _activeTrain.getTrainName(),
                         _conSignalProtectedBlock.getDisplayName(USERSYS), displayName);
@@ -1771,6 +1757,36 @@ public class AutoActiveTrain implements ThrottleListener {
                 stopInCurrentSection(NO_TASK);
             }
         }
+    }
+
+    /**
+     * Check whether a train has just passed the signal protecting a Block, so
+     * that the signal showing stop behind the train is to be ignored.
+     * <p>
+     * The signal shows stop as soon as the train enters the Block. That can be
+     * before the train's own handling of its entry has moved it on to the next
+     * signal, so the entry may still be waiting to be handled, or being
+     * handled, when the signal changes.
+     *
+     * @param protectedBlock    the Block the signal protects
+     * @param allocatedSections the train's Allocated Sections
+     * @param nextSection       the train's next Section, if it is allocated to
+     *                          the train, or null
+     * @return true if the Block is occupied, and a change to it is waiting to
+     *         be handled, or being handled, in one of the train's Sections, or
+     *         it is in the next Section
+     */
+    static boolean hasJustPassed(Block protectedBlock, List<AllocatedSection> allocatedSections, Section nextSection) {
+        if (protectedBlock == null || protectedBlock.getSensor() == null
+                || protectedBlock.getSensor().getState() != Block.OCCUPIED) {
+            return false;
+        }
+        for (AllocatedSection as : allocatedSections) {
+            if (as.isInActiveBlockList(protectedBlock)) {
+                return true;
+            }
+        }
+        return nextSection != null && nextSection.containsBlock(protectedBlock);
     }
 
     protected float getSpeedFromBlock(Block block) {

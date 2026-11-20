@@ -147,6 +147,83 @@ public class AbstractThrottleTest {
     }
 
     /**
+     * A registered {@link jmri.ThrottleSpeedLimiter} caps every speed this
+     * throttle sets, before it is sent; stops pass unchanged. Runs for every
+     * system's throttle test.
+     */
+    @Test
+    public void testSetSpeedSettingIsLimited() {
+        jmri.ThrottleSpeedLimiter limiter = address -> 0.5f;
+        InstanceManager.setDefault(jmri.ThrottleSpeedLimiter.class, limiter);
+        try {
+            checkSpeedSettingIsLimited();
+        } finally {
+            InstanceManager.deregister(limiter, jmri.ThrottleSpeedLimiter.class);
+        }
+    }
+
+    private void checkSpeedSettingIsLimited() {
+        instance.setSpeedSetting(0.8f);
+        Assertions.assertTrue(instance.getSpeedSetting() <= 0.51f,
+            "0.8 limited to 0.5, got " + instance.getSpeedSetting());
+
+        instance.setSpeedSetting(0.8f, true, true);
+        Assertions.assertTrue(instance.getSpeedSetting() <= 0.51f,
+            "0.8 limited to 0.5 with duplicates allowed, got " + instance.getSpeedSetting());
+
+        instance.setSpeedSettingAgain(1.0f);
+        Assertions.assertTrue(instance.getSpeedSetting() <= 0.51f,
+            "1.0 sent again limited to 0.5, got " + instance.getSpeedSetting());
+    }
+
+    /**
+     * While a limit is in force, the speed asked for is kept, separately from
+     * the limited speed sent. Runs for every system's throttle test.
+     */
+    @Test
+    public void testRequestKeptWhileLimited() {
+        jmri.ThrottleSpeedLimiter limiter = address -> 0.5f;
+        InstanceManager.setDefault(jmri.ThrottleSpeedLimiter.class, limiter);
+        try {
+            instance.setSpeedSetting(0.8f);
+            Assertions.assertEquals(0.8f, instance.getRequestedSpeed(), 0.0001f, "the request");
+            instance.setSpeedSettingAgain(0.9f);
+            Assertions.assertEquals(0.9f, instance.getRequestedSpeed(), 0.0001f, "sent again");
+            instance.setSpeedSetting(0.3f, false, false);
+            Assertions.assertEquals(0.3f, instance.getRequestedSpeed(), 0.0001f, "under the limit");
+        } finally {
+            InstanceManager.deregister(limiter, jmri.ThrottleSpeedLimiter.class);
+        }
+    }
+
+    /**
+     * The limit applied, in AbstractThrottle itself.
+     */
+    @Test
+    public void testApplySpeedLimit() {
+        AbstractThrottle t = new AbstractThrottleImpl(memo);
+        Assertions.assertEquals(0.8f, t.applySpeedLimit(0.8f), 0.0f, "no limiter: unchanged");
+
+        float[] limit = {0.5f};
+        jmri.ThrottleSpeedLimiter limiter = address -> limit[0];
+        InstanceManager.setDefault(jmri.ThrottleSpeedLimiter.class, limiter);
+        try {
+            Assertions.assertEquals(0.5f, t.applySpeedLimit(0.8f), 0.0f, "over the limit: the limit");
+            Assertions.assertEquals(0.3f, t.applySpeedLimit(0.3f), 0.0f, "under the limit: unchanged");
+            Assertions.assertEquals(0.0f, t.applySpeedLimit(0.0f), 0.0f, "a stop: unchanged");
+            Assertions.assertEquals(-1.0f, t.applySpeedLimit(-1.0f), 0.0f, "an emergency stop: unchanged");
+            limit[0] = Float.NaN;
+            Assertions.assertEquals(0.8f, t.applySpeedLimit(0.8f), 0.0f, "NaN: no limit");
+            limit[0] = -0.5f;
+            Assertions.assertEquals(0.0f, t.applySpeedLimit(0.8f), 0.0f, "a limit below 0: stopped, not reversed");
+            limit[0] = 1.5f;
+            Assertions.assertEquals(1.0f, t.applySpeedLimit(1.0f), 0.0f, "a limit above 1: no limit");
+        } finally {
+            InstanceManager.deregister(limiter, jmri.ThrottleSpeedLimiter.class);
+        }
+    }
+
+    /**
      * Test of getIsForward method, of class AbstractThrottle.
      */
     @Test

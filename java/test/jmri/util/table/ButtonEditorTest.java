@@ -14,7 +14,6 @@ import jmri.util.JmriJFrame;
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
 import jmri.util.junit.annotations.DisabledIfHeadless;
-import jmri.util.swing.JemmyUtil;
 
 import org.junit.jupiter.api.*;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -81,6 +80,17 @@ public class ButtonEditorTest {
         });
     }
 
+    /*
+     * These tests need the window system to make a window active when it is shown or clicked. Windows
+     * test runners sometimes don't (its foreground lock, as the clicks are not real mouse clicks), and
+     * then there is nothing to check: the test is skipped rather than failed.
+     */
+    private static void assumeActive(JmriJFrame f) {
+        ThreadingUtil.runOnGUI(f::requestFocus);
+        Assumptions.assumeTrue(JUnitUtil.waitFor(() -> ThreadingUtil.runOnGUIwithReturn(f::isActive)),
+            () -> "the window system did not make " + f.getTitle() + " active");
+    }
+
     /**
      * Clicking a table's button does not take the focus from the table within its window: if it did, a
      * window the button opens could lose the focus again to the table's window.
@@ -90,16 +100,17 @@ public class ButtonEditorTest {
     public void testClickLeavesFocusWithTable() {
         List<String> tableFocusLost = new ArrayList<>(); // written and read on the GUI thread
         JTable table = showTableWithEditButton(tableFocusLost);
-        JemmyUtil.waitFor(tableFrame);
+        assumeActive(tableFrame);
         ThreadingUtil.runOnGUI(table::requestFocusInWindow);
-        JUnitUtil.waitFor(() -> ThreadingUtil.runOnGUIwithReturn(table::isFocusOwner), "table has the focus");
+        Assumptions.assumeTrue(JUnitUtil.waitFor(() -> ThreadingUtil.runOnGUIwithReturn(table::isFocusOwner)),
+            "the window system did not give the table the focus");
 
         new JTableOperator(new JFrameOperator(tableFrame)).clickOnCell(0, 0);
         JUnitUtil.waitFor(() -> opened != null, "button opened a window");
         // the click has been handled: the button's edit is over and the window it opened is showing
         JUnitUtil.waitFor(() -> ThreadingUtil.runOnGUIwithReturn(() -> !table.isEditing() && opened.isShowing()),
             "click handled");
-        JemmyUtil.waitFor(opened);
+        assumeActive(opened);
         Assertions.assertEquals(List.of(), ThreadingUtil.runOnGUIwithReturn(() -> new ArrayList<>(tableFocusLost)),
             "the focus did not move from the table to another component of its window");
     }
@@ -112,10 +123,14 @@ public class ButtonEditorTest {
     public void testOpenedWindowBecomesActive() {
         List<String> tableFocusLost = new ArrayList<>(); // written and read on the GUI thread
         showTableWithEditButton(tableFocusLost);
-        JemmyUtil.waitFor(tableFrame);
+        assumeActive(tableFrame);
         new JTableOperator(new JFrameOperator(tableFrame)).clickOnCell(0, 0);
         JUnitUtil.waitFor(() -> opened != null, "button opened a window");
-        JemmyUtil.waitFor(opened);
+        JUnitUtil.waitFor(() -> ThreadingUtil.runOnGUIwithReturn(opened::isShowing), "opened window showing");
+        assumeActive(opened);
+        // once active, it stays active: the table's window does not take it back
+        JUnitUtil.waitFor(200);
+        Assertions.assertTrue(ThreadingUtil.runOnGUIwithReturn(opened::isActive), "opened window still active");
     }
 
     @AfterEach

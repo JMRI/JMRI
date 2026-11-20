@@ -2329,13 +2329,22 @@ abstract public class PaneProgFrame extends JmriJFrame
         Roster.getDefault().writeRoster();
     }
 
+    private boolean disposed = false;
+
     /**
      * Local dispose, which also invokes parent. Note that we remove the
-     * components (removeAll) before taking those apart.
+     * components (removeAll) before taking those apart. Safe to call more
+     * than once: later calls only dispose the window itself.
      */
     @OverridingMethodsMustInvokeSuper
     @Override
     public void dispose() {
+        if (disposed) {
+            // already disposed: its panes and models have been released
+            super.dispose();
+            return;
+        }
+        disposed = true;
         log.debug("dispose local");
 
         // remove listeners (not much of a point, though)
