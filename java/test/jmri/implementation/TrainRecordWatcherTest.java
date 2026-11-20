@@ -532,6 +532,44 @@ public class TrainRecordWatcherTest {
     }
 
     @Test
+    public void testOfTwoThatCouldHaveEnteredTheOneWhoseOnlyBlockEmptiedDid() {
+        Block[] b = line("A", "B", "C", "D");
+        TrainRecord left = manager.newRecord("Left");
+        TrainRecord right = manager.newRecord("Right");
+        place(left, true, b[0]);
+        place(right, true, b[2], b[3]);
+        occupy(b[1]);
+        assertEquals(Confidence.AMBIGUOUS, left.getConfidence(), "either could have entered B");
+        assertEquals(Confidence.AMBIGUOUS, right.getConfidence());
+
+        clear(b[0]); // Left's only Block empties while B still shows occupied
+        assertEquals(List.of(b[1]), left.getBlocks(), "Left went into B");
+        assertEquals(Confidence.CONFIRMED, left.getConfidence());
+        assertEquals(Rule.SETTLED_BY_LEAVING, Objects.requireNonNull(left.getReason(b[1])).getRule());
+        assertEquals(List.of(b[2], b[3]), right.getBlocks(), "Right is where it was");
+        assertEquals(Confidence.CONFIRMED, right.getConfidence(), "and no longer in doubt");
+
+        occupy(b[0]);
+        assertEquals(List.of(b[0], b[1]), left.getBlocks(), "Left is followed on from B, back into A");
+    }
+
+    @Test
+    public void testOfTwoThatCouldHaveEnteredOneStoppedLongAgoIsKeptWhenItsBlockEmpties() {
+        Block[] b = line("A", "B", "C");
+        TrainRecord left = train("Left", 3, 0f, nanos - 60_000_000_000L);
+        TrainRecord right = manager.newRecord("Right");
+        place(left, true, b[0]);
+        place(right, true, b[2]);
+        occupy(b[1]);
+        assertEquals(Confidence.AMBIGUOUS, left.getConfidence(), "Right's speed isn't known: either could have");
+
+        clear(b[0]); // told to stop long ago: a drop-out, not a departure
+        assertEquals(List.of(b[0]), left.getBlocks(), "Left kept in A");
+        assertEquals(Confidence.AMBIGUOUS, left.getConfidence(), "still one of the two that could have entered B");
+        assertEquals(Confidence.AMBIGUOUS, right.getConfidence());
+    }
+
+    @Test
     public void testPlacedFromValue() {
         Block[] b = line("A", "B");
         RosterEntry e = new RosterEntry();

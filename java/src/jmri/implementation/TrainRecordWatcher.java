@@ -41,8 +41,10 @@ import jmri.util.ThreadingUtil;
  * moving, its lead loco told to move while the others' were told to stop
  * long enough before (see {@link #isMoving}), that one has entered it.
  * Otherwise each becomes {@link Confidence#AMBIGUOUS} until the Block's value
- * says which train it is. A train with no speed command known, as one driven
- * by a throttle JMRI doesn't hear, is never ruled out this way.</li>
+ * says which train it is, or one of them in a single Block leaves it while the
+ * Block it could have entered still shows occupied: that one entered it. A
+ * train with no speed command known, as one driven by a throttle JMRI doesn't
+ * hear, is never ruled out this way.</li>
  * <li>When it is next to no train's end, but can be reached from an end of
  * one train through a run of Blocks with no detector (each joined to the
  * next along a path that is set, by the one shortest way), that train has
@@ -786,6 +788,12 @@ public class TrainRecordWatcher {
                 for (Block b : behind) {
                     r.left(b, b == block ? Reason.Rule.LEFT : Reason.Rule.LEFT_DARK_BEHIND);
                 }
+            } else if (blocks.size() == 1 && ambiguousAhead(r, block) != null) {
+                // one of the trains that could have entered a Block next to it, and its only Block has emptied
+                // while that Block still shows occupied: it was the one that entered
+                Map.Entry<Block, Candidate> ahead = Objects.requireNonNull(ambiguousAhead(r, block), "ahead");
+                settleByLeaving(ahead.getKey(), ahead.getValue());
+                r.left(block, Reason.Rule.LEFT);
             } else if (blocks.size() == 1 && unexplainedAhead(r, block) != null) {
                 // it left its only Block towards one already shown occupied with no train to explain it, as when
                 // a fault showed it occupied before the train got there: the train is there now
@@ -805,6 +813,56 @@ public class TrainRecordWatcher {
                 r.setConfidence(Confidence.ESTIMATED, reason(Reason.Rule.NOT_SEEN, block, Instant.now()));
             }
         }
+    }
+
+    /**
+     * The Block a train in one Block has gone into, if its Block emptied while
+     * the train was not known to have stopped, and it is one of the trains
+     * that could have entered exactly one Block that still shows occupied.
+     *
+     * @param r     a train's record
+     * @param block its only Block, now empty
+     * @return that Block, with the train's entry there, or null if there isn't
+     *         exactly one
+     */
+    @CheckForNull
+    private Map.Entry<Block, Candidate> ambiguousAhead(@Nonnull DefaultTrainRecord r, @Nonnull Block block) {
+        if (Boolean.FALSE.equals(isMoving(r, System.nanoTime()))) {
+            return null; // told to stop long enough ago: a drop-out, not a departure
+        }
+        Map.Entry<Block, Candidate> found = null;
+        for (Map.Entry<Block, List<Candidate>> e : ambiguous.entrySet()) {
+            if (e.getKey() == block || e.getKey().getState() != Block.OCCUPIED) {
+                continue;
+            }
+            for (Candidate c : e.getValue()) {
+                if (c.record == r && c.end() != null) {
+                    if (found != null) {
+                        return null;
+                    }
+                    found = Map.entry(e.getKey(), c);
+                }
+            }
+        }
+        return found;
+    }
+
+    /**
+     * Of the trains that could have entered a Block, this one did: the others
+     * are as they were before.
+     *
+     * @param block the Block
+     * @param c     the train that entered it
+     */
+    private void settleByLeaving(@Nonnull Block block, @Nonnull Candidate c) {
+        List<Candidate> candidates = ambiguous.remove(block);
+        if (candidates != null) {
+            candidates.remove(c);
+            restore(block, candidates);
+        }
+        c.record.entered(c.through(Objects.requireNonNull(c.end(), "end")), block, c.end(), c.timeNanos, c.time,
+                Reason.Rule.SETTLED_BY_LEAVING);
+        beforeAmbiguity.remove(c.record);
     }
 
     /**
