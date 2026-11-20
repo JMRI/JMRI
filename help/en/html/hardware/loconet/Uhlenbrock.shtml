@@ -195,11 +195,12 @@
       <p>The Uhlenbrock "LocoNet-USB und WLAN Interface" part #63860 connects a computer to
       any LocoNet system (Uhlenbrock, Digitrax, Fleischmann, PIKO, Tillig, ...) by USB or by
       WLAN. It takes its power from LocoNet and/or from its USB socket. With Digitrax command
-      stations (for example DCS100 or DCS200) LocoNet alone may not supply enough power to
-      start the WLAN part; in that case also connect the USB socket (to the computer or a USB
-      power supply), or use a LocoNet with an external power feed, such as a Digitrax UP5 with
-      its power supply connected. When the interface is ready, its white (LocoNet) and blue
-      (WLAN) LEDs are lit.</p>
+      stations (for example DCS100 or DCS200) LocoNet alone may not supply enough power for the
+      interface; this applies to both the USB and the WLAN connection. In that case use a
+      LocoNet with an external power feed, such as a Digitrax UP5 with its power supply
+      connected, or also connect the USB socket (to the computer or a USB power supply). When
+      the interface is ready, its white (LocoNet) LED is lit, and for WLAN also its blue (WLAN)
+      LED.</p>
 
       <p>For a USB connection select "Uhlenbrock" as the System Manufacturer and
       <strong>"LocoNet-USB and WLAN Interface 63860 (USB)"</strong> as the System Connection.
