@@ -39,11 +39,20 @@ final class Collisions {
         final TrainState.Span a;
         final TrainState.Span b;
         final Relation relation;
+        /** For fouling ways, where they foul, from {@link Route#foulingPieces}; null if not known. */
+        @CheckForNull
+        final double[][] pieces;
+
+        @CheckForNull
+        private static double[][] known(double[][] pieces) {
+            return pieces.length == 0 ? null : pieces;
+        }
 
         Pair(TrainState.Span a, TrainState.Span b, Relation relation) {
             this.a = a;
             this.b = b;
             this.relation = relation;
+            this.pieces = relation == Relation.FOUL ? known(a.passage.route.foulingPieces(b.passage.route)) : null;
         }
     }
 
@@ -159,11 +168,61 @@ final class Collisions {
             if (hiB - loB <= TOUCH_MM) {
                 continue;
             }
+            if (p.relation == Relation.FOUL && p.pieces != null) {
+                // where along each way they foul: both on a shared piece, overlapping on it, or both over a crossing
+                double loBr = Math.max(0, pb - b.length - p.b.start);
+                double hiBr = Math.min(p.b.length(), pb - p.b.start);
+                for (double[] pc : p.pieces) {
+                    if (foulAt(pc, loA, hiA, p.a.length(), loBr, hiBr, p.b.length())) {
+                        return p.a.block();
+                    }
+                }
+                continue;
+            }
             if (p.relation == Relation.FOUL || Math.min(hiA, hiB) - Math.max(loA, loB) > TOUCH_MM) {
                 return p.a.block();
             }
         }
         return null;
+    }
+
+    /**
+     * Do two trains foul each other at one piece where their ways foul?
+     *
+     * @param pc  the piece, as {@link Route#foulingPieces} gives it
+     * @param loA where the first train begins in its span, mm from its start
+     * @param hiA where it ends
+     * @param la  the first span's length
+     * @param loB where the second train begins in its span
+     * @param hiB where it ends
+     * @param lb  the second span's length
+     * @return true if they touch there
+     */
+    private static boolean foulAt(double[] pc, double loA, double hiA, double la, double loB, double hiB,
+            double lb) {
+        double a0 = pc[0] * la;
+        double a1 = pc[1] * la;
+        double b0 = pc[2] * lb;
+        double b1 = pc[3] * lb;
+        if (a1 - a0 <= TOUCH_MM || b1 - b0 <= TOUCH_MM) {
+            // a turnout or crossing: both trains over it
+            return loA < a0 - TOUCH_MM && hiA > a0 + TOUCH_MM && loB < b0 - TOUCH_MM && hiB > b0 + TOUCH_MM;
+        }
+        // a shared piece of track: their stretches on it, as parts of it, overlap
+        double ua0 = (Math.max(loA, a0) - a0) / (a1 - a0);
+        double ua1 = (Math.min(hiA, a1) - a0) / (a1 - a0);
+        double ub0 = (Math.max(loB, b0) - b0) / (b1 - b0);
+        double ub1 = (Math.min(hiB, b1) - b0) / (b1 - b0);
+        if (ua1 <= ua0 || ub1 <= ub0) {
+            return false;
+        }
+        if (pc[4] != 0) {
+            double t = ub0;
+            ub0 = 1 - ub1;
+            ub1 = 1 - t;
+        }
+        double tol = TOUCH_MM / Math.min(a1 - a0, b1 - b0);
+        return Math.min(ua1, ub1) - Math.max(ua0, ub0) > tol;
     }
 
     /**
@@ -185,6 +244,31 @@ final class Collisions {
         } else {
             e.add(new double[]{-p.b.start * k, k, 1});
             e.add(new double[]{-(b.length + p.b.start) * k, k, 1});
+        }
+        if (p.pieces != null) {
+            // the ends of each fouling piece, and the other train's ends mapped onto this one's piece
+            double lb = p.b.length();
+            for (double[] pc : p.pieces) {
+                double a0 = pc[0] * la;
+                double a1 = pc[1] * la;
+                double b0 = pc[2] * lb;
+                double b1 = pc[3] * lb;
+                e.add(new double[]{a0, 0, -1});
+                e.add(new double[]{a1, 0, -1});
+                e.add(new double[]{b0 * k, 0, -1});
+                e.add(new double[]{b1 * k, 0, -1});
+                if (b1 - b0 > TOUCH_MM && a1 - a0 > TOUCH_MM) {
+                    double s = (a1 - a0) / (b1 - b0);
+                    for (double end : new double[]{p.b.start, b.length + p.b.start}) {
+                        // a's span position of b's end at (pos - end), on the piece
+                        if (pc[4] == 0) {
+                            e.add(new double[]{a0 + (-end - b0) * s, s, 1});
+                        } else {
+                            e.add(new double[]{a1 - (-end - b0) * s, -s, 1});
+                        }
+                    }
+                }
+            }
         }
         return e;
     }
