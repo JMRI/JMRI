@@ -93,7 +93,16 @@ final class TrainState {
     final long placedNanos;
     /** The front position. */
     double position;
+    /**
+     * Stopped by a collision. It may move again away from the train it hit:
+     * driven, it is no longer crashed, and moving back into that train stops
+     * it again at once.
+     */
     boolean crashed;
+    /** The train it last collided with, or null once they have moved apart. */
+    TrainState hit;
+    /** Its front position when it collided. */
+    double hitAt;
     /** No loco: stock left by a breakaway, which coasts to a stand. */
     final boolean unpowered;
     /** Stalled by a fault: does not move whatever its locos are told. */
@@ -233,9 +242,11 @@ final class TrainState {
         }
         Velocity v = Velocity.slowest(each, 0.0, dt);
         drivenSpeed = v.after(dt);
-        if (crashed || stalled || derailed) {
+        if (stalled || derailed || (crashed && drivenSpeed == 0.0)) {
             return Velocity.still(0.0, dt);
         }
+        // driven after a collision: it may move away; moving into the train it hit stops it again
+        crashed = false;
         double factor = 1.0 + train.getSpeedFactorPercent() / 100.0;
         return factor == 1.0 ? v : v.times(factor);
     }
