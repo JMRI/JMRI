@@ -846,7 +846,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     public void checkMarkerMenuExists() {
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuMarker"));
         assertNotNull( jmo, "Marker Menu Exists");
-        assertEquals( 5, jmo.getItemCount(), "Menu Item Count");
+        assertEquals( 6, jmo.getItemCount(), "Menu Item Count"); // 5, and the checkbox to name the train in the Block
     }
 
     @Test
