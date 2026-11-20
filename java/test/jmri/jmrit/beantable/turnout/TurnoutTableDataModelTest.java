@@ -109,6 +109,31 @@ public class TurnoutTableDataModelTest extends jmri.jmrit.beantable.AbstractBean
     }
 
     @Test
+    public void testLockColumnLocksATurnoutWithoutHardwareLockout() {
+        Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT9");
+        turnout.setCommandedState(Turnout.CLOSED);
+        // the model lists the turnouts there are when it is made
+        TurnoutTableDataModel model = new TurnoutTableDataModel();
+        int row = -1;
+        for (int i = 0; i < model.getRowCount(); i++) {
+            if (turnout == model.getValueAt(i, TurnoutTableDataModel.SYSNAMECOL)) {
+                row = i;
+            }
+        }
+        assertTrue("row found", row >= 0);
+        assertTrue("Locked can be set on every system", model.isCellEditable(row, TurnoutTableDataModel.LOCKCOL));
+        assertEquals(Boolean.FALSE, model.getValueAt(row, TurnoutTableDataModel.LOCKCOL));
+
+        model.setValueAt(Boolean.TRUE, row, TurnoutTableDataModel.LOCKCOL);
+        assertTrue("locked", turnout.isLocked());
+        assertEquals(Boolean.TRUE, model.getValueAt(row, TurnoutTableDataModel.LOCKCOL));
+
+        model.setValueAt(Boolean.FALSE, row, TurnoutTableDataModel.LOCKCOL);
+        Assert.assertFalse("unlocked", turnout.isLocked());
+        model.dispose();
+    }
+
+    @Test
     public void testGraphicRendererDoesNotResizeRows() {
         TurnoutManager mgr = InstanceManager.getDefault(TurnoutManager.class);
         for (int i = 1; i <= 10; i++) {

@@ -203,6 +203,13 @@ public interface Turnout extends DigitalIO, VariableControlSpanBean {
     String PROPERTY_REPORT_LOCKED = "reportlocked";
 
     /**
+     * String constant for the Property Change fired when the holders of the
+     * turnout's lock change. See {@link #lock(Object, int)}.
+     * @since 5.19.2
+     */
+    String PROPERTY_LOCK_HOLDERS = "lockHolders";
+
+    /**
      * String constant for Property Change to set Decoder Name.
      */
     String PROPERTY_DECODER_NAME = "decoderNameChange";
@@ -470,12 +477,24 @@ public interface Turnout extends DigitalIO, VariableControlSpanBean {
     /**
      * Get the locked state of the turnout. A turnout can be locked to prevent
      * it being thrown from a cab or push button on the layout if supported by
-     * the protocol.
+     * the protocol. This is the hardware lockout only; see {@link #isLocked()}
+     * for whether the turnout is locked at all.
      *
      * @param turnoutLockout the type of lock
      * @return true if turnout is locked using specified lock method
      */
     boolean getLocked(int turnoutLockout);
+
+    /**
+     * Determine whether the turnout is locked at all: by any holder (see
+     * {@link #lock(Object, int)}), or by a cab or push button lockout.
+     *
+     * @return true if locked
+     * @since 5.19.2
+     */
+    default boolean isLocked() {
+        return !getLockHolders().isEmpty() || getLocked(CABLOCKOUT + PUSHBUTTONLOCKOUT);
+    }
 
     /**
      * Enable turnout lock operators. A turnout can be locked to prevent it
@@ -515,6 +534,12 @@ public interface Turnout extends DigitalIO, VariableControlSpanBean {
     /**
      * Lock a turnout. A turnout can be locked to prevent it being thrown from a
      * cab or push button on the layout if supported by the protocol.
+     * <p>
+     * Locking also locks the turnout, in the position it is commanded to, or
+     * else the position it is known to be in, against commands sent through
+     * JMRI, on every system, as {@link #lock(Object, int)} does. All callers
+     * of this method share one holder, so unlocking with it releases what any
+     * of them locked; locks of other holders are not released.
      *
      * @param turnoutLockout the type of lock
      * @param locked         true if turnout is locked using specified lock
@@ -522,6 +547,79 @@ public interface Turnout extends DigitalIO, VariableControlSpanBean {
      */
     @InvokeOnLayoutThread
     void setLocked(int turnoutLockout, boolean locked);
+
+    /**
+     * Lock the turnout in a position for a holder. While any holder holds the
+     * turnout, a command sent through JMRI to set it to the other position is
+     * refused, on every system, and the refusal is logged naming the holders.
+     * A command to the position it is locked in is carried out as usual.
+     * <p>
+     * Any number of holders may lock the turnout in the same position. A
+     * holder asking for the other position is refused, and nothing changes,
+     * until every other holder has unlocked it. A holder that already holds
+     * the turnout and asks again for the same position keeps its lock; one
+     * asking for the other position while it is the only holder moves the
+     * lock, but not the turnout.
+     * <p>
+     * This lock is kept by JMRI and doesn't depend on the hardware. Commands
+     * that reach the turnout from outside JMRI, such as from a cab or a push
+     * button, are not stopped by it; {@link #setLocked(int, boolean)} with a
+     * system that supports it does that.
+     * <p>
+     * On a change of holders, fires Property Change
+     * {@link #PROPERTY_LOCK_HOLDERS}.
+     *
+     * @param holder   the holder, for example a Route or a Signal Mast Logic;
+     *                 its {@code toString()}, or its display name if it is a
+     *                 {@link NamedBean}, names it in messages
+     * @param position {@link #CLOSED} or {@link #THROWN}
+     * @return true if the holder now holds the turnout in that position; false
+     *         if another holder holds it in the other position
+     * @throws IllegalArgumentException if position is neither CLOSED nor
+     *                                  THROWN
+     * @since 5.19.2
+     */
+    @InvokeOnLayoutThread
+    default boolean lock(@Nonnull Object holder, int position) {
+        return false;
+    }
+
+    /**
+     * Release a holder's lock on the turnout. The turnout stays locked while
+     * any other holder holds it. Releasing a lock a holder doesn't have does
+     * nothing.
+     * <p>
+     * On a change of holders, fires Property Change
+     * {@link #PROPERTY_LOCK_HOLDERS}.
+     *
+     * @param holder the holder whose lock is released
+     * @since 5.19.2
+     */
+    @InvokeOnLayoutThread
+    default void unlock(@Nonnull Object holder) {
+    }
+
+    /**
+     * Get the holders of the turnout's lock, in the order they locked it.
+     *
+     * @return the holders; empty if the turnout isn't locked
+     * @since 5.19.2
+     */
+    @Nonnull
+    default Set<Object> getLockHolders() {
+        return Set.of();
+    }
+
+    /**
+     * Get the position the turnout is locked in.
+     *
+     * @return {@link #CLOSED} or {@link #THROWN} while the turnout is locked;
+     *         {@link #UNKNOWN} when it isn't
+     * @since 5.19.2
+     */
+    default int getLockedPosition() {
+        return UNKNOWN;
+    }
 
     /**
      * Get reporting of use of locked turnout by a cab or throttle.

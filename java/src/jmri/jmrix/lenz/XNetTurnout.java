@@ -198,11 +198,13 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     }
 
     /**
-     * Set the Commanded State.
-     * This method overides {@link jmri.implementation.AbstractTurnout#setCommandedState(int)}.
+     * Set the Commanded State, once
+     * {@link jmri.implementation.AbstractTurnout#setCommandedState(int)} has
+     * checked the turnout's lock.
+     * This method overrides {@link jmri.implementation.AbstractTurnout#setCommandedStateInternal(int)}.
      */
     @Override
-    public void setCommandedState(int s) {
+    public void setCommandedStateInternal(int s) {
         if (log.isDebugEnabled()) {
             log.debug("set commanded state for XNet turnout {} to {}", getSystemName(), s);
         }

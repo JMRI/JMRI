@@ -133,11 +133,32 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * appropriate, starts a TurnoutOperator to do its thing. If there is no
      * TurnoutOperator (not required or nothing suitable) then just tell the
      * layout and hope for the best.
+     * <p>
+     * This method is final, so that the turnout's lock is always checked: a
+     * subclass that sets its state its own way overrides
+     * {@link #setCommandedStateInternal(int)} instead.
      *
      * @param s commanded state to set
      */
     @Override
-    public void setCommandedState(int s) {
+    public final void setCommandedState(int s) {
+        if (refusedByLock(s)) {
+            return;
+        }
+        setCommandedStateInternal(s);
+    }
+
+    /**
+     * Set the commanded state and send it to the layout, once
+     * {@link #setCommandedState(int)} has checked the turnout's lock.
+     * Implementations that set their state their own way override this
+     * rather than {@link #setCommandedState(int)}, so the lock applies to
+     * them too.
+     *
+     * @param s commanded state to set
+     * @since 5.19.2
+     */
+    protected void setCommandedStateInternal(int s) {
         log.debug("set commanded state for turnout {} to {}", getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME),
                 (s == Turnout.CLOSED ? closedText : thrownText));
         newCommandedState(s);
@@ -426,8 +447,11 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         // set the value
         int oldMode = _activeFeedbackType;
         _activeFeedbackType = mode;
-        // unlock turnout if feedback is changed
-        setLocked(CABLOCKOUT, false);
+        // release the hardware cab lockout if feedback is changed; locks
+        // held by holders don't depend on the feedback mode
+        if (setHardwareLocked(CABLOCKOUT, false)) {
+            firePropertyChange(PROPERTY_LOCKED, true, false);
+        }
         if (oldMode != _activeFeedbackType) {
             // a pending DELAYED feedback timer must not set the state any more
             delayedFeedbackCount.incrementAndGet();
@@ -523,6 +547,12 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * state.
      * Turnouts that have local buttons can also be locked if their
      * decoder supports it.
+     * <p>
+     * Locking also locks the turnout against commands sent through JMRI, on
+     * every system, as {@link #lock(Object, int)} does, in the position it
+     * is commanded to, or else the position it is known to be in. Every caller
+     * of this method shares one holder.
+     * <p>
      * On change, fires Property Change "locked".
      *
      * @param turnoutLockout lockout state to monitor. Possible values
@@ -532,18 +562,49 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      */
     @Override
     public void setLocked(int turnoutLockout, boolean locked) {
-        boolean firechange = false;
-        if ((turnoutLockout & CABLOCKOUT) != 0 && _cabLockout != locked) {
-            firechange = true;
-            if (canLock(CABLOCKOUT)) {
-                _cabLockout = locked;
+        boolean wasLocked = isLocked();
+        boolean hardwareChanged;
+        if (locked) {
+            int position = lockPositionNow();
+            if (position == CLOSED || position == THROWN) {
+                lockHolder(SHARED_LOCK_HOLDER, position);
             } else {
-                _cabLockout = false;
+                log.debug("turnout {} not locked by JMRI: neither commanded nor known to be closed or thrown",
+                        getDisplayName());
             }
+        } else {
+            unlockHolder(SHARED_LOCK_HOLDER);
+        }
+        hardwareChanged = setHardwareLocked(turnoutLockout, locked);
+        boolean isLocked = isLocked();
+        if (wasLocked != isLocked) {
+            firePropertyChange(PROPERTY_LOCKED, wasLocked, isLocked);
+        } else if (hardwareChanged) {
+            // as before turnouts could be locked by JMRI
+            firePropertyChange(PROPERTY_LOCKED, !locked, locked);
+        }
+    }
+
+    /**
+     * Set the cab and push button lockouts, where the hardware supports
+     * them, as {@link #setLocked(int, boolean)} did before turnouts could be
+     * locked by JMRI.
+     *
+     * @param turnoutLockout {@link #CABLOCKOUT}, {@link #PUSHBUTTONLOCKOUT} or
+     *                       both
+     * @param locked         true to lock
+     * @return true if a lockout was asked to change, so that
+     *         {@link #setLocked(int, boolean)} fires its change as it did
+     */
+    private boolean setHardwareLocked(int turnoutLockout, boolean locked) {
+        boolean changed = false;
+        if ((turnoutLockout & CABLOCKOUT) != 0 && _cabLockout != locked) {
+            changed = true;
+            _cabLockout = locked && canLock(CABLOCKOUT);
         }
         if ((turnoutLockout & PUSHBUTTONLOCKOUT) != 0
                 && _pushButtonLockout != locked) {
-            firechange = true;
+            changed = true;
             if (canLock(PUSHBUTTONLOCKOUT)) {
                 _pushButtonLockout = locked;
                 // now change pushbutton lockout state on layout
@@ -552,14 +613,28 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
                 _pushButtonLockout = false;
             }
         }
-        if (firechange) {
-            firePropertyChange(PROPERTY_LOCKED, !locked, locked);
+        return changed;
+    }
+
+    /**
+     * The position {@link #setLocked(int, boolean)} locks the turnout in:
+     * where it is commanded to, or else where it is known to be.
+     *
+     * @return CLOSED, THROWN, or another state if neither applies
+     */
+    private int lockPositionNow() {
+        int commanded = getCommandedState();
+        if (commanded == CLOSED || commanded == THROWN) {
+            return commanded;
         }
+        return getKnownState();
     }
 
     /**
      * Determine if turnout is locked. There
      * are two types of locks: cab lockout, and pushbutton lockout.
+     * These are the hardware lockouts; see {@link #isLocked()} for whether
+     * the turnout is locked at all.
      *
      * @param turnoutLockout turnout to check
      * @return locked state, true if turnout is locked
@@ -576,6 +651,157 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
             default:
                 return false;
         }
+    }
+
+    /**
+     * The one holder shared by every caller of
+     * {@link #setLocked(int, boolean)}.
+     */
+    private static final Object SHARED_LOCK_HOLDER = new Object() {
+        @Override
+        public String toString() {
+            return "a lock set without its own holder (Turnout table, Route, Signal Mast Logic, Logix or LogixNG)";
+        }
+    };
+
+    /**
+     * The holders of the turnout's lock, each with the position it locked
+     * the turnout in; all hold the same position. In the order they locked
+     * it.
+     */
+    private final Map<Object, Integer> lockHolders = new LinkedHashMap<>();
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean lock(@Nonnull Object holder, int position) {
+        boolean wasLocked = isLocked();
+        boolean result = lockHolder(holder, position);
+        if (!wasLocked && isLocked()) {
+            firePropertyChange(PROPERTY_LOCKED, false, true);
+        }
+        return result;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void unlock(@Nonnull Object holder) {
+        boolean wasLocked = isLocked();
+        unlockHolder(holder);
+        if (wasLocked && !isLocked()) {
+            firePropertyChange(PROPERTY_LOCKED, true, false);
+        }
+    }
+
+    /**
+     * Add or move a holder's lock, firing only the change of holders.
+     *
+     * @param holder   the holder
+     * @param position CLOSED or THROWN
+     * @return true if the holder now holds the turnout in that position
+     */
+    private boolean lockHolder(@Nonnull Object holder, int position) {
+        Objects.requireNonNull(holder, "holder");
+        if (position != CLOSED && position != THROWN) {
+            throw new IllegalArgumentException("A turnout can only be locked closed or thrown, not " + position);
+        }
+        Set<Object> oldHolders;
+        Set<Object> newHolders;
+        synchronized (this) {
+            int lockedPosition = getLockedPosition();
+            if (lockedPosition != UNKNOWN && lockedPosition != position
+                    && !(lockHolders.size() == 1 && lockHolders.containsKey(holder))) {
+                log.debug("turnout {} not locked {} for {}: locked {} by {}", getDisplayName(),
+                        stateText(position), describeHolder(holder), stateText(lockedPosition), describeHolders());
+                return false;
+            }
+            Integer old = lockHolders.get(holder);
+            if (old != null && old == position) {
+                return true;
+            }
+            oldHolders = new LinkedHashSet<>(lockHolders.keySet());
+            lockHolders.put(holder, position);
+            newHolders = new LinkedHashSet<>(lockHolders.keySet());
+        }
+        if (!oldHolders.equals(newHolders)) {
+            firePropertyChange(PROPERTY_LOCK_HOLDERS, oldHolders, newHolders);
+        }
+        return true;
+    }
+
+    /**
+     * Release a holder's lock, firing only the change of holders.
+     *
+     * @param holder the holder
+     */
+    private void unlockHolder(@Nonnull Object holder) {
+        Set<Object> oldHolders;
+        Set<Object> newHolders;
+        synchronized (this) {
+            if (!lockHolders.containsKey(holder)) {
+                return;
+            }
+            oldHolders = new LinkedHashSet<>(lockHolders.keySet());
+            lockHolders.remove(holder);
+            newHolders = new LinkedHashSet<>(lockHolders.keySet());
+        }
+        firePropertyChange(PROPERTY_LOCK_HOLDERS, oldHolders, newHolders);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @Nonnull
+    public synchronized Set<Object> getLockHolders() {
+        return Collections.unmodifiableSet(new LinkedHashSet<>(lockHolders.keySet()));
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public synchronized int getLockedPosition() {
+        if (lockHolders.isEmpty()) {
+            return UNKNOWN;
+        }
+        return lockHolders.values().iterator().next();
+    }
+
+    /**
+     * Refuse a command through JMRI to a position other than the one the
+     * turnout is locked in, logging why.
+     *
+     * @param s the commanded state asked for
+     * @return true if the command is refused
+     */
+    private boolean refusedByLock(int s) {
+        String holders;
+        int lockedPosition;
+        synchronized (this) {
+            lockedPosition = getLockedPosition();
+            if (lockedPosition == UNKNOWN || s == lockedPosition || (s != CLOSED && s != THROWN)) {
+                return false;
+            }
+            holders = describeHolders();
+        }
+        log.warn("Turnout {} not set {}: it is locked {} by {}", getDisplayName(), stateText(s),
+                stateText(lockedPosition), holders);
+        return true;
+    }
+
+    private String stateText(int s) {
+        return s == CLOSED ? closedText : (s == THROWN ? thrownText : Integer.toString(s));
+    }
+
+    private synchronized String describeHolders() {
+        StringJoiner j = new StringJoiner(", ");
+        for (Object h : lockHolders.keySet()) {
+            j.add(describeHolder(h));
+        }
+        return j.toString();
+    }
+
+    private static String describeHolder(Object holder) {
+        if (holder instanceof NamedBean) {
+            return ((NamedBean) holder).getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
+        }
+        return holder.toString();
     }
 
     protected boolean _cabLockout = false;

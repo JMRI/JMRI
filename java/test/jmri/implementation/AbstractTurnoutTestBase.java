@@ -255,6 +255,106 @@ public abstract class AbstractTurnoutTestBase {
     }
 
     @Test
+    public void testLockRefusesTheOtherPosition() {
+        t.setCommandedState(Turnout.CLOSED);
+        assertTrue( t.lock("holder A", Turnout.CLOSED), "locked closed");
+        assertTrue( t.isLocked(), "locked");
+        assertEquals( Turnout.CLOSED, t.getLockedPosition(), "locked position");
+
+        t.setCommandedState(Turnout.THROWN);
+        assertEquals( Turnout.CLOSED, t.getCommandedState(), "throw refused while locked closed");
+        jmri.util.JUnitAppender.assertWarnMessageStartsWith("Turnout " + t.getDisplayName() + " not set");
+
+        t.setCommandedState(Turnout.CLOSED);
+        assertEquals( Turnout.CLOSED, t.getCommandedState(), "close allowed while locked closed");
+
+        t.unlock("holder A");
+        assertFalse( t.isLocked(), "unlocked");
+        assertEquals( Turnout.UNKNOWN, t.getLockedPosition(), "no locked position");
+        t.setCommandedState(Turnout.THROWN);
+        assertEquals( Turnout.THROWN, t.getCommandedState(), "throw allowed once unlocked");
+    }
+
+    @Test
+    public void testLockHoldersShareOnePosition() {
+        t.setCommandedState(Turnout.THROWN);
+        assertTrue( t.lock("holder A", Turnout.THROWN), "A locks thrown");
+        assertTrue( t.lock("holder B", Turnout.THROWN), "B locks thrown too");
+        assertFalse( t.lock("holder C", Turnout.CLOSED), "C refused the other position");
+        assertEquals( java.util.List.of("holder A", "holder B"), new java.util.ArrayList<>(t.getLockHolders()),
+            "holders in the order they locked");
+
+        t.unlock("holder A");
+        assertTrue( t.isLocked(), "still locked by B");
+        t.setCommandedState(Turnout.CLOSED);
+        assertEquals( Turnout.THROWN, t.getCommandedState(), "close refused while B holds");
+        jmri.util.JUnitAppender.assertWarnMessageStartsWith("Turnout " + t.getDisplayName() + " not set");
+
+        assertTrue( t.lock("holder B", Turnout.CLOSED), "the only holder moves its lock");
+        assertEquals( Turnout.CLOSED, t.getLockedPosition(), "lock moved");
+        assertEquals( Turnout.THROWN, t.getCommandedState(), "moving the lock doesn't move the turnout");
+
+        t.unlock("holder B");
+        t.unlock("holder B"); // a lock it no longer has: nothing happens
+        assertTrue( t.getLockHolders().isEmpty(), "no holders");
+    }
+
+    @Test
+    public void testSetLockedLocksOnEverySystem() {
+        t.setCommandedState(Turnout.THROWN);
+        assertTrue( t.lock("holder A", Turnout.THROWN), "A locks thrown");
+
+        t.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, true);
+        assertEquals( 2, t.getLockHolders().size(), "setLocked adds its own holder");
+        t.setCommandedState(Turnout.CLOSED);
+        assertEquals( Turnout.THROWN, t.getCommandedState(), "close refused");
+        jmri.util.JUnitAppender.assertWarnMessageStartsWith("Turnout " + t.getDisplayName() + " not set");
+
+        t.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, false);
+        assertEquals( java.util.List.of("holder A"), new java.util.ArrayList<>(t.getLockHolders()),
+            "setLocked(false) releases only its own holder");
+        assertTrue( t.isLocked(), "still locked by A");
+
+        t.unlock("holder A");
+        assertFalse( t.isLocked(), "unlocked");
+    }
+
+    @Test
+    public void testSetLockedNeedsAPosition() {
+        // never commanded nor known: nothing to lock it in
+        t.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, true);
+        assertTrue( t.getLockHolders().isEmpty(), "no JMRI lock without a position");
+        t.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, false);
+    }
+
+    @Test
+    public void testLockPropertyChanges() {
+        t.setCommandedState(Turnout.CLOSED);
+        java.util.List<String> names = new java.util.ArrayList<>();
+        t.addPropertyChangeListener(e -> names.add(e.getPropertyName()));
+
+        t.lock("holder A", Turnout.CLOSED);
+        assertEquals( java.util.List.of(Turnout.PROPERTY_LOCK_HOLDERS, Turnout.PROPERTY_LOCKED), names,
+            "first lock: holders, then locked");
+        names.clear();
+        t.lock("holder B", Turnout.CLOSED);
+        assertEquals( java.util.List.of(Turnout.PROPERTY_LOCK_HOLDERS), names, "second holder: holders only");
+        names.clear();
+        t.lock("holder B", Turnout.CLOSED);
+        assertTrue( names.isEmpty(), "same lock again: nothing");
+        t.unlock("holder A");
+        t.unlock("holder B");
+        assertEquals( java.util.List.of(Turnout.PROPERTY_LOCK_HOLDERS, Turnout.PROPERTY_LOCK_HOLDERS,
+            Turnout.PROPERTY_LOCKED), names, "last unlock: holders, then locked");
+    }
+
+    @Test
+    public void testLockOnlyClosedOrThrown() {
+        Assertions.assertThrows( IllegalArgumentException.class, () -> t.lock("holder A", Turnout.UNKNOWN));
+        assertTrue( t.getLockHolders().isEmpty(), "nothing locked");
+    }
+
+    @Test
     public void testSetFeedbackModePCL() throws InterruptedException {
         t.setFeedbackMode(Turnout.UNKNOWN);
         assertEquals( Turnout.UNKNOWN,t.getFeedbackMode(), "No feedback set at start");

@@ -212,6 +212,23 @@ public class ActionTurnoutLockTest extends AbstractDigitalActionTestBase {
     }
 
     @Test
+    public void testToggleOnATurnoutWithoutHardwareLockout() throws JmriException {
+        Turnout internal = InstanceManager.getDefault(TurnoutManager.class).provide("IT201");
+        internal.setCommandedState(Turnout.CLOSED);
+        actionTurnoutLock.getSelectNamedBean().setNamedBean(internal);
+        actionTurnoutLock.getSelectEnum().setEnum(ActionTurnoutLock.TurnoutLock.Toggle);
+
+        conditionalNG.execute();
+        assertTrue( internal.isLocked(), "toggled to locked");
+        internal.setCommandedState(Turnout.THROWN);
+        assertEquals( Turnout.CLOSED, internal.getCommandedState(), "throw refused while locked");
+        JUnitAppender.assertWarnMessageStartsWith("Turnout IT201 not set");
+
+        conditionalNG.execute();
+        assertFalse( internal.isLocked(), "toggled to unlocked");
+    }
+
+    @Test
     public void testIndirectAddressing() throws JmriException {
 
         Memory m1 = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
