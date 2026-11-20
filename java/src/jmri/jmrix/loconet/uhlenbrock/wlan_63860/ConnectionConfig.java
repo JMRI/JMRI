@@ -1,5 +1,7 @@
 package jmri.jmrix.loconet.uhlenbrock.wlan_63860;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * Definition of objects to handle configuring a connection via the WLAN
  * (LocoNet-over-TCP) side of an Uhlenbrock LocoNet-USB and WLAN Interface
@@ -8,6 +10,7 @@ package jmri.jmrix.loconet.uhlenbrock.wlan_63860;
  * @author detami01 Copyright (C) 2026
  * @see jmri.jmrix.loconet.loconetovertcp.ConnectionConfig
  */
+@SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification="We have this naming convention")
 public class ConnectionConfig extends jmri.jmrix.loconet.loconetovertcp.ConnectionConfig {
 
     /**
