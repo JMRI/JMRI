@@ -175,6 +175,41 @@ public class SimulatedTrainMarkerHandlerTest {
         JUnitUtil.waitFor(() -> sensor(platform).getKnownState() == Sensor.INACTIVE, "the Block's sensor inactive");
     }
 
+    @Test
+    public void testBlockMenuReRailsADerailedTrain() {
+        Block platform = layout.block("Platform1");
+        Block throat = layout.block("Throat");
+        jmri.Turnout points = layout.turnout("Throat");
+        jmri.jmrit.simulation.SimulatedLayout sim = SimulationTestUtil.layout();
+        VirtualTrain train = VirtualTrain.builder("3 Mail")
+                .loco(jmri.jmrit.simulation.SimulatedLoco.builder(new jmri.DccLocoAddress(3, false)).length(100)
+                        .build())
+                .length(300).build();
+        sim.place(train, platform, throat, 100.0); // its rear 200 mm back, over the points in the Throat
+        JUnitUtil.waitFor(() -> sim.getTruth().getTrain(train) != null
+                && sim.getTruth().getTrain(train).getBlocks().contains(throat), "the train over the points");
+        points.setCommandedState(jmri.Turnout.THROWN); // under the train
+        jmri.DccThrottle throttle = SimulationTestUtil.throttle(3);
+        throttle.setIsForward(true);
+        throttle.setSpeedSetting(0.1f); // it tries to move
+        JUnitUtil.waitFor(() -> sim.getTruth().getTrain(train).isDerailed(), "derailed");
+        throttle.setSpeedSetting(0f);
+        jmri.util.JUnitAppender.assertWarnMessageStartsWith("Simulated train \"3 Mail\" has stopped:");
+        points.setCommandedState(jmri.Turnout.CLOSED);
+
+        JPopupMenu popup = new JPopupMenu();
+        ThreadingUtil.runOnGUI(() -> handler.addBlockMenuItems(popup, platform));
+        assertEquals(2, popup.getComponentCount(), "Re-rail as well as Remove");
+        JMenuItem item = (JMenuItem) popup.getComponent(0);
+        assertEquals("Re-rail Simulated Train \"3 Mail\"", item.getText());
+        ThreadingUtil.runOnGUI(item::doClick);
+        JUnitUtil.waitFor(() -> !sim.getTruth().getTrain(train).isDerailed(), "back on the track");
+
+        JPopupMenu after = new JPopupMenu();
+        ThreadingUtil.runOnGUI(() -> handler.addBlockMenuItems(after, platform));
+        assertEquals(1, after.getComponentCount(), "only Remove once it is on the track");
+    }
+
     @BeforeEach
     public void setUp(@TempDir File folder) {
         JUnitUtil.setUp();
