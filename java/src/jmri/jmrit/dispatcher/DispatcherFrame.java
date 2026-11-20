@@ -372,6 +372,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 }
             }
             at.setTrainDetection(info.getTrainDetection());
+            at.setDetectionMarkers(info.getDetectionMarkers());
             at.setMaxTrainLengthMM((long) (info.getMaxTrainLengthScaleMeters() * 1000.0 * getScale().getScaleFactor()));
             ActiveTrainRecords.link(at);
             at.setAllocateMethod(info.getAllocationMethod());

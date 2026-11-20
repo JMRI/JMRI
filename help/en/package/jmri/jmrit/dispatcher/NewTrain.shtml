@@ -240,6 +240,13 @@
               </ul>
               <p>See <strong><a href="#trainlength">Train Length</a></strong> for more AutoTrain
               stopping information.</p>
+              <p><a id="detectionMarkers"></a><strong>Markers...</strong> Where Train Detection can't
+              say which parts of the train detection sees, as for a lit coach in the middle of a
+              train, list them here for train tracking: each is the whole train, at the front, at
+              the rear, or at an offset from the front, with its length in millimetres where known.
+              The button shows how many there are. Dispatcher itself still follows Train Detection;
+              only train tracking uses the markers. Leave the list empty to follow Train Detection.
+              <span class="since">since 5.19.2</span></p>
             </dd>
           </dl>
         </li>

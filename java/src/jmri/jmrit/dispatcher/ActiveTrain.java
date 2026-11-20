@@ -460,6 +460,31 @@ public class ActiveTrain implements PropertyChangeProvider {
         return trainDetection;
     }
 
+    private List<TrainRecord.DetectionMarker> detectionMarkers = List.of();
+
+    /**
+     * Set the train's own list of detection markers, given to its train
+     * record as a custom list, for train tracking. Dispatcher's own handling
+     * still follows Train Detection.
+     *
+     * @param markers the markers, front first; empty for none, when the
+     *                record's detection follows Train Detection
+     * @since 5.19.2
+     */
+    public void setDetectionMarkers(@Nonnull List<TrainRecord.DetectionMarker> markers) {
+        detectionMarkers = List.copyOf(markers);
+        copyToTrainRecord();
+    }
+
+    /**
+     * @return the train's own detection markers, front first; empty for none
+     * @since 5.19.2
+     */
+    @Nonnull
+    public List<TrainRecord.DetectionMarker> getDetectionMarkers() {
+        return detectionMarkers;
+    }
+
     private long maxTrainLengthMM = 0;
     private boolean noLengthWarningGiven = false;
     private TrainRecord trainRecord = null;
@@ -489,15 +514,21 @@ public class ActiveTrain implements PropertyChangeProvider {
     }
 
     /**
-     * Record this train's Train Detection, unless the record has a custom
-     * list of detection markers, which Train Detection can't express, and
-     * its Max Train Length as the entered length.
+     * Record this train's own detection markers, if it has any, or else its
+     * Train Detection, unless the record has a custom list of detection
+     * markers from elsewhere, which Train Detection can't express; and its
+     * Max Train Length as the entered length.
      */
     private void copyToTrainRecord() {
         if (trainRecord == null || trainRecord.isDisposed()) {
             return;
         }
-        if (trainRecord.getDetection() != TrainRecord.Detection.CUSTOM) {
+        if (!detectionMarkers.isEmpty()) {
+            if (!detectionMarkers.equals(trainRecord.getMarkers())
+                    || trainRecord.getDetection() != TrainRecord.Detection.CUSTOM) {
+                trainRecord.setCustomMarkers(detectionMarkers);
+            }
+        } else if (trainRecord.getDetection() != TrainRecord.Detection.CUSTOM) {
             trainRecord.setDetection(toRecordDetection(trainDetection));
         }
         trainRecord.setLength(TrainRecord.LengthSource.ENTERED,
