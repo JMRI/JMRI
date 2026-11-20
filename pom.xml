@@ -459,10 +459,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.16.0</version>
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
+                    <release>11</release>
                     <compilerArgs>
                         <arg>-proc:full</arg>
                     </compilerArgs>
