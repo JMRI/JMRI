@@ -26,29 +26,33 @@ import jmri.InstanceManagerAutoDefault;
  * @since 4.13.1
  */
 public class PlaceWindow implements InstanceManagerAutoDefault {
-    static GraphicsEnvironment _environ = GraphicsEnvironment.getLocalGraphicsEnvironment();
-    static Dimension _screenSize[];
-    static Dimension _totalScreenDim = new Dimension(0, 0);
+    static final GraphicsEnvironment _environ = GraphicsEnvironment.getLocalGraphicsEnvironment();
+
+    // Each instance keeps its own screen sizes, complete before the
+    // constructor returns, so making a new instance (as each test does)
+    // never changes those another instance, perhaps on another thread, is
+    // using.
+    private final Dimension[] _screenSize;
+    private final Dimension _totalScreenDim;
 
     public PlaceWindow() {
-        getScreens();
-    }
-    private void getScreens() {
         GraphicsDevice[] gd = _environ.getScreenDevices();
-        _screenSize = new Dimension[gd.length];
+        Dimension[] screenSize = new Dimension[gd.length];
+        int totalWidth = 0;
         int maxHeight = 0;
         for (int i = 0; i < gd.length; i++) {
             String deviceID = gd[i].getIDstring();
             DisplayMode dm = gd[i].getDisplayMode();
-            _screenSize[i] = new Dimension(dm.getWidth(), dm.getHeight());
-            _totalScreenDim.width += dm.getWidth();          // assuming screens are horizontal
+            screenSize[i] = new Dimension(dm.getWidth(), dm.getHeight());
+            totalWidth += dm.getWidth();                     // assuming screens are horizontal
             maxHeight = Math.max(maxHeight, dm.getHeight()); // use maximum height
             if (log.isDebugEnabled()) {
                 log.debug("\"Screen # {} deviceID= {}: width= {}, height= {}",
                         i, deviceID, dm.getWidth(), dm.getHeight());
             }
         }
-        _totalScreenDim.height = maxHeight;
+        _screenSize = screenSize;
+        _totalScreenDim = new Dimension(totalWidth, maxHeight);
         if (log.isDebugEnabled()) {
             try {
                 GraphicsDevice dgd = _environ.getDefaultScreenDevice();
@@ -107,7 +111,7 @@ public class PlaceWindow implements InstanceManagerAutoDefault {
     }
 
     public Dimension getScreenSize(int screenNum) {
-        if (screenNum >= 0 && screenNum <= _screenSize.length) {
+        if (screenNum >= 0 && screenNum < _screenSize.length) {
             return _screenSize[screenNum];
         }
         return new Dimension(0, 0);
