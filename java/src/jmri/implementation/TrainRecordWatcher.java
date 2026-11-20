@@ -6,9 +6,11 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.Supplier;
 
 import javax.annotation.CheckForNull;
@@ -79,6 +81,8 @@ public class TrainRecordWatcher {
     private final Map<Block, Watched> watched = new HashMap<>();
     private final Map<DefaultTrainRecord, Confidence> beforeAmbiguity = new HashMap<>();
     private final Map<Block, List<Candidate>> ambiguous = new HashMap<>();
+    /** Blocks occupied with no train to explain it, until they empty or a train is taken to be there. */
+    private final Set<Block> unexplained = new HashSet<>();
     private final PropertyChangeListener blockManagerListener = this::blockManagerChanged;
     private final PropertyChangeListener instanceManagerListener = this::instanceManagerChanged;
     private BlockManager blockManager = null;
@@ -169,6 +173,7 @@ public class TrainRecordWatcher {
                 instanceManagerListener);
         useBlockManager(null);
         ambiguous.clear();
+        unexplained.clear();
         beforeAmbiguity.clear();
     }
 
@@ -315,6 +320,7 @@ public class TrainRecordWatcher {
             settleByValue(block, usable(block));
         } else {
             placer.unexplained(block, true);
+            unexplained.add(block);
         }
     }
 
@@ -738,6 +744,7 @@ public class TrainRecordWatcher {
      */
     private void unoccupied(Block block) {
         placer.unexplained(block, false);
+        unexplained.remove(block);
         if (placer.isUntrusted(block)) {
             return;
         }
@@ -779,6 +786,15 @@ public class TrainRecordWatcher {
                 for (Block b : behind) {
                     r.left(b, b == block ? Reason.Rule.LEFT : Reason.Rule.LEFT_DARK_BEHIND);
                 }
+            } else if (blocks.size() == 1 && unexplainedAhead(r, block) != null) {
+                // it left its only Block towards one already shown occupied with no train to explain it, as when
+                // a fault showed it occupied before the train got there: the train is there now
+                Block ahead = Objects.requireNonNull(unexplainedAhead(r, block), "ahead");
+                unexplained.remove(ahead);
+                placer.unexplained(ahead, false);
+                r.entered(List.of(), ahead, true, System.nanoTime(), Instant.now(), Reason.Rule.ENTERED_UNEXPLAINED);
+                beforeAmbiguity.remove(r);
+                r.left(block, Reason.Rule.LEFT);
             } else if (r.getConfidence() == Confidence.CONFIRMED
                     && (blocks.size() > 1 || darkNeighbours(block, blocks).isEmpty())) {
                 // it can't have left; from its only Block it may have gone on into a dark Block, and is just not seen
@@ -789,6 +805,41 @@ public class TrainRecordWatcher {
                 r.setConfidence(Confidence.ESTIMATED, reason(Reason.Rule.NOT_SEEN, block, Instant.now()));
             }
         }
+    }
+
+    /**
+     * The Block a train in one Block has gone into, if its Block emptied while
+     * the train was not known to have stopped, and exactly one neighbour,
+     * joined to it along a path that is set and not the Block the train came
+     * from, is occupied with no train to explain it.
+     *
+     * @param r     a train's record
+     * @param block its only Block, now empty
+     * @return the Block, or null if there isn't exactly one
+     */
+    @CheckForNull
+    private Block unexplainedAhead(@Nonnull DefaultTrainRecord r, @Nonnull Block block) {
+        if (Boolean.FALSE.equals(isMoving(r, System.nanoTime()))) {
+            return null; // told to stop long enough ago: a drop-out, not a departure
+        }
+        List<TrainRecord.TrailEntry> trail = r.getTrail();
+        Block from = null;
+        if (!trail.isEmpty() && trail.get(trail.size() - 1).getBlock() == block) {
+            from = trail.get(trail.size() - 1).getFrom();
+        }
+        Block found = null;
+        for (Path p : block.getPaths()) {
+            Block n = p.getBlock();
+            if (n == null || n == block || n == from || !unexplained.contains(n) || n.getState() != Block.OCCUPIED
+                    || !joinedBySetPath(block, n)) {
+                continue;
+            }
+            if (found != null && found != n) {
+                return null;
+            }
+            found = n;
+        }
+        return found;
     }
 
     /**

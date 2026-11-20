@@ -792,6 +792,13 @@ public interface TrainRecord extends PropertyChangeProvider {
              * @since 5.19.2
              */
             SETTLED_BY_DIRECTION,
+            /**
+             * Left its only Block towards a neighbour already shown occupied
+             * with no train to explain it: it is taken to be there.
+             *
+             * @since 5.19.2
+             */
+            ENTERED_UNEXPLAINED,
             /** Another train was named as the one that entered: no longer in doubt. */
             AMBIGUITY_CLEARED,
             /** Left a Block at one of its ends: its sensor went unoccupied. */

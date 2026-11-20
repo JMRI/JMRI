@@ -460,6 +460,37 @@ public class TrainRecordWatcherTest {
     }
 
     @Test
+    public void testLeftForABlockAlreadyShownOccupied() {
+        // C shows occupied with no train to explain it (a fault); the train in B, told to move, leaves B towards it
+        Block[] b = line("A", "B", "C");
+        TrainRecord r = train("T1", 3, 0.4f, nanos);
+        place(r, true, b[0]);
+        occupy(b[2]);
+        assertTrue(manager.getUnexplained().contains(b[2]), "C unexplained: no train next to it");
+        occupy(b[1]);
+        clear(b[0]);
+        assertEquals(List.of(b[1]), r.getBlocks());
+        clear(b[1]); // its front went on into C, already shown occupied, and now its rear has left B
+        assertEquals(List.of(b[2]), r.getBlocks(), "the train is in C");
+        assertEquals(Confidence.CONFIRMED, r.getConfidence());
+        assertEquals(TrainRecord.Reason.Rule.ENTERED_UNEXPLAINED, r.getReason(b[2]).getRule());
+        assertFalse(manager.getUnexplained().contains(b[2]), "C explained by the train");
+    }
+
+    @Test
+    public void testStoppedTrainKeptWhenItsBlockEmptiesNextToAnUnexplainedOne() {
+        Block[] b = line("A", "B", "C");
+        place(manager.newRecord("Elsewhere"), true, block("D")); // a train placed, so occupancy is followed
+        TrainRecord r = train("T1", 3, 0f, nanos - 60_000_000_000L);
+        occupy(b[2]); // shown occupied before the train is placed next to it
+        place(r, true, b[1]);
+        assertTrue(manager.getUnexplained().contains(b[2]), "C unexplained");
+        clear(b[1]);
+        assertEquals(List.of(b[1]), r.getBlocks(), "told to stop long ago: a drop-out, kept in B");
+        assertEquals(Confidence.ESTIMATED, r.getConfidence());
+    }
+
+    @Test
     public void testIsMoving() {
         TrainRecord r = train("T1", 3, 0f, 1_000_000_000L);
         assertEquals(null, TrainRecordWatcher.isMoving(r, 10_000_000_000L), "stopped 9 s before: may still roll");
