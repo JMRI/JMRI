@@ -2281,6 +2281,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                     at.holdAllocation(true);
                 }
                 nextSection = at.getSecondAllocatedSection();
+                if (nextSection == null) {
+                    // a train started part way along its Transit has not been given sequence 2 yet
+                    nextSection = chooseSectionAtSequence(at.getTransit().getSectionListBySeq(2), ar, 2);
+                }
                 nextSectionSeqNo = 2;
                 at.setAllocationReversed(false);
             }
@@ -2467,6 +2471,23 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
             queueScanOfAllocationRequests();
         }
         return as;
+    }
+
+    /*
+     * The Section to allocate next from the Sections at one sequence number of
+     * the Transit, or null if there are none.
+     */
+    private Section chooseSectionAtSequence(List<Section> secList, AllocationRequest ar, int seqNum) {
+        if (secList.size() == 1) {
+            return secList.get(0);
+        } else if (secList.size() > 1) {
+            if (_AutoAllocate) {
+                return autoChoice(secList, ar, seqNum);
+            } else {
+                return dispatcherChoice(secList, ar);
+            }
+        }
+        return null;
     }
 
     /*
