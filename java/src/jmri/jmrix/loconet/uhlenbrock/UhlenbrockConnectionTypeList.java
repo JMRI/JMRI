@@ -24,7 +24,8 @@ public class UhlenbrockConnectionTypeList implements jmri.jmrix.ConnectionTypeLi
             "jmri.jmrix.loconet.uhlenbrock.ConnectionConfig", // NOI18N
             "jmri.jmrix.loconet.Intellibox.ConnectionConfig", // NOI18N
             "jmri.jmrix.loconet.uhlenbrock.usb_63120.ConnectionConfig", // NOI18N
-            "jmri.jmrix.loconet.uhlenbrock.usb_63860.ConnectionConfig"}; // NOI18N
+            "jmri.jmrix.loconet.uhlenbrock.usb_63860.ConnectionConfig", // NOI18N
+            "jmri.jmrix.loconet.uhlenbrock.wlan_63860.ConnectionConfig"}; // NOI18N
         return tempList;
     }
 
