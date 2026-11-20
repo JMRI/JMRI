@@ -1,7 +1,9 @@
 package jmri.server.json.roster;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.NullNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,6 +16,8 @@ import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpServiceTestBase;
 import jmri.server.json.JsonRequest;
+import jmri.server.json.schema.JsonSchemaServiceCache;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -21,6 +25,10 @@ import org.junit.jupiter.api.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
 
 /**
  *
@@ -121,6 +129,7 @@ public class JsonRosterHttpServiceTest extends JsonHttpServiceTestBase<JsonRoste
         // no group name - check only size - it should contain all entries in Roster
         assertEquals(Roster.getDefault().numEntries(),
                 service.getRoster(locale, this.mapper.createObjectNode(), 0).size());
+        validate(JsonRoster.ROSTER, service.getRoster(locale, this.mapper.createObjectNode(), 0));
         // existent group name - check only size - it should contain all entries in named RosterGroup
         assertEquals(Roster.getDefault().numGroupEntries(TEST_GROUP1),
                 service.getRoster(locale, this.mapper.createObjectNode().put(JSON.GROUP, TEST_GROUP1), 0).size());
@@ -137,7 +146,9 @@ public class JsonRosterHttpServiceTest extends JsonHttpServiceTestBase<JsonRoste
     @Test
     public void testGetRosterEntry_Locale_String() throws JsonException {
         // existent entry
-        assertEquals(TEST_ENTRY1, service.getRosterEntry(locale, TEST_ENTRY1, 42).path(JSON.DATA).path(JSON.NAME).asText());
+        JsonNode result = service.getRosterEntry(locale, TEST_ENTRY1, 42);
+        assertEquals(TEST_ENTRY1, result.path(JSON.DATA).path(JSON.NAME).asText());
+        validate(JsonRoster.ROSTER_ENTRY, result);
         // non-existent entry
         JsonException ex = assertThrows( JsonException.class, () ->
             service.getRosterEntry(locale, TEST_GROUP1, 42),
@@ -155,7 +166,157 @@ public class JsonRosterHttpServiceTest extends JsonHttpServiceTestBase<JsonRoste
     public void testGetRosterEntry_Locale_RosterEntry() throws JsonException {
         RosterEntry entry = Roster.getDefault().getEntryForId(TEST_ENTRY1);
         assertNotNull(entry);
-        assertEquals(TEST_ENTRY1, service.getRosterEntry(locale, entry, 42).path(JSON.DATA).path(JSON.NAME).asText());
+        JsonNode result = service.getRosterEntry(locale, entry, 42);
+        assertEquals(TEST_ENTRY1, result.path(JSON.DATA).path(JSON.NAME).asText());
+        validate(JsonRoster.ROSTER_ENTRY, result);
+    }
+
+    @Test
+    public void testDoSchema() throws JsonException {
+        testDoSchema(JsonRoster.ROSTER);
+        testDoSchema(JsonRoster.ROSTER_ENTRY);
+        testDoSchema(JsonRoster.ROSTER_GROUP, JsonRoster.ROSTER_GROUPS);
+    }
+
+    private void assertInvalid(String type, ObjectNode data, boolean server, String message) {
+        JsonRequest request = new JsonRequest(locale, JSON.V5, JSON.GET, 42);
+        JsonSchemaServiceCache schemas = InstanceManager.getDefault(JsonSchemaServiceCache.class);
+        assertThrows(JsonException.class, () -> schemas.validateData(type, data, server, request), message);
+        // consume the warnings logged for the rejected message
+        assertNotNull(JUnitAppender.checkForMessageStartingWith("Errors validating"), message);
+        while (JUnitAppender.checkForMessageStartingWith("JSON Validation Error") != null) {
+            // drain
+        }
+    }
+
+    /**
+     * Build a rosterEntry that has every optional field populated.
+     */
+    private RosterEntry populatedEntry() {
+        RosterEntry entry = Roster.getDefault().getEntryForId(TEST_ENTRY1);
+        assertNotNull(entry);
+        entry.setRoadName("Test Road");
+        entry.setRoadNumber("1234");
+        entry.setMfg("Test Mfg");
+        entry.setModel("Test Model");
+        entry.setOwner("Test Owner");
+        entry.setComment("Test comment");
+        entry.setShuntingFunction("F3");
+        entry.setFunctionLabel(0, "Headlight");
+        entry.setFunctionLockable(0, true);
+        entry.putAttribute("testKey", "testValue");
+        entry.putAttribute("nullKey", null);
+        return entry;
+    }
+
+    @Test
+    public void testServerRosterEntryPopulated() throws JsonException {
+        RosterEntry entry = populatedEntry();
+        JsonNode result = service.getRosterEntry(locale, entry, 42);
+        validate(JsonRoster.ROSTER_ENTRY, result);
+        // nullable values are sent as null and must still validate
+        entry.setShuntingFunction(null);
+        entry.setFunctionLabel(0, null);
+        validate(JsonRoster.ROSTER_ENTRY, service.getRosterEntry(locale, entry, 42));
+    }
+
+    @Test
+    public void testServerRosterEntryRejectsInvalid() throws JsonException {
+        ObjectNode data = service.getRosterEntry(locale, TEST_ENTRY1, 42).path(JSON.DATA).deepCopy();
+        validateData(JsonRoster.ROSTER_ENTRY, data, true); // baseline is valid
+        ObjectNode missing = data.deepCopy();
+        missing.remove(JSON.SHUNTING_FUNCTION);
+        assertInvalid(JsonRoster.ROSTER_ENTRY, missing, true, "missing shuntingFunction");
+        ObjectNode badKey = data.deepCopy();
+        ((ObjectNode) badKey.path(JSON.FUNCTION_KEYS).get(0)).put(JSON.NAME, "X0");
+        assertInvalid(JsonRoster.ROSTER_ENTRY, badKey, true, "bad function key name");
+        ObjectNode badAttribute = data.deepCopy();
+        ((ArrayNode) badAttribute.path(JsonRoster.ATTRIBUTES)).addObject().put(JSON.NAME, "noValue");
+        assertInvalid(JsonRoster.ROSTER_ENTRY, badAttribute, true, "attribute without value");
+    }
+
+    @Test
+    public void testClientRosterFilters() {
+        ObjectNode data = mapper.createObjectNode();
+        validateData(JsonRoster.ROSTER, data, false); // no filters is valid
+        data.put(JSON.GROUP, TEST_GROUP1).put(JSON.ROAD, "Test Road").put(JSON.NUMBER, "1234")
+                .put(JSON.ADDRESS, "3").put(JSON.MFG, "Test Mfg").put(JSON.DECODER_MODEL, "model")
+                .put(JSON.DECODER_FAMILY, "family").put(JSON.NAME, TEST_ENTRY1);
+        validateData(JsonRoster.ROSTER, data, false);
+        assertInvalid(JsonRoster.ROSTER, mapper.createObjectNode().put("unknown", "filter"), false, "unknown filter");
+        assertInvalid(JsonRoster.ROSTER, mapper.createObjectNode().put(JSON.ADDRESS, 3), false, "non-string filter");
+    }
+
+    @Test
+    public void testClientRosterEntry() {
+        // reading only needs the name
+        validateData(JsonRoster.ROSTER_ENTRY, mapper.createObjectNode().put(JSON.NAME, TEST_ENTRY1), false);
+        ObjectNode data = mapper.createObjectNode().put(JSON.NAME, TEST_ENTRY1)
+                .put(JSON.ADDRESS, "1234").put(JSON.ROAD, "Test Road").put(JSON.NUMBER, "1234")
+                .put(JSON.MFG, "Test Mfg").put(JSON.MODEL, "Test Model").put(JSON.MAX_SPD_PCT, 75)
+                .put(JSON.SHUNTING_FUNCTION, "F3").put(JSON.OWNER, "Test Owner").put(JSON.COMMENT, "Test comment");
+        data.putArray(JSON.FUNCTION_KEYS).addObject().put(JSON.NAME, "F0").put(JSON.LABEL, "Headlight")
+                .put(JSON.LOCKABLE, true);
+        data.putArray(JsonRoster.ATTRIBUTES).addObject().put(JSON.NAME, "testKey").put(JSON.VALUE, "testValue");
+        data.putArray(JsonRoster.ROSTER_GROUPS).add(TEST_GROUP1);
+        validateData(JsonRoster.ROSTER_ENTRY, data, false);
+        // nulls are accepted where the server accepts them
+        data.putNull(JSON.SHUNTING_FUNCTION).putNull(JSON.OWNER).putNull(JSON.COMMENT);
+        validateData(JsonRoster.ROSTER_ENTRY, data, false);
+    }
+
+    @Test
+    public void testPostRosterEntry() throws JsonException {
+        // updateFile() writes the entry's XML file, which does not exist for test entries
+        RosterEntry spy = spy(Roster.getDefault().getEntryForId(TEST_ENTRY1));
+        doNothing().when(spy).updateFile();
+        Roster.getDefault().removeEntry(Roster.getDefault().getEntryForId(TEST_ENTRY1));
+        Roster.getDefault().addEntry(spy);
+
+        ObjectNode data = mapper.createObjectNode().put(JSON.NAME, TEST_ENTRY1).put(JSON.ADDRESS, "1234")
+                .put(JSON.MAX_SPD_PCT, 75).put(JSON.COMMENT, "Test comment");
+        data.putArray(JSON.FUNCTION_KEYS).addObject().put(JSON.NAME, "F0").put(JSON.LABEL, "Headlight")
+                .put(JSON.LOCKABLE, true);
+        data.putArray(JsonRoster.ATTRIBUTES).addObject().put(JSON.NAME, "testKey").put(JSON.VALUE, "testValue");
+        validateData(JsonRoster.ROSTER_ENTRY, data, false); // what the schema allows...
+
+        JsonNode result = service.postRosterEntry(locale, TEST_ENTRY1, data, 42); // ...the server applies
+        validate(JsonRoster.ROSTER_ENTRY, result);
+        JsonNode response = result.path(JSON.DATA);
+        assertEquals("1234", response.path(JSON.ADDRESS).asText());
+        assertEquals(75, response.path(JSON.MAX_SPD_PCT).asInt());
+        assertEquals("Test comment", response.path(JSON.COMMENT).asText());
+        assertEquals("Headlight", response.path(JSON.FUNCTION_KEYS).get(0).path(JSON.LABEL).asText());
+        assertTrue(response.path(JSON.FUNCTION_KEYS).get(0).path(JSON.LOCKABLE).asBoolean());
+        assertEquals("testValue", spy.getAttribute("testKey"));
+        verify(spy).updateFile();
+    }
+
+    @Test
+    public void testClientRosterEntryRejectsInvalid() {
+        ObjectNode data = mapper.createObjectNode().put(JSON.NAME, TEST_ENTRY1);
+        validateData(JsonRoster.ROSTER_ENTRY, data, false); // baseline is valid
+        assertInvalid(JsonRoster.ROSTER_ENTRY, mapper.createObjectNode().put(JSON.ADDRESS, "3"), false,
+                "missing name");
+        assertInvalid(JsonRoster.ROSTER_ENTRY, data.deepCopy().put(JSON.MAX_SPD_PCT, "fast"), false,
+                "non-integer maxSpeedPct");
+        assertInvalid(JsonRoster.ROSTER_ENTRY, data.deepCopy().put(JSON.ADDRESS, 3), false, "non-string address");
+        assertInvalid(JsonRoster.ROSTER_ENTRY, data.deepCopy().put("unknown", "property"), false,
+                "unknown property");
+        ObjectNode badKey = data.deepCopy();
+        badKey.putArray(JSON.FUNCTION_KEYS).addObject().put(JSON.NAME, "X0");
+        assertInvalid(JsonRoster.ROSTER_ENTRY, badKey, false, "bad function key name");
+        ObjectNode noAttributeName = data.deepCopy();
+        noAttributeName.putArray(JsonRoster.ATTRIBUTES).addObject().put(JSON.VALUE, "orphan");
+        assertInvalid(JsonRoster.ROSTER_ENTRY, noAttributeName, false, "attribute without name");
+    }
+
+    @Test
+    public void testClientRosterGroup() {
+        validateData(JsonRoster.ROSTER_GROUP, mapper.createObjectNode().put(JSON.NAME, TEST_GROUP1), false);
+        assertInvalid(JsonRoster.ROSTER_GROUP, mapper.createObjectNode(), false, "missing name");
+        assertInvalid(JsonRoster.ROSTER_GROUP, mapper.createObjectNode().put(JSON.NAME, TEST_GROUP1).put(JSON.LENGTH, 1),
+                false, "unknown property");
     }
 
     /**
@@ -165,7 +326,9 @@ public class JsonRosterHttpServiceTest extends JsonHttpServiceTestBase<JsonRoste
      */
     @Test
     public void testGetRosterGroups() throws JsonException {
-        assertEquals(Roster.getDefault().getRosterGroups().size() + 1, service.getRosterGroups(new JsonRequest(locale, JSON.V5, JSON.GET, 0)).size());
+        JsonNode result = service.getRosterGroups(new JsonRequest(locale, JSON.V5, JSON.GET, 0));
+        assertEquals(Roster.getDefault().getRosterGroups().size() + 1, result.size());
+        validate(JsonRoster.ROSTER_GROUPS, result);
     }
 
     /**

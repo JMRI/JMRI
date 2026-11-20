@@ -344,7 +344,7 @@ public class JsonRosterHttpService extends JsonHttpService {
         }
         if (data.path(FUNCTION_KEYS).isArray()) {
             data.path(FUNCTION_KEYS).forEach(functionKey -> {
-                int function = Integer.parseInt(functionKey.path(NAME).asText().substring(F.length() - 1));
+                int function = Integer.parseInt(functionKey.path(NAME).asText().substring(F.length()));
                 entry.setFunctionLabel(function,
                     functionKey.path(LABEL).isNull() ? null : functionKey.path(LABEL).asText());
                 entry.setFunctionLockable(function, functionKey.path(LOCKABLE).asBoolean());

@@ -14,7 +14,7 @@
         },
         "isLongAddress": {
             "type": "boolean",
-            "description": "DCC address of the rosterEntry"
+            "description": "true if the DCC address of the rosterEntry is a long address"
         },
         "road": {
             "type": "string",
@@ -78,7 +78,7 @@
                 "string",
                 "null"
             ],
-            "description": "URL of icon for the rosterEntry"
+            "description": "URL of image for the rosterEntry"
         },
         "functionKeys": {
             "type": "array",
@@ -88,6 +88,7 @@
                 "properties": {
                     "name": {
                         "type": "string",
+                        "pattern": "^F(0|[1-9][0-9]*)$",
                         "description": "Function key"
                     },
                     "label": {
@@ -151,7 +152,12 @@
                         ],
                         "description": "String value of attribute or null"
                     }
-                }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "name",
+                    "value"
+                ]
             }
         }
     },
@@ -167,6 +173,7 @@
         "decoderModel",
         "decoderFamily",
         "maxSpeedPct",
+        "shuntingFunction",
         "dateModified",
         "owner",
         "comment",
