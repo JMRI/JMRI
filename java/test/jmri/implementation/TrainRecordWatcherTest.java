@@ -221,6 +221,53 @@ public class TrainRecordWatcherTest {
         assertEquals(List.of(b[2], b[1]), r.getBlocks());
     }
 
+    /**
+     * The Block behind waits longer to show empty than the one ahead, as with
+     * a beam detector given a long delay to inactive beside a current
+     * detector: the one ahead empties first. Its raw state shows the detector
+     * behind has already lost the train, so the train has left both: no
+     * drop-out.
+     */
+    @Test
+    public void testBlockBehindSlowerToShowEmpty() {
+        Block[] b = line("A", "B", "C");
+        Sensor sa = sensor(b[0]);
+        sa.setSensorDebounceGoingInActiveTimer(60_000);
+        sa.setUseDefaultTimerSettings(false);
+        TrainRecord r = manager.newRecord("T1");
+        place(r, true, b[0]);
+        occupy(b[1]);
+        occupy(b[2]);
+        assertEquals(List.of(b[2], b[1], b[0]), r.getBlocks());
+        clear(b[0]); // A's detector has lost the train; its delay still shows A occupied
+        assertEquals(Block.OCCUPIED, b[0].getState(), "A held by its delay to inactive");
+        clear(b[1]);
+        assertEquals(List.of(b[2]), r.getBlocks(), "the rear has left B, and A before it");
+        assertEquals(Confidence.CONFIRMED, r.getConfidence(), "not a drop-out");
+        for (TrainRecord.Reason reason : r.getHistory()) {
+            assertNotEquals(TrainRecord.Reason.Rule.KEPT_AFTER_DROPOUT, reason.getRule());
+        }
+    }
+
+    /**
+     * The same, with A's detector still seeing the train: B emptying between
+     * occupied Blocks is a drop-out, and B is kept.
+     */
+    @Test
+    public void testBlockAheadEmptiesWhileTheOneBehindStillSeesTheTrain() {
+        Block[] b = line("A", "B", "C");
+        Sensor sa = sensor(b[0]);
+        sa.setSensorDebounceGoingInActiveTimer(60_000);
+        sa.setUseDefaultTimerSettings(false);
+        TrainRecord r = manager.newRecord("T1");
+        place(r, true, b[0]);
+        occupy(b[1]);
+        occupy(b[2]);
+        clear(b[1]);
+        assertEquals(List.of(b[2], b[1], b[0]), r.getBlocks(), "B kept: the train is still in A");
+        assertEquals(Confidence.ESTIMATED, r.getConfidence());
+    }
+
     @Test
     public void testGapKept() {
         Block[] b = line("A", "B", "C");

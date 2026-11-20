@@ -652,6 +652,17 @@ public class TrainRecordWatcher {
             if (blocks.size() > 1 && atEnd) {
                 enterAtOtherEnd(r, i == 0);
                 r.left(block, Reason.Rule.LEFT);
+            } else if (blocks.size() > 1 && behindSeenEmpty(r, blocks, i)) {
+                // the detectors behind no longer see the train, and only their delay to inactive
+                // still shows their Blocks occupied: the rear has left them, and now this one
+                List<Block> behind = r.getLeadingEnd() == TrainRecord.End.REAR
+                        ? new ArrayList<>(blocks.subList(0, i + 1)) : new ArrayList<>(blocks.subList(i, blocks.size()));
+                if (r.getLeadingEnd() != TrainRecord.End.REAR) {
+                    Collections.reverse(behind);
+                }
+                for (Block b : behind) {
+                    r.left(b, b.getSensor() == null ? Reason.Rule.LEFT_DARK_BEHIND : Reason.Rule.LEFT);
+                }
             } else if (blocks.size() > 1 && onlyDarkBehind(r, blocks, i)) {
                 // the rear has left this Block, so it has left the dark Blocks behind it too
                 List<Block> behind = r.getLeadingEnd() == TrainRecord.End.REAR
@@ -672,6 +683,41 @@ public class TrainRecordWatcher {
                 r.setConfidence(Confidence.ESTIMATED, reason(Reason.Rule.NOT_SEEN, block, Instant.now()));
             }
         }
+    }
+
+    /**
+     * Have the detectors of the Blocks behind one stopped seeing the train,
+     * though their Blocks still show occupied? A detector's delay to inactive
+     * (debounce) keeps its Block occupied for a while after the train has
+     * gone; where the Block behind waits longer than the one ahead, the one
+     * ahead empties first. Its raw state, before the delay, shows the train
+     * has gone.
+     *
+     * @param r      a moving train's record
+     * @param blocks its Blocks
+     * @param i      the index of one of them, not at an end
+     * @return true if the train's leading end is known, at least one Block
+     *         between this one and the trailing end has a detector, and
+     *         every such detector has stopped seeing the train
+     */
+    private boolean behindSeenEmpty(DefaultTrainRecord r, List<Block> blocks, int i) {
+        if (r.getLeadingEnd() == null) {
+            return false;
+        }
+        List<Block> behind = r.getLeadingEnd() == TrainRecord.End.REAR ? blocks.subList(0, i)
+                : blocks.subList(i + 1, blocks.size());
+        boolean any = false;
+        for (Block b : behind) {
+            if (b.getSensor() == null) {
+                continue;
+            }
+            Watched w = watched.get(b);
+            if (w == null || !w.rawEmpty) {
+                return false;
+            }
+            any = true;
+        }
+        return any;
     }
 
     /**
@@ -815,6 +861,8 @@ public class TrainRecordWatcher {
         private Sensor sensor = null;
         private long rawActiveNanos = 0;
         private Instant rawActiveTime = null;
+        /** The detector has stopped seeing a train, but its delay to inactive still shows it occupied. */
+        private boolean rawEmpty = false;
         private final PropertyChangeListener blockListener = this::blockChanged;
         private final PropertyChangeListener sensorListener = this::sensorChanged;
         private final Sensor.RawStateListener rawListener = this::rawChanged;
@@ -844,6 +892,7 @@ public class TrainRecordWatcher {
             }
             sensor = s;
             rawActiveTime = null;
+            rawEmpty = false;
             if (sensor != null) {
                 sensor.addPropertyChangeListener(sensorListener);
                 sensor.addRawStateListener(rawListener);
@@ -892,12 +941,15 @@ public class TrainRecordWatcher {
                     return;
                 }
                 if (newState == Sensor.ACTIVE) {
+                    rawEmpty = false;
                     if (rawActiveTime == null) {
                         rawActiveNanos = timeNanos;
                         rawActiveTime = now;
                     }
                 } else if (s.getKnownState() != Sensor.ACTIVE) {
                     rawActiveTime = null; // a flicker the debounce hid, or the sensor going inactive
+                } else if (newState == Sensor.INACTIVE) {
+                    rawEmpty = true; // its delay to inactive still shows the Block occupied
                 }
             });
         }
@@ -915,11 +967,13 @@ public class TrainRecordWatcher {
                     return;
                 }
                 if (state == Sensor.ACTIVE) {
+                    rawEmpty = false;
                     long t = (rawActiveTime != null) ? rawActiveNanos : nowNanos;
                     Instant wall = (rawActiveTime != null) ? rawActiveTime : now;
                     occupied(block, t, wall);
                 } else if (state == Sensor.INACTIVE) {
                     rawActiveTime = null;
+                    rawEmpty = false;
                     unoccupied(block);
                 }
             });
