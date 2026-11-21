@@ -312,6 +312,12 @@ public class JsonRosterHttpService extends JsonHttpService {
                 (locale, JsonException.ERROR_NOT_FOUND, JsonRoster.ROSTER_ENTRY, name), id);
         }
         final RosterEntry entry = re;
+        // reject bad function keys before changing anything, so a 400 leaves the entry untouched
+        if (data.path(FUNCTION_KEYS).isArray()) {
+            for (JsonNode functionKey : data.path(FUNCTION_KEYS)) {
+                getFunctionNumber(entry, functionKey, locale, id);
+            }
+        }
         if (data.path(JsonRoster.ATTRIBUTES).isArray()) {
             List<String> toKeep = new ArrayList<>();
             List<String> toRemove = new ArrayList<>();
@@ -343,12 +349,17 @@ public class JsonRosterHttpService extends JsonHttpService {
             toRemove.forEach(entry::deleteAttribute);
         }
         if (data.path(FUNCTION_KEYS).isArray()) {
-            data.path(FUNCTION_KEYS).forEach(functionKey -> {
-                int function = Integer.parseInt(functionKey.path(NAME).asText().substring(F.length()));
-                entry.setFunctionLabel(function,
-                    functionKey.path(LABEL).isNull() ? null : functionKey.path(LABEL).asText());
-                entry.setFunctionLockable(function, functionKey.path(LOCKABLE).asBoolean());
-            });
+            for (JsonNode functionKey : data.path(FUNCTION_KEYS)) {
+                int function = getFunctionNumber(entry, functionKey, locale, id);
+                // only change what the client sent, so a missing label or lockable keeps its current value
+                if (!functionKey.path(LABEL).isMissingNode()) {
+                    entry.setFunctionLabel(function,
+                        functionKey.path(LABEL).isNull() ? null : functionKey.path(LABEL).asText());
+                }
+                if (functionKey.path(LOCKABLE).isBoolean()) {
+                    entry.setFunctionLockable(function, functionKey.path(LOCKABLE).asBoolean());
+                }
+            }
         }
         if (data.path(ADDRESS).isTextual()) {
             entry.setDccAddress(data.path(ADDRESS).asText());
@@ -366,20 +377,31 @@ public class JsonRosterHttpService extends JsonHttpService {
             entry.setModel(data.path(MODEL).asText());
         }
         if (!data.path(COMMENT).isMissingNode()) {
-            entry.setComment(data.path(COMMENT).isTextual() ? data.path(COMMENT).asText() : null);
+            entry.setComment(data.path(COMMENT).isTextual() ? data.path(COMMENT).asText() : "");
         }
         if (data.path(MAX_SPD_PCT).isInt()) {
             entry.setMaxSpeedPCT(data.path(MAX_SPD_PCT).asInt());
         }
         if (!data.path(SHUNTING_FUNCTION).isMissingNode()) {
             entry.setShuntingFunction(
-                data.path(SHUNTING_FUNCTION).isTextual() ? data.path(SHUNTING_FUNCTION).asText() : null);
+                data.path(SHUNTING_FUNCTION).isTextual() ? data.path(SHUNTING_FUNCTION).asText() : "");
         }
         if (!data.path(OWNER).isMissingNode()) {
-            entry.setOwner(data.path(OWNER).isTextual() ? data.path(OWNER).asText() : null);
+            entry.setOwner(data.path(OWNER).isTextual() ? data.path(OWNER).asText() : "");
         }
         entry.updateFile();
         return getRosterEntry(locale, entry, id);
+    }
+
+    // only F followed by digits, and no higher than this entry's last function
+    private int getFunctionNumber(RosterEntry entry, JsonNode functionKey, Locale locale, int id) throws JsonException {
+        String key = functionKey.path(NAME).asText();
+        int function = key.matches("F[0-9]{1,9}") ? Integer.parseInt(key.substring(F.length())) : -1;
+        if (function < 0 || function > entry.getMaxFnNumAsInt()) {
+            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale,
+                JsonException.ERROR_BAD_PROPERTY_VALUE, key, FUNCTION_KEYS, JsonRoster.ROSTER_ENTRY), id);
+        }
+        return function;
     }
 
 }

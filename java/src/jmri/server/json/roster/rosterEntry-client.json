@@ -30,6 +30,8 @@
         },
         "maxSpeedPct": {
             "type": "integer",
+            "minimum": 0,
+            "maximum": 100,
             "description": "If present, set the maximum speed of the rosterEntry as a percentage"
         },
         "shuntingFunction": {
@@ -44,7 +46,7 @@
                 "string",
                 "null"
             ],
-            "description": "If present, set the owner of the device in the rosterEntry; null clears it"
+            "description": "If present, set the owner of the device in the rosterEntry; null clears it, which resets it to the default owner if one is set"
         },
         "comment": {
             "type": [
@@ -61,8 +63,8 @@
                 "properties": {
                     "name": {
                         "type": "string",
-                        "pattern": "^F(0|[1-9][0-9]*)$",
-                        "description": "Function key"
+                        "pattern": "^F([0-9]|[1-7][0-9]|8[0-4])$",
+                        "description": "Function key; must not be above the rosterEntry's highest function number"
                     },
                     "label": {
                         "type": [
@@ -102,16 +104,9 @@
                 },
                 "additionalProperties": false,
                 "required": [
-                    "name"
+                    "name",
+                    "value"
                 ]
-            }
-        },
-        "rosterGroups": {
-            "type": "array",
-            "description": "If present, the rosterGroups this rosterEntry is in",
-            "items": {
-                "type": "string",
-                "description": "Name of the rosterGroup"
             }
         }
     },

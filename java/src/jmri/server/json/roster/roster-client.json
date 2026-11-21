@@ -2,7 +2,7 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-roster-client-message",
     "type": "object",
-    "description": "Schema data object in message from client to JMRI for type \"roster\". All properties are optional filters; an entry must match every filter present to be returned.",
+    "description": "Schema data object in message from client to JMRI for type \"roster\". All properties are optional filters; an entry must match every filter present to be returned. Filters only apply to a get of \"roster\" sent over a WebSocket; HTTP requests and list requests ignore them.",
     "properties": {
         "group": {
             "type": "string",

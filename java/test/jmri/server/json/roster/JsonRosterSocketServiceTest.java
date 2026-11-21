@@ -214,12 +214,7 @@ public class JsonRosterSocketServiceTest {
         return null;
     }
 
-    /**
-     * Messages sent when entries are added to and removed from the roster
-     * conform to the server schema for the roster.
-     *
-     * @throws java.io.IOException in event of unexpected exception
-     */
+    // roster add and remove messages conform to the roster server schema
     @Test
     public void testRosterUpdatesValidate() throws IOException {
         JsonRequest request = new JsonRequest(locale, JSON.V5, JSON.GET, 0);
