@@ -151,6 +151,7 @@ public class JsonRosterHttpServiceTest extends JsonHttpServiceTestBase<JsonRoste
         // existent entry
         JsonNode result = service.getRosterEntry(locale, TEST_ENTRY1, 42);
         assertEquals(TEST_ENTRY1, result.path(JSON.DATA).path(JSON.NAME).asText());
+        assertEquals("[\"testGroup1\"]", result.path(JSON.DATA).path(JsonRoster.ROSTER_GROUPS).toString());
         validate(JsonRoster.ROSTER_ENTRY, result);
         // non-existent entry
         JsonException ex = assertThrows( JsonException.class, () ->
