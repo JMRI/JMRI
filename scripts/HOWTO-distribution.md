@@ -785,14 +785,17 @@ git push github
 
 ## Local-build Alternative
 
-If you can't use Jenkins for the actual build, you can create the files locally. This will make the Windows and Linux installs correctly, but will leave the macOS installer unsigned (only Jenkins can use the signing certificates currently).
+If you can't use Jenkins for the actual build, you can create the files locally. This will make the Windows and Linux installs correctly, but will leave the macOS installer unsigned.
+
+If you have a Developer ID Application certificate in your keychain, you can sign the macOS installer yourself with `scripts/macos-sign-dmg.sh` (run it with no arguments for usage). It takes either the unsigned disk image or the `dist/MacOSX` folder from `ant dist-macosx`. It also notarizes when `NOTARY_KEY_PATH`, `NOTARY_KEY_ID` and `NOTARY_ISSUER` are set to an App Store Connect API key. Passing `-` as the identity gives an ad-hoc signature, which is handy for testing but won't pass Gatekeeper. `scripts/macos-verify-dmg.sh` checks the result. The "Build Installers" GitHub Actions workflow uses the same scripts.
 
 If you're building locally:
 
 * You no need to have installed NSIS, as the two .exe files are pre-built.  If
-you want to have it anyway to update the .nsi files and rebuild it, start by getting it from http://nsis.sourceforge.net (we use version 3.01 with long string support; see [Issue 3913](https://github.com/JMRI/JMRI/issues/3913) for instructions on how to build that for Linux). On macOS, install (currently [version 3.03](https://formulae.brew.sh/formula/makensis) via Homebrew
- - brew install makensis --with-large-strings
- - add an entry in "local.properties" nsis.home=/usr/local/bin/
+you want to have it anyway to update the .nsi files and rebuild it, the stock NSIS 3 packages work:
+ - macOS: `brew install makensis`
+ - Debian/Ubuntu: `sudo apt-get install nsis`
+ - Windows: get it from https://nsis.sourceforge.io
 
 * Either make sure that 'makensis' is in your path, or set nsis.home in your local.properties file to the root of the nsis installation:
 
