@@ -27,7 +27,10 @@ public class EditorFrameTest extends jmri.util.JmriJFrameTestBase {
            Assert.fail("Failed to initialize SdfBuffer");
         }
         if(!GraphicsEnvironment.isHeadless()){
-           frame = new EditorFrame(b);
+           // a Swing window is made on the GUI thread: made here, its pack() could lay it out while
+           // the GUI thread does too, failing at random in GridBagLayout
+           SdfBuffer buffer = b;
+           frame = jmri.util.ThreadingUtil.runOnGUIwithReturn(() -> new EditorFrame(buffer));
         }
     }
 
