@@ -2,6 +2,8 @@ package jmri.jmrit.simpleclock.configurexml;
 
 import jmri.InstanceManager;
 import jmri.Timebase;
+import jmri.time.TimeProvider;
+import jmri.time.TimeProviderManager;
 import jmri.util.JUnitUtil;
 
 import org.jdom2.Element;
@@ -63,6 +65,18 @@ public class SimpleTimebaseXmlTest {
         assertEquals(true, tb.getSetRateAtStart());
 
         tb.dispose();
+    }
+
+    @Test
+    public void testRateIsSetOnLoad() {
+        Element e = new Element("timebase");
+        e.setAttribute("rate", "13.0");
+
+        SimpleTimebaseXml t = new SimpleTimebaseXml();
+        t.load(e, new Element("foo"));
+
+        TimeProvider tp = InstanceManager.getDefault(TimeProviderManager.class).getCurrentTimeProvider();
+        assertEquals(13.0d, tp.getRate().getRateValue(), 0.01);
     }
 
     // private static final Logger log = LoggerFactory.getLogger(SimpleTimebaseXmlTest.class);

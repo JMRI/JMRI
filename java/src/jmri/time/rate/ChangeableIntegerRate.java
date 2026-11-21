@@ -15,7 +15,7 @@ public class ChangeableIntegerRate extends IntegerRate implements RateSetter {
 
     /** {@inheritDoc} */
     @Override
-    public void setRate(double rate) throws UnsupportedOperationException {
+    public void setRateValue(double rate) throws UnsupportedOperationException {
         this._rate = (int) Math.round(rate);
     }
 

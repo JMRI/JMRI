@@ -16,7 +16,7 @@ public class ChangeableOnceDecimalRate extends OnceDecimalRate
 
     /** {@inheritDoc} */
     @Override
-    public void setRate(double rate) throws UnsupportedOperationException {
+    public void setRateValue(double rate) throws UnsupportedOperationException {
         this._rateTimesTen = (int) Math.round(rate * 10);
     }
 

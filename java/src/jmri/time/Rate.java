@@ -11,7 +11,7 @@ public interface Rate {
      * Get the rate.
      * @return the rate
      */
-    double getRate();
+    double getRateValue();
 
     /**
      * Return the rate as a formatted string.

@@ -54,8 +54,9 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
         if (timeProvider instanceof TimeSetter) {
             timeSetter = (TimeSetter) timeProvider;
         }
-        if (timeProvider instanceof RateSetter) {
-            rateSetter = (RateSetter) timeProvider;
+        Rate rate = timeProvider.getRate();
+        if (rate instanceof RateSetter) {
+            rateSetter = (RateSetter) rate;
         }
         if (timeProvider instanceof StartStopTimeProvider && ((StartStopTimeProvider) timeProvider).canStartAndStop()) {
             startStopTimeProvider = (StartStopTimeProvider) timeProvider;
@@ -150,7 +151,7 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
                 double r = shared.getAttribute("startrate").getDoubleValue();
                 clock.setStartRate(r);
                 if (rateSetter != null) {
-                    rateSetter.setRate(r);
+                    rateSetter.setRateValue(r);
                 }
                 hasRate = true;
             } catch (org.jdom2.DataConversionException e2) {
@@ -163,7 +164,7 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
                 double r = shared.getAttribute("rate").getDoubleValue();
                 clock.setStartRate(r);
                 if (rateSetter != null) {
-                    rateSetter.setRate(r);
+                    rateSetter.setRateValue(r);
                 }
                 hasRate = true;
             } catch (org.jdom2.DataConversionException e2) {

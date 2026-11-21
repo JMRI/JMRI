@@ -14,7 +14,7 @@ import jmri.util.TimerUtil;
  * @author Daniel Bergqvist (C) 2025
  */
 public class InternalDateTime extends AbstractTimeProvider
-        implements TimeSetter, DateProvider, CanSetRate, StartStopTimeProvider, RateSetter {
+        implements TimeSetter, DateProvider, CanSetRate, StartStopTimeProvider {
 
     private static final int _100_MILLISECONDS = 100;
 
@@ -22,7 +22,23 @@ public class InternalDateTime extends AbstractTimeProvider
     // So _time is volatile instead. This works since ZonedDateTime is immutable.
     private volatile ZonedDateTime _time = ZonedDateTime.now();
 
-    private final ChangeableDoubleRate _rate = new ChangeableDoubleRate(1.0);
+    // Changing the rate catches up the time first, so the clock doesn't jump
+    private final ChangeableDoubleRate _rate = new ChangeableDoubleRate(1.0) {
+        @Override
+        public void setRateValue(double rate) {
+            synchronized(_lock) {
+                double oldRate = getRateValue();
+                ZonedDateTime oldTime = _lastUpdatedDateTime;
+                catchUpTime();
+                resetLast();
+                super.setRateValue(rate);
+                if (oldTime != null) {
+                    timeIsUpdated(oldTime);
+                }
+                InternalDateTime.this.firePropertyChange(PROPERTY_CHANGE_RATE, oldRate, rate);
+            }
+        }
+    };
     private boolean _isRunning;
     private boolean _isLockedFromRunning;
     private final TimerTask _timerTask;
@@ -33,6 +49,7 @@ public class InternalDateTime extends AbstractTimeProvider
     private long _startTimeMillisec;
     private final Object _lock = new Object();
     private boolean _isTimerTaskStarted;
+    private boolean _isTimeSet;
 
 
     private TimerTask getTimerTask() {
@@ -46,10 +63,10 @@ public class InternalDateTime extends AbstractTimeProvider
             public void run() {
                 synchronized(_lock) {
                     if (!_isRunning || _isLockedFromRunning) return;
-                    if (_rate.getRate() < 0.0001) return;   // We don't want to divide by zero later
+                    if (_rate.getRateValue() < 0.0001) return;   // We don't want to divide by zero later
 
                     long time = System.currentTimeMillis() - _startTimeMillisec;
-                    long diff = Math.round(time * _rate.getRate());
+                    long diff = Math.round(time * _rate.getRateValue());
                     _time = _lastDateTime.plus(diff, ChronoUnit.MILLIS);
                     int sec = _time.getSecond();
                     if (sec != _lastSec) {
@@ -104,6 +121,7 @@ public class InternalDateTime extends AbstractTimeProvider
     }
 
     private void resetLast() {
+        _startTimeMillisec = System.currentTimeMillis();
         _lastDateTime = _time;
         _lastUpdatedDateTime = _time;
         _lastSec = _lastDateTime.getSecond();
@@ -156,25 +174,49 @@ public class InternalDateTime extends AbstractTimeProvider
         return true;
     }
 
+    // Bring _time up to date before the run state or the rate changes
+    private void catchUpTime() {
+        if (_isRunning && _isTimerTaskStarted && !_isLockedFromRunning && _rate.getRateValue() >= 0.0001) {
+            long time = System.currentTimeMillis() - _startTimeMillisec;
+            _time = _lastDateTime.plus(Math.round(time * _rate.getRateValue()), ChronoUnit.MILLIS);
+        }
+    }
+
     @Override
     public void start() throws UnsupportedOperationException {
+        boolean wasRunning;
         synchronized(_lock) {
-            if (!_isTimerTaskStarted && !_isLockedFromRunning) {
-                _time = ZonedDateTime.now();
+            wasRunning = _isRunning;
+            if (!_isRunning) {
+                if (!_isTimeSet && !_isTimerTaskStarted) {
+                    _time = ZonedDateTime.now();
+                }
                 resetLast();
-                _startTimeMillisec = System.currentTimeMillis();
+            }
+            if (!_isTimerTaskStarted && !_isLockedFromRunning) {
                 TimerUtil.schedule(_timerTask, _100_MILLISECONDS, _100_MILLISECONDS);
                _isTimerTaskStarted = true;
             }
             _isRunning = true;
         }
+        firePropertyChange(PROPERTY_CHANGE_RUN, wasRunning, true);
     }
 
     @Override
     public void stop() throws UnsupportedOperationException {
+        boolean wasRunning;
+        ZonedDateTime oldTime;
         synchronized(_lock) {
+            wasRunning = _isRunning;
+            oldTime = _lastUpdatedDateTime;
+            catchUpTime();
+            resetLast();
             _isRunning = false;
         }
+        if (oldTime != null) {
+            timeIsUpdated(oldTime);
+        }
+        firePropertyChange(PROPERTY_CHANGE_RUN, wasRunning, false);
     }
 
     @Override
@@ -187,6 +229,7 @@ public class InternalDateTime extends AbstractTimeProvider
         synchronized(_lock) {
             ZonedDateTime oldTime = this._time;
             _time = ZonedDateTime.of(_time.toLocalDate(), time, _time.getZone());
+            _isTimeSet = true;
             resetLast();
             timeIsUpdated(oldTime);
         }
@@ -197,6 +240,7 @@ public class InternalDateTime extends AbstractTimeProvider
         synchronized(_lock) {
             ZonedDateTime oldTime = this._time;
             this._time = time;
+            _isTimeSet = true;
             resetLast();
             timeIsUpdated(oldTime);
         }
@@ -210,15 +254,6 @@ public class InternalDateTime extends AbstractTimeProvider
     @Override
     public boolean canSetRate() {
         return true;
-    }
-
-    @Override
-    public void setRate(double rate) {
-        synchronized(_lock) {
-            double oldRate = _rate.getRate();
-            _rate.setRate(rate);
-            firePropertyChange(PROPERTY_CHANGE_RATE, oldRate, _rate.getRate());
-        }
     }
 
 }
