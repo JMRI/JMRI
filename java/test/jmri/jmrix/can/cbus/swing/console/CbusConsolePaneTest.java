@@ -140,27 +140,43 @@ public class CbusConsolePaneTest extends jmri.util.swing.JmriPanelTest {
         }
         // the lines are shown later, on the GUI thread: wait for the last of them, then for the trim.
         // The panes are read on the GUI thread too, as it changes them while the test waits.
-        JUnitUtil.waitFor(() -> ThreadingUtil.runOnGUIwithReturn(
+        JUnitUtil.waitFor(() -> onGui(
             () -> cbPanel.monTextPaneCbus.getText().contains("decoded 99")
             && cbPanel.monTextPaneCan.getText().contains("frame 99")), "every line shown");
         // 10 lines and the one being added to; a pane may keep a line or two more before it trims
-        JUnitUtil.waitFor(() -> ThreadingUtil.runOnGUIwithReturn(
+        JUnitUtil.waitFor(() -> onGui(
             () -> cbPanel.monTextPaneCbus.getLineCount() <= 13
             && cbPanel.monTextPaneCan.getLineCount() <= 13), "panes trimmed");
 
         // the highlights of the trimmed lines go when the next line is shown
         cbPanel.nextLine("frame\n", "decoded\n", 0);
-        JUnitUtil.waitFor(() -> ThreadingUtil.runOnGUIwithReturn(
+        JUnitUtil.waitFor(() -> onGui(
             () -> highlights(cbPanel.monTextPaneCbus) <= 14
             && highlights(cbPanel.monTextPaneCan) <= 14), "highlights of trimmed lines removed");
 
         new JButtonOperator(jfo, Bundle.getMessage("ButtonClearScreen")).doClick();
-        Assertions.assertEquals( 0, (int) ThreadingUtil.runOnGUIwithReturn(() -> highlights(cbPanel.monTextPaneCbus)),
-            "clear removes the highlights");
-        Assertions.assertEquals( 0, (int) ThreadingUtil.runOnGUIwithReturn(() -> highlights(cbPanel.monTextPaneCan)),
-            "clear removes the highlights");
+        JUnitUtil.waitFor(() -> onGui(
+            () -> highlights(cbPanel.monTextPaneCbus) == 0
+            && highlights(cbPanel.monTextPaneCan) == 0), "clear removes the highlights");
 
         jfo.requestClose();
+    }
+
+    /**
+     * Ask on the GUI thread, which changes the panes while the test waits.
+     * If the wait for its answer is interrupted, the answer is lost: say no,
+     * so that the test looks again, rather than failing on a missing answer.
+     *
+     * @param question what to ask
+     * @return the answer; false if it was lost
+     */
+    private static boolean onGui(java.util.function.BooleanSupplier question) {
+        Boolean answer = ThreadingUtil.runOnGUIwithReturn(question::getAsBoolean);
+        if (answer == null) {
+            Thread.interrupted(); // runOnGUIwithReturn kept the interrupt, which would stop the wait
+            return false;
+        }
+        return answer;
     }
 
     private static int highlights(javax.swing.JTextArea pane) {
