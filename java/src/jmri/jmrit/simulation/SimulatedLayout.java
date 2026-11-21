@@ -977,7 +977,17 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
         t.held = reason;
     }
 
+    /** How far apart two trains that collided must move before touching again is a new collision, mm. */
+    static final double APART_MM = 20.0;
+
     private void findCollisions(List<TrainState> list, Map<TrainState, Motion> motions, long start) {
+        for (TrainState t : list) {
+            TrainState h = t.hit;
+            if (h != null && Math.abs(t.position - t.hitAt) + Math.abs(h.position - h.hitAt) > APART_MM) {
+                t.hit = null;
+                h.hit = null;
+            }
+        }
         while (true) {
             Collisions.Found first = null;
             TrainState fa = null;
@@ -1004,6 +1014,13 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
             motions.put(fb, motions.get(fb).stoppedAt(first.time));
             fa.crashed = true;
             fb.crashed = true;
+            if (fa.hit == fb && fb.hit == fa) {
+                continue; // still against the train it hit: stopped again, not a new collision
+            }
+            fa.hit = fb;
+            fb.hit = fa;
+            fa.hitAt = motions.get(fa).position(first.time);
+            fb.hitAt = motions.get(fb).position(first.time);
             long when = start + Math.round(first.time * 1e9);
             collisions.add(new SimulationTruth.Collision(fa.train, fb.train, first.block, when));
             log.warn("Simulated trains \"{}\" and \"{}\" have collided in \"{}\".", fa.train.getName(),

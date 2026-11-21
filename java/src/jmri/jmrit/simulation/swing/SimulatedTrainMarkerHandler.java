@@ -73,6 +73,16 @@ public class SimulatedTrainMarkerHandler implements TrackMarkerDropHandler {
     @Override
     public void addBlockMenuItems(@Nonnull JPopupMenu popup, @Nonnull Block block) {
         for (VirtualTrain train : PlaceTrainModel.trainsIn(block)) {
+            jmri.jmrit.simulation.SimulationTruth.TrainTruth truth =
+                    SimulatedLayout.getDefault().getTruth().getTrain(train);
+            if (truth != null && truth.isDerailed()) {
+                popup.add(new AbstractAction(Bundle.getMessage("RerailTrain", train.getName())) {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        SimulatedLayout.getDefault().getFaults().rerail(train);
+                    }
+                });
+            }
             popup.add(new AbstractAction(Bundle.getMessage("RemoveTrain", train.getName())) {
                 @Override
                 public void actionPerformed(ActionEvent e) {

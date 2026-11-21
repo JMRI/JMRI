@@ -425,6 +425,37 @@ public class SimulatedLayoutTest {
     }
 
     @Test
+    public void testTrainsBackAwayAfterACollision() {
+        Block[] b = line();
+        VirtualTrain east = train("East", 3, 50, Detection.entireTrain());
+        VirtualTrain west = train("West", 4, 50, Detection.entireTrain());
+        layout.place(east, b[1], b[0], 100.0);
+        layout.place(west, b[2], b[3], 100.0);
+        speed(3, 100, true);
+        speed(4, 50, true);
+        layout.runFor(6.0);
+        JUnitAppender.assertWarnMessage("Simulated trains \"East\" and \"West\" have collided in \"C\".");
+        double eastAt = truthOf(east).getFrontPositionMm();
+        double westAt = truthOf(west).getFrontPositionMm();
+        layout.runFor(2.0);
+        assertTrue(truthOf(east).isCrashed(), "still driven into West: still stopped");
+        assertEquals(eastAt, truthOf(east).getFrontPositionMm(), 1e-6, "and where it stopped");
+        assertEquals(1, layout.getTruth().getCollisions().size(), "not a new collision each step");
+        speed(4, 0, true);
+        speed(3, 100, false); // East backs away
+        layout.runFor(2.0);
+        // 200 mm back at 100 mm/s: its front from 350 - 50 x 14/3 = 116.7 mm into C back into B
+        assertEquals(b[1], truthOf(east).getFrontBlock(), "East has backed away, into B");
+        assertEquals(eastAt - 200.0 + 450.0, truthOf(east).getFrontPositionMm(), 1e-6);
+        assertFalse(truthOf(east).isCrashed());
+        assertEquals(westAt, truthOf(west).getFrontPositionMm(), 1e-6, "West stays where it stopped");
+        speed(3, 100, true); // and runs back into West
+        layout.runFor(4.0);
+        JUnitAppender.assertWarnMessage("Simulated trains \"East\" and \"West\" have collided in \"C\".");
+        assertEquals(2, layout.getTruth().getCollisions().size(), "once apart, touching again is a new collision");
+    }
+
+    @Test
     public void testDuplicateAddressBothMove() {
         Block[] b = line();
         VirtualTrain one = train("One", 3, 100, Detection.entireTrain());
