@@ -24,122 +24,6 @@
             "type": "boolean",
             "description": "true if forward; false otherwise"
         },
-        "F0": {
-            "type": "boolean",
-            "description": "true if function on; false otherwise"
-        },
-        "F1": {
-            "type": "boolean",
-            "description": "true if function on; false otherwise"
-        },
-        "F2": {
-            "type": "boolean",
-            "description": "true if function on; false otherwise"
-        },
-        "F3": {
-            "type": "boolean",
-            "description": "true if function on; false otherwise"
-        },
-        "F4": {
-            "type": "boolean",
-            "description": "true if function on; false otherwise"
-        },
-        "F5": {
-            "type": "boolean",
-            "description": "true if function on; false otherwise"
-        },
-        "F6": {
-            "type": "boolean",
-            "description": "true if function on; false otherwise"
-        },
-        "F7": {
-            "type": "boolean",
-            "description": "true if function on; false otherwise"
-        },
-        "F8": {
-            "type": "boolean",
-            "description": "true if function on; false otherwise"
-        },
-        "F9": {
-            "type": "boolean",
-            "description": "true if function on; false otherwise"
-        },
-        "F10": {
-            "type": "boolean",
-            "description": "true if function on; false otherwise"
-        },
-        "F11": {
-            "type": "boolean",
-            "description": "true if function on; false otherwise"
-        },
-        "F12": {
-            "type": "boolean",
-            "description": "true if function on; false otherwise"
-        },
-        "F13": {
-            "type": "boolean",
-            "description": "true if function on; false otherwise"
-        },
-        "F14": {
-            "type": "boolean",
-            "description": "true if function on; false otherwise"
-        },
-        "F15": {
-            "type": "boolean",
-            "description": "true if function on; false otherwise"
-        },
-        "F16": {
-            "type": "boolean",
-            "description": "true if function on; false otherwise"
-        },
-        "F17": {
-            "type": "boolean",
-            "description": "true if function on; false otherwise"
-        },
-        "F18": {
-            "type": "boolean",
-            "description": "true if function on; false otherwise"
-        },
-        "F19": {
-            "type": "boolean",
-            "description": "true if function on; false otherwise"
-        },
-        "F20": {
-            "type": "boolean",
-            "description": "true if function on; false otherwise"
-        },
-        "F21": {
-            "type": "boolean",
-            "description": "true if function on; false otherwise"
-        },
-        "F22": {
-            "type": "boolean",
-            "description": "true if function on; false otherwise"
-        },
-        "F23": {
-            "type": "boolean",
-            "description": "true if function on; false otherwise"
-        },
-        "F24": {
-            "type": "boolean",
-            "description": "true if function on; false otherwise"
-        },
-        "F25": {
-            "type": "boolean",
-            "description": "true if function on; false otherwise"
-        },
-        "F26": {
-            "type": "boolean",
-            "description": "true if function on; false otherwise"
-        },
-        "F27": {
-            "type": "boolean",
-            "description": "true if function on; false otherwise"
-        },
-        "F28": {
-            "type": "boolean",
-            "description": "true if function on; false otherwise"
-        },
         "speedSteps": {
             "type": "integer",
             "description": "Number of steps between idle and full throttle"
@@ -159,6 +43,12 @@
         "release": {
             "type": "null",
             "description": "Message indicates that this throttle has been released from this client"
+        }
+    },
+    "patternProperties": {
+        "^F([0-9]|[1-7][0-9]|8[0-4])$": {
+            "type": "boolean",
+            "description": "true if function on; false otherwise; the highest function available depends on the throttle's connection (F28 for most, F68 for LocoNet and DCC-EX, F84 for TMCC)"
         }
     },
     "additionalProperties": false,

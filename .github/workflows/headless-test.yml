@@ -5,6 +5,12 @@ name: Headless CI Tests
 
 on: [ push, pull_request ]
 
+# One run per pull request: a new push to a PR cancels that PR's older run, so a superseded run
+# doesn't hold a runner. Push runs, including every master commit, are never cancelled.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   build:
     runs-on: ubuntu-latest

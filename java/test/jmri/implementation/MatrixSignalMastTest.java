@@ -265,6 +265,9 @@ public class MatrixSignalMastTest {
         Assertions.assertEquals(Turnout.CLOSED, it13.getCommandedState(), "it13 for Clear");
     }
 
+    // the most a timer can fire early: one step of the Windows system clock, rounded up
+    private static final int TIMER_CLOCK_STEP = 20;
+
     /**
      * The command delay spaces the outputs out without holding the thread
      * that sets the aspect, which is usually the layout thread.
@@ -294,8 +297,10 @@ public class MatrixSignalMastTest {
         Assertions.assertEquals(List.of(it11, it12, it13), order, "outputs sent in order");
         for (int i = 1; i < 3; i++) {
             long gap = (times.get(i) - times.get(i - 1)) / 1_000_000;
-            // the timer waits at least the delay; allow for its millisecond clock
-            Assertions.assertTrue(gap >= delay - 2, "gap before output " + (i + 1) + " was " + gap + " ms");
+            // the timer waits the delay by the system clock, which on Windows moves in steps of
+            // about 15.6 ms, so it can fire up to one step early
+            Assertions.assertTrue(gap >= delay - TIMER_CLOCK_STEP,
+                "gap before output " + (i + 1) + " was " + gap + " ms");
         }
     }
 
