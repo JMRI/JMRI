@@ -719,6 +719,8 @@
         <ul>
             <li>Some Java methods that have been deprecated since
                 JMRI 5.13 series have been removed.</li>
+            <li>Building JMRI with Maven now requires Maven 3.6.3 or newer.
+                Ant builds are not affected.</li>
             <li>Tools &gt; Train Tracking &gt; Measurements lists, for each Block
                 and way through it, how many times trains have crossed it this
                 session, their average speed, how that compares with their
