@@ -389,10 +389,22 @@ public class JsonRosterHttpServiceTest extends JsonHttpServiceTestBase<JsonRoste
     }
 
     @Test
+    public void testPostRosterEntryHighFunctionKey() throws JsonException {
+        RosterEntry spy = spyEntry();
+        spy.setMaxFnNum("85"); // Lionel TMCC2 Legacy decoders go to F85
+        ObjectNode data = mapper.createObjectNode().put(JSON.NAME, TEST_ENTRY1);
+        data.putArray(JSON.FUNCTION_KEYS).addObject().put(JSON.NAME, "F85").put(JSON.LABEL, "Smoke High");
+        validateData(JsonRoster.ROSTER_ENTRY, data, false);
+        JsonNode result = service.postRosterEntry(locale, TEST_ENTRY1, data, 42);
+        assertEquals("Smoke High", spy.getFunctionLabel(85));
+        validate(JsonRoster.ROSTER_ENTRY, result);
+    }
+
+    @Test
     public void testPostRosterEntryBadFunctionKey() {
         RosterEntry spy = spyEntry();
         assertEquals(28, spy.getMaxFnNumAsInt());
-        for (String key : new String[]{"F99999999999", "F-1", "F+3", "X5", "f5", "F", "", "F29"}) {
+        for (String key : new String[]{"F99999999999", "F-1", "F+3", "X5", "f5", "F", "", "F29", "F01"}) {
             ObjectNode data = mapper.createObjectNode().put(JSON.NAME, TEST_ENTRY1);
             data.putArray(JSON.FUNCTION_KEYS).addObject().put(JSON.NAME, key).put(JSON.LABEL, "x");
             JsonException ex = assertThrows(JsonException.class,
@@ -424,9 +436,9 @@ public class JsonRosterHttpServiceTest extends JsonHttpServiceTestBase<JsonRoste
         ObjectNode noAttributeValue = data.deepCopy();
         noAttributeValue.putArray(JsonRoster.ATTRIBUTES).addObject().put(JSON.NAME, "orphan");
         assertInvalid(JsonRoster.ROSTER_ENTRY, noAttributeValue, false, "attribute without value");
-        ObjectNode highKey = data.deepCopy();
-        highKey.putArray(JSON.FUNCTION_KEYS).addObject().put(JSON.NAME, "F85");
-        assertInvalid(JsonRoster.ROSTER_ENTRY, highKey, false, "function key above F84");
+        ObjectNode leadingZero = data.deepCopy();
+        leadingZero.putArray(JSON.FUNCTION_KEYS).addObject().put(JSON.NAME, "F01");
+        assertInvalid(JsonRoster.ROSTER_ENTRY, leadingZero, false, "function key with leading zero");
         assertInvalid(JsonRoster.ROSTER_ENTRY, data.deepCopy().put(JSON.MAX_SPD_PCT, 101), false,
                 "maxSpeedPct above 100");
         assertInvalid(JsonRoster.ROSTER_ENTRY, data.deepCopy().put(JSON.MAX_SPD_PCT, -1), false,

@@ -335,14 +335,14 @@ public class JsonRosterHttpService extends JsonHttpService {
         }
         if (data.path(FUNCTION_KEYS).isArray()) {
             for (JsonNode functionKey : data.path(FUNCTION_KEYS)) {
-                int function = getFunctionNumber(entry, functionKey, locale, id);
+                int functionNumber = getFunctionNumber(entry, functionKey, locale, id);
                 // only change what the client sent, so a missing label or lockable keeps its current value
                 if (!functionKey.path(LABEL).isMissingNode()) {
-                    entry.setFunctionLabel(function,
+                    entry.setFunctionLabel(functionNumber,
                         functionKey.path(LABEL).isNull() ? null : functionKey.path(LABEL).asText());
                 }
                 if (functionKey.path(LOCKABLE).isBoolean()) {
-                    entry.setFunctionLockable(function, functionKey.path(LOCKABLE).asBoolean());
+                    entry.setFunctionLockable(functionNumber, functionKey.path(LOCKABLE).asBoolean());
                 }
             }
         }
@@ -381,12 +381,12 @@ public class JsonRosterHttpService extends JsonHttpService {
     // only F followed by digits, and no higher than this entry's last function
     private int getFunctionNumber(RosterEntry entry, JsonNode functionKey, Locale locale, int id) throws JsonException {
         String key = functionKey.path(NAME).asText();
-        int function = key.matches("F[0-9]{1,9}") ? Integer.parseInt(key.substring(F.length())) : -1;
-        if (function < 0 || function > entry.getMaxFnNumAsInt()) {
+        int functionNumber = key.matches("F(0|[1-9][0-9]{0,8})") ? Integer.parseInt(key.substring(F.length())) : -1;
+        if (functionNumber < 0 || functionNumber > entry.getMaxFnNumAsInt()) {
             throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale,
                 JsonException.ERROR_BAD_PROPERTY_VALUE, key, FUNCTION_KEYS, JsonRoster.ROSTER_ENTRY), id);
         }
-        return function;
+        return functionNumber;
     }
 
 }
