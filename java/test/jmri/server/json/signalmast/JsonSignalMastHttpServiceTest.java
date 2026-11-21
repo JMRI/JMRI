@@ -2,6 +2,7 @@ package jmri.server.json.signalmast;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -41,6 +42,10 @@ public class JsonSignalMastHttpServiceTest extends JsonNamedBeanHttpServiceTestB
         InstanceManager.getDefault(SignalHeadManager.class).register(new VirtualSignalHead("IH2"));
         SignalMast s = InstanceManager.getDefault(SignalMastManager.class).provideSignalMast(sysName);
         s.setUserName(userName);
+        // properties of each kind, to check the shape the schema describes
+        s.setProperty("text", "value");
+        s.setProperty("number", 42);
+        s.setProperty("empty", null);
 
         JsonNode result;
         // retrieve by systemname
@@ -120,6 +125,34 @@ public class JsonSignalMastHttpServiceTest extends JsonNamedBeanHttpServiceTestB
         assertEquals("Stop", s.getAspect());
         assertEquals("Stop", result.path(JSON.DATA).path(JSON.STATE).asText());
         assertEquals("Stop", result.path(JSON.DATA).path(JSON.ASPECT).asText());
+    }
+
+    @Test
+    public void testDoPostLitHeld() throws JsonException {
+        String sysName = "IF$shsm:basic:one-searchlight:IH2";
+        InstanceManager.getDefault(SignalHeadManager.class).register(new VirtualSignalHead("IH2"));
+        SignalMast s = InstanceManager.getDefault(SignalMastManager.class).provideSignalMast(sysName);
+        s.setLit(true);
+        // booleans, the same as GET sends, and a null comment
+        JsonNode message = mapper.createObjectNode().put(JSON.NAME, sysName).put(JSON.LIT, false).put(JSON.TOKEN_HELD, true).putNull(JSON.COMMENT);
+        validateData(JsonSignalMast.SIGNAL_MAST, message, false);
+        JsonNode result = service.doPost(JsonSignalMast.SIGNAL_MAST, sysName, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        validate(result);
+        assertFalse(s.getLit());
+        assertTrue(s.getHeld());
+        // strings still work for older clients
+        message = mapper.createObjectNode().put(JSON.NAME, sysName).put(JSON.LIT, "true").put(JSON.TOKEN_HELD, "false");
+        service.doPost(JsonSignalMast.SIGNAL_MAST, sysName, message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        assertTrue(s.getLit());
+        assertFalse(s.getHeld());
+        // sending back a held mast's GET data with a new state releases it
+        s.setHeld(true);
+        ObjectNode echo = (ObjectNode) service.doGet(s, sysName, JsonSignalMast.SIGNAL_MAST, new JsonRequest(locale, JSON.V5, JSON.GET, 42)).path(JSON.DATA);
+        assertTrue(echo.path(JSON.TOKEN_HELD).asBoolean());
+        echo.put(JSON.STATE, "Stop");
+        service.doPost(JsonSignalMast.SIGNAL_MAST, sysName, echo, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        assertFalse(s.getHeld());
+        assertEquals("Stop", s.getAspect());
     }
 
     @Test

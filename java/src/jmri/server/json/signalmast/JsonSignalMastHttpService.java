@@ -74,10 +74,12 @@ public class JsonSignalMastHttpService extends JsonNamedBeanHttpService<SignalMa
                 throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorUnknownState", SIGNAL_MAST, aspect), request.id);
             }
         }
-        if (data.path(LIT).isTextual()) {
+        // booleans are what GET sends; strings are still accepted for older clients
+        if (data.path(LIT).isBoolean() || data.path(LIT).isTextual()) {
             signalMast.setLit(data.path(LIT).asBoolean());
         }
-        if (data.path(TOKEN_HELD).isTextual()) {
+        // a state decides held, so ignore a stale held sent back from a GET
+        if (!data.path(STATE).isTextual() && (data.path(TOKEN_HELD).isBoolean() || data.path(TOKEN_HELD).isTextual())) {
             signalMast.setHeld(data.path(TOKEN_HELD).asBoolean());
         }
         return this.doGet(signalMast, name, type, request);

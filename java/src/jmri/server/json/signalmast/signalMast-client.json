@@ -13,12 +13,23 @@
             "description": "If present, set the user name of the signalMast"
         },
         "comment": {
-            "type": "string",
-            "description": "If present, set the comment for the signalMast"
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "If present, set the comment for the signalMast; null clears it"
         },
         "state": {
             "type": "string",
-            "description": "If present, set the state for the signalMast"
+            "description": "If present, set the aspect of the signalMast, or \"Held\" to hold it"
+        },
+        "lit": {
+            "type": "boolean",
+            "description": "If present, set whether the signalMast is lit"
+        },
+        "held": {
+            "type": "boolean",
+            "description": "If present, set whether the signalMast is held"
         }
     },
     "additionalProperties": false,

@@ -60,6 +60,10 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
     public void testDoGet() throws JmriException, IOException, JsonException {
         IdTagManager manager = InstanceManager.getDefault(IdTagManager.class);
         IdTag idTag1 = manager.provide("ID1");
+        // properties of each kind, to check the shape the schema describes
+        idTag1.setProperty("text", "value");
+        idTag1.setProperty("number", 42);
+        idTag1.setProperty("empty", null);
         Reporter reporter1 = InstanceManager.getDefault(ReporterManager.class).provide("IR1");
         JsonNode result;
         // test idTag with defaults
