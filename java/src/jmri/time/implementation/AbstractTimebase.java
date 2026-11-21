@@ -115,7 +115,7 @@ public abstract class AbstractTimebase extends AbstractNamedBean implements Time
                 CanSetRate csr = (CanSetRate)tp;
                 RateSetter rs = (RateSetter)tp.getRate();
                 if (csr.canSetRate()) {
-                    rs.setRate(factor);
+                    rs.setRateValue(factor);
                 } else {
                     throw new UnsupportedOperationException("The current TimeProvider can not start/stop time");
                 }
@@ -138,7 +138,7 @@ public abstract class AbstractTimebase extends AbstractNamedBean implements Time
                 CanSetRate csr = (CanSetRate)tp;
                 RateSetter rs = (RateSetter)tp.getRate();
                 if (csr.canSetRate()) {
-                    rs.setRate(factor);
+                    rs.setRateValue(factor);
                 } else {
                     throw new UnsupportedOperationException("The current TimeProvider can not start/stop time");
                 }
@@ -155,13 +155,13 @@ public abstract class AbstractTimebase extends AbstractNamedBean implements Time
     @Override
     public double getRate() {
         return InstanceManager.getDefault(TimeProviderManager.class)
-                .getCurrentTimeProvider().getRate().getRate();
+                .getCurrentTimeProvider().getRate().getRateValue();
     }
 
     @Override
     public double userGetRate() {
         return InstanceManager.getDefault(TimeProviderManager.class)
-                .getCurrentTimeProvider().getRate().getRate();
+                .getCurrentTimeProvider().getRate().getRateValue();
     }
 
 

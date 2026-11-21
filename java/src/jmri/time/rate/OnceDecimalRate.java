@@ -17,7 +17,7 @@ public class OnceDecimalRate implements Rate {
 
     /** {@inheritDoc} */
     @Override
-    public double getRate() {
+    public double getRateValue() {
         return _rateTimesTen / 10.0;
     }
 

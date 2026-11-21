@@ -151,7 +151,7 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
                 double r = shared.getAttribute("startrate").getDoubleValue();
                 clock.setStartRate(r);
                 if (rateSetter != null) {
-                    rateSetter.setRate(r);
+                    rateSetter.setRateValue(r);
                 }
                 hasRate = true;
             } catch (org.jdom2.DataConversionException e2) {
@@ -164,7 +164,7 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
                 double r = shared.getAttribute("rate").getDoubleValue();
                 clock.setStartRate(r);
                 if (rateSetter != null) {
-                    rateSetter.setRate(r);
+                    rateSetter.setRateValue(r);
                 }
                 hasRate = true;
             } catch (org.jdom2.DataConversionException e2) {

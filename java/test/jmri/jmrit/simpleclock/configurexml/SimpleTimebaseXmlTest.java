@@ -76,7 +76,7 @@ public class SimpleTimebaseXmlTest {
         t.load(e, new Element("foo"));
 
         TimeProvider tp = InstanceManager.getDefault(TimeProviderManager.class).getCurrentTimeProvider();
-        assertEquals(13.0d, tp.getRate().getRate(), 0.01);
+        assertEquals(13.0d, tp.getRate().getRateValue(), 0.01);
     }
 
     // private static final Logger log = LoggerFactory.getLogger(SimpleTimebaseXmlTest.class);

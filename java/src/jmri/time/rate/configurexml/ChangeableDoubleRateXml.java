@@ -18,7 +18,7 @@ public class ChangeableDoubleRateXml {
             throw new IllegalArgumentException("rate is not a ChangeableDoubleRate: " + clazz);
         }
 
-        element.addContent(new Element("rate").addContent(Double.toString(rate.getRate())));
+        element.addContent(new Element("rate").addContent(Double.toString(rate.getRateValue())));
     }
 
     public static Rate load(Rate rate, Element element) {

@@ -17,7 +17,7 @@ public class IntegerRate implements Rate {
 
     /** {@inheritDoc} */
     @Override
-    public double getRate() {
+    public double getRateValue() {
         return _rate;
     }
 

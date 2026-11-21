@@ -71,7 +71,7 @@ public class InternalDateTimeXml extends jmri.managers.configurexml.AbstractName
             if (elem != null) {
                 try  {
                     double rate = Double.parseDouble(elem.getTextTrim());
-                    ((RateSetter) idt.getRate()).setRate(rate);
+                    ((RateSetter) idt.getRate()).setRateValue(rate);
                 } catch (NumberFormatException e) {
                     log.error("Rate is not a double: {}", elem.getTextTrim());
                     return false;

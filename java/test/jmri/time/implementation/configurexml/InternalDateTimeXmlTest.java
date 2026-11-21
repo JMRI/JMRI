@@ -24,13 +24,13 @@ public class InternalDateTimeXmlTest {
         assertInstanceOf(InternalDateTime.class, tp);
         RateSetter rateSetter = (RateSetter) tp.getRate();
 
-        rateSetter.setRate(4.0);
+        rateSetter.setRateValue(4.0);
         InternalDateTimeXml xml = new InternalDateTimeXml();
         Element element = xml.store(tp);
 
-        rateSetter.setRate(1.0);
+        rateSetter.setRateValue(1.0);
         assertTrue(xml.load(element, null));
-        assertEquals(4.0, tp.getRate().getRate(), 0.001);
+        assertEquals(4.0, tp.getRate().getRateValue(), 0.001);
     }
 
     @Test

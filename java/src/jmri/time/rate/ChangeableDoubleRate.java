@@ -15,7 +15,7 @@ public class ChangeableDoubleRate extends DoubleRate implements RateSetter {
 
     /** {@inheritDoc} */
     @Override
-    public void setRate(double rate) {
+    public void setRateValue(double rate) {
         this._rate = rate;
     }
 

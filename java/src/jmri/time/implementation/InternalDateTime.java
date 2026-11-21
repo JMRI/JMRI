@@ -25,13 +25,13 @@ public class InternalDateTime extends AbstractTimeProvider
     // Changing the rate catches up the time first, so the clock doesn't jump
     private final ChangeableDoubleRate _rate = new ChangeableDoubleRate(1.0) {
         @Override
-        public void setRate(double rate) {
+        public void setRateValue(double rate) {
             synchronized(_lock) {
-                double oldRate = getRate();
+                double oldRate = getRateValue();
                 ZonedDateTime oldTime = _lastUpdatedDateTime;
                 catchUpTime();
                 resetLast();
-                super.setRate(rate);
+                super.setRateValue(rate);
                 if (oldTime != null) {
                     timeIsUpdated(oldTime);
                 }
@@ -63,10 +63,10 @@ public class InternalDateTime extends AbstractTimeProvider
             public void run() {
                 synchronized(_lock) {
                     if (!_isRunning || _isLockedFromRunning) return;
-                    if (_rate.getRate() < 0.0001) return;   // We don't want to divide by zero later
+                    if (_rate.getRateValue() < 0.0001) return;   // We don't want to divide by zero later
 
                     long time = System.currentTimeMillis() - _startTimeMillisec;
-                    long diff = Math.round(time * _rate.getRate());
+                    long diff = Math.round(time * _rate.getRateValue());
                     _time = _lastDateTime.plus(diff, ChronoUnit.MILLIS);
                     int sec = _time.getSecond();
                     if (sec != _lastSec) {
@@ -176,9 +176,9 @@ public class InternalDateTime extends AbstractTimeProvider
 
     // Bring _time up to date before the run state or the rate changes
     private void catchUpTime() {
-        if (_isRunning && _isTimerTaskStarted && !_isLockedFromRunning && _rate.getRate() >= 0.0001) {
+        if (_isRunning && _isTimerTaskStarted && !_isLockedFromRunning && _rate.getRateValue() >= 0.0001) {
             long time = System.currentTimeMillis() - _startTimeMillisec;
-            _time = _lastDateTime.plus(Math.round(time * _rate.getRate()), ChronoUnit.MILLIS);
+            _time = _lastDateTime.plus(Math.round(time * _rate.getRateValue()), ChronoUnit.MILLIS);
         }
     }
 

@@ -12,6 +12,6 @@ public interface RateSetter {
      * @param rate the rate
      * @throws UnsupportedOperationException if the rate couldn't be set
      */
-    void setRate(double rate) throws UnsupportedOperationException;
+    void setRateValue(double rate) throws UnsupportedOperationException;
 
 }
