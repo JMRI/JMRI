@@ -407,6 +407,9 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
         setupToolBar();
         setupMenuBar();
 
+        // show train tracking's warnings while panels are open
+        jmri.jmrit.trainrecord.swing.WarningDialog.start();
+
         super.setDefaultToolTip(new ToolTip(null, 0, 0, new Font("SansSerif", Font.PLAIN, 12),
                 Color.black, new Color(215, 225, 255), Color.black, null));
 

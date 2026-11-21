@@ -333,6 +333,21 @@ public interface TrainRecord extends PropertyChangeProvider {
     boolean isPlaced();
 
     /**
+     * Whether which train this is was last decided by a Block's value: it
+     * was placed where a Block's value named it, or a Block's value chose it
+     * from several trains that could have entered a Block, and it has not
+     * been placed since by the operator, Dispatcher or code. A Block's value
+     * can follow the wrong train where trains run close together, so such a
+     * record may not be where its train is.
+     *
+     * @return true if a Block's value last decided which train this is
+     * @since 5.19.2
+     */
+    default boolean isIdentifiedByValue() {
+        return false;
+    }
+
+    /**
      * Say where the train is: the Blocks it is in. Its trail starts again
      * from here, and its confidence becomes {@link Confidence#CONFIRMED}.
      *
@@ -761,6 +776,37 @@ public interface TrainRecord extends PropertyChangeProvider {
             ENTERED_END_UNKNOWN,
             /** The Block's value named it as the train that entered. */
             SETTLED_BY_VALUE,
+            /**
+             * Of the trains that could have entered the Block, it alone was
+             * moving: the others' last commands stopped them, long enough
+             * before for their momentum.
+             *
+             * @since 5.19.2
+             */
+            SETTLED_BY_MOVEMENT,
+            /**
+             * Of the trains that could have entered the Block, it alone was
+             * heading towards it: it was next to the others' rear ends, and
+             * they had not been told to reverse.
+             *
+             * @since 5.19.2
+             */
+            SETTLED_BY_DIRECTION,
+            /**
+             * Left its only Block towards a neighbour already shown occupied
+             * with no train to explain it: it is taken to be there.
+             *
+             * @since 5.19.2
+             */
+            ENTERED_UNEXPLAINED,
+            /**
+             * One of several trains that could have entered a Block, and its
+             * only Block then emptied while the Block it could have entered
+             * still showed occupied: it was the one that entered.
+             *
+             * @since 5.19.2
+             */
+            SETTLED_BY_LEAVING,
             /** Another train was named as the one that entered: no longer in doubt. */
             AMBIGUITY_CLEARED,
             /** Left a Block at one of its ends: its sensor went unoccupied. */
@@ -772,7 +818,18 @@ public interface TrainRecord extends PropertyChangeProvider {
             /** None of its Blocks with a detector shows it. */
             NOT_SEEN,
             /** A Block it is in went occupied again. */
-            SEEN_AGAIN
+            SEEN_AGAIN,
+            /**
+             * Told to move, but not seen to reach the next Block by the time
+             * even its slowest estimate had passed the end of the Block.
+             */
+            STALLED,
+            /**
+             * Not seen to reach the next Block by the time even its slowest
+             * estimate had passed the end of the Block, with no command to
+             * move in force.
+             */
+            LOST
         }
 
         private final Rule rule;

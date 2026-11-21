@@ -25,6 +25,7 @@ public final class TrainPositionEstimate {
     private final Block block;
     private final TrainRecord.End end;
     private final double minMm;
+    private final double unlimitedMinMm;
     private final double maxMm;
     private final boolean limitedByBlock;
     private final double minSpeed;
@@ -48,7 +49,32 @@ public final class TrainPositionEstimate {
      */
     public TrainPositionEstimate(@Nonnull Block block, @Nonnull TrainRecord.End end, double minMm, double maxMm,
             boolean limitedByBlock, double minSpeed, double maxSpeed, long timeNanos) {
-        if (!(minMm >= 0) || !(maxMm >= minMm)) {
+        this(block, end, minMm, minMm, maxMm, limitedByBlock, minSpeed, maxSpeed, timeNanos);
+    }
+
+    /**
+     * @param block          the Block the leading end entered
+     * @param end            the end of the train that leads
+     * @param minMm          the least distance it can have gone into the
+     *                       Block, in millimetres
+     * @param unlimitedMinMm the least distance as its speed alone gives it,
+     *                       before the Block's length limited it, in
+     *                       millimetres; no less than minMm
+     * @param maxMm          the most, in millimetres
+     * @param limitedByBlock true if the train's detected part was taken to
+     *                       have gone no further than the Block's length, as
+     *                       it hasn't been seen to enter the next Block
+     * @param minSpeed       the least speed it can now be moving at, in
+     *                       millimetres per second
+     * @param maxSpeed       the most, in millimetres per second
+     * @param timeNanos      the moment, on the {@link System#nanoTime()}
+     *                       scale
+     * @since 5.19.2
+     */
+    public TrainPositionEstimate(@Nonnull Block block, @Nonnull TrainRecord.End end, double minMm,
+            double unlimitedMinMm, double maxMm, boolean limitedByBlock, double minSpeed, double maxSpeed,
+            long timeNanos) {
+        if (!(minMm >= 0) || !(maxMm >= minMm) || !(unlimitedMinMm >= minMm)) {
             throw new IllegalArgumentException("not a range of distances: " + minMm + " to " + maxMm);
         }
         if (!(minSpeed >= 0) || !(maxSpeed >= minSpeed)) {
@@ -57,6 +83,7 @@ public final class TrainPositionEstimate {
         this.block = Objects.requireNonNull(block, "block");
         this.end = Objects.requireNonNull(end, "end");
         this.minMm = minMm;
+        this.unlimitedMinMm = unlimitedMinMm;
         this.maxMm = maxMm;
         this.limitedByBlock = limitedByBlock;
         this.minSpeed = minSpeed;
@@ -86,6 +113,19 @@ public final class TrainPositionEstimate {
      */
     public double getMinMm() {
         return minMm;
+    }
+
+    /**
+     * @return the least distance the leading end can have gone past the
+     *         boundary where it entered the Block, from its speed alone,
+     *         before the Block's length limited it (see
+     *         {@link #isLimitedByBlock()}); the same as {@link #getMinMm()}
+     *         where it wasn't limited. How far beyond the Block's length it
+     *         is says how overdue the train is at the next Block.
+     * @since 5.19.2
+     */
+    public double getUnlimitedMinMm() {
+        return unlimitedMinMm;
     }
 
     /**

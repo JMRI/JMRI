@@ -122,6 +122,7 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     private final Deque<Reason> history = new ArrayDeque<>();
     private final Map<Block, Reason> blockReasons = new HashMap<>();
     private Reason confidenceReason = null;
+    private boolean identifiedByValue = false;
 
     /**
      * Normalise a train name as for a user name.
@@ -489,6 +490,7 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
         List<Block> old = getBlocks();
         this.blocks.clear();
         this.blocks.addAll(blocks);
+        identifiedByValue = rule == Reason.Rule.PLACED_BY_VALUE;
         long now = System.nanoTime();
         Instant time = Instant.now();
         trail.clear();
@@ -509,6 +511,12 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
         firePropertyChange(PROPERTY_BLOCKS, old, getBlocks());
         addToHistory(reason);
         registry.placementChanged(this);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean isIdentifiedByValue() {
+        return identifiedByValue;
     }
 
     /** {@inheritDoc} */
@@ -665,6 +673,33 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     @InvokeOnLayoutThread
     void entered(@Nonnull List<Block> through, @Nonnull Block block, boolean atFirst, long timeNanos,
             @Nonnull Instant time, boolean settled) {
+        entered(through, block, atFirst, timeNanos, time,
+                settled ? Reason.Rule.SETTLED_BY_VALUE
+                        : through.isEmpty() ? Reason.Rule.ENTERED : Reason.Rule.ENTERED_THROUGH_DARK);
+    }
+
+    /**
+     * The train has entered a Block, for the reason given. Called by the
+     * {@link TrainRecordWatcher}.
+     *
+     * @param through   Blocks with no detector it passed through, in order
+     * @param block     the Block entered
+     * @param atFirst   true if it entered at the end of its first Block
+     * @param timeNanos when
+     * @param time      when, as a wall-clock time
+     * @param rule      why it is taken to have entered:
+     *                  {@link jmri.TrainRecord.Reason.Rule#ENTERED},
+     *                  {@link jmri.TrainRecord.Reason.Rule#ENTERED_THROUGH_DARK},
+     *                  {@link jmri.TrainRecord.Reason.Rule#SETTLED_BY_VALUE},
+     *                  {@link jmri.TrainRecord.Reason.Rule#SETTLED_BY_MOVEMENT},
+     *                  {@link jmri.TrainRecord.Reason.Rule#SETTLED_BY_DIRECTION},
+     *                  {@link jmri.TrainRecord.Reason.Rule#ENTERED_UNEXPLAINED} or
+     *                  {@link jmri.TrainRecord.Reason.Rule#SETTLED_BY_LEAVING}
+     */
+    @InvokeOnLayoutThread
+    void entered(@Nonnull List<Block> through, @Nonnull Block block, boolean atFirst, long timeNanos,
+            @Nonnull Instant time, @Nonnull Reason.Rule rule) {
+        boolean settled = rule == Reason.Rule.SETTLED_BY_VALUE;
         if (disposed || blocks.isEmpty() || blocks.contains(block)) {
             return;
         }
@@ -694,8 +729,9 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
         }
         TrailEntry entry = new TrailEntry(block, from, end, timeNanos, time);
         addToTrail(entry);
-        Reason.Rule rule = settled ? Reason.Rule.SETTLED_BY_VALUE
-                : through.isEmpty() ? Reason.Rule.ENTERED : Reason.Rule.ENTERED_THROUGH_DARK;
+        if (settled) {
+            identifiedByValue = true;
+        }
         Reason reason = new Reason(rule, block, from, block.getSensor(), through, time);
         blockReasons.put(block, reason);
         for (Block b : through) {
@@ -749,7 +785,7 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
             if (c == null || reason == null) {
                 return;
             }
-            if (PLACING_OR_MOVING.contains(reason.getRule())) {
+            if (placesOrMoves(reason.getRule())) {
                 confidenceReason = reason; // as sure as before, from a newer fix
             } else if (confidenceReason == null || confidenceReason.getRule() != reason.getRule()) {
                 confidenceReason = reason; // as sure as before, for a different reason
@@ -760,16 +796,44 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
         Confidence old = confidence;
         confidence = c;
         confidenceReason = c == null ? null : reason;
-        if (reason != null && !PLACING_OR_MOVING.contains(reason.getRule())) {
+        if (reason != null && !placesOrMoves(reason.getRule())) {
             addToHistory(reason);
         }
         firePropertyChange(PROPERTY_CONFIDENCE, old, c);
+    }
+
+    /**
+     * The train has not been seen to reach the next Block in time: stalled
+     * if a command to move is in force, otherwise lost. Called by its
+     * manager.
+     *
+     * @param block     the Block it should have left
+     * @param commanded true if a command to move is in force
+     */
+    @InvokeOnLayoutThread
+    public void overdue(@Nonnull Block block, boolean commanded) {
+        if (disposed || !blocks.contains(block)) {
+            return;
+        }
+        Reason.Rule rule = commanded ? Reason.Rule.STALLED : Reason.Rule.LOST;
+        setConfidence(commanded ? Confidence.STALLED : Confidence.LOST,
+                new Reason(rule, block, null, block.getSensor(), List.of(), Instant.now()));
     }
 
     private static final Set<Reason.Rule> PLACING_OR_MOVING = EnumSet.of(Reason.Rule.PLACED,
             Reason.Rule.PLACED_BY_VALUE, Reason.Rule.PLACED_BY_DISPATCHER, Reason.Rule.PLACED_BY_OPERATOR,
             Reason.Rule.UNPLACED,
             Reason.Rule.ENTERED, Reason.Rule.ENTERED_THROUGH_DARK, Reason.Rule.SETTLED_BY_VALUE);
+
+    /**
+     * @param rule a reason's rule
+     * @return true if it places the train or moves it from Block to Block
+     */
+    private static boolean placesOrMoves(Reason.Rule rule) {
+        return PLACING_OR_MOVING.contains(rule) || rule == Reason.Rule.SETTLED_BY_MOVEMENT
+                || rule == Reason.Rule.SETTLED_BY_DIRECTION || rule == Reason.Rule.ENTERED_UNEXPLAINED
+                || rule == Reason.Rule.SETTLED_BY_LEAVING;
+    }
 
     private void addToHistory(@CheckForNull Reason reason) {
         if (reason == null) {

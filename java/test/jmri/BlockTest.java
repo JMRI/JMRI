@@ -152,6 +152,45 @@ public class BlockTest {
         assertEquals( "b2 contents", b1.getValue(), "Value transferred");
     }
 
+    // A value passed along from a neighbour is marked as followed; one set is not
+    @Test
+    public void testValueFollowed() throws JmriException {
+        SensorManager sm = new InternalSensorManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+
+        Block b1 = new Block("SystemName1");
+
+        Block b2 = new Block("SystemName2");
+        Sensor s2 = sm.provideSensor("IS2");
+        b2.setNamedSensor(InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle("IS2", s2));
+        s2.setState(Sensor.ACTIVE);
+        b2.setValue("b2 contents");
+        assertFalse(b2.isValueFollowed(), "a value set is not followed");
+
+        Path p = new Path();
+        p.setBlock(b2);
+        b1.addPath(p);
+
+        List<Boolean> followedWhenChanged = new ArrayList<>();
+        b1.addPropertyChangeListener(Block.PROPERTY_VALUE, e -> followedWhenChanged.add(b1.isValueFollowed()));
+        b1.goingActive();
+        assertEquals("b2 contents", b1.getValue(), "Value transferred");
+        assertTrue(b1.isValueFollowed(), "passed along from the neighbour");
+        assertEquals(List.of(true), followedWhenChanged, "already marked when listeners hear of it");
+
+        List<Object> followedEvents = new ArrayList<>();
+        b1.addPropertyChangeListener(Block.PROPERTY_VALUE_FOLLOWED, e -> followedEvents.add(e.getNewValue()));
+        b1.setValue(b1.getValue());
+        assertFalse(b1.isValueFollowed(), "the same value set: no longer followed");
+        assertEquals(List.of(false), followedEvents, "announced, as no value change is");
+        assertEquals(List.of(true), followedWhenChanged, "the value itself didn't change");
+
+        b1.setValue("set by hand");
+        assertFalse(b1.isValueFollowed(), "set: not followed");
+        assertEquals(List.of(false), followedEvents, "a new value: announced as a value change only");
+        b1.setValue(null);
+        assertFalse(b1.isValueFollowed(), "no value: not followed");
+    }
+
     // Test going active with two neighbors, one active.
     // b2 is between b1 and b3. b1 contains a train
     @Test
@@ -239,6 +278,43 @@ public class BlockTest {
         assertEquals( "b1 contents", b2.getValue(), "Value transferred");
         assertEquals( Path.RIGHT, b2.getDirection(), "Direction");
 
+    }
+
+    // Two occupied neighbours, but points in one of them are set away from this Block:
+    // only the other one's train can have entered. The neighbour's own path to this Block
+    // names its points; this Block's path back, as Layout Editor makes it, names none.
+    @Test
+    public void testNeighbourWithPointsSetAwayIsNotAnEntrant() throws JmriException {
+        SensorManager sm = new InternalSensorManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
+        t.setCommandedState(Turnout.CLOSED);
+
+        Block b1 = new Block("SystemName1");
+        Block b2 = new Block("SystemName2");
+        Block b3 = new Block("SystemName3");
+
+        Sensor s1 = sm.provideSensor("IS1");
+        b1.setNamedSensor(InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle("IS1", s1));
+        s1.setState(Sensor.ACTIVE);
+        b1.setValue("b1 contents");
+        b1.setDirection(Path.RIGHT);
+        b1.addPath(new Path(b2, Path.RIGHT, Path.LEFT, new BeanSetting(t, Turnout.THROWN)));
+
+        Sensor s2 = sm.provideSensor("IS2");
+        b2.setNamedSensor(InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle("IS2", s2));
+        s2.setState(Sensor.INACTIVE);
+
+        Sensor s3 = sm.provideSensor("IS3");
+        b3.setNamedSensor(InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle("IS3", s3));
+        s3.setState(Sensor.ACTIVE);
+        b3.setValue("b3 contents");
+        b3.setDirection(Path.LEFT);
+
+        b2.addPath(new Path(b1, Path.RIGHT, Path.LEFT));
+        b2.addPath(new Path(b3, Path.LEFT, Path.RIGHT));
+
+        b2.goingActive();
+        assertEquals( "b3 contents", b2.getValue(), "only b3's train can have entered");
     }
 
     // Test going active with two neighbors, both active, where FROM is a combination direction.
