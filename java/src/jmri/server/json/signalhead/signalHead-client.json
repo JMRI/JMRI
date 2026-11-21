@@ -10,15 +10,26 @@
         },
         "userName": {
             "type": "string",
-            "description": "If present, set the user name of the signalMast"
+            "description": "If present, set the user name of the signalHead"
         },
         "comment": {
-            "type": "string",
-            "description": "If present, set the comment for the signalMast"
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "If present, set the comment for the signalHead; null clears it"
         },
         "state": {
             "type": "integer",
-            "description": "If present, set the state for the signalHead"
+            "description": "If present, set the appearance of the signalHead, or 256 to hold it"
+        },
+        "lit": {
+            "type": "boolean",
+            "description": "If present, set whether the signalHead is lit"
+        },
+        "held": {
+            "type": "boolean",
+            "description": "If present, set whether the signalHead is held"
         }
     },
     "additionalProperties": false,

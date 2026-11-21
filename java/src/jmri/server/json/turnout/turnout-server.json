@@ -24,27 +24,17 @@
         },
         "properties": {
             "type": "array",
-            "description": "NamedBean properties of the turnout",
+            "description": "NamedBean properties of the turnout; each item has a single key, the property name, with the value as a string or null",
             "items": {
                 "type": "object",
-                "properties": {
-                    "key": {
-                        "type": "string",
-                        "description": "Key by which property is accessed"
-                    },
-                    "value": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
-                        "description": "String value of property or null"
-                    }
-                },
-                "additionalProperties": false,
-                "required": [
-                    "name",
-                    "value"
-                ]
+                "minProperties": 1,
+                "maxProperties": 1,
+                "additionalProperties": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
             }
         },
         "inverted": {

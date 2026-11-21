@@ -197,6 +197,30 @@ public class JsonSignalHeadSocketServiceTest {
         
     }
 
+    @Test
+    public void testOnMessageGetAndDelete() throws IOException, JmriException, JsonException {
+        JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
+        JsonSignalHeadSocketService service = new JsonSignalHeadSocketService(connection);
+        SignalHead s = new VirtualSignalHead("IH1", "SH1");
+        SignalHeadManager manager = InstanceManager.getDefault(SignalHeadManager.class);
+        manager.register(s);
+        s.setAppearance(SignalHead.RED);
+
+        // a GET that includes a state only reads the head
+        JsonNode message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IH1")
+                .put(JSON.STATE, SignalHead.YELLOW);
+        service.onMessage(JsonSignalHead.SIGNAL_HEAD, message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
+        assertEquals(SignalHead.RED, s.getAppearance(), "GET does not change the head");
+        assertEquals(SignalHead.RED, connection.getMessage().path(JSON.DATA).path(JSON.STATE).asInt());
+
+        // signal heads can't be deleted over JSON
+        JsonException ex = assertThrows(JsonException.class, () -> service.onMessage(JsonSignalHead.SIGNAL_HEAD,
+                message, new JsonRequest(locale, JSON.V5, JSON.DELETE, 42)));
+        assertEquals(405, ex.getCode());
+        assertNotNull(manager.getBySystemName("IH1"));
+        service.onClose();
+    }
+
     @BeforeEach
     public void setUp() throws Exception {
         JUnitUtil.setUp();

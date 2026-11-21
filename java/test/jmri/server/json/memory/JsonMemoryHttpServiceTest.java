@@ -30,6 +30,10 @@ public class JsonMemoryHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
     public void testDoGet() throws JmriException, JsonException {
         MemoryManager manager = InstanceManager.getDefault(MemoryManager.class);
         Memory memory1 = manager.provideMemory("IM1"); // no value
+        // properties of each kind, to check the shape the schema describes
+        memory1.setProperty("text", "value");
+        memory1.setProperty("number", 42);
+        memory1.setProperty("empty", null);
         JsonNode result;
         result = service.doGet(JsonMemory.MEMORY, "IM1", service.getObjectMapper().createObjectNode(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(result);

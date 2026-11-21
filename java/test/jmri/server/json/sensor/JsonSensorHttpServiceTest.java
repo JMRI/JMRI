@@ -41,6 +41,10 @@ public class JsonSensorHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
     public void testDoGet() throws JmriException, JsonException {
         SensorManager manager = InstanceManager.getDefault(SensorManager.class);
         Sensor sensor1 = manager.provideSensor("IS1"); // no value
+        // properties of each kind, to check the shape the schema describes
+        sensor1.setProperty("text", "value");
+        sensor1.setProperty("number", 42);
+        sensor1.setProperty("empty", null);
         JsonNode result;
         result = service.doGet(JsonSensor.SENSOR, "IS1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(result);
