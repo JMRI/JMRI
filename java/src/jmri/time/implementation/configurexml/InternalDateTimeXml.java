@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import jmri.InstanceManager;
 import jmri.configurexml.JmriConfigureXmlException;
+import jmri.time.RateSetter;
 import jmri.time.TimeProvider;
 import jmri.time.TimeProviderManager;
 import jmri.time.configurexml.ZonedDateTimeXml;
@@ -70,7 +71,7 @@ public class InternalDateTimeXml extends jmri.managers.configurexml.AbstractName
             if (elem != null) {
                 try  {
                     double rate = Double.parseDouble(elem.getTextTrim());
-                    idt.setRate(rate);
+                    ((RateSetter) idt.getRate()).setRate(rate);
                 } catch (NumberFormatException e) {
                     log.error("Rate is not a double: {}", elem.getTextTrim());
                     return false;

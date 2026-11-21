@@ -14,7 +14,7 @@ import jmri.util.TimerUtil;
  * @author Daniel Bergqvist (C) 2025
  */
 public class InternalDateTime extends AbstractTimeProvider
-        implements TimeSetter, DateProvider, CanSetRate, StartStopTimeProvider, RateSetter {
+        implements TimeSetter, DateProvider, CanSetRate, StartStopTimeProvider {
 
     private static final int _100_MILLISECONDS = 100;
 
@@ -22,7 +22,23 @@ public class InternalDateTime extends AbstractTimeProvider
     // So _time is volatile instead. This works since ZonedDateTime is immutable.
     private volatile ZonedDateTime _time = ZonedDateTime.now();
 
-    private final ChangeableDoubleRate _rate = new ChangeableDoubleRate(1.0);
+    // Changing the rate catches up the time first, so the clock doesn't jump
+    private final ChangeableDoubleRate _rate = new ChangeableDoubleRate(1.0) {
+        @Override
+        public void setRate(double rate) {
+            synchronized(_lock) {
+                double oldRate = getRate();
+                ZonedDateTime oldTime = _lastUpdatedDateTime;
+                catchUpTime();
+                resetLast();
+                super.setRate(rate);
+                if (oldTime != null) {
+                    timeIsUpdated(oldTime);
+                }
+                InternalDateTime.this.firePropertyChange(PROPERTY_CHANGE_RATE, oldRate, rate);
+            }
+        }
+    };
     private boolean _isRunning;
     private boolean _isLockedFromRunning;
     private final TimerTask _timerTask;
@@ -238,21 +254,6 @@ public class InternalDateTime extends AbstractTimeProvider
     @Override
     public boolean canSetRate() {
         return true;
-    }
-
-    @Override
-    public void setRate(double rate) {
-        synchronized(_lock) {
-            double oldRate = _rate.getRate();
-            ZonedDateTime oldTime = _lastUpdatedDateTime;
-            catchUpTime();
-            resetLast();
-            _rate.setRate(rate);
-            if (oldTime != null) {
-                timeIsUpdated(oldTime);
-            }
-            firePropertyChange(PROPERTY_CHANGE_RATE, oldRate, _rate.getRate());
-        }
     }
 
 }

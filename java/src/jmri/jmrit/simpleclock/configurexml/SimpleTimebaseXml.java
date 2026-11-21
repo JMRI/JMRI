@@ -54,8 +54,9 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
         if (timeProvider instanceof TimeSetter) {
             timeSetter = (TimeSetter) timeProvider;
         }
-        if (timeProvider instanceof RateSetter) {
-            rateSetter = (RateSetter) timeProvider;
+        Rate rate = timeProvider.getRate();
+        if (rate instanceof RateSetter) {
+            rateSetter = (RateSetter) rate;
         }
         if (timeProvider instanceof StartStopTimeProvider && ((StartStopTimeProvider) timeProvider).canStartAndStop()) {
             startStopTimeProvider = (StartStopTimeProvider) timeProvider;
