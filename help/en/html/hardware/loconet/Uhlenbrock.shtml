@@ -163,7 +163,7 @@
         <li>Select "Uhlenbrock" as the System Manufacturer for your connection.</li>
 
         <li>Select the appropriate System Connection for your hardware, either Intellibox-I or -II,
-        the 63120Adapter or the <a href="#63860">63860 interface</a> (USB).</li>
+        the 63120Adapter or the <a href="#63860">63860 interface</a> (USB or WLAN).</li>
 
         <li>Select the serial port used for this connection.</li>
 
@@ -194,7 +194,11 @@
 
       <p>The Uhlenbrock "LocoNet-USB und WLAN Interface" part #63860 connects a computer to
       any LocoNet system (Uhlenbrock, Digitrax, Fleischmann, PIKO, Tillig, ...) by USB or by
-      WLAN. It is powered from LocoNet.</p>
+      WLAN. It is powered from LocoNet. With Digitrax command stations (for example DCS100 or
+      DCS200) the LocoNet needs an external power feed for the interface, such as a Digitrax UP5
+      with its power supply connected; this applies to both the USB and the WLAN connection.
+      When the interface is ready, its white (LocoNet) LED is lit, and for WLAN also its blue
+      (WLAN) LED.</p>
 
       <p>For a USB connection select "Uhlenbrock" as the System Manufacturer and
       <strong>"LocoNet-USB and WLAN Interface 63860 (USB)"</strong> as the System Connection.
@@ -207,6 +211,20 @@
       <p>The interface echoes every message it sends to LocoNet and expects the computer to wait
       for that echo before sending the next one, so this connection defaults to the "Strict"
       packetizer. The interface has no hardware handshake, so flow control is always off.</p>
+
+      <p>For a WLAN connection select "Uhlenbrock" as the System Manufacturer and
+      <strong>"LocoNet-USB and WLAN Interface 63860 (WLAN)"</strong> as the System Connection.
+      This uses the LocoNet-over-TCP (LBServer) server built into the interface. In its factory
+      setting the interface opens its own WLAN access point named "UB_WLAN_" followed by its
+      serial number, without a password; connect the computer to that network. The connection
+      is preset to the factory address 192.168.0.111 and TCP port 1234. If the interface has been
+      joined to a home network (via its "WIFI Setup" web page), enter the address it got there
+      instead. As for USB, select the command station on your LocoNet as "Command station
+      type".</p>
+
+      <p>While the interface is not reachable, JMRI waits for the network connection to time out
+      at startup. If you start JMRI without the interface, you can disable the connection in the
+      Connections preferences.</p>
 
       <h2 id="tools">JMRI Uhlenbrock Tools</h2>
 

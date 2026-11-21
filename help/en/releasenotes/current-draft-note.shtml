@@ -107,6 +107,10 @@
                     manufacturer. See the
                     <a href="https://www.jmri.org/help/en/html/hardware/loconet/Uhlenbrock.shtml#63860">Uhlenbrock
                     help page</a>.</li>
+                <li>New WLAN (LocoNet-over-TCP) connection for the Uhlenbrock
+                    "LocoNet-USB and WLAN Interface" 63860, also listed under
+                    the "Uhlenbrock" system manufacturer and preset to the
+                    interface's factory address 192.168.0.111, port 1234.</li>
             </ul>
 
         <h4>Maple</h4>
