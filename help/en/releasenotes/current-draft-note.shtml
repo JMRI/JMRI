@@ -640,7 +640,9 @@
                 loco couldn't be acquired (for example a LocoNet slot refused
                 or timed out) while another throttle request is answered or a
                 throttle window is opened or closed.</li>
-            <li></li>
+            <li>
+                Default throttle function labels for NEM declined to Steam, Diesel and Electric (as default throttle layouts, and init button in Media pane)
+            </li>
         </ul>
 
     <h3>Timetable</h3>
