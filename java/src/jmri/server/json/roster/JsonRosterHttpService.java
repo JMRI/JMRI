@@ -333,21 +333,6 @@ public class JsonRosterHttpService extends JsonHttpService {
                     .forEachOrdered(toRemove::add);
             toRemove.forEach(entry::deleteAttribute);
         }
-        if (data.path(JsonRoster.ROSTER_GROUPS).isArray()) {
-            List<String> toKeep = new ArrayList<>();
-            List<String> toRemove = new ArrayList<>();
-            data.path(JsonRoster.ROSTER_GROUPS).forEach(attribute -> {
-                String key = attribute.asText();
-                String value = attribute.path(VALUE).isNull() ? null : attribute.path(VALUE).asText();
-                toKeep.add(key);
-                entry.putAttribute(key, value);
-            });
-            entry.getGroups()
-                    .stream()
-                    .filter(key -> (!toKeep.contains(Roster.ROSTER_GROUP_PREFIX + key)))
-                    .forEachOrdered(key -> toRemove.add(Roster.ROSTER_GROUP_PREFIX + key));
-            toRemove.forEach(entry::deleteAttribute);
-        }
         if (data.path(FUNCTION_KEYS).isArray()) {
             for (JsonNode functionKey : data.path(FUNCTION_KEYS)) {
                 int function = getFunctionNumber(entry, functionKey, locale, id);

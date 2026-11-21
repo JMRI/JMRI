@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.NullNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
 
 import jmri.InstanceManager;
@@ -370,6 +372,19 @@ public class JsonRosterHttpServiceTest extends JsonHttpServiceTestBase<JsonRoste
         ObjectNode data = mapper.createObjectNode().put(JSON.NAME, TEST_ENTRY1);
         data.putObject(JSON.FUNCTION_KEYS).putObject("x").put(JSON.NAME, "bad");
         service.postRosterEntry(locale, TEST_ENTRY1, data, 42);
+        verify(spy).updateFile();
+    }
+
+    @Test
+    public void testPostRosterEntryIgnoresRosterGroups() throws JsonException {
+        RosterEntry spy = spyEntry();
+        List<String> before = spy.getAttributes().stream().collect(Collectors.toList());
+        ObjectNode data = mapper.createObjectNode().put(JSON.NAME, TEST_ENTRY1);
+        data.putArray(JsonRoster.ROSTER_GROUPS).add("newGroup");
+        service.postRosterEntry(locale, TEST_ENTRY1, data, 42);
+        assertEquals(before, spy.getAttributes().stream().collect(Collectors.toList()));
+        assertEquals(1, spy.getGroups().size());
+        assertEquals(TEST_GROUP1, spy.getGroups().get(0).getName());
         verify(spy).updateFile();
     }
 
