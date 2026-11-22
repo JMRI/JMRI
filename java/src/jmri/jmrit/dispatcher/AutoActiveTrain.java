@@ -2426,18 +2426,43 @@ public class AutoActiveTrain implements ThrottleListener {
      */
     private synchronized void handleStopSensorChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("KnownState") && (int) e.getNewValue() == Sensor.ACTIVE) {
-            stopBackstop();
+            Sensor sensor = _stopSensor;
             _stopSensor.removePropertyChangeListener(_stopSensorListener);
             _stoppingBySensor = false;
             _stopSensorListener = null;
             _stopSensor = null;
             if (_needSetSpeed) {
                 _needSetSpeed = false;
+                stopBackstop();
                 setSpeedBySignal();
             } else {
+                StopBackstop backstop = _backstop;
+                if (backstop != null) {
+                    // keep watching beyond the Section until the train is given a speed again
+                    String section = _currentAllocatedSection == null ? ""
+                            : _currentAllocatedSection.getSection().getDisplayName(USERSYS);
+                    backstop.sensorStopped(reason -> reportRunPastStop(sensor, section, reason));
+                }
                 setStopNow();
             }
         }
+    }
+
+    /**
+     * The stopping sensor stopped the train, but it has run on past the end of
+     * the Section it was stopping in: say so, and why, as the sensor leaves the
+     * train too little room to stop. The train has already been told to stop.
+     *
+     * @param sensor  the stopping sensor
+     * @param section the name of the Section the train was stopping in
+     * @param reason  what showed the train beyond the Section
+     */
+    private void reportRunPastStop(Sensor sensor, String section, String reason) {
+        log.warn("{}: stopping sensor {} stopped the train, but it ran on past the end of Section {}: {}."
+                + " The train needs more room to stop than the sensor leaves before the end of the Section;"
+                + " move the sensor further from the end, or lower the stopping speed or the loco's"
+                + " deceleration (momentum)",
+                _activeTrain.getTrainName(), sensor.getDisplayName(USERSYS), section, reason);
     }
 
     private synchronized void setStopNow() {

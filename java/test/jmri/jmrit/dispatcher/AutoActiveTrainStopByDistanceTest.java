@@ -346,6 +346,28 @@ public class AutoActiveTrainStopByDistanceTest {
     }
 
     /**
+     * The stopping sensor stops the train, but it is too near the end of the
+     * Section for the train to stop in, and the train runs on into Block 8:
+     * that is reported, with the sensor and the Section, so that the cause is
+     * clear.
+     */
+    @Test
+    public void testRunningPastTheSectionAfterTheSensorIsReported() {
+        startTrain(0.0f, null);
+        runToFinalSection();
+        headInto(6);
+        set(5, Sensor.INACTIVE);
+        headInto(7);
+        set(6, Sensor.INACTIVE);
+        JUnitUtil.setBeanStateAndWait(stopSensor, Sensor.ACTIVE);
+        JUnitUtil.waitFor(() -> speed() < TOLERANCE, () -> "did not stop on the sensor, speed " + speed());
+        JUnitUtil.setBeanStateAndWait(block8Sensor, Sensor.ACTIVE);  // the train coasted on past its Section
+        jmri.util.JUnitAppender.assertWarnMessageStartsWith(
+                "AAA: stopping sensor IS_STOP_B7 stopped the train, but it ran on past the end of Section");
+        finish();
+    }
+
+    /**
      * Where the stopping sensor is the detection sensor of the Block beyond
      * the Section, the train is meant to enter that Block: it stops on the
      * sensor, and nothing is reported.

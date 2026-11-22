@@ -109,6 +109,69 @@ public class StopBackstopTest {
         JUnitUtil.waitFor(() -> !stops.isEmpty(), "reckoning from B did not stop the train");
     }
 
+    /**
+     * Once the stopping sensor has stopped the train, a Block beyond going
+     * occupied means the train has run past its Section: reported, once, and
+     * the train is not stopped again.
+     */
+    @Test
+    public void testAfterTheSensorABlockBeyondGoingOccupiedIsReported() throws JmriException {
+        List<String> reports = new ArrayList<>();
+        backstop = new StopBackstop(section, List.of(n), a, block -> 1000.0, null, stops::add);
+        backstop.sensorStopped(reports::add);
+        assertTrue(!backstop.isFinished(), "still watching after the sensor");
+        n.setState(Block.OCCUPIED);
+        n.setState(Block.UNOCCUPIED);
+        n.setState(Block.OCCUPIED);
+        assertEquals(1, reports.size(), "reported once");
+        assertTrue(reports.get(0).contains("N"), reports.get(0));
+        assertEquals(List.of(), stops, "not stopped again");
+        assertTrue(backstop.isFinished());
+    }
+
+    @Test
+    public void testAfterTheSensorHeadEnteringABlockBeyondIsReported() {
+        List<String> reports = new ArrayList<>();
+        backstop = new StopBackstop(section, List.of(), a, block -> 1000.0, null, stops::add);
+        backstop.sensorStopped(reports::add);
+        backstop.headEntered(b);
+        assertEquals(List.of(), reports, "a Block of the Section is not past it");
+        backstop.headEntered(n);
+        assertEquals(1, reports.size());
+        assertEquals(List.of(), stops);
+    }
+
+    /**
+     * Given a speed again, the train is free to go on: the backstop is
+     * disposed of, and a Block beyond going occupied is not reported.
+     */
+    @Test
+    public void testAfterTheSensorDisposedBackstopReportsNothing() throws JmriException {
+        List<String> reports = new ArrayList<>();
+        backstop = new StopBackstop(section, List.of(n), a, block -> 1000.0, null, stops::add);
+        backstop.sensorStopped(reports::add);
+        backstop.dispose();
+        n.setState(Block.OCCUPIED);
+        assertEquals(List.of(), reports);
+        assertEquals(List.of(), stops);
+    }
+
+    /**
+     * Once the sensor has stopped the train, there is nothing to reckon: a
+     * speed that would carry it past the end of the Section neither stops nor
+     * reports it. At 1000 mm/s, 300 mm would be reached in 300 ms; the wait is
+     * twice that.
+     */
+    @Test
+    public void testAfterTheSensorNothingIsReckoned() {
+        List<String> reports = new ArrayList<>();
+        backstop = new StopBackstop(section, List.of(), a, block -> 300.0, () -> 1000.0, stops::add);
+        backstop.sensorStopped(reports::add);
+        JUnitUtil.waitFor(6 * (int) StopBackstop.RECKON_INTERVAL_MS);
+        assertEquals(List.of(), reports);
+        assertEquals(List.of(), stops);
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
