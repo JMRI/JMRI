@@ -696,6 +696,11 @@
                 fails on Linux systems where /tmp is a separate filesystem,
                 such as Raspberry Pi OS trixie.</li>
             <li>Removed the unused, never-finished web preferences page (<code>/config</code>) and its templates.</li>
+            <li>JSON server: saving a roster entry's function keys no longer
+                fails with an error. Clearing a roster entry's owner, comment
+                or shunting function no longer causes errors. The JSON
+                schemas for roster messages now match what the server sends
+                and accepts.</li>
             <li></li>
         </ul>
 
