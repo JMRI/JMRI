@@ -22,6 +22,7 @@ import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpServiceTestBase;
 import jmri.server.json.JsonRequest;
+import jmri.server.json.schema.JsonSchemaServiceCache;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
@@ -44,6 +45,10 @@ public class JsonReporterHttpServiceTest extends JsonNamedBeanHttpServiceTestBas
     public void testDoGet() throws JmriException, JsonException {
         ReporterManager manager = InstanceManager.getDefault(ReporterManager.class);
         Reporter reporter1 = manager.provideReporter("IR1"); // no value
+        // properties of each kind, to check the shape the schema describes
+        reporter1.setProperty("text", "value");
+        reporter1.setProperty("number", 42);
+        reporter1.setProperty("empty", null);
         JsonNode result;
         result = service.doGet(REPORTER, "IR1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(result);
@@ -143,6 +148,39 @@ public class JsonReporterHttpServiceTest extends JsonNamedBeanHttpServiceTestBas
             "JR1 should not have been created");
         JUnitAppender.assertErrorMessageStartsWith("Invalid system name for reporter");
         assertEquals( 400, ex.getCode(), "400 name was invalid");
+    }
+
+    @Test
+    public void testDoGetHardwareState() throws JmriException, JsonException {
+        Reporter reporter1 = InstanceManager.getDefault(ReporterManager.class).provideReporter("IR1");
+        // a LocoNet transponding reporter uses the loco address as its state
+        reporter1.setState(1234);
+        JsonNode result = service.doGet(REPORTER, "IR1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
+        validate(result);
+        assertEquals(1234, result.path(JSON.DATA).path(JSON.STATE).asInt());
+    }
+
+    @Test
+    public void testClientSchema() throws JsonException {
+        Reporter reporter1 = InstanceManager.getDefault(ReporterManager.class).provideReporter("IR1");
+        reporter1.setReport("throw");
+        reporter1.setComment("a comment");
+        // nulls clear the report and the comment
+        ObjectNode data = mapper.createObjectNode().put(JSON.NAME, "IR1").putNull(JsonReporter.REPORT).putNull(JSON.COMMENT);
+        validateData(REPORTER, data, false);
+        service.doPost(REPORTER, "IR1", data, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        assertNull(reporter1.getCurrentReport());
+        assertNull(reporter1.getComment());
+        // state can't be set
+        JsonRequest request = new JsonRequest(locale, JSON.V5, JSON.GET, 42);
+        JsonSchemaServiceCache schemas = InstanceManager.getDefault(JsonSchemaServiceCache.class);
+        JsonNode withState = mapper.createObjectNode().put(JSON.NAME, "IR1").put(JSON.STATE, 2);
+        assertThrows(JsonException.class, () -> schemas.validateData(REPORTER, withState, false, request));
+        // consume the warnings logged for the rejected message
+        assertNotNull(JUnitAppender.checkForMessageStartingWith("Errors validating"));
+        while (JUnitAppender.checkForMessageStartingWith("JSON Validation Error") != null) {
+            // drain
+        }
     }
 
     @Test

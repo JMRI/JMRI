@@ -42,6 +42,10 @@ public class JsonTurnoutHttpServiceTest extends JsonNamedBeanHttpServiceTestBase
     public void testDoGet() throws JmriException, JsonException {
         TurnoutManager manager = InstanceManager.getDefault(TurnoutManager.class);
         Turnout turnout1 = manager.provideTurnout("IT1");
+        // properties of each kind, to check the shape the schema describes
+        turnout1.setProperty("text", "value");
+        turnout1.setProperty("number", 42);
+        turnout1.setProperty("empty", null);
         JsonNode result;
         turnout1.setState(Turnout.UNKNOWN);
         result = service.doGet(JsonTurnout.TURNOUT, "IT1",
