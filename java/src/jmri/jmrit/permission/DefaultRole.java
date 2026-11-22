@@ -29,7 +29,9 @@ public class DefaultRole implements Role {
     private final int _priority;
     private final String _systemName;
 
-    private final Map<Permission, PermissionValue> _permissions =
+    // Guarded by this. The permission manager fills it in on the layout thread (Swing thread) after start up,
+    // while other threads may copy or read it, so every use holds the lock.
+    private final TreeMap<Permission, PermissionValue> _permissions =
             new TreeMap<>((a,b) -> {return a.getName().compareTo(b.getName());});
 
 
@@ -38,7 +40,9 @@ public class DefaultRole implements Role {
         this._systemRole = r._systemRole;
         this._priority = r._priority;
         this._systemName = r._systemName;
-        this._permissions.putAll(r._permissions);
+        synchronized (r) {
+            this._permissions.putAll(r._permissions);
+        }
     }
 
     public DefaultRole(String name) {
@@ -76,13 +80,17 @@ public class DefaultRole implements Role {
     }
 
     @Override
-    public Map<Permission,PermissionValue> getPermissions() {
-        return Collections.unmodifiableMap(_permissions);
+    public synchronized Map<Permission,PermissionValue> getPermissions() {
+        // a copy, so that callers can go through it while the permissions change
+        return Collections.unmodifiableMap(new TreeMap<>(_permissions));
     }
 
     @Override
     public PermissionValue getPermissionValue(Permission permission) {
-        return _permissions.getOrDefault(permission, permission.getDefaultPermission(this));
+        PermissionValue defaultValue = permission.getDefaultPermission(this);
+        synchronized (this) {
+            return _permissions.getOrDefault(permission, defaultValue);
+        }
     }
 
     @Override
@@ -92,10 +100,12 @@ public class DefaultRole implements Role {
                         BooleanPermission.BooleanValue.TRUE)) {
             return;
         }
-        _permissions.put(permission, value);
+        synchronized (this) {
+            _permissions.put(permission, value);
+        }
     }
 
-    void setPermissionWithoutCheck(Permission permission, PermissionValue value) {
+    synchronized void setPermissionWithoutCheck(Permission permission, PermissionValue value) {
         _permissions.put(permission, value);
     }
 

@@ -49,6 +49,12 @@ public class DefaultPermissionManager implements PermissionManager {
     }
 
     DefaultPermissionManager(DefaultPermissionManager source) {
+        synchronized (source) {
+            copyFrom(source);
+        }
+    }
+
+    private void copyFrom(DefaultPermissionManager source) {
         _permissionsEnabled = source._permissionsEnabled;
         _allowEmptyPasswords = source._allowEmptyPasswords;
         _owners.addAll(source._owners);
@@ -85,7 +91,9 @@ public class DefaultPermissionManager implements PermissionManager {
         }
         loadPermissionSettings();
         ThreadingUtil.runOnGUIEventually(() -> {
-            checkThatAllRolesKnowsAllPermissions();
+            synchronized (this) {
+                checkThatAllRolesKnowsAllPermissions();
+            }
         });
         return this;
     }
