@@ -60,6 +60,30 @@ public class NetworkDriverAdapterTest {
         }
     }
 
+    @Test
+    public void testFramesGroupedWhenChosen() throws IOException {
+        Probe d = new Probe();
+        Assert.assertEquals("each frame at once by default", NetworkDriverAdapter.SEND_AT_ONCE,
+            d.getOptionState(NetworkDriverAdapter.FRAME_SENDING_OPTION));
+        Assert.assertFalse("not grouped by default", d.sendGrouped());
+
+        try (ServerSocket gateway = new ServerSocket(0, 2, InetAddress.getLoopbackAddress())) {
+            Probe t = new Probe();
+            t.setOptionState(NetworkDriverAdapter.FRAME_SENDING_OPTION, NetworkDriverAdapter.SEND_GROUPED);
+            t.connect(InetAddress.getLoopbackAddress().getHostAddress(), gateway.getLocalPort());
+            Assert.assertTrue("connected", t.status());
+            Assert.assertFalse("TCP no delay off: frames grouped", t.socket().getTcpNoDelay());
+
+            // a reconnection opens a new socket, set the same way
+            Socket first = t.socket();
+            t.connect();
+            Assert.assertNotSame("new socket", first, t.socket());
+            Assert.assertFalse("TCP no delay still off after reconnecting", t.socket().getTcpNoDelay());
+            first.close();
+            t.close();
+        }
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
