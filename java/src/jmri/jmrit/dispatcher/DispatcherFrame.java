@@ -2190,6 +2190,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         }
         // check if section is occupied
         if (checkOccupancy && (s.getOccupancy() == Section.OCCUPIED)) {
+            reportIfOwnTail(at, s);
             if (_AutoAllocate) {
                 return null;  // autoAllocate never overrides occupancy
             }
@@ -4408,6 +4409,48 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 showTableHeaderPopup(e, table);
             }
         }
+    }
+
+    /** For each train, the Sections it has been reported as waiting for because of its own tail. */
+    private final java.util.Map<ActiveTrain, java.util.Set<Section>> reportedOwnTail = new java.util.WeakHashMap<>();
+
+    /**
+     * A train can't be allocated a Section because it is occupied: if it is
+     * occupied by the train's own tail, say so, once for each train and
+     * Section, with what to change. Nothing else changes: the Section is still
+     * not allocated.
+     *
+     * @param at the train
+     * @param s  the occupied Section
+     */
+    private void reportIfOwnTail(ActiveTrain at, Section s) {
+        synchronized (reportedOwnTail) {
+            if (reportedOwnTail.containsKey(at) && reportedOwnTail.get(at).contains(s)) {
+                return;
+            }
+        }
+        List<Block> trainBlocks = new ArrayList<>();
+        for (AllocatedSection as : at.getAllocatedSectionList()) {
+            for (Block b : as.getSection().getBlockList()) {
+                if (b.getState() == Block.OCCUPIED) {
+                    trainBlocks.add(b);
+                }
+            }
+        }
+        String how = OwnTailCheck.ownTail(at.getTrainName(), at.getRosterEntry(), trainBlocks, s,
+                InstanceManager.getNullableDefault(jmri.TrainRecordManager.class));
+        if (how == null) {
+            return;
+        }
+        synchronized (reportedOwnTail) {
+            reportedOwnTail.computeIfAbsent(at, k -> new HashSet<>()).add(s);
+        }
+        log.warn("{}: Section {} can't be allocated, as the train's own tail occupies it ({})."
+                + " The train waits for itself, and trains behind it wait too. This happens when a train"
+                + " stops with its tail short of the end of the Section behind it, and its route then goes"
+                + " back through that Section. Give the loco a speed profile, or the Section it stops in"
+                + " a stopping sensor, so that it stops clear",
+                at.getTrainName(), s.getDisplayName(USERSYS), how);
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DispatcherFrame.class);
