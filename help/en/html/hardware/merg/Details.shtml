@@ -185,6 +185,13 @@
 
       <p>Gateway : Pass All ( Filtering also selectable )</p>
 
+      <p>Wait between frames sent (ms) : 0 ( 5, 10, 20 and 50 also selectable )
+      <span class="since">since 5.17.6</span><br>
+      Some CANPi software holds back a frame that arrives while it is still handling the one
+      before, until the next frame arrives, so events sent from JMRI are acted on late, one or
+      more clicks behind. If that happens with a CANPi, set this to 10 (or 20 if 10 is not
+      enough): JMRI then leaves that long between frames. Leave it at 0 for other gateways.</p>
+
       <h3 id="c3">CAN via GridConnect adapter</h3>
       <img src="images/connection/merg-connection-gridconnect-adapter-300x215.png" width="300"
       height="215" alt="JMRI MERG GridConnect Adapter" class="floatRight">
