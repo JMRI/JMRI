@@ -163,7 +163,8 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
                         if(!threadStopRequest) {
                            log.error("retry wait interrupted");
                         } else {
-                           log.error("retry wait interrupted during thread stop");
+                           // asked to stop: the thread is ending, as it should
+                           log.debug("retry wait interrupted during thread stop");
                         }
                     }
                 } else {
