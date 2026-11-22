@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assumptions.assumeFalse;
 
+import java.io.File;
 import java.util.HashMap;
 
 import jmri.JmriException;
@@ -12,6 +13,7 @@ import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
@@ -80,9 +82,9 @@ public class AddEntryExitPairPanelTest {
     }
 
     @BeforeEach
-    public void setUp() throws JmriException {
+    public void setUp(@TempDir File folder) throws JmriException {
         JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager(folder); // own profile, so no blockvalues.xml left by an earlier test is read
 
         panels = EntryExitTestTools.getPanels();
         assertEquals(2, panels.size(), "Get LE panels");
