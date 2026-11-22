@@ -2,7 +2,6 @@ package jmri.jmrix.can.adapters.gridconnect.net;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.ConfigurationManager;
-import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.adapters.gridconnect.GcTrafficController;
 import jmri.jmrix.can.adapters.gridconnect.canrs.MergTrafficController;
 
@@ -16,12 +15,20 @@ import jmri.jmrix.can.adapters.gridconnect.canrs.MergTrafficController;
  */
 public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortController {
 
+    /**
+     * Option name: the least time between frames sent, in milliseconds. For
+     * gateways that hold back a frame that arrives while they are still
+     * handling the one before, as some CANPi software does.
+     */
+    public static final String FRAME_GAP_OPTION = "FrameGap"; // NOI18N
+
     public NetworkDriverAdapter() {
         super(new CanSystemConnectionMemo());
         option1Name = "Gateway"; // NOI18N
         options.put(option1Name, new Option(Bundle.getMessage("ConnectionGateway"), new String[]{"Pass All", "Filtering"}));
         option2Name = "Protocol"; // NOI18N
         options.put(option2Name, new Option(Bundle.getMessage("ConnectionProtocol"), jmri.jmrix.can.ConfigurationManager.getSystemOptions(), false));
+        options.put(FRAME_GAP_OPTION, new Option(Bundle.getMessage("ConnectionFrameGap"), new String[]{"0", "5", "10", "20", "50"}));
         super.setManufacturer(jmri.jmrix.openlcb.OlcbConnectionTypeList.OPENLCB); // overriden by MERG Connections.
         allowConnectionRecovery = true;
     }
@@ -32,7 +39,7 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
      */
     @Override
     public void configure() {
-        TrafficController tc;
+        GcTrafficController tc;
         switch (getOptionState(option2Name)) {
             case ConfigurationManager.MERGCBUS:
             case ConfigurationManager.SPROGCBUS:
@@ -45,6 +52,12 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
                 break;
         }
         this.getSystemConnectionMemo().setTrafficController(tc);
+
+        int gap = frameGapMillis();
+        tc.setFrameGapMillis(gap);
+        if (gap > 0) {
+            log.info("Frames sent at least {} ms apart", gap);
+        }
 
         // Now connect to the traffic controller
         log.debug("Connecting port");
@@ -74,6 +87,17 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
         super.connect();
         if (opened && socketConn != null) {
             socketConn.setTcpNoDelay(true);
+        }
+    }
+
+    /**
+     * @return the frame gap option as milliseconds, 0 if not set or not a number
+     */
+    int frameGapMillis() {
+        try {
+            return Math.max(0, Integer.parseInt(getOptionState(FRAME_GAP_OPTION)));
+        } catch (NumberFormatException e) {
+            return 0;
         }
     }
 

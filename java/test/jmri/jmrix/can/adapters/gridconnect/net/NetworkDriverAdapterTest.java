@@ -22,6 +22,15 @@ public class NetworkDriverAdapterTest {
         Assert.assertNotNull("exists",t);
     }
 
+    @Test
+    public void testFrameGapOption() {
+        NetworkDriverAdapter t = new NetworkDriverAdapter();
+        Assert.assertEquals("no gap by default", "0", t.getOptionState(NetworkDriverAdapter.FRAME_GAP_OPTION));
+        Assert.assertEquals("no gap by default", 0, t.frameGapMillis());
+        t.setOptionState(NetworkDriverAdapter.FRAME_GAP_OPTION, "20");
+        Assert.assertEquals("gap chosen", 20, t.frameGapMillis());
+    }
+
     /** Gives the test the adapter's socket. */
     private static class Probe extends NetworkDriverAdapter {
         Socket socket() {
