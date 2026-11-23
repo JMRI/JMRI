@@ -2088,6 +2088,9 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             carOriginal.setFinalDestination(null);
             carOriginal.setFinalDestinationTrack(null);
             carOriginal.setLocation(car.getDestination(), car.getDestinationTrack(), Car.FORCE);
+            // now apply schedule to car
+            carOriginal.getTrack().scheduleNext(carOriginal);
+            carOriginal.loadNext(carOriginal.getTrack());
         } else {
             checkQuickServiceRedirected(car);
         }
