@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Tiles Catalog</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        h1 {
+            color: #333;
+            border-bottom: 2px solid #0066cc;
+            padding-bottom: 10px;
+        }
+        
+        .controls {
+            background-color: white;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .filter-group {
+            display: inline-block;
+            margin-right: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .filter-group label {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        
+        input[type="text"], select {
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+        
+        button {
+            padding: 6px 12px;
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        button:hover {
+            background-color: #0052a3;
+        }
+        
+        .stats {
+            margin-top: 10px;
+            color: #666;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        th {
+            background-color: #0066cc;
+            color: white;
+            padding: 12px 8px;
+            text-align: left;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        th:hover {
+            background-color: #0052a3;
+        }
+        
+        th.sortable::after {
+            content: " ⇅";
+            opacity: 0.5;
+        }
+        
+        th.sort-asc::after {
+            content: " ▲";
+            opacity: 1;
+        }
+        
+        th.sort-desc::after {
+            content: " ▼";
+            opacity: 1;
+        }
+        
+        td {
+            padding: 10px 8px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        tr.hidden {
+            display: none;
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <h1>Track Tiles Catalog</h1>
+    
+    <div class="controls">
+        <div class="filter-group">
+            <label for="search">Search:</label>
+            <input type="text" id="search" placeholder="Type to filter...">
+        </div>
+        
+        <div class="filter-group">
+            <label for="typeFilter">Type:</label>
+            <select id="typeFilter">
+                <option value="">All</option>
+                <option value="straight">Straight</option>
+                <option value="curved">Curved</option>
+                <option value="turnout">Turnout</option>
+                <option value="crossing">Crossing</option>
+                <option value="end">Bumper/End</option>
+            </select>
+        </div>
+        
+        <div class="filter-group">
+            <label for="vendorFilter">Vendor:</label>
+            <select id="vendorFilter">
+                <option value="">All</option>
+                <option value="Märklin">Märklin</option>
+                <option value="Piko">Piko</option>
+            </select>
+        </div>
+        
+        <button onclick="clearFilters()">Clear Filters</button>
+        
+        <div class="stats">
+            <span id="visibleCount">0</span> of <span id="totalCount">0</span> tiles displayed
+        </div>
+    </div>
+    
+    <table id="tilesTable">
+        <thead>
+            <tr>
+                <th class="sortable" onclick="sortTable(0)">Vendor</th>
+                <th class="sortable" onclick="sortTable(1)">Family</th>
+                <th class="sortable" onclick="sortTable(2)">Gauge</th>
+                <th class="sortable" onclick="sortTable(3)">Type</th>
+                <th class="sortable" onclick="sortTable(4)">Part Code</th>
+                <th class="sortable" onclick="sortTable(5)">Caption</th>
+                <th>Geometry</th>
+            </tr>
+        </thead>
+        <tbody id="tilesBody">
+        </tbody>
+    </table>
+    
+    <div id="noResults" class="no-results" style="display: none;">
+        No tiles match your search criteria.
+    </div>
+    
+    <script>
+        const tilesData = [
+        {
+                "vendor": "M\u00e4rklin",
+                "family": "C-Track",
+                "gauge": "16.5 mm",
+                "partcode": "24077",
+                "jmritype": "straight",
+                "l10n": {
+                        "de": "Gerades Gleis 77,5 mm",
+                        "en": "Straight Track 77.5 mm",
+                        "es": "V\u00eda recta 77,5 mm",
+                        "fr": "Rail droit 77,5 mm"
+                },
+                "geometry": {
+                        "straight": {
+                                "length": "77.5",
+                                "unit": "mm"
+                        }
+                }
+        },
+        {
+                "vendor": "M\u00e4rklin",
+                "family": "C-Track",
+                "gauge": "16.5 mm",
+                "partcode": "24094",
+                "jmritype": "straight",
+                "l10n": {
+                        "de": "Gerades Gleis 94,2 mm",
+                        "en": "Straight Track 94.2 mm",
+                        "es": "V\u00eda recta 94,2 mm",
+                        "fr": "Rail droit 94,2 mm"
+                },
+                "geometry": {
+                        "straight": {
+                                "length": "94.2",
+                                "unit": "mm"
+                        }
+                }
+        },
+        {
+                "vendor": "M\u00e4rklin",
+                "family": "C-Track",
+                "gauge": "16.5 mm",
+                "partcode": "24172",
+                "jmritype": "straight",
+                "l10n": {
+                        "de": "Gerades Gleis 171,7 mm",
+                        "en": "Straight Track 171.7 mm",
+                        "es": "V\u00eda recta 171,7 mm",
+                        "fr": "Rail droit 171,7 mm"
+                },
+                "geometry": {
+                        "straight": {
+                                "length": "171.7",
+                                "unit": "mm"
+                        }
+                }
+        },
+        {
+                "vendor": "M\u00e4rklin",
+                "family": "C-Track",
+                "gauge": "16.5 mm",
+                "partcode": "24188",
+                "jmritype": "straight",
+                "l10n": {
+                        "de": "Gerades Gleis 188,3 mm",
+                        "en": "Straight Track 188.3 mm",
+                        "es": "V\u00eda recta 188,3 mm",
+                        "fr": "Rail droit 188,3 mm"
+                },
+                "geometry": {
+                        "straight": {
+                                "length": "188.3",
+                                "unit": "mm"
+                        }
+                }
+        },
+        {
+                "vendor": "M\u00e4rklin",
+                "family": "C-Track",
+                "gauge": "16.5 mm",
+                "partcode": "24229",
+                "jmritype": "straight",
+                "l10n": {
+                        "de": "Gerades Gleis 229,3 mm",
+                        "en": "Straight Track 229.3 mm",
+                        "fr": "Rail droit 229,3 mm"
+                },
+                "geometry": {
+                        "straight": {
+                                "length": "229.3",
+                                "unit": "mm"
+                        }
+                }
+        },
+        {
+                "vendor": "M\u00e4rklin",
+                "family": "C-Track",
+                "gauge": "16.5 mm",
+                "partcode": "24107",
+                "jmritype": "curved",
+                "l10n": {
+                        "de": "Gleis gebogen R1 = 360 mm / 7,5\u00b0",
+                        "en": "Curved Track R1 = 360 mm / 7.5\u00b0",
+                        "fr": "Rail courbe R1 = 360 mm / 7,5\u00b0"
+                },
+                "geometry": {
+                        "curved": {
+                                "radius": "360.0",
+                                "arc": "24.3",
+                                "radiusunit": "mm",
+                                "arcunit": "deg"
+                        }
+                }
+        },
+        {
+                "vendor": "M\u00e4rklin",
+                "family": "C-Track",
+                "gauge": "16.5 mm",
+                "partcode": "24115",
+                "jmritype": "curved",
+                "l10n": {
+                        "de": "Gleis gebogen R1 = 360 mm / 15\u00b0",
+                        "en": "Curved Track R1 = 360 mm / 15\u00b0",
+                        "fr": "Rail courbe R1 = 360 mm / 15\u00b0"
+                },
+                "geometry": {
+                        "curved": {
+                                "radius": "360.0",
+                                "arc": "15.0",
+                                "radiusunit": "mm",
+                                "arcunit": "deg"
+                        }
+                }
+        },
+        {
+                "vendor": "M\u00e4rklin",
+                "family": "C-Track",
+                "gauge": "16.5 mm",
+                "partcode": "24130",
+                "jmritype": "curved",
+                "l10n": {
+                        "de": "Gleis gebogen R1 = 360 mm / 30\u00b0",
+                        "en": "Curved Track R1 = 360 mm / 30\u00b0",
+                        "es": "V\u00eda curva R1 = 360 mm / 30\u00b0",
+                        "fr": "Rail courbe R1 = 360 mm / 30\u00b0"
+                },
+                "geometry": {
+                        "curved": {
+                                "radius": "360.0",
+                                "arc": "30.0",
+                                "radiusunit": "mm",
+                                "arcunit": "deg"
+                        }
+                }
+        },
+        {
+                "vendor": "M\u00e4rklin",
+                "family": "C-Track",
+                "gauge": "16.5 mm",
+                "partcode": "24206",
+                "jmritype": "curved",
+                "l10n": {
+                        "de": "Gleis gebogen R2 = 437,5 mm / 5,7\u00b0",
+                        "en": "Curved Track R2 = 437.5 mm / 5.7\u00b0",
+                        "fr": "Rail courbe R2 = 437,5 mm / 5,7\u00b0"
+                },
+                "geometry": {
+                        "curved": {
+                                "radius": "437.5",
+                                "arc": "5.7",
+                                "radiusunit": "mm",
+                                "arcunit": "deg"
+                        }
+                }
+        },
+        {
+                "vendor": "M\u00e4rklin",
+                "family": "C-Track",
+                "gauge": "16.5 mm",
+                "partcode": "24212",
+                "jmritype": "curved",
+                "l10n": {
+                        "de": "Gleis gebogen R2 = 437,5 mm / 12,1\u00b0",
+                        "en": "Curved Track R2 = 437.5 mm / 12.1\u00b0",
+                        "fr": "Rail courbe R2 = 437,5 mm / 12,1\u00b0"
+                },
+                "geometry": {
+                        "curved": {
+                                "radius": "437.5",
+                                "arc": "12.1",
+                                "radiusunit": "mm",
+                                "arcunit": "deg"
+                        }
+                }
+        },
+        {
+                "vendor": "M\u00e4rklin",
+                "family": "C-Track",
+                "gauge": "16.5 mm",
+                "partcode": "24224",
+                "jmritype": "curved",
+                "l10n": {
+                        "de": "Gleis gebogen R2 = 437,5 mm / 24,3\u00b0",
+                        "en": "Curved Track R2 = 437.5 mm / 24.3\u00b0",
+                        "es": "V\u00eda curva R2 = 437,5 mm / 24,3\u00b0",
+                        "fr": "Rail courbe R2 = 437,5 mm / 24,3\u00b0"
+                },
+                "geometry": {
+                        "curved": {
+                                "radius": "437.5",
+                                "arc": "24.3",
+                                "radiusunit": "mm",
+                                "arcunit": "deg"
+                        }
+                }
+        },
+        {
+                "vendor": "M\u00e4rklin",
+                "family": "C-Track",
+                "gauge": "16.5 mm",
+                "partcode": "24230",
+                "jmritype": "curved",
+                "l10n": {
+                        "de": "Gleis gebogen R2 = 437,5 mm / 30\u00b0",
+                        "en": "Curved Track R2 = 437.5 mm / 30\u00b0",
+                        "es": "V\u00eda curva R2 = 437,5 mm / 30\u00b0",
+                        "fr": "Rail courbe R2 = 437,5 mm / 30\u00b0"
+                },
+                "geometry": {
+                        "curved": {
+                                "radius": "437.5",
+                                "arc": "30.0",
+                                "radiusunit": "mm",
+                                "arcunit": "deg"
+                        }
+                }
+        },
+        {
+                "vendor": "M\u00e4rklin",
+                "family": "C-Track",
+                "gauge": "16.5 mm",
+                "partcode": "24315",
+                "jmritype": "curved",
+                "l10n": {
+                        "de": "Gleis gebogen R3 = 515 mm / 15\u00b0",
+                        "en": "Curved Track R3 = 515 mm / 15\u00b0",
+                        "fr": "Rail courbe R3 = 515 mm / 15\u00b0"
+                },
+                "geometry": {
+                        "curved": {
+                                "radius": "515.0",
+                                "arc": "15.0",
+                                "radiusunit": "mm",
+                                "arcunit": "deg"
+                        }
+                }
+        },
+        {
+                "vendor": "M\u00e4rklin",
+                "family": "C-Track",
+                "gauge": "16.5 mm",
+                "partcode": "24330",
+                "jmritype": "curved",
+                "l10n": {
+                        "de": "Gleis gebogen R3 = 515 mm / 30\u00b0",
+                        "en": "Curved Track R3 = 515 mm / 30\u00b0",
+                        "es": "V\u00eda curva R3 = 515 mm / 30\u00b0",
+                        "fr": "Rail courbe R3 = 515 mm / 30\u00b0"
+                },
+                "geometry": {
+                        "curved": {
+                                "radius": "515.0",
+                                "arc": "30.0",
+                                "radiusunit": "mm",
+                                "arcunit": "deg"
+                        }
+                }
+        },
+        {
+                "vendor": "M\u00e4rklin",
+                "family": "C-Track",
+                "gauge": "16.5 mm",
+                "partcode": "24424",
+                "jmritype": "curved",
+                "l10n": {
+                        "de": "Gleis gebogen R4 = 579,3 mm / 24,3\u00b0",
+                        "en": "Curved Track R4 = 579.3 mm / 24.3\u00b0",
+                        "fr": "Rail courbe R4 = 579,3 mm / 24,3\u00b0"
+                },
+                "geometry": {
+                        "curved": {
+                                "radius": "579.3",
+                                "arc": "24.3",
+                                "radiusunit": "mm",
+                                "arcunit": "deg"
+                        }
+                }
+        },
+        {
+                "vendor": "M\u00e4rklin",
+                "family": "C-Track",
+                "gauge": "16.5 mm",
+                "partcode": "24430",
+                "jmritype": "curved",
+                "l10n": {
+                        "de": "Gleis gebogen R4 = 579,3 mm / 30\u00b0",
+                        "en": "Curved Track R4 = 579.3 mm / 30\u00b0",
+                        "fr": "Rail courbe R4 = 579,3 mm / 30\u00b0"
+                },
+                "geometry": {
+                        "curved": {
+                                "radius": "579.3",
+                                "arc": "30.0",
+                                "radiusunit": "mm",
+                                "arcunit": "deg"
+                        }
+                }
+        },
+        {
+                "vendor": "M\u00e4rklin",
+                "family": "C-Track",
+                "gauge": "16.5 mm",
+                "partcode": "24977",
+                "jmritype": "straight",
+                "l10n": {
+                        "de": "Prellbock-Gleis 77,5 mm",
+                        "en": "Bumper Track 77.5 mm",
+                        "es": "Tope 77,5 mm",
+                        "fr": "Butoir 77,5 mm"
+                },
+                "geometry": {
+                        "straight": {
+                                "length": "77.5",
+                                "unit": "mm"
+                        },
+                        "end": {}
+                }
+        },
+        {
+                "vendor": "M\u00e4rklin",
+                "family": "C-Track",
+                "gauge": "16.5 mm",
+                "partcode": "24978",
+                "jmritype": "straight",
+                "l10n": {
+                        "de": "Prellbock-Gleis 94,2 mm",
+                        "en": "Bumper Track 94.2 mm",
+                        "fr": "Butoir 94,2 mm"
+                },
+                "geometry": {
+                        "straight": {
+                                "length": "94.2",
+                                "unit": "mm"
+                        },
+                        "end": {}
+                }
+        },
+        {
+                "vendor": "M\u00e4rklin",
+                "family": "C-Track",
+                "gauge": "16.5 mm",
+                "partcode": "24611",
+                "jmritype": "turnout-rh",
+                "l10n": {
+                        "de": "Rechtsweiche",
+                        "en": "Right-Hand Turnout",
+                        "es": "Desv\u00edo izq.",
+                        "fr": "Aiguillage \u00e0 droite"
+                },
+                "geometry": {
+                        "turnout": {
+                                "text": "\n          "
+                        }
+                }
+        },
+        {
+                "vendor": "M\u00e4rklin",
+                "family": "C-Track",
+                "gauge": "16.5 mm",
+                "partcode": "24612",
+                "jmritype": "turnout-lh",
+                "l10n": {
+                        "de": "Linksweiche",
+                        "en": "Left-Hand Turnout",
+                        "es": "Desv\u00edo derecho",
+                        "fr": "Aiguillage \u00e0 gauche"
+                },
+                "geometry": {
+                        "turnout": {
+                                "text": "\n          "
+                        }
+                }
+        },
+        {
+                "vendor": "M\u00e4rklin",
+                "family": "C-Track",
+                "gauge": "16.5 mm",
+                "partcode": "24624",
+                "jmritype": "turnout-rh",
+                "l10n": {
+                        "de": "Rechtsweiche schlank",
+                        "en": "Right-Hand Turnout Slim",
+                        "fr": "Aiguillage \u00e0 droite mince"
+                },
+                "geometry": {
+                        "turnout": {
+                                "text": "\n          "
+                        }
+                }
+        },
+        {
+                "vendor": "M\u00e4rklin",
+                "family": "C-Track",
+                "gauge": "16.5 mm",
+                "partcode": "24625",
+                "jmritype": "turnout-lh",
+                "l10n": {
+                        "de": "Linksweiche schlank",
+                        "en": "Left-Hand Turnout Slim",
+                        "fr": "Aiguillage \u00e0 gauche mince"
+                },
+                "geometry": {
+                        "turnout": {
+                                "text": "\n          "
+                        }
+                }
+        },
+        {
+                "vendor": "M\u00e4rklin",
+                "family": "C-Track",
+                "gauge": "16.5 mm",
+                "partcode": "24630",
+                "jmritype": "wye",
+                "l10n": {
+                        "de": "Dreiwegweiche",
+                        "en": "Three-Way Turnout",
+                        "fr": "Aiguillage triple"
+                },
+                "geometry": {
+                        "turnout": {
+                                "text": "\n          "
+                        }
+                }
+        },
+        {
+                "vendor": "M\u00e4rklin",
+                "family": "C-Track",
+                "gauge": "16.5 mm",
+                "partcode": "24640",
+                "jmritype": "wye",
+                "l10n": {
+                        "de": "Bogenweiche rechts",
+                        "en": "Curved Turnout Right",
+                        "es": "Desv\u00edo derecha",
+                        "fr": "Aiguillage courbe droite"
+                },
+                "geometry": {
+                        "turnout": {
+                                "text": "\n          "
+                        }
+                }
+        },
+        {
+                "vendor": "M\u00e4rklin",
+                "family": "C-Track",
+                "gauge": "16.5 mm",
+                "partcode": "24649",
+                "jmritype": "wye",
+                "l10n": {
+                        "de": "Bogenweiche links",
+                        "en": "Curved Turnout Left",
+                        "fr": "Aiguillage courbe gauche"
+                },
+                "geometry": {
+                        "turnout": {
+                                "text": "\n          "
+                        }
+                }
+        },
+        {
+                "vendor": "M\u00e4rklin",
+                "family": "C-Track",
+                "gauge": "16.5 mm",
+                "partcode": "24671",
+                "jmritype": "crossing",
+                "l10n": {
+                        "de": "Kreuzung",
+                        "en": "Crossing",
+                        "es": "Desv\u00edo izq.",
+                        "fr": "Croisement"
+                },
+                "geometry": {
+                        "turnout": {
+                                "text": "\n          "
+                        }
+                }
+        },
+        {
+                "vendor": "M\u00e4rklin",
+                "family": "C-Track",
+                "gauge": "16.5 mm",
+                "partcode": "24740",
+                "jmritype": "crossing",
+                "l10n": {
+                        "de": "Schlanke Kreuzung",
+                        "en": "Slim Crossing",
+                        "fr": "Croisement mince"
+                },
+                "geometry": {
+                        "turnout": {
+                                "text": "\n          "
+                        }
+                }
+        },
+        {
+                "vendor": "M\u00e4rklin",
+                "family": "C-Track",
+                "gauge": "16.5 mm",
+                "partcode": "24994",
+                "jmritype": "straight",
+                "l10n": {
+                        "de": "Schaltgleis",
+                        "en": "Switch Track",
+                        "fr": "Voie de commutation"
+                },
+                "geometry": {
+                        "straight": {
+                                "length": "94.2",
+                                "unit": "mm",
+                                "function": "switch",
+                                "contactType": "momentary"
+                        }
+                }
+        },
+        {
+                "vendor": "M\u00e4rklin",
+                "family": "C-Track",
+                "gauge": "16.5 mm",
+                "partcode": "24997",
+                "jmritype": "straight",
+                "l10n": {
+                        "de": "Entkupplungsgleis",
+                        "en": "Uncoupling Track",
+                        "fr": "Voie de d\u00e9telage"
+                },
+                "geometry": {
+                        "straight": {
+                                "length": "94.2",
+                                "unit": "mm",
+                                "function": "decoupler",
+                                "powered": "yes"
+                        }
+                }
+        },
+        {
+                "vendor": "M\u00e4rklin",
+                "family": "C-Track",
+                "gauge": "16.5 mm",
+                "partcode": "24194",
+                "jmritype": "curved",
+                "l10n": {
+                        "de": "Schaltgleis gebogen",
+                        "en": "Curved Switch Track",
+                        "fr": "Voie de commutation courbe"
+                },
+                "geometry": {
+                        "curved": {
+                                "radius": "360",
+                                "arc": "15",
+                                "radiusunit": "mm",
+                                "arcunit": "deg",
+                                "function": "switch",
+                                "contactType": "momentary"
+                        }
+                }
+        },
+        {
+                "vendor": "Piko",
+                "family": "A-Track",
+                "gauge": "16.5 mm",
+                "partcode": "55400",
+                "jmritype": "straight",
+                "l10n": {
+                        "de": "Gerade G 239 mm",
+                        "en": "Straight Track G 239 mm",
+                        "fr": "Voie droite G 239 mm"
+                },
+                "geometry": {
+                        "straight": {
+                                "length": "239",
+                                "unit": "mm"
+                        }
+                }
+        },
+        {
+                "vendor": "Piko",
+                "family": "A-Track",
+                "gauge": "16.5 mm",
+                "partcode": "55401",
+                "jmritype": "straight",
+                "l10n": {
+                        "de": "Gerade G 231 mm",
+                        "en": "Straight Track G 231 mm",
+                        "fr": "Voie droite G 231 mm"
+                },
+                "geometry": {
+                        "straight": {
+                                "length": "231",
+                                "unit": "mm"
+                        }
+                }
+        },
+        {
+                "vendor": "Piko",
+                "family": "A-Track",
+                "gauge": "16.5 mm",
+                "partcode": "55406",
+                "jmritype": "straight",
+                "l10n": {
+                        "de": "Gerade G 231 mm f\u00fcr Anschluss-Clip",
+                        "en": "Straight Track G 231 mm for Connection Clip",
+                        "fr": "Voie droite G 231 mm pour clip de connexion"
+                },
+                "geometry": {
+                        "straight": {
+                                "length": "231",
+                                "unit": "mm"
+                        }
+                }
+        },
+        {
+                "vendor": "Piko",
+                "family": "A-Track",
+                "gauge": "16.5 mm",
+                "partcode": "55411",
+                "jmritype": "curved",
+                "l10n": {
+                        "de": "Bogen R1, 360 mm",
+                        "en": "Curved Track R1, 360 mm",
+                        "fr": "Voie courbe R1, 360 mm"
+                },
+                "geometry": {
+                        "curved": {
+                                "radius": "360",
+                                "arc": "30",
+                                "radiusunit": "mm",
+                                "arcunit": "deg"
+                        }
+                }
+        },
+        {
+                "vendor": "Piko",
+                "family": "A-Track",
+                "gauge": "16.5 mm",
+                "partcode": "55412",
+                "jmritype": "curved",
+                "l10n": {
+                        "de": "Bogen R2, 422 mm",
+                        "en": "Curved Track R2, 422 mm",
+                        "fr": "Voie courbe R2, 422 mm"
+                },
+                "geometry": {
+                        "curved": {
+                                "radius": "422",
+                                "arc": "30",
+                                "radiusunit": "mm",
+                                "arcunit": "deg"
+                        }
+                }
+        },
+        {
+                "vendor": "Piko",
+                "family": "A-Track",
+                "gauge": "16.5 mm",
+                "partcode": "55413",
+                "jmritype": "curved",
+                "l10n": {
+                        "de": "Bogen R3, 484 mm",
+                        "en": "Curved Track R3, 484 mm",
+                        "fr": "Voie courbe R3, 484 mm"
+                },
+                "geometry": {
+                        "curved": {
+                                "radius": "484",
+                                "arc": "30",
+                                "radiusunit": "mm",
+                                "arcunit": "deg"
+                        }
+                }
+        },
+        {
+                "vendor": "Piko",
+                "family": "A-Track",
+                "gauge": "16.5 mm",
+                "partcode": "55419",
+                "jmritype": "curved",
+                "l10n": {
+                        "de": "Bogen R9, 908 mm",
+                        "en": "Curved Track R9, 908 mm",
+                        "fr": "Voie courbe R9, 908 mm"
+                },
+                "geometry": {
+                        "curved": {
+                                "radius": "908",
+                                "arc": "30",
+                                "radiusunit": "mm",
+                                "arcunit": "deg"
+                        }
+                }
+        },
+        {
+                "vendor": "Piko",
+                "family": "A-Track",
+                "gauge": "16.5 mm",
+                "partcode": "55446",
+                "jmritype": "end",
+                "l10n": {
+                        "de": "B\u00f6schung Endst\u00fcck mit Prellbock",
+                        "en": "Embankment End Piece with Bumper",
+                        "fr": "Butoir avec talus"
+                },
+                "geometry": {
+                        "straight": {
+                                "length": "82",
+                                "unit": "mm"
+                        },
+                        "end": {}
+                }
+        },
+        {
+                "vendor": "Piko",
+                "family": "A-Track",
+                "gauge": "16.5 mm",
+                "partcode": "55420",
+                "jmritype": "turnout",
+                "l10n": {
+                        "de": "Weiche links WL",
+                        "en": "Turnout Left WL",
+                        "fr": "Aiguillage \u00e0 gauche WL"
+                },
+                "geometry": {
+                        "turnout": {
+                                "text": "\n          "
+                        }
+                }
+        },
+        {
+                "vendor": "Piko",
+                "family": "A-Track",
+                "gauge": "16.5 mm",
+                "partcode": "55424",
+                "jmritype": "turnout",
+                "l10n": {
+                        "de": "Weiche rechts WR",
+                        "en": "Turnout Right WR",
+                        "fr": "Aiguillage \u00e0 droite WR"
+                },
+                "geometry": {
+                        "turnout": {
+                                "text": "\n          "
+                        }
+                }
+        },
+        {
+                "vendor": "Piko",
+                "family": "A-Track",
+                "gauge": "16.5 mm",
+                "partcode": "55422",
+                "jmritype": "turnout",
+                "l10n": {
+                        "de": "Bogenweiche links BWL",
+                        "en": "Curved Turnout Left BWL",
+                        "fr": "Aiguillage courbe \u00e0 gauche BWL"
+                },
+                "geometry": {
+                        "turnout": {
+                                "text": "\n          "
+                        }
+                }
+        },
+        {
+                "vendor": "Piko",
+                "family": "A-Track",
+                "gauge": "16.5 mm",
+                "partcode": "55423",
+                "jmritype": "turnout",
+                "l10n": {
+                        "de": "Bogenweiche rechts BWR",
+                        "en": "Curved Turnout Right BWR",
+                        "fr": "Aiguillage courbe \u00e0 droite BWR"
+                },
+                "geometry": {
+                        "turnout": {
+                                "text": "\n          "
+                        }
+                }
+        },
+        {
+                "vendor": "Piko",
+                "family": "A-Track",
+                "gauge": "16.5 mm",
+                "partcode": "55424",
+                "jmritype": "crossing",
+                "l10n": {
+                        "de": "Doppelkreuzungsweiche DKW",
+                        "en": "Double Slip Switch DKW",
+                        "fr": "Travers\u00e9e jonction double DKW"
+                },
+                "geometry": {
+                        "turnout": {
+                                "text": "\n          "
+                        }
+                }
+        },
+        {
+                "vendor": "Piko",
+                "family": "A-Track",
+                "gauge": "16.5 mm",
+                "partcode": "55425",
+                "jmritype": "turnout",
+                "l10n": {
+                        "de": "3-Wege Weiche W3",
+                        "en": "3-Way Turnout W3",
+                        "fr": "Aiguillage triple W3"
+                },
+                "geometry": {
+                        "turnout": {
+                                "text": "\n          "
+                        }
+                }
+        },
+        {
+                "vendor": "Piko",
+                "family": "A-Track",
+                "gauge": "16.5 mm",
+                "partcode": "55426",
+                "jmritype": "turnout",
+                "l10n": {
+                        "de": "Y-Weiche WY",
+                        "en": "Wye Turnout WY",
+                        "fr": "Aiguillage en Y WY"
+                },
+                "geometry": {
+                        "turnout": {
+                                "text": "\n          "
+                        }
+                }
+        },
+        {
+                "vendor": "Piko",
+                "family": "A-Track",
+                "gauge": "16.5 mm",
+                "partcode": "55440",
+                "jmritype": "crossing",
+                "l10n": {
+                        "de": "Kreuzung K15",
+                        "en": "Crossing K15",
+                        "fr": "Croisement K15"
+                },
+                "geometry": {
+                        "turnout": {
+                                "text": "\n          "
+                        }
+                }
+        },
+        {
+                "vendor": "Piko",
+                "family": "A-Track",
+                "gauge": "16.5 mm",
+                "partcode": "55441",
+                "jmritype": "crossing",
+                "l10n": {
+                        "de": "Kreuzung K30",
+                        "en": "Crossing K30",
+                        "fr": "Croisement K30"
+                },
+                "geometry": {
+                        "turnout": {
+                                "text": "\n          "
+                        }
+                }
+        },
+        {
+                "vendor": "Piko",
+                "family": "A-Track",
+                "gauge": "16.5 mm",
+                "partcode": "55432",
+                "jmritype": "straight",
+                "l10n": {
+                        "de": "\u00dcbergangsgleis Fleischmann Profi 231 mm",
+                        "en": "Adapter Track to Fleischmann Profi 231 mm",
+                        "fr": "Voie de transition Fleischmann Profi 231 mm"
+                },
+                "geometry": {
+                        "straight": {
+                                "length": "231",
+                                "unit": "mm"
+                        }
+                }
+        },
+        {
+                "vendor": "Piko",
+                "family": "A-Track",
+                "gauge": "16.5 mm",
+                "partcode": "55433",
+                "jmritype": "straight",
+                "l10n": {
+                        "de": "\u00dcbergangsgleis Roco GeoLine 231 mm",
+                        "en": "Adapter Track to Roco GeoLine 231 mm",
+                        "fr": "Voie de transition Roco GeoLine 231 mm"
+                },
+                "geometry": {
+                        "straight": {
+                                "length": "231",
+                                "unit": "mm"
+                        }
+                }
+        },
+        {
+                "vendor": "Piko",
+                "family": "A-Track",
+                "gauge": "16.5 mm",
+                "partcode": "55434",
+                "jmritype": "straight",
+                "l10n": {
+                        "de": "\u00dcbergangsgleis PIKO A-Gleis ohne Bettung 231 mm",
+                        "en": "Adapter Track to PIKO A-Track without Ballast 231 mm",
+                        "fr": "Voie de transition PIKO A-Track sans ballast 231 mm"
+                },
+                "geometry": {
+                        "straight": {
+                                "length": "231",
+                                "unit": "mm"
+                        }
+                }
+        }
+];
+        
+        let currentSort = { column: -1, direction: 'asc' };
+        
+        function renderTable() {
+            const tbody = document.getElementById('tilesBody');
+            tbody.innerHTML = '';
+            
+            tilesData.forEach(tile => {
+                const row = tbody.insertRow();
+                row.insertCell(0).textContent = tile.vendor;
+                row.insertCell(1).textContent = tile.family;
+                row.insertCell(2).textContent = tile.gauge;
+                row.insertCell(3).textContent = tile.jmritype;
+                row.insertCell(4).textContent = tile.partcode;
+                row.insertCell(5).textContent = getCaption(tile.l10n);
+                row.insertCell(6).textContent = formatGeometry(tile.geometry);
+            });
+            
+            updateStats();
+        }
+        
+        function getCaption(l10n) {
+            return l10n.en || l10n.de || l10n.es || Object.values(l10n)[0] || '';
+        }
+        
+        function formatGeometry(geom) {
+            const parts = [];
+            for (const [type, attrs] of Object.entries(geom)) {
+                if (type === 'straight') {
+                    let str = `Straight: ${attrs.length}${attrs.lengthunit || 'mm'}`;
+                    if (attrs.function && attrs.function !== 'none') {
+                        str += ` (${attrs.function}`;
+                        if (attrs.contactType) str += `, ${attrs.contactType}`;
+                        if (attrs.powered === 'yes') str += ', powered';
+                        str += ')';
+                    }
+                    parts.push(str);
+                } else if (type === 'curved') {
+                    let str = `Curved: R${attrs.radius}${attrs.radiusunit || 'mm'}, ${attrs.arc}${attrs.arcunit || 'deg'}`;
+                    if (attrs.function && attrs.function !== 'none') {
+                        str += ` (${attrs.function})`;
+                    }
+                    parts.push(str);
+                } else if (type === 'end') {
+                    parts.push(`Bumper: ${attrs.length}${attrs.lengthunit || 'mm'}`);
+                } else if (type === 'turnout') {
+                    parts.push(`Turnout: ${attrs.paths} paths`);
+                } else if (type === 'crossing') {
+                    parts.push(`Crossing: ${attrs.angle}${attrs.angleunit || 'deg'}`);
+                }
+            }
+            return parts.join(' | ');
+        }
+        
+        function sortTable(columnIndex) {
+            const table = document.getElementById('tilesTable');
+            const tbody = table.querySelector('tbody');
+            const rows = Array.from(tbody.rows);
+            
+            // Update sort direction
+            if (currentSort.column === columnIndex) {
+                currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentSort.column = columnIndex;
+                currentSort.direction = 'asc';
+            }
+            
+            // Remove sort classes from all headers
+            table.querySelectorAll('th').forEach(th => {
+                th.classList.remove('sort-asc', 'sort-desc');
+            });
+            
+            // Add sort class to current header
+            const th = table.querySelectorAll('th')[columnIndex];
+            th.classList.add(currentSort.direction === 'asc' ? 'sort-asc' : 'sort-desc');
+            
+            // Sort rows
+            rows.sort((a, b) => {
+                let aVal = a.cells[columnIndex].textContent;
+                let bVal = b.cells[columnIndex].textContent;
+                
+                // Try numeric comparison
+                const aNum = parseFloat(aVal);
+                const bNum = parseFloat(bVal);
+                if (!isNaN(aNum) && !isNaN(bNum)) {
+                    return currentSort.direction === 'asc' ? aNum - bNum : bNum - aNum;
+                }
+                
+                // String comparison
+                if (currentSort.direction === 'asc') {
+                    return aVal.localeCompare(bVal);
+                } else {
+                    return bVal.localeCompare(aVal);
+                }
+            });
+            
+            // Re-append rows
+            rows.forEach(row => tbody.appendChild(row));
+        }
+        
+        function applyFilters() {
+            const searchTerm = document.getElementById('search').value.toLowerCase();
+            const typeFilter = document.getElementById('typeFilter').value.toLowerCase();
+            const vendorFilter = document.getElementById('vendorFilter').value;
+            
+            const tbody = document.getElementById('tilesBody');
+            const rows = tbody.rows;
+            
+            for (let row of rows) {
+                const vendor = row.cells[0].textContent;
+                const type = row.cells[3].textContent.toLowerCase();
+                const rowText = row.textContent.toLowerCase();
+                
+                const matchesSearch = searchTerm === '' || rowText.includes(searchTerm);
+                const matchesType = typeFilter === '' || type === typeFilter;
+                const matchesVendor = vendorFilter === '' || vendor === vendorFilter;
+                
+                if (matchesSearch && matchesType && matchesVendor) {
+                    row.classList.remove('hidden');
+                } else {
+                    row.classList.add('hidden');
+                }
+            }
+            
+            updateStats();
+        }
+        
+        function clearFilters() {
+            document.getElementById('search').value = '';
+            document.getElementById('typeFilter').value = '';
+            document.getElementById('vendorFilter').value = '';
+            applyFilters();
+        }
+        
+        function updateStats() {
+            const tbody = document.getElementById('tilesBody');
+            const total = tbody.rows.length;
+            const visible = Array.from(tbody.rows).filter(row => !row.classList.contains('hidden')).length;
+            
+            document.getElementById('totalCount').textContent = total;
+            document.getElementById('visibleCount').textContent = visible;
+            
+            const noResults = document.getElementById('noResults');
+            if (visible === 0 && total > 0) {
+                noResults.style.display = 'block';
+                document.getElementById('tilesTable').style.display = 'none';
+            } else {
+                noResults.style.display = 'none';
+                document.getElementById('tilesTable').style.display = 'table';
+            }
+        }
+        
+        // Event listeners
+        document.getElementById('search').addEventListener('input', applyFilters);
+        document.getElementById('typeFilter').addEventListener('change', applyFilters);
+        document.getElementById('vendorFilter').addEventListener('change', applyFilters);
+        
+        // Initial render
+        renderTable();
+    </script>
+</body>
+</html>
