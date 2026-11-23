@@ -164,6 +164,44 @@ public class CbusSimulator implements jmri.Disposable {
     }
 
     /**
+     * The link between JMRI and the simulated modules: the interface and the
+     * bus, and the time frames take through them. Made when first asked for;
+     * off until an interface is chosen.
+     *
+     * @return the link
+     * @since 5.19.2
+     */
+    @Nonnull
+    public synchronized CbusSimulatedLink getLink() {
+        if (link == null) {
+            link = new CbusSimulatedLink(memo);
+        }
+        return link;
+    }
+
+    /**
+     * @return the link, or null if none has been asked for
+     */
+    @javax.annotation.CheckForNull
+    synchronized CbusSimulatedLink getLinkIfMade() {
+        return link;
+    }
+
+    /**
+     * Make a Link Timing menu for the simulator window: one choice for each
+     * interface.
+     *
+     * @return the menu
+     * @since 5.19.2
+     */
+    @Nonnull
+    public javax.swing.JMenu makeLinkMenu() {
+        return new jmri.jmrit.simulation.link.swing.SimulatedLinkMenu(getLink().getLink());
+    }
+
+    private CbusSimulatedLink link;
+
+    /**
      * Disposes of all simulated objects.
      * CanListeners can be removed and command stations can stop session timers.
      * Does not remove instance from InstanceManager or CAN memo.
@@ -197,6 +235,10 @@ public class CbusSimulator implements jmri.Disposable {
         }
         _evResponseArr.clear();
 
+        CbusSimulatedLink l = getLinkIfMade();
+        if (l != null) {
+            l.dispose();
+        }
     }
 
     private static final Logger log = LoggerFactory.getLogger(CbusSimulator.class);

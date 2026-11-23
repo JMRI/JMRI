@@ -15,11 +15,14 @@ import jmri.jmrix.can.cbus.CbusSend;
  */
 public class CbusSimulatedSend extends CbusSend {
 
+    private final CanSystemConnectionMemo memo;
+
     /**
      * @param memo the CAN Simulation connection
      */
     public CbusSimulatedSend(@Nonnull CanSystemConnectionMemo memo) {
         super(memo);
+        this.memo = memo;
     }
 
     /**
@@ -35,6 +38,21 @@ public class CbusSimulatedSend extends CbusSend {
      *                      {@link System#nanoTime()} scale
      */
     public void receiveAt(@Nonnull CanReply r, long receivedNanos) {
-        queueReceivedAt(r, receivedNanos);
+        CbusSimulatedLink link = CbusSimulatedLink.of(memo);
+        if (link == null || !link.towardsJmri(r, receivedNanos, t -> queueReceivedAt(r, t))) {
+            queueReceivedAt(r, receivedNanos);
+        }
+    }
+
+    /**
+     * Through the connection's simulated link, if one is on: the frame goes
+     * on the bus when its delay ends, and is received by JMRI when it comes
+     * through.
+     * {@inheritDoc}
+     */
+    @Override
+    protected boolean sendThroughLink(@Nonnull CanReply r, long sentNanos) {
+        CbusSimulatedLink link = CbusSimulatedLink.of(memo);
+        return link != null && link.towardsJmri(r, sentNanos, t -> queueReceivedAt(r, t));
     }
 }

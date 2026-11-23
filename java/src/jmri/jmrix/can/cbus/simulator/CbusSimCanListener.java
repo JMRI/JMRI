@@ -30,7 +30,7 @@ public class CbusSimCanListener extends jmri.jmrix.can.cbus.node.CbusNodeCanList
      */
     public CbusSimCanListener( CanSystemConnectionMemo memo, jmri.jmrix.can.cbus.node.CbusNode node ){
         super(memo,node);
-        send = new CbusSend(memo);
+        send = new CbusSimulatedSend(memo);
         _processIn=false;
         _processOut=true;
         _sendIn=true;
@@ -136,7 +136,13 @@ public class CbusSimCanListener extends jmri.jmrix.can.cbus.node.CbusNodeCanList
     @Override
     public final void message(CanMessage m) {
         if ( !m.extendedOrRtr() && _processOut ) {
-            startProcessFrame(m);
+            CbusSimulatedLink link = CbusSimulatedLink.of(memo);
+            if (link == null) {
+                startProcessFrame(m);
+            } else {
+                // through the interface and over the bus first, if a link is on
+                link.towardsLayout(m, () -> startProcessFrame(m));
+            }
         }
     }
 
