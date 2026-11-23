@@ -42,6 +42,11 @@
                     node table and the tabs no longer writes all of CBUS's
                     preferences to disk for every pixel it moves. Where it
                     is left is saved once it stops.</li>
+                <li>CBUS Simulator: a new option, Options &gt; Turnout motors
+                    answer with feedback, makes turnouts with one or two
+                    feedback sensors on the connection get their feedback
+                    a set time after each command, as a real turnout motor
+                    would.</li>
                 <li></li>
             </ul>
 
