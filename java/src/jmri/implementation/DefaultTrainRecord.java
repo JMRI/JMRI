@@ -103,6 +103,8 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
     private boolean disposed = false;
     private final List<Block> blocks = new ArrayList<>();
     private boolean frontKnown = false;
+    private Set<Block> reservedBlocks = Set.of();
+    private boolean keptToReservedBlocks = false;
     private End leadingEnd = null;
     private final Deque<TrailEntry> trail = new ArrayDeque<>();
     private Confidence confidence = null;
@@ -553,6 +555,27 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
+    public Set<Block> getReservedBlocks() {
+        return reservedBlocks;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public boolean isKeptToReservedBlocks() {
+        return keptToReservedBlocks;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @InvokeOnLayoutThread
+    public void setReservedBlocks(@Nonnull Set<Block> blocks, boolean keptToThem) {
+        reservedBlocks = Set.copyOf(blocks);
+        keptToReservedBlocks = keptToThem && !reservedBlocks.isEmpty();
+    }
+
+    /** {@inheritDoc} */
+    @Override
     @CheckForNull
     public End getLeadingEnd() {
         return leadingEnd;
@@ -693,6 +716,7 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
      *                  {@link jmri.TrainRecord.Reason.Rule#SETTLED_BY_VALUE},
      *                  {@link jmri.TrainRecord.Reason.Rule#SETTLED_BY_MOVEMENT},
      *                  {@link jmri.TrainRecord.Reason.Rule#SETTLED_BY_DIRECTION},
+     *                  {@link jmri.TrainRecord.Reason.Rule#SETTLED_BY_RESERVATION},
      *                  {@link jmri.TrainRecord.Reason.Rule#ENTERED_UNEXPLAINED} or
      *                  {@link jmri.TrainRecord.Reason.Rule#SETTLED_BY_LEAVING}
      */
@@ -831,7 +855,8 @@ public class DefaultTrainRecord extends PropertyChangeSupport implements TrainRe
      */
     private static boolean placesOrMoves(Reason.Rule rule) {
         return PLACING_OR_MOVING.contains(rule) || rule == Reason.Rule.SETTLED_BY_MOVEMENT
-                || rule == Reason.Rule.SETTLED_BY_DIRECTION || rule == Reason.Rule.ENTERED_UNEXPLAINED
+                || rule == Reason.Rule.SETTLED_BY_DIRECTION || rule == Reason.Rule.SETTLED_BY_RESERVATION
+                || rule == Reason.Rule.ENTERED_UNEXPLAINED
                 || rule == Reason.Rule.SETTLED_BY_LEAVING;
     }
 

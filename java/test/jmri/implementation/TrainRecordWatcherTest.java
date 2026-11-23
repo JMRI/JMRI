@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import jmri.Block;
 import jmri.BlockManager;
@@ -457,6 +458,119 @@ public class TrainRecordWatcherTest {
         occupy(b[1]);
         assertEquals(Confidence.AMBIGUOUS, behind.getConfidence(), "the one ahead may have backed into B");
         assertEquals(Confidence.AMBIGUOUS, ahead.getConfidence());
+    }
+
+    /** The release of a train's lead loco at a time, after which every command to it is heard or not. */
+    private static void released(TrainRecord r, long atNanos, boolean heardAfter) {
+        jmri.LocoAddress a = Objects.requireNonNull(r.getFirstRosterEntry(), "roster entry").getDccLocoAddress();
+        TrainRecord.SpeedCommand last = r.getLastCommand(a);
+        ThreadingUtil.runOnLayout(() -> ((DefaultTrainRecord) r).commanded(new TrainRecord.SpeedCommand(a,
+                last == null ? 0f : last.getSpeedSetting(), last == null || last.isForward(), true, heardAfter,
+                atNanos, java.time.Instant.now())));
+    }
+
+    @Test
+    public void testSettledByDirectionAfterAReleaseWithEveryCabHeard() {
+        // the train ahead was driven into C and its throttle released, as Dispatcher does when a run ends
+        Object[] f = following();
+        Block[] b = (Block[]) f[0];
+        TrainRecord behind = (TrainRecord) f[1];
+        TrainRecord ahead = (TrainRecord) f[2];
+        released(ahead, nanos + 500_000_000L, true);
+        occupy(b[1]);
+        assertEquals(List.of(b[1], b[0]), behind.getBlocks(), "nothing heard since: the one ahead can't have reversed");
+        assertEquals(TrainRecord.Reason.Rule.SETTLED_BY_DIRECTION, behind.getReason(b[1]).getRule());
+        assertEquals(Confidence.CONFIRMED, ahead.getConfidence());
+    }
+
+    @Test
+    public void testNotSettledByDirectionAfterAReleaseNotEveryCabHeard() {
+        Object[] f = following();
+        Block[] b = (Block[]) f[0];
+        TrainRecord behind = (TrainRecord) f[1];
+        TrainRecord ahead = (TrainRecord) f[2];
+        released(ahead, nanos + 500_000_000L, false);
+        occupy(b[1]);
+        assertEquals(Confidence.AMBIGUOUS, behind.getConfidence(), "a cab JMRI doesn't hear may have backed it into B");
+        assertEquals(Confidence.AMBIGUOUS, ahead.getConfidence());
+    }
+
+    @Test
+    public void testIsMovingAfterARelease() {
+        TrainRecord r = train("T1", 3, 0f, 1_000_000_000L);
+        released(r, 2_000_000_000L, true);
+        assertEquals(Boolean.FALSE, TrainRecordWatcher.isMoving(r, 40_000_000_000L), "still stopped: nothing heard");
+        TrainRecord moving = train("T2", 4, 0.5f, 1_000_000_000L);
+        released(moving, 2_000_000_000L, true);
+        assertEquals(Boolean.TRUE, TrainRecordWatcher.isMoving(moving, 40_000_000_000L), "still at its speed");
+        TrainRecord unheard = train("T3", 5, 0f, 1_000_000_000L);
+        released(unheard, 2_000_000_000L, false);
+        assertEquals(null, TrainRecordWatcher.isMoving(unheard, 40_000_000_000L), "a cab JMRI doesn't hear may have it");
+    }
+
+    @Test
+    public void testStoppedOnceItsDecoderMomentumWouldHaveStoppedIt() {
+        TrainRecord r = train("T1", 3, 0f, 1_000_000_000L);
+        assertEquals(TrainRecordWatcher.STOPPED_AFTER_SECONDS, TrainRecordWatcher.stoppedAfterSeconds(r),
+                "no deceleration stored");
+        assertEquals(null, TrainRecordWatcher.isMoving(r, 6_000_000_000L), "stopped 5 s before: may still roll");
+        DecoderMomentum.setForTesting(Objects.requireNonNull(r.getFirstRosterEntry()), 2.688); // CV4 = 3
+        assertEquals(2.688 + TrainRecordWatcher.STOPPED_AFTER_MOMENTUM_MARGIN_SECONDS,
+                TrainRecordWatcher.stoppedAfterSeconds(r), 1e-9);
+        assertEquals(null, TrainRecordWatcher.isMoving(r, 4_000_000_000L), "3 s: not yet past its momentum");
+        assertEquals(Boolean.FALSE, TrainRecordWatcher.isMoving(r, 6_000_000_000L), "5 s: its decoder has stopped it");
+    }
+
+    @Test
+    public void testStopTimeOfATrainIsItsSlowestLocos() {
+        TrainRecord r = train("T1", 3, 0f, 1_000_000_000L);
+        jmri.jmrit.roster.RosterEntry second = new jmri.jmrit.roster.RosterEntry();
+        second.setId("T1b");
+        second.setDccAddress("4");
+        List<jmri.BasicRosterEntry> both = List.of(Objects.requireNonNull(r.getFirstRosterEntry()), second);
+        ThreadingUtil.runOnLayout(() -> r.setRosterEntries(both));
+        DecoderMomentum.setForTesting(both.get(0), 2.0);
+        assertEquals(TrainRecordWatcher.STOPPED_AFTER_SECONDS, TrainRecordWatcher.stoppedAfterSeconds(r),
+                "one loco's deceleration not known");
+        DecoderMomentum.setForTesting(second, 9.0);
+        assertEquals(9.0 + TrainRecordWatcher.STOPPED_AFTER_MOMENTUM_MARGIN_SECONDS,
+                TrainRecordWatcher.stoppedAfterSeconds(r), 1e-9);
+    }
+
+    @Test
+    public void testSettledByReservation() {
+        // two trains both told to move, next to B from either side: Dispatcher has allocated B to Left
+        Block[] b = line("A", "B", "C", "D");
+        TrainRecord left = train("Left", 3, 0.4f, nanos);
+        TrainRecord right = train("Right", 4, 0.4f, nanos);
+        place(left, true, b[0]);
+        place(right, true, b[2]);
+        ThreadingUtil.runOnLayout(() -> {
+            left.setReservedBlocks(Set.of(b[0], b[1]), true);
+            right.setReservedBlocks(Set.of(b[2], b[3]), true);
+        });
+        occupy(b[1]);
+        assertEquals(List.of(b[1], b[0]), left.getBlocks(), "B was set aside for Left");
+        assertEquals(TrainRecord.Reason.Rule.SETTLED_BY_RESERVATION, left.getReason(b[1]).getRule());
+        assertEquals(List.of(b[2]), right.getBlocks(), "Right, kept to C and D, is where it was");
+        assertEquals(Confidence.CONFIRMED, right.getConfidence());
+    }
+
+    @Test
+    public void testNotSettledByReservationWhenTheOtherIsntKeptToItsOwn() {
+        // Right is driven by a person: it may have gone into B though B was set aside for Left
+        Block[] b = line("A", "B", "C", "D");
+        TrainRecord left = train("Left", 3, 0.4f, nanos);
+        TrainRecord right = train("Right", 4, 0.4f, nanos);
+        place(left, true, b[0]);
+        place(right, true, b[2]);
+        ThreadingUtil.runOnLayout(() -> {
+            left.setReservedBlocks(Set.of(b[0], b[1]), true);
+            right.setReservedBlocks(Set.of(b[2], b[3]), false);
+        });
+        occupy(b[1]);
+        assertEquals(Confidence.AMBIGUOUS, left.getConfidence());
+        assertEquals(Confidence.AMBIGUOUS, right.getConfidence());
     }
 
     @Test

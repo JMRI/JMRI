@@ -73,4 +73,19 @@ public interface LocoSpeedSource {
      * @param listener the listener
      */
     void removeLocoSpeedListener(@Nonnull Listener listener);
+
+    /**
+     * Whether this source sees every command to a loco, whichever cab sends
+     * it, so that once a loco has been released nothing can move it without
+     * this source reporting it. A source for the throttles JMRI holds sees
+     * only those, unless there are no others; a source for the commands
+     * crossing a command station's bus sees every cab on that bus.
+     *
+     * @param address the loco address
+     * @return true if every command to that loco is seen; false by default
+     * @since 5.19.2
+     */
+    default boolean hearsEveryCab(@Nonnull LocoAddress address) {
+        return false;
+    }
 }

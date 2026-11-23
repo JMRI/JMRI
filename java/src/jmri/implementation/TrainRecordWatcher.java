@@ -44,7 +44,15 @@ import jmri.util.ThreadingUtil;
  * says which train it is, or one of them in a single Block leaves it while the
  * Block it could have entered still shows occupied: that one entered it. A
  * train with no speed command known, as one driven by a throttle JMRI doesn't
- * hear, is never ruled out this way.</li>
+ * hear, is never ruled out this way. A train is taken to have stopped once its
+ * decoders' deceleration, stored in its roster entries (CV4), would have
+ * stopped it, or after {@link #STOPPED_AFTER_SECONDS} if that isn't known. A
+ * released throttle leaves the loco as it was if every command to it after
+ * the release would be heard ({@link jmri.LocoSpeedSource#hearsEveryCab}).
+ * Failing that, of trains that are each stopped, heading away from the
+ * Block, or kept by what drives them to the Blocks set aside for them (as
+ * Dispatcher does a train it runs automatically), the one the Block was set
+ * aside for has entered it.</li>
  * <li>When it is next to no train's end, but can be reached from an end of
  * one train through a run of Blocks with no detector (each joined to the
  * next along a path that is set, by the one shortest way), that train has
@@ -300,13 +308,16 @@ public class TrainRecordWatcher {
         Candidate moving = candidates.size() > 1 ? onlyOneMoving(candidates, timeNanos) : null;
         Candidate heading = candidates.size() > 1 && moving == null ? onlyOneHeadingThere(candidates, block, timeNanos)
                 : null;
-        Candidate settled = moving != null ? moving : heading;
+        Candidate reserved = candidates.size() > 1 && moving == null && heading == null
+                ? onlyOneReservedFor(candidates, block, timeNanos) : null;
+        Candidate settled = moving != null ? moving : heading != null ? heading : reserved;
         if (candidates.size() == 1 && candidates.get(0).end() != null) {
             enter(block, candidates.get(0), false);
         } else if (settled != null) {
             Candidate c = settled;
             c.record.entered(c.through(Objects.requireNonNull(c.end(), "end")), block, c.end(), c.timeNanos, c.time,
-                    moving != null ? Reason.Rule.SETTLED_BY_MOVEMENT : Reason.Rule.SETTLED_BY_DIRECTION);
+                    moving != null ? Reason.Rule.SETTLED_BY_MOVEMENT
+                            : heading != null ? Reason.Rule.SETTLED_BY_DIRECTION : Reason.Rule.SETTLED_BY_RESERVATION);
             beforeAmbiguity.remove(c.record);
             leaveEmptyFarEnd(c.record);
         } else if (!candidates.isEmpty()) {
@@ -328,10 +339,18 @@ public class TrainRecordWatcher {
 
     /**
      * How long after a train is told to stop it is taken to have stopped, in
-     * seconds: a decoder whose deceleration (CV4) is up to 33 stops from full
-     * speed within it, by NMRA S-9.2.2.
+     * seconds, when its locos' deceleration isn't known: a decoder whose
+     * deceleration (CV4) is up to 33 stops from full speed within it, by NMRA
+     * S-9.2.2.
      */
     static final double STOPPED_AFTER_SECONDS = 30;
+
+    /**
+     * How long after its decoders' deceleration would have stopped it from
+     * full speed a train is taken to have stopped, in seconds: its detector
+     * may report it late.
+     */
+    static final double STOPPED_AFTER_MOMENTUM_MARGIN_SECONDS = 2;
 
     /**
      * How long after an emergency stop a train is taken to have stopped, in
@@ -399,6 +418,36 @@ public class TrainRecordWatcher {
     }
 
     /**
+     * Of several trains that could have entered a Block, the one that had it
+     * set aside, if every other one could not have: it was kept to the
+     * Blocks set aside for it, which don't include this one, or it is known
+     * to have stopped, or the Block is behind it.
+     *
+     * @param candidates the trains that could have entered it
+     * @param block      the Block
+     * @param timeNanos  when it went occupied
+     * @return the one it was set aside for; or null if that can't be said
+     */
+    @CheckForNull
+    private static Candidate onlyOneReservedFor(@Nonnull List<Candidate> candidates, @Nonnull Block block,
+            long timeNanos) {
+        Candidate reserved = null;
+        for (Candidate c : candidates) {
+            if (c.record.getReservedBlocks().contains(block)) {
+                if (reserved != null) {
+                    return null;
+                }
+                reserved = c;
+            } else if (!c.record.isKeptToReservedBlocks()
+                    && !Boolean.FALSE.equals(isMoving(c.record, timeNanos))
+                    && !Boolean.TRUE.equals(isBehind(c, block, timeNanos))) {
+                return null; // it may have entered it all the same
+            }
+        }
+        return reserved != null && reserved.end() != null ? reserved : null;
+    }
+
+    /**
      * Whether a Block a train is next to is behind it: on the side of the
      * end that trailed when it last entered a Block, its lead loco not told
      * to change direction since.
@@ -458,6 +507,9 @@ public class TrainRecordWatcher {
                 break;
             }
             if (cmd.isRelease()) {
+                if (cmd.isHeardAfter()) {
+                    continue; // nothing heard since: still as it was
+                }
                 return false; // driven by something JMRI may not hear
             }
             if (cmd.getTimeNanos() <= since) {
@@ -477,7 +529,9 @@ public class TrainRecordWatcher {
      * @param timeNanos the moment
      * @return true if told to move; false if told to stop long enough before
      *         for it to have stopped; null if not known, as with no command,
-     *         a released throttle, or a stop too recent
+     *         a released throttle that something JMRI doesn't hear could have
+     *         taken, or a stop too recent. A release after which every
+     *         command to the loco is heard leaves it as it was.
      */
     @CheckForNull
     static Boolean isMoving(@Nonnull TrainRecord r, long timeNanos) {
@@ -488,7 +542,7 @@ public class TrainRecordWatcher {
         }
         TrainRecord.SpeedCommand last = null;
         for (TrainRecord.SpeedCommand c : r.getCommands(lead)) {
-            if (c.getTimeNanos() <= timeNanos) {
+            if (c.getTimeNanos() <= timeNanos && !c.isHeardAfter()) {
                 last = c;
             }
         }
@@ -502,7 +556,32 @@ public class TrainRecordWatcher {
         if (last.getSpeedSetting() > 0) {
             return true;
         }
-        return since >= STOPPED_AFTER_SECONDS ? Boolean.FALSE : null;
+        return since >= stoppedAfterSeconds(r) ? Boolean.FALSE : null;
+    }
+
+    /**
+     * How long after a train is told to stop it is taken to have stopped: its
+     * slowest loco's decoder deceleration from full speed, if every loco's is
+     * stored in its roster entry, and a margin; otherwise
+     * {@link #STOPPED_AFTER_SECONDS}.
+     *
+     * @param r the train
+     * @return seconds
+     */
+    static double stoppedAfterSeconds(@Nonnull TrainRecord r) {
+        List<jmri.BasicRosterEntry> entries = r.getRosterEntries();
+        if (entries.isEmpty()) {
+            return STOPPED_AFTER_SECONDS;
+        }
+        double longest = 0;
+        for (jmri.BasicRosterEntry e : entries) {
+            Double seconds = DecoderMomentum.stoppingSeconds(e);
+            if (seconds == null) {
+                return STOPPED_AFTER_SECONDS;
+            }
+            longest = Math.max(longest, seconds);
+        }
+        return longest + STOPPED_AFTER_MOMENTUM_MARGIN_SECONDS;
     }
 
     /**

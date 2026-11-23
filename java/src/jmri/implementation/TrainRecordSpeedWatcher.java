@@ -144,8 +144,11 @@ public final class TrainRecordSpeedWatcher implements LocoSpeedSource.Listener {
     @InvokeOnAnyThread
     public void released(@Nonnull LocoAddress address, long timeNanos) {
         Instant time = wallClock(timeNanos);
-        onLayoutThread(() -> deliver(address, last -> new SpeedCommand(address,
-                last == null ? 0f : last.getSpeedSetting(), last == null || last.isForward(), true, timeNanos, time)));
+        onLayoutThread(() -> {
+            boolean heardAfter = attached.stream().anyMatch(s -> s.hearsEveryCab(address));
+            deliver(address, last -> new SpeedCommand(address, last == null ? 0f : last.getSpeedSetting(),
+                    last == null || last.isForward(), true, heardAfter, timeNanos, time));
+        });
     }
 
     /** Makes a command for a record, from the record's last command for the same loco. */

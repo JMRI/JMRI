@@ -388,6 +388,7 @@ public class ActiveTrain implements PropertyChangeProvider {
             if (mStatus != status) {
                 int old = mStatus;
                 mStatus = status;
+                reserveInTrainRecord();
                 firePropertyChange(PROPERTY_STATUS, old, mStatus);
                 if (mStatus == DONE) {
                     mDispatcher.terminateActiveTrain(this,terminateWhenFinished,true);
@@ -486,6 +487,32 @@ public class ActiveTrain implements PropertyChangeProvider {
     void setTrainRecord(@Nonnull TrainRecord record) {
         trainRecord = record;
         copyToTrainRecord();
+        reserveInTrainRecord();
+    }
+
+    /**
+     * Tell this train's record the Blocks of the Sections allocated to it,
+     * and whether the train is kept to them: it is while Dispatcher runs it
+     * automatically, and not once it is done or terminated, or driven by a
+     * person.
+     */
+    private void reserveInTrainRecord() {
+        TrainRecord record = trainRecord;
+        if (record == null) {
+            return;
+        }
+        java.util.Set<Block> blocks = new java.util.HashSet<>();
+        if (mMode != TERMINATED && mStatus != DONE) {
+            for (AllocatedSection as : mAllocatedSections) {
+                blocks.addAll(as.getSection().getBlockList());
+            }
+        }
+        boolean kept = mMode == AUTOMATIC && mStatus != DONE;
+        if (jmri.util.ThreadingUtil.isLayoutThread()) {
+            record.setReservedBlocks(blocks, kept);
+        } else {
+            jmri.util.ThreadingUtil.runOnLayoutEventually(() -> record.setReservedBlocks(blocks, kept));
+        }
     }
 
     /**
@@ -892,6 +919,7 @@ public class ActiveTrain implements PropertyChangeProvider {
                 || (mode == DISPATCHED || mode == TERMINATED)) {
             int old = mMode;
             mMode = mode;
+            reserveInTrainRecord();
             firePropertyChange(PROPERTY_MODE, old, mMode);
         } else {
             log.error("Attempt to set ActiveTrain mode to illegal value - {}", mode);
@@ -1018,6 +1046,7 @@ public class ActiveTrain implements PropertyChangeProvider {
             if (mDispatcher.getExtraColorForAllocated()) {
                 as.getSection().setAlternateColorFromActiveBlock(true);
             }
+            reserveInTrainRecord();
             // notify anyone interested
             firePropertyChange(PROPERTY_SECTION_ALLOCATED,as , null);
             refreshPanel();
@@ -1092,6 +1121,7 @@ public class ActiveTrain implements PropertyChangeProvider {
                 releaseBlockDisplay(b);
             }
         }
+        reserveInTrainRecord();
         // notify anyone interested
         firePropertyChange(PROPERTY_SECTION_DEALLOCATED,as , null);
         refreshPanel();
