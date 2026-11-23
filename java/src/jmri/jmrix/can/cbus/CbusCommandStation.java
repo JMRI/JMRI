@@ -2,6 +2,7 @@ package jmri.jmrix.can.cbus;
 
 import javax.annotation.CheckForNull;
 import jmri.CommandStation;
+import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficController;
@@ -124,6 +125,20 @@ public class CbusCommandStation implements CommandStation {
      * @param speed_dir Bit 7 is direction (1 = forward) 6:0 are speed
      */
     protected void setSpeedDir(int handle, int speed_dir) {
+        setSpeedDir(handle, speed_dir, null);
+    }
+
+    /**
+     * Set loco speed and direction, and be told when the message has been
+     * sent.
+     *
+     * @param handle    The handle of the session to which it applies
+     * @param speed_dir Bit 7 is direction (1 = forward) 6:0 are speed
+     * @param sent      told when the message has been written to the
+     *                  connection, or null; not told if no message is sent
+     * @since 5.19.1
+     */
+    protected void setSpeedDir(int handle, int speed_dir, @CheckForNull AbstractMRMessage.SentListener sent) {
         if (!isValidHandle(handle, "DSPD")) {
             return;
         }
@@ -131,6 +146,7 @@ public class CbusCommandStation implements CommandStation {
         msg.setOpCode(CbusConstants.CBUS_DSPD);
         msg.setElement(1, handle);
         msg.setElement(2, speed_dir);
+        msg.setSentListener(sent);
         log.debug("setSpeedDir session handle {} speedDir {}", handle, speed_dir);
         tc.sendCanMessage(msg, null);
     }

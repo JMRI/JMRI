@@ -1,10 +1,8 @@
 package jmri.jmrit.roster.swing.speedprofile;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -26,14 +24,7 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import jmri.Block;
-import jmri.DccThrottle;
-import jmri.InstanceManager;
-import jmri.Sensor;
-import jmri.SensorManager;
-import jmri.SpeedStepMode;
-import jmri.Throttle;
-import jmri.ThrottleListener;
+import jmri.*;
 import jmri.jmrit.logix.WarrantPreferences;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -69,6 +60,12 @@ import org.jdom2.JDOMException;
  * After a forward run, the Start and Finish sensors are swapped for a run in
  * reverse.
  */
+@SuppressFBWarnings(value = {
+    "AT_NONATOMIC_OPERATIONS_ON_SHARED_VARIABLE",
+    "AT_NONATOMIC_64BIT_PRIMITIVE",
+    "AT_STALE_THREAD_WRITE_OF_PRIMITIVE"},
+    justification = "This class is not thread safe.")
+
 class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleListener {
 
     public static final String XML_ROOT = "speedprofiler-config";
@@ -81,6 +78,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     JButton viewNewButton = new JButton(Bundle.getMessage("ButtonViewNew"));
     JButton viewMergedButton = new JButton(Bundle.getMessage("ButtonViewMerged"));
     JButton viewButton = new JButton(Bundle.getMessage("ButtonViewCurrent"));
+    JButton viewRepeatsButton = new JButton(Bundle.getMessage("ButtonViewRepeats"));
     JCheckBox createSensorsCheckBox = new JCheckBox(Bundle.getMessage("CreateSensorsIfNotDefined"));
     JCheckBox useCurrentSpeedStepsCheckBox = new JCheckBox(Bundle.getMessage("UseCurrentSpeedSteps"));
 
@@ -99,6 +97,8 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     JTextField speedStepFrom = new JTextField(5);
     JTextField speedStepTo = new JTextField(5);
     JTextField speedStepIncr = new JTextField(5);
+    JTextField repeatLowestSteps = new JTextField(5);
+    JTextField repeatTimes = new JTextField(5);
     MakeLabelPanel labelSpeedStepIncrement;
     JLabel warrentScaleLabel = new JLabel();
 
@@ -109,7 +109,6 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     BeanSelectCreatePanel<Sensor> sensorBPanel = new BeanSelectCreatePanel<>(InstanceManager.sensorManagerInstance(), null);
 
     // Block sensor
-    BeanSelectCreatePanel<Block> blockCPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(jmri.BlockManager.class), null);
     BeanSelectCreatePanel<Sensor> sensorCPanel = new BeanSelectCreatePanel<>(InstanceManager.sensorManagerInstance(), null);
 
     RosterEntryComboBox reBox = new RosterEntryComboBox();
@@ -121,15 +120,13 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     float testSpeedFwd = 0.0f;
     float testSpeedRev = 0.0f;
     boolean save = false;
-    boolean unmergedNewData = false;       // true if new data has been gathered but not merged to profile
-    boolean unsavedUpdatedProfile = false; // true if the roster profile has been updated but not saved
 
-    private JLabel sourceLabel;
+    private final JLabel sourceLabel;
 
     /*
      * Capture changes in speed steps
      */
-    private PropertyChangeListener throttleListener = new PropertyChangeListener() {
+    private final PropertyChangeListener throttleListener = new PropertyChangeListener() {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             if (evt == null) {
@@ -191,6 +188,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         panelViews.add(viewNewButton);
         panelViews.add(viewMergedButton);
         panelViews.add(viewButton);
+        panelViews.add(viewRepeatsButton);
         left = makePadPanel(panelViews);
         JPanel panelProfileControl = new JPanel();
         panelProfileControl.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ButtonProfile")));
@@ -212,6 +210,10 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         left.add(labelSpeedStepIncrement);
         speedStepIncr.setToolTipText(Bundle.getMessage("StepIncrToolTip"));
         left.add(useCurrentSpeedStepsCheckBox);
+        left.add(new MakeLabelPanel("LabelRepeatLowestSteps", repeatLowestSteps));
+        repeatLowestSteps.setToolTipText(Bundle.getMessage("RepeatLowestStepsToolTip"));
+        left.add(new MakeLabelPanel("LabelRepeatTimes", repeatTimes));
+        repeatTimes.setToolTipText(Bundle.getMessage("RepeatTimesToolTip"));
         right = new JPanel();
         addRow(main, gb, c, gridRow++, left, right);
 
@@ -338,6 +340,10 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
             viewNewProfileData();
         });
 
+        viewRepeatsButton.addActionListener((ActionEvent e) -> {
+            viewRepeats();
+        });
+
         saveDefaultsButton.addActionListener((ActionEvent e) -> {
             doSaveSettings();
         });
@@ -384,8 +390,8 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
 
     private static class MakeLabelPanel extends JPanel
     {
-        private Component comp;
-        private JLabel label;
+        private final Component comp;
+        private final JLabel label;
         public MakeLabelPanel (String text, Component comp) {
             this.comp = comp;
             this.label = new JLabel(Bundle.getMessage(text));
@@ -414,9 +420,24 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     protected boolean useCurrentSpeedSteps;
     protected int useCurrentSpeedSteps_index;
     protected List<Integer> speedSettingsToUse;
-    RosterSpeedProfile rosterSpeedProfile;
 
     protected float profileSpeedAtStart;
+
+    /** Repeats of each of the lowest steps, when the number is not given. */
+    static final int DEFAULT_REPEATS = 3;
+    /** The most repeats of each of the lowest steps. */
+    static final int MAX_REPEATS = 99;
+    /** How many of the lowest steps to repeat at the end of a profile; 0 for none. */
+    protected int repeatCount;
+    /** How many times to repeat each of them. */
+    protected int repeatEach;
+    /** The runs made in the profile so far, before any repeats. */
+    private final List<SpeedStepRepeats.Run> profiledRuns = new ArrayList<>();
+    /** The runs that repeat the lowest steps; null until the profile itself is done. */
+    private List<SpeedStepRepeats.Run> repeatRuns = null;
+    private int repeatIndex = 0;
+    /** The speeds measured for the repeated steps in the last profile. */
+    final SpeedStepRepeats repeats = new SpeedStepRepeats();
 
     void setupProfile() {
         String text;
@@ -449,16 +470,16 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         if (sensorA == null) {
             try {
                 sensorA = new SensorDetails(sensorAPanel.getNamedBean());
-            } catch (Exception e) {
+            } catch (JmriException e) {
                 JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorSensorNotFound", Bundle.getMessage("LabelStartSensor")));
                 setButtonStates(true);
                 return;
             }
         } else {
-            Sensor tmpSen = null;
+            Sensor tmpSen;
             try {
                 tmpSen = sensorAPanel.getNamedBean();
-            } catch (Exception e) {
+            } catch (JmriException e) {
                 JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorSensorNotFound", Bundle.getMessage("LabelStartSensor")));
                 setButtonStates(true);
                 return;
@@ -471,7 +492,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         if (sensorB == null) {
             try {
                 sensorB = new SensorDetails(sensorBPanel.getNamedBean());
-            } catch (Exception e) {
+            } catch (JmriException e) {
                 JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorSensorNotFound", Bundle.getMessage("LabelFinishSensor")));
                 setButtonStates(true);
                 return;
@@ -481,7 +502,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
             Sensor tmpSen = null;
             try {
                 tmpSen = sensorBPanel.getNamedBean();
-            } catch (Exception e) {
+            } catch (JmriException e) {
                 JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorSensorNotFound", Bundle.getMessage("LabelFinishSensor")));
                 setButtonStates(true);
                 return;
@@ -494,16 +515,16 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         if (middleBlockSensor == null) {
             try {
                 middleBlockSensor = new SensorDetails(sensorCPanel.getNamedBean());
-            } catch (Exception e) {
+            } catch (JmriException e) {
                 JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorSensorNotFound", Bundle.getMessage("LabelBlockSensor")));
                 setButtonStates(true);
                 return;
             }
         } else {
-            Sensor tmpSen = null;
+            Sensor tmpSen;
             try {
                 tmpSen = sensorCPanel.getNamedBean();
-            } catch (Exception e) {
+            } catch (JmriException e) {
                 JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorSensorNotFound", Bundle.getMessage("LabelBlockSensor")));
                 setButtonStates(true);
                 return;
@@ -529,7 +550,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
                     setButtonStates(true);
                     return;
                 }
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorSpeedStep", Bundle.getMessage("LabelStartStep")));
                 setButtonStates(true);
                 return;
@@ -543,7 +564,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
                     setButtonStates(true);
                     return;
                 }
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorSpeedStep", Bundle.getMessage("LabelFinishStep")));
                 setButtonStates(true);
                 return;
@@ -576,10 +597,32 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
                 speedSettingsToUse.add(speedEntry.getKey());
             }
         }
+        repeatCount = 0;
+        repeatEach = DEFAULT_REPEATS;
+        profiledRuns.clear();
+        repeatRuns = null;
+        repeatIndex = 0;
+        if (profile) {
+            text = repeatLowestSteps.getText();
+            if (text != null && text.trim().length() > 0) {
+                repeatCount = parseRepeat(text, 0, throttleSpeedSteps, "LabelRepeatLowestSteps");
+                if (repeatCount < 0) {
+                    return;
+                }
+            }
+            text = repeatTimes.getText();
+            if (repeatCount > 0 && text != null && text.trim().length() > 0) {
+                repeatEach = parseRepeat(text, 1, MAX_REPEATS, "LabelRepeatTimes");
+                if (repeatEach < 0) {
+                    return;
+                }
+            }
+            repeats.clear();
+        }
         throttleState = 0;
         if (re.getSpeedProfile() != null
                 && re.getSpeedProfile().getProfileSpeeds() != null
-                && re.getSpeedProfile().getProfileSpeeds().entrySet().size() > 0) {
+                && !re.getSpeedProfile().getProfileSpeeds().entrySet().isEmpty()) {
             for ( var speedEntry : re.getSpeedProfile().getProfileSpeeds().entrySet() ) {
                 speedSettingsToUse.add(speedEntry.getKey());
             }
@@ -600,7 +643,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
                         try {
                             Thread.sleep(1000);
                             log.debug("Wait");
-                        } catch (Exception ex) {
+                        } catch (InterruptedException ex) {
                             log.warn("Throttle for locomotive {} could not be set up.", re.getId());
                             setButtonStates(true);
                             return;
@@ -619,6 +662,30 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
 
     }
 
+    /**
+     * Read a number of repeats, showing an error if it is not valid.
+     *
+     * @param text  the text entered
+     * @param min   the least valid number
+     * @param max   the greatest valid number
+     * @param label the key of the field's label
+     * @return the number, or -1 if it is not valid
+     */
+    private int parseRepeat(String text, int min, int max, String label) {
+        int n;
+        try {
+            n = Integer.parseInt(text.trim());
+        } catch (NumberFormatException e) {
+            n = -1;
+        }
+        if (n < min || n > max) {
+            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorRepeatCount", Bundle.getMessage(label), min, max));
+            setButtonStates(true);
+            return -1;
+        }
+        return n;
+    }
+
     boolean speedStepNumOK(int num, String step) {
         if (num < 1 || num > throttleSpeedSteps ) {
             JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorSpeedStep", Bundle.getMessage(step), throttleSpeedSteps));
@@ -627,8 +694,6 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         }
         return true;
     }
-
-    javax.swing.Timer overRunTimer = null;
 
     private volatile int throttleState = 0;   // zero waiting, -1 no throttle (message already shown), 1
 
@@ -658,7 +723,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
                     try {
                         Thread.sleep(1000);
                         log.debug("Wait");
-                    } catch (Exception ex) {
+                    } catch (InterruptedException ex) {
                         log.warn("Throttle for locomotive {} could not be set up.", re.getId());
                         return;
                     }
@@ -717,26 +782,20 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         if (profile) {
             startSensor = middleBlockSensor.getSensor();
             finishSensor = sensorB.getSensor();
-            startListener = new PropertyChangeListener() {
-                @Override
-                public void propertyChange(PropertyChangeEvent e) {
-                    if (e.getPropertyName().equals("KnownState")) {
-                        if (((Integer) e.getNewValue()) == Sensor.ACTIVE) {
-                            startTiming();
-                        }
-                        if (((Integer) e.getNewValue()) == Sensor.INACTIVE) {
-                            stopLoco();
-                        }
+            startListener = (PropertyChangeEvent e) -> {
+                if (e.getPropertyName().equals("KnownState")) {
+                    if (((Integer) e.getNewValue()) == Sensor.ACTIVE) {
+                        startTiming();
+                    }
+                    if (((Integer) e.getNewValue()) == Sensor.INACTIVE) {
+                        stopLoco();
                     }
                 }
             };
-            finishListener = new PropertyChangeListener() {
-                @Override
-                public void propertyChange(PropertyChangeEvent e) {
-                    if (e.getPropertyName().equals("KnownState")) {
-                        if (((Integer) e.getNewValue()) == Sensor.ACTIVE) {
-                            stopCurrentSpeedStep();
-                        }
+            finishListener = (PropertyChangeEvent e) -> {
+                if (e.getPropertyName().equals("KnownState")) {
+                    if (((Integer) e.getNewValue()) == Sensor.ACTIVE) {
+                        stopCurrentSpeedStep();
                     }
                 }
             };
@@ -752,26 +811,20 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
             profileSpeed = profileIncrement * profileStep;
             startSensor = middleBlockSensor.getSensor();
             finishSensor = sensorB.getSensor();
-            startListener = new PropertyChangeListener() {
-                @Override
-                public void propertyChange(PropertyChangeEvent e) {
-                    if (e.getPropertyName().equals("KnownState")) {
-                        if (((Integer) e.getNewValue()) == Sensor.ACTIVE) {
-                            startTiming();
-                        }
-                        if (((Integer) e.getNewValue()) == Sensor.INACTIVE) {
-                            stopLoco();
-                        }
+            startListener = (PropertyChangeEvent e) -> {
+                if (e.getPropertyName().equals("KnownState")) {
+                    if (((Integer) e.getNewValue()) == Sensor.ACTIVE) {
+                        startTiming();
+                    }
+                    if (((Integer) e.getNewValue()) == Sensor.INACTIVE) {
+                        stopLoco();
                     }
                 }
             };
-            finishListener = new PropertyChangeListener() {
-                @Override
-                public void propertyChange(PropertyChangeEvent e) {
-                    if (e.getPropertyName().equals("KnownState")) {
-                        if (((Integer) e.getNewValue()) == Sensor.ACTIVE) {
-                            stopCurrentSpeedStep();
-                        }
+            finishListener = (PropertyChangeEvent e) -> {
+                if (e.getPropertyName().equals("KnownState")) {
+                    if (((Integer) e.getNewValue()) == Sensor.ACTIVE) {
+                        stopCurrentSpeedStep();
                     }
                 }
             };
@@ -781,14 +834,15 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         }
     }
 
-    void setButtonStates(boolean state) {
+    final void setButtonStates(boolean state) {
         cancelButton.setEnabled(!state);
         profileButton.setEnabled(state);
         testButton.setEnabled(state);
         testCancelButton.setEnabled(!state);
         viewButton.setEnabled(state);
         deleteProfileButton.setEnabled(state);
-        if (state && speeds.size() > 0) {
+        viewRepeatsButton.setEnabled(state && repeats.hasRepeats());
+        if (state && !speeds.isEmpty()) {
             viewNewButton.setEnabled(true);
             viewMergedButton.setEnabled(true);
             replaceProfileButton.setEnabled(true);
@@ -887,7 +941,12 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
 
     void startTiming() {
         startTime = System.nanoTime();
-        if (!useCurrentSpeedSteps) {
+        if (repeatRuns != null) {
+            sourceLabel.setText(Bundle.getMessage("StatusLabelRepeatRun",
+                (isForward ? Bundle.getMessage("LabelTestStepFwd") : Bundle.getMessage("LabelTestStepRev")),
+                (profileStep > 0 ? Integer.toString(profileStep) : Float.toString(profileSpeed * 100.0f) + "%"),
+                repeatIndex + 1, repeatRuns.size()));
+        } else if (!useCurrentSpeedSteps) {
             sourceLabel.setText(Bundle.getMessage("StatusLabelCurrentRun",
                 (isForward ? Bundle.getMessage("LabelTestStepFwd") : Bundle.getMessage("LabelTestStepRev")),
                 profileStep, finishSpeedStep));
@@ -927,7 +986,18 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
 
         isForward = !isForward;
         // Increment and test
-        if (isForward) {
+        if (isForward && repeatRuns != null) {
+            // repeating the lowest steps
+            repeatIndex++;
+            if (repeatIndex >= repeatRuns.size()) {
+                finishProfile();
+                return;
+            }
+            setRun(repeatRuns.get(repeatIndex));
+        } else if (isForward) {
+            if (profile) {
+                profiledRuns.add(currentRun());
+            }
             if (!useCurrentSpeedSteps) {
                 profileSpeed = profileIncrement * stepIncr + profileSpeed;
                 profileStep += stepIncr;
@@ -940,16 +1010,17 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
             if (( !useCurrentSpeedSteps && stepIncr > 0  && profileStep > finishSpeedStep)
                     || ( !useCurrentSpeedSteps && stepIncr < 0  && profileStep < finishSpeedStep)
                     || (useCurrentSpeedSteps && useCurrentSpeedSteps_index >= speedSettingsToUse.size())) {
-                t.setSpeedSetting(0.0f);
-                if (!profile) {
-                    // there are only the 2 fields on screen to be updated after a test
-                    speedStepTestFwd.setText(RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(testSpeedFwd,true));
-                    speedStepTestRev.setText(RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(testSpeedRev,true));
+                List<SpeedStepRepeats.Run> runs = profile && repeatCount > 0
+                        ? SpeedStepRepeats.plan(profiledRuns, repeatCount, repeatEach)
+                        : new ArrayList<>();
+                if (runs.isEmpty()) {
+                    finishProfile();
+                    return;
                 }
-                releaseThrottle();
-                //updateSpeedProfileWithResults();
-                setButtonStates(true);
-                return;
+                // the profile is done: repeat its lowest steps, now the loco is warm
+                repeatRuns = runs;
+                repeatIndex = 0;
+                setRun(repeatRuns.get(0));
             }
         }
         // Loco may have been brought to half-speed in stopCurrentSpeedStep, so wait for that to take effect then stop & restart
@@ -974,6 +1045,38 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         stopTimer.start();
     }
 
+    /**
+     * Stop the loco and finish a profile or test.
+     */
+    private void finishProfile() {
+        t.setSpeedSetting(0.0f);
+        if (!profile) {
+            // there are only the 2 fields on screen to be updated after a test
+            speedStepTestFwd.setText(RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(testSpeedFwd,true));
+            speedStepTestRev.setText(RosterSpeedProfile.convertMMSToScaleSpeedWithUnits(testSpeedRev,true));
+        }
+        releaseThrottle();
+        repeatRuns = null;
+        setButtonStates(true);
+    }
+
+    /**
+     * @return the run being made now
+     */
+    private SpeedStepRepeats.Run currentRun() {
+        return new SpeedStepRepeats.Run(profileSpeed, useCurrentSpeedSteps ? 0 : profileStep);
+    }
+
+    /**
+     * Make the next run at a given throttle setting.
+     *
+     * @param run the run
+     */
+    private void setRun(SpeedStepRepeats.Run run) {
+        profileSpeed = run.speed;
+        profileStep = run.step;
+    }
+
     void calculateSpeed() {
         float duration = (((float) (finishTime - startTime)) / 1000000000); // convert to seconds
         duration = duration - (profileSensorDelay / 1000); // allow for time differences between sensor delays
@@ -989,6 +1092,12 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
                 speeds.put(iSpeedStep, new SpeedStep());
             }
             SpeedStep ss = speeds.get(iSpeedStep);
+            if (repeatRuns != null) {
+                // a repeated step: the profile gets the mean of its repeats
+                speed = repeats.recordRepeat(currentRun(), isForward, speed);
+            } else {
+                repeats.recordFirst(currentRun(), isForward, speed);
+            }
             if (isForward) {
                 ss.setForwardSpeed(speed);
             } else {
@@ -1062,17 +1171,36 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
 
     void clearNewData() {
         speeds.clear();
+        repeats.clear();
+        viewRepeatsButton.setEnabled(false);
     }
 
-    void removeSpeedProfile() {
-        cancelButton();
-        RosterSpeedProfile rosterSpeedProfile = re.getSpeedProfile();
-        if (rosterSpeedProfile != null) {
-            rosterSpeedProfile.clearCurrentProfile();
+    /**
+     * View the speed steps repeated at the end of the last profile.
+     */
+    void viewRepeats() {
+        if (repeatsTable != null) {
+            repeatsTable.dispose();
         }
-        re.updateFile();
-        Roster.getDefault().writeRoster();
-        save = false;
+        repeatsTable = new SpeedStepRepeatsTable(repeats, re == null ? "" : re.getId());
+        repeatsTable.setVisible(true);
+    }
+
+    SpeedStepRepeatsTable repeatsTable = null;
+
+    void removeSpeedProfile() {
+        if (re != null) {
+            cancelButton();
+            RosterSpeedProfile rosterSpeedProfile = re.getSpeedProfile();
+            if (rosterSpeedProfile != null) {
+                rosterSpeedProfile.clearCurrentProfile();
+            }
+            re.updateFile();
+            Roster.getDefault().writeRoster();
+            save = false;
+        } else {
+            log.info("There is no roster entry");
+        }
     }
 
     /**
@@ -1180,7 +1308,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     void testButton() {
         // TODO Should also test that the step is no greater than those available on the throttle.
         try {
-            Integer.parseInt(speedStepTest.getText());
+            Integer.valueOf(speedStepTest.getText());
         } catch (NumberFormatException e) {
             JmriJOptionPane.showMessageDialog(this,
                     Bundle.getMessage("ErrorSpeedStep", Bundle.getMessage("LabelTestStep")));
@@ -1210,13 +1338,9 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         startSensor.removePropertyChangeListener(startListener);
     }
     */
+
     long startTime;
     long finishTime;
-
-    ArrayList<Double> forwardOverRuns = new ArrayList<>();
-    ArrayList<Double> reverseOverRuns = new ArrayList<>();
-
-    JPanel update;
 
     static class SensorDetails {
 
@@ -1230,12 +1354,6 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
             usingGlobal = sen.getUseDefaultTimerSettings();
             activeDelay = sen.getSensorDebounceGoingActiveTimer();
             inactiveDelay = sen.getSensorDebounceGoingInActiveTimer();
-        }
-
-        void setupSensor() {
-            sensor.setUseDefaultTimerSettings(false);
-            sensor.setSensorDebounceGoingActiveTimer(0);
-            sensor.setSensorDebounceGoingInActiveTimer(0);
         }
 
         void resetDetails() {
@@ -1335,6 +1453,12 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         if (speedStepIncr.getText().length() > 0) {
             values.addContent(new Element("speedStepIncr").addContent(speedStepIncr.getText()));
         }
+        if (repeatLowestSteps.getText().length() > 0) {
+            values.addContent(new Element("repeatLowestSteps").addContent(repeatLowestSteps.getText()));
+        }
+        if (repeatTimes.getText().length() > 0) {
+            values.addContent(new Element("repeatTimes").addContent(repeatTimes.getText()));
+        }
 
         try {
             ProfileUtils.getAuxiliaryConfiguration(ProfileManager.getDefault().getActiveProfile())
@@ -1356,14 +1480,20 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         lengthUnitMm.setSelected(true);
 
         log.debug("Check if there's anything to load");
-        try {
-            root = JDOMUtil.toJDOMElement(ProfileUtils.getAuxiliaryConfiguration(ProfileManager.getDefault().getActiveProfile())
-                    .getConfigurationFragment(XML_ROOT, XML_NAMESPACE, true));
-        } catch (NullPointerException ex) {
+        var activeProfile = ProfileManager.getDefault().getActiveProfile();
+        if (activeProfile == null) {
             // expected if never saved before
             log.debug("Nothing to load");
             return;
         }
+        var config = ProfileUtils.getAuxiliaryConfiguration(activeProfile)
+                .getConfigurationFragment(XML_ROOT, XML_NAMESPACE, true);
+        if (config == null) {
+            // expected if never saved before
+            log.debug("Nothing to load");
+            return;
+        }
+        root = JDOMUtil.toJDOMElement(config);
 
         log.debug("Start loading SpeedProfiler settings...");
 
@@ -1414,7 +1544,12 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
                     try {
                         manager.newSensor(e.getChild("sensorvalue").getText(),null);
                     } catch (IllegalArgumentException iex) {
-                        JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorSensorCannotCreate", e.getChild("sensorvalue").getText()));
+                        try {
+                            JmriJOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorSensorCannotCreate", e.getChild("sensorvalue").getText()));
+                        } catch (HeadlessException e2) {
+                            // This cannot happen since we would not be here if JMRI is headless.
+                            // But Spotbugs fails on throwing exception in constructor.
+                        }
                     }
                 }
                 switch (sensorType) {
@@ -1445,6 +1580,12 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
                         break;
                     case "speedStepIncr":
                         speedStepIncr.setText(e.getValue());
+                        break;
+                    case "repeatLowestSteps":
+                        repeatLowestSteps.setText(e.getValue());
+                        break;
+                    case "repeatTimes":
+                        repeatTimes.setText(e.getValue());
                         break;
                     default:
                         log.warn("Invalid field in steps of PanelProSpeedProfiler.xml");

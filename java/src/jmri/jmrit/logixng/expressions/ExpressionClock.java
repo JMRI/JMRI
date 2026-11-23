@@ -170,7 +170,7 @@ public class ExpressionClock extends AbstractDigitalExpression implements Proper
                         ExpressionClock.formatTime(_endTime));
 
             default:
-                throw new RuntimeException("Unknown value of _timerType: "+_type.name());
+                throw new JmriUncheckedException("Unknown value of _timerType: "+_type.name());
         }
     }
 
@@ -235,7 +235,9 @@ public class ExpressionClock extends AbstractDigitalExpression implements Proper
                 propertyChange(null);
             }
         };
-        TimerUtil.schedule(timerTask, System.currentTimeMillis() % milisInAMinute, milisInAMinute);
+        // first at the start of the next minute, then every minute
+        long toNextMinute = milisInAMinute - System.currentTimeMillis() % milisInAMinute;
+        TimerUtil.scheduleAtFixedRate(timerTask, toNextMinute, milisInAMinute);
     }
 
     /** {@inheritDoc} */

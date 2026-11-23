@@ -3,17 +3,15 @@ package jmri.jmrix.marklin;
 import java.util.Optional;
 import jmri.jmrix.marklin.mcan.address.AddressSpace;
 import jmri.jmrix.marklin.mcan.cdb.CdBFrameParser;
-import jmri.jmrix.marklin.mcan.device.CdBDeviceClass;
-import jmri.jmrix.marklin.mcan.classify.ClassifiedFrame;
-import jmri.jmrix.marklin.mcan.classify.Cs2ClassifiedFrame;
-import jmri.jmrix.marklin.mcan.classify.FrameProtocol;
+import jmri.jmrix.marklin.mcan.cdb.CdBDeviceClass;
+import jmri.jmrix.marklin.mcan.McanFrame;
+import jmri.jmrix.marklin.mcan.cs2.Cs2Frame;
 import jmri.jmrix.marklin.mcan.classify.ProtocolClassifier;
 import jmri.jmrix.marklin.mcan.cs2.Cs2AccessoryCommands;
 import jmri.jmrix.marklin.mcan.cs2.Cs2AutomationCommands;
 import jmri.jmrix.marklin.mcan.cs2.Cs2ConfigCommands;
 import jmri.jmrix.marklin.mcan.cs2.Cs2DecoderCommands;
 import jmri.jmrix.marklin.mcan.cs2.Cs2FeedbackCommands;
-import jmri.jmrix.marklin.mcan.cs2.Cs2FrameParser;
 import jmri.jmrix.marklin.mcan.cs2.Cs2GuiCommands;
 import jmri.jmrix.marklin.mcan.cs2.Cs2SystemCommands;
 
@@ -53,12 +51,23 @@ public class MarklinMessageFormatter {
      * @return formatted message string
      */
     public static String formatRaw(int[] rawData, I18nProvider i18n, boolean includeDeviceInfo) {
+        return format(ProtocolClassifier.classify(rawData), i18n, includeDeviceInfo);
+    }
+
+    /**
+     * Format an already classified MCAN frame in MarklinMon style.
+     *
+     * @param cf classified frame, e.g. from {@link MarklinReply#getFrame()}
+     * @param i18n optional i18n provider (null for English-only)
+     * @param includeDeviceInfo if true, prepend device identification from PING reply hash
+     * @return formatted message string
+     */
+    public static String format(McanFrame cf, I18nProvider i18n, boolean includeDeviceInfo) {
         StringBuilder sb = new StringBuilder();
+        int[] rawData = cf.raw().toArray();
 
-        ClassifiedFrame cf = ProtocolClassifier.classify(rawData);
-
-        if (includeDeviceInfo && cf.protocol() == FrameProtocol.CS2_NATIVE) {
-            appendDeviceInfo(cf, sb);
+        if (includeDeviceInfo && cf instanceof Cs2Frame) {
+            appendDeviceInfo((Cs2Frame) cf, sb);
         }
 
         appendPriority(cf, sb);
@@ -85,29 +94,26 @@ public class MarklinMessageFormatter {
     // Private helpers
     // ---------------------------------------------------------------------------
 
-    private static void appendDeviceInfo(ClassifiedFrame cf, StringBuilder sb) {
-        // Only attempt device info for CS2 native frames
-        if (cf.protocol() != FrameProtocol.CS2_NATIVE) return;
-        Cs2ClassifiedFrame typed = Cs2FrameParser.parse(cf);
+    private static void appendDeviceInfo(Cs2Frame typed, StringBuilder sb) {
         if (typed instanceof Cs2ConfigCommands.PingReplyFrame) {
             Cs2ConfigCommands.PingReplyFrame ping = (Cs2ConfigCommands.PingReplyFrame) typed;
-            sb.append(String.format("[0x%08X type=0x%04X] ", ping.uid(), ping.deviceType()));
+            sb.append(String.format("[0x%08X type=0x%04X] ", ping.uid().toLong(), ping.deviceType()));
         } else {
-            int hash = cf.cs2Header().hash();
+            int hash = typed.header().hash();
             sb.append(String.format("[Hash:0x%04X] ", hash));
         }
     }
 
-    private static void appendPriority(ClassifiedFrame cf, StringBuilder sb) {
-        if (cf.protocol() == FrameProtocol.UNKNOWN) {
-            sb.append("Unknown Priority");
-            return;
-        }
-        if (cf.protocol() == FrameProtocol.CDB_CONFIG) {
+    private static void appendPriority(McanFrame cf, StringBuilder sb) {
+        if (cf instanceof CdBFrameParser.CdBFrame) {
             sb.append("CdB Config");
             return;
         }
-        switch (cf.cs2Header().busPriority()) {
+        if (!(cf instanceof Cs2Frame)) {
+            sb.append("Unknown Priority");
+            return;
+        }
+        switch (((Cs2Frame) cf).header().busPriority()) {
             case 0:  sb.append("Priority 1: Stop/Go/Short"); break;
             case 1:  sb.append("Priority 2: Feedback"); break;
             case 2:  sb.append("Priority 3: Engine Stop"); break;
@@ -116,26 +122,19 @@ public class MarklinMessageFormatter {
         }
     }
 
-    private static void appendCommand(ClassifiedFrame cf, int[] rawData, StringBuilder sb, I18nProvider i18n) {
+    private static void appendCommand(McanFrame cf, int[] rawData, StringBuilder sb, I18nProvider i18n) {
         sb.append(" Command: ");
 
-        if (cf.protocol() == FrameProtocol.UNKNOWN) {
+        if (cf instanceof CdBFrameParser.CdBFrame) {
+            formatCdBCommand((CdBFrameParser.CdBFrame) cf, sb);
+        } else if (cf instanceof Cs2Frame) {
+            appendCs2Command((Cs2Frame) cf, sb, i18n);
+        } else {
             sb.append("Raw MCAN frame");
-            return;
         }
-
-        if (cf.protocol() == FrameProtocol.CDB_CONFIG) {
-            CdBFrameParser.CdBFrame cdb = CdBFrameParser.parse(cf);
-            formatCdBCommand(cdb, sb);
-            return;
-        }
-
-        // CS2_NATIVE  -  parse to typed frame and dispatch
-        Cs2ClassifiedFrame frame = Cs2FrameParser.parse(cf);
-        appendCs2Command(frame, sb, i18n);
     }
 
-    private static void appendCs2Command(Cs2ClassifiedFrame frame, StringBuilder sb, I18nProvider i18n) {
+    private static void appendCs2Command(Cs2Frame frame, StringBuilder sb, I18nProvider i18n) {
         // System commands (0x00)
         if (frame instanceof Cs2SystemCommands.SystemStopRequestFrame) {
             sb.append("System Stop");
@@ -163,61 +162,61 @@ public class MarklinMessageFormatter {
             sb.append("System Cycle Stop Reply ").append(f.locId());
         } else if (frame instanceof Cs2SystemCommands.LocoDataProtocolRequestFrame) {
             Cs2SystemCommands.LocoDataProtocolRequestFrame f = (Cs2SystemCommands.LocoDataProtocolRequestFrame) frame;
-            sb.append("System Loco Data Protocol ").append(f.locId()).append(" prot=").append(f.protocol());
+            sb.append("System Loco Data Protocol ").append(f.locId()).append(" prot=").append(f.locoProtocol());
         } else if (frame instanceof Cs2SystemCommands.LocoDataProtocolReplyFrame) {
             Cs2SystemCommands.LocoDataProtocolReplyFrame f = (Cs2SystemCommands.LocoDataProtocolReplyFrame) frame;
-            sb.append("System Loco Data Protocol Reply ").append(f.locId()).append(" prot=").append(f.protocol());
+            sb.append("System Loco Data Protocol Reply ").append(f.locId()).append(" prot=").append(f.locoProtocol());
         } else if (frame instanceof Cs2SystemCommands.AccessorySwitchTimeRequestFrame) {
             Cs2SystemCommands.AccessorySwitchTimeRequestFrame f = (Cs2SystemCommands.AccessorySwitchTimeRequestFrame) frame;
-            sb.append("System Accessory Switch Time ").append(f.targetUid()).append(" t=").append(f.time10ms()).append("0ms");
+            sb.append("System Accessory Switch Time ").append(f.targetUid().toLong()).append(" t=").append(f.time10ms()).append("0ms");
         } else if (frame instanceof Cs2SystemCommands.AccessorySwitchTimeReplyFrame) {
             Cs2SystemCommands.AccessorySwitchTimeReplyFrame f = (Cs2SystemCommands.AccessorySwitchTimeReplyFrame) frame;
-            sb.append("System Accessory Switch Time Reply ").append(f.targetUid()).append(" t=").append(f.time10ms()).append("0ms");
+            sb.append("System Accessory Switch Time Reply ").append(f.targetUid().toLong()).append(" t=").append(f.time10ms()).append("0ms");
         } else if (frame instanceof Cs2SystemCommands.FastReadMfxRequestFrame) {
             Cs2SystemCommands.FastReadMfxRequestFrame f = (Cs2SystemCommands.FastReadMfxRequestFrame) frame;
-            sb.append("System Fast Read MFX ").append(f.senderUid()).append(" sid=").append(f.mfxSid());
+            sb.append("System Fast Read MFX ").append(f.senderUid().toLong()).append(" sid=").append(f.mfxSid());
         } else if (frame instanceof Cs2SystemCommands.FastReadMfxReplyFrame) {
             Cs2SystemCommands.FastReadMfxReplyFrame f = (Cs2SystemCommands.FastReadMfxReplyFrame) frame;
-            sb.append("System Fast Read MFX Reply ").append(f.senderUid()).append(" sid=").append(f.mfxSid());
+            sb.append("System Fast Read MFX Reply ").append(f.senderUid().toLong()).append(" sid=").append(f.mfxSid());
         } else if (frame instanceof Cs2SystemCommands.EnableTrackProtocolRequestFrame) {
             Cs2SystemCommands.EnableTrackProtocolRequestFrame f = (Cs2SystemCommands.EnableTrackProtocolRequestFrame) frame;
-            sb.append(String.format("System Enable Track Protocol %d mask=0x%02X", f.targetUid(), f.protocolMask()));
+            sb.append(String.format("System Enable Track Protocol %d mask=0x%02X", f.targetUid().toLong(), f.protocolMask()));
         } else if (frame instanceof Cs2SystemCommands.EnableTrackProtocolReplyFrame) {
             Cs2SystemCommands.EnableTrackProtocolReplyFrame f = (Cs2SystemCommands.EnableTrackProtocolReplyFrame) frame;
-            sb.append(String.format("System Enable Track Protocol Reply %d mask=0x%02X", f.targetUid(), f.protocolMask()));
+            sb.append(String.format("System Enable Track Protocol Reply %d mask=0x%02X", f.targetUid().toLong(), f.protocolMask()));
         } else if (frame instanceof Cs2SystemCommands.MfxReregistrationRequestFrame) {
             Cs2SystemCommands.MfxReregistrationRequestFrame f = (Cs2SystemCommands.MfxReregistrationRequestFrame) frame;
-            sb.append("System MFX Reregistration ").append(f.targetUid());
+            sb.append("System MFX Reregistration ").append(f.targetUid().toLong());
         } else if (frame instanceof Cs2SystemCommands.MfxReregistrationReplyFrame) {
             Cs2SystemCommands.MfxReregistrationReplyFrame f = (Cs2SystemCommands.MfxReregistrationReplyFrame) frame;
-            sb.append("System MFX Reregistration Reply ").append(f.targetUid());
+            sb.append("System MFX Reregistration Reply ").append(f.targetUid().toLong());
         } else if (frame instanceof Cs2SystemCommands.SystemOverloadFrame) {
             Cs2SystemCommands.SystemOverloadFrame f = (Cs2SystemCommands.SystemOverloadFrame) frame;
-            sb.append("System Overload ").append(f.senderUid()).append(" ch=").append(f.channel());
+            sb.append("System Overload ").append(f.senderUid().toLong()).append(" ch=").append(f.channel());
         } else if (frame instanceof Cs2SystemCommands.SystemStatusRequestFrame) {
             Cs2SystemCommands.SystemStatusRequestFrame f = (Cs2SystemCommands.SystemStatusRequestFrame) frame;
-            sb.append("System Status ").append(f.deviceUid()).append(" ch=").append(f.channel());
+            sb.append("System Status ").append(f.deviceUid().toLong()).append(" ch=").append(f.channel());
         } else if (frame instanceof Cs2SystemCommands.SystemStatusReplyFrame) {
             Cs2SystemCommands.SystemStatusReplyFrame f = (Cs2SystemCommands.SystemStatusReplyFrame) frame;
-            sb.append("System Status Reply ").append(f.deviceUid()).append(" ch=").append(f.channel()).append(" val=").append(f.measuredValue());
+            sb.append("System Status Reply ").append(f.deviceUid().toLong()).append(" ch=").append(f.channel()).append(" val=").append(f.measuredValue());
         } else if (frame instanceof Cs2SystemCommands.DeviceIdentifierRequestFrame) {
             Cs2SystemCommands.DeviceIdentifierRequestFrame f = (Cs2SystemCommands.DeviceIdentifierRequestFrame) frame;
-            sb.append("System Device Identifier Query ").append(f.targetUid());
+            sb.append("System Device Identifier Query ").append(f.targetUid().toLong());
         } else if (frame instanceof Cs2SystemCommands.DeviceIdentifierReplyFrame) {
             Cs2SystemCommands.DeviceIdentifierReplyFrame f = (Cs2SystemCommands.DeviceIdentifierReplyFrame) frame;
-            sb.append(String.format("System Device Identifier %d id=0x%04X", f.targetUid(), f.identifier()));
+            sb.append(String.format("System Device Identifier %d id=0x%04X", f.targetUid().toLong(), f.identifier()));
         } else if (frame instanceof Cs2SystemCommands.MfxSeekRequestFrame) {
             Cs2SystemCommands.MfxSeekRequestFrame f = (Cs2SystemCommands.MfxSeekRequestFrame) frame;
-            sb.append("System MFX Seek ").append(f.senderUid());
+            sb.append("System MFX Seek ").append(f.senderUid().toLong());
         } else if (frame instanceof Cs2SystemCommands.MfxSeekReplyFrame) {
             Cs2SystemCommands.MfxSeekReplyFrame f = (Cs2SystemCommands.MfxSeekReplyFrame) frame;
-            sb.append("System MFX Seek Reply ").append(f.senderUid());
+            sb.append("System MFX Seek Reply ").append(f.senderUid().toLong());
         } else if (frame instanceof Cs2SystemCommands.SystemResetRequestFrame) {
             Cs2SystemCommands.SystemResetRequestFrame f = (Cs2SystemCommands.SystemResetRequestFrame) frame;
-            sb.append("System Reset ").append(f.targetUid());
+            sb.append("System Reset ").append(f.targetUid().toLong());
         } else if (frame instanceof Cs2SystemCommands.SystemResetReplyFrame) {
             Cs2SystemCommands.SystemResetReplyFrame f = (Cs2SystemCommands.SystemResetReplyFrame) frame;
-            sb.append("System Reset Reply ").append(f.targetUid());
+            sb.append("System Reset Reply ").append(f.targetUid().toLong());
 
         // Decoder commands (0x03–0x0A)
         } else if (frame instanceof Cs2DecoderCommands.LocoEmergencyStopFrame) {
@@ -319,7 +318,7 @@ public class MarklinMessageFormatter {
             sb.append("Ping Request");
         } else if (frame instanceof Cs2ConfigCommands.PingReplyFrame) {
             Cs2ConfigCommands.PingReplyFrame f = (Cs2ConfigCommands.PingReplyFrame) frame;
-            sb.append(String.format("Ping Reply uid=0x%08X type=0x%04X sw=0x%04X", f.uid(), f.deviceType(), f.softwareVersion()));
+            sb.append(String.format("Ping Reply uid=0x%08X type=0x%04X sw=0x%04X", f.uid().toLong(), f.deviceType(), f.softwareVersion()));
         } else if (frame instanceof Cs2ConfigCommands.BootCanRequestFrame) {
             Cs2ConfigCommands.BootCanRequestFrame f = (Cs2ConfigCommands.BootCanRequestFrame) frame;
             sb.append(f.isGleisboxActivation() ? "CAN BOOT Gleisbox Activate" : "CAN BOOT Bootloader Mode");
@@ -327,24 +326,24 @@ public class MarklinMessageFormatter {
             sb.append("CAN BOOT Reply");
         } else if (frame instanceof Cs2ConfigCommands.UpdateOfferRequestFrame) {
             Cs2ConfigCommands.UpdateOfferRequestFrame f = (Cs2ConfigCommands.UpdateOfferRequestFrame) frame;
-            sb.append(String.format("Update Offer uid=0x%08X sw=0x%04X", f.uid(), f.version()));
+            sb.append(String.format("Update Offer uid=0x%08X sw=0x%04X", f.uid().toLong(), f.version()));
         } else if (frame instanceof Cs2ConfigCommands.UpdateOfferReplyFrame) {
             Cs2ConfigCommands.UpdateOfferReplyFrame f = (Cs2ConfigCommands.UpdateOfferReplyFrame) frame;
-            sb.append(String.format("Update Offer uid=0x%08X type=0x%04X", f.uid(), f.deviceType()));
+            sb.append(String.format("Update Offer uid=0x%08X type=0x%04X", f.uid().toLong(), f.deviceType()));
         } else if (frame instanceof Cs2ConfigCommands.ReadConfigDataRequestFrame) {
             Cs2ConfigCommands.ReadConfigDataRequestFrame f = (Cs2ConfigCommands.ReadConfigDataRequestFrame) frame;
-            sb.append(String.format("Read Config Data uid=0x%08X ch=%d", f.uid(), f.channelIndex()));
+            sb.append(String.format("Read Config Data uid=0x%08X ch=%d", f.uid().toLong(), f.channelIndex()));
         } else if (frame instanceof Cs2ConfigCommands.ReadConfigDataReplyFrame) {
             Cs2ConfigCommands.ReadConfigDataReplyFrame f = (Cs2ConfigCommands.ReadConfigDataReplyFrame) frame;
-            sb.append(String.format("Read Config Data uid=0x%08X", f.uid()));
+            sb.append(String.format("Read Config Data uid=0x%08X", f.uid().toLong()));
         } else if (frame instanceof Cs2ConfigCommands.BootRequestFrame) {
             Cs2ConfigCommands.BootRequestFrame f = (Cs2ConfigCommands.BootRequestFrame) frame;
-            sb.append(String.format("Boot Request uid=0x%08X", f.uid()));
+            sb.append(String.format("Boot Request uid=0x%08X", f.uid().toLong()));
 
         // GUI commands (0x20–0x22)
         } else if (frame instanceof Cs2GuiCommands.StatusDataConfigRequestFrame) {
             Cs2GuiCommands.StatusDataConfigRequestFrame f = (Cs2GuiCommands.StatusDataConfigRequestFrame) frame;
-            sb.append(String.format("Status Data Config uid=0x%08X idx=%d", f.deviceUid(), f.index()));
+            sb.append(String.format("Status Data Config uid=0x%08X idx=%d", f.deviceUid().toLong(), f.index()));
         } else if (frame instanceof Cs2GuiCommands.StatusDataConfigReplyFrame) {
             sb.append("Status Data Config");
         } else if (frame instanceof Cs2GuiCommands.RequestConfigDataRequestFrame) {
@@ -358,7 +357,7 @@ public class MarklinMessageFormatter {
             sb.append(String.format("Config Data Stream %d bytes CRC=0x%04X", f.fileLength(), f.crc()));
         } else if (frame instanceof Cs2GuiCommands.ConfigDataStreamPacketFrame) {
             Cs2GuiCommands.ConfigDataStreamPacketFrame f = (Cs2GuiCommands.ConfigDataStreamPacketFrame) frame;
-            sb.append("Config Data Stream packet=").append(f.packetNumber());
+            sb.append(String.format("Config Data Stream hash=0x%04X", f.transactionHash()));
 
         // Automation commands (0x30)
         } else if (frame instanceof Cs2AutomationCommands.AutomationStatusFrame) {
@@ -372,11 +371,11 @@ public class MarklinMessageFormatter {
         }
     }
 
-    private static void appendResponse(ClassifiedFrame cf, int[] rawData, StringBuilder sb, I18nProvider i18n) {
+    private static void appendResponse(McanFrame cf, int[] rawData, StringBuilder sb, I18nProvider i18n) {
         sb.append(" ");
         boolean isReply;
-        if (cf.protocol() == FrameProtocol.CS2_NATIVE) {
-            isReply = cf.cs2Header().response();
+        if (cf instanceof Cs2Frame) {
+            isReply = ((Cs2Frame) cf).header().response();
         } else {
             // CdB and UNKNOWN: fall back to raw bit 16 of the 29-bit CAN ID (byte[1] bit 0)
             isReply = (rawData[1] & 0x01) != 0;

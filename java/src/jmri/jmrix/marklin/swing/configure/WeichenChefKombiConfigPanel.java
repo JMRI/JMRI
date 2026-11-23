@@ -4,7 +4,7 @@ import java.awt.*;
 import javax.swing.*;
 import jmri.jmrix.marklin.*;
 import jmri.jmrix.marklin.mcan.address.CdBAddressCodec;
-import jmri.jmrix.marklin.mcan.device.CdBDeviceClass;
+import jmri.jmrix.marklin.mcan.cdb.CdBDeviceClass;
 import jmri.jmrix.marklin.swing.MarklinPanel;
 
 /**

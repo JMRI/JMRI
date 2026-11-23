@@ -2,7 +2,7 @@ package jmri.jmrix.marklin;
 
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
-import jmri.jmrix.marklin.mcan.classify.Cs2ClassifiedFrame;
+import jmri.jmrix.marklin.mcan.cs2.Cs2Frame;
 import jmri.jmrix.marklin.mcan.cs2.Cs2AccessoryCommands;
 
 /**
@@ -109,7 +109,7 @@ public class MarklinTurnout extends AbstractTurnout implements MarklinListener {
 
     @Override
     public void reply(MarklinReply m) {
-        Cs2ClassifiedFrame frame = MarklinCanBridge.parse(m);
+        Cs2Frame frame = MarklinCanBridge.parse(m);
         if (!(frame instanceof Cs2AccessoryCommands.AccessoryReplyFrame)) {
             return;
         }

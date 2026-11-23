@@ -1,44 +1,34 @@
 package jmri.jmrix.marklin.mcan.cs2;
 
-import jmri.jmrix.marklin.mcan.classify.ClassifiedFrame;
-import jmri.jmrix.marklin.mcan.classify.Cs2ClassifiedFrame;
-import jmri.jmrix.marklin.mcan.classify.Cs2Data;
-import jmri.jmrix.marklin.mcan.classify.Cs2Header;
-import jmri.jmrix.marklin.mcan.classify.FrameProtocol;
+import jmri.jmrix.marklin.mcan.RawFrame;
 
 /**
- * Second-pass parser for CS2_NATIVE frames.
+ * Parser for CS2 native frames.
  * <p>
- * Takes a first-pass {@link ClassifiedFrame} (must be {@link FrameProtocol#CS2_NATIVE}),
- * builds {@link Cs2Data} from the raw bytes, resolves the {@link jmri.jmrix.marklin.mcan.classify.Cs2Command},
- * and returns the appropriate typed {@link Cs2ClassifiedFrame} subclass.
+ * Builds {@link Cs2Data} from the raw bytes, resolves the {@link Cs2Command} from the
+ * header and returns the appropriate typed {@link Cs2Frame} subclass.
  * <p>
- * Unknown commands return a base {@link Cs2ClassifiedFrame} with
- * {@link jmri.jmrix.marklin.mcan.classify.Cs2Command#UNKNOWN}; check {@link Cs2Header#response()} for direction.
+ * Unknown commands return a base {@link Cs2Frame} with {@link Cs2Command#UNKNOWN}.
+ * Check {@link Cs2Header#response()} for direction.
  */
 public final class Cs2FrameParser {
 
     private Cs2FrameParser() {}
 
     /**
-     * Parses a CS2_NATIVE classified frame into a typed result.
+     * Parses a frame whose CS2 header has already been recognised.
      *
-     * @param frame first-pass result; must have {@code protocol() == CS2_NATIVE}
-     * @return typed parse result, never null
-     * @throws IllegalArgumentException if the frame is not CS2_NATIVE
+     * @param raw    the 13-byte frame
+     * @param header header parsed from {@code raw}
+     * @return typed frame, a base Cs2Frame at worst for unknown or unhandled commands.
      */
-    public static Cs2ClassifiedFrame parse(ClassifiedFrame frame) {
-        if (frame.protocol() != FrameProtocol.CS2_NATIVE) {
-            throw new IllegalArgumentException(
-                    "Cs2FrameParser requires a CS2_NATIVE frame, got " + frame.protocol());
-        }
-        Cs2Header header = frame.cs2Header();
-        Cs2Data   data   = Cs2Data.from(frame.raw());
+    public static Cs2Frame parse(RawFrame raw, Cs2Header header) {
+        Cs2Data data = Cs2Data.from(raw);
 
         switch (header.resolvedCommand()) {
             case SYSTEM_COMMAND:
             case SYSTEM_COMMAND_REPLY:
-                return Cs2SystemCommands.parse(header, data, frame);
+                return Cs2SystemCommands.parse(header, data, raw);
             case LOCO_EMERGENCY_STOP:
             case LOCO_EMERGENCY_STOP_REPLY:
             case LOCO_SPEED:
@@ -55,18 +45,18 @@ public final class Cs2FrameParser {
             case MFX_BIND_REPLY:
             case MFX_VERIFY:
             case MFX_VERIFY_REPLY:
-                return Cs2DecoderCommands.parse(header, data, frame);
+                return Cs2DecoderCommands.parse(header, data, raw);
             case ACCESSORY:
             case ACCESSORY_REPLY:
             case MFX_BIND_EX:
             case MFX_BIND_EX_REPLY:
-                return Cs2AccessoryCommands.parse(header, data, frame);
+                return Cs2AccessoryCommands.parse(header, data, raw);
             case S88_POLL:
             case S88_POLL_REPLY:
             case S88_EVENT:
             case S88_EVENT_REPLY:
             case FEEDBACK_BROADCAST:
-                return Cs2FeedbackCommands.parse(header, data, frame);
+                return Cs2FeedbackCommands.parse(header, data, raw);
             case PING:
             case PING_REPLY:
             case BOOT_CAN:
@@ -77,23 +67,23 @@ public final class Cs2FrameParser {
             case READ_CONFIG_DATA_REPLY:
             case BOOT_REQUEST:
             case BOOT_REQUEST_REPLY:
-                return Cs2ConfigCommands.parse(header, data, frame);
+                return Cs2ConfigCommands.parse(header, data, raw);
             case STATUS_DATA_CONFIG:
             case STATUS_DATA_CONFIG_REPLY:
             case REQUEST_CONFIG_DATA:
             case REQUEST_CONFIG_DATA_REPLY:
             case CONFIG_DATA_STREAM:
             case CONFIG_DATA_STREAM_REPLY:
-                return Cs2GuiCommands.parse(header, data, frame);
+                return Cs2GuiCommands.parse(header, data, raw);
             case AUTOMATION_TRIGGER:
             case AUTOMATION_TRIGGER_REPLY:
-                return Cs2AutomationCommands.parse(header, data, frame);
+                return Cs2AutomationCommands.parse(header, data, raw);
             default:
                 // TODO: Connect 6021 Stream (spec command 0x22, CAN-ID 0x44, DLC=5/6) is not
                 //       implemented. The spec lists it in the command overview table but provides
                 //       no payload description. Add enum entries and a handler class once the
                 //       byte layout is sourced from traffic captures or Märklin firmware sources.
-                return new Cs2ClassifiedFrame(header, data, frame);
+                return new Cs2Frame(header, data, raw);
         }
     }
 }

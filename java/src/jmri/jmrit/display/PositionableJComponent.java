@@ -11,6 +11,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 import jmri.InstanceManager;
+import jmri.JmriUncheckedException;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.util.ThreadingUtil;
@@ -452,7 +453,7 @@ public class PositionableJComponent extends JComponent implements Positionable {
         _logixNG = InstanceManager.getDefault(LogixNG_Manager.class)
                 .getBySystemName(_logixNG_SystemName);
         if (_logixNG == null) {
-            throw new RuntimeException(String.format(
+            throw new JmriUncheckedException(String.format(
                     "LogixNG %s is not found for positional %s in panel %s",
                     _logixNG_SystemName, getNameString(), getEditor().getName()));
         }

@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz;
 
+import jmri.Sensor;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.util.JUnitUtil;
@@ -58,6 +59,75 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         assertThat(xt22).isNotNull();
 
         assertThat(l.getNamedBeanSet()).containsOnly(xt21,xt22);
+    }
+
+    @Test
+    public void testMixedBroadcastTurnoutsFirst() throws jmri.JmriException {
+        checkMixedBroadcast(false);
+    }
+
+    @Test
+    public void testMixedBroadcastEncodersFirst() throws jmri.JmriException {
+        checkMixedBroadcast(true);
+    }
+
+    private void checkMixedBroadcast(boolean encodersFirst) throws jmri.JmriException {
+        XNetSensorManager sensors = new XNetSensorManager(lnis.getSystemConnectionMemo());
+        try {
+            XNetTurnout unrelatedTurnout = (XNetTurnout) l.provideTurnout("XT81");
+            unrelatedTurnout.newKnownState(Turnout.CLOSED);
+            Sensor unrelatedSensor = sensors.provideSensor("XS121");
+            unrelatedSensor.setKnownState(Sensor.ACTIVE);
+
+            XNetReply reply = new XNetReply(encodersFirst
+                    ? "46 06 45 05 09 07 36 00"
+                    : "46 05 09 07 36 06 45 00");
+            reply.setParity();
+            assertThat(reply.checkParity()).isTrue();
+            lnis.sendTestMessage(reply);
+
+            assertThat(l.getNamedBeanSet()).extracting(Turnout::getSystemName)
+                    .containsExactlyInAnyOrder("XT21", "XT22", "XT31", "XT32", "XT81");
+            assertThat(sensors.getNamedBeanSet()).extracting(Sensor::getSystemName)
+                    .containsExactlyInAnyOrder("XS49", "XS50", "XS51", "XS52",
+                            "XS53", "XS54", "XS55", "XS56", "XS121");
+            assertThat(l.getBySystemName("XT21").getKnownState()).isEqualTo(Turnout.CLOSED);
+            assertThat(l.getBySystemName("XT22").getKnownState()).isEqualTo(Turnout.THROWN);
+            assertThat(l.getBySystemName("XT31").getKnownState()).isEqualTo(Turnout.THROWN);
+            assertThat(l.getBySystemName("XT32").getKnownState()).isEqualTo(Turnout.CLOSED);
+            checkEncoderStates(sensors, 0x05, -1);
+
+            reply = new XNetReply(encodersFirst
+                    ? "48 06 4A 06 55 05 06 07 39 00"
+                    : "48 05 06 07 39 06 4A 06 55 00");
+            reply.setParity();
+            assertThat(reply.checkParity()).isTrue();
+            lnis.sendTestMessage(reply);
+
+            assertThat(l.getBySystemName("XT21").getKnownState()).isEqualTo(Turnout.THROWN);
+            assertThat(l.getBySystemName("XT22").getKnownState()).isEqualTo(Turnout.CLOSED);
+            assertThat(l.getBySystemName("XT31").getKnownState()).isEqualTo(Turnout.CLOSED);
+            assertThat(l.getBySystemName("XT32").getKnownState()).isEqualTo(Turnout.THROWN);
+            checkEncoderStates(sensors, 0x0A, 0x05);
+            assertThat(l.getNamedBeanSet()).hasSize(5);
+            assertThat(sensors.getNamedBeanSet()).hasSize(9);
+            assertThat(unrelatedTurnout.getKnownState()).isEqualTo(Turnout.CLOSED);
+            JUnitUtil.waitFor(() -> unrelatedSensor.getKnownState() == Sensor.ACTIVE, "unrelated sensor initialized");
+            assertThat(unrelatedSensor.getKnownState()).isEqualTo(Sensor.ACTIVE);
+        } finally {
+            sensors.dispose();
+        }
+    }
+
+    private void checkEncoderStates(XNetSensorManager sensors, int lowNibble, int highNibble) {
+        for (int i = 0; i < 8; i++) {
+            Sensor sensor = sensors.getBySystemName("XS" + (49 + i));
+            int data = i < 4 ? lowNibble : highNibble;
+            int expected = data == -1 ? Sensor.UNKNOWN : (data & (1 << (i % 4))) != 0
+                    ? Sensor.ACTIVE : Sensor.INACTIVE;
+            JUnitUtil.waitFor(() -> sensor.getKnownState() == expected, sensor.getSystemName());
+            assertThat(sensor.getKnownState()).isEqualTo(expected);
+        }
     }
 
     @Test

@@ -1,6 +1,5 @@
 package jmri.jmrit.entryexit;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
@@ -191,8 +190,6 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
         }
     }
 
-    @SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED",
-            justification = "No auto serialization")
     transient protected PropertyChangeListener propertyBlockListener;
 
     protected void blockStateUpdated(PropertyChangeEvent e) {
@@ -460,8 +457,8 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
                     //Force a redraw, to reflect color change
                     src.getPoint().getPanel().redrawPanel();
                 }
-                if (!manager.isSkipGuiFix()) {
-                    // With the old GUI behavior clicks are held back instead, so that a second
+                if (!manager.isDoubleClickEnabled()) {
+                    // With double click enabled, clicks are held back instead, so that a second
                     // click on the destination can start the next route
                     src.getPoint().getPanel().getGlassPane().setVisible(true);
                 }

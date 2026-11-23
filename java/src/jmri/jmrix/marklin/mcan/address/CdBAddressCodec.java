@@ -1,8 +1,7 @@
 package jmri.jmrix.marklin.mcan.address;
 
 /**
- * CdB protocol accessory address codec, ported from {@code CdBMessage.encodeAddress} and
- * {@code CdBMessage.decodeAddress}.
+ * CdB protocol accessory address codec.
  * <p>
  * Type-2 (solenoid drive) offsets:
  * <pre>

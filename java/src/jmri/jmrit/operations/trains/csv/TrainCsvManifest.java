@@ -5,11 +5,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -17,6 +12,11 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.*;
+
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Builds a train's manifest using Comma Separated Values (csv).
@@ -45,6 +45,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
             printLogoURL(fileOut, train);
             printValidity(fileOut, getDate(true));
             printTrainComment(fileOut, train);
+            printTrainCommentTermination(fileOut, train);
             printRouteComment(fileOut, train);
 
             // get engine and car lists

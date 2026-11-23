@@ -293,7 +293,6 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
     }
 
     @BeforeAll
-    @SuppressWarnings("deprecation") // OlcbInterface(NodeID, Connection)
     public static void preClassInit() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
@@ -313,7 +312,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
         // Enable multiple OpenLCB connections for tests.
         memo = new OlcbSystemConnectionMemoScaffold(); // this self-registers as 'M'
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
-        memo.setInterface(new OlcbInterface(nodeID, connection) {
+        memo.setInterface(new OlcbInterface(nodeID, connection, new OlcbTestThreadPool()) {
             @Override
             public Connection getOutputConnection() {
                 return connection;
@@ -323,7 +322,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
         
         memo1 = new OlcbSystemConnectionMemoScaffold("S");
         memo1.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
-        memo1.setInterface(new OlcbInterface(nodeID1, connection) {
+        memo1.setInterface(new OlcbInterface(nodeID1, connection, new OlcbTestThreadPool()) {
             @Override
             public Connection getOutputConnection() {
                 return connection;
@@ -331,7 +330,7 @@ public class OlcbSignalMastAddPaneTest extends AbstractSignalMastAddPaneTestBase
         });
         memo2 = new OlcbSystemConnectionMemoScaffold("M3");
         memo2.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
-        memo2.setInterface(new OlcbInterface(nodeID2, connection) {
+        memo2.setInterface(new OlcbInterface(nodeID2, connection, new OlcbTestThreadPool()) {
             @Override
             public Connection getOutputConnection() {
                 return connection;

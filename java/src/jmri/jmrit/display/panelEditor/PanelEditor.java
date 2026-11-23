@@ -11,6 +11,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.KeyAdapter;
@@ -35,6 +36,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 
 import jmri.*;
 import jmri.configurexml.ConfigXmlManager;
@@ -42,6 +44,7 @@ import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.display.*;
 import jmri.util.JmriJFrame;
+import jmri.util.SystemType;
 import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.JmriColorChooser;
 import jmri.util.swing.JmriJOptionPane;
@@ -160,7 +163,11 @@ public class PanelEditor extends Editor implements ItemListener {
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         menuBar.add(fileMenu);
         fileMenu.add(new jmri.jmrit.display.NewPanelAction(Bundle.getMessage("MenuItemNew")));
-        fileMenu.add(new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("FileMenuItemStore")));
+        JMenuItem storeAllItem = new JMenuItem(
+                new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("FileMenuItemStore")));
+        storeAllItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
+                SystemType.isMacOSX() ? InputEvent.META_DOWN_MASK : InputEvent.CTRL_DOWN_MASK));
+        fileMenu.add(storeAllItem);
         JMenuItem storeIndexItem = new JMenuItem(Bundle.getMessage("MIStoreImageIndex"));
         fileMenu.add(storeIndexItem);
         storeIndexItem.addActionListener(event -> InstanceManager.getDefault(CatalogTreeManager.class).storeImageIndex());
@@ -185,6 +192,12 @@ public class PanelEditor extends Editor implements ItemListener {
                 dispose();
             }
         });
+        fileMenu.addSeparator();
+        JMenuItem closeEditorItem = new JMenuItem(Bundle.getMessage("CloseEditor"));
+        closeEditorItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,
+                SystemType.isMacOSX() ? InputEvent.META_DOWN_MASK : InputEvent.CTRL_DOWN_MASK));
+        closeEditorItem.addActionListener(event -> setVisible(false));
+        fileMenu.add(closeEditorItem);
 
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.display.PanelEditor", true);
@@ -530,12 +543,15 @@ public class PanelEditor extends Editor implements ItemListener {
         JMenuBar menuBar = new JMenuBar();
         JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
         menuBar.add(editMenu);
-        editMenu.add(new AbstractAction(Bundle.getMessage("OpenEditor")) {
+        JMenuItem openEditor = new JMenuItem(new AbstractAction(Bundle.getMessage("OpenEditor")) {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(true);
             }
         });
+        openEditor.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,
+                SystemType.isMacOSX() ? InputEvent.META_DOWN_MASK : InputEvent.CTRL_DOWN_MASK));
+        editMenu.add(openEditor);
         editMenu.addSeparator();
         editMenu.add(new AbstractAction(Bundle.getMessage("DeletePanel")) {
             @Override

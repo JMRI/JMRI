@@ -7,6 +7,7 @@ import javax.annotation.Nonnull;
 import javax.swing.*;
 
 import jmri.InstanceManager;
+import jmri.JmriUncheckedException;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.expressions.Timer;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
@@ -183,7 +184,7 @@ public class TimerSwing extends AbstractDigitalExpressionSwing {
                 throw new IllegalArgumentException("_tabbedPaneDelay has unknown selection");
             }
         } catch (ParserException e) {
-            throw new RuntimeException("ParserException: "+e.getMessage(), e);
+            throw new JmriUncheckedException("ParserException: "+e.getMessage(), e);
         }
     }
 

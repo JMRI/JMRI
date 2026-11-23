@@ -34,6 +34,8 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -212,7 +214,7 @@ public class RosterServlet extends HttpServlet {
                             log.debug("{} : Error Deleting File", m);
                             msgList.add(m);
                         }
-                        if (fileTemp.renameTo(fileNew)) {
+                        if (moveFile(fileTemp, fileNew)) {
                             String m = String.format(rl, Bundle.getMessage(rl, "FileReplaced"), fm.getFileName());
                             log.debug("{} : File Replaced", m);
                             msgList.add(m);
@@ -226,7 +228,7 @@ public class RosterServlet extends HttpServlet {
                         }
                     }
                 } else {
-                    if (fileTemp.renameTo(fileNew)) {
+                    if (moveFile(fileTemp, fileNew)) {
                         String m = String.format(rl, Bundle.getMessage(rl, "FileAdded"), fm.getFileName());
                         log.debug("{} : File Added", m);
                         msgList.add(m);
@@ -275,7 +277,7 @@ public class RosterServlet extends HttpServlet {
                         }
                     }
                 } else {
-                    if (fileTemp.renameTo(fileNew)) { //move the file to proper roster location
+                    if (moveFile(fileTemp, fileNew)) { //move the file to proper roster location
                         Roster.getDefault().addEntry(reTemp);
                         Roster.getDefault().writeRoster();
                         String m = String.format(rl, Bundle.getMessage(rl, "RosterEntryAdded"), fm.getFileName(), reTemp.getId());
@@ -295,6 +297,17 @@ public class RosterServlet extends HttpServlet {
         //respond with a json list of messages from the upload attempts
         response.setContentType("application/json");
         mapper.writeValue(response.getOutputStream(), msgList);
+    }
+
+    // File.renameTo fails when java.io.tmpdir is on another filesystem (e.g. tmpfs /tmp)
+    private boolean moveFile(File source, File target) {
+        try {
+            Files.move(source.toPath(), target.toPath(), StandardCopyOption.REPLACE_EXISTING);
+            return true;
+        } catch (IOException ex) {
+            log.warn("Unable to move '{}' to '{}': {}", source, target, ex.toString());
+            return false;
+        }
     }
 
     /**

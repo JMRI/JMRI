@@ -5,7 +5,9 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import javax.annotation.Nonnull;
 
@@ -17,11 +19,13 @@ import jmri.Section;
 import jmri.Sensor;
 import jmri.Transit;
 import jmri.Transit.TransitType;
+import jmri.TrainRecord;
 import jmri.TransitSection;
 import jmri.Section.SectionType;
 import jmri.beans.PropertyChangeProvider;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
+import jmri.util.LoggingUtil;
 
 /**
  * This class holds information and options for an ActiveTrain, that is a train
@@ -244,7 +248,9 @@ public class ActiveTrain implements PropertyChangeProvider {
     private boolean mTransitReversed = false;  // true if Transit is running in reverse
     private boolean mAllocationReversed = false;  // true if allocating Sections in reverse
     private AutoActiveTrain mAutoActiveTrain = null;
-    private final List<AllocatedSection> mAllocatedSections = new ArrayList<>();
+    // Changed as Sections are allocated and released, and read by the train's
+    // Block change handling on another thread: each read sees one whole list
+    private final List<AllocatedSection> mAllocatedSections = new CopyOnWriteArrayList<>();
     private Section mLastAllocatedSection = null;
     private Section mLastAllocOverrideSafe = null;
     private int mLastAllocatedSectionSeqNumber = 0;
@@ -296,6 +302,16 @@ public class ActiveTrain implements PropertyChangeProvider {
     //
     public boolean getStarted() {
         return mStarted;
+    }
+
+    /**
+     * Get the Dispatcher that runs this train.
+     *
+     * @return the Dispatcher, or null if not set
+     */
+    @CheckForNull
+    public DispatcherFrame getDispatcher() {
+        return mDispatcher;
     }
 
     public void setDispatcher(DispatcherFrame df) {
@@ -433,6 +449,7 @@ public class ActiveTrain implements PropertyChangeProvider {
      */
     public void setTrainDetection(TrainDetection value) {
         trainDetection = value;
+        copyToTrainRecord();
     }
 
     /**
@@ -445,6 +462,65 @@ public class ActiveTrain implements PropertyChangeProvider {
 
     private long maxTrainLengthMM = 0;
     private boolean noLengthWarningGiven = false;
+    private TrainRecord trainRecord = null;
+
+    /**
+     * The record of this train, which is kept when this Active Train is
+     * terminated, so that the next Active Train for the same train refers to
+     * it again.
+     *
+     * @return the record, or null if none has been given
+     */
+    @CheckForNull
+    public TrainRecord getTrainRecord() {
+        return trainRecord;
+    }
+
+    /**
+     * Give this Active Train its record, and record in it the Train Detection
+     * and Max Train Length entered for this train. They are recorded again
+     * whenever they are changed.
+     *
+     * @param record the record
+     */
+    void setTrainRecord(@Nonnull TrainRecord record) {
+        trainRecord = record;
+        copyToTrainRecord();
+    }
+
+    /**
+     * Record this train's Train Detection, unless the record has a custom
+     * list of detection markers, which Train Detection can't express, and
+     * its Max Train Length as the entered length.
+     */
+    private void copyToTrainRecord() {
+        if (trainRecord == null || trainRecord.isDisposed()) {
+            return;
+        }
+        if (trainRecord.getDetection() != TrainRecord.Detection.CUSTOM) {
+            trainRecord.setDetection(toRecordDetection(trainDetection));
+        }
+        trainRecord.setLength(TrainRecord.LengthSource.ENTERED,
+                maxTrainLengthMM > 0 ? Double.valueOf(maxTrainLengthMM) : null);
+    }
+
+    /**
+     * @param detection a Train Detection setting
+     * @return the train record's equivalent
+     */
+    @Nonnull
+    static TrainRecord.Detection toRecordDetection(@Nonnull TrainDetection detection) {
+        switch (detection) {
+            case TRAINDETECTION_WHOLETRAIN:
+                return TrainRecord.Detection.ENTIRE_TRAIN;
+            case TRAINDETECTION_HEADONLY:
+                return TrainRecord.Detection.HEAD_ONLY;
+            case TRAINDETECTION_HEADANDTAIL:
+                return TrainRecord.Detection.HEAD_AND_TAIL;
+            default:
+                throw new IllegalArgumentException("unknown Train Detection " + detection);
+        }
+    }
 
     /**
      * Set the train length, used for any train whose tail is not always
@@ -454,6 +530,7 @@ public class ActiveTrain implements PropertyChangeProvider {
      */
     public void setMaxTrainLengthMM(long lengthMM) {
         maxTrainLengthMM = Math.max(0, lengthMM);
+        copyToTrainRecord();
     }
 
     /**
@@ -935,12 +1012,8 @@ public class ActiveTrain implements PropertyChangeProvider {
                 mSecondAllocatedSection = as.getSection();
             }
             if (mDispatcher.getNameInAllocatedBlock()) {
-                if (mDispatcher.getRosterEntryInBlock() && getRosterEntry() != null) {
-                    as.getSection().setNameFromActiveBlock(getRosterEntry());
-                } else {
-                    as.getSection().setNameInBlocks(mTrainName);
-                }
-                as.getSection().suppressNameUpdate(true);
+                LoggingUtil.infoOnce(log, ALLOCATED_VALUE_NOTE);
+                as.getSection().setAllocatedValue(getAllocatedBlockValue());
             }
             if (mDispatcher.getExtraColorForAllocated()) {
                 as.getSection().setAlternateColorFromActiveBlock(true);
@@ -1026,32 +1099,63 @@ public class ActiveTrain implements PropertyChangeProvider {
             mLastAllocatedSection = null;
             mLastAllocOverrideSafe = null;
             if (!mAllocatedSections.isEmpty()) {
-                mLastAllocatedSection = mAllocatedSections.get(
-                        mAllocatedSections.size() - 1).getSection();
-                mLastAllocatedSectionSeqNumber = mAllocatedSections.size() - 1;
+                // the most recent allocation along the Transit, ignoring extra Sections
+                AllocatedSection lastAs = mAllocatedSections.get(mAllocatedSections.size() - 1);
+                for (AllocatedSection a : mAllocatedSections) {
+                    if (a.getAllocationNumber() > lastAs.getAllocationNumber()) {
+                        lastAs = a;
+                    }
+                }
+                int releasedSeq = mLastAllocatedSectionSeqNumber;
+                mLastAllocatedSection = lastAs.getSection();
+                mLastAllocatedSectionSeqNumber = lastAs.getSequence();
+                if (!as.getEntered() && (as.getSequence() == releasedSeq)
+                        && (as.getNextSection() == mNextSectionToAllocate)
+                        && (as.getNextSectionSequence() == mNextSectionSeqNumber)
+                        && (mTransit.getTransitSectionFromSectionAndSeq(as.getSection(), as.getSequence()) != null)) {
+                    // a Section ahead of the train was released: it is now the
+                    // next one to allocate, so that no Section beyond it is
+                    // allocated while it is free
+                    AllocationRequest oldNext = mDispatcher.findAllocationRequestInQueue(mNextSectionToAllocate,
+                            mNextSectionSeqNumber, mNextSectionDirection, this);
+                    if (oldNext != null) {
+                        mDispatcher.cancelAllocationRequest(oldNext);
+                    }
+                    mNextSectionToAllocate = as.getSection();
+                    mNextSectionSeqNumber = as.getSequence();
+                    mNextSectionDirection = getAllocationDirectionFromSectionAndSeq(
+                            mNextSectionToAllocate, mNextSectionSeqNumber);
+                }
             }
         }
     }
 
     /**
+     * Get the value that identifies this train in the Blocks allocated to it:
+     * its roster entry if "Use roster entry" is selected and it has one,
+     * otherwise its name.
+     *
+     * @return the value given to the Blocks allocated to this train
+     */
+    private Object getAllocatedBlockValue() {
+        if (mDispatcher.getRosterEntryInBlock() && getRosterEntry() != null) {
+            return getRosterEntry();
+        }
+        return mTrainName;
+    }
+
+    /**
      * Remove what was shown for this train on a Block that is no longer
-     * allocated: the train name in an unoccupied Block, and the extra colour.
-     * The memory of the Layout Block follows the Block again.
+     * allocated: its allocated value and the extra colour.
      *
      * @param b the Block that is no longer allocated
      */
     private void releaseBlockDisplay(Block b) {
-        boolean nameInBlock = mDispatcher.getNameInAllocatedBlock();
-        if (nameInBlock && b.getState() == Block.UNOCCUPIED) {
-            b.setValue(null);
-        }
+        b.setAllocatedValue(null);
         String userName = b.getUserName();
         if (userName != null) {
             LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(userName);
             if (lb != null) {
-                if (nameInBlock) {
-                    lb.setSuppressNameUpdate(false);
-                }
                 lb.setUseExtraColor(false);
             }
         }
@@ -1116,11 +1220,7 @@ public class ActiveTrain implements PropertyChangeProvider {
     }
 
     public List<AllocatedSection> getAllocatedSectionList() {
-        List<AllocatedSection> list = new ArrayList<>();
-        for (int i = 0; i < mAllocatedSections.size(); i++) {
-            list.add(mAllocatedSections.get(i));
-        }
-        return list;
+        return new ArrayList<>(mAllocatedSections);
     }
 
     /**
@@ -1135,17 +1235,19 @@ public class ActiveTrain implements PropertyChangeProvider {
      */
     public List<Block> getBlockList() {
         List<Block> list = new ArrayList<>();
-        for (int i = 0; i < mAllocatedSections.size(); i++) { // loop thru allocated sections, then all blocks for each section
-            Section s = mAllocatedSections.get(i).getSection();
+        // the Sections as they are now: one may be released while this runs
+        List<AllocatedSection> sections = getAllocatedSectionList();
+        for (int i = 0; i < sections.size(); i++) { // loop thru allocated sections, then all blocks for each section
+            Section s = sections.get(i).getSection();
             List<Block> bl = s.getBlockList();
             if (bl.size() > 1) { //sections with multiple blocks need extra logic
 
                 boolean blocksConnected = true;
                 //determine if blocks should be added in forward or reverse order based on connectivity
                 if (i == 0) { //for first section, compare last block to first of next section
-                    if (mAllocatedSections.size() > 1
+                    if (sections.size() > 1
                             && //only one section, assume forward
-                            !connected(bl.get(bl.size() - 1), mAllocatedSections.get(i + 1).getSection().getBlockList().get(0))) {
+                            !connected(bl.get(bl.size() - 1), sections.get(i + 1).getSection().getBlockList().get(0))) {
                         blocksConnected = false;
                     }
                 } else { //not first section, check for connectivity between last block in list, and first block in this section
@@ -1377,7 +1479,8 @@ public class ActiveTrain implements PropertyChangeProvider {
     }
 
     protected boolean addEndSection(Section s, int seq) {
-        AllocatedSection as = mAllocatedSections.get(mAllocatedSections.size() - 1);
+        List<AllocatedSection> sections = getAllocatedSectionList();
+        AllocatedSection as = sections.get(sections.size() - 1);
         if (!as.setNextSection(s, seq)) {
             return false;
         }
@@ -1393,7 +1496,8 @@ public class ActiveTrain implements PropertyChangeProvider {
     /*This is for use where the transit has been extended, then the last section has been cancelled no
      checks are performed, these should be done by a higher level code*/
     protected void removeLastAllocatedSection() {
-        AllocatedSection as = mAllocatedSections.get(mAllocatedSections.size() - 1);
+        List<AllocatedSection> sections = getAllocatedSectionList();
+        AllocatedSection as = sections.get(sections.size() - 1);
         //Set the end block using the AllocatedSections exit block before clearing the next section in the allocatedsection
         setEndBlock(as.getExitBlock());
 
@@ -1489,17 +1593,12 @@ public class ActiveTrain implements PropertyChangeProvider {
     }
 
     protected boolean isInAllocatedList(AllocatedSection as) {
-        for (int i = 0; i < mAllocatedSections.size(); i++) {
-            if (mAllocatedSections.get(i) == as) {
-                return true;
-            }
-        }
-        return false;
+        return mAllocatedSections.contains(as);
     }
 
     protected boolean isInAllocatedList(Section s) {
-        for (int i = 0; i < mAllocatedSections.size(); i++) {
-            if ((mAllocatedSections.get(i)).getSection() == s) {
+        for (AllocatedSection as : mAllocatedSections) {
+            if (as.getSection() == s) {
                 return true;
             }
         }
@@ -1531,6 +1630,26 @@ public class ActiveTrain implements PropertyChangeProvider {
         if (mAutoActiveTrain != null) {
             mAutoActiveTrain.setupNewCurrentSignal(null,false);
         }
+    }
+
+    private volatile boolean mTerminating = false;
+
+    /**
+     * Mark this train as being terminated. Block changes in its Sections that
+     * are still waiting to be handled are dropped from now on, as its Sections
+     * are about to be released.
+     */
+    protected void setTerminating() {
+        mTerminating = true;
+    }
+
+    /**
+     * Check whether this train is being terminated or has been.
+     *
+     * @return true once termination has begun
+     */
+    protected boolean isTerminating() {
+        return mTerminating || getMode() == TERMINATED;
     }
 
     public void terminate() {
@@ -1607,6 +1726,16 @@ public class ActiveTrain implements PropertyChangeProvider {
     public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
         pcs.removePropertyChangeListener(propertyName, listener);
     }
+
+    /**
+     * Logged once per session, the first time a Block is given an allocated
+     * value, for anyone whose own script, Logix or LogixNG used to find the
+     * train in an allocated Block's value.
+     */
+    static final String ALLOCATED_VALUE_NOTE = "Dispatcher's \"Place train name in allocated Blocks\" no longer"
+            + " puts the train's name in the value of an allocated Block; it is kept as the Block's allocated value."
+            + " A script, Logix or LogixNG that reads an allocated Block's value to find its train should use"
+            + " getDisplayValue() or getAllocatedValue() instead (see the Block Table help).";
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActiveTrain.class);
 

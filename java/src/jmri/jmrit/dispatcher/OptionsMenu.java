@@ -128,6 +128,8 @@ public class OptionsMenu extends JMenu {
     JCheckBox nameInAllocatedBlockCheckBox = new JCheckBox(Bundle.getMessage("NameInAllocatedBlockBox"));
     JCheckBox supportVSDecoderCheckBox = new JCheckBox(Bundle.getMessage("SupportVSDecoder"));
     JComboBox<Scale> layoutScaleBox = new JComboBox<>();
+    // the CUSTOM scale's ratio, N in 1:N, shown and editable only while CUSTOM is chosen
+    JSpinner customRatioSpinner = new JSpinner(new SpinnerNumberModel(87.1, 1.0, 1000.0, 0.1));
     JRadioButton scaleFeet = new JRadioButton(Bundle.getMessage("ScaleFeet"));
     JRadioButton scaleMeters = new JRadioButton(Bundle.getMessage("ScaleMeters"));
     JCheckBox openDispatcherWithPanel = new JCheckBox(Bundle.getMessage("OpenDispatcherWithPanelBox"));
@@ -137,7 +139,9 @@ public class OptionsMenu extends JMenu {
     JCheckBox useTurnoutConnectionDelayCheckBox = new JCheckBox(Bundle.getMessage("useTurnoutConnectionDelay"));
     JComboBox<String> stoppingSpeedBox = new JComboBox<>();
     JCheckBox useOccupiedTrackSpeedCheckBox = new JCheckBox(Bundle.getMessage("useOccupiedTrackSpeed"));
+    JCheckBox preventDeadlockCheckBox = new JCheckBox(Bundle.getMessage("preventDeadlock"));
     JCheckBox useStrictTrainTrackingBox = new JCheckBox(Bundle.getMessage("useStrictTrackChecking"));
+    JCheckBox waitWhereTrainsCanStopCheckBox = new JCheckBox(Bundle.getMessage("waitWhereTrainsCanStop"));
 
     String[] signalTypes = {Bundle.getMessage("SignalType1"), Bundle.getMessage("SignalType2"), Bundle.getMessage("SignalType3")};
 
@@ -206,6 +210,11 @@ public class OptionsMenu extends JMenu {
             p4.add(autoAllocateCheckBox);
             autoAllocateCheckBox.setToolTipText(Bundle.getMessage("AutoAllocateBoxHint"));
             optionsPane.add(p4);
+            JPanel p4a = new JPanel();
+            p4a.setLayout(new FlowLayout());
+            p4a.add(preventDeadlockCheckBox);
+            preventDeadlockCheckBox.setToolTipText(Bundle.getMessage("preventDeadlockHint"));
+            optionsPane.add(p4a);
             JPanel p5 = new JPanel();
             p5.setLayout(new FlowLayout());
             p5.add(autoTurnoutsCheckBox);
@@ -231,6 +240,11 @@ public class OptionsMenu extends JMenu {
             p16c.add(useStrictTrainTrackingBox);
             useStrictTrainTrackingBox.setToolTipText(Bundle.getMessage("useStrictTrackCheckingHint"));
             optionsPane.add(p16c);
+            JPanel p16d = new JPanel();
+            p16d.setLayout(new FlowLayout());
+            p16d.add(waitWhereTrainsCanStopCheckBox);
+            waitWhereTrainsCanStopCheckBox.setToolTipText(Bundle.getMessage("waitWhereTrainsCanStopHint"));
+            optionsPane.add(p16d);
             JPanel p6 = new JPanel();
             p6.setLayout(new FlowLayout());
             p6.add(shortNameCheckBox);
@@ -269,6 +283,11 @@ public class OptionsMenu extends JMenu {
             p8.add(new JLabel(Bundle.getMessage("LabelLayoutScale")));
             p8.add(layoutScaleBox);
             layoutScaleBox.setToolTipText(Bundle.getMessage("ScaleBoxHint"));
+            p8.add(new JLabel(Bundle.getMessage("CustomScaleRatioLabel")));
+            p8.add(customRatioSpinner);
+            customRatioSpinner.setToolTipText(Bundle.getMessage("CustomScaleRatioHint"));
+            layoutScaleBox.addActionListener(ev -> showCustomRatio());
+            showCustomRatio();
             optionsPane.add(p8);
             JPanel p12 = new JPanel();
             p12.setLayout(new FlowLayout());
@@ -364,7 +383,9 @@ public class OptionsMenu extends JMenu {
         autoTurnoutsCheckBox.setSelected(dispatcher.getAutoTurnouts());
         trustKnownTurnoutsCheckBox.setSelected(dispatcher.getTrustKnownTurnouts());
         useOccupiedTrackSpeedCheckBox.setSelected(dispatcher.getUseOccupiedTrackSpeed());
+        preventDeadlockCheckBox.setSelected(dispatcher.getPreventDeadlock());
         useStrictTrainTrackingBox.setSelected(dispatcher.getUseStrictTrainTracking());
+        waitWhereTrainsCanStopCheckBox.setSelected(dispatcher.getWaitWhereTrainsCanStop());
         useTurnoutConnectionDelayCheckBox.setSelected(dispatcher.getUseTurnoutConnectionDelay());
         shortNameCheckBox.setSelected(dispatcher.getShortActiveTrainNames());
         nameInBlockCheckBox.setSelected(dispatcher.getShortNameInBlock());
@@ -407,7 +428,9 @@ public class OptionsMenu extends JMenu {
         autoTurnoutsItem.setSelected(autoTurnoutsCheckBox.isSelected());
         dispatcher.setTrustKnownTurnouts(trustKnownTurnoutsCheckBox.isSelected());
         dispatcher.setUseOccupiedTrackSpeed(useOccupiedTrackSpeedCheckBox.isSelected());
+        dispatcher.setPreventDeadlock(preventDeadlockCheckBox.isSelected());
         dispatcher.setUseStrictTrainTracking(useStrictTrainTrackingBox.isSelected());
+        dispatcher.setWaitWhereTrainsCanStop(waitWhereTrainsCanStopCheckBox.isSelected());
         dispatcher.setUseTurnoutConnectionDelay(useTurnoutConnectionDelayCheckBox.isSelected());
         dispatcher.setSignalType(signalTypeBox.getSelectedIndex());
         if (autoTurnoutsCheckBox.isSelected() && ((layoutEditorList.size() == 0)
@@ -421,7 +444,16 @@ public class OptionsMenu extends JMenu {
         dispatcher.setNameInAllocatedBlock(nameInAllocatedBlockCheckBox.isSelected());
         dispatcher.setRosterEntryInBlock(rosterInBlockCheckBox.isSelected());
         dispatcher.setSupportVSDecoder(supportVSDecoderCheckBox.isSelected());
-        dispatcher.setScale((Scale) layoutScaleBox.getSelectedItem());
+        Scale scale = (Scale) layoutScaleBox.getSelectedItem();
+        if (scale != null && isCustom(scale)) {
+            double ratio = ((Number) customRatioSpinner.getValue()).doubleValue();
+            if (Double.compare(ratio, scale.getScaleRatio()) != 0 && !setCustomRatio(scale, ratio)) {
+                JmriJOptionPane.showMessageDialog(optionsFrame,
+                        Bundle.getMessage("CustomScaleRatioNotChanged", ratio, scale.getScaleRatio()),
+                        Bundle.getMessage("WarningTitle"), JmriJOptionPane.WARNING_MESSAGE);
+            }
+        }
+        dispatcher.setScale(scale);
         dispatcher.setUseScaleMeters(scaleMeters.isSelected());
         dispatcher.setMinThrottleInterval((int) minThrottleIntervalSpinner.getValue());
         dispatcher.setFullRampTime((int) fullRampTimeSpinner.getValue());
@@ -485,13 +517,47 @@ public class OptionsMenu extends JMenu {
     private void initializeScaleCombo() {
         layoutScaleBox.removeAllItems();
         for (Scale scale : ScaleManager.getScales()) {
-            if (scale.getScaleName().equals("CUSTOM")) {  // No custom support yet, don't show.
-                continue;
-            }
             layoutScaleBox.addItem(scale);
         }
         jmri.util.swing.JComboBoxUtil.setupComboBoxMaxRows(layoutScaleBox);
         layoutScaleBox.setSelectedItem(dispatcher.getScale());
+    }
+
+    /*
+     * The ratio box shows the CUSTOM scale's ratio, and may be changed, only
+     * while CUSTOM is chosen.
+     */
+    private void showCustomRatio() {
+        Scale scale = (Scale) layoutScaleBox.getSelectedItem();
+        if (scale != null && isCustom(scale)) {
+            customRatioSpinner.setEnabled(true);
+            customRatioSpinner.setValue(scale.getScaleRatio());
+        } else {
+            customRatioSpinner.setEnabled(false);
+        }
+    }
+
+    private static boolean isCustom(Scale scale) {
+        return "CUSTOM".equals(scale.getScaleName());  // NOI18N
+    }
+
+    /**
+     * Set the CUSTOM scale's ratio. There is one CUSTOM scale, shared with the
+     * Timetable, and kept in the user's scale file; a Timetable layout using it
+     * may refuse a ratio its times can't be worked out with.
+     *
+     * @param custom the CUSTOM scale
+     * @param ratio  N in 1:N
+     * @return true if the ratio was accepted
+     */
+    static boolean setCustomRatio(@javax.annotation.Nonnull Scale custom, double ratio) {
+        try {
+            custom.setScaleRatio(ratio);
+            return true;
+        } catch (IllegalArgumentException | java.beans.PropertyVetoException ex) {
+            log.warn("CUSTOM scale ratio {} not accepted: {}", ratio, ex.getMessage());
+            return false;
+        }
     }
 
     private void initializeStoppingSpeedCombo() {

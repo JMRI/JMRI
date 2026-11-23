@@ -8,37 +8,89 @@ public final class CdBReporterCommands {
 
     private CdBReporterCommands() {}
 
-    /** Writes a per-channel switch-on time (slot=channel, reg=2, DLC=4). */
+    /**
+     * Writes a per-channel switch-on time (slot=channel, reg=2, DLC=4).
+     *
+     * @param classId 8-bit CdB device class
+     * @param moduleId module slot
+     * @param channel 1-based channel
+     * @param value switch-on time
+     * @return the CAN write frame
+     */
     public static int[] buildWriteChEinSchaltzeit(int classId, int moduleId, int channel, int value) {
         return CdBConfigCommands.buildWrite(classId, moduleId, channel, 2, value);
     }
 
-    /** Writes a per-channel switch-off time (slot=channel, reg=3, DLC=4). */
+    /**
+     * Writes a per-channel switch-off time (slot=channel, reg=3, DLC=4).
+     *
+     * @param classId 8-bit CdB device class
+     * @param moduleId module slot
+     * @param channel 1-based channel
+     * @param value switch-off time
+     * @return the CAN write frame
+     */
     public static int[] buildWriteChAusSchaltzeit(int classId, int moduleId, int channel, int value) {
         return CdBConfigCommands.buildWrite(classId, moduleId, channel, 3, value);
     }
 
-    /** Writes the fault RMK address (slot=0, reg=10, DLC=4). */
+    /**
+     * Writes the fault RMK address (slot=0, reg=10, DLC=4).
+     *
+     * @param classId 8-bit CdB device class
+     * @param moduleId module slot
+     * @param rmkAddr fault RMK feedback address
+     * @return the CAN write frame
+     */
     public static int[] buildWriteStorungsRmk(int classId, int moduleId, int rmkAddr) {
         return CdBConfigCommands.buildWrite(classId, moduleId, 0, 10, rmkAddr);
     }
 
-    /** Writes the fault active flag (slot=0, reg=11, DLC=4). */
+    /**
+     * Writes the fault active flag (slot=0, reg=11, DLC=4).
+     *
+     * @param classId 8-bit CdB device class
+     * @param moduleId module slot
+     * @param flag fault active flag
+     * @return the CAN write frame
+     */
     public static int[] buildWriteStorungsFlag(int classId, int moduleId, int flag) {
         return CdBConfigCommands.buildWrite(classId, moduleId, 0, 11, flag);
     }
 
-    /** Writes the special function value (slot=0, reg=12, DLC=4). */
+    /**
+     * Writes the special function value (slot=0, reg=12, DLC=4).
+     *
+     * @param classId 8-bit CdB device class
+     * @param moduleId module slot
+     * @param value special function value
+     * @return the CAN write frame
+     */
     public static int[] buildWriteSonderfunktion(int classId, int moduleId, int value) {
         return CdBConfigCommands.buildWrite(classId, moduleId, 0, 12, value);
     }
 
-    /** Writes a slave address (slot=0, reg=regNum, DLC=4). */
+    /**
+     * Writes a slave address (slot=0, reg=regNum, DLC=4).
+     *
+     * @param classId 8-bit CdB device class
+     * @param moduleId module slot
+     * @param regNum target register number
+     * @param addr slave address
+     * @return the CAN write frame
+     */
     public static int[] buildWriteSlaveAddr(int classId, int moduleId, int regNum, int addr) {
         return CdBConfigCommands.buildWrite(classId, moduleId, 0, regNum, addr);
     }
 
-    /** Writes the freeze RMK address (slot=0, reg=18, DLC=4). StromSniffer only. */
+    /**
+     * Writes the freeze RMK address (slot=0, reg=18, DLC=4). StromSniffer only.
+     *
+     * @param classId 8-bit CdB device class
+     * @param moduleId module slot
+     * @param addr freeze RMK feedback address
+     * @return the CAN write frame
+     */
     public static int[] buildWriteFreezeRmkAddr(int classId, int moduleId, int addr) {
         return CdBConfigCommands.buildWrite(classId, moduleId, 0, 18, addr);
     }
@@ -47,6 +99,10 @@ public final class CdBReporterCommands {
      * Builds all property read frames for a Reporter module (GleisReporter/StromSniffer).
      * Global regs {250,1,244,245,246,12,5,9,10,11,16,17,18,19,21,253},
      * per-channel regs 2 and 3 (ch 1–8).
+     *
+     * @param classId 8-bit CdB device class
+     * @param moduleId module slot
+     * @return the property read frames
      */
     public static int[][] buildReadAllProperties(int classId, int moduleId) {
         int[] globalRegs = {250, 1, 244, 245, 246, 12, 5, 9, 10, 11, 16, 17, 18, 19, 21, 253};

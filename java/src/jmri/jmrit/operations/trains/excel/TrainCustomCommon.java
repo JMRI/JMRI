@@ -87,7 +87,7 @@ public abstract class TrainCustomCommon {
 
     /**
      * The common file contains a list of CSV files that need to be processed.
-     * 
+     *
      * @return the common file.
      */
     public File getCommonFile() {
@@ -236,7 +236,6 @@ public abstract class TrainCustomCommon {
      *         timeout.
      * @throws InterruptedException if process thread is interrupted
      */
-    @SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification = "FindBugs incorrectly reports not guarded by conditional control flow")
     public boolean waitForProcessToComplete() throws InterruptedException {
         if (process == null) {
             return true; // process hasn't been initialized

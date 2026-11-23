@@ -23,8 +23,9 @@ import org.junit.jupiter.api.io.TempDir;
  *
  * @author Paul Bender Copyright (C) 2017
  */
+@SuppressWarnings("deprecation")
 public class EcosDccThrottleTest extends AbstractThrottleTest {
-        
+
     private EcosSystemConnectionMemo memo = null;
     private static final int MAX_FUNCTIONS = 32;
 
@@ -54,7 +55,7 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
         SpeedStepMode result = instance.getSpeedStepMode();
         Assert.assertEquals(expResult, result);
     }
-    
+
     /**
      * Test of getSpeedIncrement method, of class AbstractThrottle.
      */
@@ -78,7 +79,22 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
         instance.setSpeedSetting(speed);
         Assert.assertEquals(speed, instance.getSpeedSetting(), 0.0);
     }
-    
+
+    /**
+     * Test of setSpeedSettingAgain method, of class AbstractThrottle. As for
+     * setSpeedSetting: the ECoS throttle sends nothing, and stores nothing,
+     * until it has control of the loco.
+     */
+    @Test
+    @Disabled("needs response to see change?")
+    @ToDo("investigate what response needs to be sent to throttle after setSpeedSetting is called before the assert")
+    @Override
+    public void testSetSpeedSettingAgain() {
+        float speed = 1.0F;
+        instance.setSpeedSettingAgain(speed);
+        Assert.assertEquals(speed, instance.getSpeedSetting(), 0.0);
+    }
+
     @Test
     @Disabled("_haveControl boolean not true?")
     @ToDo("investigate what response needs to be sent to throttle after setSpeedSetting is called before the assert")
@@ -376,7 +392,7 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
         boolean f28 = false;
         instance.setF28(f28);
     }
-    
+
     @Test
     public void testSetGetF29(){
         instance.setFunction(29, true);
@@ -384,7 +400,7 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
         instance.setFunction(29, false);
         Assert.assertFalse(instance.getFunction(29));
     }
-    
+
     @Test
     public void testSetGetF30(){
         instance.setFunction(30, true);
@@ -392,7 +408,7 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
         instance.setFunction(30, false);
         Assert.assertFalse(instance.getFunction(30));
     }
-    
+
     @Test
     public void testSetGetF31(){
         instance.setFunction(31, true);
@@ -400,7 +416,7 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
         instance.setFunction(31, false);
         Assert.assertFalse(instance.getFunction(31));
     }
-    
+
     @Test
     public void testUpdateFunction0(){
         instance.updateFunction(0, true);
@@ -408,7 +424,7 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
         instance.updateFunction(0, false);
         Assert.assertFalse(instance.getFunction(0));
     }
-    
+
     @Test
     public void testUpdateFunction1(){
         instance.updateFunction(1, true);
@@ -416,7 +432,7 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
         instance.updateFunction(1, false);
         Assert.assertFalse(instance.getFunction(1));
     }
-    
+
     @Test
     public void testUpdateFunction29(){
         instance.updateFunction(29, true);
@@ -424,7 +440,7 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
         instance.updateFunction(29, false);
         Assert.assertFalse(instance.getFunction(29));
     }
-    
+
     @Test
     public void testUpdateFunction30(){
         instance.updateFunction(30, true);
@@ -432,7 +448,7 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
         instance.updateFunction(30, false);
         Assert.assertFalse(instance.getFunction(30));
     }
-    
+
     @Test
     public void testUpdateFunction31(){
         instance.updateFunction(31, true);
@@ -440,7 +456,7 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
         instance.updateFunction(31, false);
         Assert.assertFalse(instance.getFunction(31));
     }
-    
+
     /*
      * Ecos setFunction() calls updateFunction() so we need to keep this override to
      * assert the unhandled update rather than unhandled set message
@@ -448,13 +464,13 @@ public class EcosDccThrottleTest extends AbstractThrottleTest {
     @Test
     @Override
     public void testOutOfRangeSetFunction(){
-        
+
         instance.setFunction(-1, true);
         JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: -1");
-        
+
         instance.setFunction(32, true);
         JUnitAppender.assertWarnMessageStartingWith("Unhandled update function number: 32");
-        
+
     }
 
     /**

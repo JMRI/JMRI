@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import java.net.*;
+import java.nio.charset.StandardCharsets;
 
 import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
@@ -71,7 +72,7 @@ public class CheckForUpdateAction extends jmri.util.swing.JmriAbstractAction {
         }
 
         try ( InputStream in = url.openConnection().getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in)); ) {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8)); ) {
 
             // search for releases
             String line;

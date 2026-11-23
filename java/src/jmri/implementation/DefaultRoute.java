@@ -1322,7 +1322,11 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
                             setSensor.getSystemName(), r.getDisplayName(), e.getMessage());
                     }
                 });
-                threadSleep(50);
+                if (setSensor.isPhysicalSensor()) {
+                    // space commands to a connection; a sensor that is not
+                    // physical sends nothing, so needs no gap
+                    threadSleep(50);
+                }
             }
         }
 

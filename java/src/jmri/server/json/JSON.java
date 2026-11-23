@@ -34,7 +34,7 @@ public final class JSON {
      * this is a semantic version string; prior to that, it is just an X.Y
      * version string.
      */
-    public static final String V5_PROTOCOL_VERSION = "5.4.0"; // NOI18N
+    public static final String V5_PROTOCOL_VERSION = "5.5.0"; // NOI18N
 
     /**
      * JMRI JSON protocol version. See {@link jmri.server.json} for the version
@@ -550,6 +550,12 @@ public final class JSON {
      * @since 1.1
      */
     public static final String EMPTIES = "empties";
+    
+    /**
+     * {@value #COMMENT_TERMINATION}
+     *
+     */
+    public static final String COMMENT_TERMINATION = "commentTermination";
 
     /* JSON signalling tokens */
     /**

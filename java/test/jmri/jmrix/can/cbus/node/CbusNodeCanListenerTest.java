@@ -2,6 +2,7 @@ package jmri.jmrix.can.cbus.node;
 
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import jmri.jmrix.can.CanMessage;
@@ -119,8 +120,8 @@ public class CbusNodeCanListenerTest {
         nodeToEdit.getCanListener().message(mUnlearn);
         assertFalse( nodeToEdit.getNodeInLearnMode(), "node out of learn mode after NNULN sent");
 
-        CbusNodeEvent taught = nodeToEdit.getNodeEventManager().getNodeEvent(123, 456);
-        assertNotNull(taught);
+        CbusNodeEvent taught = Objects.requireNonNull(nodeToEdit.getNodeEventManager().getNodeEvent(123, 456),
+            "node event 123 456");
         assertEquals( 1, taught.getEvVar(1), "ev var 1 taught");
         assertEquals( 255, taught.getEvVar(2), "ev var 2 taught");
 
@@ -249,6 +250,47 @@ public class CbusNodeCanListenerTest {
     }
 
     /**
+     * Frames from other tools on the bus (MMC uses CAN ID 60) carry the node
+     * number of the node they are for, and EVANS and events carry an event's
+     * node number: none of them gives this node's CAN ID. Only the node's own
+     * replies do.
+     */
+    @Test
+    public void testOtherSendersFramesDoNotChangeCanId() {
+
+        nodeToEdit.getNodeParamManager().setParameters(new int[]{8,1,2,3,4,5,3,7,8});
+
+        // the node's own reply, from CAN ID 0x12
+        nodeToEdit.getCanListener().reply(frame(0x12, CbusConstants.CBUS_NVANS, 0x1F, 0x19, 0x01, 77));
+        assertEquals( 0x12, nodeToEdit.getNodeCanId(), "CAN ID set from node reply");
+
+        // another tool on the bus asks the node for an NV, sets one, and reads its events
+        nodeToEdit.getCanListener().reply(frame(60, CbusConstants.CBUS_NVRD, 0x1F, 0x19, 0x01));
+        nodeToEdit.getCanListener().reply(frame(60, CbusConstants.CBUS_NVSET, 0x1F, 0x19, 0x02, 9));
+        nodeToEdit.getCanListener().reply(frame(60, CbusConstants.CBUS_NERD, 0x1F, 0x19));
+        assertEquals( 0x12, nodeToEdit.getNodeCanId(), "CAN ID not changed by another tool's requests");
+
+        // another node answers with an event whose node number is this node's
+        nodeToEdit.getCanListener().reply(frame(0x30, CbusConstants.CBUS_EVANS, 0x1F, 0x19, 0x00, 0x05, 0x01, 0x02));
+        nodeToEdit.getCanListener().reply(frame(0x30, CbusConstants.CBUS_ACON, 0x1F, 0x19, 0x00, 0x05));
+        assertEquals( 0x12, nodeToEdit.getNodeCanId(), "CAN ID not changed by an event with this node's number");
+
+        // the node's own report, from a new CAN ID
+        nodeToEdit.getCanListener().reply(frame(0x13, CbusConstants.CBUS_PNN, 0x1F, 0x19, 165, 29, 13));
+        assertEquals( 0x13, nodeToEdit.getNodeCanId(), "CAN ID changed by the node's own PNN");
+    }
+
+    private static CanReply frame(int canId, int... elements) {
+        CanReply r = new CanReply();
+        r.setHeader(canId);
+        r.setNumDataElements(elements.length);
+        for (int i = 0; i < elements.length; i++) {
+            r.setElement(i, elements[i]);
+        }
+        return r;
+    }
+
+    /**
      * A node reporting fewer than 8 parameters must not cause an exception
      * when the parameters known from PNN / STAT are added.
      */
@@ -352,8 +394,10 @@ public class CbusNodeCanListenerTest {
         assertEquals( 100, nodeToEdit.getNodeEventManager().getOutstandingEvVars(), "100 event variables outstanding");
         assertFalse( nodeToEdit.getNodeEventManager().isEventIndexValid(), "event index invalid");
         assertEquals( 1, allEvUpdates.get(), "1 ALLEVUPDATE notification for 25 events");
-        assertEquals( 7961, nodeToEdit.getNodeEventManager().getNodeEventByArrayID(24).getParentNn(), "event parent node");
-        assertEquals( -1, nodeToEdit.getNodeEventManager().getNodeEventByArrayID(24).getIndex(), "event index unknown");
+        CbusNodeEvent event24 = Objects.requireNonNull(nodeToEdit.getNodeEventManager().getNodeEventByArrayID(24),
+            "node event at array ID 24");
+        assertEquals( 7961, event24.getParentNn(), "event parent node");
+        assertEquals( -1, event24.getIndex(), "event index unknown");
 
         r.setElement(3, 0); // 0 events
         nodeToEdit.getCanListener().reply(r);

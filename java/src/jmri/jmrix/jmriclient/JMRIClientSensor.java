@@ -97,11 +97,11 @@ public class JMRIClientSensor extends AbstractSensor implements JMRIClientListen
             return; // not for us
         }
         if (m.toString().contains("INACTIVE")) {
-            setOwnState(!getInverted() ? jmri.Sensor.INACTIVE : jmri.Sensor.ACTIVE);
+            setOwnState(!getInverted() ? jmri.Sensor.INACTIVE : jmri.Sensor.ACTIVE, m.getReceivedTime());
         } else if (m.toString().contains("ACTIVE")) {
-            setOwnState(!getInverted() ? jmri.Sensor.ACTIVE : jmri.Sensor.INACTIVE);
+            setOwnState(!getInverted() ? jmri.Sensor.ACTIVE : jmri.Sensor.INACTIVE, m.getReceivedTime());
         } else {
-            setOwnState(jmri.Sensor.UNKNOWN);
+            setOwnState(jmri.Sensor.UNKNOWN, m.getReceivedTime());
         }
     }
 

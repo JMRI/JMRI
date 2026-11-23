@@ -132,6 +132,16 @@ public class TrainCsvCommon extends TrainCommon {
             }
         }
     }
+    
+    protected final void printTrainCommentTermination(CSVPrinter fileOut, Train train) throws IOException {
+        if (!train.getCommentTermination().equals(Train.NONE)) {
+            String textColorName = train.getCommentTerminationColorName();
+            String[] comments = train.getCommentTerminationCurrent().split(NEW_LINE);
+            for (String comment : comments) {
+                fileOut.printRecord("TCT", Bundle.getMessage("csvTrainComment"), comment, textColorName); // NOI18N
+            }
+        }
+    }
 
     protected final void printRouteComment(CSVPrinter fileOut, Train train) throws IOException {
         if (!train.getRoute().getComment().isBlank()) {

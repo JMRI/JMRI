@@ -81,7 +81,6 @@ public class LnTurnout extends AbstractTurnout {
     public void setBinaryOutput(boolean state) {
         // TODO Auto-generated method stub
         setProperty(LnTurnoutManager.SENDONANDOFFKEY, !state);
-        binaryOutput = state;
     }
     @Override
     public void setFeedbackMode(@Nonnull String mode) throws IllegalArgumentException {

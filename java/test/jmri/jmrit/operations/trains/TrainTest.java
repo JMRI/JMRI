@@ -108,6 +108,8 @@ public class TrainTest extends OperationsTestCase {
         Assert.assertEquals("Train New Name", "TESTNEWNAME", train1.getName());
         train1.setComment("TESTCOMMENT");
         Assert.assertEquals("Train Comment", "TESTCOMMENT", train1.getCommentWithColor());
+        train1.setCommentTermination("TESTCOMMENT2");
+        Assert.assertEquals("Train Comment", "TESTCOMMENT2", train1.getCommentTerminationWithColor());
         train1.setDescription("TESTDESCRIPTION");
         Assert.assertEquals("Train Description", "TESTDESCRIPTION", train1.getDescription());
         train1.setCabooseRoad("TESTCABOOSEROAD");

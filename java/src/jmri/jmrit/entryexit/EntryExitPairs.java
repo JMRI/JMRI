@@ -44,13 +44,10 @@ import jmri.util.swing.JmriJOptionPane;
 public class EntryExitPairs extends VetoableChangeSupport implements Manager<DestinationPoints>, jmri.InstanceManagerAutoDefault,
         PropertyChangeListener {
 
-    public LayoutBlockConnectivityTools.Metric routingMethod = LayoutBlockConnectivityTools.Metric.METRIC;
-
     public static final int NXBUTTONSELECTED = 0x08;
     public static final int NXBUTTONACTIVE = Sensor.ACTIVE;
     public static final int NXBUTTONINACTIVE = Sensor.INACTIVE;
     private final SystemConnectionMemo memo;
-    private final Map<String, Boolean> silencedProperties = new HashMap<>();
 
     private int settingTimer = 2000;
 
@@ -98,7 +95,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
     boolean allocateToDispatcher = false;
     boolean absSignalMode = false;
     boolean quietFail = false;      // Suppress the dialog when a route allocation fails.
-    boolean skipGuiFix = false;     // Hold back NX button clicks while a route is set.  This keeps double-click chaining.
+    boolean enableDoubleClick = false;  // Hold back NX button clicks while a route is set.  This keeps double-click chaining.
 
     public static final int PROMPTUSER = 0x00;
     public static final int AUTOCLEAR = 0x01;
@@ -134,6 +131,9 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
      * Constructor for creating an EntryExitPairs object and create a transparent JPanel for it.
      */
     public EntryExitPairs() {
+        // EntryExitPairs needs the SignalMastLogicManager initialized so load it here.
+        InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
+
         memo = InstanceManager.getDefault(InternalSystemConnectionMemo.class);
         InstanceManager.getOptionalDefault(ConfigureManager.class).ifPresent(cm -> cm.registerUser(this));
         InstanceManager.getDefault(LayoutBlockManager.class).addPropertyChangeListener(propertyBlockManagerListener);
@@ -172,12 +172,12 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
         return quietFail;
     }
 
-    public void setSkipGuiFix(boolean skip) {
-        skipGuiFix = skip;
+    public void setEnableDoubleClick(boolean enable) {
+        enableDoubleClick = enable;
     }
 
-    public boolean isSkipGuiFix() {
-        return skipGuiFix;
+    public boolean isDoubleClickEnabled() {
+        return enableDoubleClick;
     }
 
     /**
@@ -759,7 +759,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
     }
 
     /**
-     * With the old GUI behavior, hold back a click on an NX button while a
+     * With the old GUI behavior (now called enableDoubleClick), hold back a click on an NX button while a
      * route is being set. The panel used to wait until the turnouts of a route
      * were set, so a second click on the destination button was handled after
      * the route had been set and started the next route instead of cancelling
@@ -771,7 +771,7 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
      * @return true if the click has been held back
      */
     synchronized boolean holdButtonClick(Runnable click) {
-        if (!skipGuiFix || routesBeingSet == 0) {
+        if (!enableDoubleClick || routesBeingSet == 0) {
             return false;
         }
         heldButtonClicks.add(click);
@@ -1291,8 +1291,6 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
 
     }
 
-    jmri.SignalMastLogicManager smlm = InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
-
     public static final int CANCELROUTE = 0;
     public static final int CLEARROUTE = 1;
     public static final int EXITROUTE = 2;
@@ -1599,7 +1597,6 @@ public class EntryExitPairs extends VetoableChangeSupport implements Manager<Des
         if (!Manager.PROPERTY_BEANS.equals(propertyName)) {
             throw new IllegalArgumentException("Property " + propertyName + " cannot be silenced.");
         }
-        silencedProperties.put(propertyName, silenced);
         if (propertyName.equals(Manager.PROPERTY_BEANS) && !silenced) {
             fireIndexedPropertyChange(Manager.PROPERTY_BEANS, getNamedBeanSet().size(), null, null);
         }

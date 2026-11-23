@@ -62,6 +62,10 @@ public class JsonRouteHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<R
     public void testDoGetWithoutRouteSensor() throws JmriException, JsonException {
         RouteManager manager = InstanceManager.getDefault(RouteManager.class);
         Route route1 = manager.provideRoute("IO1", "Route1");
+        // properties of each kind, to check the shape the schema describes
+        route1.setProperty("text", "value");
+        route1.setProperty("number", 42);
+        route1.setProperty("empty", null);
         JsonNode result;
         result = service.doGet(JsonRouteServiceFactory.ROUTE, "IO1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         validate(result);

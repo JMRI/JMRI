@@ -41,7 +41,7 @@ public class ThrottlesPreferences implements jmri.InstanceManagerAutoDefault {
     private boolean _hideSpeedStepSelector = false;
     private boolean _ignoreThrottlePosition = true;
     private boolean _saveThrottleOnLayoutSave = true;
-    private boolean _isAddressSelectorShowingAllRosterGroup = false;
+    private boolean _isAddressSelectorShowingAllRosterGroup = true;
     private boolean _isSilentSteal = false;
     private boolean _isSilentShare = false;
     private String _defaultThrottleFilePath = "resources/throttle/NMRA throttle.xml";

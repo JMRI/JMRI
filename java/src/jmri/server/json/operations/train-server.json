@@ -24,9 +24,14 @@
             "type": "string",
             "description": "Freeform description of train"
         },
+
         "comment": {
             "type": "string",
             "description": "Freeform comment concerning train"
+        },
+        "commentTermination": {
+            "type": "string",
+            "description": "Freeform comment concerning train termination"
         },
         "status": {
             "type": "string",

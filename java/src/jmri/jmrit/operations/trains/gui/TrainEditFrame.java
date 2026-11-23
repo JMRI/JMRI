@@ -83,6 +83,11 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     JColorChooser commentColorChooser = new JColorChooser(Color.black);
     JCheckBox boldCheckBox = new JCheckBox();
 
+    JTextArea commentTerminationTextArea = new JTextArea(4, 70);
+    JScrollPane commentTerminationScroller = new JScrollPane(commentTerminationTextArea);
+    JColorChooser commentTerminationColorChooser = new JColorChooser(Color.black);
+    JCheckBox boldCheckBoxTermination = new JCheckBox();
+
     // for padding out panel
     JLabel space0 = new JLabel(" "); // before day
     JLabel space1 = new JLabel(" "); // between day and hour
@@ -291,9 +296,23 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             addItem(pC, getColorChooserPanel("", commentColorChooser, boldCheckBox), 2, 0);
         }
 
+        // row 14 termination comment
+        JPanel pCt = new JPanel();
+        pCt.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("CommentTerminaton")));
+        pCt.setLayout(new GridBagLayout());
+        addItem(pCt, commentTerminationScroller, 1, 0);
+        if (_train != null) {
+            addItem(pCt, getColorChooserPanel(_train.getCommentTerminationWithColor(), commentTerminationColorChooser,
+                    boldCheckBoxTermination), 2, 0);
+            boldCheckBoxTermination.setSelected(TrainCommon.isTextBold(_train.getCommentTerminationWithColor()));
+        } else {
+            addItem(pCt, getColorChooserPanel("", commentTerminationColorChooser, boldCheckBoxTermination), 2, 0);
+        }
+
         // adjust text area width based on window size less color chooser
         Dimension d = new Dimension(getPreferredSize().width - 100, getPreferredSize().height);
         adjustTextAreaColumnWidth(commentScroller, commentTextArea, d);
+        adjustTextAreaColumnWidth(commentTerminationScroller, commentTerminationTextArea, d);
 
         // row 15 buttons
         JPanel pB = new JPanel();
@@ -311,6 +330,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         getContentPane().add(trainReq);
         getContentPane().add(trainLastCar);
         getContentPane().add(pC);
+        getContentPane().add(pCt);
         getContentPane().add(pB);
 
         // setup buttons
@@ -331,6 +351,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         resetButton.setToolTipText(Bundle.getMessage("TipTrainReset"));
         autoSelectButton.setToolTipText(Bundle.getMessage("AutoSelectTip"));
         commentTextArea.setToolTipText(Bundle.getMessage("TrainCommentTip"));
+        commentTerminationTextArea.setToolTipText(Bundle.getMessage("TrainCommentTip"));
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
@@ -346,6 +367,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             modelEngineBox.setSelectedItem(_train.getEngineModel());
             commentTextArea.setText(TrainCommon.isTextUserModified(_train.getCommentWithColor())
                     ? _train.getCommentWithColor() : _train.getComment());
+            commentTerminationTextArea.setText(TrainCommon.isTextUserModified(_train.getCommentTerminationWithColor())
+                    ? _train.getCommentTerminationWithColor() : _train.getCommentTermination());
             cabooseRadioButton.setSelected(_train.isCabooseNeeded());
             fredRadioButton.setSelected(_train.isFredNeeded());
             updateDepartureTime();
@@ -567,7 +590,11 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
                 !_train.getRawDescription().equals(trainDescriptionTextField.getText()) ||
                 !_train.getCommentWithColor().equals(
                         TrainCommon.formatColorString(commentTextArea.getText(), commentColorChooser.getColor(),
-                                boldCheckBox.isSelected()))) {
+                                boldCheckBox.isSelected())) ||
+                !_train.getCommentTerminationWithColor().equals(
+                        TrainCommon.formatColorString(commentTerminationTextArea.getText(),
+                                commentTerminationColorChooser.getColor(),
+                                boldCheckBoxTermination.isSelected()))) {
             _train.setModified(true);
         }
         _train.setDepartureTime(dayBox.getSelectedItem().toString(), hourBox.getSelectedItem().toString(),
@@ -593,6 +620,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
         _train.setDescription(trainDescriptionTextField.getText());
         _train.setComment(TrainCommon.formatColorString(commentTextArea.getText(), commentColorChooser.getColor(),
                 boldCheckBox.isSelected()));
+        _train.setCommentTermination(TrainCommon.formatColorString(commentTerminationTextArea.getText(),
+                commentTerminationColorChooser.getColor(),
+                boldCheckBoxTermination.isSelected()));
         // save train file
         OperationsXml.save();
         return true;

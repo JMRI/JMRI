@@ -109,7 +109,7 @@ public class TimeSinceMidnight extends AbstractAnalogExpression implements Prope
                 return Bundle.getMessage(locale, "TimeSinceMidnight_Long_FastClock");
 
             default:
-                throw new RuntimeException("Unknown value of _timerType: "+_type.name());
+                throw new JmriUncheckedException("Unknown value of _timerType: "+_type.name());
         }
     }
 
@@ -174,7 +174,9 @@ public class TimeSinceMidnight extends AbstractAnalogExpression implements Prope
                 propertyChange(null);
             }
         };
-        TimerUtil.schedule(timerTask, System.currentTimeMillis() % millisInAMinute, millisInAMinute);
+        // first at the start of the next minute, then every minute
+        long toNextMinute = millisInAMinute - System.currentTimeMillis() % millisInAMinute;
+        TimerUtil.scheduleAtFixedRate(timerTask, toNextMinute, millisInAMinute);
     }
 
     /** {@inheritDoc} */

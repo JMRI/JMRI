@@ -43,6 +43,15 @@
       </xs:restriction>
     </xs:simpleType>
 
+    <!-- This type is defined in jmri.jmrit.logixng.util.BlockValueType -->
+    <xs:simpleType name="LogixNG_BlockValueType_Type">
+      <xs:restriction base="xs:token">
+        <xs:enumeration value="Value"/>
+        <xs:enumeration value="AllocatedValue"/>
+        <xs:enumeration value="DisplayValue"/>
+      </xs:restriction>
+    </xs:simpleType>
+
     <xs:simpleType name="LogixNG_LocalVariable_InitialValueType_Type">
       <xs:restriction base="xs:token">
         <xs:enumeration value="None"/>

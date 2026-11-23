@@ -24,28 +24,18 @@
         },
         "properties": {
             "type": "array",
-            "description": "NamedBean properties of the block",
+            "description": "NamedBean properties of the block; each item has a single key, the property name, with the value as a string or null",
             "items": {
                 "type": "object",
-                "properties": {
-                    "key": {
-                        "type": "string",
-                        "description": "Key by which property is accessed"
-                    },
-                    "value": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
-                        "description": "String value of property or null"
-                    }
+                "minProperties": 1,
+                "maxProperties": 1,
+                "additionalProperties": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
                 }
-            },
-            "additionalProperties": false,
-            "required": [
-                "name",
-                "value"
-            ]
+            }
         },
         "state": {
             "type": "integer",
@@ -57,6 +47,14 @@
                 "null"
             ],
             "description": "The block's value, can be idTag, Reporter, or text"
+        },
+        "allocatedValue": {
+            "type": [
+                "string",
+                "object",
+                "null"
+            ],
+            "description": "The train the block is allocated to, for example by Dispatcher, which may not have reached it yet or may have left it: a roster entry, idTag or Reporter as an object, other values as text, or null if the block is not allocated or no value was given"
         },
         "sensor": {
             "type": [
@@ -121,6 +119,7 @@
         "sensor",
         "reporter",
         "value",
+        "allocatedValue",
         "speed",
         "curvature",
         "direction",

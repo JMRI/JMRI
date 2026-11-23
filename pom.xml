@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>5.17.4-SNAPSHOT</version>
+    <version>5.19.1-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -393,6 +393,15 @@
 
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.5.0</version>
+                <configuration>
+                    <propertiesEncoding>UTF-8</propertiesEncoding>
+                </configuration>
+            </plugin>			
+			
+            <plugin>
                 <groupId>org.pitest</groupId>
                 <artifactId>pitest-maven</artifactId>
                 <version>1.4.10</version>
@@ -450,10 +459,9 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.16.0</version>
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
+                    <release>11</release>
                     <compilerArgs>
                         <arg>-proc:full</arg>
                     </compilerArgs>
@@ -955,7 +963,7 @@
                         <configuration>
                             <rules>
                                 <requireMavenVersion>
-                                    <version>[3.3.9,)</version>
+                                    <version>[3.6.3,)</version>
                                 </requireMavenVersion>
                             </rules>
                         </configuration>

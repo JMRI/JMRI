@@ -1,6 +1,7 @@
 package jmri.jmrix.tmcc;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
 import java.io.*;
@@ -115,12 +116,17 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRTrafficCon
         JUnitUtil.waitFor(100);
 
         // drive the mechanism
+        long before = System.nanoTime();
         c.handleOneIncomingReply();
+        long after = System.nanoTime();
         JUnitUtil.waitFor(() -> {
             return rcvdReply != null;
         }, "reply received");
         assertEquals( 0xFE, rcvdReply.getOpCode() & 0xFF, "first char of reply ");
         assertEquals( 3, rcvdReply.getNumDataElements(), "length of reply ");
+        assertTrue( rcvdReply.hasReceivedTime(), "received time recorded");
+        assertTrue( rcvdReply.getReceivedTime() >= before && rcvdReply.getReceivedTime() <= after,
+                "stamped when read, by the receiving thread");
         c.terminateThreads();
     }
 

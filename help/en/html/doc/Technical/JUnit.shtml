@@ -427,6 +427,9 @@ on <a href="StartUpScripts.shtml">startup scripts</a>.
       "src/jmri/Version.java", and its test class is "jmri.VersionTest" found in
       "test/jmri/VersionTest.java".</p>
 
+      <p>To test code that works with moving trains, such as Blocks, Dispatcher and Warrants,
+      see <a href="simulatedtrains.shtml">Writing Tests with Simulated Trains</a>.</p>
+
       <h3 id="writeAddl4ExistClass">Writing Additional Tests for an Existing Class</h3>
 
       <p>To write additional tests for a class with existing tests, first locate the test class.

@@ -50,6 +50,10 @@ public class JsonLightHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<L
             }
         };
         manager.register(light1);
+        // properties of each kind, to check the shape the schema describes
+        light1.setProperty("text", "value");
+        light1.setProperty("number", 42);
+        light1.setProperty("empty", null);
         JsonNode result = service.doGet(JsonLight.LIGHT, "IL1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         validate(result);
         assertEquals(JsonLight.LIGHT, result.path(JSON.TYPE).asText());

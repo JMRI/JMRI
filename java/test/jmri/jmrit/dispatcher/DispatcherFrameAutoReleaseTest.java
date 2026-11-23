@@ -198,65 +198,74 @@ public class DispatcherFrameAutoReleaseTest {
     }
 
     @Test
-    public void testHeadAndTailHeldWhileHeadInNextSectionAndTailUndetected() {
-        // A has cleared, the head is in B, and the tail has lost detection,
-        // so it may still be in A
-        buildTransit(1000);
+    public void testHeadAndTailNotHeldByLength() {
+        // the tail is detected, and the earlier checks keep any Section
+        // ahead of the last occupied one, so length is not used
+        buildTransit(500);
         when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADANDTAIL);
         when(at.getAutoActiveTrain()).thenReturn(null);
         when(at.getMaxTrainLengthMM()).thenReturn(800L);
         headIn(1);
-        assertFalse(releaseA(), "head in B, nothing beyond A is known to hold the train");
-    }
-
-    @Test
-    public void testHeadAndTailMeasuredToTheHeadNotTheTail() {
-        buildTransit(500);
-        when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADANDTAIL);
-        when(at.getAutoActiveTrain()).thenReturn(null);
-        when(at.getMaxTrainLengthMM()).thenReturn(800L);
-        headIn(2);
+        assertTrue(releaseA(), "head in B: only B (500) beyond A, train is 800, but A is not checked by length");
         tailIn(1);
-        assertFalse(releaseA(), "tail in B, head in C: only B (500) beyond A, train is 800");
-        headIn(3);
-        tailIn(1);
-        assertTrue(releaseA(), "tail in B, head in D: B and C (1000) beyond A");
-    }
-
-    @Test
-    public void testHeadAndTailHeldWhenTailLostDetectionAndNoLength() {
-        buildTransit(1000);
-        when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADANDTAIL);
-        when(at.getAutoActiveTrain()).thenReturn(null);
-        when(at.firstNoLengthWarning()).thenReturn(true, false);
         headIn(2);
-        assertFalse(releaseA(), "tail lost detection in A");
-        headIn(3);
-        assertFalse(releaseA(), "still no tail seen, train length unknown");
-        JUnitAppender.assertWarnMessage("Test: has no Max Train Length, Sections behind it will not be released automatically.");
+        assertTrue(releaseA(), "tail in B, head in C");
     }
 
     @Test
-    public void testHeadAndTailDispatchedLostDetectionReleasedByLength() {
-        buildTransit(500);
-        when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADANDTAIL);
-        when(at.getAutoActiveTrain()).thenReturn(null);
-        when(at.getMaxTrainLengthMM()).thenReturn(800L);
-        headIn(2);
-        assertFalse(releaseA(), "only B (500) beyond A, train is 800");
-        headIn(3);
-        assertTrue(releaseA(), "B and C (1000) beyond A");
-    }
-
-    @Test
-    public void testHeadAndTailAutoLostDetectionReleasedByLength() {
+    public void testHeadAndTailAutoNotHeldByLength() {
         buildTransit(500);
         when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADANDTAIL);
         autoTrain(800);
+        headIn(1);
+        assertTrue(releaseA(), "head in B: A is not checked by length");
+    }
+
+    @Test
+    public void testHeadAndTailWithoutLengthIsNotHeld() {
+        buildTransit(1000);
+        when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADANDTAIL);
+        when(at.getAutoActiveTrain()).thenReturn(null);
+        headIn(1);
+        assertTrue(releaseA(), "no train length needed, and no warning");
+    }
+
+    /**
+     * Stop an automatic train.
+     */
+    private void stopped(AutoActiveTrain aat) {
+        when(aat.getAutoEngineer().isStopped()).thenReturn(true);
+    }
+
+    @Test
+    public void testStoppedAndFitsCounts() {
+        // stopped with no stopping sensor and not by its speed profile, as by
+        // the next Section becoming occupied: the whole train is still in B
+        buildTransit(1000);
+        when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADONLY);
+        stopped(autoTrain(800));
+        headIn(1);
+        assertTrue(releaseA(), "stopped in B, and fits in B (1000)");
+    }
+
+    @Test
+    public void testMovingDoesNotCount() {
+        buildTransit(1000);
+        when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADONLY);
+        autoTrain(800);
+        headIn(1);
+        assertFalse(releaseA(), "still moving in B: its tail may still be in A");
+    }
+
+    @Test
+    public void testStoppedCountsOnlyIfTheTrainFits() {
+        buildTransit(500);
+        when(at.getTrainDetection()).thenReturn(TrainDetection.TRAINDETECTION_HEADONLY);
+        AutoActiveTrain aat = autoTrain(800);
+        stopped(aat);
+        when(aat.getStopBySpeedProfile()).thenReturn(true); // even stopped by its speed profile
         headIn(2);
-        assertFalse(releaseA(), "only B (500) beyond A, train is 800");
-        headIn(3);
-        assertTrue(releaseA(), "B and C (1000) beyond A");
+        assertFalse(releaseA(), "stopped in C, but the train (800) is longer than C (500): only B counts");
     }
 
     private TrainInfo trainInfo(TrainDetection detection, float lengthScaleMeters) {

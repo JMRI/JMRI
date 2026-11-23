@@ -17,6 +17,7 @@ import org.junit.jupiter.api.*;
  * @author Paul Bender Copyright (C) 2008-2016
  */
 @Timeout(1)
+@SuppressWarnings("deprecation")
 public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     protected XNetInterfaceScaffold tc = null;
@@ -658,6 +659,35 @@ public class XNetThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         assertTrue( waited >= 250,
             "watchdog held off for the longer deadline, waited only " + waited + "ms");
         JUnitAppender.assertWarnMessageStartsWith("Throttle 4 - no reply after");
+    }
+
+    /**
+     * A speed limit is applied before the speed message is built: the message
+     * for 1.0 limited to 0.5 is the message for 0.5.
+     */
+    @Test
+    public void testSpeedMessageIsLimited() {
+        int n = tc.outbound.size();
+        XNetThrottle t = (XNetThrottle) instance;
+        initThrottle(t, n);
+
+        n = tc.outbound.size();
+        t.setSpeedSetting(0.5f);
+        assertEquals( n + 1, tc.outbound.size(), "speed message for 0.5 sent");
+        String unlimited = tc.outbound.elementAt(n).toString();
+        t.message(new XNetReply("01 04 05")); // OK: the throttle is idle again
+
+        jmri.ThrottleSpeedLimiter limiter = address -> 0.5f;
+        jmri.InstanceManager.setDefault(jmri.ThrottleSpeedLimiter.class, limiter);
+        try {
+            n = tc.outbound.size();
+            t.setSpeedSetting(1.0f);
+            assertEquals( n + 1, tc.outbound.size(), "speed message for 1.0 sent");
+            assertEquals( unlimited, tc.outbound.elementAt(n).toString(), "1.0 sent as 0.5");
+        } finally {
+            jmri.InstanceManager.deregister(limiter, jmri.ThrottleSpeedLimiter.class);
+        }
+        t.throttleDispose();
     }
 
     @Test

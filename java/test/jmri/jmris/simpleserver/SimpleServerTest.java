@@ -1,8 +1,10 @@
 package jmri.jmris.simpleserver;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 import jmri.util.JUnitUtil;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -45,7 +47,7 @@ public class SimpleServerTest {
                 });
         ) {
             String code = "LIGHT IL1 OFF\n\r";
-            InputStream input = new ByteArrayInputStream(code.getBytes());
+            InputStream input = new ByteArrayInputStream(code.getBytes(StandardCharsets.UTF_8));
             Thread t = new Thread(() -> {
                 try {
                     ss.handleClient(new DataInputStream(input),output);

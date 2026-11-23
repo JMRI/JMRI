@@ -1,6 +1,5 @@
 package jmri.jmrix.roco.z21.messageformatters;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.jmrix.Message;
 import jmri.jmrix.roco.z21.Z21MessageFormatter;
 import jmri.jmrix.roco.z21.Z21MessageUtils;
@@ -19,7 +18,6 @@ public class Z21CANDetectorReplyFormatter implements Z21MessageFormatter {
     }
 
     @Override
-    @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     public String formatMessage(Message m) {
         if(!handlesMessage(m)){
             throw new IllegalArgumentException("Message is not a Z21 CAN Detector Reply");
@@ -90,7 +88,7 @@ public class Z21CANDetectorReplyFormatter implements Z21MessageFormatter {
     }
 
     // address value is the 16 bits of the two bytes containing the
-    // address.  The most significan two bits represent the direction.
+    // address.  The most significant two bits represent the direction.
     private String getCanDetectorLocoAddressString(int addressValue) {
         String addressString;
         if(addressValue==0) {

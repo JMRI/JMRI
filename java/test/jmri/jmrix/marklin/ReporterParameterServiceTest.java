@@ -1,4 +1,7 @@
 package jmri.jmrix.marklin;
+import jmri.jmrix.marklin.mcan.cdb.CdBConfigCommands;
+import jmri.jmrix.marklin.mcan.cdb.CdBFrameParser;
+import jmri.jmrix.marklin.mcan.classify.ProtocolClassifier;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,6 +31,61 @@ class ReporterParameterServiceTest {
     private static McanDevice makeDev(int canClass, int moduleId) {
         McanDeviceIdentity.CdB id = McanDeviceIdentity.forCdB(canClass, moduleId);
         return new McanDevice("M", id);
+    }
+
+    private static MarklinReply readReply(int cls, int module, int slot, int reg, int dlc, int... payload) {
+        int[] f = CdBConfigCommands.buildRead(cls, module, slot, reg);
+        f[1] |= 0x01; // read (+0x40000) -> read reply (+0x50000)
+        f[4] = dlc;
+        for (int i = 0; i < payload.length; i++) {
+            f[7 + i] = payload[i] & 0xFF;
+        }
+        return new MarklinReply(f);
+    }
+
+    private static void deliver(ReporterParameterService svc, MarklinReply r) {
+        svc.handleCdBReply((CdBFrameParser.CdBFrame) ProtocolClassifier.classify(r.toIntArray()), r);
+    }
+
+    @Test
+    void testReadReplyModuleNameUsesBytesBeyondValue() {
+        List<String> names = new ArrayList<>();
+        ReporterParameterService svc = new ReporterParameterService(makeDev(0x0D, 5), f -> {});
+        svc.addListener(new ReporterParameterService.ReporterListener() {
+            @Override public void moduleNameReceived(String name) { names.add(name); }
+        });
+        svc.selectModule(5);
+        deliver(svc, readReply(0x0D, 5, 0, 250, 8, 'G', 'l', 'e', 'i', 's', 'R'));
+        deliver(svc, readReply(0x0D, 5, 1, 250, 8, 'e', 'p', 0, 0xFF, 0, 0));
+        assertEquals(List.of("GleisR", "GleisRep"), names);
+    }
+
+    @Test
+    void testReadReplyHardwareChipOnlyWithDlc5() {
+        List<String> hw = new ArrayList<>();
+        ReporterParameterService svc = new ReporterParameterService(makeDev(0x0D, 5), f -> {});
+        svc.addListener(new ReporterParameterService.ReporterListener() {
+            @Override public void hardwareReceived(int hi, int lo, Integer chip, String text) {
+                hw.add(hi + "." + lo + ":" + chip + ":" + text);
+            }
+        });
+        svc.selectModule(5);
+        deliver(svc, readReply(0x0D, 5, 0, 244, 5, 7, 3, 0x42));
+        deliver(svc, readReply(0x0D, 5, 0, 244, 4, 8, 1, 0x42));
+        assertEquals(List.of("7.3:66:See manual version 2.1", "8.1:null:See manual version 2.2"), hw);
+    }
+
+    @Test
+    void testReadReplyVoltageAndModuleFilter() {
+        List<String> volts = new ArrayList<>();
+        ReporterParameterService svc = new ReporterParameterService(makeDev(0x0D, 5), f -> {});
+        svc.addListener(new ReporterParameterService.ReporterListener() {
+            @Override public void voltageReceived(String text, boolean warn) { volts.add(text + ":" + warn); }
+        });
+        svc.selectModule(5);
+        deliver(svc, readReply(0x0D, 6, 0, 246, 4, 0x12, 0x34)); // other module: ignored
+        deliver(svc, readReply(0x0D, 5, 0, 246, 4, 0x12, 0x34)); // 0x1234 * 68 / 1000 = 316
+        assertEquals(List.of("Operating voltage: 3.16 V:true"), volts);
     }
 
     @Test
@@ -120,6 +178,7 @@ class ReporterParameterServiceTest {
     @Test
     void testOccupancyFrameDispatch() {
         // Module raw ID = 3: rmk = 3*8-8 = 16; channel 0 → absolute RMK = 17
+        // TODO uncertain: hash 2691 mirrors the current port, not verified traffic (see handleStatusFrame).
         // Status frame pattern: byte[0]=0, byte[1]=35,
         // bytes[2-3] such that (b23 - 2816) == rawId - 128 → b23 = rawId - 128 + 2816 = 3 - 128 + 2816 = 2691
         // byte[7]=0, byte[8]=17 (rmk+1), byte[9]=0 = occupied

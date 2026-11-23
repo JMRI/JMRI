@@ -2599,7 +2599,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         }
 
         @Override
-        @SuppressFBWarnings(value = "WA_NOT_IN_LOOP", justification = "notify never called on this thread")
         public void run() {
             synchronized (this) {
 //                _startTime = System.currentTimeMillis();

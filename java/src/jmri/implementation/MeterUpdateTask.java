@@ -12,7 +12,8 @@ import jmri.Meter;
  */
 public abstract class MeterUpdateTask {
 
-    Map<Meter, Boolean> meters = new HashMap<>();
+    // how many users have each meter enabled: it is polled while any has
+    Map<Meter, Integer> meters = new HashMap<>();
     boolean _enabled = false;
     private UpdateTask _intervalTask = null;
     private int _initialInterval; //in ms
@@ -36,7 +37,7 @@ public abstract class MeterUpdateTask {
      }
 
     public void addMeter(Meter m) {
-        meters.put(m, false);
+        meters.put(m, 0);
     }
 
     public void removeMeter(Meter m) {
@@ -56,12 +57,10 @@ public abstract class MeterUpdateTask {
             throw new IllegalArgumentException("Meter is not registered");
         }
 
-        if (!meters.get(m)) {
-            meters.put(m, true);
-            if (!_enabled) {
-                _enabled = true;
-                enable();
-            }
+        meters.put(m, meters.get(m) + 1);
+        if (!_enabled) {
+            _enabled = true;
+            enable();
         }
     }
 
@@ -74,13 +73,14 @@ public abstract class MeterUpdateTask {
     public void disable(Meter m) {
         if (!meters.containsKey(m)) return;
 
-        if (meters.get(m)) {
-            meters.put(m, false);
+        int users = meters.get(m);
+        if (users > 0) {
+            meters.put(m, users - 1);
             if (_enabled) {
                 // Is there any more meters that are active?
                 boolean found = false;
-                for (Boolean b : meters.values()) {
-                    found |= b;
+                for (int n : meters.values()) {
+                    found |= n > 0;
                 }
                 if (! found) {
                     _enabled = false;

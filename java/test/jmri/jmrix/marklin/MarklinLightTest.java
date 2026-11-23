@@ -50,8 +50,7 @@ public class MarklinLightTest extends jmri.implementation.AbstractLightTestBase 
                 assertEquals(state, light.getState(), "release must not change the light state");
             }
 
-            MarklinReply reply = new MarklinReply();
-            reply.setCommand(MarklinConstants.ACCCOMMANDSTART);
+            MarklinReply reply = accessoryReply();
             reply.setAddress(wireAddress);
             int sent = tc.getSentMessages().size();
             reply.setElement(9, 1);
@@ -69,8 +68,7 @@ public class MarklinLightTest extends jmri.implementation.AbstractLightTestBase 
     @Test
     public void testFeedbackFiltering() {
         MarklinLight light = (MarklinLight) t;
-        MarklinReply reply = new MarklinReply();
-        reply.setCommand(MarklinConstants.ACCCOMMANDSTART);
+        MarklinReply reply = accessoryReply();
         reply.setAddress(MarklinConstants.MM1ACCSTART);
         reply.setElement(9, 1);
         light.reply(reply);
@@ -84,6 +82,15 @@ public class MarklinLightTest extends jmri.implementation.AbstractLightTestBase 
         light.reply(reply);
         assertEquals(Light.OFF, light.getState(), "wrong priority");
         assertEquals(0, tc.getSentMessages().size());
+    }
+
+    /** Accessory frame with a CS2-fingerprinted hash (0x0300) and DLC=6. */
+    private static MarklinReply accessoryReply() {
+        MarklinReply reply = new MarklinReply();
+        reply.setCommand(MarklinConstants.ACCCOMMANDSTART);
+        reply.setElement(2, 0x03);
+        reply.setElement(4, 6);
+        return reply;
     }
 
     @Test

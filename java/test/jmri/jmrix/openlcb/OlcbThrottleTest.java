@@ -13,6 +13,7 @@ import org.openlcb.*;
  *
  * @author Bob Jacobsen Copyright 2008, 2010, 2011
  */
+@SuppressWarnings("deprecation")
 public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     private static OlcbSystemConnectionMemoScaffold memo;
@@ -411,7 +412,6 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     }
 
     @BeforeAll
-    @SuppressWarnings("deprecation") // OlcbInterface(NodeID, Connection)
     public static void preClassInit() {
         JUnitUtil.setUp();
         JUnitUtil.initInternalTurnoutManager();
@@ -426,7 +426,7 @@ public class OlcbThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
         memo = new OlcbSystemConnectionMemoScaffold(); // this self-registers as 'M'
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
-        memo.setInterface(new OlcbInterface(nodeID, connection) {
+        memo.setInterface(new OlcbInterface(nodeID, connection, new OlcbTestThreadPool()) {
             @Override
             public Connection getOutputConnection() {
                 return connection;

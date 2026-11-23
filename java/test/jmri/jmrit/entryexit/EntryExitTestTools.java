@@ -30,8 +30,34 @@ class EntryExitTestTools {
         }
 
         InstanceManager.getDefault(SensorManager.class).provideSensor("Reset").setKnownState(Sensor.ACTIVE);
+        waitForResetRoutes();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
         return panels;
+    }
+
+    /**
+     * The Reset sensor's Routes set every NX button's sensor inactive, and
+     * the turnouts closed, after the sensor is set. Wait for them, or they
+     * can set a button's sensor inactive while a test is using it.
+     */
+    private static void waitForResetRoutes() {
+        RouteManager rm = InstanceManager.getDefault(RouteManager.class);
+        jmri.util.JUnitUtil.waitFor(() -> rm.getNamedBeanSet().stream().allMatch(EntryExitTestTools::isSet),
+                "the Reset Routes are set");
+    }
+
+    private static boolean isSet(Route r) {
+        for (int i = 0; i < r.getNumOutputSensors(); i++) {
+            if (r.getOutputSensor(i).getKnownState() != r.getOutputSensorState(i)) {
+                return false;
+            }
+        }
+        for (int i = 0; i < r.getNumOutputTurnouts(); i++) {
+            if (r.getOutputTurnout(i).getKnownState() != r.getOutputTurnoutState(i)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     PointDetails getPoint(Sensor sensor, LayoutEditor panel, EntryExitPairs eep) {

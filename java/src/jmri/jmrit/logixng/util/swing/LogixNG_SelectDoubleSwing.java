@@ -181,7 +181,7 @@ public class LogixNG_SelectDoubleSwing {
                 throw new IllegalArgumentException("_tabbedPaneEnum has unknown selection");
             }
         } catch (ParserException e) {
-            throw new RuntimeException("ParserException: "+e.getMessage(), e);
+            throw new JmriUncheckedException("ParserException: "+e.getMessage(), e);
         }
 
         _selectTableSwing.updateObject(selectDouble.getSelectTable());

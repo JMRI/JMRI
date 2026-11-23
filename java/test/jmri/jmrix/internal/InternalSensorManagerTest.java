@@ -1,6 +1,7 @@
 package jmri.jmrix.internal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -299,6 +300,20 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
             count++;
         }
 
+    }
+
+    /**
+     * Sensors from every internal connection, not only the default one, say
+     * they are not physical.
+     */
+    @Test
+    public void testSensorsAreNotPhysical() {
+        assertFalse(l.provideSensor("IS1").isPhysicalSensor());
+        InternalSystemConnectionMemo second = new InternalSystemConnectionMemo("J", "Second Internal", false);
+        InternalSensorManager m = new InternalSensorManager(second);
+        assertFalse(m.provideSensor("JS1").isPhysicalSensor());
+        m.dispose();
+        second.dispose();
     }
 
     @Override

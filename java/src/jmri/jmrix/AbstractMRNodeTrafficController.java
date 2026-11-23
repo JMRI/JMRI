@@ -149,11 +149,15 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
     @SuppressFBWarnings(value = "VO_VOLATILE_INCREMENT", justification = "Method itself is synchronized to protect numNodes")
     public synchronized void deleteNode(int nodeAddress) {
         // find the serial node
-        int index = 0;
+        int index = -1;
         for (int i = 0; i < numNodes; i++) {
             if (nodeArray[i].getNodeAddress() == nodeAddress) {
                 index = i;
             }
+        }
+        if (index < 0) {
+            log.warn("No node with address {} to delete", nodeAddress);
+            return;
         }
         if (index == curSerialNodeIndex) {
             log.warn("Deleting the serial node active in the polling loop");
@@ -165,9 +169,11 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
             // did not delete the last node, shift
             for (int j = index; j < numNodes; j++) {
                 nodeArray[j] = nodeArray[j + 1];
+                mustInit[j] = mustInit[j + 1]; // each node keeps its own flag
             }
         }
         nodeArray[numNodes] = null;
+        mustInit[numNodes] = true;
     }
 
     private static final Logger log = LoggerFactory.getLogger(AbstractMRNodeTrafficController.class);

@@ -8,7 +8,6 @@ import javax.swing.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterFunctionEntry;
 import jmri.util.datatransfer.RosterEntrySelection;
@@ -16,11 +15,11 @@ import jmri.util.iharder.dnd.URIDrop;
 import jmri.util.swing.EditableResizableImagePanel;
 
 /**
- * A TransferHandler that handl drag'n drop over the FunctionTable. 
+ * A TransferHandler that handl drag'n drop over the FunctionTable.
  * It can handle rows drag'n drop but also drag'n drop into the EditableResizableImagePanel in some of the table cells.
- * 
+ *
  * It is used in the FunctionLabelPane.
- * 
+ *
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -70,7 +69,6 @@ public class FunctionTableRowTransferHandler extends TransferHandler {
     }
 
     @Override
-    @SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE", justification = "There is an instanceof test just before the cast.")
     public boolean importData(TransferSupport support) {
         if ( !canImport(support) || !(support.getDropLocation() instanceof JTable.DropLocation)) {
             log.debug("TransferSupport() can't do import");
@@ -100,7 +98,7 @@ public class FunctionTableRowTransferHandler extends TransferHandler {
         try {
             MyTransferData data = (MyTransferData) support.getTransferable().getTransferData(rowFlavor);
             int to = drop.getRow();
-            if ( data.getRosterEntry().getDccLocoAddress().equals( ((FunctionTableModel)table.getModel()).getRosterEntry().getDccLocoAddress() )) { 
+            if ( data.getRosterEntry().getDccLocoAddress().equals( ((FunctionTableModel)table.getModel()).getRosterEntry().getDccLocoAddress() )) {
                 log.debug("Dropping a row from the same roster entry -> reorder");
                 int from = data.getRow();
                 if (to < 0 || from == to || from + 1 == to) {
@@ -154,7 +152,7 @@ public class FunctionTableRowTransferHandler extends TransferHandler {
         private final int row;
         private final RosterEntry rosterEntry;
         private final RosterFunctionEntry functionEntry;
-        
+
         MyTransferData(int r, RosterEntry re, RosterFunctionEntry fe) {
             row = r;
             rosterEntry = re;
@@ -171,7 +169,7 @@ public class FunctionTableRowTransferHandler extends TransferHandler {
 
         RosterFunctionEntry getRosterFunctionEntry() {
             return functionEntry;
-        }        
+        }
     }
 
     private static final Logger log = LoggerFactory.getLogger(FunctionTableRowTransferHandler.class);

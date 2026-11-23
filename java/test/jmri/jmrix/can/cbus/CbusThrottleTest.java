@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author Paul Bender Copyright (C) 2017
  */
+@SuppressWarnings("deprecation")
 public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
 
     @Test
@@ -1265,6 +1266,56 @@ public class CbusThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         t.setFunction(3, false);
         assertEquals(sent + 2, tc.outbound.size(), "function sent after recovery");
         assertEquals("[78] 60 65 01 00", tc.outbound.lastElement().toString(), "DFUN group 1 new handle");
+    }
+
+    @Test
+    public void testReportsSpeedSent() {
+        assertTrue(instance.reportsSpeedSent(), "CBUS connections record when they write");
+    }
+
+    // A speed or direction command is reported when the connection has
+    // written it, with the time the connection gives and the speed and
+    // direction that command set, not the throttle's later state.
+    @Test
+    public void testSpeedSentReportedWhenWritten() {
+        CbusThrottle t = (CbusThrottle) instance;
+        java.util.List<String> told = new java.util.concurrent.CopyOnWriteArrayList<>();
+        t.addSpeedSentListener((th, speed, forward, timeNanos) -> {
+            assertSame(t, th, "told which throttle");
+            told.add(speed + " " + forward + " " + timeNanos);
+        });
+        int sent = tc.outbound.size();
+
+        t.setSpeedSetting(0.5f);
+        assertEquals(sent + 1, tc.outbound.size(), "DSPD sent");
+        CanMessage first = tc.outbound.lastElement();
+        assertEquals(CbusConstants.CBUS_DSPD, first.getElement(0), "DSPD");
+        jmri.util.ThreadingUtil.runOnLayout(() -> {
+        }); // anything queued for the layout thread before this has run
+        assertTrue(told.isEmpty(), "not reported until the connection has written it");
+
+        t.setIsForward(false);
+        CanMessage second = tc.outbound.lastElement();
+        t.setSpeedSetting(-1f);
+        CanMessage third = tc.outbound.lastElement();
+        assertEquals(sent + 3, tc.outbound.size(), "three DSPDs sent");
+        t.setSpeedSetting(-1f);
+        assertEquals(sent + 3, tc.outbound.size(), "an unchanged speed is not sent");
+
+        tc.markWritten(first, 1000L);
+        tc.markWritten(second, 2000L);
+        tc.markWritten(third, 3000L);
+        JUnitUtil.waitFor(() -> told.size() == 3, "all three reported");
+        assertEquals(java.util.List.of("0.5 true 1000", "0.5 false 2000", "-1.0 false 3000"), told,
+                "each with the speed and direction it set, and when it was written");
+    }
+
+    // With nothing listening, a DSPD carries no sent listener, so the
+    // connection has nothing extra to do.
+    @Test
+    public void testNoSentListenerWhenNothingListens() {
+        instance.setSpeedSetting(0.5f);
+        assertNull(tc.outbound.lastElement().getSentListener(), "nothing to tell");
     }
 
     @Test

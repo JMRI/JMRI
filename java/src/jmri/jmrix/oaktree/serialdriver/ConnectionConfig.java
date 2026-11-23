@@ -40,8 +40,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
         b.addActionListener(new NodeConfigAction((OakTreeSystemConnectionMemo) adapter.getSystemConnectionMemo()));
         // add another button
-        if (!additionalItems.contains(b)) {
-            additionalItems.add(b);
+        if (!getAdditionalItems().contains(b)) {
+            getAdditionalItems().add(b);
         }
         super.loadDetails(details);
     }

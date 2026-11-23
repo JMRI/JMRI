@@ -76,6 +76,23 @@ public class PlaceWindowTest {
         JUnitUtil.dispose(w2);
     }
 
+    @Test
+    public void testScreenSizeBeyondLastScreen() {
+        int screens = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices().length;
+        PlaceWindow pw = new PlaceWindow();
+        assertThat(pw.getScreenSize(screens - 1).width).withFailMessage("last screen has a width").isGreaterThan(0);
+        assertThat(pw.getScreenSize(screens)).withFailMessage("no screen beyond the last").isEqualTo(new Dimension(0, 0));
+        assertThat(pw.getScreenSize(-1)).withFailMessage("no screen before the first").isEqualTo(new Dimension(0, 0));
+    }
+
+    @Test
+    public void testAnotherInstanceLeavesScreenSizesAlone() {
+        PlaceWindow pw = new PlaceWindow();
+        Dimension first = pw.getScreenSize(0);
+        new PlaceWindow();
+        assertThat(pw.getScreenSize(0)).withFailMessage("same screen size object").isSameAs(first);
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

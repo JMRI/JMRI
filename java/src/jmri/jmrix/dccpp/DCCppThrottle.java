@@ -175,11 +175,11 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
      * command station.
      */
     @Override
-    synchronized public void setSpeedSetting(float speed) {
+    protected synchronized void sendSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
         if (log.isDebugEnabled()) {
             log.debug("set Speed to: {} Current step mode is: {}", speed, this.speedStepMode);
         }
-        super.setSpeedSetting(speed);
+        speedSettingChanged(speed);
         if (speed < 0) {
             /* we're sending an emergency stop to this locomotive only */
             sendEmergencyStop();
@@ -232,7 +232,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     public void setIsForward(boolean forward) {
         super.setIsForward(forward);
         synchronized(this) {
-            setSpeedSetting(this.speedSetting);
+            sendSpeedSetting(this.speedSetting, false, false);
         }
     }
 
@@ -337,7 +337,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         }
         if (Math.abs(this.getSpeedSetting() - newSpeedSetting) > 0.0001) { //avoid possible float precision errors
             log.debug("changing speed from {} to {} for {}", this.getSpeedSetting(), newSpeedSetting, locoId);
-            super.setSpeedSetting(newSpeedSetting);
+            speedSettingChanged(newSpeedSetting);
         }
         //check each function value for any changes, and update if so
         for (int i = 0; i <= 28; i++) {

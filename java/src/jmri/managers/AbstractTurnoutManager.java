@@ -29,10 +29,18 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     }
 
     final void init() {
-        InstanceManager.getDefault(SensorManager.class).addVetoableChangeListener(this);
+        sensorManager = InstanceManager.getDefault(SensorManager.class);
+        sensorManager.addVetoableChangeListener(this);
         // set listener for changes in memo
         memo.addPropertyChangeListener(pcl);
     }
+
+    /**
+     * The SensorManager this manager listens to for deletions, so that
+     * {@link #dispose()} stops listening to that one, not whatever the
+     * InstanceManager holds by then.
+     */
+    private SensorManager sensorManager;
 
     final PropertyChangeListener pcl = (PropertyChangeEvent e) -> {
         if (e.getPropertyName().equals(SystemConnectionMemo.INTERVAL)) {
@@ -376,7 +384,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     @Override
     public void dispose(){
         memo.removePropertyChangeListener(pcl);
-        InstanceManager.getDefault(SensorManager.class).removeVetoableChangeListener(this);
+        sensorManager.removeVetoableChangeListener(this);
         super.dispose();
     }
 

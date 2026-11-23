@@ -381,7 +381,7 @@
             </variable>
             <variable CV="csOpSw.043" item="OpSw 043" default="0">
                 <xi:include href="http://jmri.org/xml/decoders/digitrax/enum-enabledStarDisabled.xml"/>
-                <label>LocoNet update of command staiton's track status is</label>
+                <label>LocoNet update of command station's track status is</label>
                 <tooltip>OpSw 43</tooltip>
             </variable>
             <variable CV="csOpSw.044" item="OpSw 044" default="0" exclude="DCS210">
@@ -409,7 +409,7 @@
             </variable>
             <variable CV="csOpSw.047" item="OpSw 047" default="0">
                 <enumVal>
-                    <enumChoice choice="only as a progrmming track *"/>
+                    <enumChoice choice="only as a programming track *"/>
                     <enumChoice choice="as a 'braking generator' when not programming"/>
                 </enumVal>
                 <label>Programming track acts</label>

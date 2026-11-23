@@ -2,9 +2,11 @@ package jmri.jmrix.lenz;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import jmri.util.JUnitUtil;
+import jmri.Sensor;
 import jmri.Turnout;
+import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 
@@ -239,6 +241,139 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         JUnitUtil.waitFor(() -> listenStatus != Turnout.UNKNOWN, "Turnout state changed");
         assertEquals(Turnout.CLOSED, t.getState());
         assertEquals( Turnout.CLOSED, listenStatus, "listener notified of change for DIRECT feedback");
+    }
+
+    @Test
+    public void testMonitoringBroadcastFeedback() {
+        checkBroadcastFeedback(Turnout.MONITORING);
+    }
+
+    @Test
+    public void testExactBroadcastFeedback() {
+        checkBroadcastFeedback(Turnout.EXACT);
+    }
+
+    private void checkBroadcastFeedback(int mode) {
+        t.setFeedbackMode(mode);
+        XNetTurnout turnout = (XNetTurnout) t;
+        XNetReply reply = createBroadcastFeedback(0x21);
+        assertTrue(reply.checkParity());
+        turnout.message(reply);
+        assertEquals(Turnout.CLOSED, t.getKnownState(), "feedback from third pair");
+
+        t.setInverted(true);
+        turnout.message(reply);
+        assertEquals(Turnout.THROWN, t.getKnownState(), "inverted feedback from third pair");
+
+        int sent = lnis.outbound.size();
+        reply = new XNetReply("46 05 48 05 19 06 01 00");
+        reply.setParity();
+        turnout.message(reply);
+        assertEquals(Turnout.THROWN, t.getKnownState(), "wrong nibble and encoder feedback ignored");
+        assertEquals(sent, lnis.outbound.size(), "unmatched feedback does not trigger a command");
+    }
+
+    @Test
+    public void testExactBroadcastMotionFeedback() {
+        t.setFeedbackMode(Turnout.EXACT);
+        t.setCommandedState(Turnout.THROWN);
+        XNetTurnout turnout = (XNetTurnout) t;
+        turnout.message(lnis.outbound.lastElement());
+        int sent = lnis.outbound.size();
+        XNetReply reply = createBroadcastFeedback(0xA2);
+        turnout.message(reply);
+        assertEquals(Turnout.INCONSISTENT, t.getKnownState(), "motion not complete");
+        assertEquals(sent, lnis.outbound.size(), "off not sent before motion completes");
+        assertEquals(1, turnout.requestList.size(), "feedback request queued");
+        assertEquals("42 05 80 C7", turnout.requestList.element().getMsg().toString());
+
+        reply = createBroadcastFeedback(0x22);
+        turnout.message(reply);
+        assertEquals(Turnout.THROWN, t.getKnownState(), "completed motion from third pair");
+        checkThrownOffSent();
+    }
+
+    @Test
+    public void testDirectBroadcastAcknowledgement() throws jmri.JmriException {
+        checkBroadcastAcknowledgement(Turnout.DIRECT);
+    }
+
+    @Test
+    public void testOneSensorBroadcastAcknowledgement() throws jmri.JmriException {
+        checkBroadcastAcknowledgement(Turnout.ONESENSOR);
+    }
+
+    @Test
+    public void testTwoSensorBroadcastAcknowledgement() throws jmri.JmriException {
+        checkBroadcastAcknowledgement(Turnout.TWOSENSOR);
+    }
+
+    private void checkBroadcastAcknowledgement(int mode) throws jmri.JmriException {
+        boolean sensorFeedback = mode == Turnout.ONESENSOR || mode == Turnout.TWOSENSOR;
+        if (sensorFeedback) {
+            t.provideFirstFeedbackSensor("IS1");
+            Sensor first = jmri.InstanceManager.sensorManagerInstance().provideSensor("IS1");
+            first.setKnownState(Sensor.INACTIVE);
+            if (mode == Turnout.TWOSENSOR) {
+                t.provideSecondFeedbackSensor("IS2");
+                jmri.InstanceManager.sensorManagerInstance().provideSensor("IS2").setKnownState(Sensor.ACTIVE);
+            }
+        }
+        t.setFeedbackMode(mode);
+        if (sensorFeedback) {
+            t.setInitialKnownStateFromFeedback();
+            JUnitUtil.waitFor(() -> t.getKnownState() == Turnout.CLOSED, "sensor feedback initialized");
+        }
+        t.setCommandedState(Turnout.THROWN);
+        XNetTurnout turnout = (XNetTurnout) t;
+        turnout.message(lnis.outbound.lastElement());
+        int sent = lnis.outbound.size();
+        XNetReply reply = new XNetReply("44 05 48 06 09 00");
+        reply.setParity();
+        turnout.message(reply);
+        assertEquals(sent, lnis.outbound.size(), "encoder and unrelated turnout do not acknowledge command");
+
+        reply = createBroadcastFeedback(0x21);
+        turnout.message(reply);
+        checkBroadcastAcknowledged(sent, sensorFeedback);
+    }
+
+    protected XNetReply createBroadcastFeedback(int data) {
+        int address = ((XNetTurnout) t).getNumber() - 1;
+        int module = address / 4;
+        XNetReply reply = new XNetReply("46 00 48 00 09 00 00 00");
+        reply.setElement(1, module);
+        reply.setElement(3, module + 1);
+        reply.setElement(5, module);
+        reply.setElement(6, (data & 0xE0) | ((address & 2) != 0 ? 0x10 : 0)
+                | ((data & 3) << ((address & 1) * 2)));
+        reply.setParity();
+        assertTrue(reply.checkParity());
+        return reply;
+    }
+
+    protected void checkBroadcastAcknowledged(int sent, boolean sensorFeedback) {
+        XNetTurnout turnout = (XNetTurnout) t;
+        assertEquals(sent + (sensorFeedback ? 1 : 2), lnis.outbound.size(), "matching third pair triggers off");
+        checkThrownOffSent();
+        assertEquals(sensorFeedback ? Turnout.CLOSED : Turnout.THROWN, t.getKnownState(),
+                "sensor feedback is not replaced by accessory feedback");
+        turnout.message(new XNetReply("01 04 05"));
+        assertEquals(XNetTurnout.IDLE, turnout.internalState, "off acknowledged");
+    }
+
+    @Test
+    public void testSignalBroadcastFeedback() {
+        t.setFeedbackMode(Turnout.SIGNAL);
+        t.setCommandedState(Turnout.THROWN);
+        checkThrownOffSent();
+        XNetReply reply = new XNetReply("44 06 48 05 02 00");
+        reply.setParity();
+        ((XNetTurnout) t).message(reply);
+        assertEquals(Turnout.THROWN, t.getKnownState(), "signal commanded state preserved");
+        checkThrownOffSent();
+        ((XNetTurnout) t).message(new XNetReply("01 04 05"));
+        assertEquals(XNetTurnout.IDLE, ((XNetTurnout) t).internalState);
     }
 
     @Override

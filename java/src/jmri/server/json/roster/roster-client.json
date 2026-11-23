@@ -1,33 +1,41 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "title": "jmri-json-reporter-client-message",
+    "title": "jmri-json-roster-client-message",
     "type": "object",
-    "description": "Schema data object in message from client to JMRI for type \"reporter\"",
+    "description": "Schema data object in message from client to JMRI for type \"roster\". All properties are optional filters; an entry must match every filter present to be returned. Filters only apply to a get of \"roster\" sent over a socket connection (WebSocket or the JSON server); HTTP requests and list requests ignore them.",
     "properties": {
+        "group": {
+            "type": "string",
+            "description": "If present, only return entries in this rosterGroup"
+        },
+        "road": {
+            "type": "string",
+            "description": "If present, only return entries with this road name"
+        },
+        "number": {
+            "type": "string",
+            "description": "If present, only return entries with this road number"
+        },
+        "address": {
+            "type": "string",
+            "description": "If present, only return entries with this DCC address"
+        },
+        "mfg": {
+            "type": "string",
+            "description": "If present, only return entries with this manufacturer"
+        },
+        "decoderModel": {
+            "type": "string",
+            "description": "If present, only return entries with this decoder model"
+        },
+        "decoderFamily": {
+            "type": "string",
+            "description": "If present, only return entries with this decoder family"
+        },
         "name": {
             "type": "string",
-            "description": "System name of the reporter"
-        },
-        "userName": {
-            "type": "string",
-            "description": "If present, set the user name of the reporter"
-        },
-        "comment": {
-            "type": "string",
-            "description": "If present, set the comment for the reporter"
-        },
-        "state": {
-            "type": "integer",
-            "description": "If present, sets the state of the reporter",
-            "enum": [
-                0,
-                2,
-                4
-            ]
+            "description": "If present, only return entries with this identity"
         }
     },
-    "additionalProperties": false,
-    "required": [
-        "name"
-    ]
+    "additionalProperties": false
 }

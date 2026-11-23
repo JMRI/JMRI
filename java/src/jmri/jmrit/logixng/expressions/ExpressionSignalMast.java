@@ -309,7 +309,7 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
                 result = ! signalMast.isPermissiveSmlDisabled();
                 break;
             default:
-                throw new RuntimeException("Unknown enum: "+_queryType.name());
+                throw new JmriUncheckedException("Unknown enum: "+_queryType.name());
         }
 
         return result;
@@ -425,7 +425,7 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
                     break;
 
                 default:
-                    throw new RuntimeException("Unknown enum: "+_queryType.name());
+                    throw new JmriUncheckedException("Unknown enum: "+_queryType.name());
             }
             _listenersAreRegistered = true;
         }
@@ -459,7 +459,7 @@ public class ExpressionSignalMast extends AbstractDigitalExpression
                     break;
 
                 default:
-                    throw new RuntimeException("Unknown enum: "+_queryType.name());
+                    throw new JmriUncheckedException("Unknown enum: "+_queryType.name());
             }
             _listenersAreRegistered = false;
         }

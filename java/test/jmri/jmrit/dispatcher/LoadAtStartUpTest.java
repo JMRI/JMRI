@@ -40,6 +40,16 @@ public class LoadAtStartUpTest {
         JUnitUtil.WAITFOR_DELAY_STEP = 20;
     }
 
+    /**
+     * Wait for a mast to show an aspect. Each mast's Signal Mast Logic sets
+     * its aspect in a delayed job of its own on the layout thread, so a mast
+     * can still be changing after the one just waited for has changed.
+     */
+    private static void waitForAspect(SignalMastManager smm, String mast, String aspect, String message) {
+        JUnitUtil.waitFor(() -> aspect.equals(smm.provideSignalMast(mast).getAspect()),
+                message + ": " + mast + " shows " + aspect);
+    }
+
     @Test
     public void testShowAndClose() throws JmriConfigureXmlException, JmriException {
         // Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
@@ -91,10 +101,10 @@ public class LoadAtStartUpTest {
             return "Clear".equals(smm.provideSignalMast("West End Div").getAspect());
         }, "Signal West End Div now green");
         // check signals and speed
-        assertThat(smm.provideSignalMast("West End Div").getAspect()).withFailMessage("1 West End Div Signal Green").isEqualTo("Clear");
-        assertThat(smm.provideSignalMast("West To South").getAspect()).withFailMessage("1 West To South  Green").isEqualTo("Clear");
-        assertThat(smm.provideSignalMast("South To East").getAspect()).withFailMessage("1 South To East Signal Green").isEqualTo("Approach");
-        assertThat(smm.provideSignalMast("East End Throat").getAspect()).withFailMessage("1 East End Throat Signal Green").isEqualTo("Stop");
+        waitForAspect(smm, "West End Div", "Clear", "1 West End Div Signal Green");
+        waitForAspect(smm, "West To South", "Clear", "1 West To South  Green");
+        waitForAspect(smm, "South To East", "Approach", "1 South To East Signal Green");
+        waitForAspect(smm, "East End Throat", "Stop", "1 East End Throat Signal Green");
         JUnitUtil.waitFor(() -> { return (Math.abs(aat.getTargetSpeed() - speedRestricted ) < TOLERANCE ); }, "Exit South Platform Speed is correct");
 
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("West Platform Switch"),Block.OCCUPIED);
@@ -102,10 +112,10 @@ public class LoadAtStartUpTest {
         JUnitUtil.waitFor(() -> {
             return "Stop".equals(smm.provideSignalMast("West End Div").getAspect());
         }, "Signal Just passed stop");
-        assertThat(smm.provideSignalMast("West End Div").getAspect()).withFailMessage("2 West End Div Signal Stop").isEqualTo("Stop");
-        assertThat(smm.provideSignalMast("West To South").getAspect()).withFailMessage("2 West To South  Green").isEqualTo("Clear");
-        assertThat(smm.provideSignalMast("South To East").getAspect()).withFailMessage("2 South To East Signal Green").isEqualTo("Approach");
-        assertThat(smm.provideSignalMast("East End Throat").getAspect()).withFailMessage("2 East End Throat Signal Green").isEqualTo("Stop");
+        waitForAspect(smm, "West End Div", "Stop", "2 West End Div Signal Stop");
+        waitForAspect(smm, "West To South", "Clear", "2 West To South  Green");
+        waitForAspect(smm, "South To East", "Approach", "2 South To East Signal Green");
+        waitForAspect(smm, "East End Throat", "Stop", "2 East End Throat Signal Green");
         JUnitUtil.waitFor(() -> { return (Math.abs(aat.getTargetSpeed() - speedRestricted ) < TOLERANCE ); }, "West Platform Switch Speed is correct");
 
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("West Block"),Block.OCCUPIED);
@@ -114,19 +124,19 @@ public class LoadAtStartUpTest {
         JUnitUtil.waitFor(() -> {
             return "Clear".equals(smm.provideSignalMast("South To East").getAspect());
         }, "Signal South To East now Clear");
-        assertThat(smm.provideSignalMast("West To South").getAspect()).withFailMessage("3 West To South  Green").isEqualTo("Clear");
-        assertThat(smm.provideSignalMast("South To East").getAspect()).withFailMessage("3 South To East Signal Green").isEqualTo("Clear");
-        assertThat(smm.provideSignalMast("East End Throat").getAspect()).withFailMessage("3 East End Throat Signal Approach").isEqualTo("Approach");
+        waitForAspect(smm, "West To South", "Clear", "3 West To South  Green");
+        waitForAspect(smm, "South To East", "Clear", "3 South To East Signal Green");
+        waitForAspect(smm, "East End Throat", "Approach", "3 East End Throat Signal Approach");
         JUnitUtil.waitFor(() -> { return (Math.abs(aat.getTargetSpeed() - speedRestricted ) < TOLERANCE ); }, "South To East Speed is correct");
 
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("South Block"),Block.OCCUPIED);
         JUnitUtil.waitFor(() -> {
             return "Stop".equals(smm.provideSignalMast("West To South").getAspect());
         }, "Signal Just passed West To South now stop");
-        assertThat(smm.provideSignalMast("West End Div").getAspect()).withFailMessage("4 West End Div Signal Red").isEqualTo("Stop");
-        assertThat(smm.provideSignalMast("West To South").getAspect()).withFailMessage("4 West To South  Red").isEqualTo("Stop");
-        assertThat(smm.provideSignalMast("South To East").getAspect()).withFailMessage("4 South To East Signal Green").isEqualTo("Clear");
-        assertThat(smm.provideSignalMast("East End Throat").getAspect()).withFailMessage("4 East End Throat Signal Green").isEqualTo("Approach");
+        waitForAspect(smm, "West End Div", "Stop", "4 West End Div Signal Red");
+        waitForAspect(smm, "West To South", "Stop", "4 West To South  Red");
+        waitForAspect(smm, "South To East", "Clear", "4 South To East Signal Green");
+        waitForAspect(smm, "East End Throat", "Approach", "4 East End Throat Signal Green");
         String strSigSpeed  = (String) smm.provideSignalMast("South To East").getSignalSystem().getProperty(smm.provideSignalMast("South To East").getAspect(), "speed");
         assertThat(InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(strSigSpeed)/100).isEqualTo(speedNormal);
         //The signal head indicates 1.0f but train is limited to a max of 0.6f
@@ -138,10 +148,10 @@ public class LoadAtStartUpTest {
         JUnitUtil.waitFor(() -> {
             return "Stop".equals(smm.provideSignalMast("South To East").getAspect());
         }, "Signal Just passed south to east now stop");
-        assertThat(smm.provideSignalMast("West End Div").getAspect()).withFailMessage("5 West End Div Signal Green").isEqualTo("Stop");
-        assertThat(smm.provideSignalMast("West To South").getAspect()).withFailMessage("5 West To South  Red").isEqualTo("Stop");
-        assertThat(smm.provideSignalMast("South To East").getAspect()).withFailMessage("5 South To East Signal Red").isEqualTo("Stop");
-        assertThat(smm.provideSignalMast("East End Throat").getAspect()).withFailMessage("5 East End Throat Signal yellow").isEqualTo("Approach");
+        waitForAspect(smm, "West End Div", "Stop", "5 West End Div Signal Green");
+        waitForAspect(smm, "West To South", "Stop", "5 West To South  Red");
+        waitForAspect(smm, "South To East", "Stop", "5 South To East Signal Red");
+        waitForAspect(smm, "East End Throat", "Approach", "5 East End Throat Signal yellow");
         JUnitUtil.waitFor(() -> { return (Math.abs(aat.getTargetSpeed() - speedRestricted ) < TOLERANCE ); }, "South To East Speed is correct");
 
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("South Block"),Block.UNOCCUPIED);
@@ -149,35 +159,35 @@ public class LoadAtStartUpTest {
         JUnitUtil.waitFor(() -> {
             return "Stop".equals(smm.provideSignalMast("East End Throat").getAspect());
         }, "Signal Just passed east end throat now stop");
-        assertThat(smm.provideSignalMast("West End Div").getAspect()).withFailMessage("6 West End Div Signal Red").isEqualTo("Stop");
-        assertThat(smm.provideSignalMast("West To South").getAspect()).withFailMessage("6 West To South  Red").isEqualTo("Stop");
-        assertThat(smm.provideSignalMast("South To East").getAspect()).withFailMessage("6 South To East Signal Red").isEqualTo("Stop");
-        assertThat(smm.provideSignalMast("East End Throat").getAspect()).withFailMessage("6 East End Throat Signal Red").isEqualTo("Stop");
+        waitForAspect(smm, "West End Div", "Stop", "6 West End Div Signal Red");
+        waitForAspect(smm, "West To South", "Stop", "6 West To South  Red");
+        waitForAspect(smm, "South To East", "Stop", "6 South To East Signal Red");
+        waitForAspect(smm, "East End Throat", "Stop", "6 East End Throat Signal Red");
         JUnitUtil.waitFor(() -> { return (Math.abs(aat.getTargetSpeed() - speedRestricted ) < TOLERANCE ); }, "East Platform Switch Speed is correct");
 
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("East Platform Switch"),Block.OCCUPIED);
         // No change
-        assertThat(smm.provideSignalMast("West End Div").getAspect()).withFailMessage("7 West End Div Signal Red").isEqualTo("Stop");
-        assertThat(smm.provideSignalMast("West To South").getAspect()).withFailMessage("7 West To South  Red").isEqualTo("Stop");
-        assertThat(smm.provideSignalMast("South To East").getAspect()).withFailMessage("7 South To East Signal Red").isEqualTo("Stop");
-        assertThat(smm.provideSignalMast("East End Throat").getAspect()).withFailMessage("7 East End Throat Signal Red").isEqualTo("Stop");
+        waitForAspect(smm, "West End Div", "Stop", "7 West End Div Signal Red");
+        waitForAspect(smm, "West To South", "Stop", "7 West To South  Red");
+        waitForAspect(smm, "South To East", "Stop", "7 South To East Signal Red");
+        waitForAspect(smm, "East End Throat", "Stop", "7 East End Throat Signal Red");
         JUnitUtil.waitFor(() -> { return (Math.abs(aat.getTargetSpeed() - speedRestricted ) < TOLERANCE ); }, "East Platform Switch Speed is correct");
 
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("South Platform"),Block.OCCUPIED);
         // signals no change, speed changes
-        assertThat(smm.provideSignalMast("West End Div").getAspect()).withFailMessage("8 West End Div Signal Red").isEqualTo("Stop");
-        assertThat(smm.provideSignalMast("West To South").getAspect()).withFailMessage("8 West To South  Red").isEqualTo("Stop");
-        assertThat(smm.provideSignalMast("South To East").getAspect()).withFailMessage("8 South To East Signal Red").isEqualTo("Stop");
-        assertThat(smm.provideSignalMast("East End Throat").getAspect()).withFailMessage("8 East End Throat Signal Red").isEqualTo("Stop");
+        waitForAspect(smm, "West End Div", "Stop", "8 West End Div Signal Red");
+        waitForAspect(smm, "West To South", "Stop", "8 West To South  Red");
+        waitForAspect(smm, "South To East", "Stop", "8 South To East Signal Red");
+        waitForAspect(smm, "East End Throat", "Stop", "8 East End Throat Signal Red");
         JUnitUtil.waitFor(() -> { return (Math.abs(aat.getTargetSpeed() - speedRestrictedSlow ) < TOLERANCE ); }, "Speed is correct");
 
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("East Block"),Block.UNOCCUPIED);
         JUnitUtil.setBeanStateAndWait(bm.provideBlock("East Platform Switch"),Block.UNOCCUPIED);
         // signals no change, speed changes to stop
-        assertThat(smm.provideSignalMast("West End Div").getAspect()).withFailMessage("9 West End Div Signal Red").isEqualTo("Stop");
-        assertThat(smm.provideSignalMast("West To South").getAspect()).withFailMessage("9 West To South  Red").isEqualTo("Stop");
-        assertThat(smm.provideSignalMast("South To East").getAspect()).withFailMessage("9 South To East Signal Red").isEqualTo("Stop");
-        assertThat(smm.provideSignalMast("East End Throat").getAspect()).withFailMessage("9 East End Throat Signal Red").isEqualTo("Stop");
+        waitForAspect(smm, "West End Div", "Stop", "9 West End Div Signal Red");
+        waitForAspect(smm, "West To South", "Stop", "9 West To South  Red");
+        waitForAspect(smm, "South To East", "Stop", "9 South To East Signal Red");
+        waitForAspect(smm, "East End Throat", "Stop", "9 East End Throat Signal Red");
 
         // train slows to stop
         JUnitUtil.waitFor(() -> {

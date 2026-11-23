@@ -1,7 +1,9 @@
 package jmri.jmrix.marklin.swing.devicetable;
 
+import jmri.jmrix.marklin.mcan.McanUid;
+
 import jmri.jmrix.marklin.*;
-import jmri.jmrix.marklin.mcan.protocol.NativeDeviceInfo;
+import jmri.jmrix.marklin.mcan.cs2.NativeDeviceInfo;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.*;
 
@@ -41,7 +43,7 @@ class McanDeviceTableDataModelTest {
         assertEquals(McanDeviceTableDataModel.NUM_COLUMNS, model.getColumnCount());
         assertEquals("System Name", model.getColumnName(McanDeviceTableDataModel.COLUMN_SYS_NAME));
 
-        McanDeviceIdentity.Native identity = McanDeviceIdentity.forNative(0x00112233L, NativeDeviceInfo.TYPE_MS2);
+        McanDeviceIdentity.Native identity = McanDeviceIdentity.forNative(McanUid.of(0x00112233L), NativeDeviceInfo.TYPE_MS2);
         McanDevice device = manager.provideDevice(identity);
 
         JUnitUtil.waitFor(() -> model.getRowCount() == 1, "Model row count updated");

@@ -1,12 +1,12 @@
 package jmri.jmrix.marklin;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
 import jmri.jmrix.marklin.mcan.address.AddressSpace;
-import jmri.jmrix.marklin.mcan.classify.Cs2ClassifiedFrame;
+import jmri.jmrix.marklin.mcan.cs2.Cs2Frame;
 import jmri.jmrix.marklin.mcan.cs2.Cs2DecoderCommands;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -119,9 +119,8 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
-    @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     @Override
-    public synchronized void setSpeedSetting(float speed) {
+    protected synchronized void sendSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
 
@@ -129,11 +128,11 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
         if (value > 1000) {
             value = 1000;    // max possible speed
         }
-        
+
         if (this.speedSetting > 0 && value == 0) {
             value = 1;      // ensure non-zero input results in non-zero output
         }
-        
+
         if (value < 0) {
             //Emergency Stop
             tc.sendMarklinMessage(MarklinMessage.setLocoEmergencyStop(getCANAddress()), this);
@@ -213,7 +212,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
 
     @Override
     public void reply(MarklinReply m) {
-        Cs2ClassifiedFrame frame = MarklinCanBridge.parse(m);
+        Cs2Frame frame = MarklinCanBridge.parse(m);
         if (frame == null) {
             return;
         }
@@ -234,7 +233,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
                     case 0x01:
                         if (!isForward) {
                             speedSetting = 0.0f;
-                            super.setSpeedSetting(speedSetting);
+                            speedSettingChanged(speedSetting);
                             isForward = true;
                             firePropertyChange(ISFORWARD, false, isForward);
                         }
@@ -242,14 +241,14 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
                     case 0x02:
                         if (isForward) {
                             speedSetting = 0.0f;
-                            super.setSpeedSetting(speedSetting);
+                            speedSettingChanged(speedSetting);
                             isForward = false;
                             firePropertyChange(ISFORWARD, true, isForward);
                         }
                         return;
                     case 0x03:
                         speedSetting = 0.0f;
-                        super.setSpeedSetting(speedSetting);
+                        speedSettingChanged(speedSetting);
                         isForward = !isForward;
                         firePropertyChange(ISFORWARD, !isForward, isForward);
                         return;
@@ -267,7 +266,7 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
             }
             float newSpeed = floatSpeed(f.speed());
             log.debug("Speed raw {} float {}", f.speed(), newSpeed);
-            super.setSpeedSetting(newSpeed);
+            speedSettingChanged(newSpeed);
         }
 
         if (frame instanceof Cs2DecoderCommands.LocoFunctionReplyFrame) {

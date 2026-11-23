@@ -65,7 +65,7 @@ public class NceThrottle extends AbstractThrottle {
         // The NCE USB doesn't support the NMRA packet format
         // Always need speed command before function group command to reset consist pointer
         synchronized (this) {
-            setSpeedSetting(this.speedSetting);
+            sendSpeedSetting(this.speedSetting, false, false);
         }
         if (sendA2command) {
             int locoAddr = address.getNumber();
@@ -100,7 +100,7 @@ public class NceThrottle extends AbstractThrottle {
         // The NCE USB doesn't support the NMRA packet format
         // Always need speed command before function group command to reset consist pointer
         synchronized (this) {
-            setSpeedSetting(this.speedSetting);
+            sendSpeedSetting(this.speedSetting, false, false);
         }
         if (sendA2command) {
             int locoAddr = address.getNumber();
@@ -134,7 +134,7 @@ public class NceThrottle extends AbstractThrottle {
         // The NCE USB doesn't support the NMRA packet format
         // Always need speed command before function group command to reset consist pointer
         synchronized (this) {
-            setSpeedSetting(this.speedSetting);
+            sendSpeedSetting(this.speedSetting, false, false);
         }
         if (sendA2command) {
             int locoAddr = address.getNumber();
@@ -169,7 +169,7 @@ public class NceThrottle extends AbstractThrottle {
         // The NCE USB doesn't support the NMRA packet format
         // Always need speed command before function group command to reset consist pointer
         synchronized (this) {
-            setSpeedSetting(this.speedSetting);
+            sendSpeedSetting(this.speedSetting, false, false);
         }
         if (sendA2command) {
             int locoAddr = address.getNumber();
@@ -209,7 +209,7 @@ public class NceThrottle extends AbstractThrottle {
         // The NCE USB doesn't support the NMRA packet format
         // Always need speed command before function group command to reset consist pointer
         synchronized (this) {
-            setSpeedSetting(this.speedSetting);
+            sendSpeedSetting(this.speedSetting, false, false);
         }
         if (sendA2command) {
             int locoAddr = address.getNumber();
@@ -246,7 +246,7 @@ public class NceThrottle extends AbstractThrottle {
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     @Override
-    public void setSpeedSetting(float speed) {
+    protected void sendSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
         float oldSpeed;
         synchronized (this) {
             oldSpeed = this.speedSetting;
@@ -367,7 +367,7 @@ public class NceThrottle extends AbstractThrottle {
         boolean old = isForward;
         isForward = forward;
         synchronized (this) {
-            setSpeedSetting(speedSetting);  // send the command
+            sendSpeedSetting(speedSetting, false, false);  // send the command
         }
         log.debug("setIsForward= {}", forward);
         firePropertyChange(ISFORWARD, old, isForward);

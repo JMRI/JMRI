@@ -1,12 +1,19 @@
 package jmri.jmrix.can.cbus;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
+
+import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
+import jmri.util.ThreadingUtil;
 import jmri.util.swing.TextAreaFIFO;
 
 import org.junit.jupiter.api.*;
@@ -155,6 +162,122 @@ public class CbusSendTest {
         assertNotNull( tasend, "exists");
         tasend.nodeEnterLearnEvMode(33333);
         assertTrue( (ta.getText()).contains("3 enter learn mode."), "textarea is updated 3");
+    }
+
+    @Test
+    public void testSendWithDelayGivesReplyItsReceivedTime() throws InterruptedException {
+        CountDownLatch stamped = new CountDownLatch(1);
+        AtomicLong stampTime = new AtomicLong();
+        CanReply r = new CanReply(new int[]{CbusConstants.CBUS_ACON, 0x00, 0x01, 0x00, 0x02}) {
+            @Override
+            public void setReceivedTime(long timeNanos) {
+                super.setReceivedTime(timeNanos);
+                stampTime.set(timeNanos);
+                stamped.countDown();
+            }
+        };
+
+        // hold the layout thread, so the reply can only be stamped before it reaches it
+        CountDownLatch layoutThreadHeld = new CountDownLatch(1);
+        CountDownLatch releaseLayoutThread = new CountDownLatch(1);
+        ThreadingUtil.runOnLayoutEventually(() -> {
+            layoutThreadHeld.countDown();
+            try {
+                releaseLayoutThread.await();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        });
+        long releasedAt;
+        try {
+            assertTrue(layoutThreadHeld.await(10, TimeUnit.SECONDS), "layout thread held");
+            long before = System.nanoTime();
+            send.sendWithDelay(r, true, false, 5);
+            // the timeout only stops a failing test hanging; it is not a measurement
+            assertTrue(stamped.await(10, TimeUnit.SECONDS),
+                "stamped while the layout thread is busy");
+            assertTrue(tcis.inbound.isEmpty(), "not yet delivered");
+            assertTrue(stampTime.get() >= before, "stamped after it was sent");
+        } finally {
+            releasedAt = System.nanoTime();
+            releaseLayoutThread.countDown();
+        }
+
+        JUnitUtil.waitFor(() -> tcis.inbound.size() == 1, "reply delivered");
+        CanReply delivered = tcis.inbound.elementAt(0);
+        assertTrue(delivered.hasReceivedTime(), "delivered with a received time");
+        assertEquals(stampTime.get(), delivered.getReceivedTime(), "the time it was stamped with");
+        assertTrue(delivered.getReceivedTime() < releasedAt,
+            "received before it waited for the layout thread");
+    }
+
+    @Test
+    public void testSendWithDelaySameDelayArrivesInOrderSent() {
+        int count = 50;
+        for (int i = 0; i < count; i++) {
+            send.sendWithDelay(new CanReply(new int[]{CbusConstants.CBUS_ACON, 0x00, 0x01, 0x00, i}), true, false, 5);
+        }
+        JUnitUtil.waitFor(() -> tcis.inbound.size() == count, "all frames delivered");
+        for (int i = 0; i < count; i++) {
+            assertEquals(i, tcis.inbound.elementAt(i).getElement(4), "frame " + i + " in the order sent");
+        }
+        assertReceivedTimesInOrder();
+    }
+
+    @Test
+    public void testSendWithDelayArrivesInOrderDue() {
+        // Sent with delays of 20, 10, 10 and 0 ms. Each frame is due its delay after it was sent,
+        // and the times each send began and ended bound that. A busy machine may pause between
+        // the sends, so the order of two frames is checked where those bounds settle it, and
+        // frames with the same delay must keep the order they were sent in.
+        int[] delays = {20, 10, 10, 0};
+        long[] began = new long[delays.length];
+        long[] ended = new long[delays.length];
+        for (int i = 0; i < delays.length; i++) {
+            began[i] = System.nanoTime();
+            send.sendWithDelay(new CanReply(new int[]{CbusConstants.CBUS_ACON, 0x00, 0x01, 0x00, i}), true, false,
+                delays[i]);
+            ended[i] = System.nanoTime();
+        }
+        JUnitUtil.waitFor(() -> tcis.inbound.size() == delays.length, "all frames delivered");
+        int[] position = new int[delays.length];
+        for (int p = 0; p < delays.length; p++) {
+            position[tcis.inbound.elementAt(p).getElement(4)] = p;
+        }
+        int settled = 0;
+        for (int i = 0; i < delays.length; i++) {
+            for (int j = i + 1; j < delays.length; j++) {
+                long latestI = ended[i] + TimeUnit.MILLISECONDS.toNanos(delays[i]);
+                long earliestI = began[i] + TimeUnit.MILLISECONDS.toNanos(delays[i]);
+                long latestJ = ended[j] + TimeUnit.MILLISECONDS.toNanos(delays[j]);
+                long earliestJ = began[j] + TimeUnit.MILLISECONDS.toNanos(delays[j]);
+                if (delays[i] == delays[j] || latestI - earliestJ < 0) {
+                    assertTrue(position[i] < position[j], "frame " + i + " due before frame " + j);
+                    settled++;
+                } else if (latestJ - earliestI < 0) {
+                    assertTrue(position[j] < position[i], "frame " + j + " due before frame " + i);
+                    settled++;
+                }
+            }
+        }
+        assertTrue(settled > 0, "at least the frames with the same delay are in order");
+        assertReceivedTimesInOrder();
+    }
+
+    private void assertReceivedTimesInOrder() {
+        for (int i = 1; i < tcis.inbound.size(); i++) {
+            assertTrue(tcis.inbound.elementAt(i).getReceivedTime() - tcis.inbound.elementAt(i - 1).getReceivedTime() >= 0,
+                "received times in delivery order, at " + i);
+        }
+    }
+
+    @Test
+    public void testSendWithDelayOutgoingOnlyIsNotStamped() {
+        CanReply r = new CanReply(new int[]{CbusConstants.CBUS_ACOF, 0x00, 0x01, 0x00, 0x02});
+        send.sendWithDelay(r, false, true, 5);
+        JUnitUtil.waitFor(() -> tcis.outbound.size() == 1, "message sent");
+        assertTrue(tcis.inbound.isEmpty(), "not sent as incoming");
+        assertFalse(r.hasReceivedTime(), "an outgoing frame is not received");
     }
 
     private void checknodeExitLearnEvMode() {

@@ -56,6 +56,7 @@ public class ManageLocationsAction extends AbstractAction {
             int i = 0;
             for (Reporter r : reporterSet) {
                 if (r != null) {
+                    log.debug("reporter class: {}", r.getClass());
                     if (r instanceof PhysicalLocationReporter) {
                         PhysicalLocation p = ((PhysicalLocationReporter) r).getPhysicalLocation();
                         reporterTable[i][ManageLocationsTableModel.SYSNAMECOL] = r.getSystemName();

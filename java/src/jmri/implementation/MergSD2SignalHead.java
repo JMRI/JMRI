@@ -77,7 +77,6 @@ public class MergSD2SignalHead extends DefaultSignalHead {
     @Override
     public void setAppearance(int newAppearance) {
         int oldAppearance = mAppearance;
-        mAppearance = newAppearance;
         boolean valid = false;
         switch (mAspects) {
             case 2:
@@ -105,7 +104,13 @@ public class MergSD2SignalHead extends DefaultSignalHead {
                 valid = false;
                 break;
         }
-        if ((oldAppearance != newAppearance) && (valid)) {
+        if (!valid) {
+            // keep the appearance the hardware is showing
+            log.debug("{} can't show appearance {}; keeping {}", getDisplayName(), newAppearance, oldAppearance);
+            return;
+        }
+        mAppearance = newAppearance;
+        if (oldAppearance != newAppearance) {
             updateOutput();
 
             // notify listeners, if any

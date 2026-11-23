@@ -26,19 +26,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A minimal manifest in JSON.
- *
- * This manifest is intended to be read by machines for building manifests in
- * other, human-readable outputs. This manifest is retained at build time so
- * that manifests can be endlessly recreated in other formats, even if the
- * operations database state has changed. It is expected that the parsers for
- * this manifest will be capable of querying operations for more specific
- * information while transforming this manifest into other formats.
+ * A minimal manifest in JSON. This manifest is intended to be read by machines
+ * for building manifests in other, human-readable outputs. This manifest is
+ * retained at build time so that manifests can be endlessly recreated in other
+ * formats, even if the operations database state has changed. It is expected
+ * that the parsers for this manifest will be capable of querying operations for
+ * more specific information while transforming this manifest into other
+ * formats.
  *
  * @author Randall Wood
  * @author Daniel Boudreau 1/26/2015 Load all cars including utility cars into
- * the JSON file, and tidied up the code a bit.
- *
+ *         the JSON file, and tidied up the code a bit.
  */
 public class JsonManifest extends TrainCommon {
 
@@ -73,7 +71,9 @@ public class JsonManifest extends TrainCommon {
             root.put(JSON.IMAGE, this.train.getManifestLogoPathName());
         }
         root.put(JsonOperations.DATE, TrainCommon.getDate(true)); // Validity
-        this.mapper.writeValue(InstanceManager.getDefault(TrainManagerXml.class).createManifestFile(this.train.getName(), JSON.JSON), root);
+        this.mapper.writeValue(
+                InstanceManager.getDefault(TrainManagerXml.class).createManifestFile(this.train.getName(), JSON.JSON),
+                root);
     }
 
     public ArrayNode getLocations() {
@@ -111,8 +111,8 @@ public class JsonManifest extends TrainCommon {
                 if (routeLocation == train.getSecondLegStartRouteLocation()) {
                     if ((train.getSecondLegOptions() & Train.HELPER_ENGINES) == Train.HELPER_ENGINES) {
                         options.add(JSON.ADD_HELPERS);
-                    } else if ((train.getSecondLegOptions() & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE
-                            || (train.getSecondLegOptions() & Train.ADD_CABOOSE) == Train.ADD_CABOOSE) {
+                    } else if ((train.getSecondLegOptions() & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE ||
+                            (train.getSecondLegOptions() & Train.ADD_CABOOSE) == Train.ADD_CABOOSE) {
                         options.add(JSON.CHANGE_CABOOSE);
                     } else if ((train.getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES) {
                         options.add(JSON.CHANGE_ENGINES);
@@ -121,15 +121,17 @@ public class JsonManifest extends TrainCommon {
                 if (routeLocation == train.getSecondLegEndRouteLocation()) {
                     options.add(JSON.REMOVE_HELPERS);
                 }
-                jsonLocation.set(JSON.OPTIONS, options);
+                if (!options.isEmpty()) {
+                    jsonLocation.set(JSON.OPTIONS, options);
+                }
             }
             if (train.getThirdLegOptions() != Train.NO_CABOOSE_OR_FRED) {
                 ArrayNode options = this.mapper.createArrayNode();
                 if (routeLocation == train.getThirdLegStartRouteLocation()) {
                     if ((train.getThirdLegOptions() & Train.HELPER_ENGINES) == Train.HELPER_ENGINES) {
                         options.add(JSON.ADD_HELPERS);
-                    } else if ((train.getThirdLegOptions() & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE
-                            || (train.getThirdLegOptions() & Train.ADD_CABOOSE) == Train.ADD_CABOOSE) {
+                    } else if ((train.getThirdLegOptions() & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE ||
+                            (train.getThirdLegOptions() & Train.ADD_CABOOSE) == Train.ADD_CABOOSE) {
                         options.add(JSON.CHANGE_CABOOSE);
                     } else if ((train.getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES) {
                         options.add(JSON.CHANGE_ENGINES);
@@ -138,7 +140,9 @@ public class JsonManifest extends TrainCommon {
                 if (routeLocation == train.getThirdLegEndRouteLocation()) {
                     options.add(JSON.ADD_HELPERS);
                 }
-                jsonLocation.set(JSON.OPTIONS, options);
+                if (!options.isEmpty()) {
+                    jsonLocation.set(JSON.OPTIONS, options);
+                }
             }
 
             ObjectNode engines = this.mapper.createObjectNode();
@@ -221,11 +225,11 @@ public class JsonManifest extends TrainCommon {
             List<Track> tracks = routeLocation.getLocation().getTracksByNameList(null);
             for (Track track : tracks) {
                 ObjectNode jsonTrack = this.mapper.createObjectNode();
-                    jsonTrack.put(JSON.ADD, StringEscapeUtils.escapeHtml4(track.getCommentPickupWithColor()));
-                    jsonTrack.put(JSON.REMOVE, StringEscapeUtils.escapeHtml4(track.getCommentSetoutWithColor()));
-                    jsonTrack.put(JSON.ADD_AND_REMOVE, StringEscapeUtils.escapeHtml4(track.getCommentBothWithColor()));
-                    jsonTrack.put(JSON.COMMENT, StringEscapeUtils.escapeHtml4(track.getComment()));
-                    comments.set(track.getId(), jsonTrack);
+                jsonTrack.put(JSON.ADD, StringEscapeUtils.escapeHtml4(track.getCommentPickupWithColor()));
+                jsonTrack.put(JSON.REMOVE, StringEscapeUtils.escapeHtml4(track.getCommentSetoutWithColor()));
+                jsonTrack.put(JSON.ADD_AND_REMOVE, StringEscapeUtils.escapeHtml4(track.getCommentBothWithColor()));
+                jsonTrack.put(JSON.COMMENT, StringEscapeUtils.escapeHtml4(track.getComment()));
+                comments.set(track.getId(), jsonTrack);
             }
         }
         return comments;

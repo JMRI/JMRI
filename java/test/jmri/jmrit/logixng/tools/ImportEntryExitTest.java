@@ -6,8 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import static org.junit.jupiter.api.Assumptions.assumeFalse;
-
 import java.lang.reflect.Method;
 
 import jmri.*;
@@ -63,9 +61,6 @@ public class ImportEntryExitTest {
 
     @Test
     public void testActionEntryExit() throws JmriException {
-        assumeFalse( Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"),
-            "Ignoring intermittent test");
-
         // ENTRYEXIT
         // SET_NXPAIR_ENABLED
 /*
@@ -127,9 +122,6 @@ public class ImportEntryExitTest {
 
     @Test
     public void testExpressionEntryExit() throws JmriException {
-        assumeFalse( Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"),
-            "Ignoring intermittent test");
-
         Sensor sensor211 = InstanceManager.getDefault(SensorManager.class).getByUserName("NX Active");
         assertNotNull(sensor211);
         sensor211.setState(Sensor.INACTIVE);

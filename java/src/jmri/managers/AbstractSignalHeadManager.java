@@ -29,8 +29,16 @@ public class AbstractSignalHeadManager extends AbstractManager<SignalHead>
     }
     
     final void init(){
-        InstanceManager.getDefault(TurnoutManager.class).addVetoableChangeListener(this);
+        turnoutManager = InstanceManager.getDefault(TurnoutManager.class);
+        turnoutManager.addVetoableChangeListener(this);
     }
+
+    /**
+     * The TurnoutManager this manager listens to for deletions, so that
+     * {@link #dispose()} stops listening to that one, not whatever the
+     * InstanceManager holds by then.
+     */
+    private TurnoutManager turnoutManager;
 
     /** {@inheritDoc} */
     @Override
@@ -76,7 +84,7 @@ public class AbstractSignalHeadManager extends AbstractManager<SignalHead>
     
     @Override
     public void dispose(){
-        InstanceManager.getDefault(TurnoutManager.class).removeVetoableChangeListener(this);
+        turnoutManager.removeVetoableChangeListener(this);
         super.dispose();
     }
 

@@ -74,16 +74,6 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     private static final java.util.concurrent.atomic.AtomicInteger lastPacketID =
             new java.util.concurrent.atomic.AtomicInteger();
 
-    @Deprecated (since="5.11.2",forRemoval=true) // please use the SLF4J categories.
-    public void enableDeleteRouteLog() {
-        jmri.util.LoggingUtil.warnOnce( log, "Deprecated, please use the SLF4J categories");
-    }
-
-    @Deprecated (since="5.11.2",forRemoval=true) // please use the SLF4J categories.
-    public void disableDeleteRouteLog() {
-        jmri.util.LoggingUtil.warnOnce( log, "Deprecated, please use the SLF4J categories");
-    }
-
     // constants
     public static final int OCCUPIED = Block.OCCUPIED;
     public static final int EMPTY = Block.UNOCCUPIED;
@@ -347,10 +337,11 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     /**
-     * Redraw panels using this layout block.
+     * Redraw panels using this layout block: on each, the part drawn in this
+     * block's colours (the whole panel in edit mode).
      */
     public void redrawLayoutBlockPanels() {
-        panels.stream().forEach(LayoutEditor::redrawPanel);
+        panels.stream().forEach(panel -> panel.redrawLayoutBlock(this));
         firePropertyChange(PROPERTY_REDRAW, null, null);
     }
 
@@ -1052,8 +1043,13 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * suppressed.
      *
      * @param set true, update suppress. false, update normal
+     * @deprecated since 5.19.1; to show the train a block is allocated to
+     *             while it is empty, use {@link Block#setAllocatedValue(Object)},
+     *             which the memory shows when the block has no value
      */
+    @Deprecated(since="5.19.1", forRemoval=true)
     public void setSuppressNameUpdate(boolean set) {
+        jmri.util.LoggingUtil.deprecationWarning(log, "LayoutBlock.setSuppressNameUpdate");
         boolean resume = suppressNameUpdate && !set;
         suppressNameUpdate = set;
         if (resume) {
@@ -1063,12 +1059,15 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     /**
-     * Copy the block value to the memory, if there is one.
+     * Copy the value to show for the block to the memory, if there is one:
+     * the train in the block, or the train it is allocated to.
+     *
+     * @see Block#getDisplayValue()
      */
     private void updateMemoryFromBlock() {
         Memory m = getMemory();
         if ((m != null) && (block != null)) {
-            Object val = block.getValue();
+            Object val = block.getDisplayValue();
             if (val != null) {
                 if (!(val instanceof RosterEntry) && !(val instanceof Reportable)) {
                     val = val.toString();
@@ -1941,8 +1940,14 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     // This is used when a property event change is triggered for a removed route.
-    // Not sure that bulk removals will be necessary
+    // The removal is made by the LayoutBlockManager, after any it is already
+    // making, rather than by each neighbour calling the next; a removal that
+    // spreads across a large panel would otherwise nest calls for each block.
     private void removeRouteFromNeighbour(LayoutBlock src, RoutingPacket update) {
+        InstanceManager.getDefault(LayoutBlockManager.class).removeRouteFromNeighbour(this, src, update);
+    }
+
+    private void removeRouteFromNeighbourNow(LayoutBlock src, RoutingPacket update) {
         InstanceManager.getDefault(LayoutBlockManager.class).setLastRoutingChange();
         Block srcblk = src.getBlock();
         Block destblk = update.getBlock();
@@ -2169,7 +2174,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     // could still hold a valid through path.
                     for (int i = neighbours.size() - 1; i > -1; i--) {
                         // Need to ignore if the dest block is our neighour in this instance
-                        if ((neighbours.get(i).getBlock() != destBlock) && (neighbours.get(i).getBlock() != nextHop) 
+                        if ((neighbours.get(i).getBlock() != destBlock) && (neighbours.get(i).getBlock() != nextHop)
                             && validThroughPath(notifyingblk, neighbours.get(i).getBlock())) {
                             Block neighblock = neighbours.get(i).getBlock();
 
@@ -2325,7 +2330,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             addRouteLog.debug("Block {} is a traverser block. Skipping through path generation in addThroughPath(Adjacencies).", getDisplayName());
             return; // Do not create through paths for a traverser
         }
-        
+
         Block newAdj = adj.getBlock();
         int packetFlow = adj.getPacketFlow();
 
@@ -3478,13 +3483,78 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * this block up to date with what we now advertise to that neighbour.
      * Only a neighbour whose route changes passes the change on, so this
      * stops once every table agrees.
+     * <p>
+     * The change is passed on by the {@link LayoutBlockManager}, one block at
+     * a time, rather than by each neighbour calling the next; a change that
+     * spreads across a large panel would otherwise nest one call per block
+     * and could run out of stack.
      *
      * @param dest the destination block
      */
     void advertiseRouteChange(Block dest) {
-        for (Adjacencies adj : new ArrayList<>(neighbours)) {
-            advertiseRouteChange(adj, dest);
+        InstanceManager.getDefault(LayoutBlockManager.class).advertiseRouteChange(this, dest);
+    }
+
+    /**
+     * The neighbours still to be told of a change to our route to a
+     * destination, worked through by the {@link LayoutBlockManager}.
+     */
+    final class RouteChange implements LayoutBlockManager.RoutingStep {
+
+        private final Block dest;
+        private final Iterator<Adjacencies> toTell = new ArrayList<>(neighbours).iterator();
+
+        private RouteChange(Block dest) {
+            this.dest = dest;
         }
+
+        /**
+         * Tell the next neighbour what we now advertise to it.
+         *
+         * @return false if every neighbour had already been told
+         */
+        @Override
+        public boolean next() {
+            if (!toTell.hasNext()) {
+                return false;
+            }
+            advertiseRouteChange(toTell.next(), dest);
+            return true;
+        }
+    }
+
+    RouteChange newRouteChange(Block dest) {
+        return new RouteChange(dest);
+    }
+
+    /**
+     * A neighbour's withdrawal of a route, made by the
+     * {@link LayoutBlockManager} when its turn comes.
+     */
+    private final class RouteRemoval implements LayoutBlockManager.RoutingStep {
+
+        private final LayoutBlock src;
+        private final RoutingPacket update;
+        private boolean made;
+
+        private RouteRemoval(LayoutBlock src, RoutingPacket update) {
+            this.src = src;
+            this.update = update;
+        }
+
+        @Override
+        public boolean next() {
+            if (made) {
+                return false;
+            }
+            made = true;
+            removeRouteFromNeighbourNow(src, update);
+            return true;
+        }
+    }
+
+    LayoutBlockManager.RoutingStep newRouteRemoval(LayoutBlock src, RoutingPacket update) {
+        return new RouteRemoval(src, update);
     }
 
     private void advertiseRouteChange(Adjacencies adj, Block dest) {
@@ -3765,7 +3835,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     static final int NONE = 0x08;
     int metric = 100;
 
-    private static class RoutingPacket {
+    static class RoutingPacket {
 
         int packetType;
         Block block;
@@ -4281,6 +4351,9 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
         /**
          * A copy holding only the destination and next block, used in
          * temporary lists. It does not listen to the destination block.
+         *
+         * @param dstBlock the destination block of the route
+         * @param nxtBlock the next block on the route towards the destination
          */
         Routes(Block dstBlock, Block nxtBlock) {
             destBlock = dstBlock;

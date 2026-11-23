@@ -1,9 +1,11 @@
 package jmri.jmrix.marklin.swing.devicetable;
 
+import jmri.jmrix.marklin.mcan.McanUid;
+
 import java.util.List;
 import jmri.jmrix.marklin.*;
 import jmri.jmrix.marklin.mcan.cs2.Cs2ConfigCommands;
-import jmri.jmrix.marklin.mcan.device.CdBDeviceClass;
+import jmri.jmrix.marklin.mcan.cdb.CdBDeviceClass;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.*;
 
@@ -32,6 +34,107 @@ class McanDevicePanelTest {
         tc.dispose();
         memo.dispose();
         JUnitUtil.tearDown();
+    }
+
+    @Test
+    @jmri.util.junit.annotations.DisabledIfHeadless
+    void testMagnetConfigureAndRetestEnabled() {
+        McanDevicePanel panel = new McanDevicePanel();
+        panel.initComponents(memo);
+        McanDevice device = memo.getMcanDeviceManager().provideDevice(McanDeviceIdentity.forCdB(0x22, 3));
+        device.setDeviceState(McanDeviceState.ONLINE);
+        panel.getDeviceTable().setRowSelectionInterval(0, 0);
+        assertTrue(panel.getConfigureButton().isEnabled());
+        panel.dispose();
+    }
+
+    @Test
+    @jmri.util.junit.annotations.DisabledIfHeadless
+    void testMs2ConfigureEnabledButNotGleisbox() {
+        McanDevicePanel panel = new McanDevicePanel();
+        panel.initComponents(memo);
+        McanDevice device = memo.getMcanDeviceManager().provideDevice(
+                McanDeviceIdentity.forNative(McanUid.of(0x4D5552E2), 0x0033));
+        device.setDeviceState(McanDeviceState.ONLINE);
+        panel.getDeviceTable().setRowSelectionInterval(0, 0);
+        assertTrue(panel.getConfigureButton().isEnabled());
+        assertFalse(panel.getProbeButton().isEnabled());
+        jmri.util.ThreadingUtil.runOnGUI(() -> {
+            panel.getConfigureButton().doClick();
+            jmri.util.JmriJFrame frame = jmri.util.JmriJFrame.getFrame(
+                    "Mobile Station 2 - " + device.getSystemName());
+            assertNotNull(frame);
+            assertInstanceOf(jmri.jmrix.marklin.swing.configure.Ms2ConfigPanel.class,
+                    frame.getContentPane().getComponent(0));
+            frame.dispatchEvent(new java.awt.event.WindowEvent(frame, java.awt.event.WindowEvent.WINDOW_CLOSING));
+            frame.dispose();
+        });
+        memo.getMcanDeviceManager().deregister(device);
+        memo.getMcanDeviceManager().provideDevice(McanDeviceIdentity.forNative(McanUid.of(0x47460304), 0x0010));
+        panel.getDeviceTable().setRowSelectionInterval(0, 0);
+        assertFalse(panel.getConfigureButton().isEnabled());
+        panel.dispose();
+    }
+
+    @Test
+    @jmri.util.junit.annotations.DisabledIfHeadless
+    void testPingClassCheckboxesWrapWhenWindowNarrows() throws Exception {
+        McanDevicePanel panel = new McanDevicePanel();
+        javax.swing.JFrame frame = new javax.swing.JFrame();
+        int[] dimensions = new int[3];
+        try {
+            javax.swing.SwingUtilities.invokeAndWait(() -> {
+                panel.initComponents(memo);
+                frame.setContentPane(panel);
+                frame.pack();
+                frame.setVisible(true);
+                java.awt.Container checkboxRow = panel.getCdbClassCheckBoxes().values()
+                        .iterator().next().getParent();
+                // The packed window may already wrap when the screen is narrow (e.g. CI).
+                dimensions[0] = frame.getWidth();
+                dimensions[1] = checkboxRow.getHeight();
+                dimensions[2] = rowCount(checkboxRow);
+
+                frame.setSize(dimensions[0] / 2, frame.getHeight());
+                frame.validate();
+            });
+            javax.swing.SwingUtilities.invokeAndWait(() -> { });
+            javax.swing.SwingUtilities.invokeAndWait(() -> {
+                frame.validate();
+                java.awt.Container checkboxRow = panel.getCdbClassCheckBoxes().values()
+                        .iterator().next().getParent();
+                assertTrue(checkboxRow.getHeight() > dimensions[1],
+                        "Checkbox area must grow to accommodate wrapped rows");
+                assertTrue(rowCount(checkboxRow) > dimensions[2], "Checkboxes must wrap onto more rows");
+                for (java.awt.Component checkbox : checkboxRow.getComponents()) {
+                    assertTrue(checkbox.getX() >= 0);
+                    assertTrue(checkbox.getX() + checkbox.getWidth() <= checkboxRow.getWidth());
+                    assertTrue(checkbox.getY() + checkbox.getHeight() <= checkboxRow.getHeight(),
+                            "Wrapped checkboxes must not be clipped");
+                }
+
+                frame.setSize(dimensions[0], frame.getHeight());
+                frame.validate();
+            });
+            javax.swing.SwingUtilities.invokeAndWait(() -> { });
+            javax.swing.SwingUtilities.invokeAndWait(() -> {
+                frame.validate();
+                java.awt.Container checkboxRow = panel.getCdbClassCheckBoxes().values()
+                        .iterator().next().getParent();
+                assertEquals(dimensions[1], checkboxRow.getHeight());
+                assertEquals(dimensions[2], rowCount(checkboxRow));
+            });
+        } finally {
+            javax.swing.SwingUtilities.invokeAndWait(() -> {
+                frame.dispose();
+                panel.dispose();
+            });
+        }
+    }
+
+    private static int rowCount(java.awt.Container row) {
+        return (int) java.util.Arrays.stream(row.getComponents()).mapToInt(java.awt.Component::getY)
+                .distinct().count();
     }
 
     @Test
@@ -104,15 +207,20 @@ class McanDevicePanelTest {
                 .filter(c -> c.getProtocolGeneration() == CdBDeviceClass.ProtocolGeneration.NEW)
                 .toArray(CdBDeviceClass[]::new);
 
+        // A NEW-protocol ping is told by its CAN ID, the class's ping ID. OLD-protocol classes
+        // (LampenChef) also send pings with DLC=0, 128 addressed ones, starting 250 ms after the
+        // last NEW-protocol ping; they are not counted here, however soon this thread looks.
+        java.util.Set<Integer> newPingIds = java.util.Arrays.stream(newClasses)
+                .map(CdBDeviceClass::getPingId)
+                .collect(java.util.stream.Collectors.toSet());
+
         // Wait for all NEW-protocol pings to arrive (staggered 250 ms apart)
         jmri.util.JUnitUtil.waitFor(
-                () -> tc.getSentMessages().size() >= newClasses.length,
+                () -> newProtocolPings(newPingIds).size() >= newClasses.length,
                 "All NEW-protocol CdB pings sent");
 
-        // Collect only NEW-protocol pings (DLC=0) in arrival order
-        List<MarklinMessage> newPings = tc.getSentMessages().stream()
-                .filter(m -> m.getElement(4) == 0)
-                .collect(java.util.stream.Collectors.toList());
+        // Collect only NEW-protocol pings in arrival order
+        List<MarklinMessage> newPings = newProtocolPings(newPingIds);
 
         assertEquals(newClasses.length, newPings.size(),
                 "Expected one ping per NEW-protocol class");
@@ -134,6 +242,23 @@ class McanDevicePanelTest {
             assertEquals(0, msg.getElement(4),
                 String.format("DLC should be 0 for %s ping", deviceClass.getDisplayName()));
         }
+    }
+
+    /**
+     * The messages sent so far whose CAN ID is one of the given NEW-protocol ping
+     * IDs, in the order sent.
+     */
+    private List<MarklinMessage> newProtocolPings(java.util.Set<Integer> newPingIds) {
+        return new java.util.ArrayList<>(tc.getSentMessages()).stream()
+                .filter(m -> newPingIds.contains(canId(m)))
+                .collect(java.util.stream.Collectors.toList());
+    }
+
+    private static int canId(MarklinMessage msg) {
+        return ((msg.getElement(0) & 0xFF) << 24) |
+               ((msg.getElement(1) & 0xFF) << 16) |
+               ((msg.getElement(2) & 0xFF) << 8) |
+               (msg.getElement(3) & 0xFF);
     }
 
     @Test

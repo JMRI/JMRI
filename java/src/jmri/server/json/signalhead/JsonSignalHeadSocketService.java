@@ -1,7 +1,9 @@
 package jmri.server.json.signalhead;
 
+import static jmri.server.json.JSON.DELETE;
 import static jmri.server.json.JSON.GET;
 import static jmri.server.json.JSON.NAME;
+import static jmri.server.json.JSON.POST;
 import static jmri.server.json.JSON.PUT;
 import static jmri.server.json.signalhead.JsonSignalHead.SIGNAL_HEAD;
 import static jmri.server.json.signalhead.JsonSignalHead.SIGNAL_HEADS;
@@ -45,10 +47,19 @@ public class JsonSignalHeadSocketService extends JsonSocketService<JsonSignalHea
     public void onMessage(String type, JsonNode data, JsonRequest request)
             throws IOException, JmriException, JsonException {
         String name = data.path(NAME).asText();
-        if (request.method.equals(PUT)) {
-            connection.sendMessage(service.doPut(type, name, data, request), request.id);
-        } else {
-            connection.sendMessage(service.doPost(type, name, data, request), request.id);
+        switch (request.method) {
+            case DELETE:
+                service.doDelete(type, name, data, request);
+                break;
+            case POST:
+                connection.sendMessage(service.doPost(type, name, data, request), request.id);
+                break;
+            case PUT:
+                connection.sendMessage(service.doPut(type, name, data, request), request.id);
+                break;
+            case GET:
+            default:
+                connection.sendMessage(service.doGet(type, name, data, request), request.id);
         }
         if (!beanListeners.containsKey(name)) {
             SignalHead signalHead = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(name);

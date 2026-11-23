@@ -99,7 +99,8 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
     protected boolean _showTimes = true; // when true, show arrival and departure times for this train
     protected Engine _leadEngine = null; // lead engine for icon
     protected String _switchListStatus = UNKNOWN; // print switch list status
-    protected String _comment = NONE;
+    protected String _comment = NONE; 
+    protected String _commentTermination = NONE;
     protected String _serviceStatus = NONE; // status only if train is being built
     protected int _statusCode = CODE_UNKNOWN;
     protected int _oldStatusCode = CODE_UNKNOWN;
@@ -2880,6 +2881,41 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
                         getTrainWeight(crl), getLeadEngineRoadAndNumber(),
                         getLeadEngineDccAddress()});
     }
+    
+    public void setCommentTermination(String comment) {
+        String old = _commentTermination;
+        _commentTermination = comment;
+        if (!old.equals(comment)) {
+            setDirtyAndFirePropertyChange("trainCommentTermination", old, comment); // NOI18N
+        }
+    }
+    
+    public String getCommentTermination() {
+        return TrainCommon.getOnlyText(getCommentTerminationWithColor());
+    }
+
+    public String getCommentTerminationWithColor() {
+        return _commentTermination;
+    }
+    
+    public Color getCommentTerminationColor() {
+        return TrainCommon.getTextColor(getCommentTerminationWithColor());
+    }
+    
+    public String getCommentTerminationColorName() {
+        return TrainCommon.getTextColorName(getCommentTerminationWithColor());
+    }
+    
+    public String getCommentTerminationCurrent() {
+        if (getRoute() != null) {
+            return getCommentCurrent(getCommentTermination(), getRoute().get2ndToLastRouteLocation());
+        }
+        return NONE;
+    }
+    
+    public String getCommentTerminationCurrentWithColor() {
+        return getCommentCurrent(getCommentTerminationWithColor(), getRoute().get2ndToLastRouteLocation());
+    }
 
     /**
      * Add a script to run before a train is built
@@ -4310,6 +4346,9 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         if ((a = e.getAttribute(Xml.COMMENT)) != null) {
             _comment = a.getValue();
         }
+        if ((a = e.getAttribute(Xml.COMMENT_TERMINATION)) != null) {
+            _commentTermination = a.getValue();
+        }
         if (getRoute() != null) {
             if ((a = e.getAttribute(Xml.CURRENT)) != null) {
                 _current = getRoute().getRouteLocationById(a.getValue());
@@ -4480,6 +4519,7 @@ public class Train extends PropertyChangeSupport implements Identifiable, Proper
         e.setAttribute(Xml.STATUS_CODE, Integer.toString(getStatusCode()));
         e.setAttribute(Xml.OLD_STATUS_CODE, Integer.toString(getOldStatusCode()));
         e.setAttribute(Xml.COMMENT, getCommentWithColor());
+        e.setAttribute(Xml.COMMENT_TERMINATION, getCommentTerminationWithColor());
         e.setAttribute(Xml.SHOW_TIMES, isShowArrivalAndDepartureTimesEnabled() ? Xml.TRUE : Xml.FALSE);
         // build list of car types for this train
         String[] types = getTypeNames();

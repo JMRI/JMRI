@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+
+<!-- version 1.0, Ronald Kuhn, 2026/10/05 -->
+
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
+   <name>Dimming, Blinking, Reed Contact</name>
+   <name xml:lang="de">Dimmen, Blinken, Reed-Kontakt</name>
+   <name xml:lang="fr">Variation d’intensité, clignotement, contact Reed</name>
+   <name xml:lang="es">Regulación de intensidad, parpadeo, contacto Reed</name>
+   <name xml:lang="it">Regolazione dell'intensità, lampeggio, contatto Reed</name>
+   <name xml:lang="nl">Dimming, knipperen, Reed-contact</name>
+   <name xml:lang="cs">Stmívání, blikání, kontakt Reed</name>
+   <name xml:lang="pl">Ściemnianie, miganie, styk Reed</name>
+
+<column>
+ <separator/>
+
+<!-- Headline Dimming -->
+  <row>
+   <label>
+    <text>Dimming</text>
+    <text xml:lang="de">Dimmen</text>
+    <text xml:lang="fr">Variation d’intensité</text>
+    <text xml:lang="es">Regulación de intensidad</text>
+    <text xml:lang="it">Regolazione dell'intensità</text>
+    <text xml:lang="nl">Dimming</text>
+    <text xml:lang="cs">Stmívání</text>
+    <text xml:lang="pl">Ściemnianie</text>
+   </label>
+   <label>
+    <text>            </text>
+   </label>
+  </row>
+<!-- Placeholder -->
+  <row>
+   <label>
+   <text>            </text>
+  </label>
+  </row>
+<!-- Options -->
+  <row>
+    <display item="Dimmung A1" format="hslider">
+     <label>A1</label>
+    </display>
+    <display item="Dimmung A1" label=""/>
+  </row>
+  <row>
+    <display item="Dimmung A2" format="hslider">
+     <label>A2</label>
+    </display>
+    <display item="Dimmung A2" label="" />
+  </row>
+  <row>
+    <display item="Dimmung A3" format="hslider">
+     <label>A3</label>
+    </display>
+    <display item="Dimmung A3" label="" />
+  </row>
+  <label>
+   <text>            </text>
+  </label>
+  <display item="Komfortdimmung aktiv" format="checkbox"/>
+  <label>
+   <text>            </text>
+  </label>
+
+  <separator/>
+
+<!-- Headline Blinking -->
+
+  <row>
+   <label>
+    <text>Blinking</text>
+    <text xml:lang="de">Blinken</text>
+    <text xml:lang="fr">Clignotement</text>
+    <text xml:lang="es">Parpadeo</text>
+    <text xml:lang="it">Lampeggio</text>
+    <text xml:lang="nl">Knipperen</text>
+    <text xml:lang="cs">Blikání</text>
+    <text xml:lang="pl">Miganie</text>
+   </label>
+   <label>
+    <text>            </text>
+   </label>
+  </row>
+<!-- Placeholder -->
+  <row>
+   <label>
+    <text>            </text>
+   </label>
+  </row>
+<!-- Options -->
+  <row>
+   <display item="Blinken A1" format="checkbox">
+    <label>on A1</label>
+     <label xml:lang="de">auf A1</label>
+     <label xml:lang="fr">sur A1</label>
+     <label xml:lang="es">en A1</label>
+     <label xml:lang="it">su A1</label>
+     <label xml:lang="nl">op A1</label>
+     <label xml:lang="cs">na A1</label>
+     <label xml:lang="pl">na A1</label>
+   </display>
+    <label>
+     <text>     </text>
+    </label>
+   <display item="Blinken A2" format="checkbox">
+    <label>A2</label>
+   </display>
+    <label>
+     <text>     </text>
+    </label>
+   <display item="Blinken A3" format="checkbox">
+    <label>A3</label>
+   </display>
+  </row>
+  <row>
+   <label>
+    <text>            </text>
+   </label>
+  </row>
+  <row>
+   <label>
+    <text>         </text>
+   </label>
+   <display item="Blinken Zufallsgenerator" format="checkbox">
+    <label>Random generator active</label>
+     <label xml:lang="de">Zufallsgenerator aktiv</label>
+     <label xml:lang="fr">Générateur aléatoire activé</label>
+     <label xml:lang="es">Generador aleatorio activado</label>
+     <label xml:lang="it">Generatore casuale attivo</label>
+     <label xml:lang="nl">Willekeurige generator actief</label>
+     <label xml:lang="cs">Náhodný generátor aktivní</label>
+     <label xml:lang="pl">Generator losowy aktywny</label>
+   </display>
+  </row>
+  <row>
+   <label>
+    <text>            </text>
+   </label>
+  </row>
+  <row>
+    <display item="Blinken max. Einschaltdauer" format="hslider">
+     <label>Maximum on time   </label>
+      <label xml:lang="de">max. Einschaltdauer   </label>
+      <label xml:lang="fr">Durée maximale d’activation   </label>
+      <label xml:lang="es">Duración máxima de encendido   </label>
+      <label xml:lang="it">Durata massima di accensione   </label>
+      <label xml:lang="nl">Max. inschakelduur   </label>
+      <label xml:lang="cs">Max. doba zapnutí   </label>
+      <label xml:lang="pl">Maks. czas włączenia   </label>
+    </display>
+    <display item="Blinken max. Einschaltdauer" label=""/>
+  </row>
+  <row>
+    <display item="Blinken max. Ausschaltdauer" format="hslider">
+     <label>Maximum off time  </label>
+      <label xml:lang="de">max. Ausschaltdauer  </label>
+      <label xml:lang="fr">Durée maximale de désactivation  </label>
+      <label xml:lang="es">Duración máxima de apagado  </label>
+      <label xml:lang="it">Durata massima di spegnimento  </label>
+      <label xml:lang="nl">Max. uitschakelduur  </label>
+      <label xml:lang="cs">Max. doba vypnutí  </label>
+      <label xml:lang="pl">Maks. czas wyłączenia  </label>
+    </display>
+    <display item="Blinken max. Ausschaltdauer" label=""/>
+  </row>
+  <row>
+    <display item="Blinken Anzahl Impulse" format="hslider">
+     <label>Number of pulses           </label>
+      <label xml:lang="de">Anzahl Impulse           </label>
+      <label xml:lang="fr">Nombre d’impulsions           </label>
+      <label xml:lang="es">Número de impulsos           </label>
+      <label xml:lang="it">Numero di impulsi           </label>
+      <label xml:lang="nl">Aantal impulsen           </label>
+      <label xml:lang="cs">Počet impulzů           </label>
+      <label xml:lang="pl">Liczba impulsów           </label>
+    </display>
+    <display item="Blinken Anzahl Impulse" label=""/>
+  </row>
+<!-- Placeholder -->
+  <label>
+   <text>            </text>
+  </label>
+
+  <separator/>
+
+<!-- Headline Reed Contacts -->
+
+  <row>
+   <label>
+    <text>Reed Contact</text>
+    <text xml:lang="de">Reed-Kontakt</text>
+    <text xml:lang="fr">Contact Reed</text>
+    <text xml:lang="es">Contacto Reed</text>
+    <text xml:lang="it">Contatto Reed</text>
+    <text xml:lang="nl">Reed-contact</text>
+    <text xml:lang="cs">Kontakt Reed</text>
+    <text xml:lang="pl">Styk Reed</text>
+   </label>
+   <label>
+    <text>            </text>
+   </label>
+  </row>
+<!-- Placeholder -->
+  <row>
+   <label>
+    <text>            </text>
+   </label>
+  </row>
+
+<!-- Options -->
+
+  <row>
+   <display item="Reed A1" format="checkbox">
+    <label>on A1</label>
+     <label xml:lang="de">auf A1</label>
+     <label xml:lang="fr">sur A1</label>
+     <label xml:lang="es">en A1</label>
+     <label xml:lang="it">su A1</label>
+     <label xml:lang="nl">op A1</label>
+     <label xml:lang="cs">na A1</label>
+     <label xml:lang="pl">na A1</label>
+   </display>
+    <label>
+     <text>     </text>
+    </label>
+   <display item="Reed A2" format="checkbox">
+    <label>A2</label>
+   </display>
+    <label>
+     <text>     </text>
+    </label>
+   <display item="Reed A3" format="checkbox">
+    <label>A3</label>
+   </display>
+  </row>
+  <row>
+   <label>
+    <text>            </text>
+   </label>
+  </row>
+  <row>
+   <label>
+    <text>                </text>
+   </label>
+  <display item="Reed Abschaltung aktiv" format="checkbox">
+   <label>Shutdown active</label>
+    <label xml:lang="de">Abschaltung aktiv</label>
+    <label xml:lang="fr">Désactivation active</label>
+    <label xml:lang="es">Desactivación activa</label>
+    <label xml:lang="it">Disattivazione attiva</label>
+    <label xml:lang="nl">Uitschakeling actief</label>
+    <label xml:lang="cs">Vypnutí aktivní</label>
+    <label xml:lang="pl">Wyłączenie aktywne</label>
+  </display>
+  </row>
+  <row>
+   <label>
+    <text>            </text>
+   </label>
+  </row>
+  <row>
+    <display item="Reed mind Kontaktdauer" format="hslider">
+     <label>Minimum contact duration   </label>
+      <label xml:lang="de">mindest Kontaktdauer   </label>
+      <label xml:lang="fr">Durée minimale du contact   </label>
+      <label xml:lang="es">Duración mínima del contacto   </label>
+      <label xml:lang="it">Durata minima del contatto   </label>
+      <label xml:lang="nl">Minimale contactduur   </label>
+      <label xml:lang="cs">Minimální doba kontaktu   </label>
+      <label xml:lang="pl">Minimalny czas kontaktu   </label>
+    </display>
+    <display item="Reed mind Kontaktdauer" label=""/>
+  </row>
+<!-- Placeholder -->
+  <label>
+   <text>            </text>
+  </label>
+
+  <separator/>
+
+<!-- Headline different options -->
+
+  <row>
+   <label>
+    <text>Various settings</text>
+    <text xml:lang="de">Sonstige Einstellungen</text>
+    <text xml:lang="fr">Réglages divers</text>
+    <text xml:lang="es">Otros ajustes</text>
+    <text xml:lang="it">Altre impostazioni</text>
+    <text xml:lang="nl">Overige instellingen</text>
+    <text xml:lang="cs">Ostatní nastavení</text>
+    <text xml:lang="pl">Pozostałe ustawienia</text>
+   </label>
+   <label>
+    <text>            </text>
+   </label>
+  </row>
+   <label>
+    <text>            </text>
+   </label>
+   <display item="Global Richtungsabhaengig" format="checkbox">
+     <label>F outputs are direction-dependent   </label>
+     <label xml:lang="de">F-Ausgänge sind richtungsabhängig   </label>
+     <label xml:lang="fr">Les sorties F dépendent du sens de marche   </label>
+     <label xml:lang="es">Las salidas F dependen del sentido de marcha   </label>
+     <label xml:lang="it">Le uscite F dipendono dalla direzione di marcia   </label>
+     <label xml:lang="nl">F-uitgangen zijn richtingsafhankelijk   </label>
+     <label xml:lang="cs">Výstupy F závisí na směru jízdy   </label>
+     <label xml:lang="pl">Wyjścia F zależą od kierunku jazdy   </label>
+   </display>
+   <label>
+    <text>            </text>
+   </label>
+
+  <separator/>
+ </column>
+</pane>

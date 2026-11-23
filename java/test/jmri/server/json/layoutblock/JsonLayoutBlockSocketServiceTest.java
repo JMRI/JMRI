@@ -18,10 +18,12 @@ import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
 import jmri.server.json.JsonRequest;
+import jmri.server.json.schema.JsonSchemaServiceCache;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -97,6 +99,10 @@ public class JsonLayoutBlockSocketServiceTest {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         LayoutBlockManager manager = InstanceManager.getDefault(LayoutBlockManager.class);
         LayoutBlock lb = manager.createNewLayoutBlock(null, "LayoutBlock1");
+        // properties of each kind, to check the shape the schema describes
+        lb.setProperty("text", "value");
+        lb.setProperty("number", 42);
+        lb.setProperty("empty", null);
         assertNotNull( lb, "LayoutBlock is created");
         assertEquals( 1, lb.getPropertyChangeListeners().length, "LayoutBlock has 1 listener");
         // test GETs
@@ -104,6 +110,8 @@ public class JsonLayoutBlockSocketServiceTest {
         instance.onMessage(JsonLayoutBlock.LAYOUTBLOCK,
                 instance.getConnection().getObjectMapper().readTree("{\"name\":\"" + lb.getSystemName() + "\"}"),
                 new JsonRequest(locale, JSON.V5, JSON.GET, 42));
+        assertDoesNotThrow(() -> InstanceManager.getDefault(JsonSchemaServiceCache.class)
+                .validateMessage(connection.getMessage(), true, new JsonRequest(locale, JSON.V5, JSON.GET, 42)));
         // onMessage causes a listener to be added to requested LayoutBlocks if
         // not already listening
         assertEquals( 2, lb.getPropertyChangeListeners().length, "LayoutBlock has 2 listeners");

@@ -9172,8 +9172,6 @@ public final class LayoutEditorTools {
         return new Point(xpos, ypos);
     }
 
-    double adjust = (5.0 / 90.0);
-    int awayright = 5;
     private final int offSetFromPoint = 5;
 
     //Correct for SM111, sm101, sm121, SM80
@@ -9893,7 +9891,85 @@ public final class LayoutEditorTools {
             log.debug("East set is {}", isEast);
             setIconOnPanel(ts, icon, isEast, p, endPoint, isRightSide, fromPoint);
         }
+        if (obj instanceof Integer) {
+            log.debug("Setting buffer mast");
+            int VerticalOrientation = (int) obj;
+            int offsetx;
+            int offsety;
+            int rotation;
+            boolean isEast = false;
+
+            Point loc;
+            if (VerticalOrientation == LayoutTraverser.HORIZONTAL) {
+                //In a vertical Straight Line
+                if (isEast) {
+                    log.debug("In a vertical straightline facing South");
+                    loc = northToSouth(p, icon, isRightSide, fromPoint);
+                } else {
+                    log.debug("In a vertical straightline facing North");
+                    loc = southToNorth(p, icon, isRightSide, fromPoint);
+                }
+            } else {
+                //In a Horizontal Straight Line
+                if (isEast) {
+                    log.debug("In a Horizontal striaghtline facing east");
+                    loc = westToEast(p, icon, isRightSide, fromPoint);
+                } else {
+                    log.debug("In a Horizontal striaghtline facing west");
+                    loc = eastToWest(p, icon, isRightSide, fromPoint);
+                }
+            }
+            if (VerticalOrientation == LayoutTraverser.HORIZONTAL) {
+                offsetx = 0;
+                offsety = -30;
+                rotation = 0;
+            } else {
+                offsetx = -30;
+                offsety = 0;
+                rotation = 270;
+            }
+
+            int cpx = (int) loc.getX();
+            int cpy = (int) loc.getY();
+            setIconOnPanel(icon, rotation, cpx + offsetx, cpy + offsety);
+        }
     }
+
+    public void placingBlockForTraverser(PositionableIcon icon, boolean isRightSide,
+                                         double fromPoint, boolean isEast, Object obj, Point2D p) {
+
+        if (obj instanceof Integer) {
+            log.debug("Setting buffer mast");
+            int VerticalOrientation = (int) obj;
+            int rotation;
+
+            Point loc;
+            if (VerticalOrientation == LayoutTraverser.HORIZONTAL) {
+                //In a vertical Straight Line
+                if (isEast) {
+                    log.debug("In a vertical straightline facing South");
+                    loc = northToSouth(p, icon, isRightSide, fromPoint);
+                } else {
+                    log.debug("In a vertical straightline facing North");
+                    loc = southToNorth(p, icon, isRightSide, fromPoint);
+                }
+            } else {
+                //In a Horizontal Straight Line
+                if (isEast) {
+                    log.debug("In a Horizontal striaghtline facing east");
+                    loc = westToEast(p, icon, isRightSide, fromPoint);
+                } else {
+                    log.debug("In a Horizontal striaghtline facing west");
+                    loc = eastToWest(p, icon, isRightSide, fromPoint);
+                }
+            }
+            rotation = 0;
+            int cpx = (int) loc.getX();
+            int cpy = (int) loc.getY();
+            setIconOnPanel(icon, rotation, cpx, cpy);
+        }
+    }
+
 
     private void setSignalMastsCancelPressed(ActionEvent a) {
         setSignalMastsAtTurnoutOpenFlag = false;
@@ -10494,8 +10570,6 @@ public final class LayoutEditorTools {
     BeanDetails<SignalMast> xingSignalMastD;
 
     JPanel signalMastLevelXingPanel = new JPanel(new FlowLayout());
-
-    Border blackline = BorderFactory.createLineBorder(Color.black);
 
     //display dialog for Set Signals at Level Crossing tool
     public void setSignalMastsAtLevelXingFromMenu(@Nonnull LevelXing xing,
@@ -11186,8 +11260,6 @@ public final class LayoutEditorTools {
         setSensorsAtTurnoutFrame.setPreferredSize(null);
         setSensorsAtTurnoutFrame.pack();
     }   //turnoutSensorsGetSaved
-
-    SensorIcon turnoutSensorBlockIcon;
 
     private void setSensorsDonePressed(ActionEvent a) {
         log.trace("setSensorsDonePressed (turnouts)");  // NOI18N

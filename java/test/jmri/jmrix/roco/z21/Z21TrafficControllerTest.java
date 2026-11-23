@@ -22,7 +22,7 @@ public class Z21TrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
 
     @Test
     public void testReceivesCombinedPacketLongerThan100Bytes() throws Exception {
-        TestTrafficController controller = (TestTrafficController) tc;
+        Z21TrafficController controller = (Z21TrafficController) tc;
         List<Z21Reply> replies = new ArrayList<>();
 
         controller.addz21Listener(new Z21Listener() {
@@ -58,11 +58,30 @@ public class Z21TrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
         assertEquals("04 00 88 00", replies.get(replies.size() - 1).toString());
     }
 
+    @Test
+    public void testStoppedWhileWaitingToRetryIsNotAnError() throws InterruptedException {
+        Z21TrafficController controller = (Z21TrafficController) tc;
+        // with no port the message can't be sent, so the sender waits to retry it
+        Z21Message m = Z21Message.getSerialNumberRequestMessage();
+        m.setTimeout(60000);
+        m.setRetries(1);
+        Thread sender = new Thread(() -> controller.forwardToPort(m, null), "Z21 test sender");
+        sender.start();
+        JUnitUtil.waitFor(() -> sender.getState() == Thread.State.TIMED_WAITING, "waiting to retry");
+
+        // stopped as a connection is when closed
+        controller.terminateThreads();
+        sender.interrupt();
+        sender.join(5000);
+        Assertions.assertFalse(sender.isAlive(), "the sender gave up");
+        // nothing is logged as an error: the thread is ending, as asked (checked as the test ends)
+    }
+
     @Override
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
-        tc = new TestTrafficController();
+        tc = new Z21TrafficController();
     }
 
     @Override
@@ -95,14 +114,6 @@ public class Z21TrafficControllerTest extends jmri.jmrix.AbstractMRTrafficContro
         Field field = Z21TrafficController.class.getDeclaredField(fieldName);
         field.setAccessible(true);
         field.set(controller, value);
-    }
-
-    private static class TestTrafficController extends Z21TrafficController {
-
-        TestTrafficController() {
-            xmtRunnable = () -> {
-            };
-        }
     }
 
     private static class TestZ21Adapter extends Z21Adapter {

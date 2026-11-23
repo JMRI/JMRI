@@ -1,5 +1,9 @@
 package jmri.jmrit.audio;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
+import javax.annotation.concurrent.GuardedBy;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.FloatControl;
@@ -102,7 +106,21 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
         return true;
     }
 
-//    @SuppressWarnings("SleepWhileInLoop")
+    /**
+     * The buffer this source is to be bound to once it has loaded, or null.
+     */
+    @GuardedBy("this")
+    private AudioBuffer awaitedBuffer = null;
+
+    private final PropertyChangeListener bufferStateListener = this::bufferStateChanged;
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * A buffer that has not loaded yet is not waited for, since this runs on
+     * the audio command thread holding the audio factory: the source is bound
+     * when the buffer has loaded.
+     */
     @Override
     boolean bindAudioBuffer(AudioBuffer audioBuffer) {
         // First check we've been initialised
@@ -110,19 +128,14 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
             return false;
         }
 
-        // Wait for AudioBuffer to be loaded, or 20 seconds
-        long startTime = System.currentTimeMillis();
-        while (audioBuffer.getState() != AudioBuffer.STATE_LOADED
-                && System.currentTimeMillis() - startTime < 20000) {
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException ex) {
-                log.debug("bindAudioBuffer was interruped");
-            }
+        stopAwaitingBuffer();
+        if (!loadedOrAwaited(audioBuffer)) {
+            log.debug("JavaSoundSource ({}) will be bound to AudioBuffer ({}) when it has loaded",
+                    this.getSystemName(), audioBuffer.getSystemName());
+            return false;
         }
 
-        if (audioBuffer instanceof JavaSoundAudioBuffer
-                && audioBuffer.getState() == AudioBuffer.STATE_LOADED) {
+        if (audioBuffer instanceof JavaSoundAudioBuffer) {
             // Cast to JavaSoundAudioBuffer to enable easier access to specific methods
             JavaSoundAudioBuffer buffer = (JavaSoundAudioBuffer) audioBuffer;
 
@@ -155,11 +168,65 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
             }
             return true;
         } else {
-            log.warn("AudioBuffer not loaded error when binding JavaSoundSource ({}) to AudioBuffer ({})",
+            log.warn("Can't bind JavaSoundSource ({}) to AudioBuffer ({}), which is not a JavaSound buffer",
                     this.getSystemName(), this.getAssignedBufferName());
             return false;
         }
     }
+
+    /**
+     * Tell whether a buffer has loaded, and if not, listen for it to load.
+     *
+     * @param audioBuffer the buffer
+     * @return true if it has loaded; false if this source now waits for it
+     */
+    private boolean loadedOrAwaited(AudioBuffer audioBuffer) {
+        synchronized (this) {
+            awaitedBuffer = audioBuffer;
+        }
+        // listen first, so a buffer that loads during the check is not missed
+        audioBuffer.addPropertyChangeListener(STATE_PROPERTY, bufferStateListener);
+        if (audioBuffer.getState() == AudioBuffer.STATE_LOADED) {
+            stopAwaitingBuffer();
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Bind to the awaited buffer now that it has loaded, if it is still the
+     * buffer assigned to this source.
+     *
+     * @param e the buffer's state change
+     */
+    private void bufferStateChanged(PropertyChangeEvent e) {
+        AudioBuffer loaded = (AudioBuffer) e.getSource();
+        if (loaded.getState() != AudioBuffer.STATE_LOADED) {
+            return;
+        }
+        synchronized (this) {
+            if (loaded != awaitedBuffer) {
+                return;
+            }
+        }
+        stopAwaitingBuffer();
+        if (loaded == getAssignedBuffer()) {
+            setAssignedBuffer(loaded); // queues the bind
+        }
+    }
+
+    private void stopAwaitingBuffer() {
+        AudioBuffer awaited;
+        synchronized (this) {
+            awaited = awaitedBuffer;
+            awaitedBuffer = null;
+        }
+        if (awaited != null) {
+            awaited.removePropertyChangeListener(STATE_PROPERTY, bufferStateListener);
+        }
+    }
+
+    private static final String STATE_PROPERTY = "State"; // NOI18N, as fired by AbstractAudio
 
     @Override
     protected void changePosition(Vector3f pos) {
@@ -314,6 +381,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
 
     @Override
     protected void cleanup() {
+        stopAwaitingBuffer();
         if (initialised && isBound()) {
             this.clip.stop();
             this.clip.close();

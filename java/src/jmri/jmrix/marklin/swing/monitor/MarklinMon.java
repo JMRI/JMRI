@@ -19,14 +19,7 @@ public class MarklinMon {
      * @return formatted message string with i18n support
      */
     public static String displayReply(MarklinReply r) {
-        // Convert MarklinReply to raw data array
-        int[] rawData = new int[13];
-        for (int i = 0; i < 13; i++) {
-            rawData[i] = r.getElement(i);
-        }
-
-        // Use MarklinMessageFormatter with Bundle i18n provider
-        return MarklinMessageFormatter.formatRaw(rawData, new MarklinMessageFormatter.I18nProvider() {
+        return MarklinMessageFormatter.format(r.getFrame(), new MarklinMessageFormatter.I18nProvider() {
             @Override
             public String getMessage(String key, Object... args) {
                 try {
@@ -40,6 +33,6 @@ public class MarklinMon {
                     return null;
                 }
             }
-        });
+        }, false);
     }
 }

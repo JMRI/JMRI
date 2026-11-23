@@ -28,6 +28,18 @@ public class MarklinMessageFormatterTest {
         JUnitUtil.tearDown();
     }
 
+    @Test
+    public void testCapturedMs2RosterFrames() {
+        int[] request = {0, 0x40, 0xFF, 0x37, 8,
+            0x6C, 0x6F, 0x6B, 0x6C, 0x69, 0x73, 0x74, 0x65};
+        assertTrue(MarklinMessageFormatter.formatRaw(request, null).contains("Request Config Data lokliste"));
+        int[] header = {0, 0x42, 0xFB, 0x21, 7, 0, 0, 0, 32, 0xCE, 0x2C, 0, 0};
+        assertTrue(MarklinMessageFormatter.formatRaw(header, null)
+                .contains("Config Data Stream 32 bytes CRC=0xCE2C"));
+        int[] body = {0, 0x42, 0xFB, 0x21, 8, 0x5B, 0x6C, 0x6F, 0x6B, 0x6C, 0x69, 0x73, 0x74};
+        assertTrue(MarklinMessageFormatter.formatRaw(body, null).contains("Config Data Stream hash=0xFB21"));
+    }
+
     // ---------------------------------------------------------------------------
     // CS2 system commands
     // ---------------------------------------------------------------------------

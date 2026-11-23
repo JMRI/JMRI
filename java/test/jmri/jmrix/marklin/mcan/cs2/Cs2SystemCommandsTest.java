@@ -1,4 +1,7 @@
 package jmri.jmrix.marklin.mcan.cs2;
+
+import jmri.jmrix.marklin.mcan.FrameProtocol;
+import jmri.jmrix.marklin.mcan.McanUid;
 import jmri.util.JUnitUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,11 +29,11 @@ public class Cs2SystemCommandsTest {
         JUnitUtil.tearDown();
     }
 
-    private static Cs2ClassifiedFrame roundtrip(int[] frame) {
-        ClassifiedFrame cf = ProtocolClassifier.classify(frame);
+    private static Cs2Frame roundtrip(int[] frame) {
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(frame);
         assertEquals(FrameProtocol.CS2_NATIVE, cf.protocol(),
                 "Encoded frame must classify as CS2_NATIVE");
-        return Cs2FrameParser.parse(cf);
+        return cf;
     }
 
     // --- buildSystemStop ---
@@ -42,25 +45,25 @@ public class Cs2SystemCommandsTest {
 
     @Test
     public void testBuildSystemStopClassifiesAsCs2Native() {
-        ClassifiedFrame cf = ProtocolClassifier.classify(Cs2SystemCommands.buildSystemStop());
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(Cs2SystemCommands.buildSystemStop());
         assertEquals(FrameProtocol.CS2_NATIVE, cf.protocol());
     }
 
     @Test
     public void testBuildSystemStopHasCommandCode0x00() {
-        ClassifiedFrame cf = ProtocolClassifier.classify(Cs2SystemCommands.buildSystemStop());
-        assertEquals(0x00, cf.cs2Header().commandCode());
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(Cs2SystemCommands.buildSystemStop());
+        assertEquals(0x00, cf.header().commandCode());
     }
 
     @Test
     public void testBuildSystemStopIsNotResponse() {
-        ClassifiedFrame cf = ProtocolClassifier.classify(Cs2SystemCommands.buildSystemStop());
-        assertFalse(cf.cs2Header().response());
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(Cs2SystemCommands.buildSystemStop());
+        assertFalse(cf.header().response());
     }
 
     @Test
     public void testBuildSystemStopRoundtripsToSystemStopRequestFrame() {
-        Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildSystemStop());
+        Cs2Frame parsed = roundtrip(Cs2SystemCommands.buildSystemStop());
         assertInstanceOf(Cs2SystemCommands.SystemStopRequestFrame.class, parsed);
     }
 
@@ -73,13 +76,13 @@ public class Cs2SystemCommandsTest {
 
     @Test
     public void testBuildSystemGoHasCommandCode0x00() {
-        ClassifiedFrame cf = ProtocolClassifier.classify(Cs2SystemCommands.buildSystemGo());
-        assertEquals(0x00, cf.cs2Header().commandCode());
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(Cs2SystemCommands.buildSystemGo());
+        assertEquals(0x00, cf.header().commandCode());
     }
 
     @Test
     public void testBuildSystemGoRoundtripsToSystemGoRequestFrame() {
-        Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildSystemGo());
+        Cs2Frame parsed = roundtrip(Cs2SystemCommands.buildSystemGo());
         assertInstanceOf(Cs2SystemCommands.SystemGoRequestFrame.class, parsed);
     }
 
@@ -96,9 +99,9 @@ public class Cs2SystemCommandsTest {
     @Test
     public void testSystemStopReplyRoundtrips() {
         int[] frame = Cs2SystemCommands.buildSystemStopReply();
-        ClassifiedFrame cf = ProtocolClassifier.classify(frame);
-        assertTrue(cf.cs2Header().response());
-        Cs2ClassifiedFrame parsed = Cs2FrameParser.parse(cf);
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(frame);
+        assertTrue(cf.header().response());
+        Cs2Frame parsed = cf;
         assertInstanceOf(Cs2SystemCommands.SystemStopReplyFrame.class, parsed);
         assertTrue(parsed.header().response());
     }
@@ -106,9 +109,9 @@ public class Cs2SystemCommandsTest {
     @Test
     public void testSystemGoReplyRoundtrips() {
         int[] frame = Cs2SystemCommands.buildSystemGoReply();
-        ClassifiedFrame cf = ProtocolClassifier.classify(frame);
-        assertTrue(cf.cs2Header().response());
-        Cs2ClassifiedFrame parsed = Cs2FrameParser.parse(cf);
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(frame);
+        assertTrue(cf.header().response());
+        Cs2Frame parsed = cf;
         assertInstanceOf(Cs2SystemCommands.SystemGoReplyFrame.class, parsed);
     }
 
@@ -116,14 +119,14 @@ public class Cs2SystemCommandsTest {
 
     @Test
     public void testBuildSystemStopResolvesToSystemCommandEnum() {
-        ClassifiedFrame cf = ProtocolClassifier.classify(Cs2SystemCommands.buildSystemStop());
-        assertEquals(Cs2Command.SYSTEM_COMMAND, cf.cs2Header().resolvedCommand());
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(Cs2SystemCommands.buildSystemStop());
+        assertEquals(Cs2Command.SYSTEM_COMMAND, cf.header().resolvedCommand());
     }
 
     @Test
     public void testBuildSystemStopReplyResolvesToSystemCommandReplyEnum() {
-        ClassifiedFrame cf = ProtocolClassifier.classify(Cs2SystemCommands.buildSystemStopReply());
-        assertEquals(Cs2Command.SYSTEM_COMMAND_REPLY, cf.cs2Header().resolvedCommand());
+        Cs2Frame cf = (Cs2Frame) ProtocolClassifier.classify(Cs2SystemCommands.buildSystemStopReply());
+        assertEquals(Cs2Command.SYSTEM_COMMAND_REPLY, cf.header().resolvedCommand());
     }
 
     // --- new sub-commands 0x03–0x0C, 0x80 ---
@@ -164,140 +167,140 @@ public class Cs2SystemCommandsTest {
 
     @Test
     public void testBuildAccessorySwitchTimeSubCommand() {
-        int[] frame = Cs2SystemCommands.buildAccessorySwitchTime(Cs2SystemCommands.UID_BROADCAST, 100);
+        int[] frame = Cs2SystemCommands.buildAccessorySwitchTime(McanUid.BROADCAST, 100);
         assertEquals(Cs2SystemCommands.SUB_ACCESSORY_SWITCH_TIME, frame[9]);
     }
 
     @Test
     public void testBuildAccessorySwitchTimeHasDlc7() {
-        assertEquals(7, Cs2SystemCommands.buildAccessorySwitchTime(0L, 100)[4]);
+        assertEquals(7, Cs2SystemCommands.buildAccessorySwitchTime(McanUid.of(0L), 100)[4]);
     }
 
     @Test
     public void testBuildFastReadMfxSubCommand() {
-        int[] frame = Cs2SystemCommands.buildFastReadMfx(0x11223344L, 0x0001);
+        int[] frame = Cs2SystemCommands.buildFastReadMfx(McanUid.of(0x11223344L), 0x0001);
         assertEquals(Cs2SystemCommands.SUB_FAST_READ_MFX, frame[9]);
     }
 
     @Test
     public void testBuildEnableTrackProtocolSubCommand() {
         int packetNumber = Cs2SystemCommands.TRACK_PROTOCOL_MM2 | Cs2SystemCommands.TRACK_PROTOCOL_MFX;
-        int[] frame = Cs2SystemCommands.buildEnableTrackProtocol(0L, packetNumber);
+        int[] frame = Cs2SystemCommands.buildEnableTrackProtocol(McanUid.of(0L), packetNumber);
         assertEquals(Cs2SystemCommands.SUB_ENABLE_TRACK_PROTOCOL, frame[9]);
     }
 
     @Test
     public void testBuildEnableTrackProtocolEncodesMask() {
         int mask = Cs2SystemCommands.TRACK_PROTOCOL_MFX | Cs2SystemCommands.TRACK_PROTOCOL_DCC;
-        int[] frame = Cs2SystemCommands.buildEnableTrackProtocol(0L, mask);
+        int[] frame = Cs2SystemCommands.buildEnableTrackProtocol(McanUid.of(0L), mask);
         assertEquals(mask, frame[10]);
     }
 
     @Test
     public void testBuildMfxReregistrationCounterSubCommand() {
-        int[] frame = Cs2SystemCommands.buildMfxReregistrationCounter(0L, 42);
+        int[] frame = Cs2SystemCommands.buildMfxReregistrationCounter(McanUid.of(0L), 42);
         assertEquals(Cs2SystemCommands.SUB_MFX_REREGISTRATION, frame[9]);
     }
 
     @Test
     public void testBuildSystemStatusQuerySubCommand() {
-        int[] frame = Cs2SystemCommands.buildSystemStatusQuery(0L, 1);
+        int[] frame = Cs2SystemCommands.buildSystemStatusQuery(McanUid.of(0L), 1);
         assertEquals(Cs2SystemCommands.SUB_SYSTEM_STATUS, frame[9]);
     }
 
     @Test
     public void testBuildSystemOverloadSubCommand() {
-        int[] frame = Cs2SystemCommands.buildSystemOverload(0x11223344L, 1);
+        int[] frame = Cs2SystemCommands.buildSystemOverload(McanUid.of(0x11223344L), 1);
         assertEquals(Cs2SystemCommands.SUB_SYSTEM_OVERLOAD, frame[9]);
     }
 
     @Test
     public void testBuildDeviceIdentifierQuerySubCommand() {
-        int[] frame = Cs2SystemCommands.buildDeviceIdentifierQuery(0x11223344L);
+        int[] frame = Cs2SystemCommands.buildDeviceIdentifierQuery(McanUid.of(0x11223344L));
         assertEquals(Cs2SystemCommands.SUB_DEVICE_IDENTIFIER, frame[9]);
     }
 
     @Test
     public void testBuildDeviceIdentifierQueryHasDlc5() {
-        assertEquals(5, Cs2SystemCommands.buildDeviceIdentifierQuery(0L)[4]);
+        assertEquals(5, Cs2SystemCommands.buildDeviceIdentifierQuery(McanUid.of(0L))[4]);
     }
 
     @Test
     public void testBuildDeviceIdentifierSetHasDlc7() {
-        assertEquals(7, Cs2SystemCommands.buildDeviceIdentifierSet(0L, 0x0042)[4]);
+        assertEquals(7, Cs2SystemCommands.buildDeviceIdentifierSet(McanUid.of(0L), 0x0042)[4]);
     }
 
     @Test
     public void testBuildDeviceIdentifierSetEncodesIdentifier() {
-        int[] frame = Cs2SystemCommands.buildDeviceIdentifierSet(0L, 0x0042);
+        int[] frame = Cs2SystemCommands.buildDeviceIdentifierSet(McanUid.of(0L), 0x0042);
         assertEquals(0x00, frame[10]);
         assertEquals(0x42, frame[11]);
     }
 
     @Test
     public void testBuildSystemResetSubCommand() {
-        int[] frame = Cs2SystemCommands.buildSystemReset(0L, 0);
+        int[] frame = Cs2SystemCommands.buildSystemReset(McanUid.of(0L), 0);
         assertEquals(Cs2SystemCommands.SUB_SYSTEM_RESET, frame[9]);
     }
 
     @Test
     public void testBuildSystemResetHasDlc6() {
-        assertEquals(6, Cs2SystemCommands.buildSystemReset(0L, 0)[4]);
+        assertEquals(6, Cs2SystemCommands.buildSystemReset(McanUid.of(0L), 0)[4]);
     }
 
     // --- typed frame roundtrips for new sub-commands ---
 
     @Test
     public void testLocoEmergencyStopRoundtripsToLocoEmergencyStopRequestFrame() {
-        Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildLocoEmergencyStop(0x4000L));
+        Cs2Frame parsed = roundtrip(Cs2SystemCommands.buildLocoEmergencyStop(0x4000L));
         assertInstanceOf(Cs2SystemCommands.LocoEmergencyStopRequestFrame.class, parsed);
     }
 
     @Test
     public void testLocoEmergencyStopFrameLocId() {
-        Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildLocoEmergencyStop(0x4001L));
+        Cs2Frame parsed = roundtrip(Cs2SystemCommands.buildLocoEmergencyStop(0x4001L));
         assertEquals(0x4001L, ((Cs2SystemCommands.LocoEmergencyStopRequestFrame) parsed).locId());
     }
 
     @Test
     public void testLocoCycleStopRoundtripsToLocoCycleStopRequestFrame() {
-        Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildLocoCycleStop(0x4000L));
+        Cs2Frame parsed = roundtrip(Cs2SystemCommands.buildLocoCycleStop(0x4000L));
         assertInstanceOf(Cs2SystemCommands.LocoCycleStopRequestFrame.class, parsed);
     }
 
     @Test
     public void testLocoDataProtocolRoundtripsToLocoDataProtocolRequestFrame() {
-        Cs2ClassifiedFrame parsed = roundtrip(
+        Cs2Frame parsed = roundtrip(
                 Cs2SystemCommands.buildLocoDataProtocol(0x4000L, Cs2SystemCommands.PROTOCOL_DCC_SHORT_28));
         assertInstanceOf(Cs2SystemCommands.LocoDataProtocolRequestFrame.class, parsed);
     }
 
     @Test
     public void testLocoDataProtocolFrameProtocol() {
-        Cs2ClassifiedFrame parsed = roundtrip(
+        Cs2Frame parsed = roundtrip(
                 Cs2SystemCommands.buildLocoDataProtocol(0x4000L, Cs2SystemCommands.PROTOCOL_DCC_LONG_126));
         assertEquals(Cs2SystemCommands.PROTOCOL_DCC_LONG_126,
-                ((Cs2SystemCommands.LocoDataProtocolRequestFrame) parsed).protocol());
+                ((Cs2SystemCommands.LocoDataProtocolRequestFrame) parsed).locoProtocol());
     }
 
     @Test
     public void testEnableTrackProtocolRoundtripsToEnableTrackProtocolRequestFrame() {
-        Cs2ClassifiedFrame parsed = roundtrip(
-                Cs2SystemCommands.buildEnableTrackProtocol(0L, Cs2SystemCommands.TRACK_PROTOCOL_DCC));
+        Cs2Frame parsed = roundtrip(
+                Cs2SystemCommands.buildEnableTrackProtocol(McanUid.of(0L), Cs2SystemCommands.TRACK_PROTOCOL_DCC));
         assertInstanceOf(Cs2SystemCommands.EnableTrackProtocolRequestFrame.class, parsed);
     }
 
     @Test
     public void testEnableTrackProtocolFrameMask() {
         int mask = Cs2SystemCommands.TRACK_PROTOCOL_MM2 | Cs2SystemCommands.TRACK_PROTOCOL_DCC;
-        Cs2ClassifiedFrame parsed = roundtrip(
-                Cs2SystemCommands.buildEnableTrackProtocol(0L, mask));
+        Cs2Frame parsed = roundtrip(
+                Cs2SystemCommands.buildEnableTrackProtocol(McanUid.of(0L), mask));
         assertEquals(mask, ((Cs2SystemCommands.EnableTrackProtocolRequestFrame) parsed).protocolMask());
     }
 
     @Test
     public void testSystemResetRoundtripsToSystemResetRequestFrame() {
-        Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildSystemReset(0L, 0));
+        Cs2Frame parsed = roundtrip(Cs2SystemCommands.buildSystemReset(McanUid.of(0L), 0));
         assertInstanceOf(Cs2SystemCommands.SystemResetRequestFrame.class, parsed);
     }
 
@@ -305,86 +308,86 @@ public class Cs2SystemCommandsTest {
 
     @Test
     public void testBuildMfxSeekSubCommand() {
-        int[] frame = Cs2SystemCommands.buildMfxSeek(0x11223344L, 0);
+        int[] frame = Cs2SystemCommands.buildMfxSeek(McanUid.of(0x11223344L), 0);
         assertEquals(Cs2SystemCommands.SUB_MFX_SEEK, frame[9]);
     }
 
     @Test
     public void testBuildMfxSeekHasDlc6() {
-        assertEquals(6, Cs2SystemCommands.buildMfxSeek(0L, 0)[4]);
+        assertEquals(6, Cs2SystemCommands.buildMfxSeek(McanUid.of(0L), 0)[4]);
     }
 
     @Test
     public void testBuildMfxSeekEncodesRange() {
-        int[] frame = Cs2SystemCommands.buildMfxSeek(0L, 42);
+        int[] frame = Cs2SystemCommands.buildMfxSeek(McanUid.of(0L), 42);
         assertEquals(42, frame[10]);
     }
 
     @Test
     public void testBuildMfxSeekRoundtripsToMfxSeekRequestFrame() {
-        Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildMfxSeek(0x11223344L, 5));
+        Cs2Frame parsed = roundtrip(Cs2SystemCommands.buildMfxSeek(McanUid.of(0x11223344L), 5));
         assertInstanceOf(Cs2SystemCommands.MfxSeekRequestFrame.class, parsed);
     }
 
     @Test
     public void testMfxSeekFrameRange() {
-        Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildMfxSeek(0x11223344L, 7));
+        Cs2Frame parsed = roundtrip(Cs2SystemCommands.buildMfxSeek(McanUid.of(0x11223344L), 7));
         assertEquals(7, ((Cs2SystemCommands.MfxSeekRequestFrame) parsed).range());
     }
 
     @Test
     public void testMfxSeekFrameSenderUid() {
-        Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildMfxSeek(0x11223344L, 0));
-        assertEquals(0x11223344L, ((Cs2SystemCommands.MfxSeekRequestFrame) parsed).senderUid());
+        Cs2Frame parsed = roundtrip(Cs2SystemCommands.buildMfxSeek(McanUid.of(0x11223344L), 0));
+        assertEquals(McanUid.of(0x11223344L), ((Cs2SystemCommands.MfxSeekRequestFrame) parsed).senderUid());
     }
 
     // --- reply-direction roundtrips ---
 
     @Test
     public void testBuildSystemHaltReplyRoundtripsToSystemHaltReplyFrame() {
-        Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildSystemHaltReply());
+        Cs2Frame parsed = roundtrip(Cs2SystemCommands.buildSystemHaltReply());
         assertInstanceOf(Cs2SystemCommands.SystemHaltReplyFrame.class, parsed);
     }
 
     @Test
     public void testBuildLocoEmergencyStopReplyRoundtripsToLocoEmergencyStopReplyFrame() {
-        Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildLocoEmergencyStopReply(0x4000L));
+        Cs2Frame parsed = roundtrip(Cs2SystemCommands.buildLocoEmergencyStopReply(0x4000L));
         assertInstanceOf(Cs2SystemCommands.LocoEmergencyStopReplyFrame.class, parsed);
     }
 
     @Test
     public void testBuildLocoEmergencyStopReplyFrameLocId() {
-        Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildLocoEmergencyStopReply(0x4001L));
+        Cs2Frame parsed = roundtrip(Cs2SystemCommands.buildLocoEmergencyStopReply(0x4001L));
         assertEquals(0x4001L, ((Cs2SystemCommands.LocoEmergencyStopReplyFrame) parsed).locId());
     }
 
     @Test
     public void testBuildSystemStatusReplyRoundtripsToSystemStatusReplyFrame() {
-        Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildSystemStatusReply(0L, 1, 42));
+        Cs2Frame parsed = roundtrip(Cs2SystemCommands.buildSystemStatusReply(McanUid.of(0L), 1, 42));
         assertInstanceOf(Cs2SystemCommands.SystemStatusReplyFrame.class, parsed);
     }
 
     @Test
     public void testBuildSystemStatusReplyFrameMeasuredValue() {
-        Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildSystemStatusReply(0L, 1, 42));
+        Cs2Frame parsed = roundtrip(Cs2SystemCommands.buildSystemStatusReply(McanUid.of(0L), 1, 42));
         assertEquals(42, ((Cs2SystemCommands.SystemStatusReplyFrame) parsed).measuredValue());
     }
 
     @Test
     public void testBuildDeviceIdentifierReplyRoundtripsToDeviceIdentifierReplyFrame() {
-        Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildDeviceIdentifierReply(0L, 0x0042));
+        Cs2Frame parsed = roundtrip(Cs2SystemCommands.buildDeviceIdentifierReply(McanUid.of(0L), 0x0042));
         assertInstanceOf(Cs2SystemCommands.DeviceIdentifierReplyFrame.class, parsed);
     }
 
     @Test
     public void testBuildDeviceIdentifierReplyFrameIdentifier() {
-        Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildDeviceIdentifierReply(0L, 0x0042));
+        Cs2Frame parsed = roundtrip(Cs2SystemCommands.buildDeviceIdentifierReply(McanUid.of(0L), 0x0042));
         assertEquals(0x0042, ((Cs2SystemCommands.DeviceIdentifierReplyFrame) parsed).identifier());
     }
 
     @Test
     public void testBuildSystemOverloadReplyRoundtripsToSystemOverloadFrame() {
-        Cs2ClassifiedFrame parsed = roundtrip(Cs2SystemCommands.buildSystemOverloadReply(0x11223344L, 1));
+        Cs2Frame parsed = roundtrip(Cs2SystemCommands.buildSystemOverloadReply(McanUid.of(0x11223344L), 1));
         assertInstanceOf(Cs2SystemCommands.SystemOverloadFrame.class, parsed);
     }
 }

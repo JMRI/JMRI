@@ -10,6 +10,7 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 
+import jmri.JmriUncheckedException;
 import jmri.jmrit.logixng.Module;
 import jmri.jmrit.logixng.Module.Parameter;
 import jmri.jmrit.logixng.Module.ParameterData;
@@ -198,7 +199,7 @@ public class CallModuleParameterTableModel extends AbstractTableModel {
                 }
                 setText(((ReturnValueType) value).getDescr());
             } else {
-                throw new RuntimeException("Unknown column: "+Integer.toString(column));
+                throw new JmriUncheckedException("Unknown column: "+Integer.toString(column));
             }
             return this;
         }

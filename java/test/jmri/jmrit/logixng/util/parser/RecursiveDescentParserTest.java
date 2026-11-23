@@ -853,7 +853,7 @@ public class RecursiveDescentParserTest {
     //              | <floating number>
     //              | <string>
     @Test
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked","deprecation"})
     public void testRule20() throws JmriException {
 
 

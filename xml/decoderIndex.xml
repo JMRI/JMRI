@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 5.17.3plus+jake+20261010T1212Z+R626f7224cd2 on Sat Oct 10 08:12:31 EDT 2026-->
-  <decoderIndex version="729">
+  <!--Written by JMRI version 5.17.5plus+jake+20261115T1426Z+R2b220dd4f68 on Sun Nov 15 09:26:45 EST 2026-->
+  <decoderIndex version="733">
     <!--The manufacturer list is from the nmra_mfg_list.xml file-->
     <mfgList nmraListDate="2024-12-10" updated="2025-03-30" lastadd="171">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -572,6 +572,7 @@
           <output name="2" label="rearlight" />
         </model>
         <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
           <functionlabel num="1" lockable="true">Bell</functionlabel>
           <functionlabel num="2" lockable="false">Horn 1</functionlabel>
           <functionlabel num="3" lockable="true">Coupler</functionlabel>
@@ -19181,6 +19182,16 @@
           <output name="4" label="Violet" />
         </model>
       </family>
+      <family name="MoBa-Licht Roland Weber" mfg="Public-domain and DIY" file="Public_Domain_WEBER_Light.xml">
+        <model model="Interior lighting" numOuts="5" numFns="14">
+          <versionCV lowVersionID="3" />
+          <output name="1" label="Pin6" />
+          <output name="2" label="Pin5" />
+          <output name="3" label="Pin3" />
+          <output name="4" label="fw" />
+          <output name="5" label="rw" />
+        </model>
+      </family>
       <family name="dccdoma.cz" mfg="Public-domain and DIY" modes="OPSACCEXTBYTEMODE" file="Public_Domain_dccdoma_ARD_4SERVO.xml">
         <model model="ARD-4SERVO" lowVersionID="00" highVersionID="19" productID="16843777" numOuts="4" />
       </family>
@@ -36744,9 +36755,21 @@
         <model model="32300" comment="IntelliSound 3-Module" />
         <model model="32304" comment="IntelliSound 3-Module with Sound" />
       </family>
+      <family name="IntelliSound 4 microModule" mfg="Uhlenbrock Elektronik" comment="Auxiliary Sound module for all locomotive decoders with SUSI connector" file="Uhlenbrock_3241x.xml">
+        <model model="32410" comment="IntelliSound 4-Module" />
+        <model model="32414" comment="IntelliSound 4-Module with sound" />
+        <model model="32415" comment="IntelliSound 4-Module with microSUSI" />
+        <model model="32416" comment="IntelliSound 4-Module with microSUSI and sound" />
+      </family>
       <family name="IntelliSound 4 Module" mfg="Uhlenbrock Elektronik" comment="Auxiliary Sound module for all locomotive decoders with SUSI connector" file="Uhlenbrock_32500.xml">
         <model model="32500" comment="IntelliSound 4-Module" />
         <model model="32504" comment="IntelliSound 4-Module with Sound" />
+      </family>
+      <family name="IntelliSound 6 Module" mfg="Uhlenbrock Elektronik" comment="Auxiliary Sound module for all locomotive decoders with SUSI connector" file="Uhlenbrock_3261x.xml">
+        <model model="32610" comment="IntelliSound 6-Module" />
+        <model model="32614" comment="IntelliSound 6-Module with sound" />
+        <model model="32615" comment="IntelliSound 6-Module with microSUSI" />
+        <model model="32616" comment="IntelliSound 6-Module with microSUSI and sound" />
       </family>
       <family name="Multi-Protocol IntelliSound3 Decoder" mfg="Uhlenbrock Elektronik" file="Uhlenbrock_36300.xml">
         <!-- version was checked by hardware owner Frits -->

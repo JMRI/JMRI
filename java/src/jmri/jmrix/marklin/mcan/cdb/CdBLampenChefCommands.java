@@ -7,32 +7,80 @@ public final class CdBLampenChefCommands {
 
     private CdBLampenChefCommands() {}
 
-    /** Writes a per-channel dimmer value (slot=channel, reg=4, DLC=4). */
+    /**
+     * Writes a per-channel dimmer value (slot=channel, reg=4, DLC=4).
+     *
+     * @param classId 8-bit CdB device class
+     * @param moduleId module slot
+     * @param channel 1-based channel
+     * @param value dimmer value
+     * @return the CAN write frame
+     */
     public static int[] buildWriteChDimmwert(int classId, int moduleId, int channel, int value) {
         return CdBConfigCommands.buildWrite(classId, moduleId, channel, 4, value);
     }
 
-    /** Writes a per-channel Zeit_1 value (slot=channel, reg=2, DLC=4). */
+    /**
+     * Writes a per-channel Zeit_1 value (slot=channel, reg=2, DLC=4).
+     *
+     * @param classId 8-bit CdB device class
+     * @param moduleId module slot
+     * @param channel 1-based channel
+     * @param value Zeit_1 timing value
+     * @return the CAN write frame
+     */
     public static int[] buildWriteChZeit1(int classId, int moduleId, int channel, int value) {
         return CdBConfigCommands.buildWrite(classId, moduleId, channel, 2, value);
     }
 
-    /** Writes a per-channel Zeit_2 value (slot=channel, reg=6, DLC=4). */
+    /**
+     * Writes a per-channel Zeit_2 value (slot=channel, reg=6, DLC=4).
+     *
+     * @param classId 8-bit CdB device class
+     * @param moduleId module slot
+     * @param channel 1-based channel
+     * @param value Zeit_2 timing value
+     * @return the CAN write frame
+     */
     public static int[] buildWriteChZeit2(int classId, int moduleId, int channel, int value) {
         return CdBConfigCommands.buildWrite(classId, moduleId, channel, 6, value);
     }
 
-    /** Writes a per-channel start state (slot=channel, reg=7, DLC=4). */
+    /**
+     * Writes a per-channel start state (slot=channel, reg=7, DLC=4).
+     *
+     * @param classId 8-bit CdB device class
+     * @param moduleId module slot
+     * @param channel 1-based channel
+     * @param value start-state value
+     * @return the CAN write frame
+     */
     public static int[] buildWriteChStartzustand(int classId, int moduleId, int channel, int value) {
         return CdBConfigCommands.buildWrite(classId, moduleId, channel, 7, value);
     }
 
-    /** Writes a per-channel output type (slot=channel, reg=9, DLC=4). */
+    /**
+     * Writes a per-channel output type (slot=channel, reg=9, DLC=4).
+     *
+     * @param classId 8-bit CdB device class
+     * @param moduleId module slot
+     * @param channel 1-based channel
+     * @param value output-type value
+     * @return the CAN write frame
+     */
     public static int[] buildWriteChAusgangType(int classId, int moduleId, int channel, int value) {
         return CdBConfigCommands.buildWrite(classId, moduleId, channel, 9, value);
     }
 
-    /** Writes a per-channel Magnetadresse / output address (slot=channel, reg=3, DLC=4). */
+    /**
+     * Writes a per-channel Magnetadresse / output address (slot=channel, reg=3, DLC=4).
+     *
+     * @param classId 8-bit CdB device class
+     * @param moduleId module slot
+     * @param channel 1-based channel
+     * @param address output address
+     * @return the CAN write frame
+     */
     public static int[] buildWriteChMagnetadresse(int classId, int moduleId, int channel, int address) {
         return CdBConfigCommands.buildWrite(classId, moduleId, channel, 3, address);
     }
@@ -40,6 +88,10 @@ public final class CdBLampenChefCommands {
     /**
      * Builds all property read frames for a LampenChef / LampenChef Jumbo module.
      * Global regs {1,244,245,246,250,252,48}, per-channel regs {2,3,4,6,7,9} for channels 1–32.
+     *
+     * @param classId 8-bit CdB device class
+     * @param moduleId module slot
+     * @return the property read frames
      */
     public static int[][] buildReadAllProperties(int classId, int moduleId) {
         int[] globalRegs = {1, 244, 245, 246, 250, 252, 48};

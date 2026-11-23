@@ -26,6 +26,7 @@ import org.junit.jupiter.api.io.TempDir;
  *
  * @author Randall Wood 2015
  */
+@SuppressWarnings("deprecation")
 public class AbstractThrottleTest {
 
     protected AbstractThrottle instance = null;
@@ -72,13 +73,49 @@ public class AbstractThrottleTest {
 
     /**
      * How many functions are we testing?
-     * 
+     *
      * @param maxFns to be tested
      */
     protected void setMaxFns(int maxFns) {
         this.maxFns = maxFns;
     }
-    
+
+    /**
+     * Speed sent listeners: each is told, one that throws doesn't stop the
+     * others, and a removed one is not told.
+     */
+    @Test
+    public void testSpeedSentListeners() {
+        java.util.List<String> told = new java.util.ArrayList<>();
+        jmri.Throttle.SpeedSentListener first = (t, speed, forward, timeNanos) -> {
+            Assertions.assertSame(instance, t, "told which throttle");
+            told.add("first " + speed + " " + forward + " " + timeNanos);
+        };
+        jmri.Throttle.SpeedSentListener failing = (t, speed, forward, timeNanos) -> {
+            throw new IllegalStateException("test: listener fails");
+        };
+        jmri.Throttle.SpeedSentListener last = (t, speed, forward, timeNanos) -> told.add("last");
+
+        Assertions.assertFalse(instance.hasSpeedSentListeners(), "none at first");
+        instance.addSpeedSentListener(first);
+        instance.addSpeedSentListener(failing);
+        instance.addSpeedSentListener(last);
+        Assertions.assertTrue(instance.hasSpeedSentListeners(), "listeners added");
+
+        instance.fireSpeedSent(0.5f, true, 1234L);
+        JUnitAppender.assertErrorMessageStartsWith("Speed sent listener of throttle");
+        Assertions.assertEquals(java.util.List.of("first 0.5 true 1234", "last"), told,
+                "each told, in spite of one failing");
+
+        told.clear();
+        instance.removeSpeedSentListener(first);
+        instance.removeSpeedSentListener(failing);
+        instance.fireSpeedSent(-1f, false, 5678L);
+        Assertions.assertEquals(java.util.List.of("last"), told, "removed listeners not told");
+        instance.removeSpeedSentListener(last);
+        Assertions.assertFalse(instance.hasSpeedSentListeners(), "all removed");
+    }
+
     /**
      * Test of getSpeedSetting method, of class AbstractThrottle.
      */
@@ -107,6 +144,83 @@ public class AbstractThrottleTest {
         float speed = 1.0F;
         instance.setSpeedSetting(speed);
         Assert.assertEquals(speed, instance.getSpeedSetting(), 0.0);
+    }
+
+    /**
+     * A registered {@link jmri.ThrottleSpeedLimiter} caps every speed this
+     * throttle sets, before it is sent; stops pass unchanged. Runs for every
+     * system's throttle test.
+     */
+    @Test
+    public void testSetSpeedSettingIsLimited() {
+        jmri.ThrottleSpeedLimiter limiter = address -> 0.5f;
+        InstanceManager.setDefault(jmri.ThrottleSpeedLimiter.class, limiter);
+        try {
+            checkSpeedSettingIsLimited();
+        } finally {
+            InstanceManager.deregister(limiter, jmri.ThrottleSpeedLimiter.class);
+        }
+    }
+
+    private void checkSpeedSettingIsLimited() {
+        instance.setSpeedSetting(0.8f);
+        Assertions.assertTrue(instance.getSpeedSetting() <= 0.51f,
+            "0.8 limited to 0.5, got " + instance.getSpeedSetting());
+
+        instance.setSpeedSetting(0.8f, true, true);
+        Assertions.assertTrue(instance.getSpeedSetting() <= 0.51f,
+            "0.8 limited to 0.5 with duplicates allowed, got " + instance.getSpeedSetting());
+
+        instance.setSpeedSettingAgain(1.0f);
+        Assertions.assertTrue(instance.getSpeedSetting() <= 0.51f,
+            "1.0 sent again limited to 0.5, got " + instance.getSpeedSetting());
+    }
+
+    /**
+     * While a limit is in force, the speed asked for is kept, separately from
+     * the limited speed sent. Runs for every system's throttle test.
+     */
+    @Test
+    public void testRequestKeptWhileLimited() {
+        jmri.ThrottleSpeedLimiter limiter = address -> 0.5f;
+        InstanceManager.setDefault(jmri.ThrottleSpeedLimiter.class, limiter);
+        try {
+            instance.setSpeedSetting(0.8f);
+            Assertions.assertEquals(0.8f, instance.getRequestedSpeed(), 0.0001f, "the request");
+            instance.setSpeedSettingAgain(0.9f);
+            Assertions.assertEquals(0.9f, instance.getRequestedSpeed(), 0.0001f, "sent again");
+            instance.setSpeedSetting(0.3f, false, false);
+            Assertions.assertEquals(0.3f, instance.getRequestedSpeed(), 0.0001f, "under the limit");
+        } finally {
+            InstanceManager.deregister(limiter, jmri.ThrottleSpeedLimiter.class);
+        }
+    }
+
+    /**
+     * The limit applied, in AbstractThrottle itself.
+     */
+    @Test
+    public void testApplySpeedLimit() {
+        AbstractThrottle t = new AbstractThrottleImpl(memo);
+        Assertions.assertEquals(0.8f, t.applySpeedLimit(0.8f), 0.0f, "no limiter: unchanged");
+
+        float[] limit = {0.5f};
+        jmri.ThrottleSpeedLimiter limiter = address -> limit[0];
+        InstanceManager.setDefault(jmri.ThrottleSpeedLimiter.class, limiter);
+        try {
+            Assertions.assertEquals(0.5f, t.applySpeedLimit(0.8f), 0.0f, "over the limit: the limit");
+            Assertions.assertEquals(0.3f, t.applySpeedLimit(0.3f), 0.0f, "under the limit: unchanged");
+            Assertions.assertEquals(0.0f, t.applySpeedLimit(0.0f), 0.0f, "a stop: unchanged");
+            Assertions.assertEquals(-1.0f, t.applySpeedLimit(-1.0f), 0.0f, "an emergency stop: unchanged");
+            limit[0] = Float.NaN;
+            Assertions.assertEquals(0.8f, t.applySpeedLimit(0.8f), 0.0f, "NaN: no limit");
+            limit[0] = -0.5f;
+            Assertions.assertEquals(0.0f, t.applySpeedLimit(0.8f), 0.0f, "a limit below 0: stopped, not reversed");
+            limit[0] = 1.5f;
+            Assertions.assertEquals(1.0f, t.applySpeedLimit(1.0f), 0.0f, "a limit above 1: no limit");
+        } finally {
+            InstanceManager.deregister(limiter, jmri.ThrottleSpeedLimiter.class);
+        }
     }
 
     /**

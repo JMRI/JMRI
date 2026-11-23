@@ -8,6 +8,23 @@ import org.junit.jupiter.api.*;
 public class XNetFeedbackReplyFormatterTest extends AbstractMessageFormatterTest {
 
     @Test
+    void testZ21TurnoutReplyNotHandled() {
+        XNetReply reply = new jmri.jmrix.roco.z21.Z21XNetReply("43 00 01 01 43");
+        Assertions.assertFalse(formatter.handlesMessage(reply));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> formatter.formatMessage(reply));
+    }
+
+    @Test
+    void testBroadcastHeadersRequireFeedbackPairs() {
+        for (int count = 2; count <= 14; count++) {
+            XNetReply reply = new XNetReply();
+            reply.setElement(0, 0x40 | count);
+            Assertions.assertEquals(count % 2 == 0, formatter.handlesMessage(reply),
+                    "data byte count " + count);
+        }
+    }
+
+    @Test
     void testTurnoutNotOperatedFeedbackMessageHandling() {
         XNetReply r = new XNetReply("42 05 00 47");
         Assertions.assertTrue(formatter.handlesMessage(r));
@@ -197,6 +214,41 @@ public class XNetFeedbackReplyFormatterTest extends AbstractMessageFormatterTest
         targetString += Bundle.getMessage("XNetReplyContactLabel") + " 7 ";
         targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
         targetString += " " + Bundle.getMessage("PowerStateOn") + "; ";
+        targetString += Bundle.getMessage("XNetReplyContactLabel") + " 8 ";
+        targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
+        targetString += " " + Bundle.getMessage("PowerStateOff") + "; ";
+        Assertions.assertEquals(targetString, formatter.formatMessage(r));
+    }
+
+    @Test
+    void testMultipleSensorFeedbackOnMessageHandling() {
+        XNetReply r = new XNetReply("44 4F 44 33 50 24");
+        Assertions.assertTrue(formatter.handlesMessage(r));
+        String targetString =
+                Bundle.getMessage("XNetReplyFeedbackLabel") + " " +
+                        Bundle.getMessage("XNetReplyFeedbackEncoder") + " " + 79 + " ";
+        targetString += Bundle.getMessage("XNetReplyContactLabel") + " 1 ";
+        targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
+        targetString += " " + Bundle.getMessage("PowerStateOff") + "; ";
+        targetString += Bundle.getMessage("XNetReplyContactLabel") + " 2 ";
+        targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
+        targetString += " " + Bundle.getMessage("PowerStateOff") + "; ";
+        targetString += Bundle.getMessage("XNetReplyContactLabel") + " 3 ";
+        targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
+        targetString += " " + Bundle.getMessage("PowerStateOn") + "; ";
+        targetString += Bundle.getMessage("XNetReplyContactLabel") + " 4 ";
+        targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
+        targetString += " " + Bundle.getMessage("PowerStateOff") + "; ";
+        targetString += Bundle.getMessage("XNetReplyFeedbackEncoder") + " " + 51 + " ";
+        targetString += Bundle.getMessage("XNetReplyContactLabel") + " 5 ";
+        targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
+        targetString += " " + Bundle.getMessage("PowerStateOff") + "; ";
+        targetString += Bundle.getMessage("XNetReplyContactLabel") + " 6 ";
+        targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
+        targetString += " " + Bundle.getMessage("PowerStateOff") + "; ";
+        targetString += Bundle.getMessage("XNetReplyContactLabel") + " 7 ";
+        targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
+        targetString += " " + Bundle.getMessage("PowerStateOff") + "; ";
         targetString += Bundle.getMessage("XNetReplyContactLabel") + " 8 ";
         targetString += Bundle.getMessage("MakeLabel", Bundle.getMessage("ColumnState"));
         targetString += " " + Bundle.getMessage("PowerStateOff") + "; ";

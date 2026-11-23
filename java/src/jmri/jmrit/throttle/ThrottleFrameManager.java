@@ -297,6 +297,9 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
             throttlesListFrame.setContentPane(getThrottlesListPanel());
             throttlesListFrame.pack();            
         }
+        if (throttlesListFrame.getExtendedState() == JFrame.ICONIFIED) { // uniconify if iconified
+            throttlesListFrame.setExtendedState(JFrame.NORMAL); 
+        }    
         throttlesListFrame.setVisible(true);
     }
 
@@ -313,6 +316,9 @@ public class ThrottleFrameManager implements InstanceManagerAutoDefault {
             throttlePreferencesFrame.resetComponents();
             throttlePreferencesFrame.revalidate();
         }
+        if (throttlePreferencesFrame.getExtendedState() == JFrame.ICONIFIED) { // uniconify if iconified
+            throttlePreferencesFrame.setExtendedState(JFrame.NORMAL); 
+        }           
         throttlePreferencesFrame.setVisible(true);
         throttlePreferencesFrame.requestFocus();
     }

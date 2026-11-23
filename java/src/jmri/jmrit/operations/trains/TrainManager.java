@@ -8,9 +8,6 @@ import java.util.*;
 
 import javax.swing.JComboBox;
 
-import org.jdom2.Attribute;
-import org.jdom2.Element;
-
 import jmri.*;
 import jmri.beans.PropertyChangeSupport;
 import jmri.jmrit.operations.OperationsPanel;
@@ -28,6 +25,9 @@ import jmri.jmrit.operations.trains.trainbuilder.TrainCommon;
 import jmri.script.JmriScriptEngineManager;
 import jmri.util.ColorUtil;
 import jmri.util.swing.JmriJOptionPane;
+
+import org.jdom2.Attribute;
+import org.jdom2.Element;
 
 /**
  * Manages trains.
@@ -942,6 +942,7 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
         newTrain.setServiceAllCarsWithFinalDestinationsEnabled(train.isServiceAllCarsWithFinalDestinationsEnabled());
         // comment
         newTrain.setComment(train.getCommentWithColor());
+        newTrain.setCommentTermination(train.getCommentTerminationWithColor());
         // description
         newTrain.setDescription(train.getRawDescription());
         return newTrain;
@@ -1436,6 +1437,8 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
         InstanceManager.getDefault(CarManagerXml.class); // load cars
         InstanceManager.getDefault(EngineManagerXml.class); // load engines
         InstanceManager.getDefault(TrainManagerXml.class); // load trains
+        // tell train tracking what trains are made up of
+        InstanceManager.store(new OperationsTrainMakeupSource(), jmri.TrainMakeupSource.class);
     }
 
 }

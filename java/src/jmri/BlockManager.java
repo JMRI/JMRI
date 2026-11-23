@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -50,24 +52,49 @@ public class BlockManager extends AbstractManager<Block>
         }
     };
 
+    /*
+     * The managers this manager listens to, and the ShutDownManager it registers with, so that
+     * dispose() stops listening to those and deregisters from that one, not from whatever
+     * the InstanceManager holds by then.
+     */
+    private final SensorManager sensorManager;
+    private final ReporterManager reporterManager;
+    private final ShutDownManager shutDownManager;
+    private final Set<PowerManager> powerManagers = ConcurrentHashMap.newKeySet();
+
     public BlockManager() {
         super();
-        InstanceManager.getDefault(SensorManager.class).addVetoableChangeListener(BlockManager.this);
-        InstanceManager.getDefault(ReporterManager.class).addVetoableChangeListener(BlockManager.this);
-        InstanceManager.getList(PowerManager.class).forEach(pm -> pm.addPropertyChangeListener(BlockManager.this));
+        sensorManager = InstanceManager.getDefault(SensorManager.class);
+        sensorManager.addVetoableChangeListener(BlockManager.this);
+        reporterManager = InstanceManager.getDefault(ReporterManager.class);
+        reporterManager.addVetoableChangeListener(BlockManager.this);
+        InstanceManager.getList(PowerManager.class).forEach(this::listenToPowerManager);
         powerManagerChangeName = InstanceManager.getListPropertyName(PowerManager.class);
         InstanceManager.addPropertyChangeListener(BlockManager.this);
-        InstanceManager.getDefault(ShutDownManager.class).register(shutDownTask);
+        shutDownManager = InstanceManager.getDefault(ShutDownManager.class);
+        shutDownManager.register(shutDownTask);
+    }
+
+    private void listenToPowerManager(PowerManager pm) {
+        if (powerManagers.add(pm)) {
+            pm.addPropertyChangeListener(this);
+        }
+    }
+
+    private void stopListeningToPowerManager(PowerManager pm) {
+        if (powerManagers.remove(pm)) {
+            pm.removePropertyChangeListener(this);
+        }
     }
 
     @Override
     public void dispose() {
-        InstanceManager.getDefault(SensorManager.class).removeVetoableChangeListener(this);
-        InstanceManager.getDefault(ReporterManager.class).removeVetoableChangeListener(this);
-        InstanceManager.getList(PowerManager.class).forEach(pm -> pm.removePropertyChangeListener(this));
+        sensorManager.removeVetoableChangeListener(this);
+        reporterManager.removeVetoableChangeListener(this);
+        powerManagers.forEach(this::stopListeningToPowerManager);
         InstanceManager.removePropertyChangeListener(this);
         super.dispose();
-        InstanceManager.getDefault(ShutDownManager.class).deregister(shutDownTask);
+        shutDownManager.deregister(shutDownTask);
     }
 
     /**
@@ -313,12 +340,10 @@ public class BlockManager extends AbstractManager<Block>
         if (powerManagerChangeName.equals(e.getPropertyName())) {
             if (e.getNewValue() == null) {
                 // powermanager has been removed
-                PowerManager pm = (PowerManager) e.getOldValue();
-                pm.removePropertyChangeListener(this);
+                stopListeningToPowerManager((PowerManager) e.getOldValue());
             } else {
                 // a powermanager has been added
-                PowerManager pm = (PowerManager) e.getNewValue();
-                pm.addPropertyChangeListener(this);
+                listenToPowerManager((PowerManager) e.getNewValue());
             }
         }
     }

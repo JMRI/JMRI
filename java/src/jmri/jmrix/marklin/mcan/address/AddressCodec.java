@@ -9,6 +9,11 @@ package jmri.jmrix.marklin.mcan.address;
  *   <li>Type 2 (solenoid drive): DCC, MM and CAN formats</li>
  *   <li>Type 3 (motor drive with end-stop evaluation): DCC and DCC ext. formats only</li>
  * </ul>
+ * <p>
+ * Note: this interface has a single implementation ({@link CdBAddressCodec}) and no
+ * consumers; callers use {@code CdBAddressCodec} directly. It is a candidate for
+ * removal once the address-codec design is settled. The {@code mcan.address} package
+ * remains the home for address-arithmetic tools.
  */
 public interface AddressCodec {
 
