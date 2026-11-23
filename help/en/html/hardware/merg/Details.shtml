@@ -194,12 +194,6 @@
       are acted on late with a gateway that worked with JMRI 5.17.4, choose
       Grouped (as JMRI 5.17.4). Leave it at At once for other gateways.</p>
 
-      <p>Wait between frames sent (ms) : 0 ( 5, 10, 20 and 50 also selectable )
-      <span class="since">since 5.17.6</span><br>
-      Leaves at least this long between frames sent. If Send frames set to
-      Grouped (as JMRI 5.17.4) is not enough for a gateway, try 10 here (or 20 if 10 is not
-      enough). Leave it at 0 for other gateways.</p>
-
       <h3 id="c3">CAN via GridConnect adapter</h3>
       <img src="images/connection/merg-connection-gridconnect-adapter-300x215.png" width="300"
       height="215" alt="JMRI MERG GridConnect Adapter" class="floatRight">

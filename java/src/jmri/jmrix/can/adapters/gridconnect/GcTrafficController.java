@@ -34,55 +34,6 @@ public class GcTrafficController extends TrafficController {
     }
 
     /**
-     * Least time between frames written to the port, in milliseconds; 0 for
-     * none. Some gateways hold back a frame that arrives while they are still
-     * handling the one before, until another frame arrives.
-     */
-    private volatile int frameGapMillis = 0;
-    private long lastFrameSentNanos = 0; // used on the transmit thread only
-
-    /**
-     * Set the least time between frames written to the port.
-     *
-     * @param millis milliseconds, 0 (the default) for none
-     */
-    public void setFrameGapMillis(int millis) {
-        frameGapMillis = Math.max(0, millis);
-    }
-
-    /**
-     * Get the least time between frames written to the port.
-     *
-     * @return milliseconds, 0 for none
-     */
-    public int getFrameGapMillis() {
-        return frameGapMillis;
-    }
-
-    /**
-     * {@inheritDoc}
-     * <p>
-     * When a frame gap is set, waits as needed so that frames are written at
-     * least {@link #getFrameGapMillis()} apart. Runs on the transmit thread.
-     */
-    @Override
-    protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
-        int gap = frameGapMillis;
-        if (gap > 0 && lastFrameSentNanos != 0) {
-            long waitNanos = lastFrameSentNanos + gap * 1_000_000L - System.nanoTime();
-            if (waitNanos > 0) {
-                try {
-                    Thread.sleep(waitNanos / 1_000_000L, (int) (waitNanos % 1_000_000L));
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt(); // keep it for the transmit loop
-                }
-            }
-        }
-        super.forwardToPort(m, reply);
-        lastFrameSentNanos = System.nanoTime();
-    }
-
-    /**
      * Forward a CanMessage to all registered CanInterface listeners.
      * {@inheritDoc}
      */
