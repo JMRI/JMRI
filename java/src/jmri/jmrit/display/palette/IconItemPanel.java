@@ -416,11 +416,11 @@ public class IconItemPanel extends ItemPanel {
                 Transferable tr = e.getTransferable();
                 if (e.isDataFlavorSupported(_positionableDataFlavor)) {
                     PositionableLabel label = (PositionableLabel)tr.getTransferData(_positionableDataFlavor);
-                    NamedIcon newIcon = new NamedIcon((NamedIcon)label.getIcon());
+                    NamedIcon newIcon = ((NamedIcon)label.getIcon()).cloneMe();
                     accepted = accept(label.getName(), newIcon);
                 } else if (e.isDataFlavorSupported(_namedIconDataFlavor)) {
                     NamedIcon icon = (NamedIcon) tr.getTransferData(_namedIconDataFlavor);
-                    NamedIcon newIcon = new NamedIcon(icon);
+                    NamedIcon newIcon = icon.cloneMe();
                     accepted = accept(icon.getName(), newIcon);
                 } else if (e.isDataFlavorSupported(DataFlavor.stringFlavor)) {
                     String text = (String) tr.getTransferData(DataFlavor.stringFlavor);

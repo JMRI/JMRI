@@ -545,7 +545,7 @@ public class IndicatorTOItemPanel extends TableItemPanel<Turnout> {
                 for (Entry<String, HashMap<String, NamedIcon>> entry : iconMap.entrySet()) {
                     String status = entry.getKey();
                     for (Entry<String, NamedIcon> ent : entry.getValue().entrySet()) {
-                        t.setIcon(status, ent.getKey(), new NamedIcon(ent.getValue()));
+                        t.setIcon(status, ent.getKey(), ent.getValue().cloneMe());
                     }
                 }
                 t.setLevel(Editor.TURNOUTS);

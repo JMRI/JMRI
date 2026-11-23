@@ -75,7 +75,7 @@ public class AudioIcon extends PositionableLabel {
     @Override
     public Positionable deepClone() {
         AudioIcon pos = new AudioIcon(getText(), _editor);
-        pos._originalIcon = new NamedIcon(_originalIcon);
+        pos._originalIcon = _originalIcon.cloneMe();
         pos._originalText = _originalText;
         pos.setAudio(getNamedAudio().getName());
         pos._onClickOperation = _onClickOperation;
