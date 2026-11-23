@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +21,7 @@ import jmri.util.junit.annotations.DisabledIfHeadless;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  *
@@ -100,10 +102,10 @@ public class PointDetailsTest {
     }
 
     @BeforeAll
-    public static void setUp() throws JmriException {
+    public static void setUp(@TempDir File folder) throws JmriException {
         JUnitUtil.setUp();
 
-        JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager(folder); // own profile, so no blockvalues.xml left by an earlier test is read
 
         tools = new EntryExitTestTools();
         panels = EntryExitTestTools.getPanels();

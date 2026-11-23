@@ -1,5 +1,6 @@
 package jmri.jmrit.entryexit;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +12,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -101,10 +103,10 @@ public class SourceTest {
     }
 
     @BeforeAll
-    public static void setUp() throws JmriException {
+    public static void setUp(@TempDir File folder) throws JmriException {
         JUnitUtil.setUp();
 
-        JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager(folder); // own profile, so no blockvalues.xml left by an earlier test is read
 
         tools = new EntryExitTestTools();
         panels = EntryExitTestTools.getPanels();

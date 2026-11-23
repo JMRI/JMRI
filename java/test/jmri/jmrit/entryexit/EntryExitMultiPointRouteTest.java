@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -14,6 +15,7 @@ import jmri.util.ThreadingUtil;
 import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  * Tests for NX routes made of more than one entry/exit pair.
@@ -152,9 +154,9 @@ public class EntryExitMultiPointRouteTest {
     }
 
     @BeforeEach
-    public void setUp() throws JmriException {
+    public void setUp(@TempDir File folder) throws JmriException {
         JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager(folder); // own profile, so no blockvalues.xml left by an earlier test is read
         JUnitUtil.initConfigureManager();
         panels = EntryExitTestTools.getPanels();
         assertTrue(panels.containsKey("Alpha"));
