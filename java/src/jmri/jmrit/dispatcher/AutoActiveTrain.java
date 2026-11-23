@@ -11,6 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.DoubleSupplier;
 
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 
 import jmri.*;
 import jmri.implementation.SignalSpeedMap;
@@ -654,6 +655,8 @@ public class AutoActiveTrain implements ThrottleListener {
     private volatile Block _currentBlock = null;
     private Block _nextBlock = null;
     private volatile Block _previousBlock = null;
+    // the Block the head left as it entered its current Section, or null
+    private volatile Block _enteredSectionFrom = null;
     private boolean _stoppingBySensor = false;
     private Sensor _stopSensor = null;
     private PropertyChangeListener _stopSensorListener = null;
@@ -831,8 +834,12 @@ public class AutoActiveTrain implements ThrottleListener {
                     as.getSection().getDisplayName(USERSYS),
                     b.getDisplayName(USERSYS), getBlockLength(b));
             if (b == _nextBlock || _nextBlock == null) {
+                Block cameFrom = _currentBlock;
                 _activeTrain.setCurrentBlock(_currentBlock, b);
                 _currentBlock = b;
+                if (cameFrom != null && !as.getSection().getBlockList().contains(cameFrom)) {
+                    _enteredSectionFrom = cameFrom;
+                }
                 if (_backstop != null) {
                     _backstop.headEntered(b);
                 }
@@ -2140,6 +2147,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     } else {
                         tBlock = _previousAllocatedSection.getSection().getExitBlock();
                     }
+                    tBlock = blockToClear(_previousAllocatedSection.getSection(), _enteredSectionFrom, tBlock);
                     if ((tBlock != null) && (tBlock.getState() == Block.OCCUPIED)) {
                         _stoppingBlock = tBlock;
                         setStopByBlockOccupancy(true);
@@ -2193,7 +2201,8 @@ public class AutoActiveTrain implements ThrottleListener {
                         setStopNow();
                     } else if (tstBlock == enterBlock) {
                         // train fits, but needs all available Blocks
-                        Block previousSectionExitBlock = _previousAllocatedSection.getExitBlock();
+                        Block previousSectionExitBlock = blockToClear(_previousAllocatedSection.getSection(),
+                                _enteredSectionFrom, _previousAllocatedSection.getExitBlock());
                         if ((previousSectionExitBlock != null) && (previousSectionExitBlock.getState() == Block.OCCUPIED)) {
                             _stoppingBlock = previousSectionExitBlock;
                             setStopByBlockOccupancy(true);
@@ -2470,6 +2479,30 @@ public class AutoActiveTrain implements ThrottleListener {
         } else {
             setStopNow();
         }
+    }
+
+    /**
+     * The Block of the previous Section that the tail of a train must clear
+     * before it stops in a Section it fits: the one the train came from, the
+     * Block its head left as it entered the Section it is stopping in. The
+     * previous Section's last or exit Block is not always that one: a Section
+     * can hold a Block the train doesn't run through (a ghost Block beyond a
+     * turnout, say), which never shows occupied, so a stop waiting for it to
+     * clear would come at once, with the tail still in the Block behind.
+     *
+     * @param previous  the previous Section
+     * @param cameFrom  the Block the head left as it entered the current
+     *                  Section, or null if not known
+     * @param otherwise the Block to use if that isn't known or isn't in the
+     *                  previous Section
+     * @return the Block to clear
+     */
+    @CheckForNull
+    static Block blockToClear(@Nonnull Section previous, @CheckForNull Block cameFrom, @CheckForNull Block otherwise) {
+        if (cameFrom != null && previous.getBlockList().contains(cameFrom)) {
+            return cameFrom;
+        }
+        return otherwise;
     }
 
     /**

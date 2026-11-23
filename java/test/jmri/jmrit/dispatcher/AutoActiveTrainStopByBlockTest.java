@@ -93,6 +93,25 @@ public class AutoActiveTrainStopByBlockTest {
         assertFalse(AutoActiveTrain.hasOccupiedBlockBehind(a2, allocated), "nothing behind A2");
     }
 
+    /**
+     * The Block a train must clear before it stops in a Section it fits:
+     * the one it came from, not the previous Section's last Block when that
+     * is a ghost Block the train never ran through.
+     */
+    @Test
+    public void testBlockToClearIsTheOneTheTrainCameFrom() {
+        Block came = block("A1", true);
+        Block ghost = block("A2 (ghost)", false);
+        Section previous = mock(Section.class);
+        when(previous.getBlockList()).thenReturn(Arrays.asList(came, ghost));
+        assertEquals(came, AutoActiveTrain.blockToClear(previous, came, ghost),
+                "the Block the head left, not the Section's exit Block");
+        assertEquals(ghost, AutoActiveTrain.blockToClear(previous, null, ghost), "not known: as before");
+        assertEquals(ghost, AutoActiveTrain.blockToClear(previous, block("Elsewhere", true), ghost),
+                "not in the previous Section: as before");
+        assertNull(AutoActiveTrain.blockToClear(previous, null, null));
+    }
+
     @Test
     public void testEntireTrainUnchanged() {
         Block x = block("X", true);
