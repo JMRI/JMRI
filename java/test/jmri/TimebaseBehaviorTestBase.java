@@ -101,6 +101,12 @@ public abstract class TimebaseBehaviorTestBase {
         hardware.calls.clear();
     }
 
+    // the ISCLOCKRUNNING sensor starts out active, so a new clock has to be running
+    @Test
+    public void testNewClockIsRunning() {
+        assertTrue(clock.getRun());
+    }
+
     @Test
     public void testStopAndStart() {
         clock.setRun(false);
@@ -228,6 +234,7 @@ public abstract class TimebaseBehaviorTestBase {
 
     @Test
     public void testHardwareToldStop() {
+        clock.setRun(true);
         syncWithHardware();
         clock.setRun(false);
         assertTrue(hardware.calls.contains("stop"), "calls: " + hardware.calls);

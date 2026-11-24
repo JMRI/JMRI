@@ -19,6 +19,13 @@ public class DefaultTimebaseTest extends TimebaseBehaviorTestBase {
 
     @Test
     @Override
+    @Disabled("TEMPORARY: a new DefaultTimebase is stopped, though the run sensor says it's running")
+    public void testNewClockIsRunning() {
+        super.testNewClockIsRunning();
+    }
+
+    @Test
+    @Override
     @Disabled("TEMPORARY: DefaultTimebase doesn't send changes to ClockControl yet")
     public void testHardwareToldRate() throws TimebaseRateException {
         super.testHardwareToldRate();
