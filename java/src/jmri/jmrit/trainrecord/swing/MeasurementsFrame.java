@@ -10,6 +10,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 
@@ -26,8 +27,11 @@ import jmri.util.ThreadingUtil;
  * Blocks it was entered from and left for), how many times a train's
  * leading end has crossed it this session, how fast, and how that compares
  * with the trains' speed profiles; and how often its detector dropped out
- * under a train. With no layout hardware it says that the trains measured
- * are simulated. Opened from Tools &gt; Train Tracking &gt; Measurements.
+ * under a train; for each boundary, how much later the Block behind went
+ * empty than the train's passing explains; and for each train, how its
+ * arrivals compared with its speed profile's predictions. With no layout
+ * hardware it says that the trains measured are simulated. Opened from
+ * Tools &gt; Train Tracking &gt; Measurements.
  *
  * @author Keith Bruce Copyright (C) 2026
  * @since 5.19.2
@@ -36,6 +40,8 @@ public class MeasurementsFrame extends JmriJFrame {
 
     private final MeasurementsModel model = new MeasurementsModel();
     private final JTable table = new JTable(model);
+    private final BoundariesModel boundariesModel = new BoundariesModel();
+    private final ArrivalsModel arrivalsModel = new ArrivalsModel();
     private final transient PropertyChangeListener changed = e -> refresh();
 
     /**
@@ -78,10 +84,11 @@ public class MeasurementsFrame extends JmriJFrame {
         main.setBorder(BorderFactory.createEmptyBorder(8, 12, 8, 12));
         main.add(new JLabel(Bundle.getMessage(TrainTrackingDetectors.isSimulated()
                 ? "MeasurementsIntroSimulated" : "MeasurementsIntro")), BorderLayout.NORTH);
-        table.setAutoCreateRowSorter(true);
-        JScrollPane pane = new JScrollPane(table);
-        pane.setPreferredSize(new java.awt.Dimension(640, 240));
-        main.add(pane, BorderLayout.CENTER);
+        JTabbedPane tabs = new JTabbedPane();
+        tabs.addTab(Bundle.getMessage("MeasurementsTabBlocks"), scrolled(table));
+        tabs.addTab(Bundle.getMessage("MeasurementsTabBoundaries"), scrolled(new JTable(boundariesModel)));
+        tabs.addTab(Bundle.getMessage("MeasurementsTabTrains"), scrolled(new JTable(arrivalsModel)));
+        main.add(tabs, BorderLayout.CENTER);
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(main, BorderLayout.CENTER);
         addHelpMenu("package.jmri.jmrit.trainrecord.TrainTracking", true);
@@ -89,6 +96,13 @@ public class MeasurementsFrame extends JmriJFrame {
         InstanceManager.getDefault(TrainTrackingMeasurements.class)
                 .addPropertyChangeListener(TrainTrackingMeasurements.PROPERTY_MEASUREMENT, changed);
         refresh();
+    }
+
+    private static JScrollPane scrolled(JTable t) {
+        t.setAutoCreateRowSorter(true);
+        JScrollPane pane = new JScrollPane(t);
+        pane.setPreferredSize(new java.awt.Dimension(640, 240));
+        return pane;
     }
 
     private void refresh() {
@@ -108,6 +122,10 @@ public class MeasurementsFrame extends JmriJFrame {
             model.rows = rows;
             model.measurements = m;
             model.fireTableDataChanged();
+            boundariesModel.rows = m.getBoundaries();
+            boundariesModel.fireTableDataChanged();
+            arrivalsModel.rows = m.getArrivals();
+            arrivalsModel.fireTableDataChanged();
         });
     }
 
@@ -144,8 +162,18 @@ public class MeasurementsFrame extends JmriJFrame {
         if (!m.isFitted()) {
             return "";
         }
-        return Bundle.getMessage("MeasurementsSeconds", String.format(java.util.Locale.getDefault(), "%+.2f",
-                m.getDetectorOffset()));
+        return seconds(m.getDetectorOffset());
+    }
+
+    /**
+     * A time in seconds, signed, in words.
+     *
+     * @param seconds the time
+     * @return such as "+0.25 s"
+     */
+    static String seconds(double seconds) {
+        return Bundle.getMessage("MeasurementsSeconds",
+                String.format(java.util.Locale.getDefault(), "%+.2f", seconds));
     }
 
     private static final class Row {
@@ -240,6 +268,126 @@ public class MeasurementsFrame extends JmriJFrame {
                 case DROPOUTS:
                 default:
                     return measurements == null ? 0 : measurements.getDropOuts(b);
+            }
+        }
+    }
+
+    static final class BoundariesModel extends AbstractTableModel {
+
+        static final int BEHIND = 0;
+        static final int AHEAD = 1;
+        static final int COUNT = 2;
+        static final int DELAY = 3;
+        static final int SPREAD = 4;
+
+        private List<TrainTrackingMeasurements.Boundary> rows = new ArrayList<>();
+
+        @Override
+        public int getRowCount() {
+            return rows.size();
+        }
+
+        @Override
+        public int getColumnCount() {
+            return 5;
+        }
+
+        @Override
+        public String getColumnName(int column) {
+            switch (column) {
+                case BEHIND:
+                    return Bundle.getMessage("MeasurementsBehind");
+                case AHEAD:
+                    return Bundle.getMessage("MeasurementsAhead");
+                case COUNT:
+                    return Bundle.getMessage("MeasurementsTimes");
+                case DELAY:
+                    return Bundle.getMessage("MeasurementsEmptyDelay");
+                case SPREAD:
+                default:
+                    return Bundle.getMessage("MeasurementsSpread");
+            }
+        }
+
+        @Override
+        public Class<?> getColumnClass(int column) {
+            return column == COUNT ? Integer.class : String.class;
+        }
+
+        @Override
+        public Object getValueAt(int row, int column) {
+            TrainTrackingMeasurements.Boundary b = rows.get(row);
+            switch (column) {
+                case BEHIND:
+                    return b.getBehind().getDisplayName();
+                case AHEAD:
+                    return b.getAhead().getDisplayName();
+                case COUNT:
+                    return b.getCount();
+                case DELAY:
+                    return seconds(b.getEmptyDelay());
+                case SPREAD:
+                default:
+                    return b.getCount() < 2 ? "" : Bundle.getMessage("MeasurementsSeconds",
+                            String.format(java.util.Locale.getDefault(), "%.2f", b.getSpread()));
+            }
+        }
+    }
+
+    static final class ArrivalsModel extends AbstractTableModel {
+
+        static final int TRAIN = 0;
+        static final int COUNT = 1;
+        static final int LATE = 2;
+        static final int SPREAD = 3;
+
+        private List<TrainTrackingMeasurements.Arrivals> rows = new ArrayList<>();
+
+        @Override
+        public int getRowCount() {
+            return rows.size();
+        }
+
+        @Override
+        public int getColumnCount() {
+            return 4;
+        }
+
+        @Override
+        public String getColumnName(int column) {
+            switch (column) {
+                case TRAIN:
+                    return Bundle.getMessage("MeasurementsTrain");
+                case COUNT:
+                    return Bundle.getMessage("MeasurementsCrossings");
+                case LATE:
+                    return Bundle.getMessage("MeasurementsLate");
+                case SPREAD:
+                default:
+                    return Bundle.getMessage("MeasurementsSpread");
+            }
+        }
+
+        @Override
+        public Class<?> getColumnClass(int column) {
+            return column == COUNT ? Integer.class : String.class;
+        }
+
+        @Override
+        public Object getValueAt(int row, int column) {
+            TrainTrackingMeasurements.Arrivals a = rows.get(row);
+            switch (column) {
+                case TRAIN:
+                    return a.getRecord().getName();
+                case COUNT:
+                    return a.getCount();
+                case LATE:
+                    return Bundle.getMessage("MeasurementsPercent",
+                            String.format(java.util.Locale.getDefault(), "%+d", Math.round(a.getLate() * 100)));
+                case SPREAD:
+                default:
+                    return a.getCount() < 2 ? "" : Bundle.getMessage("MeasurementsPercent",
+                            Math.round(a.getSpread() * 100));
             }
         }
     }
