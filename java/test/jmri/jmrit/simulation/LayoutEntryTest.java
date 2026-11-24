@@ -275,6 +275,26 @@ public class LayoutEntryTest {
     }
 
     @Test
+    public void testTurnoutsNobodySetAreSetClosedWhenTrainsArePlaced() {
+        Block[] b = siding(new LayoutRHTurnout[1]);
+        Turnout t = turnout("IT1");
+        assertEquals(Turnout.UNKNOWN, t.getKnownState(), "not set since start-up");
+        SimulatedLayout layout = new SimulatedLayout(true);
+        VirtualTrain train = VirtualTrain.builder("T")
+                .loco(SimulatedLoco.builder(new DccLocoAddress(3, false)).length(100).build())
+                .length(200).build();
+        layout.place(train, b[1], b[0], 250.0);
+        assertEquals(Turnout.CLOSED, t.getKnownState(), "set closed: real turnouts are one way or the other");
+        t.setCommandedState(Turnout.THROWN);
+        VirtualTrain other = VirtualTrain.builder("U")
+                .loco(SimulatedLoco.builder(new DccLocoAddress(4, false)).length(100).build())
+                .length(200).build();
+        layout.place(other, b[4], b[2], 300.0);
+        assertEquals(Turnout.THROWN, t.getKnownState(), "turnouts set are left alone");
+        layout.dispose();
+    }
+
+    @Test
     public void testTurnoutMovedUnderTrain() {
         Block[] b = siding(new LayoutRHTurnout[1]);
         turnout("IT1").setCommandedState(Turnout.THROWN);
