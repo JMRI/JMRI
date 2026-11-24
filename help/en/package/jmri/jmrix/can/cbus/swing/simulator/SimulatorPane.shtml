@@ -140,6 +140,10 @@
       <p>Only feedback sensors that are CBUS sensors of this connection are reported. Turnouts
       with other feedback modes get no answer. It is off by default.</p>
 
+      <p>On any connection, LogixNG's <a href=
+      "../../../../../../../html/tools/logixng/reference/chapter5.shtml#simfeedback">Simulate turnout
+      feedback</a> action answers turnout commands with feedback from within JMRI instead.</p>
+
       <h2 id="nodes">Nodes</h2>
 
       <p>No nodes are simulated by default.</p>
