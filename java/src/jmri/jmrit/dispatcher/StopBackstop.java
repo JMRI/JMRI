@@ -40,7 +40,12 @@ import jmri.Section;
  * the wrong place.
  * <p>
  * The backstop does nothing while the sensor works: the train stops on the
- * sensor first, and the backstop is then disposed of.
+ * sensor first. The Blocks beyond are then still watched, and the train's head
+ * followed, until the train is given a speed again (when the backstop is
+ * disposed of): a train that runs on past the end of the Section after its
+ * stopping sensor has stopped it, because the sensor leaves it too little room
+ * to stop, is reported, so that the cause is clear. The train has already been
+ * told to stop, so it is not stopped again.
  *
  * @author Keith Bruce Copyright (C) 2026
  */
@@ -60,6 +65,8 @@ final class StopBackstop {
     private double travelledMm = 0.0;
     private long lastReckonNanos;
     private boolean finished = false;
+    /** Once the stopping sensor has stopped the train: told of a run past the Section. */
+    private Consumer<String> afterSensor = null;
 
     /**
      * Start guarding a stop.
@@ -151,13 +158,35 @@ final class StopBackstop {
     }
 
     /**
+     * The stopping sensor has stopped the train. From now on there is nothing
+     * to reckon, but the Blocks beyond the Section are still watched and the
+     * train's head followed: if the train runs on past the end of the Section,
+     * the report is told why, once, instead of the train being stopped. Ends
+     * when the backstop is disposed of, as the train is given a speed again.
+     *
+     * @param report told why, if the train runs past the Section
+     */
+    void sensorStopped(@Nonnull Consumer<String> report) {
+        synchronized (this) {
+            if (finished) {
+                return;
+            }
+            afterSensor = report;
+            if (reckoner != null) {
+                reckoner.cancel();
+                reckoner = null;
+            }
+        }
+    }
+
+    /**
      * Add the distance travelled since the last reckoning, and stop the train
      * if it has reached the end of the Section.
      */
     void reckon() {
         String reason = null;
         synchronized (this) {
-            if (finished || speedMmPerSecond == null) {
+            if (finished || speedMmPerSecond == null || afterSensor != null) {
                 return;
             }
             long now = System.nanoTime();
@@ -176,18 +205,24 @@ final class StopBackstop {
     }
 
     /**
-     * Stop the train, once, outside this object's lock: the train's own lock
-     * may be held by a thread waiting to dispose of this backstop.
+     * Stop the train, or once the stopping sensor has stopped it, report the
+     * run past the Section; once, outside this object's lock: the train's own
+     * lock may be held by a thread waiting to dispose of this backstop.
      */
     private void fire(String reason) {
-        if (finish()) {
-            stop.accept(reason);
+        Consumer<String> tell;
+        synchronized (this) {
+            if (!finish()) {
+                return;
+            }
+            tell = afterSensor != null ? afterSensor : stop;
         }
+        tell.accept(reason);
     }
 
     /**
      * Stop guarding: remove the listeners and the reckoning. Called when the
-     * train stops, or the stop is cancelled.
+     * stop is cancelled or the train is given a speed again.
      */
     void dispose() {
         finish();
