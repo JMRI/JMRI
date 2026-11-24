@@ -78,7 +78,7 @@ public class CbusDummyCSSession {
         if (_isLong) {
             locoaddr = locoaddr | 0xC000;
         }
-        CanReply r = new CanReply(7);
+        CanReply r = new CanReply(8);
         r.setElement(0, CbusConstants.CBUS_PLOC);
         r.setElement(1, _sessionID);
         r.setElement(2, (locoaddr / 256)); // addr hi
