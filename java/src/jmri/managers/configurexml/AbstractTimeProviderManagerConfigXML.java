@@ -58,7 +58,7 @@ public abstract class AbstractTimeProviderManagerConfigXML extends AbstractNamed
 
                 Element elem = jmri.configurexml.ConfigXmlManager.elementFromObject(t);
                 if (elem == null) {
-                    throw new RuntimeException("Cannot load xml configurator for " + t.getClass().getName());
+                    throw new jmri.JmriUncheckedException("Cannot load xml configurator for " + t.getClass().getName());
                 }
 /*
                 // include feedback info
