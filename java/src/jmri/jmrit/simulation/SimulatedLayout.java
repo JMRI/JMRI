@@ -51,8 +51,11 @@ import jmri.util.ThreadingUtil;
  * Speed commands come from {@link SimulatedSpeedSource}s; detection goes out
  * through {@link SimulatedDetectorOutput}s, one chosen for each sensor by the
  * connection it belongs to. Internal sensors are reported by an
- * {@link InternalSensorOutput}; a sensor no output reports is left alone and
- * listed by {@link #getSensorsNotReported()}. The default layout, and any made
+ * {@link InternalSensorOutput}, and the sensors of any other simulator
+ * connection without an output of its own by a
+ * {@link SimulatorConnectionSensorOutput}, which sets their known state; a
+ * sensor no output reports is left alone and listed by
+ * {@link #getSensorsNotReported()}. The default layout, and any made
  * with the public constructor, also takes commands from the Internal
  * connection's throttles ({@link InternalThrottleSpeedSource}), so in a
  * profile with an Internal connection placed trains obey Dispatcher, Warrants,
@@ -167,6 +170,8 @@ public class SimulatedLayout implements InstanceManagerAutoDefault, Disposable {
         this.manual = manual;
         this.manualClock = System.nanoTime();
         outputs.add(new InternalSensorOutput());
+        // last, so an output a connection adds for its own sensors comes first
+        outputs.add(new SimulatorConnectionSensorOutput());
         reporterOutputs.add(new InternalReporterOutput());
     }
 
