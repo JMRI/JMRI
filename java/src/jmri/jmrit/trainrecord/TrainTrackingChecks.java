@@ -2,7 +2,9 @@ package jmri.jmrit.trainrecord;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -40,6 +42,9 @@ import jmri.jmrit.roster.RosterSpeedProfile;
  * The checks:
  * <ul>
  * <li>a train with no length from any source;</li>
+ * <li>a train whose lengths from the sources that give the whole train
+ * (entered, Operations, its parts, measured) disagree by more than
+ * {@link #LENGTH_TOLERANCE};</li>
  * <li>a train whose lead loco has no roster entry or no speed profile, so
  * where it is between detectors can't be estimated;</li>
  * <li>a Block with no length, on the layout (with paths to other
@@ -47,6 +52,10 @@ import jmri.jmrit.roster.RosterSpeedProfile;
  * <li>a Block with a detector but no paths to other Blocks, so a train can't
  * be followed into or out of it;</li>
  * <li>a path from one Block to another with no path back;</li>
+ * <li>a way through a Block that trains are measured crossing more than
+ * {@link #SPEED_FACTOR_LIMIT} times faster or slower, against their speed
+ * profiles, than on the rest of the layout, so its length is likely
+ * wrong;</li>
  * <li>a sensor used by two Blocks;</li>
  * <li>a Block that takes its value from its Reporter's current report, so
  * the value is cleared while the train is still in the Block, as soon as the
@@ -77,12 +86,26 @@ public final class TrainTrackingChecks {
         TRAIN_NO_LENGTH,
         /** A train whose lead loco has no roster entry or no speed profile. */
         TRAIN_NO_SPEED_PROFILE,
+        /**
+         * A train whose lengths from different sources disagree.
+         *
+         * @since 5.19.2
+         */
+        TRAIN_LENGTHS_DISAGREE,
         /** A Block on the layout with no length. */
         BLOCK_NO_LENGTH,
         /** A detected Block with no paths to other Blocks. */
         BLOCK_NO_PATHS,
         /** A path from one Block to another with no path back. */
         PATH_ONE_WAY,
+        /**
+         * A way through a Block that trains are measured crossing at a speed
+         * unlike the rest of the layout's, against their speed profiles, so
+         * its length is likely wrong.
+         *
+         * @since 5.19.2
+         */
+        BLOCK_LENGTH_DOUBTFUL,
         /** A sensor used by more than one Block. */
         SENSOR_SHARED,
         /**
@@ -175,6 +198,41 @@ public final class TrainTrackingChecks {
     }
 
     /**
+     * How far apart, as a part of the longer, a train's lengths from two
+     * sources may be and still be taken to agree: lengths entered by hand or
+     * measured from detectors are rarely closer.
+     *
+     * @since 5.19.2
+     */
+    public static final double LENGTH_TOLERANCE = 0.10;
+
+    /**
+     * The least difference between a train's lengths, in millimetres, that
+     * is reported, so a short train's few millimetres don't count.
+     *
+     * @since 5.19.2
+     */
+    public static final double LENGTH_TOLERANCE_MM = 30;
+
+    /**
+     * The fewest crossings compared with a speed profile, for a way through a
+     * Block, before its speed is used to judge its length.
+     *
+     * @since 5.19.2
+     */
+    public static final int LEAST_COMPARED = 3;
+
+    /**
+     * How many times faster or slower than on the rest of the layout, against
+     * their speed profiles, trains may cross a way through a Block before its
+     * length is doubted: a profile's speed varies by about a tenth with load
+     * and warm-up, so less than this is not evidence.
+     *
+     * @since 5.19.2
+     */
+    public static final double SPEED_FACTOR_LIMIT = 1.25;
+
+    /**
      * Check the layout's Blocks and the train records, and run every
      * {@link SetUpCheck}.
      *
@@ -185,6 +243,10 @@ public final class TrainTrackingChecks {
     public static List<Finding> run() {
         List<Finding> found = new ArrayList<>(run(InstanceManager.getDefault(BlockManager.class).getNamedBeanSet(),
                 InstanceManager.getDefault(TrainRecordManager.class).getRecords()));
+        if (InstanceManager.containsDefault(TrainTrackingMeasurements.class)) {
+            found.addAll(checkMeasuredLengths(InstanceManager.getDefault(TrainTrackingMeasurements.class)
+                    .getMeasurements()));
+        }
         for (SetUpCheck check : ServiceLoader.load(SetUpCheck.class)) {
             found.addAll(check.check());
         }
@@ -238,6 +300,7 @@ public final class TrainTrackingChecks {
             found.add(new Finding(Kind.TRAIN_NO_LENGTH, r, List.of(),
                     Bundle.getMessage("CheckTrainNoLength", r.getName())));
         }
+        checkLengths(r, found);
         // the lead loco's: where a train is between detectors is estimated
         // from its lead loco's commands and speed profile
         BasicRosterEntry entry = r.getFirstRosterEntry();
@@ -252,6 +315,91 @@ public final class TrainTrackingChecks {
 
     private static boolean hasSpeeds(@CheckForNull RosterSpeedProfile p) {
         return p != null && (p.hasForwardSpeeds() || p.hasReverseSpeeds());
+    }
+
+    /**
+     * A train's lengths from the sources that each give the whole train
+     * (not the roster, which gives only the locos'), if they disagree.
+     */
+    private static void checkLengths(TrainRecord r, List<Finding> found) {
+        Map<TrainRecord.LengthSource, Double> whole = new EnumMap<>(TrainRecord.LengthSource.class);
+        for (TrainRecord.LengthSource source : List.of(TrainRecord.LengthSource.ENTERED,
+                TrainRecord.LengthSource.OPERATIONS, TrainRecord.LengthSource.TRAIN_COMPONENTS,
+                TrainRecord.LengthSource.MEASURED)) {
+            if (source == TrainRecord.LengthSource.MEASURED && !r.isMeasuredLengthConsistent()) {
+                continue;
+            }
+            Double length = r.getLength(source);
+            if (length != null && length > 0) {
+                whole.put(source, length);
+            }
+        }
+        if (whole.size() < 2) {
+            return;
+        }
+        double shortest = Collections.min(whole.values());
+        double longest = Collections.max(whole.values());
+        if (longest - shortest <= Math.max(LENGTH_TOLERANCE * longest, LENGTH_TOLERANCE_MM)) {
+            return;
+        }
+        List<String> each = new ArrayList<>();
+        whole.forEach((source, length) -> each.add(Bundle.getMessage("CheckLengthFrom",
+                Bundle.getMessage("LengthSource" + source.name()), Math.round(length))));
+        found.add(new Finding(Kind.TRAIN_LENGTHS_DISAGREE, r, List.of(), Bundle.getMessage(
+                "CheckTrainLengthsDisagree", r.getName(), String.join(", ", each), Math.round(longest))));
+    }
+
+    /**
+     * Ways through Blocks that trains cross at a speed unlike the rest of
+     * the layout's, against their speed profiles. A crossing's speed is the
+     * way's length over the time taken, so where every train is fast or slow
+     * by the same factor there, the length is the likely cause: a profile
+     * that is wrong is wrong everywhere the train runs.
+     *
+     * @param measurements what train tracking has measured
+     * @return the findings, possibly none
+     * @since 5.19.2
+     */
+    @Nonnull
+    static List<Finding> checkMeasuredLengths(@Nonnull Collection<TrainTrackingMeasurements.Measurement> measurements) {
+        List<TrainTrackingMeasurements.Measurement> usable = new ArrayList<>();
+        for (TrainTrackingMeasurements.Measurement m : measurements) {
+            if (m.getCompared() >= LEAST_COMPARED && m.getAgainstProfile() > 0) {
+                usable.add(m);
+            }
+        }
+        List<Finding> found = new ArrayList<>();
+        for (TrainTrackingMeasurements.Measurement m : usable) {
+            // the rest of the layout: the middle of the other ways' factors
+            List<Double> others = new ArrayList<>();
+            for (TrainTrackingMeasurements.Measurement o : usable) {
+                if (o.getBlock() != m.getBlock()) {
+                    others.add(o.getAgainstProfile());
+                }
+            }
+            if (others.size() < 2) {
+                continue; // too little to compare with
+            }
+            double layout = median(others);
+            double factor = m.getAgainstProfile() / layout;
+            if (factor <= SPEED_FACTOR_LIMIT && factor >= 1 / SPEED_FACTOR_LIMIT) {
+                continue;
+            }
+            Block b = m.getBlock();
+            double length = b.getRouteLengthMm(m.getFrom(), m.getTo());
+            found.add(new Finding(Kind.BLOCK_LENGTH_DOUBTFUL, b, List.of(m.getFrom(), m.getTo()),
+                    Bundle.getMessage("CheckBlockLengthDoubtful", b.getDisplayName(), m.getFrom().getDisplayName(),
+                            m.getTo().getDisplayName(), m.getAgainstProfile(), layout, Math.round(length),
+                            Math.round(length / factor))));
+        }
+        return found;
+    }
+
+    private static double median(List<Double> values) {
+        List<Double> sorted = new ArrayList<>(values);
+        Collections.sort(sorted);
+        int n = sorted.size();
+        return n % 2 == 1 ? sorted.get(n / 2) : (sorted.get(n / 2 - 1) + sorted.get(n / 2)) / 2;
     }
 
     private static void checkBlock(Block b, List<Finding> found) {
