@@ -17,17 +17,21 @@ import jmri.util.JUnitUtil;
 import org.jdom2.Element;
 import org.junit.jupiter.api.*;
 
-// Behavior every Timebase must share with SimpleTimebase; subclasses run it against each implementation
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+/** Behavior every Timebase shares with SimpleTimebase; each subclass runs it against one implementation. */
 public abstract class TimebaseBehaviorTestBase {
 
     protected InternalSystemConnectionMemo memo = null;
     protected Timebase clock = null;
     protected RecordingClockControl hardware = null;
 
-    // create the Timebase under test
     protected abstract Timebase createTimebase(InternalSystemConnectionMemo memo);
 
-    // a ClockControl that records what it's told, standing in for a hardware clock
+    // stands in for a hardware clock and records what the Timebase tells it
     protected static class RecordingClockControl extends DefaultClockControl {
 
         final List<String> calls = Collections.synchronizedList(new ArrayList<>());
@@ -74,6 +78,7 @@ public abstract class TimebaseBehaviorTestBase {
         }
     }
 
+    // a fixed date, so the tests don't depend on today's date
     protected static Date at(int hour, int minute) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(1957, Calendar.JUNE, 14, hour, minute, 0);
@@ -89,43 +94,42 @@ public abstract class TimebaseBehaviorTestBase {
         return InstanceManager.getDefault(SensorManager.class).getSensor(memo.getSystemPrefix() + "SCLOCKRUNNING");
     }
 
-    // make the clock send every change to the hardware clocks, as a layout with sync turned on does
+    // turn on sync, as a layout with a hardware clock does, then forget what setup sent
     protected void syncWithHardware() {
         clock.setInternalMaster(true, false);
         clock.setSynchronize(true, false);
         hardware.calls.clear();
     }
 
-    // reading and changing the clock
-
     @Test
     public void testStopAndStart() {
         clock.setRun(false);
-        Assertions.assertFalse(clock.getRun(), "stopped");
+        assertFalse(clock.getRun(), "stopped");
         clock.setRun(true);
-        Assertions.assertTrue(clock.getRun(), "running again");
+        assertTrue(clock.getRun(), "running again");
     }
 
     @Test
     public void testSetTimeWhileStopped() {
-        clock.setRun(false);
+        clock.setRun(false); // prevent clock ticking during test
         clock.setTime(at(6, 0));
-        Assertions.assertEquals(at(6, 0), clock.getTime(), "stopped clock keeps the time it was set to");
+        assertEquals(at(6, 0), clock.getTime(), "stopped clock keeps the time it was set to");
     }
 
     @Test
     public void testUserSetRate() throws TimebaseRateException {
         clock.userSetRate(4.0);
-        Assertions.assertEquals(4.0, clock.userGetRate(), 0.0001);
+        assertEquals(4.0, clock.userGetRate(), 0.0001);
     }
 
     @Test
     public void testRateOutOfRangeThrows() {
-        Assertions.assertThrows(TimebaseRateException.class, () -> clock.userSetRate(1000.0));
+        // SimpleTimebase allows rates up to 100
+        assertThrows(TimebaseRateException.class, () -> clock.userSetRate(1000.0));
         JUnitAppender.suppressErrorMessageStartsWith("rate of");
     }
 
-    // events
+    // the new clocks fire some events from a timer thread, so these tests wait for them
 
     @Test
     public void testRateEvent() throws TimebaseRateException {
@@ -145,7 +149,7 @@ public abstract class TimebaseBehaviorTestBase {
 
     @Test
     public void testMinutesEventOnSetTime() {
-        clock.setRun(false);
+        clock.setRun(false); // prevent clock ticking during test
         clock.setTime(at(6, 0));
         EventRecorder recorder = new EventRecorder();
         clock.addPropertyChangeListener(Timebase.PROPERTY_CHANGE_MINUTES, recorder);
@@ -155,7 +159,7 @@ public abstract class TimebaseBehaviorTestBase {
 
     @Test
     public void testTimeEventOnSetTime() {
-        clock.setRun(false);
+        clock.setRun(false); // prevent clock ticking during test
         clock.setTime(at(6, 0));
         EventRecorder recorder = new EventRecorder();
         clock.addPropertyChangeListener(Timebase.PROPERTY_CHANGE_TIME, recorder);
@@ -165,7 +169,7 @@ public abstract class TimebaseBehaviorTestBase {
 
     @Test
     public void testMinuteChangeListenerOnSetTime() {
-        clock.setRun(false);
+        clock.setRun(false); // prevent clock ticking during test
         clock.setTime(at(6, 0));
         EventRecorder recorder = new EventRecorder();
         clock.addMinuteChangeListener(recorder);
@@ -173,17 +177,15 @@ public abstract class TimebaseBehaviorTestBase {
         JUnitUtil.waitFor(() -> !recorder.names.isEmpty(), "minute change listener called");
     }
 
-    // clock memories and the run sensor
-
     @Test
     public void testRateMemoryFollowsRate() throws TimebaseRateException {
         clock.userSetRate(4.0);
-        Assertions.assertEquals(4.0, memory("RATEFACTOR").getValue());
+        assertEquals(4.0, memory("RATEFACTOR").getValue());
     }
 
     @Test
     public void testTimeMemoryFollowsTime() {
-        clock.setRun(false);
+        clock.setRun(false); // prevent clock ticking during test
         clock.setTime(at(6, 5));
         JUnitUtil.waitFor(() -> "6:05 AM".equals(memory("CURRENTTIME").getValue()), "time memory shows 6:05 AM");
     }
@@ -191,45 +193,44 @@ public abstract class TimebaseBehaviorTestBase {
     @Test
     public void testSetRunUpdatesSensor() {
         clock.setRun(false);
-        Assertions.assertEquals(Sensor.INACTIVE, clockRunningSensor().getKnownState(), "sensor off when stopped");
+        assertEquals(Sensor.INACTIVE, clockRunningSensor().getKnownState(), "sensor off when stopped");
         clock.setRun(true);
-        Assertions.assertEquals(Sensor.ACTIVE, clockRunningSensor().getKnownState(), "sensor on when running");
+        assertEquals(Sensor.ACTIVE, clockRunningSensor().getKnownState(), "sensor on when running");
     }
 
     @Test
     public void testSensorStopsClock() throws JmriException {
         clockRunningSensor().setKnownState(Sensor.INACTIVE);
-        Assertions.assertFalse(clock.getRun());
+        assertFalse(clock.getRun());
     }
 
     @Test
     public void testSensorRestartsClock() throws JmriException {
         clockRunningSensor().setKnownState(Sensor.INACTIVE);
         clockRunningSensor().setKnownState(Sensor.ACTIVE);
-        Assertions.assertTrue(clock.getRun());
+        assertTrue(clock.getRun());
     }
-
-    // hardware clocks
 
     @Test
     public void testHardwareToldRate() throws TimebaseRateException {
         syncWithHardware();
         clock.userSetRate(4.0);
-        Assertions.assertTrue(hardware.calls.contains("setRate 4.0"), "calls: " + hardware.calls);
+        assertTrue(hardware.calls.contains("setRate 4.0"), "calls: " + hardware.calls);
     }
 
     @Test
     public void testHardwareToldTime() {
         syncWithHardware();
+        // userSetTime is what the Setup Fast Clock window calls
         clock.userSetTime(at(6, 0));
-        Assertions.assertTrue(hardware.calls.contains("setTime"), "calls: " + hardware.calls);
+        assertTrue(hardware.calls.contains("setTime"), "calls: " + hardware.calls);
     }
 
     @Test
     public void testHardwareToldStop() {
         syncWithHardware();
         clock.setRun(false);
-        Assertions.assertTrue(hardware.calls.contains("stop"), "calls: " + hardware.calls);
+        assertTrue(hardware.calls.contains("stop"), "calls: " + hardware.calls);
     }
 
     @Test
@@ -237,11 +238,10 @@ public abstract class TimebaseBehaviorTestBase {
         clock.setRun(false);
         syncWithHardware();
         clock.setRun(true);
-        Assertions.assertTrue(hardware.calls.contains("start"), "calls: " + hardware.calls);
+        assertTrue(hardware.calls.contains("start"), "calls: " + hardware.calls);
     }
 
-    // old panel files
-
+    // an old panel file loads into whichever Timebase is the default
     @Test
     public void testLoadOldTimebaseElement() {
         Element element = new Element("timebase");
@@ -260,18 +260,18 @@ public abstract class TimebaseBehaviorTestBase {
         element.setAttribute("showbutton", "yes");
         element.setAttribute("startsetrate", "yes");
 
-        Assertions.assertTrue(new SimpleTimebaseXml().load(element, null), "loaded");
+        assertTrue(new SimpleTimebaseXml().load(element, null), "loaded");
 
-        Assertions.assertEquals(5.0, clock.userGetRate(), 0.0001, "rate");
-        Assertions.assertEquals(5.0, clock.getStartRate(), 0.0001, "start rate");
-        Assertions.assertFalse(clock.getRun(), "stopped");
-        Assertions.assertTrue(clock.getSynchronize(), "sync");
-        Assertions.assertTrue(clock.use12HourDisplay(), "12 hour display");
-        Assertions.assertEquals(Timebase.ClockInitialRunState.DO_STOP, clock.getClockInitialRunState(), "start stopped");
-        Assertions.assertTrue(clock.getStartSetTime(), "set time at start");
-        Assertions.assertEquals(Timebase.NONE, clock.getStartClockOption(), "start clock option");
-        Assertions.assertTrue(clock.getShowStopButton(), "show stop button");
-        Assertions.assertTrue(clock.getSetRateAtStart(), "set rate at start");
+        assertEquals(5.0, clock.userGetRate(), 0.0001, "rate");
+        assertEquals(5.0, clock.getStartRate(), 0.0001, "start rate");
+        assertFalse(clock.getRun(), "stopped");
+        assertTrue(clock.getSynchronize(), "sync");
+        assertTrue(clock.use12HourDisplay(), "12 hour display");
+        assertEquals(Timebase.ClockInitialRunState.DO_STOP, clock.getClockInitialRunState(), "start stopped");
+        assertTrue(clock.getStartSetTime(), "set time at start");
+        assertEquals(Timebase.NONE, clock.getStartClockOption(), "start clock option");
+        assertTrue(clock.getShowStopButton(), "show stop button");
+        assertTrue(clock.getSetRateAtStart(), "set rate at start");
     }
 
     @BeforeEach

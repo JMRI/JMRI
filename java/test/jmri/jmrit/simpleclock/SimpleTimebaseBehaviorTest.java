@@ -4,7 +4,7 @@ import jmri.Timebase;
 import jmri.TimebaseBehaviorTestBase;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
-// Runs the shared Timebase behavior tests against SimpleTimebase
+/** Runs the shared Timebase behavior tests against SimpleTimebase, the reference behavior. */
 public class SimpleTimebaseBehaviorTest extends TimebaseBehaviorTestBase {
 
     @Override
