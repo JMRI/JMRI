@@ -290,79 +290,17 @@ public class AutoTurnouts {
                     }
                     continue;
                 }
-                // check or ignore current setting based on flag, set in Options
-                if (!trustKnownTurnouts && set) {
-                    log.debug("{}: setting turnout {} to {}", at.getTrainName(), to.getDisplayName(USERSYS),
-                            (setting == Turnout.CLOSED ? closedText : thrownText));
-                    if (checkTurnoutsCanBeSet(turnoutList.get(i).getObject(), setting, s, curBlock, at)) {
-                        log.debug("{}: setting turnout {} to {}", at.getTrainName(), to.getDisplayName(USERSYS),
-                                (setting == Turnout.CLOSED ? closedText : thrownText));
-                        if (useTurnoutConnectionDelay) {
-                            to.setCommandedStateAtInterval(setting);
-                        } else {
-                            to.setCommandedState(setting);
-                        }
-                        try {
-                            Thread.sleep(100);
-                        } catch (InterruptedException ex) {
-                        } //TODO: Check if this is needed, shouldnt turnout delays be handled at a lower level.
-                    }
-                } else {
-                    if (to.getKnownState() != setting) {
-                        // turnout is not set correctly
-                        if (set) {
-                            // setting has been requested, is Section free and Block unoccupied
-                            if (checkTurnoutsCanBeSet(turnoutList.get(i).getObject(), setting, s, curBlock, at)) {
-                                // send setting command
-                                log.debug("{}: turnout {} commanded to {}", at.getTrainName(), to.getDisplayName(),
-                                        (setting == Turnout.CLOSED ? closedText : thrownText));
-                                if (useTurnoutConnectionDelay) {
-                                    to.setCommandedStateAtInterval(setting);
-                                } else {
-                                    to.setCommandedState(setting);
-                                }
-                                try {
-                                    Thread.sleep(100);
-                                } catch (InterruptedException ex) {
-                                }  //TODO: move this to separate thread
-                            } else {
-                                turnoutsOK = false;
-                            }
-                        } else {
-                            turnoutsOK = false;
-                        }
-                    } else {
-                        log.debug("{}: turnout {} already {}, skipping", at.getTrainName(), to.getDisplayName(USERSYS),
-                                (setting == Turnout.CLOSED ? closedText : thrownText));
-                    }
+                // check, and set if asked to, as the Options say
+                if (!checkOrSetTurnout(turnoutList.get(i).getObject(), to, setting, trustKnownTurnouts, set,
+                        s, curBlock, at, useTurnoutConnectionDelay)) {
+                    turnoutsOK = false;
                 }
                 if (turnoutList.get(i).getObject() instanceof LayoutSlip) {
-                    //Look at the state of the second turnout in the slip
-                    setting = ((LayoutSlip) turnoutList.get(i).getObject()).getTurnoutBState(turnoutList.get(i).getExpectedState());
-                    to = ((LayoutSlip) turnoutList.get(i).getObject()).getTurnoutB();
-                    if (!trustKnownTurnouts) {
-                        if (useTurnoutConnectionDelay) {
-                            to.setCommandedStateAtInterval(setting);
-                        } else {
-                            to.setCommandedState(setting);
-                        }
-                    } else if (to.getKnownState() != setting) {
-                        // turnout is not set correctly
-                        if (set) {
-                            // setting has been requested, is Section free and Block unoccupied
-                            if ((s.getState() == Section.FREE) && (curBlock.getState() != Block.OCCUPIED)) {
-                                // send setting command
-                                if (useTurnoutConnectionDelay) {
-                                    to.setCommandedStateAtInterval(setting);
-                                } else {
-                                    to.setCommandedState(setting);
-                                }
-                            } else {
-                                turnoutsOK = false;
-                            }
-                        } else {
-                            turnoutsOK = false;
-                        }
+                    // the second turnout of the slip, by the same rules
+                    LayoutSlip slip = (LayoutSlip) turnoutList.get(i).getObject();
+                    if (!checkOrSetTurnout(slip, slip.getTurnoutB(), slip.getTurnoutBState(turnoutList.get(i).getExpectedState()),
+                            trustKnownTurnouts, set, s, curBlock, at, useTurnoutConnectionDelay)) {
+                        turnoutsOK = false;
                     }
                 }
             }
@@ -399,6 +337,57 @@ public class AutoTurnouts {
             return turnoutListForAllocatedSection;
         }
         return null;
+    }
+
+    /**
+     * Check one turnout of a train's route and, if asked to, set it.
+     * <p>
+     * The turnout is a layout turnout's own, or the second (B) turnout of a
+     * slip; {@code layoutTurnout} is the layout track it belongs to, which
+     * decides whether it may be changed now
+     * ({@link #checkTurnoutsCanBeSet}). When setting, a turnout is commanded
+     * only if it may be changed: with Trust Known Turnouts off, whatever its
+     * known state; with it on, only if it is not already as needed. When only
+     * checking, it must already be as needed.
+     *
+     * @param layoutTurnout              the layout track the turnout belongs to
+     * @param to                         the turnout
+     * @param setting                    the state the route needs
+     * @param trustKnownTurnouts         true to leave a turnout known to be as needed
+     * @param set                        true to set the turnout, false only to check it
+     * @param s                          the Section being allocated
+     * @param b                          the Block the turnout is in
+     * @param at                         the train
+     * @param useTurnoutConnectionDelay  true to send the command at the connection's interval
+     * @return true if the turnout is as needed or has been commanded to be;
+     *         false if it is not and could not be set now
+     */
+    boolean checkOrSetTurnout(LayoutTurnout layoutTurnout, Turnout to, int setting, boolean trustKnownTurnouts,
+            boolean set, Section s, Block b, ActiveTrain at, boolean useTurnoutConnectionDelay) {
+        boolean asNeeded = to.getKnownState() == setting;
+        if (!set || (trustKnownTurnouts && asNeeded)) {
+            if (asNeeded) {
+                log.debug("{}: turnout {} already {}", at.getTrainName(), to.getDisplayName(USERSYS),
+                        (setting == Turnout.CLOSED ? closedText : thrownText));
+            }
+            return asNeeded;
+        }
+        if (!checkTurnoutsCanBeSet(layoutTurnout, setting, s, b, at)) {
+            return false;
+        }
+        log.debug("{}: turnout {} commanded to {}", at.getTrainName(), to.getDisplayName(USERSYS),
+                (setting == Turnout.CLOSED ? closedText : thrownText));
+        if (useTurnoutConnectionDelay) {
+            to.setCommandedStateAtInterval(setting);
+        } else {
+            to.setCommandedState(setting);
+        }
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        } //TODO: Check if this is needed, shouldnt turnout delays be handled at a lower level.
+        return true;
     }
 
     /**
