@@ -430,6 +430,10 @@ public class ActivateTrainFrame extends JmriJFrame {
             initializeTrainDetectionBox();
             p7.add(trainDetectionComboBox);
             trainDetectionComboBox.setToolTipText(Bundle.getMessage("TrainDetectionBoxHint"));
+            p7.add(detectionMarkersButton);
+            detectionMarkersButton.setToolTipText(Bundle.getMessage("DetectionMarkersHint"));
+            detectionMarkersButton.addActionListener(ev -> editDetectionMarkers());
+            updateDetectionMarkersButton();
             initiatePane.add(p7);
 
             // Allocation method
@@ -1883,6 +1887,8 @@ public class ActivateTrainFrame extends JmriJFrame {
         setTrainsFromOptions(info.getTrainsFrom());
         trainNameField.setText(info.getTrainUserName());
         trainDetectionComboBox.setSelectedItemByValue(info.getTrainDetection());
+        detectionMarkers = info.getDetectionMarkers();
+        updateDetectionMarkersButton();
         inTransitBox.setSelected(info.getTrainInTransit());
         if (radioTransitsAdHoc.isSelected()) {
             initializeStartingBlockComboDynamic();
@@ -2046,6 +2052,7 @@ public class ActivateTrainFrame extends JmriJFrame {
         }
         info.setPriority((Integer) prioritySpinner.getValue());
         info.setTrainDetection(((TrainDetectionItem)trainDetectionComboBox.getSelectedItem()).value);
+        info.setDetectionMarkers(detectionMarkers);
         info.setResetWhenDone(resetWhenDoneBox.isSelected());
         info.setReverseAtEnd(reverseAtEndBox.isSelected());
         info.setDelayedStart(delayModeFromBox(delayedStartBox));
@@ -2548,6 +2555,26 @@ public class ActivateTrainFrame extends JmriJFrame {
 
     private final JLabel trainDetectionLabel = new JLabel(Bundle.getMessage("TrainDetection"));
     public final TrainDetectionJCombo trainDetectionComboBox = new TrainDetectionJCombo();
+    final JButton detectionMarkersButton = new JButton();
+    // the train's own detection markers, for train tracking; empty to follow Train Detection
+    List<jmri.TrainRecord.DetectionMarker> detectionMarkers = List.of();
+
+    /**
+     * Edit the train's own detection markers in a dialog.
+     */
+    private void editDetectionMarkers() {
+        DetectionMarkersPanel panel = new DetectionMarkersPanel(detectionMarkers);
+        if (JmriJOptionPane.showConfirmDialog(initiateFrame, panel, Bundle.getMessage("TitleDetectionMarkers"),
+                JmriJOptionPane.OK_CANCEL_OPTION) == JmriJOptionPane.OK_OPTION) {
+            detectionMarkers = panel.getMarkers();
+            updateDetectionMarkersButton();
+        }
+    }
+
+    void updateDetectionMarkersButton() {
+        detectionMarkersButton.setText(detectionMarkers.isEmpty() ? Bundle.getMessage("ButtonDetectionMarkers")
+                : Bundle.getMessage("ButtonDetectionMarkersSome", detectionMarkers.size()));
+    }
 
     protected static class TrainLengthUnitsJCombo extends JComboBox<TrainLengthUnitsItem> {
         public void setSelectedItemByValue(TrainLengthUnits var) {
@@ -3139,6 +3166,8 @@ public class ActivateTrainFrame extends JmriJFrame {
 
       
         trainDetectionComboBox.setSelectedItemByValue(info.getTrainDetection());
+        detectionMarkers = info.getDetectionMarkers();
+        updateDetectionMarkersButton();
         runInReverseBox.setSelected(info.getRunInReverse());
         soundDecoderBox.setSelected(info.getSoundDecoder());
         try {

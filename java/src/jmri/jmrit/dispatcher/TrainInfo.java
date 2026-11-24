@@ -655,6 +655,31 @@ public class TrainInfo {
         return trainDetection;
     }
 
+    private java.util.List<jmri.TrainRecord.DetectionMarker> detectionMarkers = java.util.List.of();
+
+    /**
+     * Set the train's own list of detection markers, for train tracking: the
+     * stretches of the train its detection sees, when Train Detection can't
+     * say, such as a lit coach in the middle. Dispatcher's own handling still
+     * follows Train Detection.
+     *
+     * @param markers the markers, front first; empty for none
+     * @since 5.19.2
+     */
+    public void setDetectionMarkers(@javax.annotation.Nonnull java.util.List<jmri.TrainRecord.DetectionMarker> markers) {
+        detectionMarkers = java.util.List.copyOf(markers);
+    }
+
+    /**
+     * @return the train's own detection markers, front first; empty for
+     *         none (see {@link #setDetectionMarkers})
+     * @since 5.19.2
+     */
+    @javax.annotation.Nonnull
+    public java.util.List<jmri.TrainRecord.DetectionMarker> getDetectionMarkers() {
+        return detectionMarkers;
+    }
+
     public void setRunInReverse(boolean b) {
         runInReverse = b;
     }
