@@ -207,8 +207,13 @@ public class OBlockTableActionTest {
 
         PortalManager pm = InstanceManager.getDefault(PortalManager.class);
         OBlockManager obm = InstanceManager.getDefault(OBlockManager.class);
-        obm.createNewOBlock("OB1", "ob1");  // NOI18N
-        obm.createNewOBlock("OB2", "ob2");  // NOI18N
+        // The OBlock table window is open, and its tables re-sort when blocks change, so make the blocks on the
+        // GUI thread, as testAddSignal does: made on the test thread, a re-sort could run at the same time as
+        // one on the GUI thread (NullPointerException, "Comparator c is null").
+        ThreadingUtil.runOnGUI(() -> {
+            obm.createNewOBlock("OB1", "ob1");  // NOI18N
+            obm.createNewOBlock("OB2", "ob2");  // NOI18N
+        });
 
         new JTextFieldOperator(addFrame, 0).setText("portal1");  // NOI18N
         new JComboBoxOperator(addFrame, 0).setSelectedIndex(1);  // NOI18N
