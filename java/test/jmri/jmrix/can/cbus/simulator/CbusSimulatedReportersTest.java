@@ -90,6 +90,8 @@ public class CbusSimulatedReportersTest {
             return tt != null && tt.getSpeedMmPerSecond() == 0;
         }, "stopped");
         JUnitUtil.waitFor(() -> r[0].getCurrentReport() != null, "C's reader read the tag");
+        // the reporter and this listener hear the same frame one after the other, so the reporter can have it first
+        JUnitUtil.waitFor(() -> !frames.isEmpty(), "the read heard on the bus");
         Assertions.assertEquals(1, frames.size(), "one read, by C's reader only (A and B have none)");
         Assertions.assertArrayEquals(new int[]{ACDAT, 0x01, 0x02, 0x0A, 0x1B, 0x2C, 0x3D, 0x4E}, frames.get(0),
                 "reader 258 is 0x0102; the tag's five bytes, high first");
@@ -126,6 +128,8 @@ public class CbusSimulatedReportersTest {
         JUnitAppender.assertWarnMessage("Tag \"TAG1\" is not 10 hex digits, so a CBUS RFID reader can't read it.");
         out.report(r[0], "0A1B2C3D4E", System.nanoTime());
         JUnitUtil.waitFor(() -> r[0].getCurrentReport() != null, "the good tag read");
+        // the reporter and this listener hear the same frame one after the other, so the reporter can have it first
+        JUnitUtil.waitFor(() -> !frames.isEmpty(), "the good tag heard on the bus");
         Assertions.assertEquals(1, frames.size(), "only the tag a reader can read was sent");
         memo.getTrafficController().removeCanListener(heard);
     }
