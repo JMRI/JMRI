@@ -2,11 +2,13 @@ package jmri;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import jmri.implementation.DefaultClockControl;
 import jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml;
@@ -94,7 +96,7 @@ public abstract class TimebaseBehaviorTestBase {
         return InstanceManager.getDefault(SensorManager.class).getSensor(memo.getSystemPrefix() + "SCLOCKRUNNING");
     }
 
-    // turn on sync, as a layout with a hardware clock does, then forget what setup sent
+    // JMRI keeps the time and sync is on, so changes go to the hardware clock; then forget what setup sent
     protected void syncWithHardware() {
         clock.setInternalMaster(true, false);
         clock.setSynchronize(true, false);
@@ -109,6 +111,7 @@ public abstract class TimebaseBehaviorTestBase {
 
     @Test
     public void testStopAndStart() {
+        clock.setRun(true); // a new DefaultTimebase is stopped, so start it first
         clock.setRun(false);
         assertFalse(clock.getRun(), "stopped");
         clock.setRun(true);
@@ -193,7 +196,10 @@ public abstract class TimebaseBehaviorTestBase {
     public void testTimeMemoryFollowsTime() {
         clock.setRun(false); // prevent clock ticking during test
         clock.setTime(at(6, 5));
-        JUnitUtil.waitFor(() -> "6:05 AM".equals(memory("CURRENTTIME").getValue()), "time memory shows 6:05 AM");
+        // same pattern the clock uses, so this works in any locale
+        String pattern = ResourceBundle.getBundle("jmri.jmrit.simpleclock.SimpleClockBundle").getString("TimeStorageFormat");
+        String expected = new SimpleDateFormat(pattern).format(at(6, 5));
+        JUnitUtil.waitFor(() -> expected.equals(memory("CURRENTTIME").getValue()), "time memory shows " + expected);
     }
 
     @Test
@@ -206,6 +212,7 @@ public abstract class TimebaseBehaviorTestBase {
 
     @Test
     public void testSensorStopsClock() throws JmriException {
+        clock.setRun(true);
         clockRunningSensor().setKnownState(Sensor.INACTIVE);
         assertFalse(clock.getRun());
     }
@@ -267,6 +274,7 @@ public abstract class TimebaseBehaviorTestBase {
         element.setAttribute("showbutton", "yes");
         element.setAttribute("startsetrate", "yes");
 
+        clock.setRun(true); // so "stopped" below shows the element stopped it
         assertTrue(new SimpleTimebaseXml().load(element, null), "loaded");
 
         assertEquals(5.0, clock.userGetRate(), 0.0001, "rate");
@@ -276,6 +284,7 @@ public abstract class TimebaseBehaviorTestBase {
         assertTrue(clock.use12HourDisplay(), "12 hour display");
         assertEquals(Timebase.ClockInitialRunState.DO_STOP, clock.getClockInitialRunState(), "start stopped");
         assertTrue(clock.getStartSetTime(), "set time at start");
+        assertEquals(at(6, 0), clock.getStartTime(), "start time");
         assertEquals(Timebase.NONE, clock.getStartClockOption(), "start clock option");
         assertTrue(clock.getShowStopButton(), "show stop button");
         assertTrue(clock.getSetRateAtStart(), "set rate at start");
@@ -297,7 +306,9 @@ public abstract class TimebaseBehaviorTestBase {
 
     @AfterEach
     public void tearDown() {
-        clock.dispose();
+        if (clock != null) {
+            clock.dispose();
+        }
         clock = null;
         hardware = null;
         memo = null;
