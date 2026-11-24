@@ -172,8 +172,13 @@ public class AutoAllocate implements Runnable {
                             break;
                         case ALLOCATE_IMMEDIATE:
                             ActiveTrain started = task.getAllocationRequest().getActiveTrain();
+                            if (started == null || task.getAllocationRequest().getSection() == null) {
+                                // allocated, or cancelled, since it was queued
+                                log.debug("Allocation request no longer wanted, not allocated");
+                                break;
+                            }
                             _dispatcher.allocateSection(task.getAllocationRequest(), null);
-                            if (_dispatcher.getPreventDeadlock() && started != null) {
+                            if (_dispatcher.getPreventDeadlock()) {
                                 avoidance.checkNow(started);
                             }
                             break;
