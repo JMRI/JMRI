@@ -380,7 +380,7 @@ public class LayoutEditorToolBarPanel extends JPanel implements Disposable {
         extraTurnoutPanel.add(extraTurnoutNameComboBox);
         extraTurnoutPanel.setEnabled(false);
 
-        String[] angleStrings = {"-180", "-135", "-90", "-45", "0", "+45", "+90", "+135", "+180"};
+        String[] angleStrings = {"-180", "-135", "-90", "-45", "0", "45", "90", "135", "180"};
         rotationComboBox = new JComboBox<>(angleStrings);
         rotationComboBox.setEditable(true);
         rotationComboBox.setSelectedIndex(4);
