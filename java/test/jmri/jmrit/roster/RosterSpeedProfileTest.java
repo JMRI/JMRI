@@ -440,6 +440,125 @@ public class RosterSpeedProfileTest {
         assertEquals(0.25f, sp.getMaxOperatingSpeed(), 0.0001f);
     }
 
+    /**
+     * The distance the commands of a distance plan cover, each held for its
+     * duration at the speed the profile gives its setting.
+     */
+    private static float plannedDistance(RosterSpeedProfile sp) {
+        float distance = 0.0f;
+        for (SpeedSetting ss : sp.getSpeedStepTrace()) {
+            distance += ss.getDuration() / 1000.0f * sp.getSpeed(ss.getSpeedStep(), true);
+        }
+        return distance;
+    }
+
+    /**
+     * Plan a stop to zero over 600 mm from 300 mm/s, with a minimum reliable
+     * speed of 30 mm/s, and return the distance its commands cover.
+     */
+    private static float stopToZeroOver600(RosterSpeedProfile sp, DccThrottle t) {
+        return stopToZeroOver600(sp, t, false);
+    }
+
+    private static float stopToZeroOver600(RosterSpeedProfile sp, DccThrottle t, boolean asBefore) {
+        t.setSpeedSetting(0.5f);
+        sp.setTestMode(true);
+        sp.setMinMaxLimits(0.05f, 1.0f);
+        sp.planStopToZeroOverDistance(t, 600.0f, 1.0f, asBefore);
+        float distance = plannedDistance(sp);
+        sp.cancelSpeedChange();
+        return distance;
+    }
+
+    /**
+     * The overrun time is in milliseconds for the distance planner, as for
+     * the step planner (calculateInitialOverRun): 500 ms run on at 30 mm/s
+     * takes 15 mm off the stop, not 500 s worth.
+     */
+    @Test
+    public void testDistancePlanOverrunTimeInMilliseconds() {
+        RosterEntry re = new RosterEntry(getLocoElement100()) {
+            @Override
+            protected void warnShortLong(String s) {
+            }
+        };
+        RosterSpeedProfile sp = re.getSpeedProfile();
+        sp.clearCurrentProfile();
+        for (int i = 1; i <= 10; i++) {
+            sp.setSpeed(i * 100, i * 60.0f, i * 60.0f); // 600 mm/s at full throttle
+        }
+        ThrottleListen throtListen = new ThrottleListen();
+        assertTrue( InstanceManager.getDefault(ThrottleManager.class).requestThrottle(re, throtListen, false),
+                "Throttle request denied");
+        JUnitUtil.waitFor(()-> ( throtListen.throttle != null), "Got No throttle");
+        DccThrottle t = throtListen.throttle;
+        t.setSpeedStepMode(SpeedStepMode.NMRA_DCC_128);
+        t.setIsForward(true);
+
+        float without = stopToZeroOver600(sp, t);
+        assertEquals(600.0f, without, 10.0f, "no overrun time: the commands cover the distance");
+        sp.setOverRunTimeForward(500.0f);
+        float with = stopToZeroOver600(sp, t);
+        // the commands are rounded to speed steps, so allow 10 mm either way
+        assertEquals(600.0f - 15.0f, with, 10.0f, "500 ms run on at 30 mm/s takes 15 mm off the stop");
+
+        // as earlier versions, for layouts set up around them: 0.5 s of run on read as 0.5 s
+        sp.setOverRunTimeForward(0.5f);
+        float asBefore = stopToZeroOver600(sp, t, true);
+        assertEquals(600.0f - 15.0f, asBefore, 10.0f, "earlier versions read the overrun time as seconds");
+    }
+
+    /**
+     * An approach to the minimum reliable speed ends on the minimum reliable
+     * setting itself, which is then held: the last braking command, the mean
+     * over its time, is a little faster.
+     */
+    @Test
+    public void testApproachToMinimumEndsOnTheMinimumSetting() {
+        RosterEntry re = new RosterEntry(getLocoElement100()) {
+            @Override
+            protected void warnShortLong(String s) {
+            }
+        };
+        RosterSpeedProfile sp = re.getSpeedProfile();
+        sp.clearCurrentProfile();
+        for (int i = 1; i <= 10; i++) {
+            sp.setSpeed(i * 100, i * 60.0f, i * 60.0f); // 600 mm/s at full throttle
+        }
+        ThrottleListen throtListen = new ThrottleListen();
+        assertTrue( InstanceManager.getDefault(ThrottleManager.class).requestThrottle(re, throtListen, false),
+                "Throttle request denied");
+        JUnitUtil.waitFor(()-> ( throtListen.throttle != null), "Got No throttle");
+        DccThrottle t = throtListen.throttle;
+        t.setSpeedStepMode(SpeedStepMode.NMRA_DCC_128);
+        t.setIsForward(true);
+
+        // with no distance left, the planner sets the minimum reliable setting at once
+        sp.setMinMaxLimits(0.05f, 1.0f);
+        t.setSpeedSetting(0.5f);
+        sp.planApproachToMinOverDistance(t, 0.0f, 1.0f);
+        float minimumSetting = t.getSpeedSetting();
+        assertTrue(minimumSetting > 0.0f, "a minimum setting");
+
+        t.setSpeedSetting(0.5f);
+        sp.setTestMode(true);
+        sp.setMinMaxLimits(0.05f, 1.0f);
+        sp.planApproachToMinOverDistance(t, 600.0f, 1.0f);
+        var trace = sp.getSpeedStepTrace();
+        assertEquals(minimumSetting, trace.get(trace.size() - 1).getSpeedStep(), 0.0001f, "ends on the minimum");
+        assertEquals(600.0f, plannedDistance(sp), 15.0f, "covers the distance before the minimum is held");
+        sp.cancelSpeedChange();
+
+        // as earlier versions: no final command, so the last braking command is held, above the minimum
+        t.setSpeedSetting(0.5f);
+        sp.setTestMode(true);
+        sp.setMinMaxLimits(0.05f, 1.0f);
+        sp.planApproachToMinOverDistance(t, 600.0f, 1.0f, true);
+        trace = sp.getSpeedStepTrace();
+        assertTrue(trace.get(trace.size() - 1).getSpeedStep() > minimumSetting, "held above the minimum");
+        sp.cancelSpeedChange();
+    }
+
     private void setSpeedInterpretation(SignalSpeedMap map, int interpretation) {
         var speedNames = map.getValidSpeedNames();
         HashMap<String, Float> newMap = new HashMap<>(speedNames.size());

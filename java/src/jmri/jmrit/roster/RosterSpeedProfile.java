@@ -70,18 +70,42 @@ public class RosterSpeedProfile {
         return _re;
     }
 
+    /**
+     * Get how long the loco runs on, moving forward, after it is told to
+     * change speed: the delay before the change takes effect.
+     *
+     * @return the time in milliseconds
+     */
     public float getOverRunTimeForward() {
         return overRunTimeForward;
     }
 
+    /**
+     * Set how long the loco runs on, moving forward, after it is told to
+     * change speed.
+     *
+     * @param dt the time in milliseconds
+     */
     public void setOverRunTimeForward(float dt) {
         overRunTimeForward = dt;
     }
 
+    /**
+     * Get how long the loco runs on, moving in reverse, after it is told to
+     * change speed: the delay before the change takes effect.
+     *
+     * @return the time in milliseconds
+     */
     public float getOverRunTimeReverse() {
         return overRunTimeReverse;
     }
 
+    /**
+     * Set how long the loco runs on, moving in reverse, after it is told to
+     * change speed.
+     *
+     * @param dt the time in milliseconds
+     */
     public void setOverRunTimeReverse(float dt) {
         overRunTimeReverse = dt;
     }
@@ -631,7 +655,22 @@ public class RosterSpeedProfile {
      *                    factor before enqueuing.
      */
     public void planStopToZeroOverDistance(DccThrottle t, float distanceMm, float speedFactor) {
-        planDistanceSchedule(t, distanceMm, /* toMinOnly */ false, speedFactor);
+        planDistanceSchedule(t, distanceMm, /* toMinOnly */ false, speedFactor, false);
+    }
+
+    /**
+     * Plan and execute a stop-to-zero over a given distance, optionally as
+     * earlier versions of JMRI planned it.
+     *
+     * @param t           The DccThrottle to drive
+     * @param distanceMm  Distance in mm ({@code >=} 0)
+     * @param speedFactor If {@code >} 0, throttle commands are divided by this
+     *                    factor before enqueuing.
+     * @param asBefore    true to read the overrun times as seconds, as earlier
+     *                    versions did; false to read them as milliseconds
+     */
+    public void planStopToZeroOverDistance(DccThrottle t, float distanceMm, float speedFactor, boolean asBefore) {
+        planDistanceSchedule(t, distanceMm, /* toMinOnly */ false, speedFactor, asBefore);
     }
 
     /**
@@ -645,7 +684,23 @@ public class RosterSpeedProfile {
      *                    factor before enqueuing.
      */
     public void planApproachToMinOverDistance(DccThrottle t, float distanceMm, float speedFactor) {
-        planDistanceSchedule(t, distanceMm, /* toMinOnly */ true, speedFactor);
+        planDistanceSchedule(t, distanceMm, /* toMinOnly */ true, speedFactor, false);
+    }
+
+    /**
+     * Plan and execute an approach to the minimum reliable operating speed over
+     * the given distance, optionally as earlier versions of JMRI planned it.
+     *
+     * @param t           The DccThrottle to drive
+     * @param distanceMm  Distance in mm ({@code >=} 0)
+     * @param speedFactor If {@code >} 0, throttle commands are divided by this
+     *                    factor before enqueuing.
+     * @param asBefore    true to hold the last planned setting, a little above
+     *                    the minimum, as earlier versions did; false to end
+     *                    on the minimum reliable setting
+     */
+    public void planApproachToMinOverDistance(DccThrottle t, float distanceMm, float speedFactor, boolean asBefore) {
+        planDistanceSchedule(t, distanceMm, /* toMinOnly */ true, speedFactor, asBefore);
     }
 
     /**
@@ -716,7 +771,7 @@ public class RosterSpeedProfile {
         };
         approachStopSensor.addPropertyChangeListener(approachStopSensorListener);
 
-        planDistanceSchedule(t, distanceMm, /* toMinOnly */ true, speedFactor);
+        planDistanceSchedule(t, distanceMm, /* toMinOnly */ true, speedFactor, false);
     }
 
     /*
@@ -769,7 +824,8 @@ public class RosterSpeedProfile {
      * (toMinOnly=true), then waits for stopSensor. Executes via this profile's
      * own stepQueue/stopTimer (H2/4A).
      */
-    private void planDistanceSchedule(DccThrottle t, float distanceMm, boolean toMinOnly, float speedFactor) {
+    private void planDistanceSchedule(DccThrottle t, float distanceMm, boolean toMinOnly, float speedFactor,
+            boolean asBefore) {
         if (t == null) {
             log.warn("planDistanceSchedule called with null throttle; ignoring.");
             return;
@@ -834,7 +890,10 @@ public class RosterSpeedProfile {
         // Adjust target distance for overrun ONLY for stop-to-zero.
         float s = distanceMm;
         if (!toMinOnly) {
-            float overrunSec = forward ? getOverRunTimeForward() : getOverRunTimeReverse();
+            // the overrun times are in milliseconds, as calculateInitialOverRun
+            // reads them; earlier versions read them here as seconds
+            float overrunSec = (forward ? getOverRunTimeForward() : getOverRunTimeReverse())
+                    / (asBefore ? 1.0f : 1000.0f);
             if (overrunSec < 0.0f)
                 overrunSec = 0.0f;
             s = s - (vMin * overrunSec);
@@ -965,10 +1024,18 @@ public class RosterSpeedProfile {
         }
         }
 
-        // Tail: for stop-to-zero, ensure a final explicit zero command.
+        // Tail: end on the target itself, an explicit zero for stop-to-zero, or
+        // the minimum reliable setting for approach-to-min, which is then held.
+        // The last command of the loop is the mean over its slices, so it is
+        // a little above the target.
+        int tailMs = Math.max(minCmdMs, internalSliceMs);
         if (!toMinOnly) {
-            int tailMs = Math.max(minCmdMs, internalSliceMs);
             plan.add(new SpeedSetting(0.0f, tailMs, false));
+        } else if (!asBefore) {
+            float thrMin = throttleForSpeedMms(vMin, forward, minPct, maxPct);
+            thrMin = clampPct(thrMin / speedFactorSafe);
+            thrMin = quantizeToSpeedStep(_throttle, thrMin);
+            plan.add(new SpeedSetting(thrMin, tailMs, false));
         }
 
         // Enqueue and kick timer

@@ -25,6 +25,37 @@ public class OptionsFileTest {
     }
 
     @Test
+    public void testStopByDistanceAsBeforeIsOffUnlessSavedOn(@TempDir File tempDir) throws Exception {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        // a copy of an options file written before the option existed
+        File file = new File(tempDir, "dispatcheroptions.xml");
+        Files.copy(new File("java/test/jmri/jmrit/dispatcher/dispatcheroptions.xml").toPath(), file.toPath());
+        OptionsFile.setDefaultFileName(file.getPath());
+        try {
+            DispatcherFrame d = InstanceManager.getDefault(DispatcherFrame.class);
+            Assert.assertFalse("off when the file does not say", d.getStopByDistanceAsBefore());
+
+            OptionsFile options = InstanceManager.getDefault(OptionsFile.class);
+            d.setStopByDistanceAsBefore(true);
+            options.writeDispatcherOptions(d);
+            d.setStopByDistanceAsBefore(false);
+            options.readDispatcherOptions(d);
+            Assert.assertTrue("on when saved on", d.getStopByDistanceAsBefore());
+
+            d.setStopByDistanceAsBefore(false);
+            options.writeDispatcherOptions(d);
+            d.setStopByDistanceAsBefore(true);
+            options.readDispatcherOptions(d);
+            Assert.assertFalse("off when saved off", d.getStopByDistanceAsBefore());
+
+            (new org.netbeans.jemmy.operators.JFrameOperator(Bundle.getMessage("TitleDispatcher"))).requestClose();
+            JUnitUtil.dispose(d);
+        } finally {
+            OptionsFile.setDefaultFileName("java/test/jmri/jmrit/dispatcher/dispatcheroptions.xml");
+        }
+    }
+
+    @Test
     public void testSetOptionsFileNameAndRead() {
         // The Dispatcher functionality is tightly coupled to the Dispatcher
         // Frame.  As a result, we have can currently only test reading the
