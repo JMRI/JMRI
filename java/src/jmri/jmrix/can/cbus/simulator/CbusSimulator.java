@@ -147,9 +147,25 @@ public class CbusSimulator implements jmri.Disposable {
         return reporterOutput;
     }
 
+    /**
+     * Simulated turnout motors with feedback on this connection: off until
+     * enabled. Made when first asked for, and kept until disposed.
+     *
+     * @return the turnout feedback
+     * @since 5.19.2
+     */
+    @Nonnull
+    public synchronized CbusSimulatedTurnoutFeedback getTurnoutFeedback() {
+        if (turnoutFeedback == null) {
+            turnoutFeedback = new CbusSimulatedTurnoutFeedback(memo);
+        }
+        return turnoutFeedback;
+    }
+
     private CbusSimulatedSpeedSource speedSource;
     private CbusSimulatedSensorOutput sensorOutput;
     private CbusSimulatedReporterOutput reporterOutput;
+    private CbusSimulatedTurnoutFeedback turnoutFeedback;
 
     public CbusDummyCS getNewCS(){
         CbusDummyCS newcs = new CbusDummyCS(memo);
@@ -179,6 +195,10 @@ public class CbusSimulator implements jmri.Disposable {
             }
             if (reporterOutput != null) {
                 reporterOutput.dispose();
+            }
+            if (turnoutFeedback != null) {
+                CbusSimulatedTurnoutFeedback f = turnoutFeedback;
+                jmri.util.ThreadingUtil.runOnLayout(f::dispose);
             }
         }
         log.info("Stopping {} Simulations",_csArr.size()+_ndArr.size()+_evResponseArr.size());

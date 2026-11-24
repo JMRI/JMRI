@@ -105,6 +105,22 @@
         <li>&gt;0 : Only responds to requests for a particular node</li>
       </ul>
 
+      <h2 id="turnouts">Turnout Motors with Feedback</h2>
+
+      <p><span class="since">since 5.19.2</span> With Options &gt; Turnout motors answer with
+      feedback selected, the simulator answers each command to a CBUS turnout of this connection,
+      from JMRI or from another node on the bus, as a turnout motor with feedback would. After
+      300 ms, the turnout's feedback sensors report the new position:</p>
+
+      <ul>
+        <li>One sensor: active when thrown, inactive when closed.</li>
+        <li>Two sensors: the first active and the second inactive when thrown, the other way
+        round when closed.</li>
+      </ul>
+
+      <p>Only feedback sensors that are CBUS sensors of this connection are reported. Turnouts
+      with other feedback modes get no answer. It is off by default.</p>
+
       <h2 id="nodes">Nodes</h2>
 
       <p>No nodes are simulated by default.</p>
