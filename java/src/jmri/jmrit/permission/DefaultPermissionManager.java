@@ -7,7 +7,6 @@ import java.util.*;
 import jmri.*;
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
-import jmri.util.ThreadingUtil;
 import jmri.util.swing.JmriJOptionPane;
 
 import org.jdom2.*;
@@ -84,9 +83,9 @@ public class DefaultPermissionManager implements PermissionManager {
             factory.register(this);
         }
         loadPermissionSettings();
-        ThreadingUtil.runOnGUIEventually(() -> {
-            checkThatAllRolesKnowsAllPermissions();
-        });
+        // Every permission has been registered by now, so fill the roles in here, while this holds its lock: they are
+        // complete before the manager is handed out, and nothing can read or copy a role while it is being filled in.
+        checkThatAllRolesKnowsAllPermissions();
         return this;
     }
 
