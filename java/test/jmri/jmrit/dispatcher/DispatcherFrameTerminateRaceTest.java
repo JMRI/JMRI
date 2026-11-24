@@ -99,6 +99,27 @@ public class DispatcherFrameTerminateRaceTest {
     }
 
     @Test
+    public void testNoLayoutChangeOnceDisposed() throws Exception {
+        // a release the allocation thread was already running when the
+        // Dispatcher was disposed, as when a test ends
+        Section section = mock(Section.class);
+        AllocatedSection late = mock(AllocatedSection.class);
+        when(late.getSection()).thenReturn(section);
+        when(late.getActiveTrain()).thenReturn(train);
+        when(late.getSectionName()).thenReturn("Late Section");
+        d.getAllocatedSectionsList().add(late);
+        ThreadingUtil.runOnGUI(() -> d.dispose());
+
+        Thread allocatorTask = new Thread(() -> d.doReleaseAllocatedSection(late, true), "late release");
+        allocatorTask.start();
+        allocatorTask.join(10000);
+        Assertions.assertFalse(allocatorTask.isAlive(), "release finished");
+
+        verify(train, never()).releaseAllocatedSection(late);
+        verify(late, never()).dispose();
+    }
+
+    @Test
     public void testTerminatingTrainIsGivenNothingMore() throws Exception {
         terminating.set(true);
         Section section = mock(Section.class);
