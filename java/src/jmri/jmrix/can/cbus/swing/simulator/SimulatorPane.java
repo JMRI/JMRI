@@ -167,6 +167,9 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
 
         menuList.add(optionsMenu);
         menuList.add(addMenu);
+        if (_sim != null) {
+            menuList.add(_sim.makeLinkMenu());
+        }
         return menuList;
     }
 

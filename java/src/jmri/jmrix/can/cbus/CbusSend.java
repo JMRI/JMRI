@@ -69,6 +69,10 @@ public class CbusSend {
     public void sendWithDelay( CanReply r, Boolean sendReply, Boolean sendMessage, int delay ){
         CbusMessage.setId(r, tc.getCanid() );
         CbusMessage.setPri(r, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
+        if (sendReply && !sendMessage
+                && sendThroughLink(r, System.nanoTime() + TimeUnit.MILLISECONDS.toNanos(delay))) {
+            return;
+        }
         DelayedFrames.Frame frame = DelayedFrames.add(tc, r, sendReply, sendMessage, delay);
         TimerUtil.schedule(new TimerTask() {
             @Override
@@ -76,6 +80,21 @@ public class CbusSend {
                 DelayedFrames.deliverUpTo(frame);
             }
         }, delay);
+    }
+
+    /**
+     * A simulation's chance to take an incoming frame through the time its
+     * interface and bus take, instead of it arriving when its delay ends. Only
+     * {@link jmri.jmrix.can.cbus.simulator.CbusSimulatedSend} does.
+     *
+     * @param r         the frame, already given its CAN ID and priority
+     * @param sentNanos when its delay ends and it goes on the bus
+     * @return true if the frame has been taken, and will be received when it
+     *         comes through; false, as here, to deliver it as before
+     * @since 5.19.2
+     */
+    protected boolean sendThroughLink(@Nonnull CanReply r, long sentNanos) {
+        return false;
     }
 
     /**
