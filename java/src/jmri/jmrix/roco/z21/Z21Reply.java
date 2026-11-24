@@ -42,6 +42,9 @@ public class Z21Reply extends AbstractMRReply {
      */
     public Z21Reply(byte[] a, int l) {
         super();
+        if (l > _dataChars.length) {
+            _dataChars = new int[l]; // a message longer than the default size, such as a LocoNet message carried by the Z21
+        }
         _nDataChars = l;
         setBinary(true);
         for (int i = 0; i < _nDataChars; i++) {

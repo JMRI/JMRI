@@ -54,8 +54,14 @@ public class XNetFeedbackMessageCache implements XNetListener {
     
     private boolean requestCachedState(int statesPerNibble, int pNumber, XNetListener target) {
         int replyIndex = pNumber / statesPerNibble;
+        if (replyIndex < 0 || replyIndex >= messageCache.length) {
+            // beyond the addresses XpressNet feedback covers, as a Z21 can
+            // report: nothing is cached, so ask the layout
+            return true;
+        }
+        // one pending bit for each feedback reply (nibble)
         int bitIdx = replyIndex / 8;
-        int bitMask = pNumber % 8;
+        int bitMask = replyIndex % 8;
         XNetReply cached;
         
         // do not extend the lock to code execution:

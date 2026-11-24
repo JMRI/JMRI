@@ -416,6 +416,17 @@ public class Z21ReplyTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertEquals("Z21 Broadcast flags XpressNet Messages\nRailcom Messages\n", reply.toMonitorString());
     }
 
+    @Test
+    public void testMessageLongerThanTheDefaultSize() {
+        byte[] msg = new byte[130];
+        msg[0] = (byte) 130;
+        msg[2] = (byte) 0xA0; // LAN_LOCONET_Z21_RX
+        msg[129] = (byte) 0x55;
+        Z21Reply reply = new Z21Reply(msg, 130);
+        Assert.assertEquals("length", 130, reply.getNumDataElements());
+        Assert.assertEquals("last byte", 0x55, reply.getElement(129));
+    }
+
     @BeforeEach
     @Override
     public void setUp() {
