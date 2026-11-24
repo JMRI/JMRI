@@ -3129,7 +3129,7 @@ public class TrainBuilderBase extends TrainCommon {
                 if (rs.getRouteDestination() == rl) {
                     addLine(FIVE,
                             Bundle.getMessage("buildRouteLocation", rs.toString(), rs.getTrack().getTrackTypeName(),
-                                    rs.getLocationName(), rs.getTrackName(), getTrain().getName(), rl.getName(),
+                                    rs.getLocationName(), rs.getTrackName(), rs.getLastTrainName(), rl.getName(),
                                     rl.getId()));
                     addLine(FIVE, BLANK_LINE);
                     return false;
