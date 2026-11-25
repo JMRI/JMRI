@@ -210,6 +210,37 @@ abstract public class AbstractPortController implements PortAdapter {
         return null;
     }
 
+    /**
+     * The name of the option a simulator connection offers for simulated
+     * trains: whether they obey its throttles and set its sensors.
+     *
+     * @since 5.19.2
+     */
+    public static final String SIMULATED_TRAINS_OPTION = "SimulatedTrains"; // NOI18N
+
+    /**
+     * Offer the option for simulated trains, for a simulator connection that
+     * can drive them. Its first choice, the default, is to use the
+     * connection; the second leaves it out of simulated trains.
+     *
+     * @since 5.19.2
+     */
+    protected void addSimulatedTrainsOption() {
+        options.put(SIMULATED_TRAINS_OPTION, new Option(Bundle.getMessage("SimulatedTrainsOption"),
+                new String[]{Bundle.getMessage("SimulatedTrainsUse"), Bundle.getMessage("SimulatedTrainsDontUse")},
+                true));
+    }
+
+    /**
+     * @return true unless this connection offers the option for simulated
+     *         trains and it is set to leave the connection out
+     * @since 5.19.2
+     */
+    public boolean isForSimulatedTrains() {
+        Option o = options.get(SIMULATED_TRAINS_OPTION);
+        return o == null || o.getOptions()[0].equals(o.getCurrent());
+    }
+
 
     @Override
     public boolean isOptionTypeText(String option) {

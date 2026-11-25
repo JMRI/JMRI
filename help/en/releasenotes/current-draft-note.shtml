@@ -195,7 +195,9 @@
 
         <h4>TMCC</h4>
             <ul>
-                <li></li>
+                <li>Simulated trains obey a TMCC Simulator connection's engine throttles. The
+                    connection's Simulated trains setting can leave it out. The TMCC Simulator's
+                    thread now ends when the connection is closed.</li>
             </ul>
 
         <h4>Uhlenbrock Intellibox</h4>
