@@ -102,6 +102,14 @@
 
         <h4>LocoNet</h4>
             <ul>
+                <li>Simulated trains run on a LocoNet Simulator connection. It has a simulated
+                    command station, which keeps loco slots and answers the throttles' slot
+                    messages, so LocoNet throttles, Dispatcher and Warrants use slots in
+                    simulation; simulated trains obey the slots and report occupancy on the
+                    connection's sensors, with sensor input reports on the simulated LocoNet.
+                    The connection's Simulated trains setting can leave it out, and its
+                    Simulated command station setting goes back to the debug throttles used
+                    before.</li>
                 <li>New USB connection for the Uhlenbrock "LocoNet-USB and WLAN
                     Interface" 63860, listed under the "Uhlenbrock" system
                     manufacturer. See the

@@ -213,48 +213,55 @@ public class HexFileFrame extends JmriJFrame implements LocoNetListener {
         jmri.InstanceManager.deregister(ep, jmri.AddressedProgrammerManager.class);
         jmri.InstanceManager.deregister(ep, jmri.GlobalProgrammerManager.class);
 
-        // Install a debug throttle manager and override
-        DebugThrottleManager tm = new DebugThrottleManager(port.getSystemConnectionMemo() ) {
-            /**
-             * Only address 128 and above can be a long address
-             */
-            @Override
-            public boolean canBeLongAddress(int address) {
-                return (address >= 128);
-            }
-
-            @Override
-            public void requestThrottleSetup(LocoAddress a, boolean control) {
-                if (!(a instanceof DccLocoAddress)) {
-                    log.error("{} is not a DccLocoAddress",a);
-                    failedThrottleRequest(a, "LocoAddress " + a + " is not a DccLocoAddress");
-                    return;
-                }
-                DccLocoAddress address = (DccLocoAddress) a;
-
-                //check for slot limit exceeded
-                if (slotsInUse >= maxSlots) {
-                    log.warn("SLOT MAX of {} reached. Throttle {} not added. Current slotsInUse={}", maxSlots, a, slotsInUse);
-                    failedThrottleRequest(address, "SLOT MAX of " + maxSlots + " reached");
-                    return;
+        if (port.hasSimulatedCommandStation()) {
+            // a simulated command station answers the LocoNet throttles' slot messages
+            LnSimulatedCommandStation cs = new LnSimulatedCommandStation(packets, maxSlots);
+            packets.addLocoNetListener(~0, cs);
+            port.setSimulatedCommandStation(cs);
+        } else {
+            // Install a debug throttle manager and override
+            DebugThrottleManager tm = new DebugThrottleManager(port.getSystemConnectionMemo() ) {
+                /**
+                 * Only address 128 and above can be a long address
+                 */
+                @Override
+                public boolean canBeLongAddress(int address) {
+                    return (address >= 128);
                 }
 
-                slotsInUse++;
-                log.debug("Throttle {} requested. slotsInUse={}, maxSlots={}", a, slotsInUse, maxSlots);
-                super.requestThrottleSetup(a, control);
-            }
+                @Override
+                public void requestThrottleSetup(LocoAddress a, boolean control) {
+                    if (!(a instanceof DccLocoAddress)) {
+                        log.error("{} is not a DccLocoAddress",a);
+                        failedThrottleRequest(a, "LocoAddress " + a + " is not a DccLocoAddress");
+                        return;
+                    }
+                    DccLocoAddress address = (DccLocoAddress) a;
 
-            @Override
-            public boolean disposeThrottle(DccThrottle t, jmri.ThrottleListener l) {
-                if (slotsInUse > 0) slotsInUse--;
-                log.debug("Throttle {} disposed. slotsInUse={}, maxSlots={}", t, slotsInUse, maxSlots);
-                return super.disposeThrottle(t, l);
-            }
-        };
+                    //check for slot limit exceeded
+                    if (slotsInUse >= maxSlots) {
+                        log.warn("SLOT MAX of {} reached. Throttle {} not added. Current slotsInUse={}", maxSlots, a, slotsInUse);
+                        failedThrottleRequest(address, "SLOT MAX of " + maxSlots + " reached");
+                        return;
+                    }
 
-        port.getSystemConnectionMemo().setThrottleManager(tm);
-        jmri.InstanceManager.setThrottleManager(
-                port.getSystemConnectionMemo().getThrottleManager());
+                    slotsInUse++;
+                    log.debug("Throttle {} requested. slotsInUse={}, maxSlots={}", a, slotsInUse, maxSlots);
+                    super.requestThrottleSetup(a, control);
+                }
+
+                @Override
+                public boolean disposeThrottle(DccThrottle t, jmri.ThrottleListener l) {
+                    if (slotsInUse > 0) slotsInUse--;
+                    log.debug("Throttle {} disposed. slotsInUse={}, maxSlots={}", t, slotsInUse, maxSlots);
+                    return super.disposeThrottle(t, l);
+                }
+            };
+
+            port.getSystemConnectionMemo().setThrottleManager(tm);
+            jmri.InstanceManager.setThrottleManager(
+                    port.getSystemConnectionMemo().getThrottleManager());
+        }
 
         // start listening for messages
         port.getSystemConnectionMemo().getLnTrafficController().addLocoNetListener(~0, this);
