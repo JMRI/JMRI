@@ -43,6 +43,7 @@ public class SimulatorAdapter extends EasyDccPortController implements Runnable 
     public SimulatorAdapter() {
         super(new EasyDccSystemConnectionMemo("E", "EasyDCC Simulator")); // pass customized user name
         setManufacturer(jmri.jmrix.easydcc.EasyDccConnectionTypeList.EASYDCC);
+        addSimulatedTrainsOption();
     }
 
     /**
@@ -247,12 +248,55 @@ public class SimulatorAdapter extends EasyDccPortController implements Runnable 
     }
 
     /**
+     * Told of each message the simulated EasyDCC receives, as simulated trains
+     * need them.
+     *
+     * @since 5.19.2
+     */
+    @FunctionalInterface
+    public interface MessageListener {
+
+        /**
+         * @param message   the message, as text, such as "Q 03 3F 9F A3"
+         * @param timeNanos when it was received, on the
+         *                  {@link System#nanoTime()} scale
+         */
+        void messageReceived(String message, long timeNanos);
+    }
+
+    private final java.util.List<MessageListener> messageListeners =
+            new java.util.concurrent.CopyOnWriteArrayList<>();
+
+    /**
+     * @param listener to be told of each message received
+     * @since 5.19.2
+     */
+    public void addMessageListener(MessageListener listener) {
+        messageListeners.add(listener);
+    }
+
+    /**
+     * @param listener to be told no more
+     * @since 5.19.2
+     */
+    public void removeMessageListener(MessageListener listener) {
+        messageListeners.remove(listener);
+    }
+
+    /**
      * This is the heart of the simulation. It translates an
      * incoming EasyDccMessage into an outgoing EasyDccReply.
      *
      * As yet, not all messages receive a meaningful reply. TODO: Throttle, Program
      */
     private EasyDccReply generateReply(EasyDccMessage msg) {
+        if (!messageListeners.isEmpty()) {
+            long now = System.nanoTime();
+            String text = msg.toString();
+            for (MessageListener l : messageListeners) {
+                l.messageReceived(text, now);
+            }
+        }
         log.debug("Generate Reply to message type {} (string = {})", msg.toString().charAt(0), msg.toString());
 
         EasyDccReply reply = new EasyDccReply();
