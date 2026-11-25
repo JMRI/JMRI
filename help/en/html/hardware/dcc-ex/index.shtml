@@ -131,6 +131,11 @@
       For example, the Simulator does not (yet) support assigning, storing, and remembering Sensor and Turnout assignments. The Simulator interface
       is functional enough to keep JMRI "happy" while working on offline projects such as Operations or Panel and Logix design, but is not intended to be a full-fledged EX-CommandStation Emulator.</p>
 
+      <p>The Simulator can run <a href="../../tools/simulatedtrains/index.shtml">Simulated Trains</a>:
+      they obey its throttles, and it reports their detection on its sensors. To leave it out of
+      simulated trains, set <strong>Simulated trains</strong> in the connection's additional
+      settings to <strong>leave this connection out</strong>.</p>
+
       <h4>DCC-EX Over TCP</h4>
 
       <p>For the DCC-EX Over TCP connection, a host computer must be connected to the EX-CommandStation over a Serial or Network connection (or a simulator). This host computer then runs the DCC-EX Over TCP Server. 
