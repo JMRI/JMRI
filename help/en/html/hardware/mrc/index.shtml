@@ -69,6 +69,13 @@
       Consisting is NOT currently supported</strong>
       </p>
 
+      <h3>Simulator</h3>
+      <p>On an MRC Simulator connection, <a href="../../tools/simulatedtrains/index.shtml">Simulated
+      Trains</a> obey JMRI's MRC throttles; the Simulator has no detection, so give the Blocks
+      Internal sensors. To leave the Simulator out of simulated trains, set <strong>Simulated
+      trains</strong> in the Additional Connection Settings to <strong>leave this connection
+      out</strong>.</p>
+
       <h3>Turnouts</h3>
       MRC-connected Turnouts have System Names like "MT123", where "M" is the name for MRC System,
       "T" means Turnout, and "123" is the address.

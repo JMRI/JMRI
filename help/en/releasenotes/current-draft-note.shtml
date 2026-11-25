@@ -135,7 +135,8 @@
 
         <h4>MRC</h4>
             <ul>
-                <li></li>
+                <li>Simulated trains obey an MRC Simulator connection's throttles. The connection's
+                    Simulated trains setting can leave it out.</li>
             </ul>
 
         <h4>NCE</h4>
