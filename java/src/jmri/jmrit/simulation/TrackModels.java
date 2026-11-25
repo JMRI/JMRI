@@ -1,5 +1,6 @@
 package jmri.jmrit.simulation;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -9,6 +10,7 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.Block;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Portal;
 
@@ -172,7 +174,7 @@ final class TrackModels {
                 throw new IllegalArgumentException(message("NoPlace", data.name, fromName).text());
             }
             if (entries.size() > 1) {
-                throw new IllegalArgumentException(message("MoreThanOnePlace", data.name, fromName).text());
+                return oneDrawing(entries, data.name, fromName);
             }
             return entries.get(0);
         }
@@ -186,6 +188,34 @@ final class TrackModels {
             }
         }
         return new PathEntry(this, block, from, null);
+    }
+
+    /**
+     * Where a Block is entered at more than one place: one place drawn on
+     * several panels is still one place, so if each entry is on a panel of
+     * its own, take one, preferring a drawing that does not end in the
+     * Block.
+     *
+     * @param entries  the entries, more than one
+     * @param name     the Block's name, for the message
+     * @param fromName the neighbour's name, for the message
+     * @return the entry
+     * @throws IllegalArgumentException if two entries are on the same panel
+     */
+    @Nonnull
+    private LayoutEntry oneDrawing(List<LayoutEntry> entries, String name, String fromName) {
+        Set<LayoutEditor> panels = new HashSet<>();
+        for (LayoutEntry e : entries) {
+            if (!panels.add(snapshot.panel(e.piece()))) {
+                throw new IllegalArgumentException(message("MoreThanOnePlace", name, fromName).text());
+            }
+        }
+        for (LayoutEntry e : entries) {
+            if (e.followDrawing().stop != Passage.Stop.END_OF_TRACK) {
+                return e;
+            }
+        }
+        return entries.get(0);
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TrackModels.class);

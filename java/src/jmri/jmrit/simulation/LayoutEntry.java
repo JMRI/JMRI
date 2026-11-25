@@ -12,6 +12,7 @@ import javax.annotation.Nonnull;
 import jmri.Block;
 import jmri.Turnout;
 import jmri.jmrit.display.layoutEditor.HitPointType;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
 import jmri.jmrit.display.layoutEditor.LayoutTrack;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
@@ -390,6 +391,14 @@ final class LayoutEntry extends TrackEntry {
         return b;
     }
 
+    /**
+     * @return the piece of track this entry is at
+     */
+    @Nonnull
+    LayoutTrack piece() {
+        return piece;
+    }
+
     @CheckForNull
     Block blockOrNull() {
         return blockIn(models.snapshot());
@@ -487,9 +496,49 @@ final class LayoutEntry extends TrackEntry {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * A Block can be drawn on more than one panel, and a panel showing only
+     * part of the layout may draw it as far as an end bumper, or a track end
+     * with nothing connected, where the track really goes on. If this
+     * drawing ends in the Block, and another panel draws the same Block
+     * entered from the same neighbouring Block going on, that drawing is
+     * followed instead.
+     */
     @Override
     @Nonnull
     Passage follow() {
+        Passage p = followDrawing();
+        if (p.stop != Passage.Stop.END_OF_TRACK) {
+            return p;
+        }
+        TrackSnapshot snap = models.snapshot();
+        Block block = blockIn(snap);
+        TrackEntry rev = reverse();
+        Block from = (rev instanceof LayoutEntry) ? ((LayoutEntry) rev).blockIn(snap) : null;
+        if (block == null || from == null) {
+            return p;
+        }
+        LayoutEditor panel = snap.panel(piece);
+        for (LayoutEntry other : entriesInto(models, block, from)) {
+            if (snap.panel(other.piece) != panel) {
+                Passage q = other.followDrawing();
+                if (q.stop != Passage.Stop.END_OF_TRACK) {
+                    return new Passage(this, q.length, q.route, q.next, q.back, q.stop, q.reason);
+                }
+            }
+        }
+        return p;
+    }
+
+    /**
+     * Follow this drawing only, through the Block to its far end.
+     *
+     * @return the passage as this drawing has it
+     */
+    @Nonnull
+    Passage followDrawing() {
         TrackSnapshot snap = models.snapshot();
         Block block = blockIn(snap);
         List<Object> steps = new ArrayList<>();

@@ -230,6 +230,66 @@ public class LayoutEntryTest {
         assertEquals(intoC, Objects.requireNonNull(intoC.reverse(), "a way back from C").reverse());
     }
 
+    /**
+     * A line drawn in full on one panel, EB - A - B - C - EB, and in part on
+     * a second, EB - A - B - EB, as a panel showing one area of a layout
+     * draws the line beyond it.
+     *
+     * @return the Blocks A, B and C, and the second panel
+     */
+    private Object[] partlyDrawnTwice() {
+        Block[] b = {block("A", 450), block("B", 450), block("C", 450)};
+        PositionablePoint eb1 = point(PositionablePoint.PointType.END_BUMPER);
+        PositionablePoint a1 = point(PositionablePoint.PointType.ANCHOR);
+        PositionablePoint a2 = point(PositionablePoint.PointType.ANCHOR);
+        PositionablePoint eb2 = point(PositionablePoint.PointType.END_BUMPER);
+        segment(eb1, HitPointType.POS_POINT, a1, HitPointType.POS_POINT, b[0]);
+        segment(a1, HitPointType.POS_POINT, a2, HitPointType.POS_POINT, b[1]);
+        segment(a2, HitPointType.POS_POINT, eb2, HitPointType.POS_POINT, b[2]);
+        LayoutEditor full = le;
+        LayoutEditor part = ThreadingUtil.runOnGUIwithReturn(() -> new LayoutEditor("Simulation Test Area"));
+        le = part;
+        PositionablePoint eb3 = point(PositionablePoint.PointType.END_BUMPER);
+        PositionablePoint a3 = point(PositionablePoint.PointType.ANCHOR);
+        PositionablePoint eb4 = point(PositionablePoint.PointType.END_BUMPER);
+        segment(eb3, HitPointType.POS_POINT, a3, HitPointType.POS_POINT, b[0]);
+        segment(a3, HitPointType.POS_POINT, eb4, HitPointType.POS_POINT, b[1]);
+        le = full;
+        copy();
+        return new Object[]{b, part};
+    }
+
+    @Test
+    public void testBlockDrawnInPartOnAnotherPanelGoesOn() {
+        Object[] made = partlyDrawnTwice();
+        Block[] b = (Block[]) made[0];
+        LayoutEditor part = (LayoutEditor) made[1];
+        try {
+            TrackSnapshot snap = models.snapshot();
+            List<LayoutEntry> intoB = LayoutEntry.entriesInto(models, b[1], b[0]);
+            assertEquals(2, intoB.size(), "B is entered from A on both panels");
+            LayoutEntry onPart = null;
+            for (LayoutEntry e : intoB) {
+                if (snap.panel(e.piece()) == part) {
+                    onPart = e;
+                }
+            }
+            LayoutEntry stub = Objects.requireNonNull(onPart, "an entry on the second panel");
+            assertEquals(Passage.Stop.END_OF_TRACK, stub.followDrawing().stop, "the second panel's B ends");
+            Passage p = stub.follow();
+            assertEquals(Passage.Stop.NONE, p.stop, "the train goes on, by the full drawing");
+            assertEquals(b[2], next(p).getBlock());
+            assertEquals(stub, p.entry);
+            // placing a train comes into B by the full drawing, not "more than one place"
+            assertEquals(b[2], next(models.entryInto(b[1], b[0]).follow()).getBlock());
+            // a real end of the track still ends
+            assertEquals(Passage.Stop.END_OF_TRACK, models.entryInto(b[2], b[1]).follow().stop);
+            assertEquals(b[0], next(models.entryInto(b[1], b[2]).follow()).getBlock(), "C back through B to A");
+        } finally {
+            JUnitUtil.dispose(part);
+        }
+    }
+
     @Test
     public void testUnknownTurnoutBlocks() {
         Block[] b = siding(new LayoutRHTurnout[1]);
