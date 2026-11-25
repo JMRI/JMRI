@@ -55,6 +55,43 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
                 new Option(Bundle.getMessage("MakeLabel", Bundle.getMessage("SprogSimOption")), // NOI18N
                         new String[]{Bundle.getMessage("SprogProgrammerTitle"),
                                 Bundle.getMessage("SprogCSTitle")}, true));
+        addSimulatedTrainsOption();
+    }
+
+    /**
+     * Told of each message the simulated SPROG receives, as simulated trains
+     * need them.
+     *
+     * @since 5.19.2
+     */
+    @FunctionalInterface
+    public interface MessageListener {
+
+        /**
+         * @param message   the message, as text, such as "O 03 3F 9F A3"
+         * @param timeNanos when it was received, on the
+         *                  {@link System#nanoTime()} scale
+         */
+        void messageReceived(String message, long timeNanos);
+    }
+
+    private final java.util.List<MessageListener> messageListeners =
+            new java.util.concurrent.CopyOnWriteArrayList<>();
+
+    /**
+     * @param listener to be told of each message received
+     * @since 5.19.2
+     */
+    public void addMessageListener(MessageListener listener) {
+        messageListeners.add(listener);
+    }
+
+    /**
+     * @param listener to be told no more
+     * @since 5.19.2
+     */
+    public void removeMessageListener(MessageListener listener) {
+        messageListeners.remove(listener);
     }
 
     /**
@@ -285,6 +322,13 @@ public class SimulatorAdapter extends SprogPortController implements Runnable {
      * @see jmri.jmrix.sprog.SprogReply#value()
      */
     private SprogReply generateReply(SprogMessage msg) {
+        if (!messageListeners.isEmpty()) {
+            long now = System.nanoTime();
+            String text = msg.toString();
+            for (MessageListener l : messageListeners) {
+                l.messageReceived(text, now);
+            }
+        }
         log.debug("Generate Reply to message type {} (string = {})", msg.toString().charAt(0), msg.toString());
 
         SprogReply reply = new SprogReply();

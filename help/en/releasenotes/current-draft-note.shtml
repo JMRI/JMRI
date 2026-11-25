@@ -180,7 +180,9 @@
 
         <h4>SPROG</h4>
             <ul>
-                <li></li>
+                <li>Simulated trains obey a SPROG Simulator connection's throttles, as a programmer or
+                    as a command station. The connection's Simulated trains setting can leave it
+                    out.</li>
             </ul>
 
         <h4>SRCP</h4>
