@@ -289,11 +289,9 @@ public class ListFrame extends jmri.util.JmriJFrame {
                         + numOutputBits + " " + Bundle.getMessage("OutputBits"));
             } else if (type == SerialNode.ESP32NODE) {
                 int bitsPerCard = selNode.getNumBitsPerCard();
-                int numInputCards = selNode.numInputCards();
-                int numOutputCards = selNode.numOutputCards();
-                numInputBits = bitsPerCard * numInputCards;
-                numOutputBits = bitsPerCard * numOutputCards;
-                nodeInfoText.setText("ESP32Node - " + bitsPerCard + " " + Bundle.getMessage("BitsPerCard")
+                numInputBits = selNode.numInputBits();
+                numOutputBits = selNode.numOutputBits();
+                nodeInfoText.setText("ESP32CPNode - " + bitsPerCard + " " + Bundle.getMessage("BitsPerCard")
                         + ", " + numInputBits + " " + Bundle.getMessage("InputBitsAnd") + " "
                         + numOutputBits + " " + Bundle.getMessage("OutputBits"));
             }

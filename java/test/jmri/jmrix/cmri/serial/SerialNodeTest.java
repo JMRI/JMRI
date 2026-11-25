@@ -207,6 +207,87 @@ public class SerialNodeTest {
     }
 
     @Test
+    public void testEsp32NodeFixedNumbers() {
+        // ESP32CPNode: every card position has its byte, whatever its type (firmware v2.07)
+        SerialNode e = new SerialNode(2, SerialNode.ESP32NODE, stcs);
+        Assert.assertEquals("64 cards, all output", 64, e.numOutputCards());
+        e.setCardTypeByAddress(2, SerialNode.INPUT_CARD);   // 0x21 port A an input
+        Assert.assertEquals("one input card", 1, e.numInputCards());
+        Assert.assertEquals("64 cards of output bits", 512, e.numOutputBits());
+        Assert.assertEquals("16 cards of input bits", 128, e.numInputBits());
+        Assert.assertEquals("nothing set: first card only", 1, e.numOutputBytes());
+        e.setOutputBit(17, false);    // CT2017 = 0x21 A0 = card 2 bit 0
+        Assert.assertEquals("sent up to card 2", 3, e.numOutputBytes());
+        e.setOutputBit(1, false);
+        Assert.assertEquals("a lower card adds nothing", 3, e.numOutputBytes());
+        e.setOutputBit(129, false);   // CT2129 = 0x40 ch 0 = card 16 bit 0
+        e.setOutputBit(260, false);   // CT2260 = signal logic bit 4 = card 32 bit 3
+        e.setOutputBit(512, false);   // CT2512 = signal logic bit 256 = card 63 bit 7
+        AbstractMRMessage m = e.createOutPacket();
+        Assert.assertEquals("packet size: address, T, 64 bytes", 66, m.getNumDataElements());
+        Assert.assertEquals("packet type", 84, m.getElement(1));  // 'T'
+        Assert.assertEquals("card 16 = servo board 0x40 ch 0-7", 1, m.getElement(2 + 16) & 0xff);
+        Assert.assertEquals("card 32 bit 3", 8, m.getElement(2 + 32) & 0xff);
+        Assert.assertEquals("card 63 bit 7", 128, m.getElement(2 + 63) & 0xff);
+        // Init: NI 16 (16 is DLE, so it goes as DLE 16), NO 64
+        AbstractMRMessage i = e.createInitPacket();
+        Assert.assertEquals("init NDP 'E'", 69, i.getElement(2));
+        Assert.assertEquals("init NI escaped", 16, i.getElement(7));
+        Assert.assertEquals("init NI", 16, i.getElement(8));
+        Assert.assertEquals("init NO", 64, i.getElement(9));
+    }
+
+    @Test
+    public void testEsp32NodePartlyFilledSendsOnlyWhatItUses() {
+        // only chips in use: the Transmit stops at the last card with an output set
+        SerialNode e = new SerialNode(4, SerialNode.ESP32NODE, stcs);
+        e.setOutputBit(9, false);     // card 1 bit 0
+        AbstractMRMessage m = e.createOutPacket();
+        Assert.assertEquals("packet size: address, T, 2 bytes", 4, m.getNumDataElements());
+        Assert.assertEquals("card 1 keeps its position", 1, m.getElement(2 + 1) & 0xff);
+    }
+
+    @Test
+    public void testEsp32NodeOlderSetupGetsAllCards() {
+        // a profile saved with 54 cards (firmware v2.07-v2.10), 0x21 port A Input
+        SerialNode e = new SerialNode(3, SerialNode.ESP32NODE, stcs);
+        for (int i = 0; i < SerialNode.MAXCARDLOCATIONBYTES; i++) {
+            e.setCardTypeLocation(i, i < 54 ? SerialNode.OUTPUT_CARD : SerialNode.NO_CARD);
+        }
+        e.setCardTypeLocation(2, SerialNode.INPUT_CARD);
+        e.setCardTypeLocation(5, SerialNode.NO_CARD);
+        e.setEsp32FixedCards();
+        Assert.assertTrue("input kept", e.isInputCard(2));
+        Assert.assertTrue("No Card chip port becomes Output", e.isOutputCard(5));
+        Assert.assertTrue("card 63 now Output", e.isOutputCard(63));
+        Assert.assertEquals("64 cards", 64, e.numInputCards() + e.numOutputCards());
+    }
+
+    @Test
+    public void testEsp32NodeSensorKeepsItsCardPosition() {
+        // one Input port, on card 5 (0x22 B): its sensors are bits 41-48, read from
+        // poll reply byte 5, though it is the node's only input card
+        SerialNode e = new SerialNode(5, SerialNode.ESP32NODE, stcs);
+        e.setCardTypeByAddress(5, SerialNode.INPUT_CARD);
+        Assert.assertEquals("one input card", 1, e.numInputCards());
+        SerialSensor s = new SerialSensor("CS5041", "card 5 bit 0");
+        e.registerSensor(s, 40);
+        Assert.assertTrue("sensor accepted", e.getSensorsActive());
+        SerialReply r = new SerialReply();
+        r.setElement(2 + 5, 1);
+        e.markChanges(r);
+        Assert.assertEquals("read from card 5", Sensor.ACTIVE, s.getKnownState());
+    }
+
+    @Test
+    public void testOtherNodeTypesKeepTheirBitCounts() {
+        SerialNode c = new SerialNode(6, SerialNode.CPNODE, stcs);
+        Assert.assertEquals("input bits", c.numInputCards() * c.getNumBitsPerCard(), c.numInputBits());
+        Assert.assertEquals("output bits", c.numOutputCards() * c.getNumBitsPerCard(), c.numOutputBits());
+        Assert.assertEquals("output bytes", c.numOutputCards() * c.getNumBitsPerCard() / 8, c.numOutputBytes());
+    }
+
+    @Test
     public void testMarkChangesInitial() {
         SerialNode b = new SerialNode(stcs);
         SerialSensor s1 = new SerialSensor("CS1", "a");
