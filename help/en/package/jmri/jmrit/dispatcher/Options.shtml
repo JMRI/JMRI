@@ -170,6 +170,17 @@
         </li>
 
         <li>
+          <a id="UseDarkBlocks" name="UseDarkBlocks"></a>
+          <p>Check <strong>Track Trains through Dark Blocks</strong> to run automatic trains through
+          dark blocks, blocks in Sections with no occupancy sensor, as through <a href=
+          "../beantable/BlockTable.shtml">ghost blocks</a>. Dispatcher shows each dark block
+          unoccupied, sets it occupied as an automatic train comes to it, and holds it occupied
+          until the train is clear of it. As for ghost blocks, there must not be two next to each
+          other on a route. Unchecked, the default, a dark block's occupancy is not known, and an
+          automatic train is stopped at it.</p>
+        </li>
+
+        <li>
           <p>Check <strong>Use short Active Train names</strong> to use the train name as the
           Active Train name in tables and selection boxes where Active Trains are referenced.
           Uncheck to use the full Active Train name in those locations.</p>

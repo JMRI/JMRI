@@ -557,6 +557,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
     private boolean _useStrictTrainTracking = true;
     private boolean _WaitWhereTrainsCanStop = false;
     private boolean _StopByDistanceAsBefore = false;
+    private boolean _useDarkBlocks = false;
     private boolean _useTurnoutConnectionDelay = false;
     private boolean _ShortActiveTrainNames = false;
     private boolean _ShortNameInBlock = true;
@@ -3589,6 +3590,41 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
 
     protected void setStopByDistanceAsBefore(boolean set) {
         _StopByDistanceAsBefore = set;
+    }
+
+    /**
+     * Whether Dispatcher tracks automatic trains through dark Blocks, Blocks
+     * in Sections with no occupancy sensor, as it does through ghost Blocks.
+     *
+     * @return true to track trains through dark Blocks; false, the default,
+     *         to stop a train at a dark Block, as before
+     */
+    protected boolean getUseDarkBlocks() {
+        return _useDarkBlocks;
+    }
+
+    /**
+     * Set whether Dispatcher tracks automatic trains through dark Blocks.
+     * Turning it on shows every dark Block in a Section as unoccupied, so
+     * that its Section's occupancy is known; turning it off shows them as
+     * undetected again.
+     *
+     * @param set true to track trains through dark Blocks
+     */
+    protected void setUseDarkBlocks(boolean set) {
+        _useDarkBlocks = set;
+        for (Section section : InstanceManager.getDefault(SectionManager.class).getNamedBeanSet()) {
+            for (Block b : section.getBlockList()) {
+                if (b.getSensor() != null) {
+                    continue;
+                }
+                if (set && b.getState() == Block.UNDETECTED) {
+                    b.goingInactive();
+                } else if (!set && b.getState() == Block.UNOCCUPIED) {
+                    b.setState(Block.UNDETECTED);
+                }
+            }
+        }
     }
 
     protected boolean getUseStrictTrainTracking() {

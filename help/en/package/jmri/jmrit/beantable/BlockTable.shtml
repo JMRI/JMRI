@@ -223,6 +223,20 @@
           at least one real block between ghost blocks.  Note:  This means ghost blocks cannot be
           used for both halves of crossovers.  A ghost block could be used for the recommended
           third block for double crossovers.</p>
+
+          <p>Dispatcher sets the sensor active as an automatic train comes to the ghost block, and
+          holds it active until the train is clear of it: until the block before it is empty, and the
+          block after it has been entered and is empty again. A train can stop with its end still on
+          a ghost block, as nothing can say when it has left; the ghost block then shows occupied, so
+          its Section is not given to another train, until the train moves on. If two ghost blocks
+          are next to each other on a train's route, Dispatcher stops the train before the
+          second.</p>
+
+          <p>With <a href="../dispatcher/Options.shtml#UseDarkBlocks">Track Trains through Dark
+          Blocks</a> checked in the Dispatcher options, a block with no sensor at all, a dark block,
+          can be used in the same way, without an internal sensor: Dispatcher sets the block itself,
+          which Signal Mast Logic follows. Simple Signal Logic for signal heads watches sensors, as
+          Logix, LogixNG or scripts may, and they need a ghost block.</p>
         </li>
 
         <li>

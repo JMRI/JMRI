@@ -1426,20 +1426,49 @@ public class AutoActiveTrain implements ThrottleListener {
         if ( !(getTargetSpeed() == 0.0f || isStopping())
                 && _nextBlock != null
                 && _currentBlock != null
-                && _nextBlock.getSensor() != null
-                && _nextBlock.getIsGhost()) {
-            if ( _currentBlock.getIsGhost()) {
+                && isUndetected(_nextBlock)) {
+            if (isUndetected(_currentBlock)) {
                 log.error("Stopping due to two consecutive no sensor blocks [{}], [{}]",
                         _currentBlock.getDisplayName(), _nextBlock.getDisplayName());
-            } else {
-                try {
-                    _currentBlock.addPropertyChangeListener(new DarkTerritoryListener(_nextBlock.getSensor()));
-                    _nextBlock.getSensor().setKnownState(Sensor.ACTIVE);
-                } catch (jmri.JmriException ex) {
-                    log.error("Error entering darkterratory");
-                }
+                saveSpeedAndDirection();
+                setSpeedImmediate(-1); // Estop
+                setSavedStatus(_activeTrain.getStatus());
+                _activeTrain.setStatus(ActiveTrain.STOPPED);
+            } else if (!GhostHold.isHeld(_nextBlock)) {
+                new GhostHold(_nextBlock, _currentBlock, blockAfterGhost(_nextBlock)).start();
             }
         }
+    }
+
+    /**
+     * Whether Dispatcher drives a Block's occupancy itself: a ghost Block,
+     * through its internal sensor, or, with the Dark Blocks option, a Block
+     * with no sensor at all.
+     *
+     * @param b a Block
+     * @return true if b is a ghost Block, or a dark Block Dispatcher tracks
+     */
+    private boolean isUndetected(Block b) {
+        if (b.getSensor() == null) {
+            return _dispatcher.getUseDarkBlocks();
+        }
+        return b.getIsGhost();
+    }
+
+    /**
+     * The Block a train goes into after a ghost Block, on its route.
+     *
+     * @param ghost the ghost Block
+     * @return the Block after it, or null if not known yet
+     */
+    @CheckForNull
+    private Block blockAfterGhost(Block ghost) {
+        for (AllocatedSection as : _activeTrain.getAllocatedSectionList()) {
+            if (as.getSection().getBlockList().contains(ghost)) {
+                return getNextBlock(ghost, as);
+            }
+        }
+        return null;
     }
 
     /*
@@ -2553,6 +2582,11 @@ public class AutoActiveTrain implements ThrottleListener {
      */
     private void setStopByBlockOccupancy(boolean ignoreNotOccupied) {
         // note: _stoppingBlock must be set before invoking this method
+        Block beforeGhost = GhostHold.blockBefore(_stoppingBlock);
+        if (beforeGhost != null) {
+            // a ghost Block is held until the train is clear of it: watch the Block the train came from
+            _stoppingBlock = beforeGhost;
+        }
         //  verify that _stoppingBlock is actually occupied, if not stop immediately
         if (_stoppingBlock.getState() == Block.OCCUPIED || ignoreNotOccupied) {
             setDecreasedSpeedBeforeStop();
@@ -3066,6 +3100,121 @@ public class AutoActiveTrain implements ThrottleListener {
      * the throttle's actual ones.
      */
     private static final float NO_SPEED_FACTOR = 1.0f;
+
+    /**
+     * Holds a ghost Block's sensor active, or a dark Block occupied, while a
+     * train is on it. Neither has a detector, so the train's tail can't be seen leaving it:
+     * it has left once the Blocks either side of the ghost on the train's
+     * route are both empty, the one before it emptied and the one after it
+     * entered and emptied. Clearing the sensor when only the Block before
+     * empties, as before, freed the ghost (often a turnout) with the end
+     * of the train still on it, so another train could be given it.
+     */
+    static class GhostHold implements PropertyChangeListener {
+        // by identity: Blocks are equal by system name, and a Block may be replaced by one of the same name
+        private static final java.util.Map<Block, GhostHold> HELD =
+                java.util.Collections.synchronizedMap(new java.util.IdentityHashMap<>());
+        private final Block ghost;
+        private final Block before;
+        private Block after;
+        private boolean afterEntered = false;
+
+        /**
+         * @return true if a train is holding this ghost Block
+         * @param ghost a ghost Block
+         */
+        static boolean isHeld(Block ghost) {
+            return HELD.containsKey(ghost);
+        }
+
+        /**
+         * The Block a train came into a held ghost Block from. Its tail is
+         * off that Block when it empties, the moment the ghost's sensor
+         * used to be cleared, so a stop that watches the ghost watches it
+         * instead.
+         *
+         * @param ghost a Block
+         * @return the Block before it, if a train is holding it; else null
+         */
+        @CheckForNull
+        static Block blockBefore(Block ghost) {
+            GhostHold h = HELD.get(ghost);
+            return h == null ? null : h.before;
+        }
+
+        GhostHold(Block ghost, Block before, @CheckForNull Block after) {
+            this.ghost = ghost;
+            this.before = before;
+            this.after = after;
+        }
+
+        void start() {
+            HELD.put(ghost, this);
+            before.addPropertyChangeListener(this);
+            if (after != null) {
+                after.addPropertyChangeListener(this);
+            }
+            setGhost(Sensor.ACTIVE);
+        }
+
+        @Override
+        public void propertyChange(PropertyChangeEvent e) {
+            if (!"state".equals(e.getPropertyName())) {
+                return;
+            }
+            if (after == null && before.getState() == Block.UNOCCUPIED) {
+                // not known when the ghost was set: the neighbour the train's front is in
+                for (Path p : ghost.getPaths()) {
+                    Block n = p.getBlock();
+                    if (n != null && n != before && n.getState() == Block.OCCUPIED) {
+                        after = n;
+                        after.addPropertyChangeListener(this);
+                        break;
+                    }
+                }
+                if (after == null) {
+                    end(); // nothing either side of the ghost: the train is not on it
+                    return;
+                }
+            }
+            if (after != null && after.getState() == Block.OCCUPIED) {
+                afterEntered = true;
+            }
+            if (before.getState() == Block.UNOCCUPIED && afterEntered
+                    && after.getState() == Block.UNOCCUPIED) {
+                end();
+            }
+        }
+
+        private void end() {
+            before.removePropertyChangeListener(this);
+            if (after != null) {
+                after.removePropertyChangeListener(this);
+            }
+            HELD.remove(ghost);
+            setGhost(Sensor.INACTIVE);
+        }
+
+        private void setGhost(int state) {
+            Sensor s = ghost.getSensor();
+            if (s == null) {
+                // a dark Block: no sensor, so set the Block itself
+                log.trace("Dark Block {} {}", ghost.getDisplayName(), state == Sensor.ACTIVE ? "occupied" : "unoccupied");
+                if (state == Sensor.ACTIVE) {
+                    ghost.goingActive();
+                } else {
+                    ghost.goingInactive();
+                }
+                return;
+            }
+            try {
+                log.trace("Ghost Block {} sensor {}", ghost.getDisplayName(), state == Sensor.ACTIVE ? "active" : "inactive");
+                s.setKnownState(state);
+            } catch (jmri.JmriException ex) {
+                log.error("Could not set ghost Block {}'s sensor", ghost.getDisplayName(), ex);
+            }
+        }
+    }
 
     class AutoEngineer  {
 
@@ -3596,33 +3745,6 @@ public class AutoActiveTrain implements ThrottleListener {
             else if (rampRate.equals(Bundle.getMessage("RAMP_PHYSICS")))
                 return RAMP_PHYSICS;
             return RAMP_NONE;
-        }
-
-        /*
-         * Listener for switching Ghost blocks to unoccupied
-         */
-        static class DarkTerritoryListener implements PropertyChangeListener {
-            private Sensor sensor;
-
-            public DarkTerritoryListener(Sensor sensor) {
-                this.sensor = sensor;
-                log.trace("Sensor[{}]", sensor.getDisplayName());
-            }
-
-            @Override
-            public void propertyChange(PropertyChangeEvent e) {
-                if (e.getPropertyName().equals("state")) {
-                    ((Block) e.getSource()).removePropertyChangeListener(this);
-                    if (e.getNewValue().equals(Block.UNOCCUPIED)) {
-                        try {
-                            log.trace("Sensor INACTIVE[{}]", sensor.getDisplayName());
-                            sensor.setKnownState(Sensor.INACTIVE);
-                        } catch (jmri.JmriException ex) {
-                            log.error("Error leaving darkterratory");
-                        }
-                    }
-                }
-            }
         }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AutoActiveTrain.class);

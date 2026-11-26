@@ -143,6 +143,7 @@ public class OptionsMenu extends JMenu {
     JCheckBox useStrictTrainTrackingBox = new JCheckBox(Bundle.getMessage("useStrictTrackChecking"));
     JCheckBox waitWhereTrainsCanStopCheckBox = new JCheckBox(Bundle.getMessage("waitWhereTrainsCanStop"));
     JCheckBox stopByDistanceAsBeforeCheckBox = new JCheckBox(Bundle.getMessage("stopByDistanceAsBefore"));
+    JCheckBox useDarkBlocksCheckBox = new JCheckBox(Bundle.getMessage("useDarkBlocks"));
 
     String[] signalTypes = {Bundle.getMessage("SignalType1"), Bundle.getMessage("SignalType2"), Bundle.getMessage("SignalType3")};
 
@@ -251,6 +252,11 @@ public class OptionsMenu extends JMenu {
             p16e.add(stopByDistanceAsBeforeCheckBox);
             stopByDistanceAsBeforeCheckBox.setToolTipText(Bundle.getMessage("stopByDistanceAsBeforeHint"));
             optionsPane.add(p16e);
+            JPanel p16f = new JPanel();
+            p16f.setLayout(new FlowLayout());
+            p16f.add(useDarkBlocksCheckBox);
+            useDarkBlocksCheckBox.setToolTipText(Bundle.getMessage("useDarkBlocksHint"));
+            optionsPane.add(p16f);
             JPanel p6 = new JPanel();
             p6.setLayout(new FlowLayout());
             p6.add(shortNameCheckBox);
@@ -393,6 +399,7 @@ public class OptionsMenu extends JMenu {
         useStrictTrainTrackingBox.setSelected(dispatcher.getUseStrictTrainTracking());
         waitWhereTrainsCanStopCheckBox.setSelected(dispatcher.getWaitWhereTrainsCanStop());
         stopByDistanceAsBeforeCheckBox.setSelected(dispatcher.getStopByDistanceAsBefore());
+        useDarkBlocksCheckBox.setSelected(dispatcher.getUseDarkBlocks());
         useTurnoutConnectionDelayCheckBox.setSelected(dispatcher.getUseTurnoutConnectionDelay());
         shortNameCheckBox.setSelected(dispatcher.getShortActiveTrainNames());
         nameInBlockCheckBox.setSelected(dispatcher.getShortNameInBlock());
@@ -439,6 +446,7 @@ public class OptionsMenu extends JMenu {
         dispatcher.setUseStrictTrainTracking(useStrictTrainTrackingBox.isSelected());
         dispatcher.setWaitWhereTrainsCanStop(waitWhereTrainsCanStopCheckBox.isSelected());
         dispatcher.setStopByDistanceAsBefore(stopByDistanceAsBeforeCheckBox.isSelected());
+        dispatcher.setUseDarkBlocks(useDarkBlocksCheckBox.isSelected());
         dispatcher.setUseTurnoutConnectionDelay(useTurnoutConnectionDelayCheckBox.isSelected());
         dispatcher.setSignalType(signalTypeBox.getSelectedIndex());
         if (autoTurnoutsCheckBox.isSelected() && ((layoutEditorList.size() == 0)
