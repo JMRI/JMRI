@@ -57,13 +57,13 @@ public class SignalGroupSubTableAction {
      *
      * See {@link #operFromBox}
      * 
-     * @param mode True for AND
+     * @param mode True for OR
      * @param box the comboBox object to set
      */
     void setoperBox(boolean mode, JComboBox<String> box) {
-        int _mode = 0; // OR
+        int _mode = 0; // AND
         if (mode) {
-            _mode = 1; // AND
+            _mode = 1; // OR
         }
         String result = StringUtil.getNameFromState(_mode, operValues, oper);
         box.setSelectedItem(result);
@@ -75,7 +75,7 @@ public class SignalGroupSubTableAction {
      * See {@link #setoperBox}
      * 
      * @param box the comboBox object containing the user choice
-     * @return True for AND, False for OR
+     * @return True for OR, False for AND
      */
     boolean operFromBox(JComboBox<String> box) {
         String mode = (String) box.getSelectedItem();

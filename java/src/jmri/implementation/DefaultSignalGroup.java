@@ -525,7 +525,8 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         public int getOffAppearance() {
             return offAppearance;
         }
-        //Used to determine if we are using an AND or OR when testing the Sensors and Signals
+        // AND or OR when combining the turnouts and sensors: true is OR, as the
+        // Signal Group editor has always stored it (see SignalGroup#setSensorTurnoutOper)
         private boolean turnoutSensorOper = true;
 
         public boolean getSensorTurnoutOper() {
@@ -533,11 +534,11 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
 
         /**
-         * Set whether the sensors and turnouts should be treated as separate
-         * calculations (OR) or as one (AND), when determining if the Signal
-         * Head in this item should be On or Off.
+         * Set whether this item's turnouts and sensors must all match (AND),
+         * or either its turnouts or its sensors must match (OR), for its
+         * Signal Head to be On.
          *
-         * @param boo Provide true for AND, false for OR
+         * @param boo Provide true for OR, false for AND
          */
         public void setSensorTurnoutOper(boolean boo) {
             turnoutSensorOper = boo;
@@ -574,10 +575,10 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
                 state = turnoutsMatch;
             } else if (_signalTurnoutList.isEmpty()) {
                 state = sensorsMatch;
-            } else if (turnoutSensorOper) { // AND
-                state = turnoutsMatch && sensorsMatch;
-            } else { // OR
+            } else if (turnoutSensorOper) { // OR
                 state = turnoutsMatch || sensorsMatch;
+            } else { // AND
+                state = turnoutsMatch && sensorsMatch;
             }
             if (state) {
                 getSignalHead().setAppearance(onAppearance);

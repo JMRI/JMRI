@@ -234,12 +234,15 @@ public interface SignalGroup extends NamedBean {
     void setHeadOffState(SignalHead signalHead, int state);
 
     /**
-     * Set whether the sensors and turnouts should be treated as separate
-     * calculations (OR) or as one (AND) when determining if the Signal Head
-     * should be On or Off.
+     * Set whether the Signal Head's turnouts and sensors must all match
+     * (AND), or either its turnouts or its sensors must match (OR), for the
+     * Signal Head to be On.
+     * <p>
+     * true is OR: the Signal Group editor has always stored OR as true, and
+     * existing panel files depend on that.
      *
      * @param signalHead The SignalHead Bean
-     * @param boo        Provide true for AND, false for OR
+     * @param boo        Provide true for OR, false for AND
      */
     void setSensorTurnoutOper(SignalHead signalHead, boolean boo);
 
@@ -247,7 +250,7 @@ public interface SignalGroup extends NamedBean {
      * Get the state of the AND/OR conditional operand for Signal Head at Index.
      *
      * @param x Index of the SignalHead in Group
-     * @return true when set to AND, false for OR
+     * @return true when set to OR, false for AND
      */
     boolean getSensorTurnoutOperByIndex(int x);
 
@@ -391,7 +394,7 @@ public interface SignalGroup extends NamedBean {
      * Get the AND/OR conditional operand set for a Signal Head in the group.
      *
      * @param signalHead The Signal Head Bean
-     * @return true when set to AND, false for OR
+     * @return true when set to OR, false for AND
      */
     boolean getSensorTurnoutOper(SignalHead signalHead);
 

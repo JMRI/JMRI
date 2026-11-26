@@ -20,6 +20,22 @@ public class SignalGroupSubTableActionTest {
         Assert.assertNotNull("exists",t);
     }
     
+    /**
+     * The editor shows true as OR, and OR gives true, as stored in files
+     * from earlier versions.
+     */
+    @Test
+    public void testOrIsTrue() {
+        SignalGroupSubTableAction t = new SignalGroupSubTableAction();
+        javax.swing.JComboBox<String> box = new javax.swing.JComboBox<>(new String[]{"AND", "OR"});
+        t.setoperBox(true, box);
+        Assert.assertEquals("true shows", "OR", box.getSelectedItem());
+        Assert.assertTrue("OR gives", t.operFromBox(box));
+        t.setoperBox(false, box);
+        Assert.assertEquals("false shows", "AND", box.getSelectedItem());
+        Assert.assertFalse("AND gives", t.operFromBox(box));
+    }
+
     @Test
     public void testAddRemoveSignalGroupSensorModelListeners() {
         

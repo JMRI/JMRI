@@ -42,7 +42,7 @@ public class DefaultSignalGroupTest {
         jmri.Sensor s = jmri.InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("IS1");
         g.setHeadAlignTurnout(head, t, jmri.Turnout.THROWN);
         g.setHeadAlignSensor(head, s, jmri.Sensor.ACTIVE);
-        g.setSensorTurnoutOper(head, and);
+        g.setSensorTurnoutOper(head, !and); // true is OR
         t.setCommandedState(turnoutState);
         s.setKnownState(sensorState);
         mastListener.propertyChange(new java.beans.PropertyChangeEvent(mast, "Aspect", "Stop", "Clear"));

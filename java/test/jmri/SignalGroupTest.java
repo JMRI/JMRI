@@ -47,7 +47,7 @@ public class SignalGroupTest {
         // add IT2 as a control turnout to sh with conditional state Thrown:
         sg.setHeadAlignTurnout(sh, it2, Turnout.THROWN);
         assertEquals( "IT2", sg.getTurnoutNameByIndex(0, 0), "group align turnout");
-        sg.setSensorTurnoutOper(sh, false); // OR
+        sg.setSensorTurnoutOper(sh, false); // AND
         assertFalse( sg.getSensorTurnoutOperByIndex(0), "group logic oper");
         // attach aspect Clear on mast sm to group
         sg.addSignalMastAspect("Clear"); // condition 1
