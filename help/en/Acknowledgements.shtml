@@ -223,7 +223,7 @@
         and provided updates for NCE decoders</li>
 
         <li>Keith Bruce, <!-- KeithMerg -->
-         who provided important improvements to MERG CBUS and beyond.</li>
+         who provided important improvements to MERG CBUS, train tracking and beyond.</li>
 
         <li>Bob Bucklew, who as an early CTC-builder showed the way to better functionality,
         provided images, and keeps use moving toward better CTC models. See in particular his
@@ -867,6 +867,9 @@
 
         <li>Seth Neumann, who provided information on Wangrow decoders</li>
 
+        <li>Lee Nevo, <!-- lnevo -->
+        who improved the MQTT implementation.</li>
+        
         <li>Mark Noble, who found some broken links <a id="O"></a>
         </li>
 
