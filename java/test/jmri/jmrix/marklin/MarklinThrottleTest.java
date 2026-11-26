@@ -2,7 +2,10 @@ package jmri.jmrix.marklin;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import jmri.DccLocoAddress;
+import jmri.LocoAddress;
 import jmri.ThrottleManager;
 import jmri.util.JUnitUtil;
 import jmri.SpeedStepMode;
@@ -38,7 +41,8 @@ public class MarklinThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     @Test
     public void testGetSpeedIncrement() {
-        float expResult = 1.0F/28.0F;
+        // a short DCC address gets the 128 step mode the throttle asks for
+        float expResult = 1.0F/126.0F;
         float result = instance.getSpeedIncrement();
         assertEquals(expResult, result, 0.0);
     }
@@ -49,7 +53,7 @@ public class MarklinThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Test
     @Override
     public void testGetSpeedStepMode() {
-        SpeedStepMode expResult = SpeedStepMode.NMRA_DCC_28;
+        SpeedStepMode expResult = SpeedStepMode.NMRA_DCC_128;
         SpeedStepMode result = instance.getSpeedStepMode();
         assertEquals(expResult, result);
     }
@@ -387,6 +391,50 @@ public class MarklinThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @Override
     @Disabled("Test requires further development")
     public void testSendFunctionGroup5() {
+    }
+
+    private boolean sentSpeedSteps(MarklinThrottle throttle, int step) {
+        String expected = MarklinMessage.setLocoSpeedSteps(throttle.getCANAddress(), step).toString();
+        return ((MarklinTrafficControlScaffold) memo.getTrafficController()).getSentMessages().stream()
+                .anyMatch(m -> m.toString().equals(expected));
+    }
+
+    @Test
+    public void testShortDccAddressSpeedSteps() {
+        MarklinThrottle t = new MarklinThrottle(memo, new DccLocoAddress(3, LocoAddress.Protocol.DCC_SHORT));
+        assertEquals(SpeedStepMode.NMRA_DCC_128, t.getSpeedStepMode(), "128 steps");
+        assertTrue(sentSpeedSteps(t, MarklinConstants.STEPSHORT128), "short 128 step mode sent");
+
+        t.setSpeedStepMode(SpeedStepMode.NMRA_DCC_28);
+        assertEquals(SpeedStepMode.NMRA_DCC_28, t.getSpeedStepMode(), "28 steps");
+        assertTrue(sentSpeedSteps(t, MarklinConstants.STEPSHORT28), "short 28 step mode sent");
+    }
+
+    @Test
+    public void testLongDccAddressSpeedSteps() {
+        // a long address below 100 is still long: the address says so
+        MarklinThrottle t = new MarklinThrottle(memo, new DccLocoAddress(50, LocoAddress.Protocol.DCC_LONG));
+        assertEquals(SpeedStepMode.NMRA_DCC_128, t.getSpeedStepMode(), "128 steps");
+        assertTrue(sentSpeedSteps(t, MarklinConstants.STEPLONG128), "long 128 step mode sent");
+
+        t.setSpeedStepMode(SpeedStepMode.NMRA_DCC_28);
+        assertEquals(SpeedStepMode.NMRA_DCC_28, t.getSpeedStepMode(), "28 steps");
+        assertTrue(sentSpeedSteps(t, MarklinConstants.STEPLONG28), "long 28 step mode sent");
+    }
+
+    @Test
+    public void testPlainDccAddressSpeedSteps() {
+        // a plain DCC address is long from 100, as before
+        MarklinThrottle shortT = new MarklinThrottle(memo, new DccLocoAddress(50, LocoAddress.Protocol.DCC));
+        assertTrue(sentSpeedSteps(shortT, MarklinConstants.STEPSHORT128), "short 128 step mode sent");
+        MarklinThrottle longT = new MarklinThrottle(memo, new DccLocoAddress(150, LocoAddress.Protocol.DCC));
+        assertTrue(sentSpeedSteps(longT, MarklinConstants.STEPLONG128), "long 128 step mode sent");
+    }
+
+    @Test
+    public void testMotorolaSpeedStepsUnchanged() {
+        MarklinThrottle t = new MarklinThrottle(memo, new DccLocoAddress(3, LocoAddress.Protocol.MOTOROLA));
+        assertEquals(SpeedStepMode.NMRA_DCC_28, t.getSpeedStepMode(), "28 steps, as before");
     }
 
     private MarklinSystemConnectionMemo memo = null;

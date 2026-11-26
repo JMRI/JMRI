@@ -174,9 +174,11 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
         if (log.isDebugEnabled()) {
             log.debug("Speed Step Mode Change to Mode: {} Current mode is: {}", Mode, this.speedStepMode);
         }
-        boolean isLong = adapterMemo.get(jmri.ThrottleManager.class).canBeLongAddress(address.getNumber());
         switch (address.getProtocol()) {
             case DCC:
+            case DCC_SHORT:
+            case DCC_LONG:
+                boolean isLong = isLongDccAddress();
                 if (Mode == SpeedStepMode.NMRA_DCC_28 && isLong) {
                     tc.sendMarklinMessage(MarklinMessage.setLocoSpeedSteps(getCANAddress(), MarklinConstants.STEPLONG28), this);
                 } else if (Mode == SpeedStepMode.NMRA_DCC_28 && !isLong) {
@@ -278,10 +280,29 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
         }
     }
 
+    /**
+     * Is this a long DCC address? A short or long DCC address says so; a
+     * plain DCC address is long if the throttle manager says it can be.
+     *
+     * @return true for a long DCC address
+     */
+    private boolean isLongDccAddress() {
+        switch (address.getProtocol()) {
+            case DCC_LONG:
+                return true;
+            case DCC_SHORT:
+                return false;
+            default:
+                return adapterMemo.get(jmri.ThrottleManager.class).canBeLongAddress(address.getNumber());
+        }
+    }
+
     int getCANAddress() {
         AddressSpace space;
         switch (address.getProtocol()) {
-            case DCC:       space = AddressSpace.DCC_LOCO;  break;
+            case DCC:
+            case DCC_SHORT:
+            case DCC_LONG:  space = AddressSpace.DCC_LOCO;  break;
             case SELECTRIX: space = AddressSpace.SX2_LOCO;  break;
             case MFX:       space = AddressSpace.MFX_LOCO;  break;
             case MOTOROLA:  space = AddressSpace.MM_LOCO;   break;
