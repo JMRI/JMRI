@@ -3,10 +3,13 @@ package jmri.jmrit.logixng.actions;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.annotation.CheckForNull;
+
 import jmri.*;
 import jmri.jmrit.logixng.*;
 import jmri.jmrit.logixng.util.LogixNG_SelectEnum;
 import jmri.jmrit.logixng.util.LogixNG_SelectInteger;
+import jmri.jmrit.logixng.util.ThrottleRequest;
 
 /**
  * Sets a function on a throttle
@@ -18,6 +21,8 @@ public final class ActionThrottleFunction extends AbstractDigitalAction {
     private SystemConnectionMemo _memo;
     private ThrottleManager _throttleManager;
     private ThrottleManager _oldThrottleManager;
+    private LocoAddress.Protocol _protocol;
+    private LocoAddress.Protocol _oldProtocol;
 
     // The throttle if we have one or if a request is sent, null otherwise
     private DccThrottle _throttle;
@@ -45,6 +50,7 @@ public final class ActionThrottleFunction extends AbstractDigitalAction {
         ActionThrottleFunction copy = new ActionThrottleFunction(sysName, userName);
         copy.setComment(getComment());
         copy.setMemo(_memo);
+        copy.setProtocol(_protocol);
         _selectAddress.copy(copy._selectAddress);
         _selectFunction.copy(copy._selectFunction);
         _selectOnOff.copy(copy._selectOnOff);
@@ -80,6 +86,32 @@ public final class ActionThrottleFunction extends AbstractDigitalAction {
         return _memo;
     }
 
+    /**
+     * Set the protocol used to request the throttle, for example
+     * {@link jmri.LocoAddress.Protocol#MOTOROLA} on a Marklin connection.
+     *
+     * @param protocol the protocol, one of the throttle manager's
+     *                 {@link ThrottleManager#getAddressProtocolTypes()}, or
+     *                 null to let the throttle manager choose, as before
+     *                 this option existed
+     * @since 5.19.2
+     */
+    public void setProtocol(@CheckForNull LocoAddress.Protocol protocol) {
+        assertListenersAreNotRegistered(log, "setProtocol");
+        _protocol = protocol;
+    }
+
+    /**
+     * Get the protocol used to request the throttle.
+     *
+     * @return the protocol, or null if the throttle manager chooses
+     * @since 5.19.2
+     */
+    @CheckForNull
+    public LocoAddress.Protocol getProtocol() {
+        return _protocol;
+    }
+
     /** {@inheritDoc} */
     @Override
     public LogixNG_Category getCategory() {
@@ -101,9 +133,10 @@ public final class ActionThrottleFunction extends AbstractDigitalAction {
 
         newLocoAddress = _selectAddress.evaluateValue(conditionalNG);
 
-        if (_throttleManager != _oldThrottleManager) {
+        if (_throttleManager != _oldThrottleManager || _protocol != _oldProtocol) {
             currentLocoAddress = -1;    // Force request of new throttle
             _oldThrottleManager = _throttleManager;
+            _oldProtocol = _protocol;
         }
 
         if (newLocoAddress != currentLocoAddress) {
@@ -134,7 +167,8 @@ public final class ActionThrottleFunction extends AbstractDigitalAction {
                     }
                 };
 
-                boolean result = _throttleManager.requestThrottle(newLocoAddress, _throttleListener);
+                boolean result = ThrottleRequest.requestThrottle(
+                        _throttleManager, newLocoAddress, _protocol, _throttleListener);
 
                 if (!result) {
                     log.warn("loco {} cannot be aquired", newLocoAddress);
@@ -174,18 +208,24 @@ public final class ActionThrottleFunction extends AbstractDigitalAction {
 
     @Override
     public String getLongDescription(Locale locale) {
+        String description;
         if (_memo != null) {
-            return Bundle.getMessage(locale, "ActionThrottleFunction_LongConnection",
+            description = Bundle.getMessage(locale, "ActionThrottleFunction_LongConnection",
                     _selectAddress.getDescription(locale),
                     _selectFunction.getDescription(locale),
                     _selectOnOff.getDescription(locale),
                     _memo.getUserName());
         } else {
-            return Bundle.getMessage(locale, "ActionThrottleFunction_Long",
+            description = Bundle.getMessage(locale, "ActionThrottleFunction_Long",
                     _selectAddress.getDescription(locale),
                     _selectFunction.getDescription(locale),
                     _selectOnOff.getDescription(locale));
         }
+        if (_protocol != null) {
+            description = Bundle.getMessage(locale, "ActionThrottleFunction_LongProtocol",
+                    description, _protocol.getPeopleName());
+        }
+        return description;
     }
 
     /** {@inheritDoc} */

@@ -649,6 +649,92 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
         assertEquals( 1, tm.getThrottleUsageCount(locoAddress), "Throttle is used 1 times");
     }
 
+    /**
+     * Set up a second Throttle action, not yet run, whose address socket
+     * gives the address.
+     */
+    private ActionThrottle newThrottleActionForAddress(int locoAddress) throws SocketAlreadyConnectedException {
+        logixNG.setEnabled(false);
+        ConditionalNG conditionalNG_2 = InstanceManager.getDefault(ConditionalNG_Manager.class)
+                .createConditionalNG(logixNG, "A second conditionalNG");  // NOI18N
+        conditionalNG_2.setRunDelayed(false);
+        ActionThrottle actionThrottle2 = new ActionThrottle("IQDA999", null);
+        MaleSocket maleSocket2 =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionThrottle2);
+        conditionalNG_2.getChild(0).connect(maleSocket2);
+        assertTrue( logixNG.setParentForAllChildren(new ArrayList<>()));
+
+        AnalogExpressionConstant locoAddressExpression = new AnalogExpressionConstant("IQAE111", null);
+        locoAddressExpression.setValue(locoAddress);
+        MaleSocket locoAddressSocket =
+                InstanceManager.getDefault(AnalogExpressionManager.class)
+                        .registerExpression(locoAddressExpression);
+        actionThrottle2.getChild(ActionThrottle.LOCO_ADDRESS_SOCKET).connect(locoAddressSocket);
+        return actionThrottle2;
+    }
+
+    @Test
+    public void testProtocolUsedForThrottleRequest() throws SocketAlreadyConnectedException, JmriException {
+        ThrottleManager tm = InstanceManager.getDefault(ThrottleManager.class);
+        int locoAddress = 1234;
+        DccLocoAddress motorola = new DccLocoAddress(locoAddress, LocoAddress.Protocol.MOTOROLA);
+
+        ActionThrottle actionThrottle2 = newThrottleActionForAddress(locoAddress);
+        assertNull( actionThrottle2.getProtocol(), "no protocol by default");
+        actionThrottle2.setProtocol(LocoAddress.Protocol.MOTOROLA);
+        assertEquals( LocoAddress.Protocol.MOTOROLA, actionThrottle2.getProtocol());
+
+        actionThrottle2.getConditionalNG().execute();
+
+        assertEquals( 1, tm.getThrottleUsageCount(motorola), "Motorola throttle requested");
+        assertEquals( 0, tm.getThrottleUsageCount(locoAddress), "no DCC throttle requested");
+
+        actionThrottle2.disposeMe();
+        assertEquals( 0, tm.getThrottleUsageCount(motorola), "Motorola throttle released");
+    }
+
+    @Test
+    public void testNoProtocolRequestsAsBefore() throws SocketAlreadyConnectedException, JmriException {
+        ThrottleManager tm = InstanceManager.getDefault(ThrottleManager.class);
+        int locoAddress = 1234;
+
+        ActionThrottle actionThrottle2 = newThrottleActionForAddress(locoAddress);
+        actionThrottle2.getConditionalNG().execute();
+
+        assertEquals( 1, tm.getThrottleUsageCount(locoAddress), "DCC throttle requested by number");
+
+        actionThrottle2.disposeMe();
+        assertEquals( 0, tm.getThrottleUsageCount(locoAddress), "DCC throttle released");
+    }
+
+    @Test
+    public void testProtocolChangeRequestsNewThrottle() throws SocketAlreadyConnectedException, JmriException {
+        ThrottleManager tm = InstanceManager.getDefault(ThrottleManager.class);
+        int locoAddress = 1234;
+        DccLocoAddress mfx = new DccLocoAddress(locoAddress, LocoAddress.Protocol.MFX);
+
+        ActionThrottle actionThrottle2 = newThrottleActionForAddress(locoAddress);
+        actionThrottle2.getConditionalNG().execute();
+        assertEquals( 1, tm.getThrottleUsageCount(locoAddress), "DCC throttle requested by number");
+
+        // same address number, new protocol: the DCC throttle is released and an MFX one requested
+        actionThrottle2.setProtocol(LocoAddress.Protocol.MFX);
+        actionThrottle2.getConditionalNG().execute();
+
+        assertEquals( 0, tm.getThrottleUsageCount(locoAddress), "DCC throttle released");
+        assertEquals( 1, tm.getThrottleUsageCount(mfx), "MFX throttle requested");
+
+        actionThrottle2.disposeMe();
+    }
+
+    @Test
+    public void testLongDescriptionWithProtocol() {
+        ActionThrottle a = new ActionThrottle("IQDA321", null);
+        a.setProtocol(LocoAddress.Protocol.MFX);
+        assertEquals( "Throttle. Don't wait for throttle. Stop loco when switching loco. Protocol MFX",
+                a.getLongDescription(), "strings are equal");
+    }
+
     @Test
     public void testConnectedDisconnected() throws SocketAlreadyConnectedException {
         _baseMaleSocket.setEnabled(false);

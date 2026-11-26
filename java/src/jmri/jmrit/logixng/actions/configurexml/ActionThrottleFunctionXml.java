@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.actions.configurexml;
 import java.util.List;
 
 import jmri.InstanceManager;
+import jmri.LocoAddress;
 import jmri.SystemConnectionMemo;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.*;
@@ -50,6 +51,11 @@ public class ActionThrottleFunctionXml extends jmri.managers.configurexml.Abstra
                     .addContent(p.getMemo().getSystemPrefix()));
         }
 
+        if (p.getProtocol() != null) {
+            element.addContent(new Element("protocol")
+                    .addContent(p.getProtocol().getShortName()));
+        }
+
         return element;
     }
 
@@ -84,9 +90,19 @@ public class ActionThrottleFunctionXml extends jmri.managers.configurexml.Abstra
             }
         }
 
+        Element protocol = shared.getChild("protocol");
+        if (protocol != null) {
+            try {
+                h.setProtocol(LocoAddress.Protocol.getByShortName(protocol.getTextTrim()));
+            } catch (IllegalArgumentException e) {
+                log.warn("Unknown throttle protocol \"{}\" in {}; the connection's default is used",
+                        protocol.getTextTrim(), sys);
+            }
+        }
+
         InstanceManager.getDefault(DigitalActionManager.class).registerAction(h);
         return true;
     }
 
-//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionThrottleFunctionXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionThrottleFunctionXml.class);
 }
