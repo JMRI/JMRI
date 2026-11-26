@@ -863,6 +863,9 @@ public abstract class Editor extends JmriJFrameWithPermissions
             _highlightcomponent = null;
             deselectSelectionGroup();
         }
+        if (_editHistory != null) {
+            _editHistory.updateActions();
+        }
     }
 
     public void deselectSelectionGroup() {
@@ -3310,11 +3313,214 @@ public abstract class Editor extends JmriJFrameWithPermissions
         return (selectedValue == 0 ); // array position 0 = Yes, Delete.
     }
 
+    /*
+     * ******************* undo and redo ************************
+     */
+    private EditHistory _editHistory = null;
+
+    /**
+     * Get the undo and redo history of this panel's edits.
+     *
+     * @return the history
+     * @since 5.19.2
+     */
+    @Nonnull
+    public EditHistory getEditHistory() {
+        if (_editHistory == null) {
+            _editHistory = new EditHistory(createEditModel(), this::isEditable);
+        }
+        return _editHistory;
+    }
+
+    /**
+     * Start recording one user action for undo; see
+     * {@link EditHistory#begin(String)}.
+     *
+     * @param name the action's name, as shown after "Undo" and "Redo"
+     * @since 5.19.2
+     */
+    public void beginEdit(@Nonnull String name) {
+        getEditHistory().begin(name);
+    }
+
+    /**
+     * End recording the user action begun with {@link #beginEdit(String)}.
+     *
+     * @since 5.19.2
+     */
+    public void endEdit() {
+        getEditHistory().end();
+    }
+
+    /**
+     * Create the model of this panel that the edit history records. Editors
+     * with items other than icons extend {@link PanelEditModel}.
+     *
+     * @return the model
+     * @since 5.19.2
+     */
+    @Nonnull
+    protected EditHistory.Model createEditModel() {
+        return new PanelEditModel(this);
+    }
+
+    /**
+     * Dispose of an icon that has just been removed from the panel, unless the
+     * user action being recorded may later be undone, in which case the icon
+     * is kept until no step of the edit history can put it back.
+     *
+     * @param p the icon
+     * @since 5.19.2
+     */
+    void disposeRemoved(@Nonnull Positionable p) {
+        if (_editHistory != null && _editHistory.isRecording()) {
+            _editHistory.retireLater(p);
+        } else {
+            disposeOf(p);
+        }
+    }
+
+    private static void disposeOf(@Nonnull Positionable p) {
+        if (p instanceof PositionableLabel) {
+            ((PositionableLabel) p).dispose();
+        } else if (p instanceof PositionableJPanel) {
+            ((PositionableJPanel) p).cleanup();
+        } else if (p instanceof PositionableJComponent) {
+            ((PositionableJComponent) p).cleanup();
+        }
+    }
+
+    private static void setActive(@Nonnull Positionable p, boolean active) {
+        if (p instanceof PositionableLabel) {
+            ((PositionableLabel) p).active = active;
+        } else if (p instanceof PositionableJPanel) {
+            ((PositionableJPanel) p).active = active;
+        } else if (p instanceof PositionableJComponent) {
+            ((PositionableJComponent) p).active = active;
+        }
+    }
+
+    /**
+     * Take an icon off the panel for undo or redo, without the questions and
+     * clean-up of a delete: the icon may come back.
+     *
+     * @param p the icon
+     * @since 5.19.2
+     */
+    protected void removeForUndo(@Nonnull Positionable p) {
+        removeFromTarget(p);
+        if (p.getId() != null) {
+            _idContents.remove(p.getId());
+        }
+        for (String className : p.getClasses()) {
+            _classContents.get(className).remove(p);
+        }
+        _contents.remove(p);
+    }
+
+    /**
+     * The panel as the edit history sees it: its icons. An editor with other
+     * items adds them by overriding the methods, calling these for the icons.
+     *
+     * @since 5.19.2
+     */
+    public static class PanelEditModel implements EditHistory.Model {
+
+        /**
+         * The editor whose panel this is.
+         */
+        protected final Editor editor;
+
+        /**
+         * @param editor the editor whose panel this is
+         */
+        public PanelEditModel(@Nonnull Editor editor) {
+            this.editor = editor;
+        }
+
+        @Override
+        public List<EditState<?>> capture() {
+            List<EditState<?>> list = new ArrayList<>(editor._contents.size());
+            for (Positionable p : editor._contents) {
+                list.add(PositionableEditState.of(p));
+            }
+            return list;
+        }
+
+        @Override
+        public void restore(List<Object> items, List<EditState<?>> states) {
+            restoreIcons(items);
+            for (EditState<?> s : states) {
+                if (s.getItem() instanceof Positionable) {
+                    s.restore();
+                }
+            }
+            editor._targetPanel.revalidate();
+            editor._targetPanel.repaint();
+        }
+
+        /**
+         * Make the panel hold exactly the icons listed, putting back the same
+         * objects.
+         *
+         * @param items the panel's items after the restore; icons are the
+         *              {@link Positionable}s among them
+         */
+        protected void restoreIcons(List<Object> items) {
+            Set<Positionable> keep = Collections.newSetFromMap(new IdentityHashMap<>());
+            for (Object o : items) {
+                if (o instanceof Positionable) {
+                    keep.add((Positionable) o);
+                }
+            }
+            for (Positionable p : new ArrayList<>(editor._contents)) {
+                if (!keep.contains(p)) {
+                    editor.removeForUndo(p);
+                    setActive(p, false);
+                }
+            }
+            Set<Positionable> present = Collections.newSetFromMap(new IdentityHashMap<>());
+            present.addAll(editor._contents);
+            for (Positionable p : keep) {
+                if (!present.contains(p)) {
+                    try {
+                        editor.putItem(p);
+                        setActive(p, true);
+                        p.setEditable(editor.isEditable());
+                    } catch (Positionable.DuplicateIdException e) {
+                        log.warn("Can't put back {}: its id {} is now used by another item", p.getNameString(), p.getId());
+                    }
+                }
+            }
+        }
+
+        @Override
+        public void disposeItem(Object item) {
+            if (item instanceof Positionable) {
+                disposeOf((Positionable) item);
+            }
+        }
+
+        /**
+         * {@inheritDoc}
+         * <p>
+         * Nothing to do here: this editor keeps no changed flag. An editor
+         * that does overrides this.
+         */
+        @Override
+        public void setDirty() {
+            // no changed flag to set
+        }
+    }
+
     /**
      * Dispose of the editor.
      */
     @Override
     public void dispose() {
+        if (_editHistory != null) {
+            _editHistory.discardAll();
+        }
         for (JFrameItem frame : _iconEditorFrame.values()) {
             frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
             frame.dispose();

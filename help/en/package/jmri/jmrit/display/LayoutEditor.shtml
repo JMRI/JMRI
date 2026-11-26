@@ -58,6 +58,10 @@
         </li>
 
         <li>
+          <a href="#editmenu">Using Layout Editor's Edit Menu: Undo and Redo</a>
+        </li>
+
+        <li>
           <a href="#filemenu">Using a Panel's File Menu</a>
         </li>
 
@@ -574,6 +578,49 @@
         deletion.</li>
       </ul>
 
+      <h2 id="editmenu"><span class="since">since 5.19.2</span>Using Layout Editor's Edit Menu: Undo and
+      Redo</h2>
+
+      <p>In edit mode, <strong>Edit &rArr; Undo</strong> (Ctrl+Z, or Command+Z on macOS) reverses the
+      last change made to the panel, and <strong>Edit &rArr; Redo</strong> (Ctrl+Y, or
+      Command+Shift+Z on macOS) makes it again. The menu items name the change, for example
+      <strong>Undo Move</strong> or <strong>Undo Edit TO12</strong>. The last 100 changes can be
+      undone.</p>
+
+      <p>Each of these is one change:</p>
+
+      <ul>
+        <li>a drag with the mouse (moving items, a track's end points, a Bezier control point, a
+        selection), or a move of the selection with the arrow keys;</li>
+
+        <li>an item added with the tool bar;</li>
+
+        <li>a deletion, from an item's pop-up menu or of the selection with the Delete key;</li>
+
+        <li>a command from a pop-up menu or from the panel's menus (for example
+        <strong>Hidden</strong>, <strong>Rotate Selection 90&deg;</strong> or <strong>Align Layout
+        to Grid</strong>);</li>
+
+        <li>the changes made when <strong>Done</strong> is pressed in an item's edit dialog, in
+        <strong>Translate (Move) Selection</strong>, in <strong>Scale/Translate Track
+        Diagram</strong>, and in the tools that set signals, signal masts and sensors.</li>
+      </ul>
+
+      <p>Undo puts back the same items: a deleted turnout or track segment comes back with its
+      connections and its Blocks, so Signal Mast Logic, Entry/Exit pairs and Logix&nbsp;NG that use
+      it work as before.</p>
+
+      <p>Undo and Redo cover the panel's items and their settings. They don't cover changes to
+      tables (for example a Block's sensor or a turnout's user name), the panel's Options
+      settings, Inline Logix&nbsp;NG, or a turntable's or traverser's <strong>Dispatcher
+      managed</strong> setting. If a script or Logix&nbsp;NG has changed an item since a change
+      was made, that change can no longer be undone: it is dropped from the list, and the panel
+      is left as it is.</p>
+
+      <p>The list of changes is kept while the panel is open, including when it is stored, and is
+      cleared when the panel is closed. <strong>There is no undo for deleting the panel
+      itself.</strong></p>
+
       <h2 id="option">Using Layout Editor's Options Menu</h2>
 
       <p>The Options menu is used to set options, add items to the panel, and perform operations
@@ -841,9 +888,9 @@
         the selected area. (For more information on this item, see the help page for that
         dialog.)</li>
 
-        <li><strong>Undo Translate Selection</strong> - Selecting this item automatically reverses
-        the previous <strong>Translate Selection...</strong>. Only one level of undo is supported.
-        If a selection has not been translated, this item is ignored.</li>
+        <li>To reverse a translation, use <strong>Edit &rArr; Undo</strong>; see <a href=
+        "#editmenu">Undo and Redo</a>. <span class="since">since 5.19.2</span> (This replaces the
+        <strong>Undo Translate Selection</strong> item.)</li>
 
         <li>
           <strong>Use Program Default Turnout Size</strong> - Selecting this item sets default

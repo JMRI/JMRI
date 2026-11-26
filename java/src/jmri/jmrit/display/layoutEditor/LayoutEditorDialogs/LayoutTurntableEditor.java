@@ -451,6 +451,16 @@ public class LayoutTurntableEditor extends LayoutTrackEditor {
     }
 
     private void editLayoutTurntableDonePressed(ActionEvent a) {
+        // the changes made on Done are one step for undo
+        layoutEditor.beginEdit(Bundle.getMessage("StepEditItem", layoutTurntable.getName()));
+        try {
+            editLayoutTurntableDoneApply(a);
+        } finally {
+            layoutEditor.endEdit();
+        }
+    }
+
+    private void editLayoutTurntableDoneApply(ActionEvent a) {
         // check if Block changed
         String newName = editLayoutTurntableBlockNameComboBox.getSelectedItemDisplayName();
         if (newName == null) {

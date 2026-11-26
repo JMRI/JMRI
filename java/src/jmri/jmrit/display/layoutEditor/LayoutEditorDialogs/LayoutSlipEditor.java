@@ -404,6 +404,16 @@ public class LayoutSlipEditor extends LayoutTurnoutEditor {
     }
 
     private void editLayoutSlipDonePressed(ActionEvent a) {
+        // the changes made on Done are one step for undo
+        layoutEditor.beginEdit(Bundle.getMessage("StepEditItem", layoutSlip.getName()));
+        try {
+            editLayoutSlipDoneApply(a);
+        } finally {
+            layoutEditor.endEdit();
+        }
+    }
+
+    private void editLayoutSlipDoneApply(ActionEvent a) {
         String newName = editLayoutSlipTurnoutAComboBox.getSelectedItemDisplayName();
         if (newName == null) {
             newName = "";

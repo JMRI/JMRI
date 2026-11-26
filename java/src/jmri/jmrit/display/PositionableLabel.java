@@ -1183,7 +1183,8 @@ public class PositionableLabel extends JLabel implements Positionable {
             // Modified to support conditional delete for NX sensors
             // remove from persistance by flagging inactive
             active = false;
-            dispose();
+            // disposed of now, or once undo can no longer put it back
+            _editor.disposeRemoved(this);
         }
     }
 

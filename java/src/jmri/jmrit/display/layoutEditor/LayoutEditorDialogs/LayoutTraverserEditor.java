@@ -554,6 +554,16 @@ public class LayoutTraverserEditor extends LayoutTrackEditor {
     }
 
     private void editLayoutTraverserDonePressed(ActionEvent a) {
+        // the changes made on Done are one step for undo
+        layoutEditor.beginEdit(Bundle.getMessage("StepEditItem", layoutTraverser.getName()));
+        try {
+            editLayoutTraverserDoneApply(a);
+        } finally {
+            layoutEditor.endEdit();
+        }
+    }
+
+    private void editLayoutTraverserDoneApply(ActionEvent a) {
         layoutTraverser.setOrientation(orientationComboBox.getSelectedIndex());
         try {
             double width = Double.parseDouble(deckWidthTextField.getText());

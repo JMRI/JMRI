@@ -117,6 +117,16 @@ public class MoveSelectionDialog {
     }
 
     private void moveSelectionDonePressed(@Nonnull ActionEvent event) {
+        // the changes made on Done are one step for undo
+        layoutEditor.beginEdit(Bundle.getMessage("TranslateSelection"));
+        try {
+            moveSelectionDoneApply(event);
+        } finally {
+            layoutEditor.endEdit();
+        }
+    }
+
+    private void moveSelectionDoneApply(@Nonnull ActionEvent event) {
         String newText = "";
         float xTranslation = 0.0F;
         float yTranslation = 0.0F;

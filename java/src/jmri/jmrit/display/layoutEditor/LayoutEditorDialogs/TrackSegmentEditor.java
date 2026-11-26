@@ -215,6 +215,16 @@ public class TrackSegmentEditor extends LayoutTrackEditor {
 
     @InvokeOnGuiThread
     private void editTracksegmentDonePressed(ActionEvent a) {
+        // the changes made on Done are one step for undo
+        layoutEditor.beginEdit(Bundle.getMessage("StepEditItem", trackSegment.getName()));
+        try {
+            editTracksegmentDoneApply(a);
+        } finally {
+            layoutEditor.endEdit();
+        }
+    }
+
+    private void editTracksegmentDoneApply(ActionEvent a) {
         // set dashed
         boolean oldDashed = trackSegmentView.isDashed();
         trackSegmentView.setDashed(editTrackSegmentDashedComboBox.getSelectedIndex() == editTrackSegmentDashedIndex);

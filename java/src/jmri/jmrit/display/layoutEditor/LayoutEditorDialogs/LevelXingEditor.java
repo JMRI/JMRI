@@ -202,6 +202,16 @@ public class LevelXingEditor extends LayoutTurntableEditor {
     }
 
     private void editLevelXingDonePressed(ActionEvent a) {
+        // the changes made on Done are one step for undo
+        layoutEditor.beginEdit(Bundle.getMessage("StepEditItem", levelXing.getName()));
+        try {
+            editLevelXingDoneApply(a);
+        } finally {
+            layoutEditor.endEdit();
+        }
+    }
+
+    private void editLevelXingDoneApply(ActionEvent a) {
         // check if Blocks changed
         String newName = editLevelXingBlock1NameComboBox.getSelectedItemDisplayName();
         if (newName == null) {
