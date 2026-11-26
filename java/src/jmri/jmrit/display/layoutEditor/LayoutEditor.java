@@ -3726,8 +3726,55 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
                     handler.addBlockMenuItems(popup, block);
                 }
             }
+            JMenu markerMenu = blockMarkerMenu(loc);
+            if (markerMenu != null) {
+                popup.addSeparator();
+                popup.add(markerMenu);
+            }
         }
         popup.show(event.getComponent(), event.getX(), event.getY());
+    }
+
+    /**
+     * The Marker menu for a Block's pop-up menu, unless loco marker pop-up
+     * menus are disabled: Add Loco and Add Loco from Roster, which put the
+     * new marker where the track was clicked, as if dragged there.
+     *
+     * @param loc where the Block's track was clicked, in panel coordinates
+     * @return the menu, or null if loco marker pop-up menus are disabled
+     */
+    @CheckForNull
+    JMenu blockMarkerMenu(@Nonnull Point2D loc) {
+        if (isLocoMarkerPopupDisabled()) {
+            return null;
+        }
+        JMenu markerMenu = new JMenu(Bundle.getMessage("MenuMarker"));
+        markerMenu.add(new AbstractAction(Bundle.getMessage("AddLoco") + "...") {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                locoMarkerFromInput(marker -> placeMarker(marker, loc));
+            }
+        });
+        markerMenu.add(new AbstractAction(Bundle.getMessage("AddLocoRoster") + "...") {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                locoMarkerFromRoster(marker -> placeMarker(marker, loc));
+            }
+        });
+        return markerMenu;
+    }
+
+    /**
+     * Put a new loco marker where a Block's track was clicked, centred
+     * there, as if dragged there.
+     *
+     * @param marker the marker
+     * @param loc    where the track was clicked, in panel coordinates
+     */
+    void placeMarker(@Nonnull LocoIcon marker, @Nonnull Point2D loc) {
+        marker.setLocation((int) loc.getX() - marker.getWidth() / 2, (int) loc.getY() - marker.getHeight() / 2);
+        unionToPanelBounds(marker.getBounds());
+        markerDropped(marker, loc);
     }
 
     /**
