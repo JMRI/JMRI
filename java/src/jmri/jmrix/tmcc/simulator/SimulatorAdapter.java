@@ -39,6 +39,7 @@ public class SimulatorAdapter extends SerialPortController implements Runnable {
     public SimulatorAdapter() {
         super(new TmccSystemConnectionMemo("T", "TMCC Simulator")); // pass customized user name
         setManufacturer(jmri.jmrix.tmcc.SerialConnectionTypeList.LIONEL);
+        addSimulatedTrainsOption();
     }
 
     /**
@@ -238,12 +239,73 @@ public class SimulatorAdapter extends SerialPortController implements Runnable {
     }
 
     /**
+     * Told of the bytes the simulated TMCC command base receives, as
+     * simulated trains need them.
+     *
+     * @since 5.19.2
+     */
+    @FunctionalInterface
+    public interface MessageListener {
+
+        /**
+         * @param message   the bytes read together, in hexadecimal, separated
+         *                  by spaces, such as "FE 01 F2"; a command can be
+         *                  split between two reads
+         * @param timeNanos when they were received, on the
+         *                  {@link System#nanoTime()} scale
+         */
+        void messageReceived(String message, long timeNanos);
+    }
+
+    private final java.util.List<MessageListener> messageListeners =
+            new java.util.concurrent.CopyOnWriteArrayList<>();
+
+    /**
+     * @param listener to be told of the bytes received
+     * @since 5.19.2
+     */
+    public void addMessageListener(MessageListener listener) {
+        messageListeners.add(listener);
+    }
+
+    /**
+     * @param listener to be told no more
+     * @since 5.19.2
+     */
+    public void removeMessageListener(MessageListener listener) {
+        messageListeners.remove(listener);
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Also ends the simulator's thread.
+     */
+    @Override
+    public void dispose() {
+        if (sourceThread != null) {
+            sourceThread.interrupt();
+        }
+        super.dispose();
+    }
+
+    /**
      * This is the heart of the simulation. It translates an
      * incoming SerialMessage into an outgoing SerialReply.
      *
      * As yet, no a meaningful reply. TODO: Throttle
      */
     private SerialReply generateReply(SerialMessage msg) {
+        if (!messageListeners.isEmpty()) {
+            long now = System.nanoTime();
+            StringBuilder text = new StringBuilder();
+            for (int i = 0; i < msg.getNumDataElements(); i++) {
+                text.append(i == 0 ? "" : " ").append(String.format("%02X", msg.getElement(i) & 0xFF));
+            }
+            for (MessageListener l : messageListeners) {
+                l.messageReceived(text.toString(), now);
+            }
+        }
         log.debug("Generate Reply to message type {} (string = {})", msg.toString().charAt(0), msg.toString());
 
         SerialReply reply = new SerialReply();

@@ -63,6 +63,14 @@
 
         <li>Restart the program. You should be up and running.</li>
       </ul>
+
+      <h3>Simulator</h3>
+      <p>On a TMCC Simulator connection, <a href="../../tools/simulatedtrains/index.shtml">Simulated
+      Trains</a> obey JMRI's TMCC throttles for engines (ENG), in the TMCC 1 32 and 100 step modes and
+      the TMCC 2 Legacy 32 and 200 step modes; trains (TR) are not simulated. The Simulator has no
+      detection, so give the Blocks Internal sensors. To leave the Simulator out of simulated trains,
+      set <strong>Simulated trains</strong> in the Additional Connection Settings to <strong>leave
+      this connection out</strong>.</p>
 	  
 	  <br>
 	  <h2>Programming ID#s and Feature Types</h2>
