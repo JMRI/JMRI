@@ -86,6 +86,19 @@ public class StopPointFixCheckTest {
     }
 
     @Test
+    public void testGhostBlockIsNotAFix() {
+        // a ghost Block's sensor is set by Dispatcher, not by a detector
+        Block road = block("Road", 1000, true);
+        Block ghost = block("Ghost", 300, true);
+        ghost.setIsGhost(true);
+        Section s = section("Platform 1", road, ghost);
+        s.setStopPointMm(Section.FORWARD, 1050);
+        List<Finding> found = check(s, Section.FORWARD);
+        assertEquals(1, found.size(), "50 mm into a ghost Block is 1050 mm past the start of Road");
+        assertEquals(List.of(road), found.get(0).getRelated());
+    }
+
+    @Test
     public void testStoppingSensorIsTheFix() {
         Section s = section("Platform 1", block("Road", 1000, true), block("Dark", 300, false));
         s.setStopPointMm(Section.FORWARD, 900);

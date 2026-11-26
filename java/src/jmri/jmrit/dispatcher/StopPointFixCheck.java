@@ -20,7 +20,8 @@ import org.openide.util.lookup.ServiceProvider;
 /**
  * Checks each Section's stop points: a train that stops by distance at a stop
  * point is placed there by reckoning from the last place before it where the
- * train was seen, a boundary into a Block with a detector. Reckoning is only
+ * train was seen, a boundary into a Block with a detector (not a ghost Block,
+ * whose sensor Dispatcher sets). Reckoning is only
  * as good as the train's speed is repeatable, a few parts in a hundred, so
  * the further that place is from the stop point, the further off the stop can
  * be. A stop point with a stopping sensor for its direction is not checked:
@@ -101,7 +102,7 @@ public class StopPointFixCheck implements SetUpCheck {
             if (!(b.getLengthMm() > 0)) {
                 return; // nothing can be placed by distance: the Section's own validation says so
             }
-            if (b.getSensor() != null) {
+            if (b.getSensor() != null && !b.getIsGhost()) { // a ghost Block's sensor is Dispatcher's, not a detector
                 seenAt = b;
                 seenMm = into;
             }
