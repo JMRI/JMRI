@@ -207,8 +207,9 @@ public class AutoActiveTrain implements ThrottleListener {
         if (_autoEngineer.isStopped() && getTargetSpeed() == 0.0f && speed > 0.0f) {
             boolean hold = _autoTrainAction.isDelayedStart(-1.0f, speed);
             log.debug("{}: delayedStart check (no-distance): hold={}", _activeTrain.getTrainName(), hold);
-            if (_autoTrainAction.isDelayedStart(-1.0f, speed))
+            if (hold) {
                 return;
+            }
         }
         _autoEngineer.setTargetSpeed(speed);
     }

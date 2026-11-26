@@ -64,7 +64,9 @@ public class AutoTrainAction {
     // this method is called by AutoActiveTrain when target speed goes from 0 to
     // a greater value.and the train is currently stopped
     protected synchronized boolean isDelayedStart(float distance, float speed) {
-        for (TransitSectionAction t: _activeActionList) {
+        // Walk a copy: an action with no delay runs at once and removes itself
+        // from _activeActionList (completedAction), on this same thread.
+        for (TransitSectionAction t: new ArrayList<>(_activeActionList)) {
             if (t.getWhenCode() == TransitSectionAction.PRESTARTDELAY
                     && t.getTargetTransitSection().getSection() == _autoActiveTrain.getCurrentAllocatedSection().getSection()) {
                 log.debug("Start Internal resume task delay[{}] resume target speed[{}] Existing Thread[{}], Section:[{}]",
@@ -75,11 +77,10 @@ public class AutoTrainAction {
                     t.setDataWhat2Float(distance);
                     checkDelay(t);
                     // now
-                    Iterator<TransitSectionAction> itrA = _activeActionList.iterator();
-                    while (itrA.hasNext()) {
-                        TransitSectionAction tA = itrA.next();
-                        if (tA.getWhenCode() == TransitSectionAction.PRESTARTACTION) {
-                           checkDelay(tA);
+                    for (TransitSectionAction tA : new ArrayList<>(_activeActionList)) {
+                        if (tA.getWhenCode() == TransitSectionAction.PRESTARTACTION
+                                && _activeActionList.contains(tA)) {
+                            checkDelay(tA);
                         }
                     }
                 } else {
