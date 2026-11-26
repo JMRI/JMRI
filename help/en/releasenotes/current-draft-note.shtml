@@ -26,7 +26,13 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li></li>
+                <li>CBUS network connections have a new setting in Additional
+                    Connection Settings, Send frames. Some CANPi software holds back a
+                    frame that arrives while it is still handling the one before, until
+                    the next frame arrives, so events sent from JMRI are acted on late,
+                    one or more clicks behind. If that happens with a gateway that worked
+                    with JMRI 5.17.4, set Send frames to Grouped (as JMRI 5.17.4), which
+                    sends frames as 5.17.4 did.</li>
             </ul>
 
         <h4>C/MRI</h4>
