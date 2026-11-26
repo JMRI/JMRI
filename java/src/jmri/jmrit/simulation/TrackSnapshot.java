@@ -278,7 +278,8 @@ final class TrackSnapshot {
         BlockData(Block b, List<SimulatedDetectorOutput> outputs, List<SimulatedReporterOutput> reporterOutputs) {
             name = b.getDisplayName();
             length = b.getLengthMm();
-            Sensor s = b.getSensor();
+            // a ghost Block has no detector: its sensor is Dispatcher's to set
+            Sensor s = b.getIsGhost() ? null : b.getSensor();
             sensor = s;
             SimulatedDetectorOutput o = null;
             if (s != null) {
@@ -589,7 +590,7 @@ final class TrackSnapshot {
 
     /**
      * @param b a Block
-     * @return its sensor, or null for a dark Block
+     * @return its sensor, or null for a dark Block or a ghost Block
      */
     @CheckForNull
     Sensor sensor(Block b) {
