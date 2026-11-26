@@ -199,9 +199,10 @@ public class DCCppTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
         t.setCommandedState(Turnout.THROWN);
 
         JUnitUtil.waitFor(() -> dnis.outbound.size() >= 3, "automation retries sent to layout");
+        // the automation sets the known state on its own thread after sending the last retry
+        JUnitUtil.waitFor(() -> t.getKnownState() == Turnout.THROWN, "known state set once automation completes");
 
         assertEquals(3, dnis.outbound.size(), "commands sent to layout by automation");
-        assertEquals(Turnout.THROWN, t.getKnownState(), "known state set once automation completes");
     }
 
     @Test

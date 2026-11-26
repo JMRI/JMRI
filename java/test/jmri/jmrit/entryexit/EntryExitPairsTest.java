@@ -1,5 +1,6 @@
 package jmri.jmrit.entryexit;
 
+import java.io.File;
 import java.util.List;
 import java.util.HashMap;
 
@@ -14,6 +15,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.JButtonOperator;
@@ -109,9 +111,9 @@ public class EntryExitPairsTest {
     }
 
     @BeforeEach
-    public void before() throws jmri.JmriException {
+    public void before(@TempDir File folder) throws jmri.JmriException {
         JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager(folder); // own profile, so no blockvalues.xml left by an earlier test is read
         JUnitUtil.initConfigureManager();
         tools = new EntryExitTestTools();
         panels = EntryExitTestTools.getPanels();

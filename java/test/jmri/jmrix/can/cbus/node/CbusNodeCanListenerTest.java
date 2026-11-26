@@ -407,6 +407,22 @@ public class CbusNodeCanListenerTest {
         nodeToEdit.removePropertyChangeListener(listener);
     }
 
+    @Test
+    public void testShortNvansDropped() {
+        nodeToEdit.getNodeNvManager().setNVs(new int[]{2, 5, 6});
+        // NVANS for NV1 with its value missing: once read as 0
+        CanReply r = new CanReply(new int[]{CbusConstants.CBUS_NVANS, 0x1F, 0x19, 0x01}, 0x12);
+        nodeToEdit.getCanListener().reply(r);
+        nodeModel.reply(r);
+        // logged as a warning the first time in a run, then at debug level
+        JUnitAppender.checkForMessageStartingWith("Dropped CBUS frame [12] 97 1F 19 01");
+        assertEquals(5, nodeToEdit.getNodeNvManager().getNV(1), "NV1 unchanged");
+
+        CanReply whole = new CanReply(new int[]{CbusConstants.CBUS_NVANS, 0x1F, 0x19, 0x01, 77}, 0x12);
+        nodeToEdit.getCanListener().reply(whole);
+        assertEquals(77, nodeToEdit.getNodeNvManager().getNV(1), "a whole NVANS sets NV1");
+    }
+
     private CbusNode nodeToEdit;
     private CbusNodeTableDataModel nodeModel;
     private CanSystemConnectionMemo memo;
