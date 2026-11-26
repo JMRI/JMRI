@@ -537,6 +537,17 @@ public class MemoryIcon extends MemoryOrGVIcon implements java.beans.PropertyCha
         }
     }
 
+    /**
+     * Intercept the CPE popup menu item request and use setEditIconMenu.
+     * setEditItemMenu returns false since a memory label is not an icon.
+     * @param popup The current popup menu being created.
+     * @return the result of setEditIconMenu.
+     */
+    @Override
+    public boolean setEditItemMenu(JPopupMenu popup) {
+        return setEditIconMenu(popup);
+    }
+
     @Override
     public boolean setEditIconMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("BeanNameMemory"));
