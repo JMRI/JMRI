@@ -126,6 +126,7 @@ public class DefaultVariableLightManagerTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initInternalLightManager();
     }
 

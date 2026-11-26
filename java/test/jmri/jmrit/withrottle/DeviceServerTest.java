@@ -105,8 +105,9 @@ public class DeviceServerTest {
         JUnitUtil.initRosterConfigManager();
         JUnitUtil.initDebugCommandStation();
         InstanceManager.setDefault(NamedBeanHandleManager.class, new NamedBeanHandleManager());
+        JUnitUtil.initTimeProviderManager();
     }
-    
+
     @AfterEach
     public void tearDown() {
         JUnitUtil.clearShutDownManager();

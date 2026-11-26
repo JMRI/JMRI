@@ -182,6 +182,7 @@ public class DispatcherFrameTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initRosterConfigManager();
         JUnitUtil.initDebugThrottleManager();
         // the options the Dispatcher reads when it is created: Auto Allocate off,

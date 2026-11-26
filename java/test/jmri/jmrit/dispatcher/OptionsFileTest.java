@@ -110,6 +110,7 @@ public class OptionsFileTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initTimeProviderManager();
     }
 
     @AfterEach

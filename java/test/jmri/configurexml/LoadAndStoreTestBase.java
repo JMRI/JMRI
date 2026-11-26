@@ -9,14 +9,14 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 import java.text.ParseException;
 import java.util.stream.Stream;
 
 import jmri.*;
 import jmri.jmrit.logix.WarrantPreferences;
+import jmri.time.TimeProvider;
+import jmri.time.TimeProviderManager;
+import jmri.time.implementation.InternalDateTime;
 import jmri.util.FileUtil;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
@@ -191,50 +191,6 @@ public class LoadAndStoreTestBase {
                     }
                 }
 
-                // Check the <timebase> tag. When the time is stored in the xml file, it's
-                // stored in the current timezone, which differs from user to user.
-                // This check accept two times in different timezones, as long as the
-                // actual time is the same. For example, "Sun May 17 08:12:43 PDT 2020"
-                // is the same time as "Sun May 17 17:12:43 CEST 2020" but in different
-                // timezones.
-                if (line1.startsWith("  <timebase") && line2.startsWith("  <timebase")) {
-                    SimpleDateFormat format = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.US);
-                    int beginning = "  <timebase ".length();
-                    // Remove the beginning and the last four characters   "/ >
-                    String t1s = line1.substring(beginning, line1.length()-4);
-                    String t2s = line2.substring(beginning, line2.length()-4);
-                    // Split the attributes. There might be spaces in the values so
-                    // split using one double quote and a space.
-                    String[] t1sa = t1s.split("\" ");
-                    String[] t2sa = t2s.split("\" ");
-                    if (t1sa.length == t2sa.length) {
-                        boolean success = true;
-                        for (int i=0; i < t1sa.length; i++) {
-                            if (t1sa[i].startsWith("time=")) {
-                                // Check time independent of timezone
-                                String d1s = t1sa[i].substring("time=\"".length());
-                                String d2s = t2sa[i].substring("time=\"".length());
-                                Date d1 = format.parse(d1s);
-                                Date d2 = format.parse(d2s);
-                                if (!d1.equals(d2)) {
-                                    success = false;
-                                }
-                            } else if (t1sa[i].startsWith("class=") && t2sa[i].startsWith("class=")) {
-                                // Accept different classes. jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml and jmri.time.implementation.configurexml.DefaultTimebaseXml
-                            } else if (t1sa[i].equals(t2sa[i])) {
-                                // Other attributes in <timebase>
-                            } else {
-                                // Attributes are not equal
-                                success = false;
-                            }
-                        }
-
-                        if (success) {
-                            match = true;
-                        }
-                    }
-                }
-
                 // Screen size will vary when written out
                 if (!match) {
                     if (line1.contains("  <LayoutEditor")) {
@@ -292,6 +248,12 @@ public class LoadAndStoreTestBase {
                 }
 
                 if (!match && !line1.equals(line2)) {
+//                    log.error("match failed in LoadAndStoreTest:");
+//                    log.error("    file1:line {}: \"{}\"", lineNumber1, line1);
+//                    log.error("    file2:line {}: \"{}\"", lineNumber2, line2);
+//                    log.error("  comparing file1:\"{}\"", inFile1.getPath());
+//                    log.error("         to file2:\"{}\"", inFile2.getPath());
+//                    Assert.assertEquals("File matches: "+inFile1.getPath().replaceAll("\\\\", "/"), line1, line2);
                     assertEquals(line1, line2, "match failed in LoadAndStoreTest:" +
                         System.lineSeparator() + "    file1:line " + lineNumber1 + ": \"" + line1+ "\"" +
                         System.lineSeparator() + "    file2:line " + lineNumber2 + ": \"" + line2+ "\"" +
@@ -420,6 +382,7 @@ public class LoadAndStoreTestBase {
         JUnitUtil.resetProfileManager( new jmri.profile.NullProfile( tempDir));
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
@@ -431,6 +394,13 @@ public class LoadAndStoreTestBase {
         // kill the fast clock and set to a consistent time
         jmri.Timebase clock = jmri.InstanceManager.getDefault(jmri.Timebase.class);
         clock.setRun(false);
+
+        TimeProvider tp = InstanceManager.getDefault(TimeProviderManager.class)
+                .getCurrentTimeProvider();
+        if (tp instanceof InternalDateTime) {
+            // Prevent the clock from running
+            ((InternalDateTime)tp).lockFromRunning();
+        }
 
         try {
             clock.setTime(

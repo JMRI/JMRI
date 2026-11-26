@@ -68,6 +68,7 @@ public class SimpleServerTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initDebugPowerManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();

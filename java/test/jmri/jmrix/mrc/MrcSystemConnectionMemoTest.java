@@ -17,6 +17,7 @@ public class MrcSystemConnectionMemoTest extends SystemConnectionMemoTestBase<Mr
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initTimeProviderManager();
         scm = new jmri.jmrix.mrc.MrcSystemConnectionMemo();
         jmri.jmrix.mrc.MrcInterfaceScaffold tc = new jmri.jmrix.mrc.MrcInterfaceScaffold();
         scm.setMrcTrafficController(tc);

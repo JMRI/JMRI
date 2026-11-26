@@ -91,6 +91,7 @@ public class ActivateTrainFrameTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initTimeProviderManager();
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initRosterConfigManager();
     }

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-5-5-5.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-5-5-5.xsd">
+  <jmriversion>
+    <major>5</major>
+    <minor>13</minor>
+    <test>7</test>
+    <modifier>plus</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+  </sensors>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory value="5:40 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Wed Dec 03 17:39:29 CET 2025" rate="1.0" startrate="1.0" run="no" master="yes" sync="no" correct="no" display="no" startstopped="yes" startrunning="no" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Wed Dec 03 17:40:44 CET 2025</date>
+      <filename>PanelPro (v5.13.7)</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Wed Dec 03 17:43:11 CET 2025</date>
+      <filename>/home/daniel/.jmri/Time_Old.jmri/FastClock_is_stopped_speed_1_00.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Wed Dec 03 17:39:29 CET 2025</date>
+          <filename>PanelPro (v5.13.7)</filename>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Wed Dec 03 17:40:22 CET 2025</date>
+          <filename>/home/daniel/.jmri/Time_Old.jmri/FastClock_is_stopped_speed_1_00.xml</filename>
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Wed Dec 03 17:43:50 CET 2025</date>
+      <filename>/home/daniel/.jmri/Time_Old.jmri/FastClock_is_stopped_speed_1_00.xml</filename>
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 5.13.7plus+daniel+2025-12-03T16:40:30Z+R8c76183 on Wed Dec 03 17:43:50 CET 2025-->
+</layout-config>

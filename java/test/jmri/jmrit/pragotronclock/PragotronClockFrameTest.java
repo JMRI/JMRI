@@ -17,7 +17,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
  *
  * @author Petr Sidlo Copyright (C) 2019
  *
- * Based on NixieClockFrameTest by Paul Bender 
+ * Based on NixieClockFrameTest by Paul Bender
  */
 @DisabledIfHeadless
 public class PragotronClockFrameTest extends jmri.util.JmriJFrameTestBase {
@@ -45,7 +45,7 @@ public class PragotronClockFrameTest extends jmri.util.JmriJFrameTestBase {
            "button back to run text");
 
     }
-    
+
     /**
      * Tests button is displayed and starts / stops clock.
      */
@@ -61,22 +61,22 @@ public class PragotronClockFrameTest extends jmri.util.JmriJFrameTestBase {
             assertNotNull(frame);
         }
     }
-    
+
     @Test
     public void testNoButton(){
 
         frame.dispose();
         clock.setShowStopButton(false);
-        
+
         java.util.Calendar cal = new java.util.GregorianCalendar();
         cal.set(2020, 5, 4, 13, 33, 00); // 02:00:00
         clock.setTime(cal.getTime());
-        
+
         frame = new PragotronClockFrame();
         frame.setVisible(true);
         new org.netbeans.jemmy.QueueTool().waitEmpty();
         assertNotNull(frame);
-        
+
     }
 
     @Test
@@ -85,9 +85,9 @@ public class PragotronClockFrameTest extends jmri.util.JmriJFrameTestBase {
         frame.dispose();
         assertEquals( 0, clock.getMinuteChangeListeners().length, "0 listener when clock disposed");
     }
-    
+
     private jmri.Timebase clock;
-    
+
     /**
      * Clock started paused.
      */
@@ -96,6 +96,7 @@ public class PragotronClockFrameTest extends jmri.util.JmriJFrameTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initTimeProviderManager();
 
         // force time, not running
         clock = jmri.InstanceManager.getDefault(jmri.Timebase.class);

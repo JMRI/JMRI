@@ -15,7 +15,7 @@ import org.junit.jupiter.api.*;
  * @author Paul Bender Copyright (C) 2016
  */
 public class WiThrottlePreferencesTest {
- 
+
     private WiThrottlePreferences prefs;
 
     @Test
@@ -137,6 +137,7 @@ public class WiThrottlePreferencesTest {
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initTimeProviderManager();
         prefs = new WiThrottlePreferences();
     }
 
