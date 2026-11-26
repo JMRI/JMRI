@@ -123,6 +123,39 @@ public class TrainRecordDarkBlocksTest {
         assertEquals(Confidence.CONFIRMED, r.getConfidence());
     }
 
+    /**
+     * A ghost Block's sensor is Dispatcher's: it goes active while the train
+     * is still in the Block before, and inactive when that Block empties, with
+     * the train still in the ghost Block. It is followed as a dark Block.
+     */
+    @Test
+    public void testThroughAGhostBlock() {
+        Block a = detected("A");
+        Block g = detected("G");
+        g.setIsGhost(true);
+        Block b = detected("B");
+        Block c = detected("C");
+        chain(a, g, b, c);
+        TrainRecord r = placed(a);
+
+        occupy(g); // Dispatcher, as the train nears it
+        assertEquals(List.of(a), r.getBlocks(), "a ghost Block's sensor is not a detector");
+
+        clear(a);
+        clear(g); // Dispatcher, as the Block before it empties
+        assertTrue(r.getBlocks().contains(g) || r.getBlocks().contains(a),
+                "not lost when the ghost Block's sensor goes inactive: " + r.getBlocks());
+
+        occupy(b);
+        assertSame(b, last(r).getBlock());
+        assertSame(g, last(r).getFrom(), "entered from the ghost Block");
+        assertEquals(Confidence.CONFIRMED, r.getConfidence());
+
+        occupy(c);
+        clear(b);
+        assertEquals(List.of(c), r.getBlocks());
+    }
+
     @Test
     public void testThroughSeveralDarkBlocks() {
         Block a = detected("A");

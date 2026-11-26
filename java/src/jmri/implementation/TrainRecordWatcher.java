@@ -683,7 +683,7 @@ public class TrainRecordWatcher {
         List<Block> found = new ArrayList<>();
         for (Path p : b.getPaths()) {
             Block n = p.getBlock();
-            if (n != null && n != b && n.getSensor() == null && !exclude.contains(n) && !found.contains(n)
+            if (n != null && n != b && detector(n) == null && !exclude.contains(n) && !found.contains(n)
                     && joinedBySetPath(b, n)) {
                 found.add(n);
             }
@@ -717,7 +717,7 @@ public class TrainRecordWatcher {
     }
 
     private static Reason reason(Reason.Rule rule, Block block, Instant time) {
-        return new Reason(rule, block, null, block.getSensor(), List.of(), time);
+        return new Reason(rule, block, null, detector(block), List.of(), time);
     }
 
     /**
@@ -735,7 +735,7 @@ public class TrainRecordWatcher {
                 return;
             }
             Block far = r.getLeadingEnd() == TrainRecord.End.REAR ? blocks.get(0) : blocks.get(blocks.size() - 1);
-            if (far.getSensor() == null || far.getState() != Block.UNOCCUPIED) {
+            if (detector(far) == null || far.getState() != Block.UNOCCUPIED) {
                 return;
             }
             r.left(far, Reason.Rule.LEFT);
@@ -855,7 +855,7 @@ public class TrainRecordWatcher {
                     Collections.reverse(behind);
                 }
                 for (Block b : behind) {
-                    r.left(b, b.getSensor() == null ? Reason.Rule.LEFT_DARK_BEHIND : Reason.Rule.LEFT);
+                    r.left(b, detector(b) == null ? Reason.Rule.LEFT_DARK_BEHIND : Reason.Rule.LEFT);
                 }
             } else if (blocks.size() > 1 && onlyDarkBehind(r, blocks, i)) {
                 // the rear has left this Block, so it has left the dark Blocks behind it too
@@ -1002,7 +1002,7 @@ public class TrainRecordWatcher {
                 : blocks.subList(i + 1, blocks.size());
         boolean any = false;
         for (Block b : behind) {
-            if (b.getSensor() == null) {
+            if (detector(b) == null) {
                 continue;
             }
             Watched w = watched.get(b);
@@ -1028,7 +1028,7 @@ public class TrainRecordWatcher {
         }
         List<Block> behind = leading == TrainRecord.End.REAR ? blocks.subList(0, i) : blocks.subList(i + 1, blocks.size());
         for (Block b : behind) {
-            if (b.getSensor() != null) {
+            if (detector(b) != null) {
                 return false;
             }
         }
@@ -1041,7 +1041,7 @@ public class TrainRecordWatcher {
      */
     private static boolean anyDetectedOccupied(DefaultTrainRecord r) {
         for (Block b : r.getBlocks()) {
-            if (b.getSensor() != null && b.getState() == Block.OCCUPIED) {
+            if (detector(b) != null && b.getState() == Block.OCCUPIED) {
                 return true;
             }
         }
@@ -1147,6 +1147,22 @@ public class TrainRecordWatcher {
     }
 
     /**
+     * A Block's detector: its occupancy sensor, or null for a dark Block
+     * or a ghost Block. A ghost Block's sensor is set by Dispatcher, not by
+     * a detector: active while a train is still in the Block before it, and
+     * inactive when that Block empties, even with the train still partly in
+     * the ghost Block (Block Table help, Ghost Blocks). So a ghost Block is
+     * treated as a dark one.
+     *
+     * @param b a Block
+     * @return its sensor, or null
+     */
+    @CheckForNull
+    static Sensor detector(@Nonnull Block b) {
+        return b.getIsGhost() ? null : b.getSensor();
+    }
+
+    /**
      * One Block: its value always, its sensor while any record is placed.
      */
     private final class Watched {
@@ -1173,7 +1189,7 @@ public class TrainRecordWatcher {
             }
             sensorWatched = on;
             if (on) {
-                attachSensor(block.getSensor());
+                attachSensor(detector(block));
             } else {
                 attachSensor(null);
             }
@@ -1203,7 +1219,7 @@ public class TrainRecordWatcher {
             if (Block.OCC_SENSOR_CHANGE.equals(name)) {
                 onLayoutThread(() -> {
                     if (sensorWatched) {
-                        attachSensor(block.getSensor());
+                        attachSensor(detector(block));
                     }
                 });
             } else if (Block.PROPERTY_STATE.equals(name)) {

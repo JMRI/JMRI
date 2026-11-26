@@ -25,7 +25,10 @@
       name). From then on, each time a Block next to one
       of the train's ends becomes occupied along a path that is set, the train has entered it;
       when a Block at its rear becomes empty, it has left it. A Block with no occupancy sensor has
-      no detector: a train is followed through it when it is seen in the next detected Block.</p>
+      no detector: a train is followed through it when it is seen in the next detected Block. A
+      ghost Block is treated the same way, since its sensor is set by Dispatcher, not by a
+      detector (see Ghost Blocks in the <a href="../beantable/BlockTable.shtml">Block Table</a>
+      help).</p>
 
       <p id="followedValues">When a Block becomes occupied it takes the value of the neighbour the
       train seems to have come from. Where trains run close together, as in a yard, that can be
