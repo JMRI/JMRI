@@ -1177,6 +1177,15 @@ abstract public class PaneProgFrame extends JmriJFrame
                 return; // without doing anything
             }
         }
+        finishWindowClosing(e);
+    }
+
+    /**
+     * Finish closing after the dirty checks have passed.
+     *
+     * @param e window closing event
+     */
+    private void finishWindowClosing(java.awt.event.WindowEvent e) {
         if(maxFnNumDirty && !maxFnNumOld.equals("")){
             _rosterEntry.setMaxFnNum(maxFnNumOld);
         }
@@ -1207,6 +1216,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // do the close itself
         super.windowClosing(e);
+        dispose();
     }
 
     void readConfig(Element root, RosterEntry r) {
@@ -2283,7 +2293,7 @@ abstract public class PaneProgFrame extends JmriJFrame
                 threadCount.decrementAndGet();
                 if (closeAfterSave) {
                     closeAfterSave = false;
-                    windowClosing(new java.awt.event.WindowEvent(PaneProgFrame.this,
+                    finishWindowClosing(new java.awt.event.WindowEvent(PaneProgFrame.this,
                             java.awt.event.WindowEvent.WINDOW_CLOSING));
                 }
             }
