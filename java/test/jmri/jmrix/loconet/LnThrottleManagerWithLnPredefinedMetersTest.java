@@ -75,6 +75,21 @@ public class LnThrottleManagerWithLnPredefinedMetersTest {
         }
     }
 
+    /**
+     * The last message sent, other than the meters' query, which the meters
+     * send on their own timer and so can come after the throttle's message.
+     * @return the message
+     */
+    private LocoNetMessage lastSent() {
+        Object[] all = lnis.outbound.toArray();
+        for (int i = all.length - 1; i >= 0; i--) {
+            if (!METERS_QUERY.equals(all[i].toString())) {
+                return (LocoNetMessage) all[i];
+            }
+        }
+        return org.junit.jupiter.api.Assertions.fail("nothing but the meters' query was sent");
+    }
+
     private void waitForMetersQuery() {
         JUnitUtil.waitFor(() -> {
             for (Object m : lnis.outbound.toArray()) {
@@ -106,7 +121,7 @@ public class LnThrottleManagerWithLnPredefinedMetersTest {
 
         tm.requestThrottle(260, throtListen, true);
 
-        memo.getSlotManager().message(lnis.outbound.elementAt(lnis.outbound.size()-1));
+        memo.getSlotManager().message(lastSent());
 
         LocoNetMessage cmdStationReply = new LocoNetMessage(new int[] {
                 0xe7, 0x0e, 0x9, 0x00, 0x04, 0x0, 0x0, 0x7, 0x0, 0x02, 0x00, 0x00, 0x00, 0x53});  // slot is free
@@ -116,8 +131,7 @@ public class LnThrottleManagerWithLnPredefinedMetersTest {
                 0xe7, 0x0e, 0x9, 0x30, 0x04, 0x0, 0x0, 0x7, 0x0, 0x02, 0x00, 0x00, 0x00, 0x53});  // slot is in-use no throttle ID
         lnis.sendTestMessage(cmdStationReply);
 
-        JUnitUtil.waitFor( () -> "EF 0E 09 30 04 00 00 07 00 02 00 71 02 00".equals(
-            (lnis.outbound.elementAt(lnis.outbound.size()-1).toString())),
+        JUnitUtil.waitFor( () -> "EF 0E 09 30 04 00 00 07 00 02 00 71 02 00".equals(lastSent().toString()),
             "Write Throttle ID");
 
         tm.requestThrottle(260, throtListen2, true);  // An additional user of the same throttle
@@ -165,7 +179,7 @@ public class LnThrottleManagerWithLnPredefinedMetersTest {
 
         tm.requestThrottle(260, throtListen, true);
 
-        memo.getSlotManager().message(lnis.outbound.elementAt(lnis.outbound.size()-1));
+        memo.getSlotManager().message(lastSent());
 
         LocoNetMessage cmdStationReply = new LocoNetMessage(new int[] {
                 0xe7, 0x0e, 0x9, 0x00, 0x04, 0x0, 0x0, 0x7, 0x0, 0x02, 0x00, 0x13, 0x01, 0x53});  // slot is in-use
