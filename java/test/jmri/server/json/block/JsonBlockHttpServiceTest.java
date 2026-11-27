@@ -65,6 +65,10 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
     public void testDoGet() throws JmriException, IOException, JsonException {
         BlockManager manager = InstanceManager.getDefault(BlockManager.class);
         Block block1 = manager.provideBlock("IB1");
+        // properties of each kind, to check the shape the schema describes
+        block1.setProperty("text", "value");
+        block1.setProperty("number", 42);
+        block1.setProperty("empty", null);
         Sensor sensor1 = InstanceManager.getDefault(SensorManager.class).provide("IS1");
         Reporter reporter1 = InstanceManager.getDefault(ReporterManager.class).provide("IR1");
         JsonNode result;

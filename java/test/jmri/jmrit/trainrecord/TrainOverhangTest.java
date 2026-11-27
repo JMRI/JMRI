@@ -113,6 +113,36 @@ public class TrainOverhangTest {
         assertRange(DEFAULT, DEFAULT, at(record, End.REAR), "the loco's own rear overhang");
     }
 
+    private static jmri.jmrit.roster.RosterEntry loco(String id, Double front, Double rear) {
+        jmri.jmrit.roster.RosterEntry e = new jmri.jmrit.roster.RosterEntry();
+        e.setId(id);
+        e.setWheelOverhangMm(true, front);
+        e.setWheelOverhangMm(false, rear);
+        return e;
+    }
+
+    @Test
+    public void testLeadLocosRosterOverhangWhereItLeads() {
+        set(() -> {
+            record.setDetection(Detection.HEAD_ONLY);
+            record.setLength(LengthSource.ENTERED, 1000.0);
+            record.setRosterEntries(List.<jmri.BasicRosterEntry>of(loco("Class 37", 21.0, 19.0), loco("Class 20", 15.0, 15.0)));
+        });
+        assertRange(21, 21, at(record, End.FRONT), "the lead loco's front overhang, from its roster entry");
+        assertRange(DEFAULT, 1000, at(record, End.REAR), "not a loco's at the rear, which isn't known");
+        set(() -> record.setTrainComponents(List.of(new TrainComponent("loco", 220.0, 18.0, 12.0),
+                new TrainComponent("wagons", null))));
+        assertRange(18, 18, at(record, End.FRONT), "the front component's own overhang comes first");
+    }
+
+    @Test
+    public void testLeadLocosRosterOverhangNotWhereTheEndIsNotKnown() {
+        // Entire Train: whatever is at the front, it isn't known to be the lead loco
+        set(() -> record.setRosterEntries(List.<jmri.BasicRosterEntry>of(loco("Class 37", 21.0, 19.0))));
+        assertRange(DEFAULT, DEFAULT, at(record, End.FRONT), "the default");
+        assertRange(DEFAULT, DEFAULT, at(record, End.REAR), "the default");
+    }
+
     @Test
     public void testDefaultFollowsTheLayoutScale() {
         InstanceManager.getDefault(SignalSpeedMap.class).setLayoutScale(87.1f);

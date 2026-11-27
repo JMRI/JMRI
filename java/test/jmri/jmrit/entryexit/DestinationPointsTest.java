@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.File;
 import java.util.HashMap;
 
 import jmri.*;
@@ -15,6 +16,7 @@ import jmri.util.ThreadingUtil;
 import jmri.util.junit.annotations.DisabledIfHeadless;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
 
 import org.netbeans.jemmy.operators.*;
 
@@ -133,9 +135,9 @@ public class DestinationPointsTest {
     }
 
     @BeforeEach
-    public void setUp() throws JmriException {
+    public void setUp(@TempDir File folder) throws JmriException {
         JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager(folder); // own profile, so no blockvalues.xml left by an earlier test is read
         tools = new EntryExitTestTools();
         panels = EntryExitTestTools.getPanels();
         assertEquals(2, panels.size(), "Get LE panels");

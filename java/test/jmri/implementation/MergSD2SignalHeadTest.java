@@ -28,6 +28,20 @@ public class MergSD2SignalHeadTest extends AbstractSignalHeadTestBase {
         Assert.assertNotNull("exists",t);
     }
 
+    @Test
+    public void testInvalidAppearanceIsNotStored() {
+        SignalHead h = getHeadToTest(); // three aspects: red, yellow, green
+        h.setAppearance(SignalHead.GREEN);
+        h.setAppearance(SignalHead.LUNAR);
+        Assert.assertEquals("still shows green", SignalHead.GREEN, h.getAppearance());
+        h.setAppearance(SignalHead.FLASHRED);
+        Assert.assertEquals("still shows green", SignalHead.GREEN, h.getAppearance());
+        // a later change of lit state redraws the stored appearance, without complaint
+        h.setLit(false);
+        h.setLit(true);
+        Assert.assertEquals(SignalHead.GREEN, h.getAppearance());
+    }
+
     @Override
     public SignalHead getHeadToTest() {
         Turnout it = (InstanceManager.getDefault(TurnoutManager.class)).provideTurnout("IT1");

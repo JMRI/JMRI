@@ -1,5 +1,6 @@
 package jmri.jmrit.simulation;
 
+import java.awt.geom.Point2D;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,6 +35,7 @@ import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 import jmri.jmrit.display.layoutEditor.PositionablePoint;
 import jmri.jmrit.display.layoutEditor.TrackSegment;
+import jmri.jmrit.display.layoutEditor.TrackSegmentView;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.OPath;
@@ -66,13 +68,16 @@ final class TrackSnapshot {
         final HitPointType type2;
         @CheckForNull
         final Block block;
+        /** Its length as drawn, in the panel's units, or 0 if not known. */
+        final double drawnLength;
 
-        Segment(TrackSegment s) {
+        Segment(TrackSegment s, double drawnLength) {
             connect1 = s.getConnect1();
             type1 = s.getType1();
             connect2 = s.getConnect2();
             type2 = s.getType2();
             block = blockOf(s.getLayoutBlock());
+            this.drawnLength = drawnLength;
         }
     }
 
@@ -373,7 +378,7 @@ final class TrackSnapshot {
                 for (LayoutTrack t : le.getLayoutTracks()) {
                     pieces.add(t);
                     if (t instanceof TrackSegment) {
-                        segments.put((TrackSegment) t, new Segment((TrackSegment) t));
+                        segments.put((TrackSegment) t, new Segment((TrackSegment) t, drawnLength(le, (TrackSegment) t)));
                     } else if (t instanceof PositionablePoint) {
                         points.put((PositionablePoint) t, new Point((PositionablePoint) t));
                     } else if (t instanceof LayoutTurnout) {
@@ -408,6 +413,37 @@ final class TrackSnapshot {
             for (Portal p : d.portals) {
                 portals.computeIfAbsent(p, PortalData::new);
             }
+        }
+    }
+
+    /**
+     * A segment's length as drawn: the straight line between its ends, or
+     * the arc through them. Only the proportions of a Block's segments are
+     * used, to tell where along the Block a turnout is.
+     *
+     * @param le the panel the segment is drawn on
+     * @param ts the segment
+     * @return the length in the panel's units, or 0 if it can't be worked out
+     */
+    private static double drawnLength(LayoutEditor le, TrackSegment ts) {
+        try {
+            Point2D a = le.getCoords(ts.getConnect1(), ts.getType1());
+            Point2D b = le.getCoords(ts.getConnect2(), ts.getType2());
+            if (a == null || b == null) {
+                return 0.0;
+            }
+            double chord = a.distance(b);
+            Object v = le.getLayoutTrackView(ts);
+            if (v instanceof TrackSegmentView) {
+                TrackSegmentView sv = (TrackSegmentView) v;
+                double angle = Math.toRadians(sv.getAngle());
+                if ((sv.isArc() || sv.isCircle()) && angle > 0.0 && angle < 2 * Math.PI) {
+                    return chord * (angle / 2) / Math.sin(angle / 2);
+                }
+            }
+            return chord;
+        } catch (RuntimeException e) {
+            return 0.0; // a segment not connected at both ends
         }
     }
 

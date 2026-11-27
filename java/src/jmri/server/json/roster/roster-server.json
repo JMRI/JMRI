@@ -2,62 +2,43 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "jmri-json-roster-server-message",
     "type": "object",
-    "description": "Data portion of message from JMRI to client for type \"roster\"",
+    "description": "Data portion of message from JMRI to client for type \"roster\". Sent when the roster changes; a rosterEntry is added, removed, or (when its identity changes) both. The roster itself is returned in response to a request as a list of \"rosterEntry\" messages.",
     "properties": {
-        "name": {
-            "type": "string",
-            "description": "System name of the roster"
-        },
-        "userName": {
-            "type": "string",
-            "description": "User name of the roster"
-        },
-        "comment": {
-            "type": "string",
-            "description": "Comment for the roster"
-        },
-        "properties": {
-            "type": "array",
-            "description": "NamedBean properties of the roster",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "key": {
-                        "type": "string",
-                        "description": "Key by which property is accessed"
-                    },
-                    "value": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
-                        "description": "String value of property or null"
-                    }
+        "add": {
+            "type": "object",
+            "description": "A complete \"rosterEntry\" message for an entry added to the roster",
+            "properties": {
+                "type": {
+                    "const": "rosterEntry"
                 },
-                "additionalProperties": false,
-                "required": [
-                    "name",
-                    "value"
-                ]
-            }
+                "data": {
+                    "type": "object",
+                    "description": "Conforms to the server schema for type \"rosterEntry\""
+                }
+            },
+            "required": [
+                "type",
+                "data"
+            ]
         },
-        "state": {
-            "type": "integer",
-            "description": "The state of the roster",
-            "enum": [
-                0,
-                2,
-                4,
-                8
+        "remove": {
+            "type": "object",
+            "description": "A complete \"rosterEntry\" message for an entry removed from the roster",
+            "properties": {
+                "type": {
+                    "const": "rosterEntry"
+                },
+                "data": {
+                    "type": "object",
+                    "description": "Conforms to the server schema for type \"rosterEntry\""
+                }
+            },
+            "required": [
+                "type",
+                "data"
             ]
         }
     },
     "additionalProperties": false,
-    "required": [
-        "name",
-        "userName",
-        "comment",
-        "properties",
-        "state"
-    ]
+    "minProperties": 1
 }

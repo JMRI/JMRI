@@ -2365,7 +2365,17 @@ public class PaneProgPane extends javax.swing.JPanel
      */
     ArrayList<JPanel> panelList = new ArrayList<>();
 
+    private boolean disposed = false;
+
+    /**
+     * Release the pane's components, listeners and lists. Safe to call more
+     * than once: later calls do nothing.
+     */
     public void dispose() {
+        if (disposed) {
+            return;
+        }
+        disposed = true;
         log.debug("dispose");
 
         // remove components

@@ -82,10 +82,12 @@ public class JsonSignalHeadHttpService extends JsonNonProvidedNamedBeanHttpServi
                 }
             }
         }
-        if (data.path(LIT).isTextual()) {
+        // booleans are what GET sends; strings are still accepted for older clients
+        if (data.path(LIT).isBoolean() || data.path(LIT).isTextual()) {
             signalHead.setLit(data.path(LIT).asBoolean());
         }
-        if (data.path(TOKEN_HELD).isTextual()) {
+        // a state decides held, so ignore a stale held sent back from a GET
+        if (!data.path(STATE).isIntegralNumber() && (data.path(TOKEN_HELD).isBoolean() || data.path(TOKEN_HELD).isTextual())) {
             signalHead.setHeld(data.path(TOKEN_HELD).asBoolean());
         }
         return this.doGet(type, name, data, request);

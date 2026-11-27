@@ -494,7 +494,7 @@ final class LayoutEntry extends TrackEntry {
         Block block = blockIn(snap);
         List<Object> steps = new ArrayList<>();
         if (block == null) {
-            return new Passage(this, TrackModels.DEFAULT_LENGTH_MM, new LayoutRoute(null, steps), null, null,
+            return new Passage(this, TrackModels.DEFAULT_LENGTH_MM, new LayoutRoute(null, steps, new double[0]), null, null,
                     Passage.Stop.BLOCKED, models.message("TrackWithoutBlock", piece.getName()));
         }
         Set<Object> seen = new HashSet<>();
@@ -564,18 +564,38 @@ final class LayoutEntry extends TrackEntry {
     }
 
     private Passage boundary(Block block, List<Object> steps, LayoutEntry next, LayoutEntry back) {
-        return new Passage(this, models.length(block, 0), new LayoutRoute(block, steps), next, back,
+        return new Passage(this, models.length(block, 0), new LayoutRoute(block, steps, drawn(steps)), next, back,
                 Passage.Stop.NONE, null);
     }
 
     private Passage end(Block block, List<Object> steps, LayoutEntry back) {
-        return new Passage(this, models.length(block, 0), new LayoutRoute(block, steps), null, back,
+        return new Passage(this, models.length(block, 0), new LayoutRoute(block, steps, drawn(steps)), null, back,
                 Passage.Stop.END_OF_TRACK, models.message("EndOfTrack", models.name(block)));
     }
 
     private Passage blocked(Block block, List<Object> steps, Message reason) {
-        return new Passage(this, models.length(block, 0), new LayoutRoute(block, steps), null, null,
+        return new Passage(this, models.length(block, 0), new LayoutRoute(block, steps, drawn(steps)), null, null,
                 Passage.Stop.BLOCKED, reason);
+    }
+
+    /**
+     * @param steps the steps of a way through a Block
+     * @return the drawn length before each step, and in all at the end; or
+     *         none if the segments' drawn lengths aren't known
+     */
+    @Nonnull
+    private double[] drawn(List<Object> steps) {
+        TrackSnapshot snap = models.snapshot();
+        double[] at = new double[steps.size() + 1];
+        for (int i = 0; i < steps.size(); i++) {
+            double d = 0.0;
+            if (steps.get(i) instanceof SegmentStep) {
+                TrackSnapshot.Segment seg = snap.segment(((SegmentStep) steps.get(i)).segment);
+                d = seg == null ? 0.0 : seg.drawnLength;
+            }
+            at[i + 1] = at[i] + d;
+        }
+        return at[steps.size()] > 0.0 ? at : new double[0];
     }
 
     private Object key() {
@@ -631,6 +651,47 @@ final class LayoutEntry extends TrackEntry {
         public int hashCode() {
             return Objects.hash(segment, end);
         }
+    }
+
+    /**
+     * Where along a way through a Block it first changed: how far from where
+     * the Block is entered the first piece is whose way now differs, as a part
+     * of the way's length taken from the segments' drawn lengths.
+     *
+     * @param models the track models, for the drawing
+     * @param was    the way the train was taking
+     * @param now    the way as the turnouts are set now
+     * @param length the way's length, mm
+     * @return the distance, mm, or -1 if it can't be told (not a Layout
+     *         Editor way, or no drawn lengths)
+     */
+    static double changedAt(TrackModels models, Route was, Route now, double length) {
+        if (!(was instanceof LayoutRoute) || !(now instanceof LayoutRoute)) {
+            return -1.0;
+        }
+        List<Object> a = ((LayoutRoute) was).steps;
+        List<Object> b = ((LayoutRoute) now).steps;
+        int k = 0;
+        while (k < a.size() && k < b.size() && a.get(k).equals(b.get(k))) {
+            k++;
+        }
+        TrackSnapshot snap = models.snapshot();
+        double before = 0.0;
+        double total = 0.0;
+        for (int i = 0; i < a.size(); i++) {
+            if (a.get(i) instanceof SegmentStep) {
+                TrackSnapshot.Segment seg = snap.segment(((SegmentStep) a.get(i)).segment);
+                double d = seg == null ? 0.0 : seg.drawnLength;
+                total += d;
+                if (i < k) {
+                    before += d;
+                }
+            }
+        }
+        if (!(total > 0.0)) {
+            return -1.0;
+        }
+        return length * before / total;
     }
 
     /** Running through a turnout, slip or crossing from one point to another. */
@@ -691,10 +752,17 @@ final class LayoutEntry extends TrackEntry {
         @CheckForNull
         final Block block;
         final List<Object> steps;
+        /** The drawn length before each step, and in all at the end; none if not known. */
+        final double[] at;
 
-        LayoutRoute(@CheckForNull Block block, List<Object> steps) {
+        LayoutRoute(@CheckForNull Block block, List<Object> steps, @Nonnull double[] at) {
             this.block = block;
             this.steps = steps;
+            this.at = at;
+        }
+
+        LayoutRoute(@CheckForNull Block block, List<Object> steps) {
+            this(block, steps, new double[0]);
         }
 
         @Override
@@ -731,6 +799,39 @@ final class LayoutEntry extends TrackEntry {
 
         @Override
         @Nonnull
+        public double[][] foulingPieces(@Nonnull Route other) {
+            if (!(other instanceof LayoutRoute)) {
+                return new double[0][];
+            }
+            LayoutRoute o = (LayoutRoute) other;
+            double[] a = at;
+            double[] b = o.at;
+            if (a.length == 0 || b.length == 0) {
+                return new double[0][];
+            }
+            double la = a[a.length - 1];
+            double lb = b[b.length - 1];
+            List<double[]> pieces = new ArrayList<>();
+            for (int i = 0; i < steps.size(); i++) {
+                for (int j = 0; j < o.steps.size(); j++) {
+                    Object x = steps.get(i);
+                    Object y = o.steps.get(j);
+                    if (x instanceof SegmentStep && y instanceof SegmentStep
+                            && ((SegmentStep) x).segment == ((SegmentStep) y).segment && block == o.block) {
+                        boolean opposite = ((SegmentStep) x).end != ((SegmentStep) y).end;
+                        pieces.add(new double[]{a[i] / la, a[i + 1] / la, b[j] / lb, b[j + 1] / lb,
+                            opposite ? 1 : 0});
+                    } else if (x instanceof NodeStep && y instanceof NodeStep
+                            && ((NodeStep) x).node == ((NodeStep) y).node && ((NodeStep) x).fouls((NodeStep) y)) {
+                        pieces.add(new double[]{a[i] / la, a[i] / la, b[j] / lb, b[j] / lb, 0});
+                    }
+                }
+            }
+            return pieces.toArray(new double[0][]);
+        }
+
+        @Override
+        @Nonnull
         public Route reversed() {
             List<Object> r = new ArrayList<>();
             for (int i = steps.size() - 1; i >= 0; i--) {
@@ -742,7 +843,15 @@ final class LayoutEntry extends TrackEntry {
                     r.add(new NodeStep(n.node, n.to, n.from));
                 }
             }
-            return new LayoutRoute(block, r);
+            double[] a = at;
+            double[] ra = new double[a.length];
+            if (a.length > 0) {
+                double total = a[a.length - 1];
+                for (int i = 0; i < a.length; i++) {
+                    ra[i] = total - a[a.length - 1 - i];
+                }
+            }
+            return new LayoutRoute(block, r, ra);
         }
     }
 

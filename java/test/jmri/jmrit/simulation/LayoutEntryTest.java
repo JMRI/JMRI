@@ -1,6 +1,7 @@
 package jmri.jmrit.simulation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -290,6 +291,82 @@ public class LayoutEntryTest {
         JUnitAppender.assertWarnMessage("Simulated train \"T\" has stopped: The way through \"C\" changed under the train.");
         assertEquals(100.0, Objects.requireNonNull(layout.getTruth().getTrain(t), "T placed").getFrontPositionMm(),
                 1e-9, "held where it was");
+        layout.dispose();
+    }
+
+    /**
+     * EB - A - anchor - B (a segment, then turnout TO1 at its far end) - D (continuing) - EB
+     *                                                                  \ E (diverging)  - EB
+     *
+     * @return A, B, D and E
+     */
+    private Block[] throat() {
+        Block[] b = {block("A", 450), block("B", 450), block("D", 450), block("E", 450)};
+        PositionablePoint eb1 = point(PositionablePoint.PointType.END_BUMPER);
+        PositionablePoint anchor = point(PositionablePoint.PointType.ANCHOR);
+        segment(eb1, HitPointType.POS_POINT, anchor, HitPointType.POS_POINT, b[0]);
+        String it1 = turnout("IT1").getSystemName();
+        LayoutRHTurnout to = ThreadingUtil.runOnGUIwithReturn(() -> {
+            LayoutRHTurnout t = new LayoutRHTurnout("TO1", le);
+            t.setTurnout(it1);
+            t.setLayoutBlockByName(userName(b[1]));
+            le.addLayoutTrack(t, new LayoutRHTurnoutView(t, at(), 0.0, 1.0, 1.0, le));
+            return t;
+        });
+        TrackSegment sb = segment(anchor, HitPointType.POS_POINT, to, HitPointType.TURNOUT_A, b[1]);
+        connect(to, HitPointType.TURNOUT_A, sb);
+        TrackSegment sd = segment(to, HitPointType.TURNOUT_B, point(PositionablePoint.PointType.END_BUMPER),
+                HitPointType.POS_POINT, b[2]);
+        connect(to, HitPointType.TURNOUT_B, sd);
+        TrackSegment se = segment(to, HitPointType.TURNOUT_C, point(PositionablePoint.PointType.END_BUMPER),
+                HitPointType.POS_POINT, b[3]);
+        connect(to, HitPointType.TURNOUT_C, se);
+        copy();
+        return b;
+    }
+
+    @Test
+    public void testTurnoutMovedAheadOfTheTrainInItsBlock() {
+        Block[] b = throat();
+        turnout("IT1").setCommandedState(Turnout.THROWN);
+        SimulatedLayout layout = new SimulatedLayout(true);
+        InMemorySpeedSource throttle = new InMemorySpeedSource();
+        layout.addSpeedSource(throttle);
+        VirtualTrain t = VirtualTrain.builder("T")
+                .loco(SimulatedLoco.builder(new DccLocoAddress(3, false)).length(100).fullSpeed(126).build())
+                .length(200).build();
+        layout.place(t, b[1], b[0], 100.0); // its front in B, short of the turnout at B's far end
+        throttle.setSpeed(new DccLocoAddress(3, false), 100, SpeedStepMode.NMRA_DCC_128, true, layout.now());
+        layout.runFor(0.5);
+        turnout("IT1").setCommandedState(Turnout.CLOSED); // ahead of the front: not under the train
+        layout.runFor(8.0);
+        SimulationTruth.TrainTruth truth = Objects.requireNonNull(layout.getTruth().getTrain(t), "T placed");
+        assertFalse(truth.isDerailed(), "the points moved ahead of it");
+        assertEquals(b[2], truth.getFrontBlock(), "it took the way as set when it got there");
+        JUnitAppender.assertWarnMessage("Simulated train \"T\" has stopped: The track ends at the far end of \"D\".");
+        layout.dispose();
+    }
+
+    @Test
+    public void testTurnoutMovedAheadOfTheTrainAfterItPlannedAhead() {
+        Block[] b = throat();
+        turnout("IT1").setCommandedState(Turnout.CLOSED);
+        SimulatedLayout layout = new SimulatedLayout(true);
+        InMemorySpeedSource throttle = new InMemorySpeedSource();
+        layout.addSpeedSource(throttle);
+        VirtualTrain t = VirtualTrain.builder("T")
+                .loco(SimulatedLoco.builder(new DccLocoAddress(3, false)).length(100).fullSpeed(126).build())
+                .length(200).build();
+        layout.place(t, b[1], b[0], 400.0); // its front near the turnout, D planned ahead
+        throttle.setSpeed(new DccLocoAddress(3, false), 10, SpeedStepMode.NMRA_DCC_128, true, layout.now());
+        layout.runFor(0.2);
+        turnout("IT1").setCommandedState(Turnout.THROWN);
+        throttle.setSpeed(new DccLocoAddress(3, false), 100, SpeedStepMode.NMRA_DCC_128, true, layout.now());
+        layout.runFor(8.0);
+        SimulationTruth.TrainTruth truth = Objects.requireNonNull(layout.getTruth().getTrain(t), "T placed");
+        assertFalse(truth.isDerailed(), "the points moved ahead of it");
+        assertEquals(b[3], truth.getFrontBlock(), "it took the diverging way, as set when it got there");
+        JUnitAppender.assertWarnMessage("Simulated train \"T\" has stopped: The track ends at the far end of \"E\".");
         layout.dispose();
     }
 

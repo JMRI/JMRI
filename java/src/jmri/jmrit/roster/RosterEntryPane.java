@@ -34,6 +34,8 @@ public class RosterEntryPane extends javax.swing.JPanel {
     JTextField roadName = new JTextField(30);
     JTextField maxSpeed = new JTextField(3);
     JSpinner maxSpeedSpinner = new JSpinner(); // percentage stored as fraction
+    JTextField frontOverhang = new JTextField(5);
+    JTextField rearOverhang = new JTextField(5);
     JCheckBox locoDataEnabled = new JCheckBox();
 
     JTextField roadNumber = new JTextField(30);
@@ -67,6 +69,8 @@ public class RosterEntryPane extends javax.swing.JPanel {
         maxSpeedSpinner.setModel(new SpinnerNumberModel(1.00d, 0.00d, 1.00d, 0.01d));
         maxSpeedSpinner.setEditor(new JSpinner.NumberEditor(maxSpeedSpinner, "# %"));
         id.setText(r.getId());
+        frontOverhang.setText(overhangText(r.getWheelOverhangMm(true)));
+        rearOverhang.setText(overhangText(r.getWheelOverhangMm(false)));
 
         if (r.getDccAddress().isEmpty()) {
             // null address, so clear selector
@@ -255,6 +259,23 @@ public class RosterEntryPane extends javax.swing.JPanel {
         gbLayout.setConstraints(maxSpeedSpinner, cR);
         super.add(maxSpeedSpinner);
 
+        cL.gridy++;
+        JLabel overhangLabel = new JLabel(Bundle.getMessage("FieldWheelOverhang") + ":");
+        gbLayout.setConstraints(overhangLabel, cL);
+        super.add(overhangLabel);
+        JPanel overhangs = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
+        frontOverhang.getAccessibleContext().setAccessibleName(Bundle.getMessage("FieldWheelOverhangFront"));
+        rearOverhang.getAccessibleContext().setAccessibleName(Bundle.getMessage("FieldWheelOverhangRear"));
+        frontOverhang.setToolTipText(Bundle.getMessage("ToolTipWheelOverhang"));
+        rearOverhang.setToolTipText(Bundle.getMessage("ToolTipWheelOverhang"));
+        overhangs.add(new JLabel(Bundle.getMessage("FieldWheelOverhangFront")));
+        overhangs.add(frontOverhang);
+        overhangs.add(new JLabel(Bundle.getMessage("FieldWheelOverhangRear")));
+        overhangs.add(rearOverhang);
+        cR.gridy = cL.gridy;
+        gbLayout.setConstraints(overhangs, cR);
+        super.add(overhangs);
+
 
 
 
@@ -406,6 +427,10 @@ public class RosterEntryPane extends javax.swing.JPanel {
             log.debug("check: {}|{}", r.getMaxSpeedPCT(), (int) Math.round(100 * maxSet));
             return true;
         }
+        if (!overhangText(r.getWheelOverhangMm(true)).equals(overhangText(overhang(frontOverhang)))
+                || !overhangText(r.getWheelOverhangMm(false)).equals(overhangText(overhang(rearOverhang)))) {
+            return true;
+        }
         DccLocoAddress a = addrSel.getAddress();
         if (a == null) {
             return !r.getDccAddress().isEmpty();
@@ -457,7 +482,36 @@ public class RosterEntryPane extends javax.swing.JPanel {
         r.setDecoderModel(decoderModel.getText());
         r.setDecoderComment(decoderComment.getText());
         r.setLocoDataEnabled(locoDataEnabled.isSelected());
+        r.setWheelOverhangMm(true, overhang(frontOverhang));
+        r.setWheelOverhangMm(false, overhang(rearOverhang));
    }
+
+    /**
+     * @param field a wheel overhang field
+     * @return its overhang in millimetres, or null if it is blank or not a
+     *         length
+     */
+    private static Double overhang(JTextField field) {
+        String text = field.getText().trim();
+        if (text.isEmpty()) {
+            return null;
+        }
+        try {
+            double mm = Double.parseDouble(text);
+            return mm >= 0 && Double.isFinite(mm) ? mm : null;
+        } catch (NumberFormatException e) {
+            return null;
+        }
+    }
+
+    private static String overhangText(Double mm) {
+        if (mm == null) {
+            return "";
+        }
+        // whole millimetres without ".0", as most are entered
+        java.math.BigDecimal exact = java.math.BigDecimal.valueOf(mm).stripTrailingZeros();
+        return exact.scale() <= 0 ? exact.toBigInteger().toString() : exact.toPlainString();
+    }
 
 
     /**
@@ -485,6 +539,8 @@ public class RosterEntryPane extends javax.swing.JPanel {
         maxSpeedSpinner.setValue(maxSpeedSet);
         log.debug("Max Speed in spinner: {}", maxSpeedSpinner.getValue());
         locoDataEnabled.setSelected(r.isLocoDataEnabled());
+        frontOverhang.setText(overhangText(r.getWheelOverhangMm(true)));
+        rearOverhang.setText(overhangText(r.getWheelOverhangMm(false)));
     }
 
     public void setDccAddress(String a) {

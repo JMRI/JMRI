@@ -5,6 +5,7 @@ import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
+import jmri.jmrix.can.cbus.CbusOpCodes;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,7 +78,7 @@ public class CbusNodeCanListener implements jmri.jmrix.can.CanListener {
      *                 false if the Frame has been sent by software, ie. this JMRI instance.
      */
     private void processFrame(CanReply m, boolean fromNode) {
-        if ( m.extendedOrRtr() ) {
+        if ( m.extendedOrRtr() || ( fromNode && CbusOpCodes.isTooShort(m) ) ) {
             return;
         }
         int opc = CbusMessage.getOpcode(m);

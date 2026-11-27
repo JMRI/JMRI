@@ -30,14 +30,14 @@ public class CbusDummyCSSessionTest {
         
         t.sendPloc();
         JUnitUtil.waitFor(()->{ return(!tc.inbound.isEmpty()); }, "ploc didn't arrive");
-        Assert.assertEquals("ploc sent", "[5f8] E1 01 C4 D2 80 00 00",
+        Assert.assertEquals("ploc sent", "[5f8] E1 01 C4 D2 80 00 00 00",
         tc.inbound.elementAt(tc.inbound.size() - 1).toString());
         
         t.setSpd(200);
         t.sendPloc();
 
         JUnitUtil.waitFor(()->{ return(tc.inbound.size()>1); }, "ploc 2 didn't arrive");
-        Assert.assertEquals("ploc 2 sent", "[5f8] E1 01 C4 D2 C8 00 00",
+        Assert.assertEquals("ploc 2 sent", "[5f8] E1 01 C4 D2 C8 00 00 00",
         tc.inbound.elementAt(tc.inbound.size() - 1).toString());
         
         Assert.assertFalse(t.getIsDispatched());

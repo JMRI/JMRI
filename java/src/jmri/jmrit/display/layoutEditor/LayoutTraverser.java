@@ -57,6 +57,7 @@ public class LayoutTraverser extends LayoutTrack {
     private int lastKnownIndex = -1;
 
     private int signalIconPlacement = 0; // 0: Do Not Place, 1: Left, 2: Right
+    private int bridgeSignalIconPlacement = 0; // 0: Do Not Place, 1: Left, 2: Right
 
     private NamedBeanHandle<SignalMast> bufferSignalMast;
     private NamedBeanHandle<SignalMast> exitSignalMast;
@@ -125,6 +126,14 @@ public class LayoutTraverser extends LayoutTrack {
 
     public void setSignalIconPlacement(int placement) {
         this.signalIconPlacement = placement;
+    }
+
+    public int getBridgeSignalIconPlacement() {
+        return bridgeSignalIconPlacement;
+    }
+
+    public void setBridgeSignalIconPlacement(int placement) {
+        this.bridgeSignalIconPlacement = placement;
     }
 
     public SignalMast getBufferMast() {
@@ -374,22 +383,22 @@ public class LayoutTraverser extends LayoutTrack {
 
     /**
      * Set the turnout and state for the slot with this index.
+     * This will also apply the same turnout to the slot's partner in the pair.
      *
      * @param index       the index
      * @param turnoutName the turnout name
      * @param state       the state
      */
     public void setSlotTurnout(int index, @CheckForNull String turnoutName, int state) {
-        boolean found = false; // assume failure (pessimist!)
-        for (SlotTrack rt : slotList) {
-            if (rt.getConnectionIndex() == index) {
-                rt.setTurnout(turnoutName, state);
-                found = true;
-                break;
+        // Partners in a pair share a lane and thus share a single turnout command.
+        int pairBase = (index / 2) * 2;
+        if (pairBase < slotList.size()) {
+            slotList.get(pairBase).setTurnout(turnoutName, state);
+            if (pairBase + 1 < slotList.size()) {
+                slotList.get(pairBase + 1).setTurnout(turnoutName, state);
             }
-        }
-        if (!found) {
-            log.error("{}.setSlotTurnout({}, {}, {}); Attempt to add Turnout control to a non-existant slot track",
+        } else {
+            log.error("{}.setSlotTurnout({}, {}, {}); Attempt to add Turnout control to a non-existent slot track pair",
                     getName(), index, turnoutName, state);
         }
     }
@@ -682,6 +691,7 @@ public class LayoutTraverser extends LayoutTrack {
             boolean found = false; // assume failure (pessimist!)
             for (SlotTrack rt : slotList) {
                 if (rt.getConnectionIndex() == index) {
+                    // Update the visual intent before firing the turnout.
                     lastKnownIndex = index;
                     rt.setPosition();
                     models.redrawPanel();
@@ -691,7 +701,7 @@ public class LayoutTraverser extends LayoutTrack {
                 }
             }
             if (!found) {
-                log.error("{}.setPosition({}); Attempt to set the position on a non-existant slot track",
+                log.error("{}.setPosition({}); Attempt to set the position on a non-existent slot track",
                         getName(), index);
             }
         }
@@ -1006,40 +1016,42 @@ public class LayoutTraverser extends LayoutTrack {
             Turnout turnout = null;
             if (mTurnoutListener == null) {
                 mTurnoutListener = (PropertyChangeEvent e) -> {
-                    int turnoutState = getTurnout().getKnownState();
-                    if (turnoutState == Turnout.THROWN) {
-                        // This slot is now the active one.
-                        // Update the traverser's position indicator.
+                    if (getTurnout() == null) return;
+                    int tState = getTurnout().getKnownState();
+                    if (tState == Turnout.THROWN) {
+                        // Calculate the actual physical lane/pair base (0, 2, 4...)
+                        int targetPhysicalLane = connectionIndex / 2;
+                        int pairBase = targetPhysicalLane * 2;
                         if (lastKnownIndex != connectionIndex) {
                             lastKnownIndex = connectionIndex;
-                            models.redrawPanel();
-                            models.setDirty();
                         }
-
-                        // Command all other slot turnouts to CLOSED.
-                        for (SlotTrack otherSlot : LayoutTraverser.this.slotList) {
-                            if (otherSlot != this && otherSlot.getTurnout() != null) {
-                                // Check state before commanding to prevent potential listener loops
-                                if (otherSlot.getTurnout().getCommandedState() != Turnout.CLOSED) {
-                                    otherSlot.getTurnout().setCommandedState(Turnout.CLOSED);
+                        // Command all other slot turnouts (other lanes) to CLOSED.
+                        for (int i = 0; i < LayoutTraverser.this.slotList.size(); i += 2) {
+                            if (i != pairBase) {
+                                SlotTrack laneSlot = LayoutTraverser.this.slotList.get(i);
+                                if (laneSlot.getTurnout() != null && laneSlot.getTurnout().getCommandedState() != Turnout.CLOSED) {
+                                    laneSlot.getTurnout().setCommandedState(Turnout.CLOSED);
                                 }
                             }
                         }
-                    } else if (turnoutState == Turnout.CLOSED) {
-                        // This turnout is now closed. Check if all are closed.
+                    } else if (tState == Turnout.CLOSED) {
+                        // This lane is now closed. Check if all are closed.
                         boolean allClosed = true;
-                        for (SlotTrack otherSlot : LayoutTraverser.this.slotList) {
-                            if (otherSlot.getTurnout() != null && otherSlot.getTurnout().getKnownState() != Turnout.CLOSED) {
+                        for (int i = 0; i < LayoutTraverser.this.slotList.size(); i += 2) {
+                            SlotTrack laneSlot = LayoutTraverser.this.slotList.get(i);
+                            if (laneSlot.getTurnout() != null && laneSlot.getTurnout().getKnownState() != Turnout.CLOSED) {
                                 allClosed = false;
                                 break;
                             }
                         }
                         if (allClosed && lastKnownIndex != -1) {
-                            lastKnownIndex = -1; // All turnouts are closed, blank the bridge
-                            models.redrawPanel();
-                            models.setDirty();
+                            lastKnownIndex = -1; // All physical lanes are closed, blank the bridge
                         }
                     }
+
+                    // 🎨 Unified redraw: handles THROWN, CLOSED, and cascading changes across all tracks
+                    models.redrawPanel();
+                    models.setDirty();
                 };
             }
             if (turnoutName != null) {
@@ -1071,7 +1083,7 @@ public class LayoutTraverser extends LayoutTrack {
                 if (disableWhenOccupied && isOccupied()) { // isOccupied is on SlotTrack, so check must be here
                     log.debug("Can not setPosition of traverser slot when it is occupied");
                 } else {
-                    // The listener attached to the turnout will handle de-selecting other slots
+                    // The listener attached to the turnout will handle de-selecting other lanes
                     // by setting their turnouts to CLOSED.
                     getTurnout().setCommandedState(Turnout.THROWN);
                 }
@@ -1275,7 +1287,7 @@ public class LayoutTraverser extends LayoutTrack {
 
         for (int idx = 0; idx < 2; idx++) {
             var slot = slotList.get(pairIndex * 2 + idx);
-            msg.append(isSlotConnectionClear(slot));
+            msg.append(isSlotConnectionClear(slot, true));
         }
 
         if (msg.length() > 0) {
@@ -1296,13 +1308,15 @@ public class LayoutTraverser extends LayoutTrack {
      * @param track The A or B side of a slot.
      * @return an empty StringBuilder if clear or a set of messages.
      */
-    public StringBuilder isSlotConnectionClear(SlotTrack track) {
+    public StringBuilder isSlotConnectionClear(SlotTrack track, boolean checkForConnection) {
         var smlManager = InstanceManager.getDefault(SignalMastLogicManager.class);
         var msg = new StringBuilder();
 
         var trackSegment = track.getConnect();
-        if (trackSegment != null) {
-            msg.append(Bundle.getMessage("TV_Connection"));
+        if (checkForConnection) {
+            if (trackSegment != null) {
+                msg.append(Bundle.getMessage("TV_Connection"));
+            }
         }
 
         // slot approach mast
@@ -1366,9 +1380,30 @@ public class LayoutTraverser extends LayoutTrack {
         if (buffer != null && models.containsSignalMast(buffer)) {
             msg.append(Bundle.getMessage("TTV_Buffer_Mast", buffer.getDisplayName()));
         }
+        
+        int issueCount = 0;
+        StringBuilder firstIssue = new StringBuilder();
 
         for (var slotTrack : slotList) {
-           msg.append(isSlotConnectionClear(slotTrack));
+            boolean checkForConnection = false;
+            StringBuilder slotMsg = isSlotConnectionClear(slotTrack, checkForConnection);
+
+            if (slotMsg.length() > 0) {
+                issueCount++;
+
+                if (firstIssue.length() == 0) {
+                    firstIssue.append("\n");
+                    firstIssue.append(slotMsg);
+                }
+            }
+        }
+
+        msg.append(firstIssue);
+
+        if (issueCount > 1) {
+            msg.append("...\n");
+            msg.append(issueCount - 1);
+            msg.append(" additional slot connections have similar issues.\n");
         }
 
         if (msg.length() > 0) {
@@ -1452,7 +1487,6 @@ public class LayoutTraverser extends LayoutTrack {
                 for (Set<String> checkTrackNameSet : TrackNameSets) {
                     if (checkTrackNameSet.add(getName())) {
                         log.debug("*    Add track '{}' to trackNameSet for block '{}'", getName(), theBlockName);
-                        log.debug("    Added traverser '{}' to existing track set for block '{}'", getName(), theBlockName);
                     }
                     if (checkTrackNameSet.contains(getName())) { // (#2)
                         TrackNameSet = checkTrackNameSet;
@@ -1471,7 +1505,7 @@ public class LayoutTraverser extends LayoutTrack {
             if (TrackNameSet.add(getName())) {
                 log.debug("    Added traverser '{}' to new track set for block '{}'", getName(), theBlockName);
             }
-            log.warn("    Flooding from connection '{}'...", theConnect.getName());
+            log.debug("    Flooding from connection '{}'...", theConnect.getName());
             theConnect.collectContiguousTracksNamesInBlockNamed(theBlockName, TrackNameSet);
         }
     }

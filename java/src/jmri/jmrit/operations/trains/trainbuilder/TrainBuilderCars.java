@@ -2088,6 +2088,11 @@ public class TrainBuilderCars extends TrainBuilderEngines {
             carOriginal.setFinalDestination(null);
             carOriginal.setFinalDestinationTrack(null);
             carOriginal.setLocation(car.getDestination(), car.getDestinationTrack(), Car.FORCE);
+            // now apply schedule to car
+            carOriginal.getTrack().scheduleNext(carOriginal);
+            carOriginal.loadNext(carOriginal.getTrack());
+            carOriginal.setPreviousFinalDestination(carOriginal.getFinalDestination());
+            carOriginal.setPreviousFinalDestinationTrack(carOriginal.getFinalDestinationTrack());
         } else {
             checkQuickServiceRedirected(car);
         }
@@ -2161,6 +2166,8 @@ public class TrainBuilderCars extends TrainBuilderEngines {
                         track.getLocation().getName(), track.getName(), cloneCar.toString(), car.toString()));
         track.scheduleNext(car); // apply schedule to car
         car.loadNext(track); // update load, wait count
+        car.setPreviousFinalDestination(car.getFinalDestination());
+        car.setPreviousFinalDestinationTrack(car.getFinalDestinationTrack());
         if (car.getWait() > 0) {
             remove(car); // available for next train
             addLine(FIVE, Bundle.getMessage("buildExcludeCarWait", car.toString(),

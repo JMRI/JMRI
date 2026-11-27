@@ -236,7 +236,7 @@ public class SprogThrottle extends AbstractThrottle {
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     @Override
-    public synchronized void setSpeedSetting(float speed) {
+    protected synchronized void sendSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
         SpeedStepMode mode = getSpeedStepMode();
         if (mode == SpeedStepMode.NMRA_DCC_28) {
             // 28 step mode speed commands are
@@ -318,7 +318,7 @@ public class SprogThrottle extends AbstractThrottle {
         boolean old = isForward;
         isForward = forward;
         synchronized (this) {
-            setSpeedSetting(speedSetting);  // send the command
+            sendSpeedSetting(speedSetting, false, false);  // send the command
         }
         firePropertyChange(ISFORWARD, old, isForward);
     }

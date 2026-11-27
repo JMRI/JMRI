@@ -631,7 +631,6 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
                     setLastRouteId(getTrain().getRoute().getId());
                 }
                 setRouteLocation(null);
-                setRouteDestination(null);
             }
             setDirtyAndFirePropertyChange(DESTINATION_TRACK_CHANGED_PROPERTY, oldTrack, track);
         }
@@ -1396,7 +1395,8 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
                     log.error("Rolling stock ({}) has a null route location for next", this); // NOI18N
                 }
                 setLocation(getDestination(), getDestinationTrack(), RollingStock.FORCE); // force RS to destination
-                setDestination(null, null); // this also clears the route locations
+                setDestination(null, null); // also does setRouteLocation(null)
+                setRouteDestination(null);
                 setLastTrain(getTrain()); // save the last train moving this rs
                 setTrain(null); // this must come after setDestination (route id is set)
                 setMoves(getMoves() + 1); // bump count
@@ -1416,6 +1416,7 @@ public abstract class RollingStock extends PropertyChangeSupport implements Iden
         // train's route id
         setTrain(null);
         setDestination(null, null);
+        setRouteDestination(null);
     }
 
     /*

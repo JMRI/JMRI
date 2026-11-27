@@ -1,29 +1,113 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "title": "jmri-json-reporter-client-message",
+    "title": "jmri-json-rosterEntry-client-message",
     "type": "object",
-    "description": "Schema data object in message from client to JMRI for type \"reporter\"",
+    "description": "Schema data object in message from client to JMRI for type \"rosterEntry\"",
     "properties": {
         "name": {
             "type": "string",
-            "description": "System name of the reporter"
+            "description": "Identity of the rosterEntry"
         },
-        "userName": {
+        "address": {
             "type": "string",
-            "description": "If present, set the user name of the reporter"
+            "description": "If present, set the DCC address of the rosterEntry"
+        },
+        "road": {
+            "type": "string",
+            "description": "If present, set the owning railroad of the rosterEntry"
+        },
+        "number": {
+            "type": "string",
+            "description": "If present, set the owning railroad roster number of the rosterEntry"
+        },
+        "mfg": {
+            "type": "string",
+            "description": "If present, set the manufacturer of the device in the rosterEntry"
+        },
+        "model": {
+            "type": "string",
+            "description": "If present, set the model of the device in the rosterEntry"
+        },
+        "maxSpeedPct": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100,
+            "description": "If present, set the maximum speed of the rosterEntry as a percentage"
+        },
+        "shuntingFunction": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "If present, set the function key that triggers shunting capability; null clears it"
+        },
+        "owner": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "If present, set the owner of the device in the rosterEntry; null clears it, which resets it to the default owner if one is set"
         },
         "comment": {
-            "type": "string",
-            "description": "If present, set the comment for the reporter"
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "If present, set the comment for the rosterEntry; null clears it"
         },
-        "state": {
-            "type": "integer",
-            "description": "If present, sets the state of the reporter",
-            "enum": [
-                0,
-                2,
-                4
-            ]
+        "functionKeys": {
+            "type": "array",
+            "description": "If present, set the label and lockable state of each listed function key",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "pattern": "^F(0|[1-9][0-9]*)$",
+                        "description": "Function key; must not be above the rosterEntry's highest function number"
+                    },
+                    "label": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "description": "Label for function key; null clears it"
+                    },
+                    "lockable": {
+                        "type": "boolean",
+                        "description": "\"false\" if key is momentary, \"true\" otherwise"
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "name"
+                ]
+            }
+        },
+        "attributes": {
+            "type": "array",
+            "description": "If present, replaces the additional properties of the rosterEntry; any attribute not listed is removed",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Key by which attribute is accessed"
+                    },
+                    "value": {
+                        "type": [
+                            "string",
+                            "null"
+                        ],
+                        "description": "String value of attribute or null"
+                    }
+                },
+                "additionalProperties": false,
+                "required": [
+                    "name",
+                    "value"
+                ]
+            }
         }
     },
     "additionalProperties": false,

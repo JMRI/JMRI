@@ -61,6 +61,16 @@
       how often each Block's detector stopped seeing a train that train tracking was sure was
       there. Nothing uses the measurements yet.</p>
 
+      <p>Once a way through a Block has been crossed, at a steady speed, at least three times
+      at speeds far enough apart (the slowest taking at least half as long again as the
+      fastest), two more columns are filled in. <strong>Detector Offset</strong> is a fixed time
+      added to every crossing whatever the speed: how much later the next Block's detector
+      reports a train than this Block's did, as a slow detector or a debounce delay on it
+      would make it. <strong>Against Profile, Offset Removed</strong> is how the trains' speed
+      compares with their profiles once that time is taken out. An offset of a few hundredths of
+      a second is normal; a larger one points at the detector, and a percentage well away
+      from 100% at the profile or the Block's length.</p>
+
       <p>Only detectors are measured from. A Block whose occupancy sensor is an internal
       sensor, set by a script, Logix or LogixNG rather than by hardware on the layout, is
       followed but not measured. With simulated trains, where there is no layout hardware, the
@@ -82,6 +92,17 @@
       Operations length. Both are taken again each time the train moves on to its next stop.
       The Block dialog shows the train's work at its next stop: how many cars and engines it is
       to set out and pick up there.</p>
+
+      <h2>Wheel overhang</h2>
+
+      <p>Detection sees wheels, never buffers, so train tracking places a train's real ends
+      beyond its detected wheels by its <strong>wheel overhang</strong>: how far the buffer beam
+      reaches beyond the outer axle. Enter it for a loco in its roster entry, as
+      <strong>Wheel Overhang (mm)</strong>, front and rear, in millimetres on the model. It is
+      used for the engine at each end of each part of an Operations train, and for the front of
+      a train whose Train Detection is Head Only or Head and Tail, which its lead loco leads.
+      Where none is known, a generous default for the layout's scale is used (4 m at full size,
+      about 46 mm in HO), so a missing value holds a little more track, never less.</p>
 
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div><!-- closes #mainContent-->

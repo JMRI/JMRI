@@ -138,7 +138,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
     //The values here might need a bit of re-working
     @SuppressFBWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
     @Override
-    public void setSpeedSetting(float speed) {
+    protected void sendSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
         if (!_haveControl) {
             return;
         }
@@ -278,7 +278,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
                         speedMessageSent--;
                         if (speedMessageSent <= 0) {
                             Float newSpeed = floatSpeed(Integer.parseInt(EcosReply.getContentDetails(line, "speed")));
-                            super.setSpeedSetting(newSpeed);
+                            speedSettingChanged(newSpeed);
                         }
                     }
                     if (line.contains("dir")) {
@@ -295,7 +295,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
                         speedMessageSent--;
                         if (speedMessageSent <= 0) {
                             Float newSpeed = floatSpeed(Integer.parseInt(EcosReply.getContentDetails(m.toString(), "speed")));
-                            super.setSpeedSetting(newSpeed);
+                            speedSettingChanged(newSpeed);
                         }
                     }
                     if (m.toString().contains("dir")) {
@@ -315,7 +315,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener {
                         //We want to ignore these messages.
                     } else if (speedMessageSent <= 0 && line.contains("speed") && !line.contains("speedstep")) {
                         Float newSpeed = floatSpeed(Integer.parseInt(EcosReply.getContentDetails(line, "speed")));
-                        super.setSpeedSetting(newSpeed);
+                        speedSettingChanged(newSpeed);
                     } else if (line.contains("dir")) {
                         boolean newDirection = false;
                         if (EcosReply.getContentDetails(line, "dir").equals("0")) {

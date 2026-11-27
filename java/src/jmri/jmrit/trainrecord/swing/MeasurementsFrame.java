@@ -133,6 +133,21 @@ public class MeasurementsFrame extends JmriJFrame {
                 m.getCompared(), m.getCrossings());
     }
 
+    /**
+     * The detector offset, in words.
+     *
+     * @param m a measurement
+     * @return such as "+0.25 s", or "" if crossings at different speeds
+     *         haven't been measured
+     */
+    public static String detectorOffset(Measurement m) {
+        if (!m.isFitted()) {
+            return "";
+        }
+        return Bundle.getMessage("MeasurementsSeconds", String.format(java.util.Locale.getDefault(), "%+.2f",
+                m.getDetectorOffset()));
+    }
+
     private static final class Row {
 
         private final Block block;
@@ -153,6 +168,8 @@ public class MeasurementsFrame extends JmriJFrame {
         static final int SPEED = 4;
         static final int PROFILE = 5;
         static final int DROPOUTS = 6;
+        static final int OFFSET = 7;
+        static final int WITHOUT_OFFSET = 8;
 
         private List<Row> rows = new ArrayList<>();
         private TrainTrackingMeasurements measurements = null;
@@ -164,7 +181,7 @@ public class MeasurementsFrame extends JmriJFrame {
 
         @Override
         public int getColumnCount() {
-            return 7;
+            return 9;
         }
 
         @Override
@@ -182,6 +199,10 @@ public class MeasurementsFrame extends JmriJFrame {
                     return Bundle.getMessage("MeasurementsSpeed");
                 case PROFILE:
                     return Bundle.getMessage("MeasurementsAgainstProfile");
+                case OFFSET:
+                    return Bundle.getMessage("MeasurementsDetectorOffset");
+                case WITHOUT_OFFSET:
+                    return Bundle.getMessage("MeasurementsAgainstProfileWithoutOffset");
                 case DROPOUTS:
                 default:
                     return Bundle.getMessage("MeasurementsDropOuts");
@@ -210,6 +231,12 @@ public class MeasurementsFrame extends JmriJFrame {
                     return m == null ? null : (int) Math.round(m.getAverageSpeed());
                 case PROFILE:
                     return m == null ? "" : againstProfile(m);
+                case OFFSET:
+                    return m == null ? "" : detectorOffset(m);
+                case WITHOUT_OFFSET:
+                    return m == null || !m.isFitted() ? ""
+                            : Bundle.getMessage("MeasurementsPercent",
+                                    Math.round(m.getAgainstProfileWithoutOffset() * 100));
                 case DROPOUTS:
                 default:
                     return measurements == null ? 0 : measurements.getDropOuts(b);

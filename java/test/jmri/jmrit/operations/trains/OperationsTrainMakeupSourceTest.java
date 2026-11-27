@@ -147,6 +147,33 @@ public class OperationsTrainMakeupSourceTest extends OperationsTestCase {
     }
 
     @Test
+    public void testComponentsTakeTheirEndEnginesRosterOverhangs() {
+        Route route = new Route("R1", "Route");
+        RouteLocation yard = route.addLocation(new Location("L1", "Yard"));
+        jmri.jmrit.roster.RosterEntry entry = new jmri.jmrit.roster.RosterEntry();
+        entry.setId("SP 1");
+        entry.setWheelOverhangMm(true, 21.0);
+        entry.setWheelOverhangMm(false, 19.0);
+        Engine loco = org.mockito.Mockito.spy(new Engine("SP", "1"));
+        org.mockito.Mockito.doReturn(entry).when(loco).getRosterEntry();
+        Engine banker = org.mockito.Mockito.spy(new Engine("SP", "2"));
+        org.mockito.Mockito.doReturn(null).when(banker).getRosterEntry(); // no roster entry
+        Car c1 = new Car("SP", "11");
+        for (jmri.jmrit.operations.rollingstock.RollingStock rs : List.of(loco, c1, banker)) {
+            rs.setLength("40");
+            rs.setRouteDestination(yard);
+        }
+        List<TrainRecord.TrainComponent> components = OperationsTrainMakeupSource.components(List.of(loco, c1, banker));
+        assertEquals(1, components.size());
+        assertEquals(21.0, components.get(0).getFrontOverhang(), "the front engine's, from its roster entry");
+        assertNull(components.get(0).getRearOverhang(), "the rear engine has no roster entry");
+
+        components = OperationsTrainMakeupSource.components(List.of(c1, loco));
+        assertNull(components.get(0).getFrontOverhang(), "a car at the front: not known");
+        assertEquals(19.0, components.get(0).getRearOverhang(), "the engine's rear, at the rear");
+    }
+
+    @Test
     public void testMillimetres() {
         assertNull(OperationsTrainMakeupSource.millimetres(0));
         Double mm = java.util.Objects.requireNonNull(OperationsTrainMakeupSource.millimetres(40));

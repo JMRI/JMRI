@@ -106,14 +106,14 @@ public class CbusDummyCSTest {
         t.message(m);
 
         JUnitUtil.waitFor(()->{ return(tc.inbound.size()>0); }, "reply didn't arrive");
-        Assert.assertEquals("rton acknowledged", "[5f8] E1 01 C4 D2 80 00 00",
+        Assert.assertEquals("rton acknowledged", "[5f8] E1 01 C4 D2 80 00 00 00",
             tc.inbound.elementAt(tc.inbound.size() - 1).toString()); // assign session 1
         Assert.assertTrue("rloc 1 session",t.getNumberSessions()==1);
         
         m = new CanMessage( new int[]{CbusConstants.CBUS_QLOC, 1 },0x12 ); // query session 1
         t.message(m);
         JUnitUtil.waitFor(()->{ return(tc.inbound.size()>1); }, "reply didn't arrive");
-        Assert.assertEquals("qloc acknowledged", "[5f8] E1 01 C4 D2 80 00 00",
+        Assert.assertEquals("qloc acknowledged", "[5f8] E1 01 C4 D2 80 00 00 00",
             tc.inbound.elementAt(tc.inbound.size() - 1).toString());        
         
         m = new CanMessage( new int[]{CbusConstants.CBUS_DKEEP, 1  },0x12 ); // keep alive session 1

@@ -1814,6 +1814,16 @@ public abstract class Editor extends JmriJFrameWithPermissions
      * ****************** Marker Menu ***************************
      */
     protected void locoMarkerFromRoster() {
+        locoMarkerFromRoster(null);
+    }
+
+    /**
+     * Ask for a loco from the roster, and add a marker for it.
+     *
+     * @param placed if not null, given each marker added, to place it; the
+     *               window then closes once one is added
+     */
+    protected void locoMarkerFromRoster(@CheckForNull java.util.function.Consumer<LocoIcon> placed) {
         final JmriJFrame locoRosterFrame = new JmriJFrame();
         locoRosterFrame.getContentPane().setLayout(new FlowLayout());
         locoRosterFrame.setTitle(Bundle.getMessage("LocoFromRoster"));
@@ -1823,7 +1833,11 @@ public abstract class Editor extends JmriJFrameWithPermissions
         final RosterEntrySelectorPanel rosterBox = new RosterEntrySelectorPanel();
         rosterBox.addPropertyChangeListener("selectedRosterEntries", pce -> {
             if (rosterBox.getSelectedRosterEntries().length != 0) {
-                selectLoco(rosterBox.getSelectedRosterEntries()[0]);
+                LocoIcon l = selectLoco(rosterBox.getSelectedRosterEntries()[0]);
+                if (l != null && placed != null) {
+                    placed.accept(l);
+                    locoRosterFrame.dispose();
+                }
             }
         });
         locoRosterFrame.getContentPane().add(rosterBox);
@@ -1862,6 +1876,16 @@ public abstract class Editor extends JmriJFrameWithPermissions
     }
 
     protected void locoMarkerFromInput() {
+        locoMarkerFromInput(null);
+    }
+
+    /**
+     * Ask for a loco's name or number, and add a marker for it.
+     *
+     * @param placed if not null, given the marker added, to place it; the
+     *               window then closes
+     */
+    protected void locoMarkerFromInput(@CheckForNull java.util.function.Consumer<LocoIcon> placed) {
         final JmriJFrame locoFrame = new JmriJFrame();
         locoFrame.getContentPane().setLayout(new FlowLayout());
         locoFrame.setTitle(Bundle.getMessage("EnterLocoMarker"));
@@ -1879,7 +1903,11 @@ public abstract class Editor extends JmriJFrameWithPermissions
         okay.addActionListener(e -> {
             String nameID = locoId.getText();
             if ((nameID != null) && !(nameID.trim().equals(""))) {
-                addLocoIcon(nameID.trim());
+                LocoIcon l = addLocoIcon(nameID.trim());
+                if (placed != null) {
+                    placed.accept(l);
+                    locoFrame.dispose();
+                }
             } else {
                 JmriJOptionPane.showMessageDialog(locoFrame, Bundle.getMessage("ErrorEnterLocoID"),
                         Bundle.getMessage("ErrorTitle"), JmriJOptionPane.ERROR_MESSAGE);

@@ -48,12 +48,17 @@ public class JmriJFrameTest extends JmriJFrameTestBase {
     /**
      * Move the window one step, as a drag does, and give the window system
      * time to report it before the next step.
+     *
+     * @return when the window system had reported the move, from
+     *         {@link System#nanoTime()}
      */
-    private static void moveAndLetWindowSystemReport(JmriJFrame f, int x, int y) {
+    private static long moveAndLetWindowSystemReport(JmriJFrame f, int x, int y) {
         Point p = new Point(x, y);
         ThreadingUtil.runOnGUI(() -> f.setLocation(p));
         JUnitUtil.waitFor(() -> ThreadingUtil.runOnGUIwithReturn(() -> p.equals(f.getLocation())), "moved");
+        long movedAt = System.nanoTime();
         JUnitUtil.waitFor(100); // well within the save delay
+        return movedAt;
     }
 
     /**
@@ -72,29 +77,49 @@ public class JmriJFrameTest extends JmriJFrameTestBase {
             }
         });
         JmriJFrame f = new JmriJFrame("JmriJFrame move test", false, true);
-        ThreadingUtil.runOnGUI(() -> {
-            f.setVisible(true);
-            f.setLocation(100, 100);
-        });
-        JUnitUtil.waitFor(() -> ThreadingUtil.runOnGUIwithReturn(() -> !saved.isEmpty()), "first location saved");
-        // let the window settle
-        JUnitUtil.waitFor(4 * JmriJFrame.WINDOW_DETAILS_SAVE_DELAY);
-        ThreadingUtil.runOnGUI(saved::clear);
+        showAndLetSettle(f, saved);
 
-        // each step in its own event, as when dragged
-        moveAndLetWindowSystemReport(f, 110, 110);
-        moveAndLetWindowSystemReport(f, 120, 120);
-        moveAndLetWindowSystemReport(f, 130, 130);
-        JUnitUtil.waitFor(() -> ThreadingUtil.runOnGUIwithReturn(
-            () -> saved.contains(new Point(130, 130))), "location saved where the window stopped");
-        // allow ten times the save delay for any further save
-        JUnitUtil.waitFor(10 * JmriJFrame.WINDOW_DETAILS_SAVE_DELAY);
-        List<Point> after = ThreadingUtil.runOnGUIwithReturn(() -> new ArrayList<>(saved));
-        Assertions.assertTrue(after.size() <= 2, () -> "saved at most twice: " + after);
-        Assertions.assertFalse(after.contains(new Point(120, 120)), () -> "not saved on the way: " + after);
-        Assertions.assertEquals(new Point(130, 130), after.get(after.size() - 1), "last saved where the window stopped");
+        // The steps must follow each other within the save delay, as in a drag; a step
+        // that comes later is a new move, and is rightly saved at once. On a busy machine
+        // the window system can take longer than that to report a step, so try again,
+        // from where the window is, until the steps come close enough together.
+        long slowest = Long.MAX_VALUE;
+        int x = 100;
+        for (int attempt = 0; attempt < MOVE_ATTEMPTS; attempt++) {
+            if (attempt > 0) {
+                JUnitUtil.waitFor(4 * JmriJFrame.WINDOW_DETAILS_SAVE_DELAY); // let it settle
+                ThreadingUtil.runOnGUI(saved::clear);
+            }
+            // each step in its own event, as when dragged
+            long first = moveAndLetWindowSystemReport(f, x + 10, x + 10);
+            long second = moveAndLetWindowSystemReport(f, x + 20, x + 20);
+            long third = moveAndLetWindowSystemReport(f, x + 30, x + 30);
+            Point stopped = new Point(x + 30, x + 30);
+            Point onTheWay = new Point(x + 20, x + 20);
+            x += 30;
+            slowest = Math.max(second - first, third - second) / 1_000_000L;
+            JUnitUtil.waitFor(() -> ThreadingUtil.runOnGUIwithReturn(
+                () -> saved.contains(stopped)), "location saved where the window stopped");
+            if (slowest >= JmriJFrame.WINDOW_DETAILS_SAVE_DELAY * 4 / 5) {
+                continue; // too slow to be one drag: try again
+            }
+            // allow ten times the save delay for any further save
+            JUnitUtil.waitFor(10 * JmriJFrame.WINDOW_DETAILS_SAVE_DELAY);
+            List<Point> after = ThreadingUtil.runOnGUIwithReturn(() -> new ArrayList<>(saved));
+            Assertions.assertTrue(after.size() <= 2, () -> "saved at most twice: " + after);
+            Assertions.assertFalse(after.contains(onTheWay), () -> "not saved on the way: " + after);
+            Assertions.assertEquals(stopped, after.get(after.size() - 1), "last saved where the window stopped");
+            JUnitUtil.dispose(f);
+            return;
+        }
         JUnitUtil.dispose(f);
+        long ms = slowest;
+        Assumptions.abort(() -> "the window system took " + ms + " ms to report a move, in each of "
+            + MOVE_ATTEMPTS + " tries; a drag needs steps within " + JmriJFrame.WINDOW_DETAILS_SAVE_DELAY + " ms");
     }
+
+    /** How many times testLocationSavedOnceWindowStopsMoving tries a drag. */
+    private static final int MOVE_ATTEMPTS = 5;
 
     /**
      * A window that is opened and placed saves its location at once, as it did

@@ -50,6 +50,12 @@ import jmri.jmrit.roster.RosterSpeedProfile;
  * could have gone on into a Block with no detector, it is only counted once
  * the train is seen again in the Block that went empty.
  * <p>
+ * Where a way through has been crossed at different steady speeds, the
+ * measured times are fitted against the times the profile gives, which
+ * separates a fixed time added to every crossing, such as a detector that is
+ * slow to report or a debounce delay, from a profile that is out by a
+ * proportion at every speed (see {@link Measurement#getDetectorOffset()}).
+ * <p>
  * It only measures: nothing uses the measurements yet.
  *
  * @author Keith Bruce Copyright (C) 2026
@@ -205,11 +211,10 @@ public class TrainTrackingMeasurements extends PropertyChangeSupport implements 
         if (seconds <= 0 || length <= 0) {
             return null;
         }
-        double speed = length / seconds;
         Double profile = profileSpeed(r, fromNanos, toNanos);
         Measurement m = measurements.computeIfAbsent(new Key(crossed, from, to),
                 k -> new Measurement(k.block, k.from, k.to));
-        m.add(speed, profile);
+        m.add(seconds, length, profile);
         firePropertyChange(PROPERTY_MEASUREMENT, null, m);
         return m;
     }
@@ -304,6 +309,11 @@ public class TrainTrackingMeasurements extends PropertyChangeSupport implements 
         dropOuts.clear();
     }
 
+    /** The fewest crossings compared with a profile to fit a detector offset from. */
+    static final int MIN_FIT_CROSSINGS = 3;
+    /** How many times the longest profile time must be of the shortest, to fit from. */
+    static final double MIN_FIT_SPREAD = 1.5;
+
     private static final class Key {
 
         private final Block block;
@@ -341,6 +351,13 @@ public class TrainTrackingMeasurements extends PropertyChangeSupport implements 
         private double speedSum = 0;
         private int compared = 0;
         private double ratioSum = 0;
+        // for the fit of measured time against the profile's time
+        private double sumX = 0;
+        private double sumY = 0;
+        private double sumXX = 0;
+        private double sumXY = 0;
+        private double minX = Double.MAX_VALUE;
+        private double maxX = 0;
 
         Measurement(Block block, Block from, Block to) {
             this.block = block;
@@ -348,13 +365,85 @@ public class TrainTrackingMeasurements extends PropertyChangeSupport implements 
             this.to = to;
         }
 
-        void add(double speed, @CheckForNull Double profile) {
+        /**
+         * One crossing.
+         *
+         * @param seconds  how long it took
+         * @param lengthMm the length of the way through
+         * @param profile  the speed the lead loco's profile gives for its
+         *                 command, in millimetres per second, or null if
+         *                 none can be compared
+         */
+        void add(double seconds, double lengthMm, @CheckForNull Double profile) {
+            double speed = lengthMm / seconds;
             crossings++;
             speedSum += speed;
             if (profile != null) {
                 compared++;
                 ratioSum += speed / profile;
+                double x = lengthMm / profile; // the time the profile gives
+                sumX += x;
+                sumY += seconds;
+                sumXX += x * x;
+                sumXY += x * seconds;
+                minX = Math.min(minX, x);
+                maxX = Math.max(maxX, x);
             }
+        }
+
+        /**
+         * Whether the crossings compared with a profile were at speeds far
+         * enough apart, and enough of them, to tell a fixed time offset
+         * from a speed that differs from the profile.
+         *
+         * @return true if {@link #getDetectorOffset()} and
+         *         {@link #getAgainstProfileWithoutOffset()} have values
+         * @since 5.19.2
+         */
+        public boolean isFitted() {
+            return compared >= MIN_FIT_CROSSINGS && maxX >= MIN_FIT_SPREAD * minX
+                    && compared * sumXX - sumX * sumX > 0;
+        }
+
+        private double slope() {
+            return (compared * sumXY - sumX * sumY) / (compared * sumXX - sumX * sumX);
+        }
+
+        /**
+         * How much later the detector of the Block left for reports a train
+         * than the detector of this Block did, beyond the time the train
+         * took: a fixed time added to every crossing, whatever the speed, as
+         * a slow detector or a debounce delay adds. Found by fitting the
+         * measured times against the times the speed profile gives, over
+         * crossings at different speeds: the measured time is taken to be
+         * the profile's time, scaled, plus this offset.
+         *
+         * @return the offset in seconds, positive where the far detector is
+         *         the later; NaN unless {@link #isFitted()}
+         * @since 5.19.2
+         */
+        public double getDetectorOffset() {
+            if (!isFitted()) {
+                return Double.NaN;
+            }
+            return (sumY - slope() * sumX) / compared;
+        }
+
+        /**
+         * The trains' speed through the Block, as a fraction of the speed
+         * the profile gives, with {@link #getDetectorOffset()} taken out: how
+         * far the profile itself is out here.
+         *
+         * @return the fraction, such as 0.95 for 5% slower than the
+         *         profile; NaN unless {@link #isFitted()}
+         * @since 5.19.2
+         */
+        public double getAgainstProfileWithoutOffset() {
+            if (!isFitted()) {
+                return Double.NaN;
+            }
+            double slope = slope();
+            return slope > 0 ? 1 / slope : Double.NaN;
         }
 
         /**

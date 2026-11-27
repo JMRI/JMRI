@@ -48,8 +48,8 @@ public class XpaThrottle extends AbstractThrottle {
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     @Override
-    public void setSpeedSetting(float speed) {
-        super.setSpeedSetting(speed);
+    protected void sendSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
+        speedSettingChanged(speed);
         int value = Math.round((127) * speed);
         if (value > 127) {
             value = 127;    // max possible speed

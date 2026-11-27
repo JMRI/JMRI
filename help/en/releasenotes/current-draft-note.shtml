@@ -102,7 +102,15 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li></li>
+                <li>New USB connection for the Uhlenbrock "LocoNet-USB and WLAN
+                    Interface" 63860, listed under the "Uhlenbrock" system
+                    manufacturer. See the
+                    <a href="https://www.jmri.org/help/en/html/hardware/loconet/Uhlenbrock.shtml#63860">Uhlenbrock
+                    help page</a>.</li>
+                <li>New WLAN (LocoNet-over-TCP) connection for the Uhlenbrock
+                    "LocoNet-USB and WLAN Interface" 63860, also listed under
+                    the "Uhlenbrock" system manufacturer and preset to the
+                    interface's factory address 192.168.0.111, port 1234.</li>
             </ul>
 
         <h4>Maple</h4>
@@ -122,7 +130,10 @@
 
         <h4>MQTT</h4>
             <ul>
-                <li></li>
+                <li>An MQTT connection no longer drops at startup when the
+                    broker holds retained messages for the turnouts and
+                    sensors being loaded. A lost connection now logs its
+                    cause.</li>
             </ul>
 
         <h4>MRC</h4>
@@ -297,7 +308,8 @@
 
         <h4>MD Electronics</h4>
              <ul>
-                <li></li>
+                <li>New decoder definition for the mXion LLM light bar with
+                    integrated function decoder.</li>
              </ul>
 
         <h4>MGP</h4>
@@ -635,7 +647,9 @@
                 loco couldn't be acquired (for example a LocoNet slot refused
                 or timed out) while another throttle request is answered or a
                 throttle window is opened or closed.</li>
-            <li></li>
+            <li>
+                Default throttle function labels for NEM declined to Steam, Diesel and Electric (as default throttle layouts, and init button in Media pane)
+            </li>
         </ul>
 
     <h3>Timetable</h3>
@@ -675,10 +689,23 @@
         <ul>
             <li>Web panels: a panel showing a sensor as text no longer
                 reloads in the browser each time the sensor changes.</li>
+            <li>JSON server: signal heads and signal masts now accept
+                <code>lit</code> and <code>held</code> as true/false, the
+                same way the server sends them. Over a WebSocket or JSON
+                server connection, a get for a signal head no longer changes
+                it; clients need to send a post to change one. The JSON
+                schemas for reporters, signal heads, signal masts and named
+                bean properties now match what the server sends and
+                accepts.</li>
             <li>Web roster: uploading files from the roster page no longer
                 fails on Linux systems where /tmp is a separate filesystem,
                 such as Raspberry Pi OS trixie.</li>
             <li>Removed the unused, never-finished web preferences page (<code>/config</code>) and its templates.</li>
+            <li>JSON server: saving a roster entry's function keys no longer
+                fails with an error. Clearing a roster entry's owner, comment
+                or shunting function no longer causes errors. The JSON
+                schemas for roster messages now match what the server sends
+                and accepts.</li>
             <li></li>
         </ul>
 
@@ -691,7 +718,10 @@
    <h3>WiThrottle Server</h3>
         <a id="WS" name="WS"></a>
         <ul>
-            <li></li>
+            <li>The WiThrottle server no longer stops responding to a client
+                that sends an unrecognized speed step mode or a malformed
+                number. The bad message is logged and ignored, and an
+                unrecognized speed step mode is answered with the current mode.</li>
         </ul>
 
    <h3>Virtual Sound Decoder</h3>
@@ -711,6 +741,8 @@
         <ul>
             <li>Some Java methods that have been deprecated since
                 JMRI 5.13 series have been removed.</li>
+            <li>Building JMRI with Maven now requires Maven 3.6.3 or newer.
+                Ant builds are not affected.</li>
             <li>Tools &gt; Train Tracking &gt; Measurements lists, for each Block
                 and way through it, how many times trains have crossed it this
                 session, their average speed, how that compares with their

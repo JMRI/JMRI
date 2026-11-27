@@ -1,29 +1,12 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "title": "jmri-json-reporter-client-message",
+    "title": "jmri-json-rosterGroup-client-message",
     "type": "object",
-    "description": "Schema data object in message from client to JMRI for type \"reporter\"",
+    "description": "Schema data object in message from client to JMRI for type \"rosterGroup\"",
     "properties": {
         "name": {
             "type": "string",
-            "description": "System name of the reporter"
-        },
-        "userName": {
-            "type": "string",
-            "description": "If present, set the user name of the reporter"
-        },
-        "comment": {
-            "type": "string",
-            "description": "If present, set the comment for the reporter"
-        },
-        "state": {
-            "type": "integer",
-            "description": "If present, sets the state of the reporter",
-            "enum": [
-                0,
-                2,
-                4
-            ]
+            "description": "Name of the rosterGroup"
         }
     },
     "additionalProperties": false,
