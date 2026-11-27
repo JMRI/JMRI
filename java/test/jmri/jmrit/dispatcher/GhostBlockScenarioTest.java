@@ -499,6 +499,98 @@ public class GhostBlockScenarioTest {
         assertEquals(Block.OCCUPIED, s.block("West").getState(), "an occupied dark Block left as it is");
     }
 
+    /**
+     * Dave's case on #16033: a turnout given its own ghost Block so that its
+     * throat has a block boundary for a signal mast, as when a layout moves
+     * from signal heads with Simple Signal Logic to signal masts with Signal
+     * Mast Logic. A mast at Local, protecting the turnout West, needs West
+     * unoccupied. It returns a list of each aspect the mast shows, with where
+     * the trains were then.
+     */
+    private List<String> mastIntoWest() {
+        jmri.implementation.VirtualSignalMast source =
+                new jmri.implementation.VirtualSignalMast("IF$vsm:basic:one-searchlight($0101)", "Local to West");
+        jmri.implementation.VirtualSignalMast dest =
+                new jmri.implementation.VirtualSignalMast("IF$vsm:basic:one-searchlight($0102)", "Line4 out");
+        jmri.SignalMastManager masts = jmri.InstanceManager.getDefault(jmri.SignalMastManager.class);
+        masts.register(source);
+        masts.register(dest);
+        jmri.SignalMastLogicManager smlm = jmri.InstanceManager.getDefault(jmri.SignalMastLogicManager.class);
+        smlm.setSignalLogicDelay(20);
+        jmri.SignalMastLogic sml = smlm.newSignalMastLogic(source);
+        sml.setDestinationMast(dest);
+        java.util.Hashtable<Block, Integer> blocks = new java.util.Hashtable<>();
+        blocks.put(s.block("West"), Block.UNOCCUPIED);
+        sml.setBlocks(blocks, dest);
+        sml.initialise();
+        s.waitFor(() -> !"Stop".equals(source.getAspect()), "the mast clears while West is empty");
+        List<String> aspects = java.util.Collections.synchronizedList(new ArrayList<>());
+        source.addPropertyChangeListener(e -> {
+            if ("Aspect".equals(e.getPropertyName())) {
+                aspects.add(e.getNewValue() + where());
+            }
+        });
+        return aspects;
+    }
+
+    /**
+     * With the ghost turnout's Length entered, as the help asks, the mast
+     * protecting it shows Stop from when Dispatcher sets the ghost, and stays
+     * at Stop while the train is on the turnout, here standing with its end on
+     * it.
+     */
+    @Test
+    public void testMastAtTheGhostTurnoutsThroatHeldWhileTheTrainIsOnIt()
+            throws IOException, NamedBean.BadNameException {
+        s.block("West").setIsGhost(true);
+        List<String> aspects = mastIntoWest();
+        Transit t = roundToMain();
+        VirtualTrain train = s.place("Goods", SimulationTestLayouts.Loco.DIESEL, 300, "Line1", "East", 400);
+        ActiveTrain at = s.run(s.trainInfo(t, SimulationTestLayouts.Loco.DIESEL, 300, "Line1", "Main"));
+
+        s.waitFor(() -> SimulationTestUtil.truth(train).getFrontBlock() == s.block("Main"), "train into Main");
+        s.waitForStop(at, train);
+        assertTrue(SimulationTestUtil.truth(train).getBlocks().contains(s.block("West")),
+                "the train stands with its end on the turnout: " + where());
+        int stop = -1;
+        for (int i = 0; i < aspects.size(); i++) {
+            if (aspects.get(i).startsWith("Stop")) {
+                stop = i;
+                break;
+            }
+        }
+        assertTrue(stop >= 0, "the mast went to Stop when Dispatcher set the ghost: " + aspects);
+        assertEquals(stop, aspects.size() - 1, "and stayed at Stop with the train on the turnout: " + aspects);
+        assertEquals("Stop", jmri.InstanceManager.getDefault(jmri.SignalMastManager.class)
+                .getSignalMast("Local to West").getAspect());
+    }
+
+    /**
+     * Why the help asks for a ghost turnout's Length: with none entered, it
+     * is taken as a join of no length and cleared as soon as the Block before
+     * it is empty, so the mast protecting the turnout clears with the train
+     * still on it.
+     */
+    @Test
+    public void testMastAtTheGhostTurnoutsThroatClearsUnderTheTrainWithNoLength()
+            throws IOException, NamedBean.BadNameException {
+        s.block("West").setIsGhost(true);
+        s.block("West").setLength(0);
+        List<String> aspects = mastIntoWest();
+        Transit t = roundToMain();
+        VirtualTrain train = s.place("Goods", SimulationTestLayouts.Loco.DIESEL, 300, "Line1", "East", 400);
+        ActiveTrain at = s.run(s.trainInfo(t, SimulationTestLayouts.Loco.DIESEL, 300, "Line1", "Main"));
+
+        s.waitFor(() -> SimulationTestUtil.truth(train).getFrontBlock() == s.block("Main"), "train into Main");
+        s.waitForStop(at, train);
+        s.waitFor(() -> !aspects.isEmpty() && !aspects.get(aspects.size() - 1).startsWith("Stop"),
+                "the mast cleared");
+        String cleared = aspects.get(aspects.size() - 1);
+        assertTrue(cleared.contains("[Goods") && cleared.contains(" West"),
+                "with the train still on the turnout: " + aspects);
+        jmri.util.JUnitAppender.assertWarnMessage("Block \"West\" has no length; simulated trains take it as 300 mm.");
+    }
+
     private static String where() {
         StringBuilder sb = new StringBuilder();
         for (jmri.jmrit.simulation.SimulationTruth.TrainTruth t : SimulationTestUtil.truth().getTrains()) {
