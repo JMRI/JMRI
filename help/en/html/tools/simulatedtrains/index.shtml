@@ -40,6 +40,11 @@
         inactive when the last of every train has left it. A sensor of another connection is left
         alone.</li>
 
+        <li>On some systems' simulator connections, such as CAN Simulation and the DCC-EX Simulator,
+        they also obey that connection's throttles and set its sensors, reported as that system's
+        command station or detectors report them. Each system's help page says whether its
+        simulator does.</li>
+
         <li>Two trains that touch both stop. A train whose turnout is moved under it derails and
         stays where it stopped.</li>
       </ul>

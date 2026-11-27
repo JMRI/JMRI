@@ -52,7 +52,10 @@
 
         <h4>DCC++ and DCC-EX</h4>
             <ul>
-                <li></li>
+                <li>Simulated trains can run on a DCC-EX Simulator connection: they obey its throttles,
+                    and its simulated command station reports their detection on its sensors. Once
+                    simulated trains use the connection, the simulator stops sending random sensor
+                    reports. The connection's Simulated trains setting can leave it out.</li>
             </ul>
 
         <h4>DCC4pc</h4>

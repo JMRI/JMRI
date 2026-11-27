@@ -8,6 +8,8 @@ import java.io.PipedOutputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -64,9 +66,13 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     //keep track of speed, direction and functions for each loco address
     private LinkedHashMap<Integer,Integer> locoSpeedByte = new LinkedHashMap<Integer,Integer>();
     private LinkedHashMap<Integer,Integer> locoFunctions = new LinkedHashMap<Integer,Integer>();
+    // for simulated trains: who is told of throttle commands, and whether they report the sensors
+    private final List<ThrottleCommandListener> throttleCommandListeners = new CopyOnWriteArrayList<>();
+    private volatile boolean simulatedTrainsReporting = false;
 
     public DCCppSimulatorAdapter() {
         setPort(Bundle.getMessage("None"));
+        addSimulatedTrainsOption();
         try {
             PipedOutputStream tempPipeI = new ImmediatePipedOutputStream();
             pout = new DataOutputStream(tempPipeI);
@@ -167,6 +173,20 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     }
 
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Also stops the heartbeat, which would otherwise make a new traffic
+     * controller for the disposed connection.
+     */
+    @Override
+    public void dispose() {
+        if (keepAliveTimer != null) {
+            keepAliveTimer.cancel();
+        }
+        super.dispose();
+    }
+
     // base class methods for the DCCppSimulatorPortController interface
 
     /**
@@ -243,8 +263,9 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             }
 
             // Once every SENSOR_MSG_RATE loops, generate a random Sensor message.
+            // (not once simulated trains report the sensors: they would be scrambled)
             int rand = ThreadLocalRandom.current().nextInt(SENSOR_MSG_RATE);
-            if (rand == 1) {
+            if (rand == 1 && !simulatedTrainsReporting) {
                 generateRandomSensorReply();
             }
         }
@@ -296,8 +317,11 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                         int speed = Integer.parseInt(m.group(2));
                         int dir = Integer.parseInt(m.group(3));
                         storeLocoSpeedByte(locoId, speed, dir);
+                        throttleCommand(locoId, speed, dir);
                         r = getLocoStateString(locoId);
                     } else {
+                        throttleCommand(Integer.parseInt(m.group(2)), Integer.parseInt(m.group(3)),
+                                Integer.parseInt(m.group(4)));
                         r = "T " + m.group(1) + " " + m.group(3) + " " + m.group(4);
                     }
                 } catch (PatternSyntaxException e) {
@@ -803,7 +827,73 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         writeReply(r);
     }
 
-    private void writeReply(DCCppReply r) {
+    /**
+     * Told of each throttle command the simulated command station receives,
+     * as simulated trains need them.
+     *
+     * @since 5.19.2
+     */
+    @FunctionalInterface
+    public interface ThrottleCommandListener {
+
+        /**
+         * @param cab       the cab (loco address) number
+         * @param speed     -1 for an emergency stop, else 0 to 126
+         * @param direction 1 for forward, 0 for reverse
+         * @param timeNanos when it was received, on the
+         *                  {@link System#nanoTime()} scale
+         */
+        void throttleCommand(int cab, int speed, int direction, long timeNanos);
+    }
+
+    /**
+     * @param listener to be told of each throttle command received
+     * @since 5.19.2
+     */
+    public void addThrottleCommandListener(ThrottleCommandListener listener) {
+        throttleCommandListeners.add(listener);
+    }
+
+    /**
+     * @param listener to be told no more
+     * @since 5.19.2
+     */
+    public void removeThrottleCommandListener(ThrottleCommandListener listener) {
+        throttleCommandListeners.remove(listener);
+    }
+
+    private void throttleCommand(int cab, int speed, int direction) {
+        long now = System.nanoTime();
+        for (ThrottleCommandListener l : throttleCommandListeners) {
+            l.throttleCommand(cab, speed, direction, now);
+        }
+    }
+
+    /**
+     * Report a sensor input changing, as the command station does: {@code <Q
+     * n>} for active, {@code <q n>} for inactive. From then on no random
+     * sensor replies are sent.
+     *
+     * @param input  the input number
+     * @param active true if the input is active
+     * @since 5.19.2
+     */
+    public void reportSensorInput(int input, boolean active) {
+        stopRandomSensorReplies();
+        writeReply(DCCppReply.parseDCCppReply((active ? "Q " : "q ") + input));
+    }
+
+    /**
+     * Send no more random sensor replies: simulated trains are reporting the
+     * sensors.
+     *
+     * @since 5.19.2
+     */
+    public void stopRandomSensorReplies() {
+        simulatedTrainsReporting = true;
+    }
+
+    private synchronized void writeReply(DCCppReply r) {
         log.debug("Simulator Thread sending Reply '{}'", r);
         int i;
         int len = r.getLength();  // opCode+Nbytes+ECC
