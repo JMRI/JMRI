@@ -13,49 +13,45 @@
             "description": "If present, set the user name of the OBlock"
         },
         "comment": {
-            "type": "string",
-            "description": "If present, set the comment for the OBlock"
-        },
-        "status": {
-            "type": "integer",
-            "description": "If present, set the occupancy status of the oblock",
-            "enum": [
-                0,
-                1,
-                2,
-                4,
-                8,
-                16,
-                18,
-                20,
-                24,
-                32,
-                34,
-                36,
-                40,
-                64,
-                66,
-                68,
-                72,
-                128,
-                130,
-                132,
-                136
-            ]
-        },
-        "warrant": {
             "type": [
                 "string",
                 "null"
             ],
-            "description": "If present, allocate Warrant for the OBlock"
+            "description": "If present, set the comment for the OBlock; null removes it"
+        },
+        "status": {
+            "type": "integer",
+            "enum": [
+                0,
+                2,
+                4,
+                16,
+                32,
+                64,
+                128
+            ],
+            "description": "If present, 64 sets the out of service flag and 128 the track error flag, keeping the other flags; 2 (occupied), 4 (unoccupied), 16 (allocated) or 32 (running) replaces the whole status; 0 leaves it alone"
+        },
+        "value": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "If present, sets the value of the OBlock; null clears it"
+        },
+        "sensor": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "If present, the system name of the sensor that detects the OBlock; null removes it"
         },
         "train": {
             "type": [
                 "string",
                 "null"
             ],
-            "description": "If present, set Train in Warrant for the OBlock"
+            "description": "If present, sets the train name in the warrant using the OBlock; null clears it. Returns an error if the OBlock has no warrant or the warrant is running"
         }
     },
     "additionalProperties": false,

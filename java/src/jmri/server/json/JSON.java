@@ -806,11 +806,11 @@ public final class JSON {
     /**
      * {@value #OUT_OF_SERVICE}
      */
-    public static final int OUT_OF_SERVICE = 0x30;
+    public static final int OUT_OF_SERVICE = 0x40;
     /**
      * {@value #TRACK_ERROR}
      */
-    public static final int TRACK_ERROR = 0x40;
+    public static final int TRACK_ERROR = 0x80;
 
     /**
      * {@value #UNIT}

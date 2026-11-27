@@ -24,6 +24,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import java.awt.Color;
 import java.util.List;
+import java.util.function.Consumer;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -93,9 +94,9 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
 
     public JsonNode doPost(LayoutBlock layoutBlock, JsonNode data, String name, String type, JsonRequest request) throws JsonException {
         postNamedBean(layoutBlock, data, name, type, request); // throws JsonException if layoutBlock == null
-        setBlockTrackColor(layoutBlock, TRACK_COLOR, type, data, request);
-        setBlockTrackColor(layoutBlock, OCCUPIED_COLOR, type, data, request);
-        setBlockTrackColor(layoutBlock, EXTRA_COLOR, type, data, request);
+        setBlockColor(layoutBlock::setBlockTrackColor, TRACK_COLOR, type, data, request);
+        setBlockColor(layoutBlock::setBlockOccupiedColor, OCCUPIED_COLOR, type, data, request);
+        setBlockColor(layoutBlock::setBlockExtraColor, EXTRA_COLOR, type, data, request);
         String string = "";
         if (!data.path(MEMORY).isMissingNode()) {
             string = !data.path(MEMORY).isNull() ? data.path(MEMORY).asText() : null;
@@ -104,7 +105,7 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
                 if (memory == null) {
                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(request.locale, JsonException.ERROR_NOT_FOUND, MEMORY, string), request.id);
                 }
-                layoutBlock.setMemoryName(memory.getUserName());
+                layoutBlock.setMemoryName(memory.getDisplayName());
             } else {
                 layoutBlock.setMemoryName(null);
             }
@@ -116,7 +117,7 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
                 if (sensor == null) {
                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(request.locale, JsonException.ERROR_NOT_FOUND, SENSOR, string), request.id);
                 }
-                layoutBlock.setOccupancySensorName(sensor.getUserName());
+                layoutBlock.setOccupancySensorName(sensor.getDisplayName());
             } else {
                 layoutBlock.setOccupancySensorName(null);
             }
@@ -125,13 +126,13 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
         return doGet(layoutBlock, name, type, request);
     }
 
-    private void setBlockTrackColor(LayoutBlock layoutBlock, String key, String type, JsonNode data, JsonRequest request) throws JsonException {
+    private void setBlockColor(Consumer<Color> setter, String key, String type, JsonNode data, JsonRequest request) throws JsonException {
         String value = "";
         try {
             value = data.path(key).asText();
             Color color = (!data.path(key).isMissingNode() ? ColorUtil.stringToColor(value) : null);
             if (color != null) {
-                layoutBlock.setBlockTrackColor(color);
+                setter.accept(color);
             }
         } catch (IllegalArgumentException ex) {
             throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(request.locale, JsonException.ERROR_BAD_PROPERTY_VALUE, value, key, type), request.id);

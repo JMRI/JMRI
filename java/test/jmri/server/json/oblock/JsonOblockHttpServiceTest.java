@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import jmri.*;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
+import jmri.jmrit.logix.Warrant;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpServiceTestBase;
@@ -162,6 +163,98 @@ public class JsonOblockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
             service.doPost(JsonOblock.OBLOCK, "IT1", messageEx3, new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         }, "Expected exception not thrown.");
         assertEquals(404, ex.getCode());
+    }
+
+    @Test
+    public void testDoPostOutOfServiceAndError() throws JsonException {
+        OBlock oblock1 = InstanceManager.getDefault(OBlockManager.class).provideOBlock("OB1");
+        JsonRequest request = new JsonRequest(locale, JSON.V5, JSON.POST, 42);
+        // the same numbers a GET reports
+        assertEquals(OBlock.OUT_OF_SERVICE, JSON.OUT_OF_SERVICE);
+        assertEquals(OBlock.TRACK_ERROR, JSON.TRACK_ERROR);
+        oblock1.setState(OBlock.OCCUPIED | OBlock.ALLOCATED);
+        // out of service keeps the occupied and allocated flags
+        JsonNode message = mapper.createObjectNode().put(JSON.NAME, "OB1").put(JsonOblock.STATUS, OBlock.OUT_OF_SERVICE);
+        validateData(JsonOblock.OBLOCK, message, false);
+        JsonNode result = service.doPost(JsonOblock.OBLOCK, "OB1", message, request);
+        validate(result);
+        assertEquals(OBlock.OCCUPIED | OBlock.ALLOCATED | OBlock.OUT_OF_SERVICE, oblock1.getState());
+        assertEquals(oblock1.getState(), result.path(JSON.DATA).path(JsonOblock.STATUS).asInt());
+        // track error keeps the other flags too
+        message = mapper.createObjectNode().put(JSON.NAME, "OB1").put(JsonOblock.STATUS, OBlock.TRACK_ERROR);
+        validateData(JsonOblock.OBLOCK, message, false);
+        service.doPost(JsonOblock.OBLOCK, "OB1", message, request);
+        assertEquals(OBlock.OCCUPIED | OBlock.ALLOCATED | OBlock.OUT_OF_SERVICE | OBlock.TRACK_ERROR, oblock1.getState());
+    }
+
+    @Test
+    public void testClientSchema() throws JsonException {
+        OBlock oblock1 = InstanceManager.getDefault(OBlockManager.class).provideOBlock("OB1");
+        Sensor sensor1 = InstanceManager.getDefault(SensorManager.class).provide("IS1");
+        oblock1.setComment("a comment");
+        JsonNode data = mapper.createObjectNode().put(JSON.NAME, "OB1").put(JSON.VALUE, "Train 1")
+                .put(JsonSensor.SENSOR, "IS1").putNull(JSON.COMMENT);
+        validateData(JsonOblock.OBLOCK, data, false);
+        service.doPost(JsonOblock.OBLOCK, "OB1", data, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        assertEquals("Train 1", oblock1.getValue());
+        assertEquals(sensor1, oblock1.getSensor());
+        assertNull(oblock1.getComment());
+    }
+
+    @Test
+    public void testDoPostTrainWithoutWarrant() {
+        OBlockManager manager = InstanceManager.getDefault(OBlockManager.class);
+        OBlock oblock1 = manager.provideOBlock("OB1");
+        assertNull(oblock1.getWarrant());
+        // the check comes before any change, including the comment
+        JsonNode message = mapper.createObjectNode().put(JSON.NAME, "OB1").put(JSON.COMMENT, "new comment").put(JsonOblock.TRAIN, "Train 1");
+        JsonException ex = assertThrows(JsonException.class,
+                () -> service.doPost(JsonOblock.OBLOCK, "OB1", message, new JsonRequest(locale, JSON.V5, JSON.POST, 42)));
+        assertEquals(400, ex.getCode());
+        assertEquals("Property train is invalid for oblock OB1.", ex.getMessage());
+        assertNull(oblock1.getComment());
+        // a PUT with a train is refused before the OBlock is created
+        JsonNode message2 = mapper.createObjectNode().put(JSON.NAME, "OB2").put(JsonOblock.TRAIN, "Train 1");
+        ex = assertThrows(JsonException.class,
+                () -> service.doPut(JsonOblock.OBLOCK, "OB2", message2, new JsonRequest(locale, JSON.V5, JSON.PUT, 42)));
+        assertEquals(400, ex.getCode());
+        assertNull(manager.getOBlock("OB2"));
+    }
+
+    @Test
+    public void testDoPostTrain() throws JsonException {
+        OBlock oblock1 = InstanceManager.getDefault(OBlockManager.class).provideOBlock("OB1");
+        Warrant warrant = new Warrant("IW1", "Warrant 1");
+        assertNull(oblock1.allocate(warrant));
+        JsonRequest request = new JsonRequest(locale, JSON.V5, JSON.POST, 42);
+        JsonNode message = mapper.createObjectNode().put(JSON.NAME, "OB1").put(JsonOblock.TRAIN, "Train 1");
+        validateData(JsonOblock.OBLOCK, message, false);
+        JsonNode result = service.doPost(JsonOblock.OBLOCK, "OB1", message, request);
+        validate(result);
+        assertEquals("Train 1", warrant.getTrainName());
+        assertEquals("Train 1", result.path(JSON.DATA).path(JsonOblock.TRAIN).asText());
+        // null clears the name
+        message = mapper.createObjectNode().put(JSON.NAME, "OB1").putNull(JsonOblock.TRAIN);
+        service.doPost(JsonOblock.OBLOCK, "OB1", message, request);
+        assertEquals("", warrant.getTrainName());
+    }
+
+    @Test
+    public void testDoPostTrainWhileRunning() {
+        OBlock oblock1 = InstanceManager.getDefault(OBlockManager.class).provideOBlock("OB1");
+        // a warrant that reports it is running a train
+        Warrant warrant = new Warrant("IW1", "Warrant 1") {
+            @Override
+            public int getRunMode() {
+                return MODE_RUN;
+            }
+        };
+        assertNull(oblock1.allocate(warrant));
+        JsonNode message = mapper.createObjectNode().put(JSON.NAME, "OB1").put(JsonOblock.TRAIN, "Train 1");
+        JsonException ex = assertThrows(JsonException.class,
+                () -> service.doPost(JsonOblock.OBLOCK, "OB1", message, new JsonRequest(locale, JSON.V5, JSON.POST, 42)));
+        assertEquals(400, ex.getCode());
+        assertEquals("Property train is invalid for oblock OB1.", ex.getMessage());
     }
 
     @Test

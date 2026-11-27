@@ -687,6 +687,13 @@
    <h3>Web Server</h3>
         <a id="server" name="server"></a>
         <ul>
+            <li>JSON server: setting a layout block's occupied or extra
+                color no longer changes its track color instead. Setting an
+                OBlock out of service (64) or to track error (128) now uses
+                the same numbers the server sends, and keeps the block's
+                other status flags. The JSON schemas for blocks, layout
+                blocks and OBlocks now match what the server sends and
+                accepts.</li>
             <li>Web panels: a panel showing a sensor as text no longer
                 reloads in the browser each time the sensor changes.</li>
             <li>JSON server: signal heads and signal masts now accept

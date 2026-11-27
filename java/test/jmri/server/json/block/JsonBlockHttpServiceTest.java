@@ -113,6 +113,47 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
     }
 
     @Test
+    public void testDoGetObjectValue() throws JsonException {
+        Block block1 = InstanceManager.getDefault(BlockManager.class).provideBlock("IB1");
+        Reporter reporter1 = InstanceManager.getDefault(ReporterManager.class).provide("IR1");
+        // a reporter as the value is sent as an object
+        block1.setValue(reporter1);
+        JsonNode result = service.doGet(JsonBlock.BLOCK, "IB1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
+        validate(result);
+        assertEquals("IR1", result.path(JSON.DATA).path(JSON.VALUE).path(JSON.DATA).path(JSON.NAME).asText());
+    }
+
+    @Test
+    public void testClientSchema() throws JsonException {
+        Block block1 = InstanceManager.getDefault(BlockManager.class).provideBlock("IB1");
+        Sensor sensor1 = InstanceManager.getDefault(SensorManager.class).provide("IS1");
+        Reporter reporter1 = InstanceManager.getDefault(ReporterManager.class).provide("IR1");
+        block1.setComment("a comment");
+        JsonRequest request = new JsonRequest(locale, JSON.V5, JSON.POST, 42);
+        JsonNode data = mapper.createObjectNode().put(JSON.NAME, "IB1").put(JSON.STATE, JSON.ACTIVE);
+        validateData(JsonBlock.BLOCK, data, false);
+        service.doPost(JsonBlock.BLOCK, "IB1", data, request);
+        assertEquals(Block.OCCUPIED, block1.getState());
+        // a block with a sensor follows the sensor's state, so set the state on its own above
+        data = mapper.createObjectNode().put(JSON.NAME, "IB1").put(JsonSensor.SENSOR, "IS1")
+                .put(JsonReporter.REPORTER, "IR1").putNull(JSON.COMMENT);
+        validateData(JsonBlock.BLOCK, data, false);
+        service.doPost(JsonBlock.BLOCK, "IB1", data, request);
+        assertEquals(sensor1, block1.getSensor());
+        assertEquals(reporter1, block1.getReporter());
+        assertNull(block1.getComment());
+        // null removes the sensor and reporter and clears the value
+        block1.setValue("Train 1");
+        data = mapper.createObjectNode().put(JSON.NAME, "IB1").putNull(JsonSensor.SENSOR)
+                .putNull(JsonReporter.REPORTER).putNull(JSON.VALUE);
+        validateData(JsonBlock.BLOCK, data, false);
+        service.doPost(JsonBlock.BLOCK, "IB1", data, request);
+        assertNull(block1.getSensor());
+        assertNull(block1.getReporter());
+        assertNull(block1.getValue());
+    }
+
+    @Test
     public void testDoGetAllocatedValue() throws JsonException {
         Block block1 = InstanceManager.getDefault(BlockManager.class).provideBlock("IB1");
         JsonNode result = service.doGet(JsonBlock.BLOCK, "IB1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));

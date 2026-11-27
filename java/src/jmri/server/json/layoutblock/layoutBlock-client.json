@@ -16,19 +16,11 @@
             "description": "If present, set the user name of the layoutBlock; if not present when putting a new layoutBlock, name must be empty or null to generate an automatically named layoutBlock"
         },
         "comment": {
-            "type": "string",
-            "description": "If present, set the comment for the layoutBlock"
-        },
-        "value": {
-            "type": "string",
-            "description": "If present, sets the value of the layoutBlock"
-        },
-        "block": {
             "type": [
                 "string",
                 "null"
             ],
-            "description": "Name of underlying block"
+            "description": "If present, set the comment for the layout block; null removes it"
         },
         "memory": {
             "type": [
@@ -43,14 +35,6 @@
                 "null"
             ],
             "description": "Name of occupancy sensor for block"
-        },
-        "occupiedSense": {
-            "type": "integer",
-            "description": "State of occupancy sensor for block"
-        },
-        "blockColor": {
-            "type": "string",
-            "description": "Color of block on panel"
         },
         "trackColor": {
             "type": "string",

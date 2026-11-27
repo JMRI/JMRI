@@ -13,12 +13,41 @@
             "description": "If present, set the user name of the block"
         },
         "comment": {
-            "type": "string",
-            "description": "If present, set the comment for the block"
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "If present, set the comment for the block; null removes it"
         },
         "value": {
-            "type": "string",
-            "description": "If present, sets the value of the block"
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "If present, sets the value of the block, usually the train in it; null clears it"
+        },
+        "state": {
+            "type": "integer",
+            "enum": [
+                0,
+                2,
+                4
+            ],
+            "description": "If present, 2 sets the block occupied and 4 unoccupied; 0 leaves it alone"
+        },
+        "sensor": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "If present, the system name of the sensor that detects the block; null removes it"
+        },
+        "reporter": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "If present, the system name of the reporter for the block; null removes it"
         },
         "speed": {
             "type": [
@@ -47,18 +76,6 @@
         "permissive": {
             "type": "boolean",
             "description": "true if block allows a train to enter it while occupied; false otherwise"
-        },
-        "speedLimit": {
-            "type": "number",
-            "description": "The maximum allowed speed for the block"
-        },
-        "denied": {
-            "type": "array",
-            "description": "List of names of blocks that trains cannot enter this block from",
-            "items": {
-                "type": "string",
-                "description": "Name of a block that trains cannot enter this block from"
-            }
         }
     },
     "additionalProperties": false,
