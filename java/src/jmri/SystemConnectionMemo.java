@@ -38,6 +38,7 @@ public interface SystemConnectionMemo extends jmri.beans.PropertyChangeProvider 
     String USER_NAME = "ConnectionNameChanged";
     String SYSTEM_PREFIX = "ConnectionPrefixChanged";
     String INTERVAL = "OutputInterval";
+    String INTERVAL_KEPT = "OutputIntervalKept";
     String STORE = "Store";
     String DEREGISTER = "Deregister";
 
@@ -160,5 +161,28 @@ public interface SystemConnectionMemo extends jmri.beans.PropertyChangeProvider 
     int getDefaultOutputInterval();
 
     void setOutputInterval(int newInterval);
+
+    /**
+     * Get whether the OutputInterval is kept when each command is sent.
+     * <p>
+     * When false (the default), each command is sent at its time as scheduled,
+     * so commands held up while JMRI is busy can be sent together. When true,
+     * each command is also sent no sooner than the OutputInterval after the one
+     * before it.
+     * Used in {@link jmri.implementation.AbstractTurnout#setCommandedStateAtInterval(int)}.
+     *
+     * @return true if the interval is kept when commands are sent
+     * @since 5.19.2
+     */
+    boolean isOutputIntervalKept();
+
+    /**
+     * Set whether the OutputInterval is kept when each command is sent.
+     *
+     * @param kept true to keep the interval when commands are sent
+     * @see #isOutputIntervalKept()
+     * @since 5.19.2
+     */
+    void setOutputIntervalKept(boolean kept);
 
 }

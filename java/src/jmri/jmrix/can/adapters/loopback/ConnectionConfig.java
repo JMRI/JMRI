@@ -45,6 +45,7 @@ public class ConnectionConfig extends jmri.jmrix.can.adapters.ConnectionConfig {
         outputIntervalLabel.setVisible(true);   // show interval JSpinner idem
         outputIntervalSpinner.setVisible(true); // show intervalLabel idem
         outputIntervalReset.setVisible(true);   // show Interval Reset button
+        outputIntervalKept.setVisible(true);    // show whether the interval is kept
     }
 
     /**

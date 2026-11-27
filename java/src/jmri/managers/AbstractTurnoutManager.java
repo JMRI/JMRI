@@ -349,6 +349,12 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     /** {@inheritDoc} */
     @Override
+    public boolean isOutputIntervalKept() {
+        return memo.isOutputIntervalKept();
+    }
+
+    /** {@inheritDoc} */
+    @Override
     public void setOutputInterval(int newInterval) {
         memo.setOutputInterval(newInterval);
         turnoutInterval = newInterval; // local field will hear change and update automatically?

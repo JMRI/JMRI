@@ -248,6 +248,14 @@ public class ProxyTurnoutManager extends AbstractProvidingProxyManager<Turnout> 
         return ((TurnoutManager) getDefaultManager()).getOutputInterval();
     }
 
+    /** {@inheritDoc}
+     * @return whether the Output Interval is kept, from the default TurnoutManager
+     */
+    @Override
+    public boolean isOutputIntervalKept() {
+        return ((TurnoutManager) getDefaultManager()).isOutputIntervalKept();
+    }
+
     /**
      * {@inheritDoc}
      * This method is only used in jmri.jmrix.internal.InternalTurnoutManagerTest and should not be

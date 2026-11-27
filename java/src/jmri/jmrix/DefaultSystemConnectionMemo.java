@@ -413,6 +413,26 @@ public abstract class DefaultSystemConnectionMemo extends Bean implements System
         _interval = newInterval;
     }
 
+    private boolean _intervalKept = false;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isOutputIntervalKept() {
+        return _intervalKept;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setOutputIntervalKept(boolean kept) {
+        boolean old = _intervalKept;
+        _intervalKept = kept;
+        this.propertyChangeSupport.firePropertyChange(INTERVAL_KEPT, old, kept);
+    }
+
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultSystemConnectionMemo.class);
 
 }

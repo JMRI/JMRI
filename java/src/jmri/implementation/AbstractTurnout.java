@@ -208,6 +208,12 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      */
     @Override
     public void setCommandedStateAtInterval(int s) {
+        if (InstanceManager.turnoutManagerInstance().isOutputIntervalKept()) {
+            // sent in the order requested, spaced by the output interval when
+            // sent, however busy the layout thread (Swing thread) is
+            InstanceManager.getDefault(TurnoutIntervalSender.class).send(() -> setCommandedState(s));
+            return;
+        }
         // each call gets its own end time, later calls get later times
         LocalDateTime nextWait = InstanceManager.turnoutManagerInstance().outputIntervalEnds();
         // nextWait time is calculated using actual turnoutInterval in TurnoutManager

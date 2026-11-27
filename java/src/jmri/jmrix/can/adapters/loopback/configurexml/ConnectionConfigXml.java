@@ -118,6 +118,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         if (perNode.getAttribute("turnoutInterval") != null) {
             adapter.getSystemConnectionMemo().setOutputInterval(Integer.parseInt(perNode.getAttribute("turnoutInterval").getValue()));
         }
+        loadOutputIntervalKept(adapter, perNode);
 
         return result;
     }

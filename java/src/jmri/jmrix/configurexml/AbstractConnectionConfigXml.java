@@ -195,7 +195,8 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
     }
 
     /**
-     * Store the outputInterval in a connection element for persistence.
+     * Store the outputInterval in a connection element for persistence,
+     * and whether it is kept when commands are sent, only when it is.
      *
      * @param adapter the adapter for which properties are stored
      * @param e the "connection" element being filled
@@ -206,6 +207,30 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
         } else {
             e.setAttribute("turnoutInterval", "0");
         }
+        if (adapter.getSystemConnectionMemo().isOutputIntervalKept()) {
+            e.setAttribute(INTERVAL_KEPT_ATTRIBUTE, "yes");
+        }
+    }
+
+    /**
+     * Name of the connection attribute storing whether the outputInterval is
+     * kept when commands are sent, see
+     * {@link jmri.SystemConnectionMemo#isOutputIntervalKept()}.
+     * @since 5.19.2
+     */
+    public static final String INTERVAL_KEPT_ATTRIBUTE = "turnoutIntervalKept";
+
+    /**
+     * Load whether the outputInterval is kept when commands are sent; off when
+     * the attribute is missing.
+     *
+     * @param adapter the adapter whose connection is loaded
+     * @param e the "connection" element being read
+     * @since 5.19.2
+     */
+    protected void loadOutputIntervalKept(PortAdapter adapter, Element e) {
+        adapter.getSystemConnectionMemo().setOutputIntervalKept(
+                "yes".equals(e.getAttributeValue(INTERVAL_KEPT_ATTRIBUTE)));
     }
 
     abstract protected void dispose();
