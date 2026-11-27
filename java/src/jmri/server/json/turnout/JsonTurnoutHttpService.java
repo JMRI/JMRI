@@ -84,6 +84,10 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService<Turnout> {
     @Override
     public ObjectNode doPost(Turnout turnout, String name, String type, JsonNode data, JsonRequest request) throws JsonException {
         if (data.path(SENSOR).isArray()) {
+            // check before changing anything, since a turnout has at most two feedback sensors
+            if (data.path(SENSOR).size() > 2) {
+                throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorInvalidProperty", SENSOR, type, name), request.id);
+            }
             int number = 0;
             for (JsonNode node : data.path(SENSOR)) {
                 if (node != null) {
@@ -126,10 +130,11 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService<Turnout> {
                 turnout.provideFeedbackSensor(null, number);
             } else {
                 Sensor sensor = null;
+                String sensorName = data.isObject() ? data.path(JSON.NAME).asText() : data.asText();
                 if (data.isTextual()) {
-                    sensor = sensorService.getNamedBean(SENSOR, data.asText(), mapper.nullNode(), request);
+                    sensor = sensorService.getNamedBean(SENSOR, sensorName, mapper.nullNode(), request);
                 } else if (data.isObject()) {
-                    sensor = sensorService.getNamedBean(SENSOR, data.path(JSON.NAME).asText(), data, request);
+                    sensor = sensorService.getNamedBean(SENSOR, sensorName, data, request);
                 } else {
                     throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorInvalidProperty", SENSOR, TURNOUT, turnout.getSystemName()), request.id);
                 }
@@ -137,7 +142,7 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService<Turnout> {
                     turnout.provideFeedbackSensor(sensor.getSystemName(), number);
                 } else {
                     throw new JsonException(404,
-                            Bundle.getMessage(request.locale, "ErrorNotFound", SENSOR, data.asText()), request.id);
+                            Bundle.getMessage(request.locale, "ErrorNotFound", SENSOR, sensorName), request.id);
                 }
             }
         } catch (JmriException ex) {

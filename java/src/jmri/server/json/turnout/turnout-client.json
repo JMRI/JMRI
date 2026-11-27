@@ -39,16 +39,13 @@
         "sensor": {
             "type": "array",
             "description": "The feedback sensor names for the turnout in order",
+            "maxItems": 2,
             "items": {
                 "type": [
                     "string",
-                    "object",
                     "null"
                 ],
-                "required": [
-                    "name"
-                ],
-                "description": "The name of the sensor to set, a sensor object with a name (as sent by the server), or null to unset a sensor"
+                "description": "The name of the sensor to set or null to unset a sensor"
             }
         }
     },
