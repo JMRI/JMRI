@@ -51,6 +51,7 @@
         "name",
         "userName",
         "comment",
-        "value"
+        "value",
+        "properties"
     ]
 }

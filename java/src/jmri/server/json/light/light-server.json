@@ -53,6 +53,7 @@
         "name",
         "userName",
         "comment",
-        "state"
+        "state",
+        "properties"
     ]
 }
