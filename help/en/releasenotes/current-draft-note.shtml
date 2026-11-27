@@ -501,9 +501,12 @@
                  listing the Actions of every Transit, or of one, in a table
                  that can be searched, copied, saved as CSV and printed. It
                  shows any Block, Sensor, Signal, TrainInfo file or Roster
-                 entry an Action names that does not exist. Double-click a row
-                 to edit its Transit. It does the job of the
-                 TransitActionsReport.py script.</li>
+                 entry an Action names that does not exist, a Block that is
+                 not in the Action's Section, and a Delay Start Action with
+                 nothing to start it. Actions can be copied to another
+                 Transit's Section, and a name replaced in every Action that
+                 uses it. Double-click a row to edit its Transit. It does the
+                 job of the TransitActionsReport.py script.</li>
         </ul>
 
     <h3>Dispatcher System</h3>

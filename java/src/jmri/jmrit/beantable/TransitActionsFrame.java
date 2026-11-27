@@ -34,8 +34,10 @@ import jmri.util.table.JTableToCsvAction;
 
 /**
  * Lists the Special Actions of every Transit, or of one, in one table, with any
- * names they use that are not defined. The table can be filtered, copied,
- * saved as CSV and printed; double-clicking a row edits its Transit.
+ * names they use that are not defined and any that cannot run where they are.
+ * The table can be filtered, copied, saved as CSV and printed; double-clicking
+ * a row edits its Transit. Actions can be copied to another Transit's Section,
+ * and a name replaced in all the actions that use it.
  *
  * @author Keith Bruce Copyright (C) 2026
  */
@@ -77,6 +79,7 @@ public class TransitActionsFrame extends JmriJFrame {
         getContentPane().add(top, BorderLayout.NORTH);
 
         table.setRowSorter(sorter);
+        table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         table.setToolTipText(editor == null ? null : rbx.getString("ActionsReportEditHint"));
         table.addMouseListener(JmriMouseListener.adapt(new JmriMouseAdapter() {
             @Override
@@ -91,6 +94,14 @@ public class TransitActionsFrame extends JmriJFrame {
         JPanel bottom = new JPanel(new BorderLayout());
         bottom.add(summary, BorderLayout.WEST);
         JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JButton copyTo = new JButton(rbx.getString("ActionsReportCopyTo"));
+        copyTo.setToolTipText(rbx.getString("ActionsReportCopyToHint"));
+        copyTo.addActionListener(e -> copyToDialog());
+        buttons.add(copyTo);
+        JButton replace = new JButton(rbx.getString("ActionsReportReplace"));
+        replace.setToolTipText(rbx.getString("ActionsReportReplaceHint"));
+        replace.addActionListener(e -> replaceDialog());
+        buttons.add(replace);
         JButton refresh = new JButton(rbx.getString("ActionsReportRefresh"));
         refresh.addActionListener(e -> refresh());
         buttons.add(refresh);
@@ -247,6 +258,184 @@ public class TransitActionsFrame extends JmriJFrame {
         }
     }
 
+    /**
+     * The model rows selected, in the order shown.
+     *
+     * @return the rows; empty if none is selected
+     */
+    List<Integer> selectedRows() {
+        List<Integer> rows = new ArrayList<>();
+        for (int v : table.getSelectedRows()) {
+            rows.add(table.convertRowIndexToModel(v));
+        }
+        return rows;
+    }
+
+    /**
+     * The model rows shown, in the order shown.
+     *
+     * @return the rows
+     */
+    List<Integer> shownRows() {
+        List<Integer> rows = new ArrayList<>();
+        for (int v = 0; v < table.getRowCount(); v++) {
+            rows.add(table.convertRowIndexToModel(v));
+        }
+        return rows;
+    }
+
+    /**
+     * Copy actions to the end of a Transit Section's actions, in the order
+     * given, then read the Transits again.
+     *
+     * @param rows    model rows of the actions to copy
+     * @param transit the Transit to copy them to; nothing is copied if it is
+     *                in use by an Active Train
+     * @param target  the Transit Section of that Transit to copy them to
+     * @return the number of actions copied
+     */
+    int copyActions(List<Integer> rows, Transit transit, TransitSection target) {
+        if (transit.getState() == Transit.ASSIGNED) {
+            return 0;
+        }
+        for (int r : rows) {
+            target.addAction(TransitActionText.copy(model.rows.get(r).action));
+        }
+        refresh();
+        return rows.size();
+    }
+
+    /**
+     * Replace a name in actions, then read the Transits again. Actions of a
+     * Transit in use by an Active Train are left as they are.
+     *
+     * @param rows    model rows of the actions to change
+     * @param oldName the name to replace
+     * @param newName the name to use instead
+     * @return the number of actions changed
+     */
+    int replaceName(List<Integer> rows, String oldName, String newName) {
+        int changed = 0;
+        for (int r : rows) {
+            Row row = model.rows.get(r);
+            if (row.transit.getState() != Transit.ASSIGNED
+                    && TransitActionText.replaceName(row.action, oldName, newName)) {
+                changed++;
+            }
+        }
+        refresh();
+        return changed;
+    }
+
+    /**
+     * Count the actions in rows that use a name, and those of them in a
+     * Transit in use by an Active Train.
+     *
+     * @param rows model rows
+     * @param name the name
+     * @return {actions using it, of which in use}
+     */
+    int[] countUses(List<Integer> rows, String name) {
+        int uses = 0;
+        int inUse = 0;
+        for (int r : rows) {
+            Row row = model.rows.get(r);
+            if (TransitActionText.replaceName(TransitActionText.copy(row.action), name, name + "_")) {
+                uses++;
+                if (row.transit.getState() == Transit.ASSIGNED) {
+                    inUse++;
+                }
+            }
+        }
+        return new int[]{uses, inUse};
+    }
+
+    private void copyToDialog() {
+        List<Integer> rows = selectedRows();
+        if (rows.isEmpty()) {
+            JmriJOptionPane.showMessageDialog(this, rbx.getString("ActionsReportSelectFirst"),
+                    getTitle(), JmriJOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        JComboBox<Transit> transits = new JComboBox<>();
+        List<Transit> list = new ArrayList<>(InstanceManager.getDefault(TransitManager.class).getNamedBeanSet());
+        list.sort((a, b) -> a.getDisplayName().compareTo(b.getDisplayName()));
+        list.forEach(transits::addItem);
+        transits.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public java.awt.Component getListCellRendererComponent(JList<?> l, Object v, int i, boolean s, boolean f) {
+                return super.getListCellRendererComponent(l, v == null ? "" : ((Transit) v).getDisplayName(), i, s, f);
+            }
+        });
+        JComboBox<String> sections = new JComboBox<>();
+        Runnable fill = () -> {
+            sections.removeAllItems();
+            Transit t = (Transit) transits.getSelectedItem();
+            if (t != null) {
+                for (TransitSection ts : t.getTransitSectionList()) {
+                    sections.addItem(ts.getSequenceNumber() + ": " + ts.getSectionName());
+                }
+            }
+        };
+        transits.addActionListener(e -> fill.run());
+        fill.run();
+        JPanel p = new JPanel(new java.awt.GridLayout(0, 2, 5, 5));
+        p.add(new JLabel(rbx.getString("ActionsReportTransit")));
+        p.add(transits);
+        p.add(new JLabel(rbx.getString("ActionsReportColSection") + ":"));
+        p.add(sections);
+        if (JmriJOptionPane.showConfirmDialog(this, p, MessageFormat.format(rbx.getString("ActionsReportCopyTitle"),
+                rows.size()), JmriJOptionPane.OK_CANCEL_OPTION) != JmriJOptionPane.OK_OPTION
+                || transits.getSelectedItem() == null || sections.getSelectedIndex() < 0) {
+            return;
+        }
+        Transit t = (Transit) transits.getSelectedItem();
+        TransitSection target = t.getTransitSectionList().get(sections.getSelectedIndex());
+        if (t.getState() == Transit.ASSIGNED) {
+            JmriJOptionPane.showMessageDialog(this, MessageFormat.format(rbx.getString("ActionsReportInUse"),
+                    t.getDisplayName()), getTitle(), JmriJOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        int n = copyActions(rows, t, target);
+        JmriJOptionPane.showMessageDialog(this, MessageFormat.format(rbx.getString("ActionsReportCopied"),
+                n, t.getDisplayName(), sections.getSelectedItem()), getTitle(), JmriJOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void replaceDialog() {
+        List<Integer> rows = selectedRows().isEmpty() ? shownRows() : selectedRows();
+        JTextField oldField = new JTextField(findField.getText().trim(), 20);
+        JTextField newField = new JTextField(20);
+        JPanel p = new JPanel(new java.awt.GridLayout(0, 2, 5, 5));
+        p.add(new JLabel(rbx.getString("ActionsReportReplaceOld")));
+        p.add(oldField);
+        p.add(new JLabel(rbx.getString("ActionsReportReplaceNew")));
+        p.add(newField);
+        if (JmriJOptionPane.showConfirmDialog(this, p, rbx.getString("ActionsReportReplaceTitle"),
+                JmriJOptionPane.OK_CANCEL_OPTION) != JmriJOptionPane.OK_OPTION) {
+            return;
+        }
+        String oldName = oldField.getText().trim();
+        String newName = newField.getText().trim();
+        if (oldName.isEmpty() || newName.isEmpty() || oldName.equals(newName)) {
+            return;
+        }
+        int[] uses = countUses(rows, oldName);
+        if (uses[0] == 0) {
+            JmriJOptionPane.showMessageDialog(this, MessageFormat.format(rbx.getString("ActionsReportNotUsed"),
+                    oldName), getTitle(), JmriJOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        String question = MessageFormat.format(rbx.getString("ActionsReportReplaceConfirm"),
+                oldName, newName, uses[0] - uses[1]);
+        if (uses[1] > 0) {
+            question = question + "\n" + MessageFormat.format(rbx.getString("ActionsReportReplaceSkipped"), uses[1]);
+        }
+        if (JmriJOptionPane.showConfirmDialog(this, question, rbx.getString("ActionsReportReplaceTitle"),
+                JmriJOptionPane.OK_CANCEL_OPTION) == JmriJOptionPane.OK_OPTION) {
+            replaceName(rows, oldName, newName);
+        }
+    }
+
     private void print() {
         try {
             table.print(JTable.PrintMode.FIT_WIDTH, new MessageFormat(getTitle()),
@@ -260,6 +449,7 @@ public class TransitActionsFrame extends JmriJFrame {
     private static final class Row {
 
         final Transit transit;
+        final TransitSectionAction action;
         final String transitName;
         final int sequence;
         final String section;
@@ -269,12 +459,13 @@ public class TransitActionsFrame extends JmriJFrame {
 
         Row(Transit t, TransitSection ts, TransitSectionAction tsa) {
             transit = t;
+            action = tsa;
             transitName = t.getDisplayName();
             sequence = ts.getSequenceNumber();
             section = ts.getSection() == null ? "" : ts.getSection().getDisplayName();
             when = TransitActionText.whenText(tsa);
             what = TransitActionText.whatText(tsa);
-            problems = TransitActionText.problems(tsa);
+            problems = TransitActionText.problems(ts, tsa);
         }
     }
 

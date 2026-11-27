@@ -107,6 +107,66 @@ public class TransitActionTextTest {
                         0, 0, TransitSectionAction.LOCOADDRESSTYPEROSTER, "", "None.xml", "NoLoco")));
     }
 
+    @Test
+    public void testBlockNotInItsSection() {
+        jmri.Block inside = InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("IB1", "Inside");
+        InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("IB2", "Outside");
+        jmri.Section s = InstanceManager.getDefault(jmri.SectionManager.class).createNewSection("Sec");
+        s.addBlock(inside);
+        jmri.TransitSection ts = new jmri.TransitSection(s, 1, jmri.Section.FORWARD);
+        assertTrue(TransitActionText.problems(ts, act(TransitSectionAction.BLOCKENTRY,
+                TransitSectionAction.PAUSE, 0, 1, 0, "Inside", "", "")).isEmpty());
+        assertEquals(List.of("Block \"Outside\" is not in Section \"Sec\""), TransitActionText.problems(ts,
+                act(TransitSectionAction.BLOCKEXIT, TransitSectionAction.PAUSE, 0, 1, 0, "Outside", "", "")));
+    }
+
+    @Test
+    public void testDelayStartActionNeedsADelayStart() {
+        jmri.Section s = InstanceManager.getDefault(jmri.SectionManager.class).createNewSection("Sec");
+        jmri.TransitSection ts = new jmri.TransitSection(s, 1, jmri.Section.FORWARD);
+        TransitSectionAction horn = act(TransitSectionAction.PRESTARTACTION, TransitSectionAction.SOUNDHORN,
+                1000, 500, 0, "", "", "");
+        ts.addAction(horn);
+        assertEquals(List.of("No Delay Start action in this Section to start it"), TransitActionText.problems(ts, horn));
+        ts.addAction(act(TransitSectionAction.PRESTARTDELAY, TransitSectionAction.PRESTARTRESUME,
+                5000, 0, 0, "", "", ""));
+        assertTrue(TransitActionText.problems(ts, horn).isEmpty());
+    }
+
+    @Test
+    public void testCopyKeepsWhenAndWhat() {
+        TransitSectionAction a = act(TransitSectionAction.BLOCKENTRY, TransitSectionAction.LOADTRAININFO,
+                300, 3, TransitSectionAction.LOCOADDRESSTYPEROSTER, "IB1", "T.xml", "Loco");
+        TransitSectionAction c = TransitActionText.copy(a);
+        assertNotSame(a, c);
+        assertEquals(TransitActionText.whenText(a), TransitActionText.whenText(c));
+        assertEquals(TransitActionText.whatText(a), TransitActionText.whatText(c));
+        assertEquals(3, c.getDataWhat1());
+    }
+
+    @Test
+    public void testReplaceName() {
+        TransitSectionAction a = act(TransitSectionAction.SENSORACTIVE, TransitSectionAction.SETSENSORACTIVE,
+                0, 0, 0, "S1", "S1", "");
+        assertTrue(TransitActionText.replaceName(a, "S1", "S9"));
+        assertEquals("S9", a.getStringWhen());
+        assertEquals("S9", a.getStringWhat());
+
+        TransitSectionAction partial = act(TransitSectionAction.SENSORACTIVE, TransitSectionAction.PAUSE,
+                0, 1, 0, "S10", "", "");
+        assertFalse(TransitActionText.replaceName(partial, "S1", "S9"), "only whole names");
+        assertEquals("S10", partial.getStringWhen());
+
+        TransitSectionAction roster = act(TransitSectionAction.ENTRY, TransitSectionAction.LOADTRAININFO,
+                0, 0, TransitSectionAction.LOCOADDRESSTYPEROSTER, "", "T.xml", "Loco");
+        assertTrue(TransitActionText.replaceName(roster, "Loco", "Loco2"));
+        assertEquals("Loco2", roster.getStringWhat2());
+
+        TransitSectionAction pause = act(TransitSectionAction.ENTRY, TransitSectionAction.PAUSE,
+                0, 1, 0, "", "S1", "");
+        assertFalse(TransitActionText.replaceName(pause, "S1", "S9"), "a Pause names nothing");
+    }
+
     @BeforeEach
     public void setUp(@TempDir File tempDir) throws IOException {
         JUnitUtil.setUp();
@@ -115,6 +175,7 @@ public class TransitActionTextTest {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalSignalHeadManager();
         JUnitUtil.initDefaultSignalMastManager();
+        JUnitUtil.initSectionManager();
     }
 
     @AfterEach

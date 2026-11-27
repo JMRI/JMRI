@@ -21,6 +21,7 @@ import jmri.util.ThreadingUtil;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperty;
 import org.junit.jupiter.api.io.TempDir;
+import org.netbeans.jemmy.operators.*;
 
 /**
  * Tests for TransitActionsFrame.
@@ -108,6 +109,92 @@ public class TransitActionsFrameTest {
         ThreadingUtil.runOnGUI(() -> frame.setTransit("East"));
         ThreadingUtil.runOnGUI(() -> frame.editRow(frame.getTable().convertRowIndexToModel(0)));
         assertEquals(List.of(InstanceManager.getDefault(TransitManager.class).getTransit("East")), edited);
+    }
+
+    @Test
+    public void testCopyActionsToAnotherSection() {
+        open();
+        ThreadingUtil.runOnGUI(() -> frame.setTransit("West"));
+        List<Integer> rows = frame.shownRows();
+        Transit east = InstanceManager.getDefault(TransitManager.class).getTransit("East");
+        int[] n = new int[1];
+        ThreadingUtil.runOnGUI(() -> n[0] = frame.copyActions(rows, east, east.getTransitSectionList().get(0)));
+        assertEquals(2, n[0]);
+        assertEquals(3, east.getTransitSectionList().get(0).getTransitSectionActionList().size());
+        ThreadingUtil.runOnGUI(() -> frame.setTransit("East"));
+        assertEquals(3, frame.getTable().getRowCount());
+        assertTrue(frame.visibleText().contains("East\t1\tSecE\tOn Entry to this Section\tPause for \"2\" fast minutes"));
+    }
+
+    @Test
+    public void testNoCopyToATransitInUse() {
+        open();
+        Transit east = InstanceManager.getDefault(TransitManager.class).getTransit("East");
+        east.setState(Transit.ASSIGNED);
+        int[] n = new int[1];
+        ThreadingUtil.runOnGUI(() -> n[0] = frame.copyActions(frame.shownRows(), east, east.getTransitSectionList().get(0)));
+        assertEquals(0, n[0]);
+        assertEquals(1, east.getTransitSectionList().get(0).getTransitSectionActionList().size());
+    }
+
+    @Test
+    public void testReplaceNameInShownActions() {
+        open();
+        int[] n = new int[1];
+        ThreadingUtil.runOnGUI(() -> n[0] = frame.replaceName(frame.shownRows(), "Gone", "IS1"));
+        assertEquals(1, n[0]);
+        assertEquals("3 actions in 2 Transits; 0 with problems.", frame.summaryText());
+    }
+
+    @Test
+    public void testReplaceNameLeavesATransitInUse() {
+        open();
+        InstanceManager.getDefault(TransitManager.class).getTransit("East").setState(Transit.ASSIGNED);
+        assertArrayEquals(new int[]{1, 1}, frame.countUses(frame.shownRows(), "Gone"));
+        int[] n = new int[1];
+        ThreadingUtil.runOnGUI(() -> n[0] = frame.replaceName(frame.shownRows(), "Gone", "IS1"));
+        assertEquals(0, n[0]);
+        assertEquals("3 actions in 2 Transits; 1 with problems.", frame.summaryText());
+    }
+
+    @Test
+    public void testReplaceNameDialog() {
+        open();
+        ThreadingUtil.runOnGUI(() -> {
+            frame.setVisible(true);
+            frame.getFindField().setText("Gone");
+        });
+        JFrameOperator jfo = new JFrameOperator(frame);
+        new JButtonOperator(jfo, "Replace Name...").pushNoBlock();
+        JDialogOperator ask = new JDialogOperator("Replace Name");
+        new JTextFieldOperator(ask, 1).setText("IS1");
+        new JButtonOperator(ask, "OK").pushNoBlock();
+        ask.waitClosed();
+        JDialogOperator confirm = new JDialogOperator("Replace Name");
+        new JButtonOperator(confirm, "OK").push();
+        JUnitUtil.waitFor(() -> frame.summaryText().endsWith("0 with problems."), "replaced");
+        assertEquals("IS1", InstanceManager.getDefault(TransitManager.class).getTransit("East")
+                .getTransitSectionList().get(0).getTransitSectionActionList().get(0).getStringWhat());
+    }
+
+    @Test
+    public void testCopyToSectionDialog() {
+        open();
+        ThreadingUtil.runOnGUI(() -> {
+            frame.setVisible(true);
+            frame.setTransit("East");
+            frame.getTable().selectAll();
+        });
+        JFrameOperator jfo = new JFrameOperator(frame);
+        new JButtonOperator(jfo, "Copy to Section...").pushNoBlock();
+        JDialogOperator ask = new JDialogOperator("Copy 1 actions to");
+        new JComboBoxOperator(ask, 0).selectItem(0); // East sorts before West
+        new JButtonOperator(ask, "OK").pushNoBlock();
+        ask.waitClosed();
+        JDialogOperator done = new JDialogOperator("Transit Actions");
+        new JButtonOperator(done, "OK").push();
+        assertEquals(2, InstanceManager.getDefault(TransitManager.class).getTransit("East")
+                .getTransitSectionList().get(0).getTransitSectionActionList().size());
     }
 
     @BeforeEach

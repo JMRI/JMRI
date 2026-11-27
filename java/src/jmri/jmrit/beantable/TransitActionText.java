@@ -8,19 +8,22 @@ import java.util.ResourceBundle;
 
 import javax.annotation.Nonnull;
 
+import jmri.Block;
 import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.SensorManager;
 import jmri.SignalHeadManager;
 import jmri.SignalMastManager;
+import jmri.TransitSection;
 import jmri.TransitSectionAction;
 import jmri.jmrit.dispatcher.TrainInfoFile;
 import jmri.jmrit.roster.Roster;
 
 /**
  * Words a Transit Section Action, as shown in the Transit editor's Special
- * Actions table and in the Transit Actions window, and finds the names it uses
- * that are not defined.
+ * Actions table and in the Transit Actions window; finds the names it uses that
+ * are not defined, and actions that cannot run where they are; copies actions,
+ * and replaces a name in them.
  *
  * @author Keith Bruce Copyright (C) 2026
  */
@@ -255,6 +258,103 @@ public final class TransitActionText {
                 break;
         }
         return found;
+    }
+
+    /**
+     * Find the problems of an action in its Section: the names it uses that are
+     * not defined, as {@link #problems(TransitSectionAction)}, a Block that is
+     * not in the Section, and a Delay Start Action with no Delay Start in the
+     * Section to start it.
+     *
+     * @param ts  the Transit Section the action belongs to
+     * @param tsa the action
+     * @return one line for each problem; empty if there are none
+     */
+    @Nonnull
+    public static List<String> problems(@Nonnull TransitSection ts, @Nonnull TransitSectionAction tsa) {
+        List<String> found = problems(tsa);
+        if ((tsa.getWhenCode() == TransitSectionAction.BLOCKENTRY || tsa.getWhenCode() == TransitSectionAction.BLOCKEXIT)
+                && ts.getSection() != null) {
+            Block b = InstanceManager.getDefault(BlockManager.class).getBlock(nonNull(tsa.getStringWhen()));
+            if (b != null && !ts.getSection().getBlockList().contains(b)) {
+                found.add(MessageFormat.format(rbx.getString("ActionsReportBlockNotInSection"),
+                        tsa.getStringWhen(), ts.getSection().getDisplayName()));
+            }
+        }
+        if (tsa.getWhenCode() == TransitSectionAction.PRESTARTACTION) {
+            boolean started = false;
+            for (TransitSectionAction other : ts.getTransitSectionActionList()) {
+                if (other.getWhenCode() == TransitSectionAction.PRESTARTDELAY) {
+                    started = true;
+                }
+            }
+            if (!started) {
+                found.add(rbx.getString("ActionsReportNoPreStart"));
+            }
+        }
+        return found;
+    }
+
+    /**
+     * Make a new action with the same When and What as another.
+     *
+     * @param tsa the action to copy
+     * @return the copy
+     */
+    @Nonnull
+    public static TransitSectionAction copy(@Nonnull TransitSectionAction tsa) {
+        return new TransitSectionAction(tsa.getWhenCode(), tsa.getWhatCode(), tsa.getDataWhen(),
+                tsa.getDataWhat1(), tsa.getDataWhat2(), tsa.getStringWhen(), tsa.getStringWhat(),
+                tsa.getStringWhat2());
+    }
+
+    /**
+     * Replace a name an action uses: a Block, Sensor, Signal Head or Mast,
+     * TrainInfo file or Roster entry. Only a whole name that matches exactly
+     * is replaced.
+     *
+     * @param tsa     the action
+     * @param oldName the name to replace
+     * @param newName the name to use instead
+     * @return true if the action used the name, and now uses the new one
+     */
+    public static boolean replaceName(@Nonnull TransitSectionAction tsa, @Nonnull String oldName, @Nonnull String newName) {
+        boolean changed = false;
+        switch (tsa.getWhenCode()) {
+            case TransitSectionAction.BLOCKENTRY:
+            case TransitSectionAction.BLOCKEXIT:
+            case TransitSectionAction.SENSORACTIVE:
+            case TransitSectionAction.SENSORINACTIVE:
+                if (oldName.equals(tsa.getStringWhen())) {
+                    tsa.setStringWhen(newName);
+                    changed = true;
+                }
+                break;
+            default:
+                break;
+        }
+        switch (tsa.getWhatCode()) {
+            case TransitSectionAction.SETSENSORACTIVE:
+            case TransitSectionAction.SETSENSORINACTIVE:
+            case TransitSectionAction.TOMANUALMODE:
+            case TransitSectionAction.HOLDSIGNAL:
+            case TransitSectionAction.RELEASESIGNAL:
+            case TransitSectionAction.LOADTRAININFO:
+                if (oldName.equals(tsa.getStringWhat())) {
+                    tsa.setStringWhat(newName);
+                    changed = true;
+                }
+                if (tsa.getWhatCode() == TransitSectionAction.LOADTRAININFO
+                        && tsa.getDataWhat2() == TransitSectionAction.LOCOADDRESSTYPEROSTER
+                        && oldName.equals(tsa.getStringWhat2())) {
+                    tsa.setStringWhat2(newName);
+                    changed = true;
+                }
+                break;
+            default:
+                break;
+        }
+        return changed;
     }
 
     private static void checkSensor(String name, List<String> found) {
