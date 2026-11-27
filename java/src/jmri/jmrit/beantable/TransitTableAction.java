@@ -264,6 +264,38 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
         };
     }
 
+    /**
+     * Add a Tools menu with the Transit Actions window.
+     *
+     * @param f the Transit Table frame
+     */
+    @Override
+    public void setMenuBar(BeanTableFrame<Transit> f) {
+        JMenuBar menuBar = f.getJMenuBar();
+        int pos = menuBar.getMenuCount() - 1;
+        int offset = 1;
+        for (int i = 0; i <= pos; i++) {
+            var comp = menuBar.getComponent(i);
+            if (comp instanceof JMenu && ((JMenu) comp).getText().equals(Bundle.getMessage("MenuHelp"))) {
+                offset = -1; // as part of ListedTableAction, the Help menu is not yet present
+            }
+        }
+        JMenu toolsMenu = new JMenu(rbx.getString("ActionsReportMenu"));
+        JMenuItem item = new JMenuItem(rbx.getString("ActionsReportMenuItem"));
+        item.addActionListener(e -> openActionsFrame());
+        toolsMenu.add(item);
+        menuBar.add(toolsMenu, pos + offset);
+    }
+
+    /**
+     * Open the Transit Actions window, listing the actions of every Transit.
+     */
+    void openActionsFrame() {
+        TransitActionsFrame frame = new TransitActionsFrame(t -> editPressed(t.getSystemName()));
+        frame.initComponents();
+        frame.setVisible(true);
+    }
+
     @Override
     protected void setTitle() {
         f.setTitle(Bundle.getMessage("TitleTransitTable"));
@@ -2599,70 +2631,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
      * @return display string including entered values
      */
     private String getWhenText(int r) {
-        TransitSectionAction tsa = action.get(activeRow).get(r);
-        switch (tsa.getWhenCode()) {
-            case TransitSectionAction.ENTRY:
-                if (tsa.getDataWhen() > 0) {
-                    return java.text.MessageFormat.format(rbx.getString("OnEntryDelayedFull"),
-                            new Object[]{"" + tsa.getDataWhen()});
-                }
-                return rbx.getString("OnEntryFull");
-            case TransitSectionAction.EXIT:
-                if (tsa.getDataWhen() > 0) {
-                    return java.text.MessageFormat.format(rbx.getString("OnExitDelayedFull"),
-                            new Object[]{"" + tsa.getDataWhen()});
-                }
-                return rbx.getString("OnExitFull");
-            case TransitSectionAction.BLOCKENTRY:
-                if (tsa.getDataWhen() > 0) {
-                    return java.text.MessageFormat.format(rbx.getString("OnBlockEntryDelayedFull"),
-                            new Object[]{"" + tsa.getDataWhen(), tsa.getStringWhen()});
-                }
-                return java.text.MessageFormat.format(rbx.getString("OnBlockEntryFull"),
-                        new Object[]{tsa.getStringWhen()});
-            case TransitSectionAction.BLOCKEXIT:
-                if (tsa.getDataWhen() > 0) {
-                    return java.text.MessageFormat.format(rbx.getString("OnBlockExitDelayedFull"),
-                            new Object[]{"" + tsa.getDataWhen(), tsa.getStringWhen()});
-                }
-                return java.text.MessageFormat.format(rbx.getString("OnBlockExitFull"),
-                        new Object[]{tsa.getStringWhen()});
-            case TransitSectionAction.TRAINSTOP:
-                if (tsa.getDataWhen() > 0) {
-                    return java.text.MessageFormat.format(rbx.getString("TrainStopDelayedFull"),
-                            new Object[]{"" + tsa.getDataWhen()});
-                }
-                return rbx.getString("TrainStopFull");
-            case TransitSectionAction.TRAINSTART:
-                if (tsa.getDataWhen() > 0) {
-                    return java.text.MessageFormat.format(rbx.getString("TrainStartDelayedFull"),
-                            new Object[]{"" + tsa.getDataWhen()});
-                }
-                return rbx.getString("TrainStartFull");
-            case TransitSectionAction.SENSORACTIVE:
-                if (tsa.getDataWhen() > 0) {
-                    return java.text.MessageFormat.format(rbx.getString("OnSensorActiveDelayedFull"),
-                            new Object[]{"" + tsa.getDataWhen(), tsa.getStringWhen()});
-                }
-                return java.text.MessageFormat.format(rbx.getString("OnSensorActiveFull"),
-                        new Object[]{tsa.getStringWhen()});
-            case TransitSectionAction.SENSORINACTIVE:
-                if (tsa.getDataWhen() > 0) {
-                    return java.text.MessageFormat.format(rbx.getString("OnSensorInactiveDelayedFull"),
-                            new Object[]{"" + tsa.getDataWhen(), tsa.getStringWhen()});
-                }
-                return java.text.MessageFormat.format(rbx.getString("OnSensorInactiveFull"),
-                        new Object[]{tsa.getStringWhen()});
-            case TransitSectionAction.PRESTARTDELAY:
-                return java.text.MessageFormat.format(rbx.getString("PreStartDelayFull"),
-                        new Object[]{"" + tsa.getDataWhen(), tsa.getStringWhen()});
-            case TransitSectionAction.PRESTARTACTION:
-                return java.text.MessageFormat.format(rbx.getString("PreStartActionFull"),
-                        new Object[]{"" + tsa.getDataWhen(), tsa.getStringWhen()});
-            default:
-                log.warn("Unhandled transit section action When code: {}",tsa.getWhenCode());
-                return("");
-        }
+        return TransitActionText.whenText(action.get(activeRow).get(r));
     }
 
     /**
@@ -2673,94 +2642,7 @@ public class TransitTableAction extends AbstractTableAction<Transit> {
      * @return display string including entered values
      */
     private String getWhatText(int r) {
-        TransitSectionAction tsa = action.get(activeRow).get(r);
-        switch (tsa.getWhatCode()) {
-            case TransitSectionAction.PAUSE:
-                return java.text.MessageFormat.format(rbx.getString("PauseFull"),
-                        new Object[]{tsa.getDataWhat1()});
-            case TransitSectionAction.SETMAXSPEED:
-                return java.text.MessageFormat.format(rbx.getString("SetMaxSpeedFull"),
-                        new Object[]{tsa.getDataWhat1()});
-            case TransitSectionAction.SETCURRENTSPEED:
-                return java.text.MessageFormat.format(rbx.getString("SetTrainSpeedFull"),
-                        new Object[]{tsa.getDataWhat1()});
-            case TransitSectionAction.RAMPTRAINSPEED:
-                return java.text.MessageFormat.format(rbx.getString("RampTrainSpeedFull"),
-                        new Object[]{"" + tsa.getDataWhat1()});
-            case TransitSectionAction.TOMANUALMODE:
-                if (tsa.getStringWhat().length() > 0) {
-                    return java.text.MessageFormat.format(rbx.getString("ToManualModeAltFull"),
-                            new Object[]{tsa.getStringWhat()});
-                }
-                return rbx.getString("ToManualModeFull");
-            case TransitSectionAction.SETLIGHT:
-                if (tsa.getStringWhat().equals("Off")) {
-                    return java.text.MessageFormat.format(rbx.getString("SetLightFull"),
-                        new Object[]{Bundle.getMessage("StateOff")});
-                }
-                return java.text.MessageFormat.format(rbx.getString("SetLightFull"),
-                        new Object[]{Bundle.getMessage("StateOn")});
-            case TransitSectionAction.STARTBELL:
-                return rbx.getString("StartBellFull");
-            case TransitSectionAction.STOPBELL:
-                return rbx.getString("StopBellFull");
-            case TransitSectionAction.SOUNDHORN:
-                return java.text.MessageFormat.format(rbx.getString("SoundHornFull"),
-                        new Object[]{tsa.getDataWhat1()});
-            case TransitSectionAction.SOUNDHORNPATTERN:
-                return java.text.MessageFormat.format(rbx.getString("SoundHornPatternFull"),
-                        new Object[]{tsa.getStringWhat(), "" + tsa.getDataWhat1(), "" + tsa.getDataWhat2()});
-            case TransitSectionAction.LOCOFUNCTION:
-                if (tsa.getStringWhat().equals("Off")) {
-                    return java.text.MessageFormat.format(rbx.getString("LocoFunctionFull"),
-                            new Object[]{"" + tsa.getDataWhat1(), Bundle.getMessage("StateOff")});
-                }
-                return java.text.MessageFormat.format(rbx.getString("LocoFunctionFull"),
-                        new Object[]{"" + tsa.getDataWhat1(), Bundle.getMessage("StateOn")});
-            case TransitSectionAction.SETSENSORACTIVE:
-                return java.text.MessageFormat.format(rbx.getString("SetSensorActiveFull"),
-                        new Object[]{tsa.getStringWhat()});
-            case TransitSectionAction.SETSENSORINACTIVE:
-                return java.text.MessageFormat.format(rbx.getString("SetSensorInactiveFull"),
-                        new Object[]{tsa.getStringWhat()});
-            case TransitSectionAction.HOLDSIGNAL:
-                return java.text.MessageFormat.format(rbx.getString("HoldSignalFull"),
-                        new Object[]{tsa.getStringWhat()});
-            case TransitSectionAction.RELEASESIGNAL:
-                return java.text.MessageFormat.format(rbx.getString("ReleaseSignalFull"),
-                        new Object[]{tsa.getStringWhat()});
-            case TransitSectionAction.PRESTARTRESUME:
-                return java.text.MessageFormat.format(rbx.getString("PreStartResumeFull"),
-                        new Object[]{tsa.getDataWhen()});
-            case TransitSectionAction.ESTOP:
-                return rbx.getString("EStopFull");
-            case TransitSectionAction.TERMINATETRAIN:
-                return rbx.getString("TerminateTrain");
-            case TransitSectionAction.FORCEALLOCATEPASSSAFESECTION:
-                return rbx.getString("ForcePassNextSafe");
-            case TransitSectionAction.LOADTRAININFO:
-                switch (tsa.getDataWhat2()) {
-                    case TransitSectionAction.LOCOADDRESSTYPEROSTER:
-                        return java.text.MessageFormat.format(rbx.getString("LoadTrainInfoRosterFull"),
-                                new Object[]{tsa.getStringWhat(),tsa.getStringWhat2()});
-                    case TransitSectionAction.LOCOADDRESSTYPENUMBER:
-                        return java.text.MessageFormat.format(rbx.getString("LoadTrainInfoNumberFull"),
-                                new Object[]{tsa.getStringWhat(),tsa.getStringWhat2()});
-                    case TransitSectionAction.LOCOADDRESSTYPECURRENT:
-                        return java.text.MessageFormat.format(rbx.getString("LoadTrainInfoCurrentFull"),
-                                new Object[]{tsa.getStringWhat()});
-                    case TransitSectionAction.LOCOADDRESSTYPEDEFAULT:
-                    default:
-                        return java.text.MessageFormat.format(rbx.getString("LoadTrainInfoDefaultFull"),
-                                new Object[]{tsa.getStringWhat()});
-                 }
-            case TransitSectionAction.SELECTWHAT:
-                return rbx.getString("SelectWhat");
-            default:
-                log.warn("Unhandled transit section action What code: {}", tsa.getWhatCode());
-                break;
-        }
-        return "WHAT";
+        return TransitActionText.whatText(action.get(activeRow).get(r));
     }
 
     private String getSectionNameByRow(int r) {

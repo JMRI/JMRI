@@ -112,6 +112,33 @@
       More information on Actions is located in the Actions. Read <a href=
       "ViewSpecialActions.shtml">more on Actions</a>.</p>
 
+      <h2 id="actionsReport">Listing the Actions of all Transits</h2>
+
+      <p><span class="since">since 5.19.1</span> Select <strong>Tools &gt; Transit Actions...</strong>
+      in the Transit Table to see the Actions of every Transit in one table, with a row for each
+      Action: its Transit, the sequence number and name of its Section, and its When and What
+      parts, worded as in the Special Actions table.</p>
+
+      <ul>
+        <li><strong>Transit</strong> shows one Transit, or all of them.</li>
+
+        <li><strong>Find</strong> shows only the Actions whose text contains what you type, in
+        upper or lower case, for example a Sensor or Block name to see every Action that uses
+        it.</li>
+
+        <li><strong>Problems</strong> lists any Block, Sensor, Signal Head or Mast, TrainInfo file
+        or Roster entry the Action names that does not exist, such as a Sensor deleted after the
+        Action was set up. Check <strong>Only actions with problems</strong> to see just
+        those.</li>
+
+        <li>Double-click a row to edit its Transit.</li>
+
+        <li><strong>Refresh</strong> reads the Transits again, after a change. <strong>Copy</strong>
+        puts the rows shown on the clipboard, to paste into a spreadsheet or a message;
+        <strong>Save as CSV...</strong> saves them to a file; <strong>Print...</strong> prints
+        them.</li>
+      </ul>
+
       <h2>Saving Transits to Disk</h2>
 
       <p>Use the Store item in the File menu to save Transit information to disk. See <a href=

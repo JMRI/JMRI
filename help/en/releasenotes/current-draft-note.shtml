@@ -497,6 +497,13 @@
                  other, which needed track the waiting train already held.
                  Dispatcher now drops such a meet, as it does when a train is
                  already past the meeting place.</li>
+             <li>The Transit Table has a new Tools &gt; Transit Actions window,
+                 listing the Actions of every Transit, or of one, in a table
+                 that can be searched, copied, saved as CSV and printed. It
+                 shows any Block, Sensor, Signal, TrainInfo file or Roster
+                 entry an Action names that does not exist. Double-click a row
+                 to edit its Transit. It does the job of the
+                 TransitActionsReport.py script.</li>
         </ul>
 
     <h3>Dispatcher System</h3>
