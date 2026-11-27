@@ -3,8 +3,10 @@ package jmri.jmrit.display;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
 import java.util.List;
 
+import javax.annotation.CheckForNull;
 import javax.swing.AbstractAction;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
@@ -12,12 +14,14 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
 
+import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logix.TrackerTableAction;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.jmrit.throttle.interfaces.ThrottleControllerUI;
+import jmri.jmrit.throttle.interfaces.ThrottleControllersUIContainer;
 import jmri.util.swing.JmriMouseEvent;
 
 import org.slf4j.Logger;
@@ -108,6 +112,45 @@ public class LocoIcon extends PositionableLabel {
     ThrottleControllerUI tf = null;
 
     /**
+     * Show a throttle for this marker's loco: the throttle already open for
+     * it, brought to the front, or a new one if none is.
+     */
+    void showThrottle() {
+        RosterEntry entry = _entry;
+        if (entry == null) {
+            return;
+        }
+        ThrottleControllerUI open = openThrottleFor(entry);
+        if (open == null) {
+            open = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
+            open.setRosterEntry(entry);
+        }
+        tf = open;
+        open.toFront();
+    }
+
+    /**
+     * @param entry a loco
+     * @return a throttle open for it, or null if none is
+     */
+    @CheckForNull
+    private static ThrottleControllerUI openThrottleFor(RosterEntry entry) {
+        DccLocoAddress address = entry.getDccLocoAddress();
+        Iterator<ThrottleControllersUIContainer> windows =
+                InstanceManager.getDefault(ThrottleFrameManager.class).iterator();
+        while (windows.hasNext()) {
+            ThrottleControllersUIContainer w = windows.next();
+            for (int i = 0; i < w.getNbThrottlesControllers(); i++) {
+                ThrottleControllerUI c = w.getThrottleControllerAt(i);
+                if (c != null && (entry.equals(c.getRosterEntry()) || (address != null && c.isUsingAddress(address)))) {
+                    return c;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
      * Pop-up only if right click and not dragged
      */
     @Override
@@ -119,9 +162,7 @@ public class LocoIcon extends PositionableLabel {
             popup.add(new AbstractAction("Throttle") {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    tf = InstanceManager.getDefault(ThrottleFrameManager.class).createThrottleFrame();
-                    tf.setRosterEntry(_entry);
-                    tf.toFront();
+                    showThrottle();
                 }
             });
         }
