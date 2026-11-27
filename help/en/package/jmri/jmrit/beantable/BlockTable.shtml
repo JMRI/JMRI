@@ -224,13 +224,16 @@
           used for both halves of crossovers.  A ghost block could be used for the recommended
           third block for double crossovers.</p>
 
-          <p>Dispatcher sets the sensor active as an automatic train comes to the ghost block, and
-          holds it active until the train is clear of it: until the block before it is empty, and the
-          block after it has been entered and is empty again. A train can stop with its end still on
-          a ghost block, as nothing can say when it has left; the ghost block then shows occupied, so
-          its Section is not given to another train, until the train moves on. If two ghost blocks
-          are next to each other on a train's route, Dispatcher stops the train before the
-          second.</p>
+          <p>Ghost blocks were designed as joins of no length between two turnouts, and a train should
+          never be stopped in one. Dispatcher sets the sensor active as an automatic train comes to the
+          ghost block. For a ghost block of no length (Length 0), it clears the sensor when the block
+          before it is empty: the train is past it then. For a ghost block with a length, such as a
+          turnout made a ghost block, it holds the sensor active until the train is clear of it: until
+          the block before it is empty, and the block after it has been entered and is empty again. A
+          train can stop with its end still on such a ghost block, as nothing can say when it has left;
+          the ghost block then shows occupied, so its Section is not given to another train, until the
+          train moves on. If two ghost blocks are next to each other on a train's route, Dispatcher
+          stops the train before the second.</p>
 
           <p>With <a href="../dispatcher/Options.shtml#UseDarkBlocks">Track Trains through Dark
           Blocks</a> checked in the Dispatcher options, a block with no sensor at all, a dark block,

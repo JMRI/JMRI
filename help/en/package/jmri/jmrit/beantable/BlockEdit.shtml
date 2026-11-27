@@ -216,7 +216,10 @@
         <dt>Ghost</dt>
         <dd>
           <p>The Ghost option is used by Dispatcher to simulate block occupancy for blocks that
-          don't have real occupancy sensors.</p>
+          don't have real occupancy sensors. Ghost blocks were designed as joins of no length between
+          two turnouts, and a train should never be stopped in one. See <a href=
+          "BlockTable.shtml">the Block Table help</a> for how Dispatcher sets a ghost block's
+          sensor.</p>
         </dd>
 
         <dt><span class="since">since 5.19.1</span>Braking Section</dt>

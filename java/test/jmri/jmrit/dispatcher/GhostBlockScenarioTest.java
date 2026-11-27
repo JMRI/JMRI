@@ -107,6 +107,34 @@ public class GhostBlockScenarioTest {
     }
 
     /**
+     * A ghost Block of no length, a join between two turnouts as ghost Blocks
+     * were designed for, is cleared when the Block before it empties, as
+     * before: the train is past it then.
+     */
+    @Test
+    public void testGhostOfNoLengthClearedWhenTheBlockBeforeEmpties() throws IOException, NamedBean.BadNameException {
+        s.block("West").setIsGhost(true);
+        s.block("West").setLength(0);
+        Transit t = roundToMain();
+        VirtualTrain train = s.place("Goods", SimulationTestLayouts.Loco.DIESEL, 300, "Line1", "East", 400);
+        ActiveTrain at = s.run(s.trainInfo(t, SimulationTestLayouts.Loco.DIESEL, 300, "Line1", "Main"));
+
+        s.waitFor(() -> SimulationTestUtil.truth(train).getFrontBlock() == s.block("Main"), "train into Main");
+        s.waitForStop(at, train);
+        List<String> events = s.events();
+        int westOn = indexOf(events, "West occupied");
+        assertTrue(westOn >= 0, "Dispatcher set the ghost Block's sensor: " + events);
+        int line4Off = indexOf(events, "Line4 unoccupied");
+        int westOff = indexOf(events, "West unoccupied");
+        assertTrue(line4Off >= 0 && westOff == line4Off + 1,
+                "and cleared it when the Block before it emptied: " + events);
+        assertEquals(s.block("Main"), SimulationTestUtil.truth(train).getFrontBlock(), "stopped in Main: " + events);
+        assertEquals(Block.UNOCCUPIED, s.block("West").getState(), "the ghost Block shows empty");
+        // the simulated train still needs track to move through
+        jmri.util.JUnitAppender.assertWarnMessage("Block \"West\" has no length; simulated trains take it as 300 mm.");
+    }
+
+    /**
      * The help says never to have two ghost Blocks in a row. If there are,
      * Dispatcher logs an error when the train is in the first and the second
      * is next, and stops the train, before the second. Before, it only logged

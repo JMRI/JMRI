@@ -1435,7 +1435,8 @@ public class AutoActiveTrain implements ThrottleListener {
                 setSavedStatus(_activeTrain.getStatus());
                 _activeTrain.setStatus(ActiveTrain.STOPPED);
             } else if (!GhostHold.isHeld(_nextBlock)) {
-                new GhostHold(_nextBlock, _currentBlock, blockAfterGhost(_nextBlock)).start();
+                new GhostHold(_nextBlock, _currentBlock, blockAfterGhost(_nextBlock),
+                        holdUntilClear(_nextBlock)).start();
             }
         }
     }
@@ -1453,6 +1454,21 @@ public class AutoActiveTrain implements ThrottleListener {
             return _dispatcher.getUseDarkBlocks();
         }
         return b.getIsGhost();
+    }
+
+    /**
+     * Whether a ghost Block is held until the train is clear of it. A ghost
+     * Block of no length, a join between two turnouts as ghost Blocks were
+     * designed for, is cleared when the Block before it empties, as before:
+     * the train is past it then. A ghost Block with a length can still have
+     * the end of the train on it then, so it is held. A dark Block is always
+     * held.
+     *
+     * @param b a ghost Block, or a dark Block
+     * @return true to hold it until the train is clear of it
+     */
+    private static boolean holdUntilClear(Block b) {
+        return b.getSensor() == null || b.getLengthMm() > 0.0f;
     }
 
     /**
@@ -3103,7 +3119,8 @@ public class AutoActiveTrain implements ThrottleListener {
 
     /**
      * Holds a ghost Block's sensor active, or a dark Block occupied, while a
-     * train is on it. Neither has a detector, so the train's tail can't be seen leaving it:
+     * train is on it. A ghost Block of no length is held only until the Block
+     * before it empties, as before. Neither has a detector, so the train's tail can't be seen leaving it:
      * it has left once the Blocks either side of the ghost on the train's
      * route are both empty, the one before it emptied and the one after it
      * entered and emptied. Clearing the sensor when only the Block before
@@ -3117,6 +3134,7 @@ public class AutoActiveTrain implements ThrottleListener {
         private final Block ghost;
         private final Block before;
         private Block after;
+        private final boolean untilClear;
         private boolean afterEntered = false;
 
         /**
@@ -3142,10 +3160,18 @@ public class AutoActiveTrain implements ThrottleListener {
             return h == null ? null : h.before;
         }
 
-        GhostHold(Block ghost, Block before, @CheckForNull Block after) {
+        /**
+         * @param ghost      the ghost or dark Block
+         * @param before     the Block the train comes from
+         * @param after      the Block the train goes into after it, if known
+         * @param untilClear true to hold it until the train is clear of it;
+         *                   false to clear it when the Block before empties
+         */
+        GhostHold(Block ghost, Block before, @CheckForNull Block after, boolean untilClear) {
             this.ghost = ghost;
             this.before = before;
-            this.after = after;
+            this.after = untilClear ? after : null;
+            this.untilClear = untilClear;
         }
 
         void start() {
@@ -3160,6 +3186,12 @@ public class AutoActiveTrain implements ThrottleListener {
         @Override
         public void propertyChange(PropertyChangeEvent e) {
             if (!"state".equals(e.getPropertyName())) {
+                return;
+            }
+            if (!untilClear) {
+                if (before.getState() == Block.UNOCCUPIED) {
+                    end(); // a ghost of no length: the train is past it
+                }
                 return;
             }
             if (after == null && before.getState() == Block.UNOCCUPIED) {
