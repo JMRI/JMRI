@@ -2494,7 +2494,37 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
             });
             disableLocoMarkerPopupMenuItem.setSelected(isLocoMarkerPopupDisabled());
             markerMenu.add(disableLocoMarkerPopupMenuItem);
+            JCheckBoxMenuItem namesTrain = new JCheckBoxMenuItem(Bundle.getMessage("MarkerNamesTrainInBlock"));
+            namesTrain.setToolTipText(Bundle.getMessage("MarkerNamesTrainInBlockToolTip"));
+            namesTrain.setSelected(isMarkerNamingTrainInBlock());
+            namesTrain.addActionListener(e -> setMarkerNamingTrainInBlock(namesTrain.isSelected()));
+            markerMenu.add(namesTrain);
         });
+    }
+
+    private String getMarkerNamesTrainInBlockRef() {
+        return "MarkerNamesTrainInBlock__" + getWindowFrameRef();
+    }
+
+    /**
+     * Should a loco marker dropped on a Block's track in operating mode set
+     * the Block's value to the train's name? Off unless chosen; kept for each
+     * panel in the user's preferences.
+     *
+     * @param value true to set the Block's value
+     */
+    public void setMarkerNamingTrainInBlock(boolean value) {
+        InstanceManager.getOptionalDefault(UserPreferencesManager.class)
+                .ifPresent(p -> p.setCheckboxPreferenceState(getMarkerNamesTrainInBlockRef(), value));
+    }
+
+    /**
+     * @return true if a loco marker dropped on a Block's track sets the
+     *         Block's value to the train's name
+     */
+    public boolean isMarkerNamingTrainInBlock() {
+        return InstanceManager.getOptionalDefault(UserPreferencesManager.class)
+                .map(p -> p.getCheckboxPreferenceState(getMarkerNamesTrainInBlockRef(), false)).orElse(false);
     }
 
     private void enableDisableLocoMarkerPopups() {
@@ -3823,14 +3853,22 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
      * @param block  the Block
      */
     private void markerTrainIsIn(@Nonnull LocoIcon marker, @Nonnull jmri.Block block) {
-        if (!jmri.jmrit.trainrecord.PermissionsTrainTracking.mayCorrect()) {
-            return;
-        }
         String name = marker.getText();
         if (name == null || name.isEmpty()) {
             name = marker.getUnRotatedText();
         }
         String text = name;
+        if (isMarkerNamingTrainInBlock()) {
+            // the train's name, as train tracking names it: its roster entry's, else the marker's text
+            jmri.jmrit.roster.RosterEntry entry = marker.getRosterEntry();
+            String trainName = entry != null ? entry.getId() : text;
+            if (trainName != null && !trainName.trim().isEmpty()) {
+                jmri.util.ThreadingUtil.runOnLayout(() -> block.setValue(trainName));
+            }
+        }
+        if (!jmri.jmrit.trainrecord.PermissionsTrainTracking.mayCorrect()) {
+            return;
+        }
         jmri.util.ThreadingUtil.runOnLayout(() -> {
             jmri.TrainRecord r = jmri.jmrit.trainrecord.TrainCorrections.recordForMarker(marker.getRosterEntry(), text);
             if (r != null) {
