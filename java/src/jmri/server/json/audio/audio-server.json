@@ -39,13 +39,16 @@
         },
         "state": {
             "type": "integer",
-            "description": "The state of the audio",
+            "description": "The state of the audio source: 0 if it hasn't played or stopped yet, 16 if stopped, 17 if playing",
             "enum": [
                 0,
-                2,
-                4,
-                8
+                16,
+                17
             ]
+        },
+        "playNumLoops": {
+            "type": "integer",
+            "description": "Only sent while playing: how many times the source loops; -1 means forever"
         }
     },
     "additionalProperties": false,
@@ -53,7 +56,6 @@
         "name",
         "userName",
         "comment",
-        "inverted",
         "state"
     ]
 }

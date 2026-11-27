@@ -51,7 +51,9 @@ public abstract class JsonNonProvidedNamedBeanHttpService<T extends NamedBean> e
             throws JsonException {
         ArrayNode array = this.mapper.createArrayNode();
         for (T bean : manager.getNamedBeanSet()) {
-            array.add(this.doGet(bean, bean.getSystemName(), type, request));
+            if (isListed(bean)) {
+                array.add(this.doGet(bean, bean.getSystemName(), type, request));
+            }
         }
         return message(array, request.id);
     }
@@ -79,6 +81,19 @@ public abstract class JsonNonProvidedNamedBeanHttpService<T extends NamedBean> e
     protected final JsonNode doGetList(Manager<T> manager, String type, JsonNode data, Locale locale, int id)
             throws JsonException {
         return doGetList(manager, type, data, new JsonRequest(locale, JSON.V5, JSON.GET, id));
+    }
+
+    /**
+     * Check if a bean should be included in a list of items of this type.
+     * <p>
+     * Override if some beans the manager provides can't be shown by this
+     * service. By default every bean is listed.
+     *
+     * @param bean the bean to check
+     * @return true if the bean should be listed; false otherwise
+     */
+    protected boolean isListed(@Nonnull T bean) {
+        return true;
     }
 
     /**

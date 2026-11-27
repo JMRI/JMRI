@@ -13,16 +13,18 @@
             "description": "If present, set the user name of the audio"
         },
         "comment": {
-            "type": "string",
-            "description": "If present, set the comment for the audio"
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "If present, set the comment for the audio; null clears it"
         },
-        "state": {
-            "type": "integer",
-            "description": "If present, sets the state of the audio",
+        "command": {
+            "type": "string",
+            "description": "If present, play or stop the audio source",
             "enum": [
-                0,
-                2,
-                4
+                "Play",
+                "Stop"
             ]
         }
     },
