@@ -230,13 +230,25 @@ public class JsonTurnoutHttpServiceTest extends JsonNamedBeanHttpServiceTestBase
     public void testDoPostSensorErrors() throws JsonException {
         Turnout turnout1 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
         InstanceManager.getDefault(SensorManager.class).provideSensor("IS1");
-        // a third feedback sensor is a 400, and the first two aren't applied
-        ObjectNode data = mapper.createObjectNode().put(JSON.NAME, "IT1");
+        turnout1.setComment("a comment");
+        // a third feedback sensor is a 400, and nothing else in the request is applied
+        ObjectNode data = mapper.createObjectNode().put(JSON.NAME, "IT1").put(JSON.COMMENT, "changed");
         data.putArray(JsonSensor.SENSOR).add("IS1").add("IS1").add("IS1");
         JsonException ex = assertThrows(JsonException.class,
                 () -> service.doPost(JsonTurnout.TURNOUT, "IT1", data, new JsonRequest(locale, JSON.V5, JSON.POST, 42)));
         assertEquals(400, ex.getCode());
         assertNull(turnout1.getFirstSensor());
+        assertEquals("a comment", turnout1.getComment());
+        // the same request doesn't create a turnout with a PUT
+        ex = assertThrows(JsonException.class,
+                () -> service.doPut(JsonTurnout.TURNOUT, "IT2", data, new JsonRequest(locale, JSON.V5, JSON.PUT, 42)));
+        assertEquals(400, ex.getCode());
+        assertNull(InstanceManager.getDefault(TurnoutManager.class).getBySystemName("IT2"));
+        // and posting it to a missing turnout is still a 404
+        ex = assertThrows(JsonException.class,
+                () -> service.doPost(JsonTurnout.TURNOUT, "IT3", data, new JsonRequest(locale, JSON.V5, JSON.POST, 42)));
+        assertEquals(404, ex.getCode());
+        data.remove(JSON.COMMENT);
         // a missing sensor sent as an object is named in the error
         data.putArray(JsonSensor.SENSOR).addObject().put(JSON.NAME, "IS99");
         ex = assertThrows(JsonException.class,

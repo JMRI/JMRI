@@ -84,10 +84,6 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService<Turnout> {
     @Override
     public ObjectNode doPost(Turnout turnout, String name, String type, JsonNode data, JsonRequest request) throws JsonException {
         if (data.path(SENSOR).isArray()) {
-            // check before changing anything, since a turnout has at most two feedback sensors
-            if (data.path(SENSOR).size() > 2) {
-                throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorInvalidProperty", SENSOR, type, name), request.id);
-            }
             int number = 0;
             for (JsonNode node : data.path(SENSOR)) {
                 if (node != null) {
@@ -147,6 +143,30 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService<Turnout> {
             }
         } catch (JmriException ex) {
             throw new JsonException(500, Bundle.getMessage(request.locale, "ErrorInternal", TURNOUT), request.id);
+        }
+    }
+
+    @Override
+    public JsonNode doPut(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
+        // check before the base class creates the turnout
+        checkSensorCount(data, type, name, request);
+        return super.doPut(type, name, data, request);
+    }
+
+    @Nonnull
+    @Override
+    protected Turnout postNamedBean(Turnout bean, JsonNode data, String name, String type, JsonRequest request) throws JsonException {
+        // check before the base class changes the user name or comment; a missing turnout is still a 404
+        if (bean != null) {
+            checkSensorCount(data, type, name, request);
+        }
+        return super.postNamedBean(bean, data, name, type, request);
+    }
+
+    private void checkSensorCount(JsonNode data, String type, String name, JsonRequest request) throws JsonException {
+        // a turnout has at most two feedback sensors
+        if (data.path(SENSOR).isArray() && data.path(SENSOR).size() > 2) {
+            throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorInvalidProperty", SENSOR, type, name), request.id);
         }
     }
 
