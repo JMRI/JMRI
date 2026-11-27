@@ -26,13 +26,7 @@
 
         <h4>CBUS</h4>
             <ul>
-                <li>CBUS network connections have a new setting in Additional
-                    Connection Settings, Send frames. Some CANPi software holds back a
-                    frame that arrives while it is still handling the one before, until
-                    the next frame arrives, so events sent from JMRI are acted on late,
-                    one or more clicks behind. If that happens with a gateway that worked
-                    with JMRI 5.17.4, set Send frames to Grouped (as JMRI 5.17.4), which
-                    sends frames as 5.17.4 did.</li>
+                <li></li>
             </ul>
 
         <h4>C/MRI</h4>
@@ -440,52 +434,13 @@
     <h3>DecoderPro</h3>
         <a id="DecoderPro" name="DecoderPro"></a>
         <ul>
-            <li>Fixed some problems with selecting entries
-                when adding an entry to a roster group.</li>
-            <li>Improved the button language when adding
-                an entry to a roster group.</li>
+            <li></li>
         </ul>
 
    <h3>Dispatcher</h3>
         <a id="Dispatcher" name="Dispatcher"></a>
         <ul>
-             <li>The Auto Allocator no longer stops allocating for a moment,
-                 with an IndexOutOfBoundsException in the log, when an
-                 allocation request is added or removed while it is
-                 looking at the list of requests.</li>
-             <li>Terminating an automatic train no longer freezes JMRI.
-                 Terminating waited until the train's speed read zero, and
-                 if Dispatcher gave the train another Section at that moment
-                 the train set its speed again, so the wait never ended. The
-                 same could leave that Section allocated to a train that no
-                 longer existed, so no other train could have it. A train is
-                 now stopped at once when it is terminated, and is given
-                 nothing more.</li>
-             <li>A Block change that an automatic train handles just after
-                 one of its Sections is released, or as the train is
-                 terminated, no longer gives warnings such as "No next Block"
-                 or that the train has disappeared. The train now uses the
-                 direction the Section was allocated in, and ignores Block
-                 changes once it is being terminated.</li>
              <li></li>
-             <li>With automatic allocation, an automatic train is no longer
-                 held for good in a passing loop or before one, waiting for
-                 another train that cannot pass or meet it there. Dispatcher
-                 now plans a meet only when the other train has a free track
-                 to take, and drops the plan when the train it waits for can
-                 no longer get there: the other track is occupied or held by
-                 another train, a train has taken the other's track, or a
-                 train is already past the meeting place. Allocating by hand
-                 was needed to free the train.</li>
-             <li>Allocate Extra and the script call extendActiveTrainsPath now
-                 give a Section beyond the end of a train's Transit in the
-                 direction the train enters it. A train running its Transit's
-                 Sections in their reverse direction was given an extra Section
-                 forward, and extendActiveTrainsPath refused to extend its path at
-                 all. With automatic allocation on, the extra Section is now
-                 allocated by the Auto Allocator, so it no longer logs errors
-                 about the request with signal masts, or fails part way when the
-                 request is allocated while it is looking at it (JMRI/JMRI#15894).</li>
         </ul>
 
     <h3>Dispatcher System</h3>
@@ -503,13 +458,7 @@
     <h3>Layout Editor</h3>
         <a id="LE" name="LE"></a>
         <ul>
-            <li>A large panel using Layout Block routing no longer stops with
-                a StackOverflowError while the routing tables are built
-                (new in 5.17.5).</li>
-            <li>Layout Block routing tables are now complete and correct on
-                large panels with loops, and after a connection is taken
-                away: routes that were missed are learnt, and routes that no
-                longer lead anywhere are withdrawn.</li>
+            <li></li>
         </ul>
 
         <h4>NX - Entry/Exit Tool</h4>
@@ -574,10 +523,7 @@
     <h3>Roster</h3>
         <a id="Roster" name="Roster"></a>
         <ul>
-            <li>Fixed some problems with selecting entries
-                when adding an entry to a roster group.</li>
-            <li>Improved the button language when adding
-                an entry to a roster group.</li>
+            <li></li>
         </ul>
 
     <h3>Routes</h3>
@@ -595,12 +541,6 @@
     <h3>Signals</h3>
         <a id="Signals" name="Signals"></a>
         <ul>
-            <li>A Signal Mast no longer keeps changing between clear and
-                danger when automatic signal mast generation is allowed for
-                one of its Signal Mast Logic pairs. The pair listed the mast
-                itself among the masts that must show danger, so the mast
-                put itself back to danger each time it cleared (seen since
-                5.17.5, with the turnouts set for that route).</li>
             <li></li>
         </ul>
         <h4>Signal Systems</h4>
@@ -647,10 +587,7 @@
     <h3>Throttle</h3>
         <a id="throttle" name="throttle"></a>
         <ul>
-            <li>Throttle function button visibility implementation less confusing, documentation and code updated</li>
-            <li>Due to a Java throttle code refactoring, in Jynstruments, for ThrottleFrame jynstruments, the expected 
-                context class is now jmri.jmrit.throttle.implementation.ThrottleFrame instead of jmri.jmrit.throttle.ThrottleFrame,
-                you can check released code in jython/Jynstruments/ThrottleFrame/Bell.jyn for instance.</li>
+            <li></li>
         </ul>
 
     <h3>Timetable</h3>
