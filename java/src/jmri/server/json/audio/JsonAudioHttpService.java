@@ -35,28 +35,29 @@ public class JsonAudioHttpService extends JsonNamedBeanHttpService<Audio> {
 
     @Override
     public ObjectNode doGet(Audio audio, String name, String type, JsonRequest request) throws JsonException {
-        // a missing audio falls through to getNamedBean, which returns 404
-        if (audio != null && (audio.getSubType() != Audio.SOURCE || (!(audio instanceof AudioSource)))) {
-            throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorAudioNotSource", audio.getSystemName()), request.id);
-        }
-        AudioSource audioSource = (AudioSource) audio;
         ObjectNode root = this.getNamedBean(audio, name, getType(), request); // throws JsonException if audio == null
-        ObjectNode data = root.withObject(JSON.DATA);
-        switch (audio.getState()) {
-            case Audio.STATE_PLAYING:
-                data.put(JSON.STATE, JSON.AUDIO_PLAYING);
-                data.put(JSON.AUDIO_COMMAND_PLAY_NUM_LOOPS, audioSource.getLastNumLoops());
-                break;
-            case Audio.STATE_STOPPED:
-                data.put(JSON.STATE, JSON.AUDIO_STOPPED);
-                break;
-            case Audio.STATE_INITIAL:
-                // a source that hasn't played or stopped yet
-                data.put(JSON.STATE, JSON.AUDIO_INITIAL);
-                break;
-            default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-                        Bundle.getMessage(request.locale, "ErrorInternal", type), request.id); // NOI18N
+        if (audio != null) {
+            if (audio.getSubType() != Audio.SOURCE || (!(audio instanceof AudioSource))) {
+                throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorAudioNotSource", audio.getSystemName()), request.id);
+            }
+            AudioSource audioSource = (AudioSource) audio;
+            ObjectNode data = root.withObject(JSON.DATA);
+            switch (audio.getState()) {
+                case Audio.STATE_PLAYING:
+                    data.put(JSON.STATE, JSON.AUDIO_PLAYING);
+                    data.put(JSON.AUDIO_COMMAND_PLAY_NUM_LOOPS, audioSource.getLastNumLoops());
+                    break;
+                case Audio.STATE_STOPPED:
+                    data.put(JSON.STATE, JSON.AUDIO_STOPPED);
+                    break;
+                case Audio.STATE_INITIAL:
+                    // a source that hasn't played or stopped yet
+                    data.put(JSON.STATE, JSON.AUDIO_INITIAL);
+                    break;
+                default:
+                    throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                            Bundle.getMessage(request.locale, "ErrorInternal", type), request.id); // NOI18N
+            }
         }
         return root;
     }
