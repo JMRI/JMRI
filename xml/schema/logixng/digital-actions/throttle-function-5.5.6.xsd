@@ -45,6 +45,12 @@
               <xs:element name="onOff" type="LogixNG_SelectEnumType" minOccurs="1" maxOccurs="1" />
 
               <xs:element name="systemConnection" type="xs:string" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="protocol" type="xs:string" minOccurs="0" maxOccurs="1">
+                <xs:annotation><xs:documentation>
+                  Since 5.19.2: the short name of the LocoAddress.Protocol used to request the
+                  throttle, such as "motorola" or "mfx". Absent: the connection chooses.
+                </xs:documentation></xs:annotation>
+              </xs:element>
 
               <xs:element name="MaleSocket" type="LogixNG_MaleSocket_Type" minOccurs="0" maxOccurs="1"/>
 

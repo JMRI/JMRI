@@ -13,6 +13,7 @@ import jmri.jmrit.logixng.actions.ActionThrottleFunction.FunctionState;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectEnumSwing;
 import jmri.jmrit.logixng.util.swing.LogixNG_SelectIntegerSwing;
+import jmri.jmrit.logixng.util.swing.ThrottleProtocolComboBox;
 
 /**
  * Configures an ActionThrottleFunction object with a Swing JPanel.
@@ -25,6 +26,7 @@ public class ActionThrottleFunctionSwing extends AbstractDigitalActionSwing {
     private LogixNG_SelectIntegerSwing _selectFunctionSwing;
     private LogixNG_SelectEnumSwing<FunctionState> _selectOnOffSwing;
     private JComboBox<Connection> _connection;
+    private ThrottleProtocolComboBox _protocol;
 
     @Override
     protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
@@ -77,8 +79,22 @@ public class ActionThrottleFunctionSwing extends AbstractDigitalActionSwing {
         }
         connectionPanel.add(_connection);
 
+        JPanel protocolPanel = new JPanel();
+        protocolPanel.add(new JLabel(Bundle.getMessage("ActionThrottleFunctionSwing_Protocol")));
+        _protocol = new ThrottleProtocolComboBox();
+        _protocol.setConnection(getSelectedMemo(), (object != null) ? action.getProtocol() : null);
+        _connection.addActionListener((e) -> {
+            _protocol.setConnection(getSelectedMemo(), _protocol.getSelectedProtocol());
+        });
+        protocolPanel.add(_protocol);
+
         panel.add(selectPanel);
         panel.add(connectionPanel);
+        panel.add(protocolPanel);
+    }
+
+    private SystemConnectionMemo getSelectedMemo() {
+        return _connection.getItemAt(_connection.getSelectedIndex())._memo;
     }
 
     /** {@inheritDoc} */
@@ -113,7 +129,8 @@ public class ActionThrottleFunctionSwing extends AbstractDigitalActionSwing {
         _selectFunctionSwing.updateObject(action.getSelectFunction());
         _selectOnOffSwing.updateObject(action.getSelectOnOff());
 
-        action.setMemo(_connection.getItemAt(_connection.getSelectedIndex())._memo);
+        action.setMemo(getSelectedMemo());
+        action.setProtocol(_protocol.getSelectedProtocol());
     }
 
     /** {@inheritDoc} */

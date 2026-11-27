@@ -884,6 +884,11 @@ LogixNG: IQ:AUTO:0001
       If there is more than one connection, other connections <strong><em>might</em></strong>
       support a throttle.</p>
 
+      <p><span class="since">since 5.19.2</span>The <strong>Protocol</strong> drop down chooses the
+      protocol used to request the throttle, from the protocols the connection supports, for example
+      <strong>Motorola</strong> or <strong>MFX</strong> on a Marklin connection. <strong>Default</strong>
+      leaves the choice to the connection, as before.</p>
+
       <p><span class="since">since 5.9.5</span>When enabled, the <strong>Stop loco when switching loco</strong>
       option stops the loco before switching to another loco.  This is the default and was the
       previous behavior. <em><strong>Warning:</strong> When the option is disabled and and a loco
@@ -935,6 +940,11 @@ LogixNG: IQ:AUTO:0001
       </div>
 
       <p>The <strong>Connection</strong> drop down can be used to specify the connection to be used.</p>
+
+      <p><span class="since">since 5.19.2</span>The <strong>Protocol</strong> drop down chooses the
+      protocol used to request the throttle, from the protocols the connection supports, for example
+      <strong>Motorola</strong> or <strong>MFX</strong> on a Marklin connection. <strong>Default</strong>
+      leaves the choice to the connection, as before.</p>
 
       <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->
 

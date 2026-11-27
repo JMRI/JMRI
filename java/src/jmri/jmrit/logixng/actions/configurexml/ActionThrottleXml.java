@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.actions.configurexml;
 import java.util.List;
 
 import jmri.InstanceManager;
+import jmri.LocoAddress;
 import jmri.SystemConnectionMemo;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.actions.ActionThrottle;
@@ -109,6 +110,11 @@ public class ActionThrottleXml extends jmri.managers.configurexml.AbstractNamedB
                     .addContent(p.getMemo().getSystemPrefix()));
         }
 
+        if (p.getProtocol() != null) {
+            element.addContent(new Element("protocol")
+                    .addContent(p.getProtocol().getShortName()));
+        }
+
         if (!p.isStopLocoWhenSwitchingLoco()) {
             element.addContent(new Element("stopLocoWhenSwitchingLoco")
                     .addContent("no"));
@@ -186,6 +192,16 @@ public class ActionThrottleXml extends jmri.managers.configurexml.AbstractNamedB
             }
         }
 
+        Element protocol = shared.getChild("protocol");
+        if (protocol != null) {
+            try {
+                h.setProtocol(LocoAddress.Protocol.getByShortName(protocol.getTextTrim()));
+            } catch (IllegalArgumentException e) {
+                log.warn("Unknown throttle protocol \"{}\" in {}; the connection's default is used",
+                        protocol.getTextTrim(), sys);
+            }
+        }
+
         Element stopLocoWhenSwitchingLoco = shared.getChild("stopLocoWhenSwitchingLoco");
         if (stopLocoWhenSwitchingLoco != null) {
             h.setStopLocoWhenSwitchingLoco("yes".equals(stopLocoWhenSwitchingLoco.getTextTrim()));
@@ -200,5 +216,5 @@ public class ActionThrottleXml extends jmri.managers.configurexml.AbstractNamedB
         return true;
     }
 
-//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionThrottleXml.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ActionThrottleXml.class);
 }

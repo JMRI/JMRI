@@ -2327,6 +2327,7 @@ public class CreateLogixNGTreeScaffold {
         actionThrottle.setMemo(null);
         actionThrottle.setStopLocoWhenSwitchingLoco(false);
         actionThrottle.setWaitForThrottle(true);
+        actionThrottle.setProtocol(LocoAddress.Protocol.MOTOROLA);
         maleSocket = digitalActionManager.registerAction(actionThrottle);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 
@@ -2351,6 +2352,7 @@ public class CreateLogixNGTreeScaffold {
         actionThrottleFunction.getSelectAddress().setValue(9);
         actionThrottleFunction.getSelectFunction().setValue(120);
         actionThrottleFunction.getSelectOnOff().setEnum(ActionThrottleFunction.FunctionState.Off);
+        actionThrottleFunction.setProtocol(LocoAddress.Protocol.MFX);
         maleSocket = digitalActionManager.registerAction(actionThrottleFunction);
         actionManySocket.getChild(indexAction++).connect(maleSocket);
 

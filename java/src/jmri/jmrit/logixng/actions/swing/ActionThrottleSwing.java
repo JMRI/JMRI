@@ -12,6 +12,7 @@ import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.actions.ActionThrottle;
+import jmri.jmrit.logixng.util.swing.ThrottleProtocolComboBox;
 
 /**
  * Configures an ActionThrottle object with a Swing JPanel.
@@ -21,6 +22,7 @@ import jmri.jmrit.logixng.actions.ActionThrottle;
 public class ActionThrottleSwing extends AbstractDigitalActionSwing {
 
     private JComboBox<Connection> _connection;
+    private ThrottleProtocolComboBox _protocol;
     private JCheckBox _stopLocoWhenSwitchingLoco;
     private JCheckBox _waitForThrottle;
 
@@ -56,6 +58,16 @@ public class ActionThrottleSwing extends AbstractDigitalActionSwing {
         connectionPanel.add(_connection);
         panel.add(connectionPanel);
 
+        JPanel protocolPanel = new JPanel();
+        protocolPanel.add(new JLabel(Bundle.getMessage("ActionThrottleSwing_Protocol")));
+        _protocol = new ThrottleProtocolComboBox();
+        _protocol.setConnection(getSelectedMemo(), (action != null) ? action.getProtocol() : null);
+        _connection.addActionListener((e) -> {
+            _protocol.setConnection(getSelectedMemo(), _protocol.getSelectedProtocol());
+        });
+        protocolPanel.add(_protocol);
+        panel.add(protocolPanel);
+
             _stopLocoWhenSwitchingLoco = new JCheckBox(Bundle.getMessage("ActionThrottleSwing_StopLocoWhenSwitchingLoco"));
         _waitForThrottle = new JCheckBox(Bundle.getMessage("ActionThrottleSwing_WaitForThrottle"));
         _waitForThrottle.addActionListener((e) -> {
@@ -71,6 +83,10 @@ public class ActionThrottleSwing extends AbstractDigitalActionSwing {
         setEnabledStopLocoWhenSwitchingLoco();
         panel.add(_stopLocoWhenSwitchingLoco);
         panel.add(_waitForThrottle);
+    }
+
+    private SystemConnectionMemo getSelectedMemo() {
+        return _connection.getItemAt(_connection.getSelectedIndex())._memo;
     }
 
     private void setEnabledStopLocoWhenSwitchingLoco() {
@@ -104,7 +120,8 @@ public class ActionThrottleSwing extends AbstractDigitalActionSwing {
 
         ActionThrottle action = (ActionThrottle)object;
 
-        action.setMemo(_connection.getItemAt(_connection.getSelectedIndex())._memo);
+        action.setMemo(getSelectedMemo());
+        action.setProtocol(_protocol.getSelectedProtocol());
         action.setStopLocoWhenSwitchingLoco(_stopLocoWhenSwitchingLoco.isSelected());
         action.setWaitForThrottle(_waitForThrottle.isSelected());
     }

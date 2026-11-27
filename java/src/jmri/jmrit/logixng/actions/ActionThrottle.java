@@ -3,8 +3,11 @@ package jmri.jmrit.logixng.actions;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.annotation.CheckForNull;
+
 import jmri.*;
 import jmri.jmrit.logixng.*;
+import jmri.jmrit.logixng.util.ThrottleRequest;
 import jmri.util.ThreadingUtil;
 
 /**
@@ -28,6 +31,8 @@ public final class ActionThrottle extends AbstractDigitalAction
     private SystemConnectionMemo _memo;
     private ThrottleManager _throttleManager;
     private ThrottleManager _oldThrottleManager;
+    private LocoAddress.Protocol _protocol;
+    private LocoAddress.Protocol _oldProtocol;
 
     // The throttle if we have one or if a request is sent, null otherwise
     private DccThrottle _throttle;
@@ -75,6 +80,7 @@ public final class ActionThrottle extends AbstractDigitalAction
         copy.setStopLocoWhenSwitchingLoco(_stopLocoWhenSwitchingLoco);
         copy.setWaitForThrottle(_waitForThrottle);
         copy.setMemo(_memo);
+        copy.setProtocol(_protocol);
         return manager.registerAction(copy).deepCopyChildren(this, systemNames, userNames);
     }
 
@@ -93,6 +99,32 @@ public final class ActionThrottle extends AbstractDigitalAction
 
     public SystemConnectionMemo getMemo() {
         return _memo;
+    }
+
+    /**
+     * Set the protocol used to request the throttle, for example
+     * {@link jmri.LocoAddress.Protocol#MOTOROLA} on a Marklin connection.
+     *
+     * @param protocol the protocol, one of the throttle manager's
+     *                 {@link ThrottleManager#getAddressProtocolTypes()}, or
+     *                 null to let the throttle manager choose, as before
+     *                 this option existed
+     * @since 5.19.2
+     */
+    public void setProtocol(@CheckForNull LocoAddress.Protocol protocol) {
+        assertListenersAreNotRegistered(log, "setProtocol");
+        _protocol = protocol;
+    }
+
+    /**
+     * Get the protocol used to request the throttle.
+     *
+     * @return the protocol, or null if the throttle manager chooses
+     * @since 5.19.2
+     */
+    @CheckForNull
+    public LocoAddress.Protocol getProtocol() {
+        return _protocol;
     }
 
     /** {@inheritDoc} */
@@ -122,9 +154,10 @@ public final class ActionThrottle extends AbstractDigitalAction
                             .evaluate();
         }
 
-        if (_throttleManager != _oldThrottleManager) {
+        if (_throttleManager != _oldThrottleManager || _protocol != _oldProtocol) {
             currentLocoAddress = -1;    // Force request of new throttle
             _oldThrottleManager = _throttleManager;
+            _oldProtocol = _protocol;
         }
 
         if (newLocoAddress != currentLocoAddress) {
@@ -169,7 +202,8 @@ public final class ActionThrottle extends AbstractDigitalAction
 
                 final int locoAddr = newLocoAddress;
                 boolean result = ThreadingUtil.runOnGUIwithReturn(
-                        () -> { return _throttleManager.requestThrottle(locoAddr, _throttleListener); });
+                        () -> { return ThrottleRequest.requestThrottle(
+                                _throttleManager, locoAddr, _protocol, _throttleListener); });
 
                 if (!result) {
                     log.warn("loco {} cannot be aquired", newLocoAddress);
@@ -346,23 +380,29 @@ public final class ActionThrottle extends AbstractDigitalAction
                 ? Bundle.getMessage("ActionThrottle_WaitForThrottle")
                 : Bundle.getMessage("ActionThrottle_DontWaitForThrottle");
 
+        String description;
         if (_memo != null) {
             if (_waitForThrottle) {
-                return Bundle.getMessage(locale, "ActionThrottle_LongConnection1",
+                description = Bundle.getMessage(locale, "ActionThrottle_LongConnection1",
                         _memo.getUserName(), waitForThrottleStr);
             } else {
-                return Bundle.getMessage(locale, "ActionThrottle_LongConnection2",
+                description = Bundle.getMessage(locale, "ActionThrottle_LongConnection2",
                         _memo.getUserName(), waitForThrottleStr, stopLocoWhenSwitchingLocoStr);
             }
         } else {
             if (_waitForThrottle) {
-                return Bundle.getMessage(locale, "ActionThrottle_Long1",
+                description = Bundle.getMessage(locale, "ActionThrottle_Long1",
                         waitForThrottleStr);
             } else {
-                return Bundle.getMessage(locale, "ActionThrottle_Long2",
+                description = Bundle.getMessage(locale, "ActionThrottle_Long2",
                         waitForThrottleStr, stopLocoWhenSwitchingLocoStr);
             }
         }
+        if (_protocol != null) {
+            description = Bundle.getMessage(locale, "ActionThrottle_LongProtocol",
+                    description, _protocol.getPeopleName());
+        }
+        return description;
     }
 
     public FemaleAnalogExpressionSocket getLocoAddressSocket() {
