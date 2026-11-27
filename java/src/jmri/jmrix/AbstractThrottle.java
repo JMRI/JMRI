@@ -434,39 +434,43 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * @param momentary False to send normal function status, true to send momentary.
      */
     protected void sendFunctionGroup(int functionNum, boolean momentary){
-        switch (FUNCTION_GROUPS[functionNum]) {
-            case 1:
-                if (momentary) sendMomentaryFunctionGroup1(); else sendFunctionGroup1();
-                break;
-            case 2:
-                if (momentary) sendMomentaryFunctionGroup2(); else sendFunctionGroup2();
-                break;
-            case 3:
-                if (momentary) sendMomentaryFunctionGroup3(); else sendFunctionGroup3();
-                break;
-            case 4:
-                if (momentary) sendMomentaryFunctionGroup4(); else sendFunctionGroup4();
-                break;
-            case 5:
-                if (momentary) sendMomentaryFunctionGroup5(); else sendFunctionGroup5();
-                break;
-            case 6:
-                if (momentary) sendMomentaryFunctionGroup6(); else sendFunctionGroup6();
-                break;
-            case 7:
-                if (momentary) sendMomentaryFunctionGroup7(); else sendFunctionGroup7();
-                break;
-            case 8:
-                if (momentary) sendMomentaryFunctionGroup8(); else sendFunctionGroup8();
-                break;
-            case 9:
-                if (momentary) sendMomentaryFunctionGroup9(); else sendFunctionGroup9();
-                break;
-            case 10:
-                if (momentary) sendMomentaryFunctionGroup10(); else sendFunctionGroup10();
-                break;
-            default:
-                break;
+        if (functionNum >= FUNCTION_GROUPS.length) {
+            if (momentary) sendMomentaryFunctionGroupRest(); else sendFunctionGroupRest();
+        } else {
+            switch (FUNCTION_GROUPS[functionNum]) {
+                case 1:
+                    if (momentary) sendMomentaryFunctionGroup1(); else sendFunctionGroup1();
+                    break;
+                case 2:
+                    if (momentary) sendMomentaryFunctionGroup2(); else sendFunctionGroup2();
+                    break;
+                case 3:
+                    if (momentary) sendMomentaryFunctionGroup3(); else sendFunctionGroup3();
+                    break;
+                case 4:
+                    if (momentary) sendMomentaryFunctionGroup4(); else sendFunctionGroup4();
+                    break;
+                case 5:
+                    if (momentary) sendMomentaryFunctionGroup5(); else sendFunctionGroup5();
+                    break;
+                case 6:
+                    if (momentary) sendMomentaryFunctionGroup6(); else sendFunctionGroup6();
+                    break;
+                case 7:
+                    if (momentary) sendMomentaryFunctionGroup7(); else sendFunctionGroup7();
+                    break;
+                case 8:
+                    if (momentary) sendMomentaryFunctionGroup8(); else sendFunctionGroup8();
+                    break;
+                case 9:
+                    if (momentary) sendMomentaryFunctionGroup9(); else sendFunctionGroup9();
+                    break;
+                case 10:
+                    if (momentary) sendMomentaryFunctionGroup10(); else sendFunctionGroup10();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -666,6 +670,16 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
     }
 
     /**
+     * Send the message to set the state of functions F69 and above.
+     * <p>
+     * This is used in the setFn implementations provided in this class, but a
+     * real implementation needs to be provided.
+     */
+    protected void sendFunctionGroupRest() {
+        log.error("sendFunctionGroupRest needs to be implemented if invoked");
+    }
+
+    /**
      * Sets Momentary Function and sends to layout.
      * {@inheritDoc}
      */
@@ -783,6 +797,16 @@ abstract public class AbstractThrottle extends PropertyChangeSupport implements 
      * supports setting functions momentary.
      */
     protected void sendMomentaryFunctionGroup10() {
+    }
+
+    /**
+     * Send the message to set the Momentary state of functions F69 and above.
+     * <p>
+     * This is used in the setFnMomentary implementations provided in this
+     * class, but a real implementation needs to be provided if the hardware
+     * supports setting functions momentary.
+     */
+    protected void sendMomentaryFunctionGroupRest() {
     }
 
     /**
