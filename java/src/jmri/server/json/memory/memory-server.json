@@ -40,9 +40,10 @@
         "value": {
             "type": [
                 "string",
+                "object",
                 "null"
             ],
-            "description": "The memory's value, can be idTag, Reporter, or text"
+            "description": "The memory's value: text, or an object if the value is an idTag, reporter or roster entry"
         }
     },
     "additionalProperties": false,

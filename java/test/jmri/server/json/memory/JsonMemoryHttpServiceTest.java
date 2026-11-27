@@ -3,14 +3,17 @@ package jmri.server.json.memory;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
 
+import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Memory;
 import jmri.MemoryManager;
+import jmri.ReporterManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpServiceTestBase;
 import jmri.server.json.JsonRequest;
+import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 
@@ -101,11 +104,40 @@ public class JsonMemoryHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
         assertEquals(2, result.size());
     }
 
+    @Test
+    public void testDoGetObjectValues() throws JsonException {
+        Memory memory1 = InstanceManager.getDefault(MemoryManager.class).provideMemory("IM1");
+        // an IdTag or a Reporter as the value is sent as an object
+        memory1.setValue(InstanceManager.getDefault(IdTagManager.class).provideIdTag("ID1"));
+        JsonNode result = service.doGet(JsonMemory.MEMORY, "IM1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
+        validate(result);
+        assertEquals("ID1", result.path(JSON.DATA).path(JSON.VALUE).path(JSON.DATA).path(JSON.NAME).asText());
+        memory1.setValue(InstanceManager.getDefault(ReporterManager.class).provideReporter("IR1"));
+        result = service.doGet(JsonMemory.MEMORY, "IM1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
+        validate(result);
+        assertEquals("IR1", result.path(JSON.DATA).path(JSON.VALUE).path(JSON.DATA).path(JSON.NAME).asText());
+    }
+
+    @Test
+    public void testClientSchema() throws JsonException {
+        Memory memory1 = InstanceManager.getDefault(MemoryManager.class).provideMemory("IM1");
+        memory1.setValue("a value");
+        memory1.setComment("a comment");
+        // nulls clear the value and the comment
+        JsonNode data = mapper.createObjectNode().put(JSON.NAME, "IM1").putNull(JSON.VALUE).putNull(JSON.COMMENT);
+        validateData(JsonMemory.MEMORY, data, false);
+        service.doPost(JsonMemory.MEMORY, "IM1", data, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        assertNull(memory1.getValue());
+        assertNull(memory1.getComment());
+    }
+
     @BeforeEach
     @Override
     public void setUp() throws Exception {
         super.setUp();
         service = new JsonMemoryHttpService(mapper);
+        JUnitUtil.initIdTagManager();
+        JUnitUtil.initReporterManager();
     }
 
     @AfterEach

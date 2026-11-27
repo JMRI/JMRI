@@ -13,8 +13,11 @@
             "description": "If present, set the user name of the idTag"
         },
         "comment": {
-            "type": "string",
-            "description": "If present, set the comment for the idTag"
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "If present, set the comment for the idTag; null clears it"
         },
         "reporter": {
             "type": [

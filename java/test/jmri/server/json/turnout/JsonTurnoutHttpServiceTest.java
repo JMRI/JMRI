@@ -224,6 +224,20 @@ public class JsonTurnoutHttpServiceTest extends JsonNamedBeanHttpServiceTestBase
         assertEquals(404, ex.getCode());
     }
 
+    @Test
+    public void testClientSchema() throws JsonException {
+        Turnout turnout1 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
+        Sensor sensor1 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS1");
+        turnout1.setComment("a comment");
+        // null clears the comment, and a feedback sensor can be sent as the object GET returns
+        ObjectNode data = mapper.createObjectNode().put(JSON.NAME, "IT1").putNull(JSON.COMMENT);
+        data.putArray(JsonSensor.SENSOR).addObject().put(JSON.NAME, "IS1");
+        validateData(JsonTurnout.TURNOUT, data, false);
+        service.doPost(JsonTurnout.TURNOUT, "IT1", data, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        assertNull(turnout1.getComment());
+        assertEquals(sensor1, turnout1.getFirstSensor());
+    }
+
     @BeforeEach
     @Override
     public void setUp() throws Exception {
