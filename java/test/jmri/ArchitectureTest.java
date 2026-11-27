@@ -597,10 +597,12 @@ public class ArchitectureTest {
      * itself. Nothing else in JMRI depends on them, so a simulator can't
      * change how JMRI behaves on a real layout. A system's adapter, which
      * takes that system's commands to simulated trains and reports their
-     * detection in that system's messages, is added here with its package.
+     * detection in that system's messages, is in a package of its own named
+     * simulatedtrains, under the system's simulator package.
      */
     private static final String[] SIMULATION_USERS = {"jmri.jmrit.simulation..",
-        "jmri.jmrix.can.cbus.simulator.."}; // CBUS on CAN Simulation
+        "jmri.jmrix.can.cbus.simulator..", // CBUS on CAN Simulation
+        "jmri.jmrix..simulatedtrains.."}; // each system's own package for simulated trains
 
     /**
      * Only the simulator and the packages in {@code SIMULATION_USERS} use

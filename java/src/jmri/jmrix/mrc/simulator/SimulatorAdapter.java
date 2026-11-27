@@ -36,6 +36,7 @@ public class SimulatorAdapter extends MrcPortController implements Runnable {
 
     public SimulatorAdapter() {
         super(new MrcSystemConnectionMemo());
+        addSimulatedTrainsOption();
     }
 
     @Override
@@ -200,6 +201,43 @@ public class SimulatorAdapter extends MrcPortController implements Runnable {
     }
 
     /**
+     * Told of each message the simulated MRC receives, as simulated trains
+     * need them.
+     *
+     * @since 5.19.2
+     */
+    @FunctionalInterface
+    public interface MessageListener {
+
+        /**
+         * @param message   the message's bytes in hexadecimal, separated by
+         *                  spaces, such as "25 00 25 00 00 00 03 00 C0 00 02 00 C1 00"
+         * @param timeNanos when it was received, on the
+         *                  {@link System#nanoTime()} scale
+         */
+        void messageReceived(String message, long timeNanos);
+    }
+
+    private final java.util.List<MessageListener> messageListeners =
+            new java.util.concurrent.CopyOnWriteArrayList<>();
+
+    /**
+     * @param listener to be told of each message received
+     * @since 5.19.2
+     */
+    public void addMessageListener(MessageListener listener) {
+        messageListeners.add(listener);
+    }
+
+    /**
+     * @param listener to be told no more
+     * @since 5.19.2
+     */
+    public void removeMessageListener(MessageListener listener) {
+        messageListeners.remove(listener);
+    }
+
+    /**
      * Get characters from the input source.
      *
      * @return filled message
@@ -222,6 +260,16 @@ public class SimulatorAdapter extends MrcPortController implements Runnable {
     // generateReply is the heart of the simulation.  It translates an 
     // incoming MrcMessage into an outgoing MrcReply.
     private MrcMessage generateReply(MrcMessage m) {
+        if (!messageListeners.isEmpty()) {
+            long now = System.nanoTime();
+            StringBuilder text = new StringBuilder();
+            for (int i = 0; i < m.getNumDataElements(); i++) {
+                text.append(i == 0 ? "" : " ").append(String.format("%02X", m.getElement(i) & 0xFF));
+            }
+            for (MessageListener l : messageListeners) {
+                l.messageReceived(text.toString(), now);
+            }
+        }
         MrcMessage reply = new MrcMessage(4);
         if (m.getNumDataElements() < 4) {
             reply.setElement(0, MrcPackets.BADCMDRECEIVEDCODE);
