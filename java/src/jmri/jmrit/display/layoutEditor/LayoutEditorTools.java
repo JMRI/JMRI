@@ -391,6 +391,16 @@ public final class LayoutEditorTools {
     }
 
     private void setSignalsDonePressed(ActionEvent a) {
+        // the changes made on Done are one step for undo
+        layoutEditor.beginEdit(Bundle.getMessage("SignalsAtTurnout"));
+        try {
+            setSignalsApply(a);
+        } finally {
+            layoutEditor.endEdit();
+        }
+    }
+
+    private void setSignalsApply(ActionEvent a) {
         //process turnout name
         if (!getTurnoutInformation(false)) {
             return;
@@ -2195,6 +2205,16 @@ public final class LayoutEditorTools {
     }
 
     private void setSignalsAtBlockBoundaryDonePressed(ActionEvent a) {
+        // the changes made on Done are one step for undo
+        layoutEditor.beginEdit(Bundle.getMessage("SignalsAtBoundary"));
+        try {
+            setSignalsAtBlockBoundaryApply(a);
+        } finally {
+            layoutEditor.endEdit();
+        }
+    }
+
+    private void setSignalsAtBlockBoundaryApply(ActionEvent a) {
         if (!getBlockInformation()) {
             return;
         }
@@ -2950,6 +2970,16 @@ public final class LayoutEditorTools {
     }
 
     private void setXoverSignalsDonePressed(ActionEvent a) {
+        // the changes made on Done are one step for undo
+        layoutEditor.beginEdit(Bundle.getMessage("SignalsAtXoverTurnout"));
+        try {
+            setXoverSignalsApply(a);
+        } finally {
+            layoutEditor.endEdit();
+        }
+    }
+
+    private void setXoverSignalsApply(ActionEvent a) {
         if (!getXoverSignalHeadInformation()) {
             return;
         }
@@ -4016,6 +4046,16 @@ public final class LayoutEditorTools {
     }
 
     private void setXingSignalsDonePressed(ActionEvent a) {
+        // the changes made on Done are one step for undo
+        layoutEditor.beginEdit(Bundle.getMessage("SignalsAtLevelXing"));
+        try {
+            setXingSignalsApply(a);
+        } finally {
+            layoutEditor.endEdit();
+        }
+    }
+
+    private void setXingSignalsApply(ActionEvent a) {
         if (!getLevelCrossingInformation()) {
             return;
         }
@@ -5201,6 +5241,16 @@ public final class LayoutEditorTools {
     }   //getTToTTurnoutInformation
 
     private void setTToTSignalsDonePressed(ActionEvent a) {
+        // the changes made on Done are one step for undo
+        layoutEditor.beginEdit(Bundle.getMessage("SignalsAtTToTTurnout"));
+        try {
+            setTToTSignalsApply(a);
+        } finally {
+            layoutEditor.endEdit();
+        }
+    }
+
+    private void setTToTSignalsApply(ActionEvent a) {
         if (!getTToTTurnoutInformation()) {
             return;
         }
@@ -6634,6 +6684,16 @@ public final class LayoutEditorTools {
     }   //get3WayTurnoutInformation
 
     private void set3WaySignalsDonePressed(ActionEvent a) {
+        // the changes made on Done are one step for undo
+        layoutEditor.beginEdit(Bundle.getMessage("SignalsAt3WayTurnout"));
+        try {
+            set3WaySignalsApply(a);
+        } finally {
+            layoutEditor.endEdit();
+        }
+    }
+
+    private void set3WaySignalsApply(ActionEvent a) {
         //process turnout names
         if (!get3WayTurnoutInformation()) {
             return;
@@ -7952,6 +8012,16 @@ public final class LayoutEditorTools {
     }
 
     private void setSensorsAtBlockBoundaryDonePressed(ActionEvent a) {
+        // the changes made on Done are one step for undo
+        layoutEditor.beginEdit(Bundle.getMessage("SensorsAtBoundary"));
+        try {
+            setSensorsAtBlockBoundaryApply(a);
+        } finally {
+            layoutEditor.endEdit();
+        }
+    }
+
+    private void setSensorsAtBlockBoundaryApply(ActionEvent a) {
         log.trace("setSensorsAtBlockBoundaryDonePressed");  // NOI18N
         if (!getSimpleBlockInformation()) {
             return;
@@ -8489,6 +8559,16 @@ public final class LayoutEditorTools {
     }
 
     private void setSignalMastsAtBlockBoundaryDonePressed(ActionEvent a) {
+        // the changes made on Done are one step for undo
+        layoutEditor.beginEdit(Bundle.getMessage("SignalMastsAtBoundary"));
+        try {
+            setSignalMastsAtBlockBoundaryApply(a);
+        } finally {
+            layoutEditor.endEdit();
+        }
+    }
+
+    private void setSignalMastsAtBlockBoundaryApply(ActionEvent a) {
         if (!getSimpleBlockInformation()) {
             return;
         }
@@ -9430,6 +9510,16 @@ public final class LayoutEditorTools {
     }   //turnoutSignalMastsGetSaved
 
     private void setSignalMastsDonePressed(ActionEvent a) {
+        // the changes made on Done are one step for undo
+        layoutEditor.beginEdit(Bundle.getMessage("SignalMastsAtTurnout"));
+        try {
+            setSignalMastsApply(a);
+        } finally {
+            layoutEditor.endEdit();
+        }
+    }
+
+    private void setSignalMastsApply(ActionEvent a) {
         //process turnout name
         if (!getTurnoutMastInformation()) {
             return;
@@ -10333,6 +10423,16 @@ public final class LayoutEditorTools {
     }
 
     private void setSlipSignalMastsDonePressed(ActionEvent a) {
+        // the changes made on Done are one step for undo
+        layoutEditor.beginEdit(Bundle.getMessage("SignalMastsAtLayoutSlip"));
+        try {
+            setSlipSignalMastsApply(a);
+        } finally {
+            layoutEditor.endEdit();
+        }
+    }
+
+    private void setSlipSignalMastsApply(ActionEvent a) {
         if (!getSlipMastInformation()) {
             return;
         }
@@ -10872,6 +10972,16 @@ public final class LayoutEditorTools {
     }
 
     private void setXingSignalMastsDonePressed(ActionEvent a) {
+        // the changes made on Done are one step for undo
+        layoutEditor.beginEdit(Bundle.getMessage("SignalMastsAtLevelXing"));
+        try {
+            setXingSignalMastsApply(a);
+        } finally {
+            layoutEditor.endEdit();
+        }
+    }
+
+    private void setXingSignalMastsApply(ActionEvent a) {
         if (!getLevelCrossingMastInformation()) {
             return;
         }
@@ -11262,6 +11372,16 @@ public final class LayoutEditorTools {
     }   //turnoutSensorsGetSaved
 
     private void setSensorsDonePressed(ActionEvent a) {
+        // the changes made on Done are one step for undo
+        layoutEditor.beginEdit(Bundle.getMessage("SensorsAtTurnout"));
+        try {
+            setSensorsApply(a);
+        } finally {
+            layoutEditor.endEdit();
+        }
+    }
+
+    private void setSensorsApply(ActionEvent a) {
         log.trace("setSensorsDonePressed (turnouts)");  // NOI18N
         if (!getTurnoutSensorInformation()) {
             return;
@@ -11785,6 +11905,16 @@ public final class LayoutEditorTools {
     }
 
     private void setXingSensorsDonePressed(ActionEvent a) {
+        // the changes made on Done are one step for undo
+        layoutEditor.beginEdit(Bundle.getMessage("SensorsAtLevelXing"));
+        try {
+            setXingSensorsApply(a);
+        } finally {
+            layoutEditor.endEdit();
+        }
+    }
+
+    private void setXingSensorsApply(ActionEvent a) {
         log.trace("setXingSensorsDonePressed");  // NOI18N
 
         if (!getLevelCrossingSensorInformation()) {
@@ -12338,6 +12468,16 @@ public final class LayoutEditorTools {
     }
 
     private void setSlipSensorsDonePressed(ActionEvent a) {
+        // the changes made on Done are one step for undo
+        layoutEditor.beginEdit(Bundle.getMessage("SensorsAtSlip"));
+        try {
+            setSlipSensorsApply(a);
+        } finally {
+            layoutEditor.endEdit();
+        }
+    }
+
+    private void setSlipSensorsApply(ActionEvent a) {
         log.trace("setSlipSensorsDonePressed");
         if (!getSlipSensorInformation()) {
             return;
@@ -12994,6 +13134,16 @@ public final class LayoutEditorTools {
     }
 
     private void setSlipSignalsDonePressed(ActionEvent a) {
+        // the changes made on Done are one step for undo
+        layoutEditor.beginEdit(Bundle.getMessage("SignalsAtSlip"));
+        try {
+            setSlipSignalsApply(a);
+        } finally {
+            layoutEditor.endEdit();
+        }
+    }
+
+    private void setSlipSignalsApply(ActionEvent a) {
         if (!getSlipTurnoutInformation()) {
             return;
         }

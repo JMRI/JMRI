@@ -211,12 +211,15 @@ public class BlockContentsIconTest extends PositionableLabelTest {
         org.junit.jupiter.api.Assertions.assertTrue(((BlockContentsIcon) to).showPopUp(popup), "a menu");
         assertEquals(1, popup.getComponentCount(), "no train shown: only the Block dialog's item, with no separator");
         assertEquals(java.util.List.of(BLOCK_ITEM), menuItems());
-        ((javax.swing.JMenuItem) popup.getComponent(popup.getComponentCount() - 1)).doClick();
+        // the dialog is built and shown on the Swing thread, as from a real click: built here, its
+        // layout could deadlock with its own text updates on the Swing thread
+        javax.swing.JMenuItem item = (javax.swing.JMenuItem) popup.getComponent(popup.getComponentCount() - 1);
+        jmri.util.ThreadingUtil.runOnGUI(item::doClick);
         jmri.jmrit.trainrecord.swing.BlockDialog d = jmri.util.JmriJFrame.getFrameList(
                 jmri.jmrit.trainrecord.swing.BlockDialog.class).stream().findFirst().orElse(null);
         org.junit.jupiter.api.Assertions.assertNotNull(d, "choosing it opens the Block dialog");
         org.junit.jupiter.api.Assertions.assertSame(((BlockContentsIcon) to).getBlock(), d.getBlock());
-        d.dispose();
+        jmri.util.ThreadingUtil.runOnGUI(d::dispose);
 
         jmri.jmrit.dispatcher.DispatcherFrame df = org.mockito.Mockito.mock(jmri.jmrit.dispatcher.DispatcherFrame.class);
         jmri.jmrit.dispatcher.ActiveTrain at = org.mockito.Mockito.mock(jmri.jmrit.dispatcher.ActiveTrain.class);

@@ -183,7 +183,6 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
     private final JRadioButtonMenuItem zoom70Item = new JRadioButtonMenuItem("x 7.0");
     private final JRadioButtonMenuItem zoom80Item = new JRadioButtonMenuItem("x 8.0");
 
-    private final JMenuItem undoTranslateSelectionMenuItem = new JMenuItem(Bundle.getMessage("UndoTranslateSelection"));
     private final JMenuItem assignBlockToSelectionMenuItem = new JMenuItem(Bundle.getMessage("AssignBlockToSelectionTitle") + "...");
 
     // Selected point information
@@ -547,6 +546,15 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
             }
         });
         setJMenuBar(menuBar);
+
+        // set up Edit menu: Undo and Redo, used in edit mode
+        JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
+        editMenu.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("MenuEditMnemonic")));
+        menuBar.add(editMenu);
+        editMenu.add(getEditHistory().createUndoMenuItem());
+        editMenu.add(getEditHistory().createRedoMenuItem());
+        // a command from a menu or pop-up menu of this window is one step
+        getEditHistory().watchMenus(this);
 
         // setup Options menu
         setupOptionMenu(menuBar);
@@ -1727,15 +1735,6 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
             }
         });
 
-        // undo translate selection
-        undoTranslateSelectionMenuItem.setToolTipText(Bundle.getMessage("UndoTranslateSelectionToolTip"));
-        toolsMenu.add(undoTranslateSelectionMenuItem);
-        undoTranslateSelectionMenuItem.addActionListener((ActionEvent event) -> {
-            // undo previous move selection
-            undoMoveSelection();
-        });
-        undoTranslateSelectionMenuItem.setEnabled(canUndoMoveSelection);
-
         // rotate selection
         jmi = new JMenuItem(Bundle.getMessage("RotateSelection90MenuItemTitle"));
         jmi.setToolTipText(Bundle.getMessage("RotateSelection90MenuItemToolTip"));
@@ -2631,10 +2630,6 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
         return changed;
     }
 
-    private Rectangle2D undoRect;
-    private boolean canUndoMoveSelection = false;
-    private Point2D undoDelta = MathUtil.zeroPoint2D;
-
     /**
      * Translate entire layout by x and y amounts.
      *
@@ -2645,13 +2640,7 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
         // here when all numbers read in - translation if entered
         if ((xTranslation != 0.0F) || (yTranslation != 0.0F)) {
             Point2D delta = new Point2D.Double(xTranslation, yTranslation);
-            Rectangle2D selectionRect = getSelectionRect();
-
-            // set up undo information
-            undoRect = MathUtil.offset(selectionRect, delta);
-            undoDelta = MathUtil.subtract(MathUtil.zeroPoint2D, delta);
-            canUndoMoveSelection = true;
-            undoTranslateSelectionMenuItem.setEnabled(canUndoMoveSelection);
+            Rectangle2D movedRect = MathUtil.offset(getSelectionRect(), delta);
 
             // apply translation to icon items within the selection
             for (Positionable c : _positionableSelection) {
@@ -2668,46 +2657,13 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
                 ls.setCoordsCenter(MathUtil.add(ls.getCoordsCenter(), delta));
             }
 
-            selectionX = undoRect.getX();
-            selectionY = undoRect.getY();
-            selectionWidth = undoRect.getWidth();
-            selectionHeight = undoRect.getHeight();
+            selectionX = movedRect.getX();
+            selectionY = movedRect.getY();
+            selectionWidth = movedRect.getWidth();
+            selectionHeight = movedRect.getHeight();
             resizePanelBounds(false);
             setDirty();
             redrawPanel();
-        }
-    }
-
-    /**
-     * undo the move selection
-     */
-    void undoMoveSelection() {
-        if (canUndoMoveSelection) {
-            _positionableSelection.forEach((c) -> {
-                Point2D newPoint = MathUtil.add(c.getLocation(), undoDelta);
-                c.setLocation((int) newPoint.getX(), (int) newPoint.getY());
-            });
-
-            _layoutTrackSelection.forEach(
-                    (lt) -> {
-                        LayoutTrackView ltv = getLayoutTrackView(lt);
-                        ltv.setCoordsCenter(MathUtil.add(ltv.getCoordsCenter(), undoDelta));
-                    }
-            );
-
-            _layoutShapeSelection.forEach((ls) -> ls.setCoordsCenter(MathUtil.add(ls.getCoordsCenter(), undoDelta)));
-
-            undoRect = MathUtil.offset(undoRect, undoDelta);
-            selectionX = undoRect.getX();
-            selectionY = undoRect.getY();
-            selectionWidth = undoRect.getWidth();
-            selectionHeight = undoRect.getHeight();
-
-            resizePanelBounds(false);
-            redrawPanel();
-
-            canUndoMoveSelection = false;
-            undoTranslateSelectionMenuItem.setEnabled(canUndoMoveSelection);
         }
     }
 
@@ -3302,6 +3258,19 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
      */
     @Override
     public void mousePressed(JmriMouseEvent event) {
+        // a press, any drag, and the release are one step
+        if (mouseStepOpen) {
+            endEdit();
+        }
+        beginEdit(Bundle.getMessage("StepEdit"));
+        mouseStepOpen = true;
+        handleMousePressed(event);
+    }
+
+    // true from a mouse press to its release
+    private boolean mouseStepOpen = false;
+
+    private void handleMousePressed(JmriMouseEvent event) {
         if (isInputTextBox(event)) {
             return;
         }
@@ -4168,6 +4137,22 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     @Override
     public void mouseReleased(JmriMouseEvent event) {
+        if (isDragging) {
+            getEditHistory().rename(Bundle.getMessage("StepMove"));
+        } else if (event.isShiftDown()) {
+            getEditHistory().rename(Bundle.getMessage("StepAdd"));
+        }
+        try {
+            handleMouseReleased(event);
+        } finally {
+            if (mouseStepOpen) {
+                mouseStepOpen = false;
+                endEdit();
+            }
+        }
+    }
+
+    private void handleMouseReleased(JmriMouseEvent event) {
         super.setToolTip(null);
 
         if (isInputTextBox(event)) {
@@ -5469,6 +5454,17 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
 
     @Override
     public void keyPressed(@Nonnull KeyEvent event) {
+        // a key that deletes or moves the selection is one step
+        beginEdit(Bundle.getMessage(
+                (event.getKeyCode() == KeyEvent.VK_DELETE) ? "StepDelete" : "StepMove"));
+        try {
+            handleKeyPressed(event);
+        } finally {
+            endEdit();
+        }
+    }
+
+    private void handleKeyPressed(@Nonnull KeyEvent event) {
         if (event.getKeyCode() == KeyEvent.VK_DELETE) {
             deleteSelectedItems();
             return;
@@ -6634,100 +6630,22 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
      * @return true if found
      */
     private boolean remove(@Nonnull Positionable s) {
-        boolean found = false;
-
-        if (backgroundImage.contains(s)) {
-            backgroundImage.remove(s);
-            found = true;
-        }
-        if (memoryLabelList.contains(s)) {
-            memoryLabelList.remove(s);
-            found = true;
-        }
-        if (memoryInputList.contains(s)) {
-            memoryInputList.remove(s);
-            found = true;
-        }
-        if (globalVariableLabelList.contains(s)) {
-            globalVariableLabelList.remove(s);
-            found = true;
-        }
-        if (globalVariableInputList.contains(s)) {
-            globalVariableInputList.remove(s);
-            found = true;
-        }
-        if (blockContentsLabelList.contains(s)) {
-            blockContentsLabelList.remove(s);
-            found = true;
-        }
-        if (blockContentsInputList.contains(s)) {
-            blockContentsInputList.remove(s);
-            found = true;
-        }
-        if (multiSensors.contains(s)) {
-            multiSensors.remove(s);
-            found = true;
-        }
-        if (clocks.contains(s)) {
-            clocks.remove(s);
-            found = true;
-        }
-        if (labelImage.contains(s)) {
-            labelImage.remove(s);
-            found = true;
-        }
-
+        // a sensor, turnout or signal icon: ask about the track that uses its bean
+        NamedBean bean = null;
         if (sensorImage.contains(s) || sensorList.contains(s)) {
-            Sensor sensor = ((SensorIcon) s).getSensor();
-            if (sensor != null) {
-                if (removeAttachedBean((sensor))) {
-                    sensorImage.remove(s);
-                    sensorList.remove(s);
-                    found = true;
-                } else {
-                    return false;
-                }
-            }
+            bean = ((SensorIcon) s).getSensor();
+        } else if (turnoutImage.contains(s) || turnoutList.contains(s)) {
+            bean = ((TurnoutIcon) s).getTurnout();
+        } else if (signalHeadImage.contains(s) || signalList.contains(s)) {
+            bean = ((SignalHeadIcon) s).getSignalHead();
+        } else if (signalMastList.contains(s)) {
+            bean = ((SignalMastIcon) s).getSignalMast();
+        }
+        if (bean != null && !removeAttachedBean(bean)) {
+            return false;
         }
 
-        if (turnoutImage.contains(s) || turnoutList.contains(s)) {
-            Turnout turnout = ((TurnoutIcon) s).getTurnout();
-            if (turnout != null) {
-                if (removeAttachedBean((turnout))) {
-                    turnoutImage.remove(s);
-                    turnoutList.remove(s);
-                    found = true;
-                } else {
-                    return false;
-                }
-            }
-        }
-
-        if (signalHeadImage.contains(s) || signalList.contains(s)) {
-            SignalHead head = ((SignalHeadIcon) s).getSignalHead();
-            if (head != null) {
-                if (removeAttachedBean((head))) {
-                    signalHeadImage.remove(s);
-                    signalList.remove(s);
-                    found = true;
-                } else {
-                    return false;
-                }
-            }
-        }
-
-        if (signalMastList.contains(s)) {
-            SignalMast mast = ((SignalMastIcon) s).getSignalMast();
-            if (mast != null) {
-                if (removeAttachedBean((mast))) {
-                    signalMastList.remove(s);
-                    found = true;
-                } else {
-                    return false;
-                }
-            }
-        }
-
+        boolean found = removeFromIconLists(s);
         super.removeFromContents(s);
 
         if (found) {
@@ -6735,6 +6653,45 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
             redrawPanel();
         }
         return found;
+    }
+
+    /**
+     * Remove an icon from this editor's lists of icons by kind.
+     *
+     * @param s the icon
+     * @return true if it was in any of them
+     */
+    private boolean removeFromIconLists(@Nonnull Positionable s) {
+        boolean found = false;
+        for (List<? extends Positionable> list : List.of(backgroundImage, memoryLabelList, memoryInputList,
+                globalVariableLabelList, globalVariableInputList, blockContentsLabelList, blockContentsInputList,
+                multiSensors, clocks, labelImage, sensorImage, sensorList, turnoutImage, turnoutList,
+                signalHeadImage, signalList, signalMastList, markerImage, factoryPositionables)) {
+            found |= list.remove(s);
+        }
+        return found;
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Also removes the icon from this editor's lists of icons by kind.
+     */
+    @Override
+    protected void removeForUndo(@Nonnull Positionable p) {
+        removeFromIconLists(p);
+        super.removeForUndo(p);
+    }
+
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Layout Editor's model also holds the tracks and the shapes.
+     */
+    @Override
+    @Nonnull
+    protected EditHistory.Model createEditModel() {
+        return new LayoutEditorEditModel(this);
     }
 
     @Override
@@ -9680,6 +9637,34 @@ public final class LayoutEditor extends PanelEditor implements MouseWheelListene
      * Clear the list of layout tracks. Not intended for general use.
      * <p>
      */
+    /**
+     * Make the panel hold exactly these tracks, in this order: the same
+     * objects, put back or taken off by undo and redo.
+     *
+     * @param views the tracks' views
+     */
+    void setLayoutTracksForUndo(@Nonnull List<LayoutTrackView> views) {
+        clearLayoutTracks();
+        for (LayoutTrackView v : views) {
+            LayoutTrack trk = v.getLayoutTrack();
+            layoutTrackList.add(trk);
+            layoutTrackViewList.add(v);
+            trkToView.put(trk, v);
+            viewToTrk.put(v, trk);
+        }
+    }
+
+    /**
+     * Make the panel hold exactly these shapes, in this order, for undo and
+     * redo.
+     *
+     * @param shapes the shapes
+     */
+    void setLayoutShapesForUndo(@Nonnull List<LayoutShape> shapes) {
+        layoutShapes.clear();
+        layoutShapes.addAll(shapes);
+    }
+
     private void clearLayoutTracks() {
         layoutTrackList.clear();
         layoutTrackViewList.clear();

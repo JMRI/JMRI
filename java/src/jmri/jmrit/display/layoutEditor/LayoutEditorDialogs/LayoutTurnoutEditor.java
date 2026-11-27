@@ -354,6 +354,16 @@ public class LayoutTurnoutEditor extends LayoutTrackEditor {
     }
 
     private void editLayoutTurnoutDonePressed(ActionEvent a) {
+        // the changes made on Done are one step for undo
+        layoutEditor.beginEdit(Bundle.getMessage("StepEditItem", layoutTurnout.getName()));
+        try {
+            editLayoutTurnoutDoneApply(a);
+        } finally {
+            layoutEditor.endEdit();
+        }
+    }
+
+    private void editLayoutTurnoutDoneApply(ActionEvent a) {
         // check if Turnout changed
         String newName = editLayoutTurnout1stTurnoutComboBox.getSelectedItemDisplayName();
         if (newName == null) {

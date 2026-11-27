@@ -504,9 +504,10 @@ public class PositionableJPanel extends JPanel implements Positionable, JmriMous
     @Override
     public void remove() {
         _editor.removeFromContents(this);
-        cleanup();
         // remove from persistance by flagging inactive
         active = false;
+        // cleaned up now, or once undo can no longer put it back
+        _editor.disposeRemoved(this);
     }
 
     /**

@@ -144,6 +144,16 @@ public class ScaleTrackDiagramDialog {
     }
 
     private void scaleTrackDiagramDonePressed(@Nonnull ActionEvent event) {
+        // the changes made on Done are one step for undo
+        layoutEditor.beginEdit(Bundle.getMessage("ScaleTrackDiagram"));
+        try {
+            scaleTrackDiagramDoneApply(event);
+        } finally {
+            layoutEditor.endEdit();
+        }
+    }
+
+    private void scaleTrackDiagramDoneApply(@Nonnull ActionEvent event) {
         boolean changeFlag = false;
         boolean translateError = false;
         float xTranslation, yTranslation, xFactor, yFactor;

@@ -383,6 +383,20 @@ abstract public class LayoutSlip extends LayoutTurnout {
         updateState();
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * A slip also follows its second turnout.
+     */
+    @Override
+    void setOnPanel(boolean onPanel) {
+        super.setOnPanel(onPanel);
+        deactivateTurnout();
+        if (onPanel) {
+            activateTurnout();
+        }
+    }
+
     void deactivateTurnout() {
         if (mTurnoutListener != null) {
             if (namedTurnout != null) {

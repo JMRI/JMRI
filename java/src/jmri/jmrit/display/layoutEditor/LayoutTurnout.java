@@ -1865,6 +1865,21 @@ abstract public class LayoutTurnout extends LayoutTrack {
         }
     }
 
+    /**
+     * Follow, or stop following, the turnout's state, as undo or redo puts
+     * this object back on its panel or takes it off.
+     *
+     * @param onPanel true when put back on the panel
+     */
+    void setOnPanel(boolean onPanel) {
+        active = onPanel;
+        if (onPanel) {
+            activateTurnout();
+        } else {
+            deactivateTurnout();
+        }
+    }
+
     private void deactivateTurnout() {
         if (mTurnoutListener != null) {
             if (namedTurnout != null) {
