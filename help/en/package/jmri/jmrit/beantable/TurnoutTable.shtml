@@ -84,15 +84,15 @@
         </dt>
 
         <dd>
-          When checked, the Turnout is locked. There are two types of locks supported by JMRI: Cab
-          lockout and Pushbutton lockout. When a Turnout is locked, only Turnout commands from JMRI
-          will move the Turnout. Cabs and/or pushbuttons on the layout are disabled. You can decide
-          for each Turnout if you want "Both" cabs and pushbuttons locked, "Cabs only", or
-          "Pushbuttons only". Click the "Show Lock information" box on the lower edge of the pane
-          to see the lock options. Not all stationary decoders support pushbutton lockout, and not
-          all systems support cab lockout. Turnouts that can not be locked have grayed out boxes
-          and can not be checked. See <a href="#Turnout_lock_feature">Turnout Lock feature</a>
-          below.
+          When checked, the Turnout is locked. On every system, JMRI then refuses its own commands
+          to move the Turnout from the position it was locked in, whether they come from a panel,
+          a Route, Logix, LogixNG or a script, and says so in the log. There are also two types of
+          hardware lock supported by some systems: Cab lockout and Pushbutton lockout, which
+          disable cabs and/or pushbuttons on the layout. You can decide for each Turnout if you
+          want "Both" cabs and pushbuttons locked, "Cabs only", or "Pushbuttons only". Click the
+          "Show Lock information" box on the lower edge of the pane to see the lock options. Not
+          all stationary decoders support pushbutton lockout, and not all systems support cab
+          lockout. See <a href="#Turnout_lock_feature">Turnout Lock feature</a> below.
         </dd>
 
         <dt><strong>Edit</strong>
@@ -571,10 +571,17 @@
 
       <h2 id="Turnout_lock_feature">Turnout Lock feature</h2>
 
-      <p>The Turnout Lock feature allows you to selectively disable accessory (Turnout) commands
-      from cabs and/or locally-wired pushbuttons. The Lock can be set (Locked) or unset (Unlocked)
-      from a checkbox in the Turnout Table, from a <a href="RouteAddEdit.shtml#lock">Route</a> or
-      Logix, or from scripts.</p>
+      <p>The Turnout Lock feature keeps a Turnout where it is. The Lock can be set (Locked) or
+      unset (Unlocked) from a checkbox in the Turnout Table, from a <a href=
+      "RouteAddEdit.shtml#lock">Route</a>, Signal Mast Logic, Logix or LogixNG, or from scripts.</p>
+
+      <h4>JMRI's own lock</h4>
+      On every system, while a Turnout is locked JMRI refuses any of its own commands to move it
+      from the position it was locked in, and logs a warning saying what holds the lock. A command
+      to the position it is locked in is carried out as usual. JMRI locks the Turnout in the
+      position it was last commanded to, or, if it hasn't been commanded, the position it is known
+      to be in. This lock doesn't stop cabs or pushbuttons on the layout; the lockouts below do
+      that, where the system supports them.
 
       <h4>Cab Lockout</h4>
       To do the Cab Lockout, JMRI works with the DCC system to prevent people from changing the

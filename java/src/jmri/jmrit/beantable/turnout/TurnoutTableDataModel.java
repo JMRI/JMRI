@@ -263,8 +263,8 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
             case INVERTCOL:
                 return t.canInvert();
             case LOCKCOL:
-                // checkbox disabled unless current configuration allows locking
-                return t.canLock(Turnout.CABLOCKOUT | Turnout.PUSHBUTTONLOCKOUT);
+                // JMRI locks a turnout against its own commands on every system
+                return true;
             case OPSEDITCOL:
                 return t.getTurnoutOperation() != null;
             case KNOWNCOL:
@@ -306,7 +306,7 @@ public class TurnoutTableDataModel extends BeanTableDataModel<Turnout>{
         if (col == INVERTCOL) {
             return t.getInverted();
         } else if (col == LOCKCOL) {
-            return t.getLocked(Turnout.CABLOCKOUT | Turnout.PUSHBUTTONLOCKOUT);
+            return t.isLocked();
         } else if (col == KNOWNCOL) {
             return t.describeState(t.getKnownState());
         } else if (col == MODECOL) {
