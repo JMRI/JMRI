@@ -319,6 +319,7 @@ final class TrackSnapshot {
     private final Map<PositionablePoint, Point> points = new HashMap<>();
     private final Map<LayoutTrack, Node> nodes = new HashMap<>();
     private final List<LayoutTrack> pieces = new ArrayList<>();
+    private final Map<LayoutTrack, LayoutEditor> panels = new HashMap<>();
     private final Map<Block, BlockData> blocks = new HashMap<>();
     private final Map<Portal, PortalData> portals = new HashMap<>();
     private final Map<Sensor, String> unreported = new HashMap<>();
@@ -377,6 +378,7 @@ final class TrackSnapshot {
             for (LayoutEditor le : editors.getAll(LayoutEditor.class)) {
                 for (LayoutTrack t : le.getLayoutTracks()) {
                     pieces.add(t);
+                    panels.put(t, le);
                     if (t instanceof TrackSegment) {
                         segments.put((TrackSegment) t, new Segment((TrackSegment) t, drawnLength(le, (TrackSegment) t)));
                     } else if (t instanceof PositionablePoint) {
@@ -515,6 +517,17 @@ final class TrackSnapshot {
 
     List<LayoutTrack> pieces() {
         return Collections.unmodifiableList(pieces);
+    }
+
+    /**
+     * The panel a piece of track is drawn on.
+     *
+     * @param t the piece
+     * @return the panel, or null if the piece is not in the snapshot
+     */
+    @CheckForNull
+    LayoutEditor panel(LayoutTrack t) {
+        return panels.get(t);
     }
 
     @CheckForNull

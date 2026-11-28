@@ -766,5 +766,11 @@
                 dropped marker does what it did before. See the <a href=
                 "https://www.jmri.org/help/en/html/tools/simulatedtrains/index.shtml#placing">Simulated
                 Trains</a> page.</li>
+            <li>A simulated train no longer stops with "The track ends"
+                in a Block drawn on more than one panel, where a panel
+                showing part of the layout draws the Block as far as an
+                end bumper. It follows the panel where the track goes on.
+                Placing a train where two panels draw the same way into a
+                Block no longer says it could be in more than one place.</li>
         </ul>
 
