@@ -109,16 +109,18 @@ public abstract class AppsBase {
         }
 
         // all loaded, initialize objects as necessary
-        InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
-        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+        jmri.util.ThreadingUtil.runOnGUI(()->{
+            InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
+            InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
 
-        jmri.jmrit.logixng.LogixNG_Manager logixNG_Manager =
+            jmri.jmrit.logixng.LogixNG_Manager logixNG_Manager =
                 InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class);
-        logixNG_Manager.setupAllLogixNGs();
-        if (InstanceManager.getDefault(LogixNGPreferences.class).getStartLogixNGOnStartup()
-                && InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class).isStartLogixNGsOnLoad()) {
-            logixNG_Manager.activateAllLogixNGs();
-        }
+            logixNG_Manager.setupAllLogixNGs();
+            if (InstanceManager.getDefault(LogixNGPreferences.class).getStartLogixNGOnStartup()
+                    && InstanceManager.getDefault(jmri.jmrit.logixng.LogixNG_Manager.class).isStartLogixNGsOnLoad()) {
+                logixNG_Manager.activateAllLogixNGs();
+            }
+        });
     }
 
     /**
