@@ -211,7 +211,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         if (InstanceManager.turnoutManagerInstance().isOutputIntervalKept()) {
             // sent in the order requested, spaced by the output interval when
             // sent, however busy the layout thread (Swing thread) is
-            InstanceManager.getDefault(TurnoutIntervalSender.class).send(() -> setCommandedState(s));
+            InstanceManager.getDefault(OutputIntervalSender.class).send(() -> setCommandedState(s));
             return;
         }
         // each call gets its own end time, later calls get later times

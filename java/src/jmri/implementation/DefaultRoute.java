@@ -1314,14 +1314,22 @@ public class DefaultRoute extends AbstractNamedBean implements Route, java.beans
                 }
                 final int toState = state;
                 final Sensor setSensor = t;
-                ThreadingUtil.runOnLayoutEventually(() -> { // eventually, even though timing here, should be soon
+                Runnable command = () -> {
                     try {
                         setSensor.setKnownState(toState);
                     } catch (JmriException e) {
                         setRouteLog.warn("Exception setting sensor {} in route {} {}",
                             setSensor.getSystemName(), r.getDisplayName(), e.getMessage());
                     }
-                });
+                };
+                if (setSensor.isPhysicalSensor()
+                        && InstanceManager.turnoutManagerInstance().isOutputIntervalKept()) {
+                    // in one queue with the turnout commands, spaced by the output
+                    // interval, so the commands of Routes set together are spaced too
+                    InstanceManager.getDefault(OutputIntervalSender.class).sendOnLayout(command);
+                    continue;
+                }
+                ThreadingUtil.runOnLayoutEventually(command::run); // eventually, even though timing here, should be soon
                 if (setSensor.isPhysicalSensor()) {
                     // space commands to a connection; a sensor that is not
                     // physical sends nothing, so needs no gap

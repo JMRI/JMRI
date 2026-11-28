@@ -15,26 +15,28 @@ import jmri.util.ThreadingUtil;
 /**
  * Sends the turnout commands requested through
  * {@link AbstractTurnout#setCommandedStateAtInterval(int)}, such as those of a
- * Route, a Matrix Signal Mast or Dispatcher, spaced by the turnout output interval,
- * when the connection's {@link jmri.SystemConnectionMemo#isOutputIntervalKept()}
+ * Route, a Matrix Signal Mast or Dispatcher, and the commands to the output
+ * sensors of a Route, spaced by the turnout output interval, when the
+ * connection's {@link jmri.SystemConnectionMemo#isOutputIntervalKept()}
  * setting is on.
  * <p>
- * Commands are sent in the order requested. Each is sent no earlier than its
- * output interval slot from {@link TurnoutManager#outputIntervalEnds()}, and
- * no sooner than one output interval after the command sent before it. The
- * interval is kept when each command is sent, not only when it is scheduled,
- * so commands held up by a busy layout thread (Swing thread), for example
- * while panels load at start-up, still reach the layout spaced apart instead
- * of all at once.
+ * Commands are sent in the order requested, turnouts and sensors in one queue,
+ * so commands from Routes set at the same time are spaced apart too. Each is
+ * sent no earlier than its output interval slot from
+ * {@link TurnoutManager#outputIntervalEnds()}, and no sooner than one output
+ * interval after the command sent before it. The interval is kept when each
+ * command is sent, not only when it is scheduled, so commands held up by a
+ * busy layout thread (Swing thread), for example while panels load at
+ * start-up, still reach the layout spaced apart instead of all at once.
  * <p>
- * Commands are sent on the layout thread (Swing thread), apart from one
- * requested when nothing is waiting and no wait is due, which is sent at
- * once on the caller's thread.
+ * Commands are sent on the layout thread (Swing thread), apart from a turnout
+ * command requested through {@link #send(Runnable)} when nothing is waiting
+ * and no wait is due, which is sent at once on the caller's thread.
  *
  * @author Keith Bruce Copyright (C) 2026
  * @since 5.19.2
  */
-public final class TurnoutIntervalSender implements InstanceManagerAutoDefault {
+public final class OutputIntervalSender implements InstanceManagerAutoDefault {
 
     private static final class Pending {
         private final Runnable command;
@@ -55,15 +57,31 @@ public final class TurnoutIntervalSender implements InstanceManagerAutoDefault {
     /**
      * Create the sender. Normally obtained from the InstanceManager.
      */
-    public TurnoutIntervalSender() {
+    public OutputIntervalSender() {
     }
 
     /**
-     * Send a turnout command at the output interval.
+     * Send a turnout command at the output interval. When nothing is waiting
+     * and no wait is due, it is sent at once on the caller's thread.
      *
      * @param command sends the command to the layout
      */
     void send(@Nonnull Runnable command) {
+        send(command, true);
+    }
+
+    /**
+     * Send a command at the output interval, always on the layout thread
+     * (Swing thread).
+     *
+     * @param command sends the command to the layout
+     * @since 5.19.2
+     */
+    void sendOnLayout(@Nonnull Runnable command) {
+        send(command, false);
+    }
+
+    private void send(@Nonnull Runnable command, boolean nowOnCallerThread) {
         TurnoutManager tm = InstanceManager.turnoutManagerInstance();
         boolean now;
         synchronized (this) {
@@ -72,7 +90,7 @@ public final class TurnoutIntervalSender implements InstanceManagerAutoDefault {
             long delayMs = Math.max(0L, LocalDateTime.now().until(slot, ChronoUnit.MILLIS));
             long time = System.nanoTime();
             Pending p = new Pending(command, time + delayMs * 1_000_000L);
-            now = queue.isEmpty() && dueNanos(p, tm) <= time;
+            now = nowOnCallerThread && queue.isEmpty() && dueNanos(p, tm) <= time;
             if (now) {
                 markSent(time);
             } else {
@@ -118,7 +136,7 @@ public final class TurnoutIntervalSender implements InstanceManagerAutoDefault {
                 queue.removeFirst();
                 markSent(time);
             }
-            log.debug("sending turnout command at output interval");
+            log.debug("sending command at output interval");
             p.command.run();
         }
     }
@@ -138,6 +156,6 @@ public final class TurnoutIntervalSender implements InstanceManagerAutoDefault {
         sentAny = true;
     }
 
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TurnoutIntervalSender.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(OutputIntervalSender.class);
 
 }

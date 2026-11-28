@@ -169,7 +169,8 @@ public interface SystemConnectionMemo extends jmri.beans.PropertyChangeProvider 
      * so commands held up while JMRI is busy can be sent together. When true,
      * each command is also sent no sooner than the OutputInterval after the one
      * before it.
-     * Used in {@link jmri.implementation.AbstractTurnout#setCommandedStateAtInterval(int)}.
+     * Used in {@link jmri.implementation.AbstractTurnout#setCommandedStateAtInterval(int)},
+     * and by {@link jmri.implementation.DefaultRoute} for its output sensors.
      *
      * @return true if the interval is kept when commands are sent
      * @since 5.19.2
