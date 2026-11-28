@@ -23,10 +23,10 @@ public class LearnFunctionPanelTest {
 
     @Test
     public void testCTor() {
-
-        WarrantFrame wf = new WarrantFrame(new Warrant("IW0", "AllTestWarrant"));
-        LearnThrottleFrame ltf = new LearnThrottleFrame(wf);
-        LearnFunctionPanel t = new LearnFunctionPanel(ltf);
+        // the windows are built, shown and closed on the GUI thread (Swing thread)
+        WarrantFrame wf = ThreadingUtil.runOnGUIwithReturn(() -> new WarrantFrame(new Warrant("IW0", "AllTestWarrant")));
+        LearnThrottleFrame ltf = ThreadingUtil.runOnGUIwithReturn(() -> new LearnThrottleFrame(wf));
+        LearnFunctionPanel t = ThreadingUtil.runOnGUIwithReturn(() -> new LearnFunctionPanel(ltf));
         Assertions.assertNotNull( t, "exists");
         JUnitUtil.dispose(ltf);
         JUnitUtil.dispose(wf);
