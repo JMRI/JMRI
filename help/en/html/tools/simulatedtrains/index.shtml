@@ -31,18 +31,26 @@
       <h2 id="driving">How they are driven and seen</h2>
 
       <ul>
-        <li>Simulated trains obey the Internal connection's throttles, by DCC address. A throttle
-        window, Dispatcher, a Warrant or a script using that connection drives them with no further
-        set-up.</li>
+        <li>Simulated trains obey the Internal connection's throttles, by DCC address, and on a CAN
+        Simulation connection the speed and direction its simulated command station gives each loco,
+        whichever cab sets them. A throttle window, Dispatcher, a Warrant or a script using one of
+        those drives them with no further set-up. Other connections' throttles don't drive them
+        yet.</li>
 
-        <li>They set internal sensors. Give each Block an internal sensor as its occupancy sensor; a
-        Block's sensor goes active when the first part of a train that detectors see enters it, and
-        inactive when the last of every train has left it. A sensor of another connection is left
-        alone.</li>
+        <li>They set the layout's own occupancy sensors, the ones its Blocks already use, on any
+        simulator connection, so no extra sensors are needed. A sensor is set as a script or a
+        sensor icon sets it, so the connection sends what it would for that; on a CAN Simulation
+        connection, CBUS sensors send their own events as a real detector would. A Block's sensor
+        goes active when the first part of a train that detectors see enters it, and inactive when
+        the last of every train has left it.</li>
 
         <li>Two trains that touch both stop. A train whose turnout is moved under it derails and
         stays where it stopped.</li>
       </ul>
+
+      <p>Turnouts with feedback sensors need something to answer their commands. On any simulated
+      connection, LogixNG's <a href="../logixng/reference/chapter5.shtml#simfeedback">Simulate
+      turnout feedback</a> action does this.</p>
 
       <h2 id="track">The track they run on</h2>
 

@@ -15,6 +15,7 @@
             <li><a href="/help/en/html/tools/scripting/index.shtml">Scripting</a>
             <li><a href="/help/en/html/tools/automation/viaJava.shtml">Automate with Java</a>
             <li><a href="/help/en/html/tools/CTC.shtml">CTC Tools</a>
+            <li><a href="/help/en/html/tools/simulatedtrains/index.shtml">Train Simulation</a><span class="since">since 5.19.1</span>
           </ul>
         </dd>
 <!-- /SidebarLayoutAutomation.shtml -->

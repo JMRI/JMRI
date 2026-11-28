@@ -7,8 +7,11 @@
  * in a profile whose connections are all simulators (see
  * {@link jmri.jmrit.simulation.SimulationCheck}). Placed trains obey the
  * Internal connection's throttles
- * ({@link jmri.jmrit.simulation.InternalThrottleSpeedSource}) and set internal
- * sensors ({@link jmri.jmrit.simulation.InternalSensorOutput}), so in a
+ * ({@link jmri.jmrit.simulation.InternalThrottleSpeedSource}) and set the
+ * Blocks' own sensors: internal sensors
+ * ({@link jmri.jmrit.simulation.InternalSensorOutput}) and those of any
+ * simulator connection
+ * ({@link jmri.jmrit.simulation.SimulatorConnectionSensorOutput}), so in a
  * profile with an Internal connection Dispatcher, Warrants, throttle windows
  * and scripts drive them with no further set-up.
  * <h2>Independence</h2>
