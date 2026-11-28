@@ -58,6 +58,41 @@ public class XNetFeedbackMessageCacheTest {
         }
     }
 
+    @Test
+    public void testTurnoutBeyondTheFeedbackCacheCanBeMade() {
+        // a Z21 reports turnouts above the 1024 that the feedback cache covers
+        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
+        try {
+            XNetTurnout turnout = new XNetTurnout("X", 1153, tc);
+            try {
+                assertEquals(1153, turnout.getNumber());
+            } finally {
+                turnout.dispose();
+            }
+        } finally {
+            tc.terminateThreads();
+        }
+    }
+
+    @Test
+    public void testTurnoutsInDifferentFeedbackRepliesAreEachAskedFor() {
+        // turnouts 1 and 9 are reported in different feedback replies, so
+        // asking for one doesn't mean the other has been asked for
+        XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
+        try {
+            XNetTurnout t1 = new XNetTurnout("X", 1, tc);
+            XNetTurnout t9 = new XNetTurnout("X", 9, tc);
+            try {
+                assertEquals(2, tc.outbound.size(), "both asked for");
+            } finally {
+                t1.dispose();
+                t9.dispose();
+            }
+        } finally {
+            tc.terminateThreads();
+        }
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

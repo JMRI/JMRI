@@ -9,6 +9,7 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -19,6 +20,32 @@ import org.junit.jupiter.api.*;
  * @author Paul Bender
  */
 public class Z21TrafficControllerTest extends jmri.jmrix.AbstractMRTrafficControllerTest {
+
+    @Test
+    public void testRepliesInSplitsAPacket() {
+        byte[] packet = {0x04, 0x00, (byte) 0x88, 0x00, 0x05, 0x00, 0x40, 0x00, 0x61, 0x00, 0x00};
+        List<Z21Reply> replies = Z21TrafficController.repliesIn(packet, 9);
+        assertEquals(2, replies.size());
+        assertEquals("04 00 88 00", replies.get(0).toString());
+        assertEquals("05 00 40 00 61", replies.get(1).toString());
+    }
+
+    @Test
+    public void testRepliesInStopsAtALengthTooShort() {
+        // a length of 0 would never move on through the packet
+        byte[] packet = {0x04, 0x00, (byte) 0x88, 0x00, 0x00, 0x00, 0x40, 0x00};
+        List<Z21Reply> replies = Z21TrafficController.repliesIn(packet, 8);
+        assertEquals(1, replies.size());
+        JUnitAppender.assertWarnMessageStartsWith("Ignoring the rest of a Z21 packet: message length 0");
+    }
+
+    @Test
+    public void testRepliesInStopsAtALengthPastTheEnd() {
+        byte[] packet = {0x04, 0x00, (byte) 0x88, 0x00, 0x10, 0x00, 0x40, 0x00};
+        List<Z21Reply> replies = Z21TrafficController.repliesIn(packet, 8);
+        assertEquals(1, replies.size());
+        JUnitAppender.assertWarnMessageStartsWith("Ignoring the rest of a Z21 packet: message length 16");
+    }
 
     @Test
     public void testReceivesCombinedPacketLongerThan100Bytes() throws Exception {

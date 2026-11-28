@@ -288,25 +288,40 @@ public class Z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
         if (threadStopRequest) return;
 
         // handle more than one reply in the same UDP packet.
-        List<Z21Reply> replies = new ArrayList<>();
-
-        int totalLength=receivePacket.getLength();
-        int consumed=0;
-
-        do {
-            int length = (0xff & buffer[0]) + ((0xff & buffer[1]) << 8);
-            Z21Reply msg = new Z21Reply(buffer, length);
-
-            replies.add(msg);
-
-            buffer = Arrays.copyOfRange(buffer,length,buffer.length);
-            consumed +=length;
-            log.trace("total length: {} consumed {}",totalLength,consumed);
-        } while(totalLength>consumed);
-
+        List<Z21Reply> replies = repliesIn(buffer, receivePacket.getLength());
 
         // and then dispatch each reply
         replies.forEach(this::dispatchReply);
+    }
+
+    /**
+     * Split a received UDP packet into the Z21 messages it holds. Each
+     * message starts with its own length, which includes the 4 bytes of
+     * length and header. A length shorter than that, or longer than what is
+     * left of the packet, ends the packet with a warning.
+     *
+     * @param packet      the received bytes
+     * @param totalLength how many of them were received
+     * @return the messages, in order
+     */
+    static List<Z21Reply> repliesIn(byte[] packet, int totalLength) {
+        List<Z21Reply> replies = new ArrayList<>();
+        int consumed = 0;
+        while (consumed < totalLength) {
+            if (totalLength - consumed < 2) {
+                log.warn("Ignoring the rest of a Z21 packet: {} byte left of {}", totalLength - consumed, totalLength);
+                break;
+            }
+            int length = (0xff & packet[consumed]) + ((0xff & packet[consumed + 1]) << 8);
+            if (length < 4 || length > totalLength - consumed) {
+                log.warn("Ignoring the rest of a Z21 packet: message length {} with {} of {} bytes left",
+                        length, totalLength - consumed, totalLength);
+                break;
+            }
+            replies.add(new Z21Reply(Arrays.copyOfRange(packet, consumed, consumed + length), length));
+            consumed += length;
+        }
+        return replies;
     }
 
     private void dispatchReply(Z21Reply msg) {
