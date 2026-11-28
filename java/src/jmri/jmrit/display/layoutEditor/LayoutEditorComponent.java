@@ -85,6 +85,8 @@ class LayoutEditorComponent extends JComponent {
 
             drawDecorations(g2);
 
+            layoutEditor.getTrainFootprints().paint(g2);
+
             // things that only get drawn in edit mode
             if (layoutEditor.isEditable()) {
                 drawLayoutTrackEditControls(g2);
