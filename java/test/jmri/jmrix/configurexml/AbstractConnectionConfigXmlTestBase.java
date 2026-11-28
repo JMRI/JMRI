@@ -60,6 +60,34 @@ abstract public class AbstractConnectionConfigXmlTestBase extends jmri.configure
         }
     }
 
+    @Test
+    public void outputIntervalKeptStoredOnlyWhenOnTest() {
+        Assume.assumeNotNull(cc);
+        ThreadingUtil.runOnGUI(() -> cc.loadDetails(new JPanel()));
+        // load details MAY produce an error message if no ports are found.
+        jmri.util.JUnitAppender.suppressErrorMessage("No usable ports returned");
+        Assume.assumeNotNull(cc.getAdapter());
+        jmri.SystemConnectionMemo memo = cc.getAdapter().getSystemConnectionMemo();
+        Assume.assumeNotNull(memo);
+        Element off = xmlAdapter.store(cc);
+        // only connections which store the output interval store whether it is kept
+        Assume.assumeNotNull(off.getAttribute("turnoutInterval"));
+        Assert.assertFalse("off by default", memo.isOutputIntervalKept());
+        Assert.assertNull("not stored when off",
+            off.getAttribute(AbstractConnectionConfigXml.INTERVAL_KEPT_ATTRIBUTE));
+
+        memo.setOutputIntervalKept(true);
+        Element on = xmlAdapter.store(cc);
+        Assert.assertEquals("stored when on", "yes",
+            on.getAttributeValue(AbstractConnectionConfigXml.INTERVAL_KEPT_ATTRIBUTE));
+
+        memo.setOutputIntervalKept(false);
+        ((AbstractConnectionConfigXml) xmlAdapter).loadOutputIntervalKept(cc.getAdapter(), on);
+        Assert.assertTrue("loaded on", memo.isOutputIntervalKept());
+        ((AbstractConnectionConfigXml) xmlAdapter).loadOutputIntervalKept(cc.getAdapter(), off);
+        Assert.assertFalse("loaded off when not stored", memo.isOutputIntervalKept());
+    }
+
     /**
      * Validate the common details for ConnectionConfig match the values in
      * the xml element.

@@ -138,6 +138,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
         outputIntervalLabel.setVisible(false);
         outputIntervalSpinner.setVisible(false);
         outputIntervalReset.setVisible(false);
+        outputIntervalKept.setVisible(false);
         
         getDeviceListData(); //get current data
 

@@ -115,6 +115,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
         if (perNode.getAttribute("turnoutInterval") != null) { // migrate existing profile, defaults to 250 ms in memo
             adapter.getSystemConnectionMemo().setOutputInterval(Integer.parseInt(perNode.getAttribute("turnoutInterval").getValue()));
         }
+        loadOutputIntervalKept(adapter, perNode);
 
         unpackElement(shared, perNode);
         return result;

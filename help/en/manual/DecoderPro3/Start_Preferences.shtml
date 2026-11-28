@@ -234,6 +234,15 @@
 
             <li>Output Interval (default: 250 milliseconds, serial connections only, intended for
             debugging/advanced users)</li>
+
+            <li>Keep the interval when JMRI is busy (default: off). When on, each turnout command
+            sent at the Output Interval (by Routes, Matrix Signal Masts, and Dispatcher with Apply
+            Connections Turnout Delay) is sent no sooner than the Output Interval after the one
+            before, even if JMRI was busy when it was due, for example while panels load at
+            start-up. A Route's commands to its output sensors join the same queue, so the
+            commands of Routes set at the same time, for example at start-up, are spaced apart too.
+            When off, commands held up that way can be sent together, and each Route spaces only
+            its own sensor commands, 50 milliseconds apart.</li>
           </ul>
 
           <p>The <span class="textbutton">Disable Connection</span> button will

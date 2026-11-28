@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import jmri.InstanceManager;
@@ -93,7 +94,26 @@ public class AbstractTurnoutCommandOrderTest {
     }
 
     @Test
+    public void testOutputIntervalNotKeptByDefault() {
+        Assertions.assertFalse(InstanceManager.getDefault(TurnoutManager.class).isOutputIntervalKept(),
+            "off unless the connection's setting is on");
+        InstanceManager.getDefault(InternalSystemConnectionMemo.class).setOutputIntervalKept(true);
+        Assertions.assertTrue(InstanceManager.getDefault(TurnoutManager.class).isOutputIntervalKept(),
+            "the default connection's setting");
+    }
+
+    @Test
     public void testCommandsAtIntervalKeepOrder() {
+        checkCommandsAtIntervalKeepOrder();
+    }
+
+    @Test
+    public void testCommandsAtIntervalKeepOrderWhenIntervalKept() {
+        InstanceManager.getDefault(InternalSystemConnectionMemo.class).setOutputIntervalKept(true);
+        checkCommandsAtIntervalKeepOrder();
+    }
+
+    private void checkCommandsAtIntervalKeepOrder() {
         InstanceManager.getDefault(InternalSystemConnectionMemo.class).setOutputInterval(20);
         for (int i = 0; i < 5; i++) {
             Turnout t = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1" + i);
@@ -113,6 +133,72 @@ public class AbstractTurnoutCommandOrderTest {
             assertEquals(Turnout.CLOSED, t.getCommandedState(), "later command wins");
             assertTrue(onLayoutThread.stream().allMatch(b -> b), "commands sent on the layout thread");
         }
+    }
+
+    @Test
+    public void testCommandsAtIntervalSpacedWhenLayoutThreadBusy() throws InterruptedException {
+        int interval = 100;
+        InstanceManager.getDefault(InternalSystemConnectionMemo.class).setOutputInterval(interval);
+        InstanceManager.getDefault(InternalSystemConnectionMemo.class).setOutputIntervalKept(true);
+        List<Turnout> turnouts = new ArrayList<>();
+        List<Turnout> sentBy = Collections.synchronizedList(new ArrayList<>());
+        List<Long> sentAt = Collections.synchronizedList(new ArrayList<>());
+        for (int i = 0; i < 5; i++) {
+            Turnout t = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT2" + i);
+            t.addPropertyChangeListener(Turnout.PROPERTY_COMMANDED_STATE, e -> {
+                sentAt.add(System.nanoTime());
+                sentBy.add(t);
+            });
+            turnouts.add(t);
+        }
+
+        // hold the layout thread (Swing thread), as panels loading at start-up do,
+        // until every command's output interval slot has passed
+        CountDownLatch release = new CountDownLatch(1);
+        AtomicBoolean held = new AtomicBoolean(false);
+        ThreadingUtil.runOnLayoutEventually(() -> {
+            held.set(true);
+            try {
+                release.await();
+            } catch (InterruptedException ex) {
+                Thread.currentThread().interrupt();
+            }
+        });
+        try {
+            JUnitUtil.waitFor(held::get, "layout thread held");
+            long start = System.nanoTime();
+            for (Turnout t : turnouts) {
+                t.setCommandedStateAtInterval(Turnout.THROWN);
+            }
+            // the last slot is 5 intervals away
+            JUnitUtil.waitFor(() -> System.nanoTime() - start > 6L * interval * 1_000_000L,
+                "every slot passed");
+            assertTrue(sentAt.isEmpty(), "nothing sent while the layout thread is held");
+        } finally {
+            release.countDown();
+        }
+
+        JUnitUtil.waitFor(() -> sentAt.size() == 5, "all commands sent");
+        assertEquals(turnouts, sentBy, "commands sent in the order requested");
+        // each time is taken just after its send, so allow a little for that;
+        // without the fix the commands held back are all sent together, 0 ms apart
+        long marginMs = 10;
+        for (int i = 1; i < 5; i++) {
+            long gapMs = (sentAt.get(i) - sentAt.get(i - 1)) / 1_000_000L;
+            assertTrue(gapMs >= interval - marginMs,
+                "command " + i + " sent " + gapMs + " ms after the one before, interval " + interval + " ms");
+        }
+    }
+
+    @Test
+    public void testCommandAtIntervalSentAtOnceWithNoInterval() {
+        InstanceManager.getDefault(InternalSystemConnectionMemo.class).setOutputInterval(0);
+        InstanceManager.getDefault(InternalSystemConnectionMemo.class).setOutputIntervalKept(true);
+        Turnout t = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT30");
+
+        // with no interval and nothing waiting, sent at once on the caller's thread
+        t.setCommandedStateAtInterval(Turnout.THROWN);
+        assertEquals(Turnout.THROWN, t.getCommandedState());
     }
 
     @BeforeEach

@@ -119,6 +119,18 @@ abstract public class SystemConnectionMemoTestBase<M extends DefaultSystemConnec
         Assert.assertEquals("Output Interval after set", 50, scm.getOutputInterval());
     }
 
+    @Test
+    public void testGetAndSetOutputIntervalKept() {
+        Assert.assertFalse("Output Interval not kept by default", scm.isOutputIntervalKept());
+        java.util.List<Object> changes = new java.util.ArrayList<>();
+        scm.addPropertyChangeListener(SystemConnectionMemo.INTERVAL_KEPT, e -> changes.add(e.getNewValue()));
+        scm.setOutputIntervalKept(true);
+        Assert.assertTrue("Output Interval kept after set", scm.isOutputIntervalKept());
+        scm.setOutputIntervalKept(false);
+        Assert.assertFalse("Output Interval not kept after clear", scm.isOutputIntervalKept());
+        Assert.assertEquals("changes reported", java.util.List.of(true, false), changes);
+    }
+
     abstract public void setUp();
 
     abstract public void tearDown();

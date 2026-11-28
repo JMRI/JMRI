@@ -173,6 +173,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
 
         // set/change delay interval between (actually before) output (Turnout) commands
         outputIntervalSpinner.addChangeListener(e -> adapter.getSystemConnectionMemo().setOutputInterval((Integer) outputIntervalSpinner.getValue()));
+        outputIntervalKept.addActionListener(e -> adapter.getSystemConnectionMemo().setOutputIntervalKept(outputIntervalKept.isSelected()));
 
         init = true;
     }
@@ -224,6 +225,11 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
     protected JSpinner outputIntervalSpinner = new JSpinner(intervalSpinner);
     protected JLabel outputIntervalLabel;
     protected JButton outputIntervalReset = new JButton(Bundle.getMessage("ButtonReset"));
+    /**
+     * Whether the output interval is kept when commands are sent.
+     * @since 5.19.2
+     */
+    protected JCheckBox outputIntervalKept = new JCheckBox(Bundle.getMessage("OutputIntervalKeptBox"));
 
     protected NetworkPortAdapter adapter = null;
 
@@ -331,6 +337,8 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         outputIntervalSpinner.setMaximumSize(outputIntervalSpinner.getPreferredSize()); // set spinner JTextField width
         outputIntervalSpinner.setValue(adapter.getSystemConnectionMemo().getOutputInterval());
         outputIntervalSpinner.setEnabled(true);
+        outputIntervalKept.setToolTipText(Bundle.getMessage("OutputIntervalKeptTooltip"));
+        outputIntervalKept.setSelected(adapter.getSystemConnectionMemo().isOutputIntervalKept());
         outputIntervalReset.addActionListener((ActionEvent event) -> {
             outputIntervalSpinner.setValue(adapter.getSystemConnectionMemo().getDefaultOutputInterval());
             adapter.getSystemConnectionMemo().setOutputInterval(adapter.getSystemConnectionMemo().getDefaultOutputInterval());
@@ -442,6 +450,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             gbLayout.setConstraints(intervalPanel, cR);
             intervalPanel.add(outputIntervalSpinner);
             intervalPanel.add(outputIntervalReset);
+            intervalPanel.add(outputIntervalKept);
             _details.add(intervalPanel);
             i++;
         }

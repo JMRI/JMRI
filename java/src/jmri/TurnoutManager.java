@@ -261,6 +261,18 @@ public interface TurnoutManager extends ProvidingManager<Turnout>, NameIncrement
     int getOutputInterval();
 
     /**
+     * Get whether the Output Interval is kept when each command is sent, so
+     * that commands held up while JMRI is busy are still sent spaced apart.
+     * Configured in AdapterConfig, stored in memo.
+     *
+     * @return true if the interval is kept when commands are sent; false by default
+     * @since 5.19.2
+     */
+    default boolean isOutputIntervalKept() {
+        return false;
+    }
+
+    /**
      * Set the Interval (in ms) to wait between output commands.
      *
      * @param newInterval the new Output Interval in Milliseconds
