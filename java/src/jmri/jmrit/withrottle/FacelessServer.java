@@ -3,11 +3,12 @@ package jmri.jmrit.withrottle;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.ArrayList;
+
 import jmri.InstanceManager;
-import jmri.UserPreferencesManager;
 import jmri.util.zeroconf.ZeroConfService;
 import jmri.util.zeroconf.ZeroConfServiceEvent;
 import jmri.util.zeroconf.ZeroConfServiceListener;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,9 +25,6 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
 
     private static final Logger log = LoggerFactory.getLogger(FacelessServer.class);
 
-    UserPreferencesManager userPreferences = InstanceManager.getNullableDefault(UserPreferencesManager.class);
-
-// Server iVars
     int port;
     ZeroConfService service;
     boolean isListen = true;

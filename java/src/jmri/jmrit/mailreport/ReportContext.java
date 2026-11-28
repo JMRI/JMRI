@@ -150,6 +150,8 @@ public class ReportContext {
         addString("FileSystemView#getHomeDirectory(): "+javax.swing.filechooser.FileSystemView.getFileSystemView().getHomeDirectory().getPath() );
         addString("Default JFileChooser(): "+(new javax.swing.JFileChooser()).getCurrentDirectory().getPath() );
 
+        addString("AWT toolkit: "+ java.awt.Toolkit.getDefaultToolkit().toString() );
+
         addScreenSize();
 
         if (reportNetworkInfo) {

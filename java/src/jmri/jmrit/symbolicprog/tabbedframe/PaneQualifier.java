@@ -14,14 +14,12 @@ import org.slf4j.LoggerFactory;
  */
 public class PaneQualifier extends ArithmeticQualifier {
 
-    PaneProgPane pane;
     JTabbedPane tabs;
     String name;
 
     public PaneQualifier(PaneProgPane qualifiedPane, VariableValue watchedVal, int value, String relation, JTabbedPane tabPane, String name) {
         super(watchedVal, value, relation);
 
-        this.pane = qualifiedPane;
         this.tabs = tabPane;
         this.name = name;
 

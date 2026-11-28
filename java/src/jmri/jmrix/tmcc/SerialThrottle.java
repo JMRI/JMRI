@@ -921,7 +921,7 @@ public class SerialThrottle extends AbstractThrottle {
      */
 
     @Override
-    public void setSpeedSetting(float speed) {
+    protected void sendSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
         float oldSpeed;
         synchronized(this) {
             oldSpeed = this.speedSetting;

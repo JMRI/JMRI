@@ -106,14 +106,14 @@ public class CbusDummyCSTest {
         t.message(m);
 
         JUnitUtil.waitFor(()->{ return(tc.inbound.size()>0); }, "reply didn't arrive");
-        Assert.assertEquals("rton acknowledged", "[5f8] E1 01 C4 D2 80 00 00",
+        Assert.assertEquals("rton acknowledged", "[5f8] E1 01 C4 D2 80 00 00 00",
             tc.inbound.elementAt(tc.inbound.size() - 1).toString()); // assign session 1
         Assert.assertTrue("rloc 1 session",t.getNumberSessions()==1);
         
         m = new CanMessage( new int[]{CbusConstants.CBUS_QLOC, 1 },0x12 ); // query session 1
         t.message(m);
         JUnitUtil.waitFor(()->{ return(tc.inbound.size()>1); }, "reply didn't arrive");
-        Assert.assertEquals("qloc acknowledged", "[5f8] E1 01 C4 D2 80 00 00",
+        Assert.assertEquals("qloc acknowledged", "[5f8] E1 01 C4 D2 80 00 00 00",
             tc.inbound.elementAt(tc.inbound.size() - 1).toString());        
         
         m = new CanMessage( new int[]{CbusConstants.CBUS_DKEEP, 1  },0x12 ); // keep alive session 1
@@ -168,6 +168,95 @@ public class CbusDummyCSTest {
         
     }
     
+    /** Records what a command station tells its session listeners. */
+    private static final class Heard implements CbusDummyCS.SessionListener {
+        final java.util.List<String> events = new java.util.concurrent.CopyOnWriteArrayList<>();
+
+        @Override
+        public void sessionChanged(CbusDummyCSSession s) {
+            events.add("changed " + s.getSessionNumber() + " " + s.getLocoAddress() + " " + s.getSpeedDirection()
+                    + " " + s.getSpeedStepMode().numSteps);
+        }
+
+        @Override
+        public void sessionEnded(CbusDummyCSSession s) {
+            events.add("ended " + s.getSessionNumber());
+        }
+    }
+
+    @Test
+    public void testSessionListenerToldOfStartSpeedModeAndEnd() {
+        CbusDummyCS t = new CbusDummyCS(memo);
+        Heard heard = new Heard();
+        t.addSessionListener(heard);
+
+        t.message(new CanMessage(new int[]{CbusConstants.CBUS_RLOC, 0xC4, 0xD2}, 0x12)); // 1234 long
+        t.message(new CanMessage(new int[]{CbusConstants.CBUS_DSPD, 1, 0x80 | 50}, 0x12));
+        t.message(new CanMessage(new int[]{CbusConstants.CBUS_STMOD, 1, CbusConstants.CBUS_SS_28}, 0x12));
+        t.message(new CanMessage(new int[]{CbusConstants.CBUS_STMOD, 1, CbusConstants.CBUS_SS_14}, 0x12));
+        t.message(new CanMessage(new int[]{CbusConstants.CBUS_STMOD, 1, CbusConstants.CBUS_SS_28_INTERLEAVE}, 0x12));
+        t.message(new CanMessage(new int[]{CbusConstants.CBUS_STMOD, 1, CbusConstants.CBUS_SS_128}, 0x12));
+        t.message(new CanMessage(new int[]{CbusConstants.CBUS_KLOC, 1}, 0x12));
+
+        Assertions.assertEquals(java.util.List.of(
+                "changed 1 1234(L) 128 126",
+                "changed 1 1234(L) 178 126",
+                "changed 1 1234(L) 178 28",
+                "changed 1 1234(L) 178 14",
+                "changed 1 1234(L) 178 28",
+                "changed 1 1234(L) 178 126",
+                "ended 1"), heard.events);
+
+        t.removeSessionListener(heard);
+        t.message(new CanMessage(new int[]{CbusConstants.CBUS_RLOC, 0x00, 0x03}, 0x12));
+        Assertions.assertEquals(7, heard.events.size(), "not told once removed");
+        t.dispose();
+    }
+
+    @Test
+    public void testStmodSendsNoReplyAndUnknownSessionIsAnError() {
+        CbusDummyCS t = new CbusDummyCS(memo);
+        t.message(new CanMessage(new int[]{CbusConstants.CBUS_RLOC, 0x00, 0x03}, 0x12));
+        JUnitUtil.waitFor(() -> tc.inbound.size() == 1, "PLOC");
+        t.message(new CanMessage(new int[]{CbusConstants.CBUS_STMOD, 1, CbusConstants.CBUS_SS_28}, 0x12));
+        t.message(new CanMessage(new int[]{CbusConstants.CBUS_STMOD, 2, CbusConstants.CBUS_SS_28}, 0x12));
+        JUnitUtil.waitFor(() -> tc.inbound.size() == 2, "error for session 2");
+        Assertions.assertEquals("[5f8] 63 02 00 03", tc.inbound.elementAt(1).toString(),
+                "only the unknown session is answered, with an error");
+        Assertions.assertEquals(jmri.SpeedStepMode.NMRA_DCC_28, t.getSessions().get(0).getSpeedStepMode());
+        t.dispose();
+    }
+
+    @Test
+    public void testEmergencyStopIsTheModesEmergencyStopValue() {
+        CbusDummyCS t = new CbusDummyCS(memo);
+        t.message(new CanMessage(new int[]{CbusConstants.CBUS_RLOC, 0x00, 0x03}, 0x12)); // session 1, 128 steps
+        t.message(new CanMessage(new int[]{CbusConstants.CBUS_RLOC, 0x00, 0x04}, 0x12)); // session 2
+        t.message(new CanMessage(new int[]{CbusConstants.CBUS_STMOD, 2, CbusConstants.CBUS_SS_28}, 0x12));
+        t.message(new CanMessage(new int[]{CbusConstants.CBUS_DSPD, 1, 0x80 | 60}, 0x12));
+        t.message(new CanMessage(new int[]{CbusConstants.CBUS_DSPD, 2, 0x80 | 20}, 0x12));
+        t.message(new CanMessage(new int[]{CbusConstants.CBUS_RESTP}, 0x12));
+        Assertions.assertEquals(1, t.getSessions().get(0).getSpeedDirection(), "128 steps: 1");
+        Assertions.assertEquals(2, t.getSessions().get(1).getSpeedDirection(), "28 steps: 2");
+        t.dispose();
+    }
+
+    @Test
+    public void testResetEndsEverySession() {
+        CbusDummyCS t = new CbusDummyCS(memo);
+        Heard heard = new Heard();
+        t.addSessionListener(heard);
+        for (int a = 3; a < 6; a++) {
+            t.message(new CanMessage(new int[]{CbusConstants.CBUS_RLOC, 0x00, a}, 0x12));
+        }
+        Assertions.assertEquals(3, t.getSessions().size());
+        t.resetCS();
+        Assertions.assertEquals(0, t.getNumberSessions());
+        Assertions.assertEquals(java.util.List.of("ended 1", "ended 2", "ended 3"),
+                heard.events.subList(3, heard.events.size()), "every session ended, in order");
+        t.dispose();
+    }
+
     private TrafficControllerScaffold tc;
     private CanSystemConnectionMemo memo;
 

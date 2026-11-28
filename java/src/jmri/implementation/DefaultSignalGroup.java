@@ -525,7 +525,8 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         public int getOffAppearance() {
             return offAppearance;
         }
-        //Used to determine if we are using an AND or OR when testing the Sensors and Signals
+        // AND or OR when combining the turnouts and sensors: true is OR, as the
+        // Signal Group editor has always stored it (see SignalGroup#setSensorTurnoutOper)
         private boolean turnoutSensorOper = true;
 
         public boolean getSensorTurnoutOper() {
@@ -533,35 +534,51 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
 
         /**
-         * Set whether the sensors and turnouts should be treated as separate
-         * calculations (OR) or as one (AND), when determining if the Signal
-         * Head in this item should be On or Off.
+         * Set whether this item's turnouts and sensors must all match (AND),
+         * or either its turnouts or its sensors must match (OR), for its
+         * Signal Head to be On.
          *
-         * @param boo Provide true for AND, false for OR
+         * @param boo Provide true for OR, false for AND
          */
         public void setSensorTurnoutOper(boolean boo) {
             turnoutSensorOper = boo;
         }
 
-        // Don't yet have the AND or OR set.
+        /**
+         * Work out whether this item's head should be On: its turnouts all
+         * set as listed, and its sensors all as listed. With both lists, they
+         * are combined as the AND/OR setting says; a sensor match no longer
+         * overrides a turnout that is set the other way.
+         *
+         * @return true if the head is set to its On appearance
+         */
         public boolean checkActive() {
-            boolean state = false;
-            for (int x = 0; x < _signalTurnoutList.size(); x++) {
-                log.debug("Real state {} {} state we testing for {}", _signalTurnoutList.get(x).getName(), _signalTurnoutList.get(x).getTurnout().getKnownState(), _signalTurnoutList.get(x).getState());
-                if (_signalTurnoutList.get(x).getTurnout().getKnownState() == _signalTurnoutList.get(x).getState()) {
-                    state = true;
-                } else {
-                    state = false;
+            boolean turnoutsMatch = true;
+            for (SignalTurnout t : _signalTurnoutList) {
+                log.debug("Real state {} {} state we testing for {}", t.getName(), t.getTurnout().getKnownState(), t.getState());
+                if (t.getTurnout().getKnownState() != t.getState()) {
+                    turnoutsMatch = false;
                     break;
                 }
             }
-            for (int x = 0; x < _signalSensorList.size(); x++) {
-                if (_signalSensorList.get(x).getSensor().getKnownState() == _signalSensorList.get(x).getState()) {
-                    state = true;
-                } else {
-                    state = false;
+            boolean sensorsMatch = true;
+            for (SignalSensor s : _signalSensorList) {
+                if (s.getSensor().getKnownState() != s.getState()) {
+                    sensorsMatch = false;
                     break;
                 }
+            }
+            boolean state;
+            if (_signalTurnoutList.isEmpty() && _signalSensorList.isEmpty()) {
+                state = false;
+            } else if (_signalSensorList.isEmpty()) {
+                state = turnoutsMatch;
+            } else if (_signalTurnoutList.isEmpty()) {
+                state = sensorsMatch;
+            } else if (turnoutSensorOper) { // OR
+                state = turnoutsMatch || sensorsMatch;
+            } else { // AND
+                state = turnoutsMatch && sensorsMatch;
             }
             if (state) {
                 getSignalHead().setAppearance(onAppearance);

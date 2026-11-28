@@ -60,9 +60,18 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
     }
 
     final void addListeners() {
-        InstanceManager.getDefault(SensorManager.class).addVetoableChangeListener(this);
-        InstanceManager.getDefault(BlockManager.class).addVetoableChangeListener(this);
+        sensorManager = InstanceManager.getDefault(SensorManager.class);
+        sensorManager.addVetoableChangeListener(this);
+        blockManager = InstanceManager.getDefault(BlockManager.class);
+        blockManager.addVetoableChangeListener(this);
     }
+
+    /**
+     * The SensorManager and BlockManager this manager listens to for deletions, so that {@link #dispose()}
+     * stops listening to those, not to whatever the InstanceManager holds by then.
+     */
+    private SensorManager sensorManager;
+    private BlockManager blockManager;
 
     @Override
     public int getXMLOrder() {
@@ -302,14 +311,18 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
     }
 
     /**
-     * Check if a block based section has a first block that matches.
+     * Check if a block based section starts or ends with this block. A line
+     * with a dead end at both ends is generated once, from whichever end is
+     * found first.
      * @param layoutBlock
      * @return true or false
      */
     private boolean blockSectionExists(LayoutBlock layoutBlock){
         for (Section section : getNamedBeanSet()){
             if (section.getNumBlocks() > 0 && section.getSectionType() != Section.SIGNALMASTLOGIC) {
-                if (layoutBlock.getBlock().equals(section.getBlockList().get(0))) {
+                List<Block> blocks = section.getBlockList();
+                if (layoutBlock.getBlock().equals(blocks.get(0))
+                        || layoutBlock.getBlock().equals(blocks.get(blocks.size() - 1))) {
                     return true;
                 }
             }
@@ -439,7 +452,9 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
         blockList.add(block);
         if (blockList.size() < 100) {
             var nextBlock = getNextBlock(block);
-            if (nextBlock != null) {
+            // a Block already in the list means the line turned back on
+            // itself (a dead end at both ends), so this Block is the last
+            if (nextBlock != null && !blockList.contains(nextBlock)) {
                 createSectionBlockList(nextBlock);
             }
         }
@@ -547,8 +562,8 @@ public class DefaultSectionManager extends AbstractManager<Section> implements j
 
     @Override
     public void dispose(){
-        InstanceManager.getDefault(SensorManager.class).removeVetoableChangeListener(this);
-        InstanceManager.getDefault(BlockManager.class).removeVetoableChangeListener(this);
+        sensorManager.removeVetoableChangeListener(this);
+        blockManager.removeVetoableChangeListener(this);
         super.dispose();
     }
 

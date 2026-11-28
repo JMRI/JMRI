@@ -45,6 +45,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.JTableHeader;
 
 import jmri.InstanceManager;
+import jmri.JmriUncheckedException;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
 import jmri.server.json.JSON;
@@ -242,7 +243,7 @@ public class JmriJFrameServlet extends HttpServlet {
                     try {
                         doGetOnSwing(request, response);
                     } catch ( ServletException | IOException ex ) {
-                        throw new RuntimeException(ex);
+                        throw new JmriUncheckedException(ex);
                     }
                 }
             );
@@ -263,15 +264,15 @@ public class JmriJFrameServlet extends HttpServlet {
                         throw (IOException) ex2;
                     } else {
                         // wrap and throw
-                        throw new RuntimeException(ex);
+                        throw new JmriUncheckedException(ex);
                     }
                 } else {
                     // wrap and throw
-                    throw new RuntimeException(ex);
+                    throw new JmriUncheckedException(ex);
                 }
             } else {
                 // just wrap and rethrow the InvocationTargetException, but this should never happen
-                throw new RuntimeException(ex);
+                throw new JmriUncheckedException(ex);
             }
         }
     }

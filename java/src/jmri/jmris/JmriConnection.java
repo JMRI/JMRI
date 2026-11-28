@@ -4,7 +4,11 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
 
-import org.eclipse.jetty.websocket.api.RemoteEndpoint;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+
+import jmri.util.ClientMessageSender;
+
 import org.eclipse.jetty.websocket.api.Session;
 import org.eclipse.jetty.websocket.api.WebSocketException;
 import org.slf4j.Logger;
@@ -15,6 +19,11 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Used so that that server objects need only to use a single object/method to
  * send data to any supported object type.
+ * <p>
+ * Messages are sent through a {@link ClientMessageSender}, so a message sent
+ * from the layout thread (Swing thread) does not wait for a client that is not
+ * reading. If a client falls too far behind, or a message can't be sent, the
+ * connection is closed.
  *
  * @author Randall Wood Copyright (C) 2012, 2014
  */
@@ -22,6 +31,7 @@ public class JmriConnection {
 
     private final Session session;
     private final DataOutputStream dataOutputStream;
+    private final ClientMessageSender sender;
     private Locale locale = Locale.getDefault();
     private static final Logger log = LoggerFactory.getLogger(JmriConnection.class);
     private static final String EX_SENDING_MSG = "Exception sending message";
@@ -34,6 +44,7 @@ public class JmriConnection {
     public JmriConnection(Session connection) {
         this.session = connection;
         this.dataOutputStream = null;
+        this.sender = new ClientMessageSender(clientName(), this::write, this::closeAfterFailure);
     }
 
     /**
@@ -44,6 +55,14 @@ public class JmriConnection {
     public JmriConnection(DataOutputStream output) {
         this.dataOutputStream = output;
         this.session = null;
+        this.sender = new ClientMessageSender(clientName(), this::write, this::closeAfterFailure);
+    }
+
+    private String clientName() {
+        if (session != null && session.getRemoteAddress() != null) {
+            return "Client " + session.getRemoteAddress();
+        }
+        return "Client";
     }
 
     /**
@@ -69,21 +88,40 @@ public class JmriConnection {
      * @param message message to send
      * @throws IOException if problem sending message
      */
-    public void sendMessage(String message) throws IOException {
+    public void sendMessage(@Nonnull String message) throws IOException {
+        sendMessage(message, null);
+    }
+
+    /**
+     * Send a String to the instantiated connection, replacing a message with
+     * the same key that is still waiting to be sent.
+     * <p>
+     * Use a key for a message that gives the whole state of one thing, such
+     * as a bean, so that a client that is behind gets only the latest.
+     *
+     * @param message message to send
+     * @param key     the thing the message gives the whole state of, or null
+     * @throws IOException if problem sending message
+     */
+    public void sendMessage(@Nonnull String message, @CheckForNull Object key) throws IOException {
         log.trace("Sending \"{}\"", message);
+        sender.send(message, key);
+    }
+
+    /**
+     * Write a message to the client, waiting if it is behind.
+     *
+     * @param message message to send
+     * @throws IOException if problem sending message
+     */
+    private void write(@Nonnull String message) throws IOException {
         if (this.dataOutputStream != null) {
             this.dataOutputStream.writeBytes(message);
         } else if (this.session.isOpen()) {
             try {
-                RemoteEndpoint remote = this.session.getRemote();
-                // The JSON sockets keep an internal state variable and throw an
-                // IllegalStateException if more than one thread attempts to do
-                // sendString at the same time. This function gets normally
-                // called from a mixture of the Layout thread and the
-                // WebServer-NN threads.
-                synchronized (remote) {
-                    remote.sendString(message);
-                }
+                // only one thread at a time may call sendString; the
+                // sender writes one message at a time
+                this.session.getRemote().sendString(message);
             } catch (WebSocketException ex) {
                 // A WebSocketException is most likely a broken socket,
                 // so rethrow it as an IOException
@@ -103,6 +141,18 @@ public class JmriConnection {
             // immediately thrown an IOException to trigger closing
             // actions up the call chain
             throw new IOException("Will not send message on non-open session");
+        }
+    }
+
+    /**
+     * Close the connection after a message can't be sent, so the server
+     * holding it open ends it.
+     */
+    private void closeAfterFailure() {
+        try {
+            close();
+        } catch (IOException ex) {
+            log.debug("Closing after a failed send: {}", ex.getMessage());
         }
     }
 

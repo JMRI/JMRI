@@ -60,7 +60,10 @@
       <strong>Include</strong> check boxes for both Turnouts and Sensors, and specify their state
       in the last column of each list.<br>
       In between both lists there is a final logic <strong>OR/AND</strong> option to choose
-      from.</p>
+      from. With <strong>AND</strong>, the Head is On only when all its Turnouts and all its
+      Sensors are in the states listed. With <strong>OR</strong>, it is On when all its Turnouts,
+      or all its Sensors, are in the states listed. A Head with only Turnouts, or only Sensors, is
+      On when they are all in the states listed, whichever is chosen.</p>
 
       <p>You will need to do some deep thinking to prepare for this last step, as this is the place
       where you control how your Indicator will behave. The signal hardware on your layout may rule

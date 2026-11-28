@@ -1,9 +1,12 @@
 package jmri.jmrit.entryexit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +21,7 @@ import jmri.util.junit.annotations.DisabledIfHeadless;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 /**
  *
@@ -69,11 +73,39 @@ public class PointDetailsTest {
         assertEquals(EntryExitPairs.NXBUTTONINACTIVE, nxState, "Button is active");
     }
 
+    @Test
+    public void testButtonTimeOutSetsSensorOnLayoutThread() {
+        PointDetails pd = tools.getPoint(sm.getSensor("NX-AW-Main"), panels.get("Alpha"), eep);  // NOI18N
+        assertNotNull(pd, "PointDetails fetch failed");
+        Sensor sensor = pd.getSensor();
+        // set the button, and its sensor, active as NX does, not as a click on the button
+        pd.setNXButtonState(EntryExitPairs.NXBUTTONACTIVE);
+        assertEquals(Sensor.ACTIVE, sensor.getKnownState(), "button sensor active");
+        List<Boolean> setOnLayoutThread = java.util.Collections.synchronizedList(new ArrayList<>());
+        java.beans.PropertyChangeListener l = e -> setOnLayoutThread.add(jmri.util.ThreadingUtil.isLayoutThread());
+        sensor.addPropertyChangeListener("KnownState", l);
+
+        // the button is pressed, starting its time out, which ends when cancelled
+        pd.setNXState(EntryExitPairs.NXBUTTONSELECTED);
+        pd.cancelNXButtonTimeOut();
+
+        // A sensor stores its new state before it tells its listeners, so wait for the listener
+        // to hear of the change, then let the layout thread finish handling it, before looking.
+        JUnitUtil.waitFor(() -> sensor.getKnownState() == Sensor.INACTIVE && !setOnLayoutThread.isEmpty(),
+                "button set inactive");
+        jmri.util.ThreadingUtil.runOnLayout(() -> { });
+        sensor.removePropertyChangeListener("KnownState", l);
+        // other NX activity on the test panels may also change the sensor; all of it on the layout thread
+        assertTrue(setOnLayoutThread.contains(true), "button sensor set");
+        assertFalse(setOnLayoutThread.contains(false), "button sensor set on the layout thread");
+        assertEquals(EntryExitPairs.NXBUTTONINACTIVE, pd.getNXState(), "button inactive");
+    }
+
     @BeforeAll
-    public static void setUp() throws JmriException {
+    public static void setUp(@TempDir File folder) throws JmriException {
         JUnitUtil.setUp();
 
-        JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager(folder); // own profile, so no blockvalues.xml left by an earlier test is read
 
         tools = new EntryExitTestTools();
         panels = EntryExitTestTools.getPanels();

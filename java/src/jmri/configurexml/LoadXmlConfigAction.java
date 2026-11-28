@@ -109,18 +109,6 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
     }
 
     /**
-     * Get the File from a given JFileChooser.
-     * @return the selected File.
-     * @deprecated use {@link #getFile(JFileChooser fileChooser, Component component)}
-     * @param fileChooser the JFileChooser for the file.
-     */
-    @CheckForNull
-    @Deprecated (since="5.7.8",forRemoval=true)
-    public static File getFile(@Nonnull JFileChooser fileChooser) {
-        return getFile(fileChooser, null);
-    }
-
-    /**
      * Get the File from an Open File JFileChooser.
      * If a Component is provided, this helps the JFileChooser to not get stuck
      * behind an Always On Top Window.
@@ -133,17 +121,6 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
     public static File getFile(@Nonnull JFileChooser fileChooser, @CheckForNull Component component) {
         fileChooser.setDialogType(javax.swing.JFileChooser.OPEN_DIALOG);
         return getFileCustom(fileChooser, component);
-    }
-
-    /**
-     * @return the selected File.
-     * @deprecated use {@link #getFile(JFileChooser fileChooser, Component component)}
-     * @param fileChooser the FileChooser to get from.
-     */
-    @CheckForNull
-    @Deprecated (since="5.7.8",forRemoval=true)
-    public static File getFileCustom(@Nonnull JFileChooser fileChooser) {
-        return getFileCustom(fileChooser, null);
     }
 
     /**

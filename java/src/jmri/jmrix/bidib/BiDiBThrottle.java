@@ -193,7 +193,7 @@ public class BiDiBThrottle extends AbstractThrottle {
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     @Override
-    public void setSpeedSetting(float speed) {
+    protected void sendSpeedSetting(float speed, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
         synchronized(this) {
             oldSpeed = this.speedSetting;
             this.speedSetting = speed; //sendDriveCommand needs it - TODO: should be redesigned
@@ -203,7 +203,7 @@ public class BiDiBThrottle extends AbstractThrottle {
                     log.debug("setSpeedSetting= {}",speed);
                 }
                 this.speedSetting = oldSpeed; //super.setSpeedSetting needs the old speed here and then sets the new one. As sayed, this should be redesigned
-                super.setSpeedSetting(speed);
+                speedSettingChanged(speed);
             }
             else {
                 this.speedSetting = oldSpeed;
@@ -423,7 +423,7 @@ public class BiDiBThrottle extends AbstractThrottle {
             oldSpeed = this.speedSetting;
             float newSpeed = floatSpeed(speed, 127);
             log.trace("  set speed: old: {}, new: {} {}", oldSpeed, newSpeed, speed);
-            super.setSpeedSetting(newSpeed);
+            speedSettingChanged(newSpeed);
         }
     }
     

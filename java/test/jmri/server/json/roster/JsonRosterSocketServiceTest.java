@@ -21,11 +21,14 @@ import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
 import jmri.server.json.JsonRequest;
+import jmri.server.json.schema.JsonSchemaServiceCache;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -200,6 +203,61 @@ public class JsonRosterSocketServiceTest {
                 JsonRoster.ROSTER_GROUP, JsonRoster.ROSTER_GROUP, JsonRoster.ROSTER_GROUP},
             values.toArray(new String[5]),
             "Objects are 1 rosterEntry and 4 rosterGroup");
+    }
+
+    private JsonNode findRosterUpdate(String key) {
+        for (JsonNode message : this.connection.getMessages()) {
+            if (message.path(JSON.DATA).has(key)) {
+                return message;
+            }
+        }
+        return null;
+    }
+
+    // roster add and remove messages conform to the roster server schema
+    @Test
+    public void testRosterUpdatesValidate() throws IOException {
+        JsonRequest request = new JsonRequest(locale, JSON.V5, JSON.GET, 0);
+        JsonSchemaServiceCache schemas = InstanceManager.getDefault(JsonSchemaServiceCache.class);
+        JsonRosterSocketService instance = new JsonRosterSocketService(this.connection);
+        instance.listen();
+        new org.netbeans.jemmy.QueueTool().waitEmpty();
+
+        // add an entry
+        this.connection.sendMessage(null, 0);
+        RosterEntry added = new RosterEntry("addedEntry");
+        Roster.getDefault().addEntry(added);
+        // the server warns that it only sees one entry when a whole roster is imported
+        JUnitAppender.assertWarnMessage("If you have just imported a complete Roster, please restart the program so the web server will see the new contents");
+        JUnitUtil.waitFor(() -> findRosterUpdate(JSON.ADD) != null, "add message not sent");
+        JsonNode addMessage = findRosterUpdate(JSON.ADD);
+        assertEquals(JsonRoster.ROSTER, addMessage.path(JSON.TYPE).asText());
+        assertDoesNotThrow(() -> schemas.validateMessage(addMessage, true, request));
+
+        // remove the same entry
+        this.connection.sendMessage(null, 0);
+        Roster.getDefault().removeEntry(added);
+        JUnitUtil.waitFor(() -> findRosterUpdate(JSON.REMOVE) != null, "remove message not sent");
+        JsonNode removeMessage = findRosterUpdate(JSON.REMOVE);
+        assertEquals(JsonRoster.ROSTER, removeMessage.path(JSON.TYPE).asText());
+        assertDoesNotThrow(() -> schemas.validateMessage(removeMessage, true, request));
+    }
+
+    @Test
+    public void testRosterUpdateSchemaRejectsInvalid() {
+        JsonRequest request = new JsonRequest(locale, JSON.V5, JSON.GET, 0);
+        JsonSchemaServiceCache schemas = InstanceManager.getDefault(JsonSchemaServiceCache.class);
+        var mapper = connection.getObjectMapper();
+        // an empty update, an unknown property, and an update that is not a rosterEntry message
+        for (var data : List.of(mapper.createObjectNode(),
+                mapper.createObjectNode().put("unknown", "property"),
+                mapper.createObjectNode().set(JSON.ADD, mapper.createObjectNode().put(JSON.TYPE, "rosterGroup")))) {
+            assertThrows(JsonException.class, () -> schemas.validateData(JsonRoster.ROSTER, data, true, request));
+            assertNotNull(JUnitAppender.checkForMessageStartingWith("Errors validating"));
+            while (JUnitAppender.checkForMessageStartingWith("JSON Validation Error") != null) {
+                // drain
+            }
+        }
     }
 
     /**

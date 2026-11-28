@@ -161,7 +161,7 @@ public class LnThrottleManager extends AbstractThrottleManager implements SlotLi
                 int maxAttempts = 20;
                 while (attempts <= maxAttempts) {
                     try {
-                        Thread.sleep(1000); // wait one second
+                        Thread.sleep(retryIntervalMs); // one second, unless a test sets it
                     } catch (InterruptedException ex) {
                         return; // stop waiting if slot is found or error occurs
                     }
@@ -201,6 +201,14 @@ public class LnThrottleManager extends AbstractThrottleManager implements SlotLi
     }
 
     volatile Thread retrySetupThread;
+
+    /**
+     * How long to wait for a reply to a slot request before asking again, in
+     * milliseconds. Package access so that tests that don't look for the
+     * request being repeated can wait longer, and are not upset by a repeat
+     * when the test machine is slow.
+     */
+    volatile int retryIntervalMs = 1000;
 
     // Address a pending slot request was actually made for. This manager
     // is a single shared SlotListener for whatever address it's currently

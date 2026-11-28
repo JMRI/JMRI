@@ -44,6 +44,17 @@ public class LayoutBlockThroughPathStateTest {
         JUnitUtil.waitFor(() -> lbm.routingStablised(), "routing stabilised");
     }
 
+    /**
+     * Wait for the routing work a change starts to be done, with the check
+     * of every routing table it queues on the layout thread (Swing thread),
+     * so the tables are read as they end up, not while they change.
+     */
+    private void settled() {
+        JUnitUtil.waitFor(() -> lbm.routingStablised(), "routing stabilised");
+        ThreadingUtil.runOnLayout(() -> {
+        });
+    }
+
     private void setAllTurnouts(int state) {
         for (Turnout t : InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet()) {
             ThreadingUtil.runOnLayout(() -> t.setCommandedState(state));
@@ -144,6 +155,7 @@ public class LayoutBlockThroughPathStateTest {
     public void testRouteValidityAndListeners() throws Exception {
         loadPanel(true);
         setAllTurnouts(Turnout.CLOSED);
+        settled();
         checkRouteValidWhileAnyPathActive();
         assertEquals(routesInTables(), routeListenersOnBlocks(), "one block listener per route after load");
 
@@ -156,6 +168,7 @@ public class LayoutBlockThroughPathStateTest {
 
         // the neighbour drops the adjacency and tells the target block to do the same
         ThreadingUtil.runOnLayout(() -> neighbour.notifiedNeighbourNoLongerMutual(target));
+        settled();
 
         assertTrue(target.getNumberOfThroughPaths() < pathsBefore, "through paths removed");
         checkRouteValidWhileAnyPathActive();

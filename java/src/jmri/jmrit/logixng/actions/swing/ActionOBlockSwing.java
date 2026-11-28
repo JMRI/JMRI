@@ -9,6 +9,7 @@ import javax.swing.*;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.InstanceManager;
+import jmri.JmriUncheckedException;
 import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.NamedBeanHandle;
@@ -296,7 +297,7 @@ public class ActionOBlockSwing extends AbstractDigitalActionSwing {
                 throw new IllegalArgumentException("_tabbedPaneBlock has unknown selection");
             }
         } catch (ParserException e) {
-            throw new RuntimeException("ParserException: "+e.getMessage(), e);
+            throw new JmriUncheckedException("ParserException: "+e.getMessage(), e);
         }
     }
 

@@ -345,7 +345,7 @@ public class ActionPositionable extends AbstractDigitalAction implements Vetoabl
                     positionable.setHidden(false);
                     break;
                 default:
-                    throw new RuntimeException("operation has invalid value: "+operation.name());
+                    throw new JmriUncheckedException("operation has invalid value: "+operation.name());
             }
             if (_editor instanceof LayoutEditor) {
                 // Insure that the panel has been updated

@@ -94,14 +94,11 @@ public class AcelaNode extends AbstractNode {
     protected int sensorbitsPerCard = MAXSENSORBITS;    // See above
     protected int transmissionDelay = 0;                // Delay between bytes on Receive (units of 10 microsec.)
 
-    // operational instance variables  (should not be preserved between runs)
-    protected boolean needInit = false;          // 'true' if this module needs to be initialized
     //    used for sensors
     protected byte[] outputArray = new byte[MAXOUTPUTBITS]; // current values of the output bits for this node
     protected int[] outputSpecial = new int[MAXOUTPUTBITS]; // does the output circuit require special handling
     protected int[] outputSignalHeadType = new int[MAXOUTPUTBITS]; // type of SignalHead
     protected boolean hasActiveSensors = false; // 'true' if there are active Sensors for this node
-    protected int lastUsedSensor = -1;           // grows as sensors defined
     protected Sensor[] sensorArray = new Sensor[MAXSENSORBITS];
     protected boolean[] sensorNeedInit = new boolean[MAXSENSORBITS];    // used to indicate if sensor needs to be configured
     protected boolean[] sensorHasBeenInit = new boolean[MAXSENSORBITS]; // used to indicate if sensor has been configured
@@ -192,7 +189,6 @@ public class AcelaNode extends AbstractNode {
 
         // initialize other operational instance variables
         resetMustSend();
-        needInit = false;
         hasActiveSensors = false;
 
         // register this node
@@ -1028,7 +1024,6 @@ public class AcelaNode extends AbstractNode {
         m.setBinary(true);
         return m;
     }
-    boolean warned = false;
 
     /**
      * Use the contents of the poll reply to mark changes.

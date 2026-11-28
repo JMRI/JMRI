@@ -290,6 +290,21 @@ public class TestArchitectureTest {
         }
     }
 
+    /**
+     * The CBUS event frames the simulated detectors' tests check against are
+     * worked out from the CBUS specification, not with JMRI's CBUS encoding,
+     * so a fault in that encoding shows as a difference.
+     */
+    @ArchTest
+    public static final ArchRule cbusEventSpecIndependentOfCbusEncoding = noClasses()
+        .that().haveFullyQualifiedName("jmri.jmrix.can.cbus.simulator.CbusEventSpec")
+        .or().haveFullyQualifiedName("jmri.jmrix.can.cbus.simulator.CbusEventSpec$Event")
+        .should().dependOnClassesThat().haveFullyQualifiedName("jmri.jmrix.can.cbus.CbusAddress")
+        .orShould().dependOnClassesThat().haveFullyQualifiedName("jmri.jmrix.can.cbus.CbusSensor")
+        .orShould().dependOnClassesThat().haveFullyQualifiedName("jmri.jmrix.can.cbus.CbusMessage")
+        .orShould().dependOnClassesThat().haveFullyQualifiedName("jmri.jmrix.can.cbus.CbusOpCodes")
+        .orShould().dependOnClassesThat().haveFullyQualifiedName("jmri.jmrix.can.cbus.CbusConstants");
+
     private static boolean isJUnitTestClass(JavaClass c) {
         return c.getMethods().stream().anyMatch(m ->
             m.isAnnotatedWith( Test.class)

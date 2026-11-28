@@ -207,8 +207,13 @@ public class OBlockTableActionTest {
 
         PortalManager pm = InstanceManager.getDefault(PortalManager.class);
         OBlockManager obm = InstanceManager.getDefault(OBlockManager.class);
-        obm.createNewOBlock("OB1", "ob1");  // NOI18N
-        obm.createNewOBlock("OB2", "ob2");  // NOI18N
+        // The OBlock table window is open, and its tables re-sort when blocks change, so make the blocks on the
+        // GUI thread, as testAddSignal does: made on the test thread, a re-sort could run at the same time as
+        // one on the GUI thread (NullPointerException, "Comparator c is null").
+        ThreadingUtil.runOnGUI(() -> {
+            obm.createNewOBlock("OB1", "ob1");  // NOI18N
+            obm.createNewOBlock("OB2", "ob2");  // NOI18N
+        });
 
         new JTextFieldOperator(addFrame, 0).setText("portal1");  // NOI18N
         new JComboBoxOperator(addFrame, 0).setSelectedIndex(1);  // NOI18N
@@ -233,18 +238,24 @@ public class OBlockTableActionTest {
         JFrame f = JFrameOperator.waitJFrame(Bundle.getMessage("TitleOBlocksTabbedFrame"), true, true);
         assertNotNull(f);
 
-        OBlockManager obm = InstanceManager.getDefault(OBlockManager.class);
-        OBlock ob1 = obm.createNewOBlock("OB1", "ob1");  // NOI18N
-        OBlock ob2 = obm.createNewOBlock("OB2", "ob2");  // NOI18N
+        // The OBlock table window is open, and its tables re-sort when blocks and portals change, so make the
+        // changes on the GUI thread, as the window itself would: made on the test thread, a re-sort could run
+        // at the same time as one on the GUI thread (NullPointerException, "Comparator c is null").
+        Portal port1 = ThreadingUtil.runOnGUIwithReturn(() -> {
+            OBlockManager obm = InstanceManager.getDefault(OBlockManager.class);
+            OBlock ob1 = obm.createNewOBlock("OB1", "ob1");  // NOI18N
+            OBlock ob2 = obm.createNewOBlock("OB2", "ob2");  // NOI18N
 
-        PortalManager pm = InstanceManager.getDefault(PortalManager.class);
-        Portal p = pm.getPortal("IP1");
-        if (p != null) {    // make sure it is not already there
-            p.dispose();
-        }
-        Portal port1 = pm.createNewPortal("IP1");  // NOI18N
-        port1.setFromBlock(ob1, false);
-        port1.setToBlock(ob2, false);
+            PortalManager pm = InstanceManager.getDefault(PortalManager.class);
+            Portal p = pm.getPortal("IP1");
+            if (p != null) {    // make sure it is not already there
+                p.dispose();
+            }
+            Portal port = pm.createNewPortal("IP1");  // NOI18N
+            port.setFromBlock(ob1, false);
+            port.setToBlock(ob2, false);
+            return port;
+        });
 
         SignalMastManager l = InstanceManager.getDefault(SignalMastManager.class);
         VirtualSignalMast sm1 = (VirtualSignalMast) l.provideSignalMast("IF$vsm:basic:one-searchlight($1)");

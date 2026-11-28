@@ -1607,11 +1607,19 @@ abstract public class PaneProgFrame extends JmriJFrame
 
             JButton resetNMRA = new JButton(Bundle.getMessage("ButtonFnBtnNMRA"));
             resetNMRA.addActionListener(e -> _flPane.resetFnBtnNMRA());
-            resetNMRA.setToolTipText(Bundle.getMessage("BButtonFnBtnNMRATooltip"));
+            resetNMRA.setToolTipText(Bundle.getMessage("ButtonFnBtnNMRATooltip"));
 
-            JButton resetNEM = new JButton(Bundle.getMessage("ButtonFnBtnNEM"));
-            resetNEM.addActionListener(e -> _flPane.resetFnBtnNEM());
-            resetNEM.setToolTipText(Bundle.getMessage("ButtonFnBtnNEMTooltip"));
+            JButton resetNEMSteam = new JButton(Bundle.getMessage("ButtonFnBtnNEMSteam"));
+            resetNEMSteam.addActionListener(e -> _flPane.resetFnBtnNEMSteam());
+            resetNEMSteam.setToolTipText(Bundle.getMessage("ButtonFnBtnNEMSteamTooltip"));
+
+            JButton resetNEMDiesel = new JButton(Bundle.getMessage("ButtonFnBtnNEMDiesel"));
+            resetNEMDiesel.addActionListener(e -> _flPane.resetFnBtnNEMDiesel());
+            resetNEMDiesel.setToolTipText(Bundle.getMessage("ButtonFnBtnNEMDieselTooltip"));
+
+            JButton resetNEMElectric = new JButton(Bundle.getMessage("ButtonFnBtnNEMElectric"));
+            resetNEMElectric.addActionListener(e -> _flPane.resetFnBtnNEMElectric());
+            resetNEMElectric.setToolTipText(Bundle.getMessage("ButtonFnBtnNEMElectricTooltip"));
 
             JButton resetDecDef = new JButton(Bundle.getMessage("ButtonFnBtnDec"));
             resetDecDef.addActionListener(e -> resetFnButtonFromDecoderFile() );
@@ -1623,14 +1631,23 @@ abstract public class PaneProgFrame extends JmriJFrame
 
             JPanel buttons = new JPanel();
             buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS));
-            buttons.add(clear);
+            buttons.add(new JLabel(Bundle.getMessage("TxtResetTo")));
             buttons.add(resetNMRA);
-            buttons.add(resetNEM);
-            buttons.add(resetDecDef);
+            buttons.add(resetNEMSteam);
+            buttons.add(resetNEMDiesel);
+            buttons.add(resetNEMElectric);
+            buttons.add(resetDecDef);        
+            buttons.add(new JSeparator());
+            body.add(buttons);
+
+            buttons = new JPanel();
+            buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS));
+            buttons.add(clear);
             buttons.add(restoreRosterEntry);
             buttons.add(new JSeparator());
             buttons.add(store);
             body.add(buttons);
+
             outer.add(scrollPane);
         });
         return outer;
@@ -2312,13 +2329,22 @@ abstract public class PaneProgFrame extends JmriJFrame
         Roster.getDefault().writeRoster();
     }
 
+    private boolean disposed = false;
+
     /**
      * Local dispose, which also invokes parent. Note that we remove the
-     * components (removeAll) before taking those apart.
+     * components (removeAll) before taking those apart. Safe to call more
+     * than once: later calls only dispose the window itself.
      */
     @OverridingMethodsMustInvokeSuper
     @Override
     public void dispose() {
+        if (disposed) {
+            // already disposed: its panes and models have been released
+            super.dispose();
+            return;
+        }
+        disposed = true;
         log.debug("dispose local");
 
         // remove listeners (not much of a point, though)

@@ -5,20 +5,33 @@ on:
   push:
   pull_request:
 
+# One run per pull request: a new push to a PR cancels that PR's older run, so a superseded run
+# doesn't hold a runner. Push runs, including every master commit, are never cancelled.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   tsc:
     name: tsc
     runs-on: ubuntu-latest
     steps:
     # see https://github.com/marketplace/actions/typescript-compiler
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v7
     - name: install node v24
       uses: actions/setup-node@v6
       with:
         node-version: 24
+        # problem-matcher=false disable annotations viewing PRs
+        problem-matcher: false
     - name: yarn install
       run:
         yarn install
+    # ubuntu-latest is ubuntu-26.04 from November 2026, and its image no longer
+    # installs TypeScript; ubuntu-24.04 had the latest version installed globally
+    - name: install TypeScript
+      run:
+        npm install -g typescript
     - name: check changes
       run: |
         ant typescript

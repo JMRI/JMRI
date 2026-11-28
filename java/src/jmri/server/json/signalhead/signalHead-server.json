@@ -9,7 +9,10 @@
             "description": "System name of the signalHead"
         },
         "userName": {
-            "type": "string",
+            "type": [
+                "string",
+                "null"
+            ],
             "description": "User name of the signalHead"
         },
         "comment": {
@@ -21,44 +24,30 @@
         },
         "properties": {
             "type": "array",
-            "description": "NamedBean properties of the signalHead",
+            "description": "NamedBean properties of the signalHead; each item has a single key, the property name, with the value as a string or null",
             "items": {
                 "type": "object",
-                "properties": {
-                    "key": {
-                        "type": "string",
-                        "description": "Key by which property is accessed"
-                    },
-                    "value": {
-                        "type": [
-                            "string",
-                            "null"
-                        ],
-                        "description": "String value of property or null"
-                    }
-                },
-                "additionalProperties": false,
-                "required": [
-                    "name",
-                    "value"
-                ]
+                "minProperties": 1,
+                "maxProperties": 1,
+                "additionalProperties": {
+                    "type": [
+                        "string",
+                        "null"
+                    ]
+                }
             }
-        },
-        "aspect": {
-            "type": "string",
-            "description": "The current signalHead aspect"
         },
         "lit": {
             "type": "boolean",
-            "description": "\"true\" if lit; \"false\" otherwise"
+            "description": "true if lit, false otherwise"
         },
         "held": {
             "type": "boolean",
-            "description": "\"true\" if held; \"false\" otherwise"
+            "description": "true if held, false otherwise"
         },
         "state": {
             "type": "integer",
-            "description": "The current appearance or 100 if held == \"true\""
+            "description": "The current appearance, or 256 if held"
         },
         "appearance": {
             "type": "integer",

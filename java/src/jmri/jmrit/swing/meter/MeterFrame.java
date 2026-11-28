@@ -117,7 +117,7 @@ public class MeterFrame extends JmriJFrame {
         this.uuid = uuid;
 
         MeterManager mm = InstanceManager.getNullableDefault(MeterManager.class);
-        if (mm == null) throw new RuntimeException("No meter manager exists");
+        if (mm == null) throw new JmriUncheckedException("No meter manager exists");
 
         addAllMeters();
 
@@ -657,7 +657,8 @@ public class MeterFrame extends JmriJFrame {
     public void dispose() {
         if (meter != null) {
             meter.disable();
-            meter.removePropertyChangeListener(propertyChangeListener);
+            // added under the property name, so removed under it
+            meter.removePropertyChangeListener(NamedBean.PROPERTY_STATE, propertyChangeListener);
         }
         MeterFrameManager.getInstance().deregister(this);
         super.dispose();

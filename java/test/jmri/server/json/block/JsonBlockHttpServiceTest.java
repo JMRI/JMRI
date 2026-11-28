@@ -14,11 +14,16 @@ import jmri.Reporter;
 import jmri.ReporterManager;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterConfigManager;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.profile.ProfileManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpServiceTestBase;
 import jmri.server.json.JsonRequest;
 import jmri.server.json.reporter.JsonReporter;
+import jmri.server.json.roster.JsonRoster;
 import jmri.server.json.sensor.JsonSensor;
 import jmri.util.JUnitUtil;
 
@@ -60,6 +65,10 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
     public void testDoGet() throws JmriException, IOException, JsonException {
         BlockManager manager = InstanceManager.getDefault(BlockManager.class);
         Block block1 = manager.provideBlock("IB1");
+        // properties of each kind, to check the shape the schema describes
+        block1.setProperty("text", "value");
+        block1.setProperty("number", 42);
+        block1.setProperty("empty", null);
         Sensor sensor1 = InstanceManager.getDefault(SensorManager.class).provide("IS1");
         Reporter reporter1 = InstanceManager.getDefault(ReporterManager.class).provide("IR1");
         JsonNode result;
@@ -101,6 +110,51 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
                 new JsonRequest(locale, JSON.V5, JSON.GET, 0));
         }, "Expected exception not thrown.");
         assertEquals(404, ex.getCode());
+    }
+
+    @Test
+    public void testDoGetAllocatedValue() throws JsonException {
+        Block block1 = InstanceManager.getDefault(BlockManager.class).provideBlock("IB1");
+        JsonNode result = service.doGet(JsonBlock.BLOCK, "IB1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
+        validate(result);
+        assertTrue(result.path(JSON.DATA).path(JsonBlock.ALLOCATED_VALUE).isNull(), "Not allocated");
+        // allocated to a train that has not reached the block
+        block1.setAllocatedValue("Train 1");
+        result = service.doGet(JsonBlock.BLOCK, "IB1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
+        validate(result);
+        assertEquals("Train 1", result.path(JSON.DATA).path(JsonBlock.ALLOCATED_VALUE).asText());
+        assertTrue(result.path(JSON.DATA).path(JSON.VALUE).isNull(), "No train in the block");
+        // a train in the block is sent separately
+        block1.setValue("Train 2");
+        result = service.doGet(JsonBlock.BLOCK, "IB1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
+        validate(result);
+        assertEquals("Train 2", result.path(JSON.DATA).path(JSON.VALUE).asText());
+        assertEquals("Train 1", result.path(JSON.DATA).path(JsonBlock.ALLOCATED_VALUE).asText());
+        // released
+        block1.setAllocatedValue(null);
+        result = service.doGet(JsonBlock.BLOCK, "IB1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
+        validate(result);
+        assertTrue(result.path(JSON.DATA).path(JsonBlock.ALLOCATED_VALUE).isNull(), "No longer allocated");
+        assertEquals("Train 2", result.path(JSON.DATA).path(JSON.VALUE).asText());
+    }
+
+    @Test
+    public void testDoGetAllocatedRosterEntry() throws JsonException {
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.initRosterConfigManager();
+        InstanceManager.getDefault(RosterConfigManager.class).setRoster(ProfileManager.getDefault().getActiveProfile(),
+                new Roster("java/test/jmri/server/json/roster/data/roster.xml"));
+        RosterEntry entry = Roster.getDefault().getEntryForId("testEntry1");
+        assertNotNull(entry);
+        Block block1 = InstanceManager.getDefault(BlockManager.class).provideBlock("IB1");
+        // as Dispatcher allocates with "Place Roster Entry in starting Block"
+        block1.setAllocatedValue(entry);
+        JsonNode result = service.doGet(JsonBlock.BLOCK, "IB1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 0));
+        validate(result);
+        JsonNode allocated = result.path(JSON.DATA).path(JsonBlock.ALLOCATED_VALUE);
+        assertEquals(JsonRoster.ROSTER_ENTRY, allocated.path(JSON.TYPE).asText());
+        assertEquals("testEntry1", allocated.path(JSON.DATA).path(JSON.NAME).asText());
+        assertTrue(result.path(JSON.DATA).path(JSON.VALUE).isNull(), "No train in the block");
     }
 
     @Test

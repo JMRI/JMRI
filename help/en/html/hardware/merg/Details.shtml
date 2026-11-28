@@ -185,6 +185,15 @@
 
       <p>Gateway : Pass All ( Filtering also selectable )</p>
 
+      <p>Send frames : At once ( Grouped (as JMRI 5.17.4) also selectable )
+      <span class="since">since 5.19.2</span><br>
+      Some CANPi software holds back a frame that arrives while it is still handling the one
+      before, until the next frame arrives, so events sent from JMRI are acted on late, one or
+      more clicks behind. Since 5.17.5, JMRI sends each frame to the network as soon as it is
+      written; up to 5.17.4, frames written in quick succession were sent together. If events
+      are acted on late with a gateway that worked with JMRI 5.17.4, choose
+      Grouped (as JMRI 5.17.4). Leave it at At once for other gateways.</p>
+
       <h3 id="c3">CAN via GridConnect adapter</h3>
       <img src="images/connection/merg-connection-gridconnect-adapter-300x215.png" width="300"
       height="215" alt="JMRI MERG GridConnect Adapter" class="floatRight">

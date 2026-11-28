@@ -115,6 +115,51 @@ public class SCWarrantTest extends WarrantTest {
         }, "warrant not done");
     }
 
+    @Test
+    public void testTurnoutsSetOnLayoutThread() throws Exception {
+        sEast.setState(Sensor.INACTIVE);
+        sWest.setState(Sensor.INACTIVE);
+        sSouth.setState(Sensor.INACTIVE);
+        sNorth.setState(Sensor.INACTIVE);
+
+        ArrayList<BlockOrder> orders = new ArrayList<>();
+        orders.add(new BlockOrder( bNorth, "NorthToWest", "", "NorthWest"));
+        orders.add(new BlockOrder( bWest, "SouthToNorth", "NorthWest", "SouthWest"));
+        orders.add(new BlockOrder( bSouth, "SouthToWest", "SouthWest", null));
+        warrant.setBlockOrders(orders);
+
+        // a turnout's listener that also tells the warrant of the change, as
+        // signals and Blocks do, needs the warrant's lock on the layout thread
+        java.util.List<Boolean> setOnLayoutThread = java.util.Collections.synchronizedList(new ArrayList<>());
+        PropertyChangeListener l = e -> {
+            setOnLayoutThread.add(ThreadingUtil.isLayoutThread());
+            synchronized (warrant) {
+                warrant.notifyAll();
+            }
+        };
+        Turnout north = _turnoutMgr.provideTurnout("IT1");
+        Turnout south = _turnoutMgr.provideTurnout("IT2");
+        north.addPropertyChangeListener("CommandedState", l);
+        south.addPropertyChangeListener("CommandedState", l);
+
+        // the train runner sets the route's turnouts while holding the warrant's lock
+        Thread runner = new Thread(() -> {
+            synchronized (warrant) {
+                ((SCWarrant) warrant).allocateBlocksAndSetTurnouts(0);
+            }
+        }, "SCTrainRunner stand-in");
+        runner.start();
+        runner.join(10000);
+
+        Assertions.assertFalse(runner.isAlive(), "route set");
+        Assertions.assertFalse(setOnLayoutThread.isEmpty(), "turnouts set");
+        Assertions.assertFalse(setOnLayoutThread.contains(false), "turnouts set on the layout thread");
+        Assertions.assertEquals(Turnout.CLOSED, north.getCommandedState(), "NorthSwitch set for the route");
+        north.removePropertyChangeListener("CommandedState", l);
+        south.removePropertyChangeListener("CommandedState", l);
+        warrant.deAllocate();
+    }
+
     @BeforeEach
     @Override
     public void setUp(@TempDir File tempDir) throws IOException  {

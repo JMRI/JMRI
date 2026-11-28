@@ -399,6 +399,56 @@ public class CbusOpCodes {
     }
 
     /**
+     * Test if a received frame is too short for its opcode, so that it should
+     * be dropped. Bytes missing from a frame read as 0, so a short NVANS, for
+     * example, would set an NV to 0.
+     * <p>
+     * Used by the Node Manager. Layout objects are not checked, as a sensor
+     * may be given a raw frame of any length as its address.
+     * <p>
+     * The data length of every opcode in the table follows the CBUS rule, the
+     * opcode's top three bits. An opcode not in the table is not checked: the
+     * VLCB specification says a new opcode need not follow the rule. A frame
+     * longer than its opcode needs is not dropped, as no byte is missing.
+     * <p>
+     * Each frame dropped is logged once, however many listeners check it: the
+     * first for each opcode as a warning, later ones at debug level, so that a
+     * device sending short frames does not fill the log.
+     *
+     * @param msg the frame
+     * @return true if the frame is a standard frame with a known opcode and
+     *         fewer data bytes than the opcode needs
+     * @since 5.19.2
+     */
+    public static boolean isTooShort(@Nonnull AbstractMessage msg) {
+        if ( !isKnownOpc(msg) ) {
+            return false;
+        }
+        int needed = 1 + ( msg.getElement(0) >> 5 );
+        if ( msg.getNumDataElements() >= needed ) {
+            return false;
+        }
+        if ( lastDropped.get() != msg ) {
+            lastDropped = new java.lang.ref.WeakReference<>(msg);
+            if ( WARNED.add(msg.getElement(0)) ) {
+                log.warn("Dropped CBUS frame {}: {} needs {} bytes, the frame has {}. Others with this opcode are logged at debug level.",
+                    msg, getOpcName(msg.getElement(0)), needed, msg.getNumDataElements());
+            } else {
+                log.debug("Dropped CBUS frame {}: {} needs {} bytes, the frame has {}",
+                    msg, getOpcName(msg.getElement(0)), needed, msg.getNumDataElements());
+            }
+        }
+        return true;
+    }
+
+    // the last frame logged by isTooShort
+    private static volatile java.lang.ref.WeakReference<AbstractMessage> lastDropped
+        = new java.lang.ref.WeakReference<>(null);
+
+    // the opcodes a dropped frame has been logged as a warning for
+    private static final java.util.Set<Integer> WARNED = java.util.concurrent.ConcurrentHashMap.newKeySet();
+
+    /**
      * Test if CBUS OpCode represents a CBUS event.
      * <p>
      * Defined in the CBUS Developer Manual as accessory commands.

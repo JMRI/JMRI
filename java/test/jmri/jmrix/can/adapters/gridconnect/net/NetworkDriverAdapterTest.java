@@ -51,6 +51,66 @@ public class NetworkDriverAdapterTest {
         }
     }
 
+    @Test
+    public void testFramesGroupedWhenChosen() throws IOException {
+        Probe d = new Probe();
+        Assert.assertEquals("each frame at once by default", NetworkDriverAdapter.SEND_AT_ONCE,
+            d.getOptionState(NetworkDriverAdapter.FRAME_SENDING_OPTION));
+        Assert.assertFalse("not grouped by default", d.sendGrouped());
+
+        try (ServerSocket gateway = new ServerSocket(0, 2, InetAddress.getLoopbackAddress())) {
+            Probe t = new Probe();
+            t.setOptionState(NetworkDriverAdapter.FRAME_SENDING_OPTION, NetworkDriverAdapter.SEND_GROUPED);
+            t.connect(InetAddress.getLoopbackAddress().getHostAddress(), gateway.getLocalPort());
+            Assert.assertTrue("connected", t.status());
+            Assert.assertFalse("TCP no delay off: frames grouped", t.socket().getTcpNoDelay());
+
+            // a reconnection opens a new socket, set the same way
+            Socket first = t.socket();
+            t.connect();
+            Assert.assertNotSame("new socket", first, t.socket());
+            Assert.assertFalse("TCP no delay still off after reconnecting", t.socket().getTcpNoDelay());
+            first.close();
+            t.close();
+        }
+    }
+
+    @Test
+    public void testOneBufferedInputStreamPerSocket() throws IOException {
+        try (ServerSocket gateway = new ServerSocket(0, 2, InetAddress.getLoopbackAddress())) {
+            Probe t = new Probe();
+            t.connect(InetAddress.getLoopbackAddress().getHostAddress(), gateway.getLocalPort());
+            try (Socket far = gateway.accept()) {
+                far.getOutputStream().write(":SB020N9101020304;:SB020N9101020305;".getBytes(java.nio.charset.StandardCharsets.US_ASCII));
+                far.getOutputStream().flush();
+
+                // every caller gets the same stream, so what one buffers the next still reads
+                java.io.DataInputStream in = t.getInputStream();
+                Assert.assertSame("one stream for the socket", in, t.getInputStream());
+                byte[] first = new byte[18];
+                in.readFully(first);
+                Assert.assertEquals(":SB020N9101020304;", new String(first, java.nio.charset.StandardCharsets.US_ASCII));
+                byte[] second = new byte[18];
+                t.getInputStream().readFully(second);
+                Assert.assertEquals(":SB020N9101020305;", new String(second, java.nio.charset.StandardCharsets.US_ASCII));
+
+                // a reconnection opens a new socket, with a stream of its own
+                Socket old = t.socket();
+                t.connect();
+                try (Socket far2 = gateway.accept()) {
+                    Assert.assertNotSame("new stream for the new socket", in, t.getInputStream());
+                    far2.getOutputStream().write(":SB020N9101020306;".getBytes(java.nio.charset.StandardCharsets.US_ASCII));
+                    far2.getOutputStream().flush();
+                    byte[] third = new byte[18];
+                    t.getInputStream().readFully(third);
+                    Assert.assertEquals(":SB020N9101020306;", new String(third, java.nio.charset.StandardCharsets.US_ASCII));
+                }
+                old.close();
+            }
+            t.close();
+        }
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.beans.PropertyChangeEvent;
@@ -17,6 +18,7 @@ import jmri.ThrottleListener.DecisionType;
 import jmri.jmrit.throttle.preferences.ThrottlesPreferences;
 import jmri.jmrix.debugthrottle.DebugThrottle;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -93,6 +95,32 @@ public class MultiThrottleControllerTest {
         controller.notifyThrottleFound(t);
         assertTrue( controller.sort("X"), "Continue after EStop");
         assertTrue( t.getSpeedSetting() < 0.0f, "Estop");
+    }
+
+    @Test
+    public void testSetSpeedStepMode() {
+        DccThrottle t = new DebugThrottle(new DccLocoAddress(1, false), memo);
+        controller.notifyThrottleFound(t);
+        assertTrue( controller.sort("s8"), "Continue after speed step mode");
+        assertEquals( jmri.SpeedStepMode.NMRA_DCC_14, t.getSpeedStepMode(), "Speed step mode set");
+    }
+
+    @Test
+    public void testSetInvalidSpeedStepMode() {
+        DccThrottle t = new DebugThrottle(new DccLocoAddress(1, false), memo);
+        controller.notifyThrottleFound(t);
+        assertTrue( controller.sort("stmcc_32"), "Continue after invalid speed step mode");
+        JUnitAppender.assertWarnMessage("Unknown speed step mode from client: tmcc_32");
+        assertEquals( jmri.SpeedStepMode.NMRA_DCC_128, t.getSpeedStepMode(), "Speed step mode unchanged");
+        assertEquals( "MAAtest<;>s1", cis.getLastPacket(), "current mode sent back");
+    }
+
+    @Test
+    public void testInvalidAddressKeepsCurrentLoco() {
+        DccThrottle t = new DebugThrottle(new DccLocoAddress(1, false), memo);
+        controller.notifyThrottleFound(t);
+        assertThrows( NumberFormatException.class, () -> controller.sort("S12x"), "invalid address rejected");
+        assertEquals( t, controller.getThrottle(), "still holding the current loco");
     }
 
     @Test
@@ -221,8 +249,8 @@ public class MultiThrottleControllerTest {
     public void testVelocityChangeSequence() {
         DccThrottle t = new DebugThrottle(new DccLocoAddress(1, false), memo) {
             @Override
-            public synchronized void setSpeedSetting(float s) {
-                // override so we can send property changes in sequence.
+            protected synchronized void sendSpeedSetting(float s, boolean allowDuplicates, boolean allowDuplicatesOnStop) {
+                // send nothing, so the test can send property changes in sequence.
             }
         };
         controller.notifyThrottleFound(t);

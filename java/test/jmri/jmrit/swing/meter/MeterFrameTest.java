@@ -4,6 +4,7 @@ import java.awt.GraphicsEnvironment;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.JmriUncheckedException;
 import jmri.Meter;
 import jmri.MeterManager;
 import jmri.implementation.DefaultMeter;
@@ -66,21 +67,37 @@ public class MeterFrameTest extends jmri.util.JmriJFrameTestBase {
         });
     }
 
+    @Test
+    public void testDisposedFrameStopsListening() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Meter m = jmri.InstanceManager.getDefault(jmri.MeterManager.class).getNamedBeanSet().first();
+        int before = m.getPropertyChangeListeners(jmri.NamedBean.PROPERTY_STATE).length;
+        runOnLayout(() -> {
+            frame.initComponents();
+            ((MeterFrame) frame).setMeter(m);
+        });
+        Assertions.assertEquals(before + 1, m.getPropertyChangeListeners(jmri.NamedBean.PROPERTY_STATE).length);
+        jmri.util.ThreadingUtil.runOnGUI(() -> frame.dispose());
+        Assertions.assertEquals(before, m.getPropertyChangeListeners(jmri.NamedBean.PROPERTY_STATE).length,
+                "the closed window no longer listens");
+        frame = new MeterFrame();
+    }
+
     @BeforeEach
     @Override
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        
+
         Meter voltageMeter = new DefaultMeter.DefaultVoltageMeter("IVVoltageMeter", Meter.Unit.Milli, 0.0, 1000.0, 1.0, new MeterUpdateTask(-1) {
             @Override
             public void requestUpdateFromLayout() {
                 // Do nothing
             }
         });
-        
+
         InstanceManager.getDefault(MeterManager.class).register(voltageMeter);
-        
+
         if (!GraphicsEnvironment.isHeadless()) {
             frame = new MeterFrame();
         }
@@ -91,13 +108,13 @@ public class MeterFrameTest extends jmri.util.JmriJFrameTestBase {
     public void tearDown() {
         super.tearDown();
     }
-    
+
     private void runOnLayout(RunnableWithException r) {
         ThreadingUtil.runOnLayout(() -> {
             try {
                 r.run();
             } catch (JmriException e) {
-                throw new RuntimeException(e);
+                throw new JmriUncheckedException(e);
             }
         });
     }
@@ -105,6 +122,6 @@ public class MeterFrameTest extends jmri.util.JmriJFrameTestBase {
     private interface RunnableWithException {
         public void run() throws JmriException;
     }
-    
+
     // private static final Logger log = LoggerFactory.getLogger(AmpMeterFrameTest.class);
 }

@@ -1,7 +1,10 @@
 package jmri.jmrix.mqtt;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import javax.annotation.Nonnull;
 
@@ -48,7 +51,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     @API(status=API.Status.MAINTAINED)
     public String baseTopic = DEFAULT_BASETOPIC;
 
-    HashMap<String, ArrayList<MqttEventListener>> mqttEventListeners = new HashMap<>();
+    ConcurrentHashMap<String, CopyOnWriteArrayList<MqttEventListener>> mqttEventListeners = new ConcurrentHashMap<>();
 
     MqttClient mqttClient;
 
@@ -130,7 +133,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         if (! getOptionState("LastWillTopic").isEmpty()
                 && ! getOptionState("LastWillMessage").isEmpty()) {
             mqttConnOpts.setWill(baseTopic + getOptionState("LastWillTopic"),
-                    getOptionState("LastWillMessage").getBytes(),
+                    getOptionState("LastWillMessage").getBytes(StandardCharsets.UTF_8),
                     qosflag,
                     true);
         }
@@ -142,7 +145,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     @API(status=API.Status.INTERNAL)
     public void configure() {
         log.debug("Doing configure...");
-        mqttEventListeners = new HashMap<>();
+        mqttEventListeners = new ConcurrentHashMap<>();
         getSystemConnectionMemo().setMqttAdapter(this);
         getSystemConnectionMemo().configureManagers();
     }
@@ -224,15 +227,14 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         }
         try {
             String fullTopic = baseTopic + topic;
-            if (mqttEventListeners.containsKey(fullTopic)) {
-                if (!mqttEventListeners.get(fullTopic).contains(mel)) {
-                    mqttEventListeners.get(fullTopic).add(mel);
-                }
+            boolean[] isNew = {false};
+            mqttEventListeners.computeIfAbsent(fullTopic, k -> {
+                isNew[0] = true;
+                return new CopyOnWriteArrayList<>();
+            }).addIfAbsent(mel);
+            if (!isNew[0]) {
                 return;
             }
-            ArrayList<MqttEventListener> mels = new ArrayList<>();
-            mels.add(mel);
-            mqttEventListeners.put(fullTopic, mels);
             mqttClient.subscribe(fullTopic);
             log.debug("Subscribed : \"{}\"", fullTopic);
         } catch (MqttException ex) {
@@ -247,17 +249,16 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
             jmri.util.LoggingUtil.warnOnce(log, "Trying to unsubscribe before connect/configure is done");
             return;
         }
-        try {
-            mqttEventListeners.get(fullTopic).remove(mel);
-        } catch (NullPointerException e) {
+        CopyOnWriteArrayList<MqttEventListener> mels = mqttEventListeners.get(fullTopic);
+        if (mels == null) {
             // Not subscribed
             log.debug("Unsubscribe but not subscribed: \"{}\"", fullTopic);
             return;
         }
-        if (mqttEventListeners.get(fullTopic).isEmpty()) {
+        mels.remove(mel);
+        if (mels.isEmpty() && mqttEventListeners.remove(fullTopic, mels)) {
             try {
                 mqttClient.unsubscribe(fullTopic);
-                mqttEventListeners.remove(fullTopic);
                 log.debug("Unsubscribed : \"{}\"", fullTopic);
             } catch (MqttException ex) {
                 log.error("Can't unsubscribe : ", ex);
@@ -305,7 +306,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
      */
     @API(status=API.Status.MAINTAINED)
     public void publish(@Nonnull String topic, @Nonnull String payload) {
-        publish(topic, payload.getBytes());
+        publish(topic, payload.getBytes(StandardCharsets.UTF_8));
     }
 
     /**
@@ -316,7 +317,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
      */
     @API(status=API.Status.MAINTAINED)
     public void publish(@Nonnull String topic, @Nonnull String payload, boolean retain) {
-        publish(topic, payload.getBytes(), retain);
+        publish(topic, payload.getBytes(StandardCharsets.UTF_8), retain);
     }
 
     public MqttClient getMQttClient() {
@@ -364,7 +365,7 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
     @Override
     @API(status=API.Status.INTERNAL)
     public void connectionLost(Throwable thrwbl) {
-        log.warn("Lost MQTT broker connection...");
+        log.warn("Lost MQTT broker connection...", thrwbl);
         if (this.allowConnectionRecovery) {
             log.info("...trying to reconnect repeatedly");
             scheduleReconnectTimer(true);
@@ -379,9 +380,8 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         log.debug("Message received, topic : {} - '{}'", topic, mm);
 
         boolean found = false;
-        Map<String,ArrayList<MqttEventListener>> tempMap
-            = new HashMap<> (mqttEventListeners); // Avoid ConcurrentModificationException
-        for (Map.Entry<String,ArrayList<MqttEventListener>> e : tempMap.entrySet()) {
+        // ConcurrentHashMap iteration is safe while subscribe() adds topics
+        for (Map.Entry<String,CopyOnWriteArrayList<MqttEventListener>> e : mqttEventListeners.entrySet()) {
             // does key match received topic, including wildcards?
             if (MqttTopic.isMatched(e.getKey(), topic) ) {
                 found = true;
@@ -397,8 +397,8 @@ public class MqttAdapter extends jmri.jmrix.AbstractNetworkPortController implem
         }
 
         if (!found) {
+            // Throwing here would make Paho drop the connection
             log.error("No one subscribed to {}", topic);
-            throw new Exception("No subscriber for MQTT topic " + topic);
         }
     }
 

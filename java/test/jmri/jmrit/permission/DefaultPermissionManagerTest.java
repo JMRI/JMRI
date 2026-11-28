@@ -271,6 +271,40 @@ public class DefaultPermissionManagerTest {
                 "Second session should still be valid");
     }
 
+    /**
+     * Every role knows every permission as soon as init() returns, before anything else runs on the layout thread
+     * (Swing thread), and so does a copy made then. A role read from the permissions file with no permissions stored
+     * shows it: only the fill-in in init() gives it them. Run on that thread, so a fill-in posted to it would not have
+     * run yet.
+     */
+    @Test
+    public void testRolesKnowEveryPermissionOnceInitialised() throws java.io.IOException {
+        java.io.File file = new java.io.File(jmri.util.FileUtil.getPreferencesPath() + ".permissions.xml");
+        java.nio.file.Files.writeString(file.toPath(), "<Permissions><Settings><Enabled>no</Enabled>"
+                + "<AllowEmptyPasswords>no</AllowEmptyPasswords></Settings>"
+                + "<Roles><Role><Name>Signalman</Name><Permissions/></Role></Roles><Users/></Permissions>");
+        java.util.List<String> missing = new java.util.ArrayList<>();
+        try {
+            jmri.util.ThreadingUtil.runOnGUI(() -> {
+                DefaultPermissionManager m = new DefaultPermissionManager().init();
+                for (DefaultPermissionManager each : new DefaultPermissionManager[]{m, m.getTemporaryInstance()}) {
+                    jmri.Role signalman = each.getRoles().stream().filter(r -> "Signalman".equals(r.getName()))
+                            .findFirst().orElseThrow();
+                    for (jmri.PermissionOwner owner : each.getOwners()) {
+                        for (jmri.Permission p : each.getPermissions(owner)) {
+                            if (!signalman.getPermissions().containsKey(p)) {
+                                missing.add(p.getName());
+                            }
+                        }
+                    }
+                }
+            });
+        } finally {
+            assertTrue(file.delete());
+        }
+        assertTrue(missing.isEmpty(), "Signalman knows every permission at once; missing: " + missing);
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

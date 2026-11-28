@@ -1,6 +1,5 @@
 package jmri.jmrit.decoderdefn;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -10,8 +9,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
 import java.net.URL;
+
 import javax.swing.Icon;
 import javax.swing.JPanel;
+
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
 import jmri.util.swing.JmriAbstractAction;
@@ -112,7 +113,6 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
         JmriJOptionPane.showMessageDialog(who, Bundle.getMessage("CompleteOK"));
     }
 
-    @SuppressFBWarnings(value = "OBL_UNSATISFIED_OBLIGATION", justification = "Looks like false positive")
     boolean copyfile(URL from, File toFile, JPanel who) {
         InputStream in = null;
         OutputStream out = null;

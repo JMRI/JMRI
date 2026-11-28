@@ -171,20 +171,6 @@ public class RosterSpeedProfile {
     /**
      * Returns the scale speed as a numeric.
      * If Warrant preferences are not a speed, value returns unchanged.
-     * @param mms MilliMetres per second
-     * @return scale speed in units specified by Warrant Preferences,
-     *         unchanged if Warrant preferences are not a speed.
-     * @deprecated use {@link #mmsToScaleSpeed(float mms)}
-     */
-    @Deprecated (since="5.9.6",forRemoval=true)
-    public float MMSToScaleSpeed(float mms) {
-        jmri.util.LoggingUtil.deprecationWarning(log, "MMSToScaleSpeed");
-        return mmsToScaleSpeed(mms);
-    }
-
-    /**
-     * Returns the scale speed as a numeric.
-     * If Warrant preferences are not a speed, value returns unchanged.
      * Does not factor Fast Clock ratio.
      * @param mms MilliMetres per second
      * @return scale speed in units specified by Warrant Preferences,
@@ -626,7 +612,7 @@ public class RosterSpeedProfile {
     /**
      * Plan and execute a stop-to-zero over a given distance (actual
      * millimetres).
-     * 
+     *
      * @param t          The DccThrottle to drive
      * @param distanceMm Distance in mm ({@code >=} 0)
      */
@@ -638,7 +624,7 @@ public class RosterSpeedProfile {
      * Plan and execute a stop-to-zero over a given distance (actual
      * millimetres), with an optional external speed factor pre-divide (see
      * AutoActiveTrain behaviour).
-     * 
+     *
      * @param t           The DccThrottle to drive
      * @param distanceMm  Distance in mm ({@code >=} 0)
      * @param speedFactor If {@code >} 0, throttle commands are divided by this
@@ -650,13 +636,30 @@ public class RosterSpeedProfile {
 
     /**
      * Plan and execute an approach to the minimum reliable operating speed over
+     * the given distance, then hold that speed. Stopping, for example when a
+     * stopping sensor goes active, is for the caller.
+     *
+     * @param t           The DccThrottle to drive
+     * @param distanceMm  Distance in mm ({@code >=} 0)
+     * @param speedFactor If {@code >} 0, throttle commands are divided by this
+     *                    factor before enqueuing.
+     */
+    public void planApproachToMinOverDistance(DccThrottle t, float distanceMm, float speedFactor) {
+        planDistanceSchedule(t, distanceMm, /* toMinOnly */ true, speedFactor);
+    }
+
+    /**
+     * Plan and execute an approach to the minimum reliable operating speed over
      * the given distance, then stop when the supplied sensor transitions to
      * ACTIVE.
-     * 
+     *
      * @param t          The DccThrottle to drive
      * @param distanceMm Distance in mm ({@code >=} 0)
      * @param stopSensor The sensor on which to stop (must not be null)
+     * @deprecated since 5.17.5; use {@link #planApproachToMinOverDistance(DccThrottle, float, float)}
+     *             and stop the train when the sensor goes active
      */
+    @Deprecated(since = "5.17.5", forRemoval = true)
     public void planApproachToMinOverDistanceThenStopBySensor(
             DccThrottle t, float distanceMm, jmri.Sensor stopSensor) {
         planApproachToMinOverDistanceThenStopBySensor(t, distanceMm, stopSensor, /*
@@ -668,15 +671,19 @@ public class RosterSpeedProfile {
      * Plan and execute an approach to the minimum reliable operating speed over
      * the given distance, then stop when the supplied sensor transitions to
      * ACTIVE. Supports optional speed factor pre-divide.
-     * 
+     *
      * @param t           The DccThrottle to drive
      * @param distanceMm  Distance in mm ({@code >=} 0)
      * @param stopSensor  The sensor on which to stop (must not be null)
      * @param speedFactor If {@code >} 0, throttle commands are divided by this
      *                    factor before enqueuing.
+     * @deprecated since 5.17.5; use {@link #planApproachToMinOverDistance(DccThrottle, float, float)}
+     *             and stop the train when the sensor goes active
      */
+    @Deprecated(since = "5.17.5", forRemoval = true)
     public void planApproachToMinOverDistanceThenStopBySensor(
             DccThrottle t, float distanceMm, jmri.Sensor stopSensor, float speedFactor) {
+        jmri.util.LoggingUtil.deprecationWarning(log, "planApproachToMinOverDistanceThenStopBySensor");
         if (stopSensor == null) {
             log.warn("planApproachToMin... called with null stopSensor; forcing immediate stop.");
             if (t != null)

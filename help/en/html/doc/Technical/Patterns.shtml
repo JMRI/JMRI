@@ -268,10 +268,6 @@ and distribute JMRI.
     on TypeScript and how to install it, see the
     <a href="https://www.typescriptlang.org/">TypeScript web page</a>.</p>
 
-    <p>JavaScript code can also be used for scripting.  By default, these should be put
-    into the <code>jython/</code> directory, though of course people can run scripts from
-    any location they choose.</p>
-
       <!--#include virtual="/help/en/parts/Footer.shtml" -->
     </div>
     <!-- closes #mainContent-->

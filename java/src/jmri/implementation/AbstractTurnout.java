@@ -1035,9 +1035,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     /** {@inheritDoc} */
     @Override
     public void setBinaryOutput(boolean state) {
-        binaryOutput = true;
     }
-    protected boolean binaryOutput = false;
 
     /** {@inheritDoc} */
     @Override

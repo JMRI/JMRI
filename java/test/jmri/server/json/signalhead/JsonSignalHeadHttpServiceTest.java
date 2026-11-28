@@ -2,6 +2,7 @@ package jmri.server.json.signalhead;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import jmri.JmriException;
 import jmri.SignalHead;
@@ -9,6 +10,8 @@ import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpServiceTestBase;
 import jmri.server.json.JsonRequest;
+import jmri.server.json.schema.JsonSchemaServiceCache;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 
 import org.junit.jupiter.api.*;
@@ -106,6 +109,73 @@ public class JsonSignalHeadHttpServiceTest extends JsonHttpServiceTestBase<JsonS
         result = service.doPost(JsonSignalHead.SIGNAL_HEAD, userName, message, new JsonRequest(locale, JSON.V5, JSON.GET, 42));
         assertNotNull(result);
         assertEquals(false, s.getHeld());
+    }
+
+    @Test
+    public void testDoPostLitHeld() throws JsonException {
+        SignalHead s = new jmri.implementation.VirtualSignalHead("IH1", "SH1");
+        jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
+        s.setLit(true);
+        // booleans, the same as GET sends
+        JsonNode message = mapper.createObjectNode().put(JSON.NAME, "IH1").put(JSON.LIT, false).put(JSON.TOKEN_HELD, true);
+        validateData(JsonSignalHead.SIGNAL_HEAD, message, false);
+        JsonNode result = service.doPost(JsonSignalHead.SIGNAL_HEAD, "IH1", message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        validate(result);
+        assertFalse(s.getLit());
+        assertTrue(s.getHeld());
+        assertEquals(SignalHead.HELD, result.path(JSON.DATA).path(JSON.STATE).asInt());
+        // strings still work for older clients
+        message = mapper.createObjectNode().put(JSON.NAME, "IH1").put(JSON.LIT, "true").put(JSON.TOKEN_HELD, "false");
+        service.doPost(JsonSignalHead.SIGNAL_HEAD, "IH1", message, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        assertTrue(s.getLit());
+        assertFalse(s.getHeld());
+        // sending back a held head's GET data with a new state releases it
+        s.setHeld(true);
+        ObjectNode echo = (ObjectNode) service.doGet(JsonSignalHead.SIGNAL_HEAD, "IH1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42)).path(JSON.DATA);
+        assertTrue(echo.path(JSON.TOKEN_HELD).asBoolean());
+        echo.put(JSON.STATE, SignalHead.RED);
+        service.doPost(JsonSignalHead.SIGNAL_HEAD, "IH1", echo, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        assertFalse(s.getHeld());
+        assertEquals(SignalHead.RED, s.getAppearance());
+    }
+
+    @Test
+    public void testDoGetAllFields() throws JsonException {
+        // no user name, a comment and properties of each kind
+        SignalHead s = new jmri.implementation.VirtualSignalHead("IH1");
+        jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).register(s);
+        s.setComment("a comment");
+        s.setProperty("text", "value");
+        s.setProperty("number", 42);
+        s.setProperty("empty", null);
+        JsonNode result = service.doGet(JsonSignalHead.SIGNAL_HEAD, "IH1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
+        validate(result);
+        assertTrue(result.path(JSON.DATA).path(JSON.USERNAME).isNull());
+        assertEquals(3, result.path(JSON.DATA).path(JSON.PROPERTIES).size());
+        // held state is 256
+        s.setHeld(true);
+        result = service.doGet(JsonSignalHead.SIGNAL_HEAD, "IH1", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, JSON.GET, 42));
+        validate(result);
+        assertEquals(256, result.path(JSON.DATA).path(JSON.STATE).asInt());
+    }
+
+    @Test
+    public void testClientSchema() {
+        // a null comment clears it
+        validateData(JsonSignalHead.SIGNAL_HEAD, mapper.createObjectNode().put(JSON.NAME, "IH1").putNull(JSON.COMMENT), false);
+        assertInvalid(mapper.createObjectNode().put(JSON.NAME, "IH1").put(JSON.LIT, "yes"), "lit as a string");
+        assertInvalid(mapper.createObjectNode().put(JSON.NAME, "IH1").put(JSON.ASPECT, "Clear"), "aspect is not settable");
+    }
+
+    private void assertInvalid(JsonNode data, String message) {
+        JsonRequest request = new JsonRequest(locale, JSON.V5, JSON.GET, 42);
+        JsonSchemaServiceCache schemas = jmri.InstanceManager.getDefault(JsonSchemaServiceCache.class);
+        assertThrows(JsonException.class, () -> schemas.validateData(JsonSignalHead.SIGNAL_HEAD, data, false, request), message);
+        // consume the warnings logged for the rejected message
+        assertNotNull(JUnitAppender.checkForMessageStartingWith("Errors validating"), message);
+        while (JUnitAppender.checkForMessageStartingWith("JSON Validation Error") != null) {
+            // drain
+        }
     }
 
     @Test

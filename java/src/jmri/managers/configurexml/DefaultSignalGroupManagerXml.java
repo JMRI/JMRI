@@ -68,6 +68,10 @@ public class DefaultSignalGroupManagerXml
         group.setAttribute("name", name);
         group.setAttribute("onAppearance", getSignalColour(_group.getHeadOnStateByIndex(x)));
         group.setAttribute("offAppearance", getSignalColour(_group.getHeadOffStateByIndex(x)));
+        // The attribute is the opposite of the choice: OR (true) has always
+        // been stored as "AND", and AND (false) as "OR". It stays so that
+        // existing files keep their meaning; loadSignalGroups reads it back
+        // the same way.
         if (_group.getSensorTurnoutOperByIndex(x)) {
             group.setAttribute("sensorTurnoutLogic", "AND");
         } else {
@@ -168,6 +172,8 @@ public class DefaultSignalGroupManagerXml
                 String head = sh.getAttribute("name").getValue();
                 SignalHead sigHead = jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(head);
                 sg.addSignalHead(sigHead);
+                // "AND" in the file means OR (true), and "OR" means AND
+                // (false): see storeSignalHead.
                 yesno = sh.getAttribute("sensorTurnoutLogic").getValue();
                 inverse = false;
                 if ((yesno != null) && (!yesno.isEmpty())) {

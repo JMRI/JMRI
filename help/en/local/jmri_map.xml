@@ -183,6 +183,7 @@
 <mapID target="html.tools.signaling.SignalingSetup" url="html/tools/signaling/SignalingSetup.shtml"/>
 <mapID target="html.tools.signaling.index" url="html/tools/signaling/index.shtml"/>
 <mapID target="html.tools.signaling.ldt.output" url="html/tools/signaling/ldt/output.shtml"/>
+<mapID target="html.tools.simulatedtrains.index" url="html/tools/simulatedtrains/index.shtml"/>
 <mapID target="html.tools.speedometer.NCE-Speedometer" url="html/tools/speedometer/NCE-Speedometer.shtml"/>
 <mapID target="html.tools.speedometer.SpeedMatch" url="html/tools/speedometer/SpeedMatch.shtml"/>
 <mapID target="html.tools.speedometer.index" url="html/tools/speedometer/index.shtml"/>
@@ -370,6 +371,7 @@
 <mapID target="package.jmri.jmrit.simpleprog.SimpleProgFrame" url="package/jmri/jmrit/simpleprog/SimpleProgFrame.shtml"/>
 <mapID target="package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl" url="package/jmri/jmrit/simpleturnoutctrl/SimpleTurnoutCtrl.shtml"/>
 <mapID target="package.jmri.jmrit.throttle.ThrottleFrame" url="package/jmri/jmrit/throttle/ThrottleFrame.shtml"/>
+<mapID target="package.jmri.jmrit.trainrecord.TrainTracking" url="package/jmri/jmrit/trainrecord/TrainTracking.shtml"/>
 <mapID target="package.jmri.jmrit.ussctc.FollowerFrame" url="package/jmri/jmrit/ussctc/FollowerFrame.shtml"/>
 <mapID target="package.jmri.jmrit.ussctc.OsIndicatorFrame" url="package/jmri/jmrit/ussctc/OsIndicatorFrame.shtml"/>
 <mapID target="package.jmri.jmrit.webThrottle.webThrottle" url="package/jmri/jmrit/webThrottle/webThrottle.shtml"/>

@@ -157,6 +157,46 @@ public class LocoNetMessage extends AbstractMessage implements Serializable {
 
         if (original.getNumDataElements() >= 0)
             System.arraycopy(original._dataChars, 0, _dataChars, 0, original.getNumDataElements());
+        receivedTime = original.receivedTime;
+        hasReceivedTime = original.hasReceivedTime;
+    }
+
+    private long receivedTime = 0L;
+    private boolean hasReceivedTime = false;
+
+    /**
+     * Record when this message was read in full from LocoNet, on the
+     * {@link System#nanoTime()} scale. Set by the receive thread, before the
+     * message is passed on to the layout thread (Swing thread), so that the
+     * time does not include waiting there. It is not part of the message's
+     * contents: {@link #equals(Object)} ignores it.
+     *
+     * @param timeNanos the time
+     * @since 5.19.1
+     */
+    public void setReceivedTime(long timeNanos) {
+        receivedTime = timeNanos;
+        hasReceivedTime = true;
+    }
+
+    /**
+     * @return true if the time this message was received has been recorded
+     * @since 5.19.1
+     */
+    public boolean hasReceivedTime() {
+        return hasReceivedTime;
+    }
+
+    /**
+     * Get when this message was read in full from LocoNet, on the
+     * {@link System#nanoTime()} scale; only differences between such times
+     * have a meaning.
+     *
+     * @return the time, or the time now if it was not recorded
+     * @since 5.19.1
+     */
+    public long getReceivedTime() {
+        return hasReceivedTime ? receivedTime : System.nanoTime();
     }
 
     public void setOpCode(int i) {

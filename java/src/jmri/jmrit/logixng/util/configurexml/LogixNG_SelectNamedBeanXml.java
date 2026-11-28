@@ -99,10 +99,8 @@ public class LogixNG_SelectNamedBeanXml<E extends NamedBean> {
                     if (delayedLookup) {
                         selectNamedBean.setDelayedNamedBean(elem.getTextTrim());
                     } else {
-                        String name = elem.getTextTrim();
-                        E t = selectNamedBean.getManager().getNamedBean(name);
-                        if (t != null) selectNamedBean.setNamedBean(name, t);
-                        else selectNamedBean.removeNamedBean();
+                        // logs an error if the bean is not found
+                        selectNamedBean.setNamedBean(elem.getTextTrim());
                     }
                 }
 

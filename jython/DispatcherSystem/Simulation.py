@@ -187,6 +187,7 @@ class Simulate_instance(jmri.jmrit.automat.AbstractAutomaton):
             self.start_position = index
             self.end_position = index
             if self.logLevel > 0: print "end of setup", "returning True", index
+            self.waitMsec(500)
             return True
         else:
             if self.logLevel > 0: print "end of setup", "returning False", index

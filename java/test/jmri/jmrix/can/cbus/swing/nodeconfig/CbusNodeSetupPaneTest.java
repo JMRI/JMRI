@@ -36,6 +36,55 @@ public class CbusNodeSetupPaneTest {
 
     }
 
+    @Test
+    public void testCanIdControlsOnlyForCbusNodes() {
+
+        CbusNodeSetupPane t = new CbusNodeSetupPane(null);
+        t.setNode(nodeToEdit); // flags 8: a CBUS node
+        Assertions.assertTrue(isInVisiblePanel(t, "Force set CAN ID"), "CAN ID controls for a CBUS node");
+        Assertions.assertTrue(isInVisiblePanel(t, "CAN ID Self Enumeration"), "CAN ID controls for a CBUS node");
+
+        // the flags arrive with bit 6 set: a VLCB node, which chooses its own CAN ID
+        nodeToEdit.getNodeParamManager().setParameter(8, 0x48);
+        JUnitUtil.waitFor(() -> !isInVisiblePanel(t, "Force set CAN ID"), "no CAN ID controls for a VLCB node");
+        Assertions.assertFalse(isInVisiblePanel(t, "CAN ID Self Enumeration"), "no CAN ID controls for a VLCB node");
+
+        // chosen afresh, as a VLCB node
+        CbusNodeSetupPane fresh = new CbusNodeSetupPane(null);
+        fresh.setNode(nodeToEdit);
+        Assertions.assertFalse(isInVisiblePanel(fresh, "Force set CAN ID"), "no CAN ID controls for a VLCB node");
+        fresh.dispose();
+        t.dispose();
+    }
+
+    private static javax.swing.JButton findButton(java.awt.Container c, String text) {
+        for (java.awt.Component child : c.getComponents()) {
+            if (child instanceof javax.swing.JButton && text.equals(((javax.swing.JButton) child).getText())) {
+                return (javax.swing.JButton) child;
+            }
+            if (child instanceof java.awt.Container) {
+                javax.swing.JButton b = findButton((java.awt.Container) child, text);
+                if (b != null) {
+                    return b;
+                }
+            }
+        }
+        return null;
+    }
+
+    // the button is there and it and every container up to the pane is visible
+    private static boolean isInVisiblePanel(java.awt.Container pane, String text) {
+        java.awt.Component c = findButton(pane, text);
+        Assertions.assertNotNull(c, text);
+        while (c != null && c != pane) {
+            if (!c.isVisible()) {
+                return false;
+            }
+            c = c.getParent();
+        }
+        return true;
+    }
+
     private CanSystemConnectionMemo memo = null;
     private TrafficControllerScaffold tcis = null;
     private CbusNodeTableDataModel nodeModel = null;

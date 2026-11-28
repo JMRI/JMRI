@@ -116,6 +116,9 @@ abstract public class AbstractCanTrafficController
                 while (hm.getRetries() >= 0) {
                     if (portReadyToSend(controller)) {
                         ostream.write(msg);
+                        // the caller's message is the one stamped and told,
+                        // not its hardware encoding
+                        messageSent(m, System.nanoTime());
                         log.debug("message written");
                         break;
                     } else if (hm.getRetries() >= 0) {
@@ -124,15 +127,16 @@ abstract public class AbstractCanTrafficController
                         }
                         hm.setRetries(hm.getRetries() - 1);
                         try {
-                            synchronized (xmtRunnable) {
-                                xmtRunnable.wait(hm.getTimeout());
+                            synchronized (XMT_RUNNABLE_LOCK) {
+                                XMT_RUNNABLE_LOCK.wait(hm.getTimeout());
                             }
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later
                             log.error("retry wait interrupted");
                         }
-                    } else {
-                        log.warn("sendMessage: port not ready for data sending: {}", Arrays.toString(msg));
+                        if (hm.getRetries() < 0) {
+                            portNotReadyWarn(m, Arrays.toString(msg));
+                        }
                     }
                 }
             } else {
@@ -248,10 +252,10 @@ abstract public class AbstractCanTrafficController
 
                 case WAITMSGREPLYSTATE: {
                     // update state, and notify to continue
-                    synchronized (xmtRunnable) {
+                    synchronized (XMT_RUNNABLE_LOCK) {
                         mCurrentState = NOTIFIEDSTATE;
                         replyInDispatch = false;
-                        xmtRunnable.notify();
+                        XMT_RUNNABLE_LOCK.notify();
                     }
                     break;
                 }
@@ -266,8 +270,8 @@ abstract public class AbstractCanTrafficController
                     int warmUpDelay = enterProgModeDelayTime();
                     if (warmUpDelay != 0) {
                         try {
-                            synchronized (xmtRunnable) {
-                                xmtRunnable.wait(warmUpDelay);
+                            synchronized (XMT_RUNNABLE_LOCK) {
+                                XMT_RUNNABLE_LOCK.wait(warmUpDelay);
                             }
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later
@@ -276,9 +280,9 @@ abstract public class AbstractCanTrafficController
                     }
 
                     // update state, and notify to continue
-                    synchronized (xmtRunnable) {
+                    synchronized (XMT_RUNNABLE_LOCK) {
                         mCurrentState = OKSENDMSGSTATE;
-                        xmtRunnable.notify();
+                        XMT_RUNNABLE_LOCK.notify();
                     }
                     break;
                 }
@@ -288,9 +292,9 @@ abstract public class AbstractCanTrafficController
                     mCurrentMode = NORMALMODE;
                     replyInDispatch = false;
                     // update state, and notify to continue
-                    synchronized (xmtRunnable) {
+                    synchronized (XMT_RUNNABLE_LOCK) {
                         mCurrentState = OKSENDMSGSTATE;
-                        xmtRunnable.notify();
+                        XMT_RUNNABLE_LOCK.notify();
                     }
                     break;
                 }

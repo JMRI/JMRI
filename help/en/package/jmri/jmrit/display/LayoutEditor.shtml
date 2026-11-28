@@ -650,6 +650,14 @@
         screens. For turnouts, the turnout control circle will also flash a couple of times
         while the turnout is moving.</li>
 
+        <li><strong>Show Trains from Train Tracking</strong> <span class="since">since 5.19.2</span>
+        - If this item is selected, each train that train tracking knows is drawn along the track
+        of the Blocks it is in, in a colour of its own, with its name above it. The track is drawn
+        solid where JMRI is sure of where the train is, and dashed and fainter where it isn't, with
+        a word saying why (estimated, may be another train, stalled or lost). An arrowhead marks the
+        train's front, pointing the way it faces; when JMRI doesn't know which way the train faces,
+        a "?" follows its name instead. The choice is kept for each panel in your preferences.</li>
+
         <li><strong>New Title...</strong> - Selecting this item brings up a small window that
         allows a new panel window title to be entered.</li>
 
@@ -1120,9 +1128,13 @@
       segments is contained below in the discussion of these items, and in the help page of each
       edit dialog.</p>
 
-      <p>For <strong>Track Segments</strong>, there is also a <strong>Decorations</strong> item.
-      The sub-menus provide the ability to add <strong>Arrows</strong>, <strong>Bridges</strong>,
-      <strong>End Bumpers</strong> , and <strong>Tunnels</strong> to the track segment.</p>
+      <p>For <strong>Track Segments</strong>, there is also a <strong>Decorations</strong> menu item.
+      The sub-menus provide the ability <em>decorate</em> some track items. The track segment can
+      have decorations to represent <strong>Bridges</strong> or <strong>Tunnels</strong>. If the
+      track segment has an <em>End Bumper</em> connection, the <strong>End Bumpers</strong> menu
+      item will be shown and can be selected to decorate the end bumper. If the track segment has an
+      <em>Edge Connector</em> connection, the <strong>Arrows</strong> menu item will be shown and
+      can be selected to decorate the edge connector.</p>
 
       <div style="margin-left: 2em;"><img src="images/TrackDecorations.png" alt=
       "Track Decorations Menu Item" height="113" width="364">
@@ -1512,7 +1524,7 @@
 
       <p>The Edit Traverser dialog is used to add, remove and configure slot pairs.
       provides for the addition and deletion of ray tracks. For more information, see the help page
-      of the Edit Turntable dialog.  see the
+      for the Edit Traverser dialog at the
       <a href="EditTraverser.shtml">Edit Traverser</a> help page.</p>
 
       <h2 id="background">Backgrounds</h2>

@@ -13,17 +13,18 @@
             "description": "If present, set the user name of the reporter"
         },
         "comment": {
-            "type": "string",
-            "description": "If present, set the comment for the reporter"
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "If present, set the comment for the reporter; null clears it"
         },
-        "state": {
-            "type": "integer",
-            "description": "If present, sets the state of the reporter",
-            "enum": [
-                0,
-                2,
-                4
-            ]
+        "report": {
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "If present, set the current report; null clears it"
         }
     },
     "additionalProperties": false,

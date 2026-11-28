@@ -11,6 +11,7 @@ import javax.annotation.CheckForNull;
 
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.JmriUncheckedException;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.NamedBeanUsageReport;
@@ -78,7 +79,7 @@ public class DigitalFormula extends AbstractDigitalAction implements FemaleSocke
 
     private void setExpressionSystemNames(List<SocketData> systemNames) {
         if (!_expressionEntries.isEmpty()) {
-            throw new RuntimeException("expression system names cannot be set more than once");
+            throw new JmriUncheckedException("expression system names cannot be set more than once");
         }
 
         for (SocketData socketData : systemNames) {
@@ -368,7 +369,7 @@ public class DigitalFormula extends AbstractDigitalAction implements FemaleSocke
                 }
             } catch (SocketAlreadyConnectedException ex) {
                 // This shouldn't happen and is a runtime error if it does.
-                throw new RuntimeException("socket is already connected");
+                throw new JmriUncheckedException("socket is already connected");
             }
         }
 

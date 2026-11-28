@@ -263,12 +263,12 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
         if (adapter.getSystemConnectionMemo() != null) {
             systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
-            NUMOPTIONS = NUMOPTIONS + 2;
+            increaseNumOptions(2);
         }
 
         refreshPortBox();
 
-        NUMOPTIONS = NUMOPTIONS + options.size();
+        increaseNumOptions(options.size());
 
         portBoxLabel = new JLabel(Bundle.getMessage("UsbPortLocationLabel"));
 
@@ -281,8 +281,6 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
     }
 
     @Override
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
-            justification = "Type is checked before casting")
     protected void showAdvancedItems() {
         log.debug("*   showAdvancedItems()");
         _details.removeAll();
@@ -337,7 +335,7 @@ abstract public class AbstractUsbConnectionConfig extends AbstractConnectionConf
             }
         }
         cL.gridwidth = 2;
-        for (JComponent item : additionalItems) {
+        for (JComponent item : getAdditionalItems()) {
             cL.gridy = i;
             gbLayout.setConstraints(item, cL);
             _details.add(item);

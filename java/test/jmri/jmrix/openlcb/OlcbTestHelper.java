@@ -18,7 +18,9 @@ import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 /**
@@ -45,6 +47,8 @@ public class OlcbTestHelper {
     private FakeConnection fakeConnection;
     // Helper object for single-threaded operation.
     FakeExecutionThread thread;
+    // The interface's thread pool, made here so that dispose() can stop it.
+    private OlcbTestThreadPool threadPool;
 
     /* A Connection class that forwards all messages to a
      * mock connection passed in at construction time.
@@ -77,6 +81,17 @@ public class OlcbTestHelper {
             thread.waitForEmpty();
         }
         expectNoMessages();
+        // Stop the pool's tasks before the interface does. Its dispose() lets
+        // them run for 100 ms, interrupts them, and logs "Pool did not
+        // terminate" if they have not ended 100 ms later, as on a busy test
+        // machine. Interrupted here at once, they are given 10 seconds to end;
+        // the interface then finds the pool already shut down.
+        threadPool.shutdownNow();
+        try {
+            assertTrue(threadPool.awaitTermination(10, TimeUnit.SECONDS), "thread pool tasks ended");
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
         iface.dispose();
         iface = null;
     }
@@ -89,7 +104,8 @@ public class OlcbTestHelper {
         NodeID id = new NodeID(new byte[]{1, 2, 0, 0, 1, 1});
         aliasMap.insert(0x333, id);
         fakeConnection = new FakeConnection(outputConnectionMock);
-        iface = new OlcbInterface(id, fakeConnection);
+        threadPool = new OlcbTestThreadPool();
+        iface = new OlcbInterface(id, fakeConnection, threadPool);
         expectMessage(new InitializationCompleteMessage(iface.getNodeId()));
     }
 

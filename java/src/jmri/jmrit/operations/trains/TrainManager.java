@@ -1437,6 +1437,8 @@ public class TrainManager extends PropertyChangeSupport implements InstanceManag
         InstanceManager.getDefault(CarManagerXml.class); // load cars
         InstanceManager.getDefault(EngineManagerXml.class); // load engines
         InstanceManager.getDefault(TrainManagerXml.class); // load trains
+        // tell train tracking what trains are made up of
+        InstanceManager.store(new OperationsTrainMakeupSource(), jmri.TrainMakeupSource.class);
     }
 
 }

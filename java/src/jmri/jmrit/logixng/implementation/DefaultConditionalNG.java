@@ -432,7 +432,7 @@ public class DefaultConditionalNG extends AbstractBase
                     }
                 } catch (SocketAlreadyConnectedException ex) {
                     // This shouldn't happen and is a runtime error if it does.
-                    throw new RuntimeException("socket is already connected");
+                    throw new JmriUncheckedException("socket is already connected");
                 }
             }
         } else {
