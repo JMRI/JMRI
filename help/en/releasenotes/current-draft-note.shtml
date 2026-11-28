@@ -706,6 +706,14 @@
                 or shunting function no longer causes errors. The JSON
                 schemas for roster messages now match what the server sends
                 and accepts.</li>
+            <li>JSON server: listing audio no longer fails with an error,
+                and lists only audio sources. Getting a source that hasn't
+                played yet no longer fails; its state is 0. A post with an
+                unknown command no longer changes the user name or comment
+                before it's rejected. Web panel audio icons set to play
+                globally can now start a source that hasn't played yet. The
+                JSON schemas for audio now match what the server sends and
+                accepts.</li>
             <li></li>
         </ul>
 

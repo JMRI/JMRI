@@ -1607,10 +1607,10 @@ function $handleClick(e) {
                 }
                 break;
             case "PlaySoundGlobally":
-                if ($widget['state'] == 16) {           // Sound is stopped
-                    jmri.setAudio($widget.systemName, "Play");
-                } else if ($widget['state'] == 17) {    // Sound is playing
+                if ($widget['state'] == 17) {           // Sound is playing
                     jmri.setAudio($widget.systemName, "Stop");
+                } else {                                // Sound is stopped or hasn't played yet
+                    jmri.setAudio($widget.systemName, "Play");
                 }
                 break;
         }

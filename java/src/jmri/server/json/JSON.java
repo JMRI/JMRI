@@ -725,6 +725,10 @@ public final class JSON {
      * {@value #AUDIO_STOPPED}
      */
     public static final int AUDIO_STOPPED = Audio.STATE_STOPPED;
+    /**
+     * {@value #AUDIO_INITIAL}
+     */
+    public static final int AUDIO_INITIAL = Audio.STATE_INITIAL;
 
     /* Route state */
     /**

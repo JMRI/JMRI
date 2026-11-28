@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import javax.annotation.Nonnull;
 import javax.servlet.http.HttpServletResponse;
 
 import jmri.InstanceManager;
@@ -34,23 +35,29 @@ public class JsonAudioHttpService extends JsonNamedBeanHttpService<Audio> {
 
     @Override
     public ObjectNode doGet(Audio audio, String name, String type, JsonRequest request) throws JsonException {
-        if (audio.getSubType() != Audio.SOURCE || (!(audio instanceof AudioSource))) {
-            throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorAudioNotSource", AUDIO, audio.getSubType()), request.id);
-        }
-        AudioSource audioSource = (AudioSource) audio;
         ObjectNode root = this.getNamedBean(audio, name, getType(), request); // throws JsonException if audio == null
-        ObjectNode data = root.withObject(JSON.DATA);
-        switch (audio.getState()) {
-            case Audio.STATE_PLAYING:
-                data.put(JSON.STATE, JSON.AUDIO_PLAYING);
-                data.put(JSON.AUDIO_COMMAND_PLAY_NUM_LOOPS, audioSource.getLastNumLoops());
-                break;
-            case Audio.STATE_STOPPED:
-                data.put(JSON.STATE, JSON.AUDIO_STOPPED);
-                break;
-            default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-                        Bundle.getMessage(request.locale, "ErrorInternal", type), request.id); // NOI18N
+        if (audio != null) {
+            if (audio.getSubType() != Audio.SOURCE || (!(audio instanceof AudioSource))) {
+                throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorAudioNotSource", audio.getSystemName()), request.id);
+            }
+            AudioSource audioSource = (AudioSource) audio;
+            ObjectNode data = root.withObject(JSON.DATA);
+            switch (audio.getState()) {
+                case Audio.STATE_PLAYING:
+                    data.put(JSON.STATE, JSON.AUDIO_PLAYING);
+                    data.put(JSON.AUDIO_COMMAND_PLAY_NUM_LOOPS, audioSource.getLastNumLoops());
+                    break;
+                case Audio.STATE_STOPPED:
+                    data.put(JSON.STATE, JSON.AUDIO_STOPPED);
+                    break;
+                case Audio.STATE_INITIAL:
+                    // a source that hasn't played or stopped yet
+                    data.put(JSON.STATE, JSON.AUDIO_INITIAL);
+                    break;
+                default:
+                    throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                            Bundle.getMessage(request.locale, "ErrorInternal", type), request.id); // NOI18N
+            }
         }
         return root;
     }
@@ -59,7 +66,7 @@ public class JsonAudioHttpService extends JsonNamedBeanHttpService<Audio> {
     public ObjectNode doPost(Audio audio, String name, String type, JsonNode data, JsonRequest request) throws JsonException {
 
         if (audio.getSubType() != Audio.SOURCE || (!(audio instanceof AudioSource))) {
-            throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorAudioNotSource", AUDIO, audio.getSubType()), request.id);
+            throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorAudioNotSource", audio.getSystemName()), request.id);
         }
 
         AudioSource audioSource = (AudioSource) audio;
@@ -72,9 +79,32 @@ public class JsonAudioHttpService extends JsonNamedBeanHttpService<Audio> {
                 audioSource.stop();
                 break;
             default:
-                throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorAudioUnknownCommand", command), request.id);
+                // no command; postNamedBean has already turned away an unknown one
+                break;
         }
         return this.doGet(audio, name, type, request);
+    }
+
+    @Nonnull
+    @Override
+    protected Audio postNamedBean(Audio bean, JsonNode data, String name, String type, JsonRequest request) throws JsonException {
+        // check before the base class changes the user name or comment, so a bad request changes nothing
+        if (bean != null && (bean.getSubType() != Audio.SOURCE || (!(bean instanceof AudioSource)))) {
+            throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorAudioNotSource", bean.getSystemName()), request.id);
+        }
+        if (data.has(JSON.AUDIO_COMMAND)) {
+            String command = data.path(JSON.AUDIO_COMMAND).asText();
+            if (!command.equals(JSON.AUDIO_COMMAND_PLAY) && !command.equals(JSON.AUDIO_COMMAND_STOP)) {
+                throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorAudioUnknownCommand", command), request.id);
+            }
+        }
+        return super.postNamedBean(bean, data, name, type, request);
+    }
+
+    @Override
+    protected boolean isListed(@Nonnull Audio bean) {
+        // only sources can be read or played, so leave out buffers and the listener
+        return bean.getSubType() == Audio.SOURCE && bean instanceof AudioSource;
     }
 
     @Override
