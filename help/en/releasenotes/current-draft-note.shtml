@@ -65,6 +65,12 @@
                 <li></li>
             </ul>
 
+        <h4>EasyDCC</h4>
+            <ul>
+                <li>Simulated trains obey an EasyDCC Simulator connection's throttles. The
+                    connection's Simulated trains setting can leave it out.</li>
+            </ul>
+
         <h4>ESU</h4>
             <ul>
                 <li></li>

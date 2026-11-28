@@ -111,7 +111,11 @@
 
         <li>Review the suggested Connection Name and prefix.</li>
 
-        <li>No other settings are needed.</li>
+        <li>No other settings are needed. <a href="../../tools/simulatedtrains/index.shtml">Simulated
+        Trains</a> obey the Simulator's throttles; it has no detection, so give the Blocks Internal
+        sensors. To leave the Simulator out of simulated trains, set <strong>Simulated
+        trains</strong> in the Additional Connection Settings to <strong>leave this connection
+        out</strong>.</li>
 
         <li>Click "Save". You'll be asked if it's OK for the program to quit; click "Yes".</li>
       </ul>
