@@ -107,6 +107,18 @@ public class TransitTableActionTest extends AbstractTableActionBase<Transit> {
         return "Edit Transit";
     }
 
+    @Test
+    @DisabledIfSystemProperty( named = "java.awt.headless", matches = "true" )
+    public void testToolsMenuOpensTransitActions() {
+        a.actionPerformed(null);
+        JFrame f = JFrameOperator.waitJFrame(getTableFrameName(), true, true);
+        new JMenuBarOperator(new JFrameOperator(f)).pushMenu("Tools|Transit Actions...", "|");
+        JFrame r = JFrameOperator.waitJFrame("Transit Actions", true, true);
+        Assert.assertNotNull("Transit Actions window", r);
+        JUnitUtil.dispose(r);
+        JUnitUtil.dispose(f);
+    }
+
     @Override
     @BeforeEach
     public void setUp() {

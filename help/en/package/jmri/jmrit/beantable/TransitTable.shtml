@@ -112,6 +112,56 @@
       More information on Actions is located in the Actions. Read <a href=
       "ViewSpecialActions.shtml">more on Actions</a>.</p>
 
+      <h2 id="actionsReport">Listing the Actions of all Transits<span class="since">since 5.19.2</span></h2>
+
+      <p>Select <strong>Tools &gt; Transit Actions...</strong>
+      in the Transit Table to see the Actions of every Transit in one table, with a row for each
+      Action: its Transit, the sequence number and name of its Section, and its When and What
+      parts, worded as in the Special Actions table. A Block, Sensor or Signal is shown by its
+      display name, usually its user name, whichever name the Action was set up with.</p>
+
+      <ul>
+        <li><strong>Transit</strong> shows one Transit, or all of them.</li>
+
+        <li><strong>Find</strong> shows only the Actions whose text contains what you type, in
+        upper or lower case, for example a Sensor or Block name to see every Action that uses
+        it.</li>
+
+        <li><strong>Problems</strong> lists what would stop the Action working:
+          <ul>
+            <li>a Block, Sensor, Signal Head or Mast, TrainInfo file or Roster entry the Action names
+            that does not exist, such as a Sensor deleted after the Action was set up;</li>
+
+            <li>a Block, in an "On Entry to Block" or "On Exit from Block" Action, that is not in
+            the Action's Section, for example after the Section was changed. Dispatcher only
+            watches the Blocks of the Sections allocated to the train;</li>
+
+            <li>a "Delay Start Action" with no "Delay Start" Action in its Section to start it.</li>
+          </ul>
+        Check <strong>Only actions with problems</strong> to see just those.</li>
+
+        <li>Double-click a row to edit its Transit.</li>
+
+        <li><strong>Copy to Section...</strong> copies the selected Actions, with their When and
+        What, to the end of the Actions of a Section of any Transit, for example to give the return
+        Transit the same station stop. Select several rows with Shift or Ctrl (Cmd on a Mac).</li>
+
+        <li><strong>Replace Name...</strong> replaces a Block, Sensor, Signal Head or Mast,
+        TrainInfo file or Roster entry name in the selected Actions, or, with none selected, in all
+        the Actions shown, for example after a Sensor is replaced. Only a whole name is
+        replaced; for a Block, Sensor or Signal, its user name or system name will do. It asks
+        before changing anything.</li>
+
+        <li>Copying and replacing leave a Transit in use by an Active Train as it is. Use Store
+        to save the changes.</li>
+
+        <li><strong>Refresh</strong> reads the Transits again, after a change. <strong>Copy</strong>
+        puts the rows shown on the clipboard as text, each Transit with its Sections and their
+        Actions' When and What, to paste into a message or a support question;
+        <strong>Save as CSV...</strong> saves them to a file; <strong>Print...</strong> prints
+        them.</li>
+      </ul>
+
       <h2>Saving Transits to Disk</h2>
 
       <p>Use the Store item in the File menu to save Transit information to disk. See <a href=
