@@ -333,6 +333,21 @@ public interface TrainRecord extends PropertyChangeProvider {
     boolean isPlaced();
 
     /**
+     * Whether which train this is was last decided by a Block's value: it
+     * was placed where a Block's value named it, or a Block's value chose it
+     * from several trains that could have entered a Block, and it has not
+     * been placed since by the operator, Dispatcher or code. A Block's value
+     * can follow the wrong train where trains run close together, so such a
+     * record may not be where its train is.
+     *
+     * @return true if a Block's value last decided which train this is
+     * @since 5.19.2
+     */
+    default boolean isIdentifiedByValue() {
+        return false;
+    }
+
+    /**
      * Say where the train is: the Blocks it is in. Its trail starts again
      * from here, and its confidence becomes {@link Confidence#CONFIRMED}.
      *
@@ -394,6 +409,36 @@ public interface TrainRecord extends PropertyChangeProvider {
      *         the front of the train
      */
     boolean isFrontKnown();
+
+    /**
+     * The Blocks whatever drives this train has set aside for it, such as the
+     * Sections Dispatcher has allocated to it.
+     *
+     * @return the Blocks; empty if none
+     * @since 5.19.2
+     */
+    @Nonnull
+    Set<Block> getReservedBlocks();
+
+    /**
+     * @return true if whatever drives this train keeps it to its
+     *         {@link #getReservedBlocks()}, as Dispatcher does a train it runs
+     *         automatically, so that it doesn't enter any other Block
+     * @since 5.19.2
+     */
+    boolean isKeptToReservedBlocks();
+
+    /**
+     * Set the Blocks set aside for this train, and whether it is kept to
+     * them. Called by whatever drives the train, such as Dispatcher, each time
+     * they change, and with an empty set when it stops driving the train.
+     *
+     * @param blocks     the Blocks
+     * @param keptToThem true if the train is kept to them: it is driven
+     *                   automatically, not by a person
+     * @since 5.19.2
+     */
+    void setReservedBlocks(@Nonnull Set<Block> blocks, boolean keptToThem);
 
     /**
      * @return the end of the train that led when it last moved, or null if
@@ -481,6 +526,7 @@ public interface TrainRecord extends PropertyChangeProvider {
         private final float speedSetting;
         private final boolean forward;
         private final boolean release;
+        private final boolean heardAfter;
         private final long timeNanos;
         private final java.time.Instant time;
 
@@ -498,10 +544,33 @@ public interface TrainRecord extends PropertyChangeProvider {
          */
         public SpeedCommand(@Nonnull LocoAddress address, float speedSetting, boolean forward, boolean release,
                 long timeNanos, @Nonnull java.time.Instant time) {
+            this(address, speedSetting, forward, release, false, timeNanos, time);
+        }
+
+        /**
+         * @param address      the loco's address
+         * @param speedSetting the speed setting, as
+         *                     {@link Throttle#getSpeedSetting()} gives it: 0
+         *                     to 1, or less than 0 for an emergency stop
+         * @param forward      true if the direction is forward
+         * @param release      true if this is the release of the loco's
+         *                     address, which leaves it at the speed and
+         *                     direction given
+         * @param heardAfter   for a release: true if every command to the
+         *                     loco after it will be heard, whichever cab sends
+         *                     it, so that a loco with nothing heard since
+         *                     still has the speed and direction given
+         * @param timeNanos    when, on the {@link System#nanoTime()} scale
+         * @param time         when, as a wall-clock time
+         * @since 5.19.2
+         */
+        public SpeedCommand(@Nonnull LocoAddress address, float speedSetting, boolean forward, boolean release,
+                boolean heardAfter, long timeNanos, @Nonnull java.time.Instant time) {
             this.address = Objects.requireNonNull(address, "address");
             this.speedSetting = speedSetting;
             this.forward = forward;
             this.release = release;
+            this.heardAfter = release && heardAfter;
             this.timeNanos = timeNanos;
             this.time = Objects.requireNonNull(time, "time");
         }
@@ -554,6 +623,16 @@ public interface TrainRecord extends PropertyChangeProvider {
          */
         public boolean isRelease() {
             return release;
+        }
+
+        /**
+         * @return true if this is a release after which every command to the
+         *         loco will be heard, whichever cab sends it: until one is,
+         *         the loco keeps the speed and direction given
+         * @since 5.19.2
+         */
+        public boolean isHeardAfter() {
+            return heardAfter;
         }
 
         /**
@@ -761,6 +840,45 @@ public interface TrainRecord extends PropertyChangeProvider {
             ENTERED_END_UNKNOWN,
             /** The Block's value named it as the train that entered. */
             SETTLED_BY_VALUE,
+            /**
+             * Of the trains that could have entered the Block, it alone was
+             * moving: the others' last commands stopped them, long enough
+             * before for their momentum.
+             *
+             * @since 5.19.2
+             */
+            SETTLED_BY_MOVEMENT,
+            /**
+             * Of the trains that could have entered the Block, it alone was
+             * heading towards it: it was next to the others' rear ends, and
+             * they had not been told to reverse.
+             *
+             * @since 5.19.2
+             */
+            SETTLED_BY_DIRECTION,
+            /**
+             * Of the trains that could have entered the Block, it alone had
+             * the Block set aside for it; the others were kept to the Blocks
+             * set aside for them, or known to be stopped or heading away.
+             *
+             * @since 5.19.2
+             */
+            SETTLED_BY_RESERVATION,
+            /**
+             * Left its only Block towards a neighbour already shown occupied
+             * with no train to explain it: it is taken to be there.
+             *
+             * @since 5.19.2
+             */
+            ENTERED_UNEXPLAINED,
+            /**
+             * One of several trains that could have entered a Block, and its
+             * only Block then emptied while the Block it could have entered
+             * still showed occupied: it was the one that entered.
+             *
+             * @since 5.19.2
+             */
+            SETTLED_BY_LEAVING,
             /** Another train was named as the one that entered: no longer in doubt. */
             AMBIGUITY_CLEARED,
             /** Left a Block at one of its ends: its sensor went unoccupied. */
@@ -772,7 +890,18 @@ public interface TrainRecord extends PropertyChangeProvider {
             /** None of its Blocks with a detector shows it. */
             NOT_SEEN,
             /** A Block it is in went occupied again. */
-            SEEN_AGAIN
+            SEEN_AGAIN,
+            /**
+             * Told to move, but not seen to reach the next Block by the time
+             * even its slowest estimate had passed the end of the Block.
+             */
+            STALLED,
+            /**
+             * Not seen to reach the next Block by the time even its slowest
+             * estimate had passed the end of the Block, with no command to
+             * move in force.
+             */
+            LOST
         }
 
         private final Rule rule;

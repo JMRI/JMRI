@@ -265,9 +265,9 @@ public final class TrainTrackingChecks {
         }
         if (!neighbours.isEmpty() && !(b.getLengthMm() > 0)) {
             found.add(new Finding(Kind.BLOCK_NO_LENGTH, b, List.of(), Bundle.getMessage(
-                    b.getSensor() == null ? "CheckDarkBlockNoLength" : "CheckBlockNoLength", b.getDisplayName())));
+                    TrainTrackingDetectors.detector(b) == null ? "CheckDarkBlockNoLength" : "CheckBlockNoLength", b.getDisplayName())));
         }
-        if (neighbours.isEmpty() && b.getSensor() != null) {
+        if (neighbours.isEmpty() && TrainTrackingDetectors.detector(b) != null) {
             found.add(new Finding(Kind.BLOCK_NO_PATHS, b, List.of(),
                     Bundle.getMessage("CheckBlockNoPaths", b.getDisplayName())));
         }
@@ -277,7 +277,7 @@ public final class TrainTrackingChecks {
                         Bundle.getMessage("CheckPathOneWay", b.getDisplayName(), n.getDisplayName())));
             }
         }
-        if (b.getSensor() == null) {
+        if (TrainTrackingDetectors.detector(b) == null) {
             List<Turnout> blind = new ArrayList<>();
             for (Path p : b.getPaths()) {
                 for (BeanSetting s : p.getSettings()) {
@@ -306,7 +306,7 @@ public final class TrainTrackingChecks {
         List<Block> sorted = new ArrayList<>(blocks);
         sorted.sort(Comparator.comparing(Block::getDisplayName));
         for (Block from : sorted) {
-            if (from.getSensor() == null) {
+            if (TrainTrackingDetectors.detector(from) == null) {
                 continue;
             }
             Map<Block, Integer> ways = waysThroughDark(from);
@@ -342,7 +342,7 @@ public final class TrainTrackingChecks {
         List<Block> frontier = new ArrayList<>();
         depth.put(from, 0);
         for (Block d : plainNeighbours(from)) {
-            if (d.getSensor() == null && !depth.containsKey(d)) {
+            if (TrainTrackingDetectors.detector(d) == null && !depth.containsKey(d)) {
                 depth.put(d, 1);
                 ways.put(d, 1);
                 frontier.add(d);
@@ -356,7 +356,7 @@ public final class TrainTrackingChecks {
                     if (n == from) {
                         continue;
                     }
-                    if (n.getSensor() != null) {
+                    if (TrainTrackingDetectors.detector(n) != null) {
                         Integer at = reachedDepth.get(n);
                         if (at == null || at == level + 1) {
                             reachedDepth.put(n, level + 1);

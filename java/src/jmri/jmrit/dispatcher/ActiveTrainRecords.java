@@ -43,6 +43,7 @@ final class ActiveTrainRecords {
         InstanceManager.getDefault(jmri.jmrit.trainrecord.TrainTrackingMeasurements.class); // measure trains as they run
         TrainRecord record = find(at);
         at.setTrainRecord(record);
+        jmri.jmrit.trainrecord.swing.WarningDialog.start(); // show train tracking's warnings
         Block start = at.getStartBlock();
         if (start != null && start.getState() == Block.OCCUPIED && !record.getBlocks().contains(start)) {
             record.place(List.of(start), false, TrainRecord.Reason.Rule.PLACED_BY_DISPATCHER);

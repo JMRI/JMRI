@@ -261,8 +261,44 @@ public final class TrainPositionEstimator {
             return null;
         }
         return new TrainPositionEstimate(detected.getBlock(), end, detected.getMinMm() + overhang.getMinMm(),
-                detected.getMaxMm() + overhang.getMaxMm(), detected.isLimitedByBlock(), detected.getMinSpeed(),
-                detected.getMaxSpeed(), detected.getTimeNanos());
+                detected.getUnlimitedMinMm() + overhang.getMinMm(), detected.getMaxMm() + overhang.getMaxMm(),
+                detected.isLimitedByBlock(), detected.getMinSpeed(), detected.getMaxSpeed(), detected.getTimeNanos());
+    }
+
+    /**
+     * Estimate where a train record's first detected wheel is, at its leading
+     * end: the part of the train the next Block's detector sees, without its
+     * overhang.
+     *
+     * @param record    the record
+     * @param momentum  its lead loco's decoder momentum
+     * @param nowNanos  the moment, on the {@link System#nanoTime()} scale
+     * @return the estimate, or null if there is none (see the class
+     *         description)
+     */
+    @CheckForNull
+    @InvokeOnLayoutThread
+    static TrainPositionEstimate estimateDetected(@Nonnull TrainRecord record, @Nonnull Momentum momentum,
+            long nowNanos) {
+        if (!record.isPlaced() || record.getLeadingEnd() == null) {
+            return null;
+        }
+        List<TrailEntry> trail = record.getTrail();
+        if (trail.isEmpty()) {
+            return null;
+        }
+        TrailEntry fix = trail.get(trail.size() - 1);
+        BasicRosterEntry entry = record.getFirstRosterEntry();
+        if (fix.getFrom() == null || fix.getEnd() == null || !(entry instanceof RosterEntry)) {
+            return null;
+        }
+        RosterSpeedProfile profile = ((RosterEntry) entry).getSpeedProfile();
+        LocoAddress lead = entry.getDccLocoAddress();
+        if (profile == null || lead == null) {
+            return null;
+        }
+        return estimate(fix.getBlock(), fix.getFrom(), fix.getEnd(), fix.getTimeNanos(),
+                record.getCommands(lead), profile::getSpeed, momentum, nowNanos);
     }
 
     /**
@@ -320,6 +356,7 @@ public final class TrainPositionEstimator {
         double withMomentum = ramp.distanceWithMomentum;
         double without = ramp.distanceWithout;
         double min = Math.min(withMomentum, without);
+        double unlimitedMin = min;
         double max = Math.max(withMomentum, without);
         boolean limited = false;
         double length = lengthOn(block, from);
@@ -330,7 +367,7 @@ public final class TrainPositionEstimator {
         }
         double speedNow = ramp.speed(ramp.setting);
         double speedTarget = ramp.speed(ramp.target);
-        return new TrainPositionEstimate(block, end, min, max, limited, Math.min(speedNow, speedTarget),
+        return new TrainPositionEstimate(block, end, min, unlimitedMin, max, limited, Math.min(speedNow, speedTarget),
                 Math.max(speedNow, speedTarget), now);
     }
 
@@ -382,9 +419,9 @@ public final class TrainPositionEstimator {
         boolean toA = false;
         boolean toB = false;
         for (Path p : block.getPaths()) {
-            if (p.getBlock() == a && p.checkPathSet()) {
+            if (p.getBlock() == a && block.isPathSet(p)) {
                 toA = true;
-            } else if (p.getBlock() == b && p.checkPathSet()) {
+            } else if (p.getBlock() == b && block.isPathSet(p)) {
                 toB = true;
             }
         }

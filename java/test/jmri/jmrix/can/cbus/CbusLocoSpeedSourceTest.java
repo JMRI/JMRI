@@ -232,6 +232,35 @@ public class CbusLocoSpeedSourceTest {
     }
 
     @Test
+    public void testHearsEveryCabUntilACabItCantFollow() {
+        DccLocoAddress three = new DccLocoAddress(3, false);
+        assertTrue(source.hearsEveryCab(three), "every cab's commands cross the bus");
+        assertTrue(!source.hearsEveryCab(new jmri.LocoAddress() {
+            @Override
+            public int getNumber() {
+                return 3;
+            }
+
+            @Override
+            public jmri.LocoAddress.Protocol getProtocol() {
+                return jmri.LocoAddress.Protocol.SELECTRIX;
+            }
+        }), "only DCC locos");
+        sessionFor3(7);
+        source.reply(reply(1, CbusConstants.CBUS_DSPD, 7, 0x80 | 40));
+        assertTrue(source.hearsEveryCab(three), "a known session");
+        source.reply(reply(2, CbusConstants.CBUS_DSPD, 5, 0x80 | 40));
+        assertTrue(!source.hearsEveryCab(three), "a session started before it listened: some cab isn't followed");
+    }
+
+    @Test
+    public void testHearsNoCabOnceDisposed() {
+        source.dispose();
+        assertTrue(!source.hearsEveryCab(new DccLocoAddress(3, false)));
+        source = new CbusLocoSpeedSource(memo);
+    }
+
+    @Test
     public void testDisposeStopsListening() {
         int before = tc.numListeners();
         source.dispose();

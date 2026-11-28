@@ -86,6 +86,18 @@ public class DebugThrottleManager extends AbstractThrottleManager {
         return EnumSet.allOf(SpeedStepMode.class);
     }
 
+    /**
+     * Debug throttles drive no real locos, so with no throttle manager but
+     * debug ones, as on a simulated layout, every command to a loco comes
+     * from a throttle JMRI holds, and is seen.
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean hearsEveryCab(@javax.annotation.Nonnull LocoAddress address) {
+        return jmri.InstanceManager.getList(jmri.ThrottleManager.class).stream()
+                .allMatch(m -> m instanceof DebugThrottleManager);
+    }
+
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DebugThrottleManager.class);
 
 }

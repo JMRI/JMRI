@@ -1,5 +1,6 @@
 package jmri.jmrit.trainrecord;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.Block;
@@ -36,6 +37,20 @@ public final class TrainTrackingDetectors {
     }
 
     /**
+     * A Block's detector: its occupancy sensor, or null for a dark Block or a
+     * ghost Block. A ghost Block's sensor is set by Dispatcher, not by a
+     * detector (Block Table help, Ghost Blocks), so it is treated as dark.
+     *
+     * @param block a Block
+     * @return its sensor, or null
+     * @since 5.19.2
+     */
+    @CheckForNull
+    public static Sensor detector(@Nonnull Block block) {
+        return block.getIsGhost() ? null : block.getSensor();
+    }
+
+    /**
      * Has this Block a detector that can be measured from?
      *
      * @param block a Block
@@ -43,7 +58,7 @@ public final class TrainTrackingDetectors {
      *         the Internal connection's on a layout with hardware
      */
     public static boolean isDetector(@Nonnull Block block) {
-        Sensor sensor = block.getSensor();
+        Sensor sensor = detector(block);
         if (sensor == null) {
             return false;
         }

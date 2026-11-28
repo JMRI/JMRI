@@ -6,9 +6,11 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.Supplier;
 
 import javax.annotation.CheckForNull;
@@ -35,9 +37,22 @@ import jmri.util.ThreadingUtil;
  * train, along a path that is set, that train has entered it at that end.
  * It is dated by when the sensor first reported it (its raw state), not by
  * when any debounce let it through.</li>
- * <li>When it is next to an end of several trains, each becomes
- * {@link Confidence#AMBIGUOUS} until the Block's value says which train it
- * is.</li>
+ * <li>When it is next to an end of several trains, and only one of them was
+ * moving, its lead loco told to move while the others' were told to stop
+ * long enough before (see {@link #isMoving}), that one has entered it.
+ * Otherwise each becomes {@link Confidence#AMBIGUOUS} until the Block's value
+ * says which train it is, or one of them in a single Block leaves it while the
+ * Block it could have entered still shows occupied: that one entered it. A
+ * train with no speed command known, as one driven by a throttle JMRI doesn't
+ * hear, is never ruled out this way. A train is taken to have stopped once its
+ * decoders' deceleration, stored in its roster entries (CV4), would have
+ * stopped it, or after {@link #STOPPED_AFTER_SECONDS} if that isn't known. A
+ * released throttle leaves the loco as it was if every command to it after
+ * the release would be heard ({@link jmri.LocoSpeedSource#hearsEveryCab}).
+ * Failing that, of trains that are each stopped, heading away from the
+ * Block, or kept by what drives them to the Blocks set aside for them (as
+ * Dispatcher does a train it runs automatically), the one the Block was set
+ * aside for has entered it.</li>
  * <li>When it is next to no train's end, but can be reached from an end of
  * one train through a run of Blocks with no detector (each joined to the
  * next along a path that is set, by the one shortest way), that train has
@@ -57,7 +72,11 @@ import jmri.util.ThreadingUtil;
  * </ul>
  * It also places a record when a Block's value is set to something that
  * identifies it, and makes a record for a roster entry or ID tag value that
- * has none.
+ * has none. A value the Block passed along itself, from a neighbour as a
+ * train entered (see {@link Block#isValueFollowed()}), is used for this, and
+ * to say which of several trains entered a Block, only if the
+ * {@link Placer} says so: where trains run close together it can be another
+ * train's.
  * <p>
  * Everything is handled on the layout thread (Swing thread), in the order
  * it happened.
@@ -72,6 +91,8 @@ public class TrainRecordWatcher {
     private final Map<Block, Watched> watched = new HashMap<>();
     private final Map<DefaultTrainRecord, Confidence> beforeAmbiguity = new HashMap<>();
     private final Map<Block, List<Candidate>> ambiguous = new HashMap<>();
+    /** Blocks occupied with no train to explain it, until they empty or a train is taken to be there. */
+    private final Set<Block> unexplained = new HashSet<>();
     private final PropertyChangeListener blockManagerListener = this::blockManagerChanged;
     private final PropertyChangeListener instanceManagerListener = this::instanceManagerChanged;
     private BlockManager blockManager = null;
@@ -100,6 +121,35 @@ public class TrainRecordWatcher {
          */
         @CheckForNull
         TrainRecord recordFor(@CheckForNull Object value);
+
+        /**
+         * A Block's detector shows it occupied when no train could have
+         * entered it, or it no longer does.
+         *
+         * @param block       the Block
+         * @param unexplained true if its occupancy is unexplained
+         */
+        default void unexplained(@Nonnull Block block, boolean unexplained) {
+        }
+
+        /**
+         * @param block a Block
+         * @return true if its detector is not to be believed
+         */
+        default boolean isUntrusted(@Nonnull Block block) {
+            return false;
+        }
+
+        /**
+         * @return true if a value a Block passed along itself (see
+         *         {@link Block#isValueFollowed()}) is used to place a
+         *         record or say which train entered a Block; false if only
+         *         values set on a Block are
+         * @since 5.19.2
+         */
+        default boolean useFollowedValues() {
+            return false;
+        }
     }
 
     /**
@@ -133,6 +183,7 @@ public class TrainRecordWatcher {
                 instanceManagerListener);
         useBlockManager(null);
         ambiguous.clear();
+        unexplained.clear();
         beforeAmbiguity.clear();
     }
 
@@ -227,6 +278,9 @@ public class TrainRecordWatcher {
      * A Block went occupied.
      */
     private void occupied(Block block, long timeNanos, Instant time) {
+        if (placer.isUntrusted(block)) {
+            return;
+        }
         ambiguous.remove(block);
         List<Candidate> candidates = new ArrayList<>();
         for (DefaultTrainRecord r : records.get()) {
@@ -251,8 +305,21 @@ public class TrainRecordWatcher {
         if (candidates.isEmpty()) {
             candidates = throughDarkBlocks(block, timeNanos, time);
         }
+        Candidate moving = candidates.size() > 1 ? onlyOneMoving(candidates, timeNanos) : null;
+        Candidate heading = candidates.size() > 1 && moving == null ? onlyOneHeadingThere(candidates, block, timeNanos)
+                : null;
+        Candidate reserved = candidates.size() > 1 && moving == null && heading == null
+                ? onlyOneReservedFor(candidates, block, timeNanos) : null;
+        Candidate settled = moving != null ? moving : heading != null ? heading : reserved;
         if (candidates.size() == 1 && candidates.get(0).end() != null) {
             enter(block, candidates.get(0), false);
+        } else if (settled != null) {
+            Candidate c = settled;
+            c.record.entered(c.through(Objects.requireNonNull(c.end(), "end")), block, c.end(), c.timeNanos, c.time,
+                    moving != null ? Reason.Rule.SETTLED_BY_MOVEMENT
+                            : heading != null ? Reason.Rule.SETTLED_BY_DIRECTION : Reason.Rule.SETTLED_BY_RESERVATION);
+            beforeAmbiguity.remove(c.record);
+            leaveEmptyFarEnd(c.record);
         } else if (!candidates.isEmpty()) {
             // one train alone here is next to both of its ends, and which leads isn't known
             Reason.Rule rule = candidates.size() == 1 ? Reason.Rule.ENTERED_END_UNKNOWN : Reason.Rule.AMBIGUOUS;
@@ -263,8 +330,258 @@ public class TrainRecordWatcher {
                 c.record.setConfidence(Confidence.AMBIGUOUS, reason(rule, block, time));
             }
             ambiguous.put(block, candidates);
-            settleByValue(block, block.getValue());
+            settleByValue(block, usable(block));
+        } else {
+            placer.unexplained(block, true);
+            unexplained.add(block);
         }
+    }
+
+    /**
+     * How long after a train is told to stop it is taken to have stopped, in
+     * seconds, when its locos' deceleration isn't known: a decoder whose
+     * deceleration (CV4) is up to 33 stops from full speed within it, by NMRA
+     * S-9.2.2.
+     */
+    static final double STOPPED_AFTER_SECONDS = 30;
+
+    /**
+     * How long after its decoders' deceleration would have stopped it from
+     * full speed a train is taken to have stopped, in seconds: its detector
+     * may report it late.
+     */
+    static final double STOPPED_AFTER_MOMENTUM_MARGIN_SECONDS = 2;
+
+    /**
+     * How long after an emergency stop a train is taken to have stopped, in
+     * seconds: it stops at once, but its detector may report it late.
+     */
+    static final double STOPPED_AFTER_EMERGENCY_SECONDS = 2;
+
+    /**
+     * Of several trains that could have entered a Block, the one that was
+     * moving, if it alone was and the others are known to have stopped.
+     *
+     * @param candidates the trains that could have entered it
+     * @param timeNanos  when it went occupied
+     * @return the moving one, if it could have entered at one end only; or
+     *         null if that can't be said
+     */
+    @CheckForNull
+    private static Candidate onlyOneMoving(@Nonnull List<Candidate> candidates, long timeNanos) {
+        Candidate moving = null;
+        for (Candidate c : candidates) {
+            Boolean m = isMoving(c.record, timeNanos);
+            if (m == null) {
+                return null; // not known: it may have been driven by a throttle JMRI doesn't hear
+            }
+            if (m) {
+                if (moving != null) {
+                    return null;
+                }
+                moving = c;
+            }
+        }
+        return moving != null && moving.end() != null ? moving : null;
+    }
+
+    /**
+     * Of several trains that could have entered a Block, the one heading
+     * towards it, if every other one would have had to reverse to enter it
+     * and wasn't told to. Two trains following each other round a circuit
+     * are both next to each Block between them, one at its front and the
+     * other at its rear.
+     *
+     * @param candidates the trains that could have entered it
+     * @param block      the Block
+     * @param timeNanos  when it went occupied
+     * @return the one heading towards it, if it could have entered at one
+     *         end only; or null if that can't be said
+     */
+    @CheckForNull
+    private static Candidate onlyOneHeadingThere(@Nonnull List<Candidate> candidates, @Nonnull Block block,
+            long timeNanos) {
+        Candidate heading = null;
+        for (Candidate c : candidates) {
+            Boolean behind = isBehind(c, block, timeNanos);
+            if (behind == null) {
+                return null; // not known: it may have reversed
+            }
+            if (!behind) {
+                if (heading != null) {
+                    return null;
+                }
+                heading = c;
+            }
+        }
+        return heading != null && heading.end() != null ? heading : null;
+    }
+
+    /**
+     * Of several trains that could have entered a Block, the one that had it
+     * set aside, if every other one could not have: it was kept to the
+     * Blocks set aside for it, which don't include this one, or it is known
+     * to have stopped, or the Block is behind it.
+     *
+     * @param candidates the trains that could have entered it
+     * @param block      the Block
+     * @param timeNanos  when it went occupied
+     * @return the one it was set aside for; or null if that can't be said
+     */
+    @CheckForNull
+    private static Candidate onlyOneReservedFor(@Nonnull List<Candidate> candidates, @Nonnull Block block,
+            long timeNanos) {
+        Candidate reserved = null;
+        for (Candidate c : candidates) {
+            if (c.record.getReservedBlocks().contains(block)) {
+                if (reserved != null) {
+                    return null;
+                }
+                reserved = c;
+            } else if (!c.record.isKeptToReservedBlocks()
+                    && !Boolean.FALSE.equals(isMoving(c.record, timeNanos))
+                    && !Boolean.TRUE.equals(isBehind(c, block, timeNanos))) {
+                return null; // it may have entered it all the same
+            }
+        }
+        return reserved != null && reserved.end() != null ? reserved : null;
+    }
+
+    /**
+     * Whether a Block a train is next to is behind it: on the side of the
+     * end that trailed when it last entered a Block, its lead loco not told
+     * to change direction since.
+     *
+     * @param c         the train, as a candidate to have entered the Block
+     * @param block     the Block
+     * @param timeNanos when it went occupied
+     * @return true if behind the train, false if ahead of it, null if not
+     *         known: the train's direction, or which end is next to the
+     *         Block, isn't known, or it may have reversed
+     */
+    @CheckForNull
+    private static Boolean isBehind(@Nonnull Candidate c, @Nonnull Block block, long timeNanos) {
+        DefaultTrainRecord r = c.record;
+        List<TrainRecord.TrailEntry> trail = r.getTrail();
+        List<Block> blocks = r.getBlocks();
+        if (trail.isEmpty() || blocks.isEmpty()) {
+            return null;
+        }
+        TrainRecord.TrailEntry last = trail.get(trail.size() - 1);
+        if (!sameDirectionSince(r, last.getTimeNanos(), timeNanos)) {
+            return null;
+        }
+        if (blocks.size() == 1) {
+            // a train in one Block came from the Block behind it
+            Block from = last.getFrom();
+            if (from == null || last.getBlock() != blocks.get(0)) {
+                return null;
+            }
+            return from == block;
+        }
+        TrainRecord.End leading = r.isFrontKnown() ? r.getLeadingEnd() : null;
+        if (leading == null || c.atFirst == c.atLast) {
+            return null;
+        }
+        // the Blocks are front first: the first leads if the front does
+        return c.atFirst != (leading == TrainRecord.End.FRONT);
+    }
+
+    /**
+     * @param r     a train
+     * @param since a moment
+     * @param until a later moment
+     * @return true if its lead loco was told one direction at the first
+     *         moment and nothing different until the second; false if it may
+     *         have changed direction, or no command is known
+     */
+    private static boolean sameDirectionSince(@Nonnull TrainRecord r, long since, long until) {
+        jmri.BasicRosterEntry entry = r.getFirstRosterEntry();
+        jmri.LocoAddress lead = entry == null ? null : entry.getDccLocoAddress();
+        if (lead == null) {
+            return false;
+        }
+        Boolean forward = null;
+        for (TrainRecord.SpeedCommand cmd : r.getCommands(lead)) {
+            if (cmd.getTimeNanos() > until) {
+                break;
+            }
+            if (cmd.isRelease()) {
+                if (cmd.isHeardAfter()) {
+                    continue; // nothing heard since: still as it was
+                }
+                return false; // driven by something JMRI may not hear
+            }
+            if (cmd.getTimeNanos() <= since) {
+                forward = cmd.isForward();
+            } else if (forward == null || cmd.isForward() != forward) {
+                return false;
+            }
+        }
+        return forward != null;
+    }
+
+    /**
+     * Whether a train was moving at a moment, from the last speed command to
+     * its lead loco before it.
+     *
+     * @param r         the train
+     * @param timeNanos the moment
+     * @return true if told to move; false if told to stop long enough before
+     *         for it to have stopped; null if not known, as with no command,
+     *         a released throttle that something JMRI doesn't hear could have
+     *         taken, or a stop too recent. A release after which every
+     *         command to the loco is heard leaves it as it was.
+     */
+    @CheckForNull
+    static Boolean isMoving(@Nonnull TrainRecord r, long timeNanos) {
+        jmri.BasicRosterEntry entry = r.getFirstRosterEntry();
+        jmri.LocoAddress lead = entry == null ? null : entry.getDccLocoAddress();
+        if (lead == null) {
+            return null;
+        }
+        TrainRecord.SpeedCommand last = null;
+        for (TrainRecord.SpeedCommand c : r.getCommands(lead)) {
+            if (c.getTimeNanos() <= timeNanos && !c.isHeardAfter()) {
+                last = c;
+            }
+        }
+        if (last == null || last.isRelease()) {
+            return null;
+        }
+        double since = (timeNanos - last.getTimeNanos()) / 1e9;
+        if (last.isEmergencyStop()) {
+            return since >= STOPPED_AFTER_EMERGENCY_SECONDS ? Boolean.FALSE : null;
+        }
+        if (last.getSpeedSetting() > 0) {
+            return true;
+        }
+        return since >= stoppedAfterSeconds(r) ? Boolean.FALSE : null;
+    }
+
+    /**
+     * How long after a train is told to stop it is taken to have stopped: its
+     * slowest loco's decoder deceleration from full speed, if every loco's is
+     * stored in its roster entry, and a margin; otherwise
+     * {@link #STOPPED_AFTER_SECONDS}.
+     *
+     * @param r the train
+     * @return seconds
+     */
+    static double stoppedAfterSeconds(@Nonnull TrainRecord r) {
+        List<jmri.BasicRosterEntry> entries = r.getRosterEntries();
+        if (entries.isEmpty()) {
+            return STOPPED_AFTER_SECONDS;
+        }
+        double longest = 0;
+        for (jmri.BasicRosterEntry e : entries) {
+            Double seconds = DecoderMomentum.stoppingSeconds(e);
+            if (seconds == null) {
+                return STOPPED_AFTER_SECONDS;
+            }
+            longest = Math.max(longest, seconds);
+        }
+        return longest + STOPPED_AFTER_MOMENTUM_MARGIN_SECONDS;
     }
 
     /**
@@ -366,7 +683,7 @@ public class TrainRecordWatcher {
         List<Block> found = new ArrayList<>();
         for (Path p : b.getPaths()) {
             Block n = p.getBlock();
-            if (n != null && n != b && n.getSensor() == null && !exclude.contains(n) && !found.contains(n)
+            if (n != null && n != b && detector(n) == null && !exclude.contains(n) && !found.contains(n)
                     && joinedBySetPath(b, n)) {
                 found.add(n);
             }
@@ -384,8 +701,23 @@ public class TrainRecordWatcher {
         leaveEmptyFarEnd(c.record);
     }
 
+    /**
+     * A Block's value, if it may say which train is there: a value set on
+     * the Block, or one the Block passed along itself if those are used.
+     *
+     * @param block the Block
+     * @return the value, or null if there is none or it isn't to be used
+     */
+    @CheckForNull
+    private Object usable(Block block) {
+        if (block.isValueFollowed() && !placer.useFollowedValues()) {
+            return null;
+        }
+        return block.getValue();
+    }
+
     private static Reason reason(Reason.Rule rule, Block block, Instant time) {
-        return new Reason(rule, block, null, block.getSensor(), List.of(), time);
+        return new Reason(rule, block, null, detector(block), List.of(), time);
     }
 
     /**
@@ -403,7 +735,7 @@ public class TrainRecordWatcher {
                 return;
             }
             Block far = r.getLeadingEnd() == TrainRecord.End.REAR ? blocks.get(0) : blocks.get(blocks.size() - 1);
-            if (far.getSensor() == null || far.getState() != Block.UNOCCUPIED) {
+            if (detector(far) == null || far.getState() != Block.UNOCCUPIED) {
                 return;
             }
             r.left(far, Reason.Rule.LEFT);
@@ -492,6 +824,11 @@ public class TrainRecordWatcher {
      * A Block went unoccupied.
      */
     private void unoccupied(Block block) {
+        placer.unexplained(block, false);
+        unexplained.remove(block);
+        if (placer.isUntrusted(block)) {
+            return;
+        }
         List<Candidate> pending = ambiguous.remove(block);
         if (pending != null) {
             restore(block, pending);
@@ -509,6 +846,17 @@ public class TrainRecordWatcher {
             if (blocks.size() > 1 && atEnd) {
                 enterAtOtherEnd(r, i == 0);
                 r.left(block, Reason.Rule.LEFT);
+            } else if (blocks.size() > 1 && behindSeenEmpty(r, blocks, i)) {
+                // the detectors behind no longer see the train, and only their delay to inactive
+                // still shows their Blocks occupied: the rear has left them, and now this one
+                List<Block> behind = r.getLeadingEnd() == TrainRecord.End.REAR
+                        ? new ArrayList<>(blocks.subList(0, i + 1)) : new ArrayList<>(blocks.subList(i, blocks.size()));
+                if (r.getLeadingEnd() != TrainRecord.End.REAR) {
+                    Collections.reverse(behind);
+                }
+                for (Block b : behind) {
+                    r.left(b, detector(b) == null ? Reason.Rule.LEFT_DARK_BEHIND : Reason.Rule.LEFT);
+                }
             } else if (blocks.size() > 1 && onlyDarkBehind(r, blocks, i)) {
                 // the rear has left this Block, so it has left the dark Blocks behind it too
                 List<Block> behind = r.getLeadingEnd() == TrainRecord.End.REAR
@@ -519,6 +867,21 @@ public class TrainRecordWatcher {
                 for (Block b : behind) {
                     r.left(b, b == block ? Reason.Rule.LEFT : Reason.Rule.LEFT_DARK_BEHIND);
                 }
+            } else if (blocks.size() == 1 && ambiguousAhead(r, block) != null) {
+                // one of the trains that could have entered a Block next to it, and its only Block has emptied
+                // while that Block still shows occupied: it was the one that entered
+                Map.Entry<Block, Candidate> ahead = Objects.requireNonNull(ambiguousAhead(r, block), "ahead");
+                settleByLeaving(ahead.getKey(), ahead.getValue());
+                r.left(block, Reason.Rule.LEFT);
+            } else if (blocks.size() == 1 && unexplainedAhead(r, block) != null) {
+                // it left its only Block towards one already shown occupied with no train to explain it, as when
+                // a fault showed it occupied before the train got there: the train is there now
+                Block ahead = Objects.requireNonNull(unexplainedAhead(r, block), "ahead");
+                unexplained.remove(ahead);
+                placer.unexplained(ahead, false);
+                r.entered(List.of(), ahead, true, System.nanoTime(), Instant.now(), Reason.Rule.ENTERED_UNEXPLAINED);
+                beforeAmbiguity.remove(r);
+                r.left(block, Reason.Rule.LEFT);
             } else if (r.getConfidence() == Confidence.CONFIRMED
                     && (blocks.size() > 1 || darkNeighbours(block, blocks).isEmpty())) {
                 // it can't have left; from its only Block it may have gone on into a dark Block, and is just not seen
@@ -529,6 +892,126 @@ public class TrainRecordWatcher {
                 r.setConfidence(Confidence.ESTIMATED, reason(Reason.Rule.NOT_SEEN, block, Instant.now()));
             }
         }
+    }
+
+    /**
+     * The Block a train in one Block has gone into, if its Block emptied while
+     * the train was not known to have stopped, and it is one of the trains
+     * that could have entered exactly one Block that still shows occupied.
+     *
+     * @param r     a train's record
+     * @param block its only Block, now empty
+     * @return that Block, with the train's entry there, or null if there isn't
+     *         exactly one
+     */
+    @CheckForNull
+    private Map.Entry<Block, Candidate> ambiguousAhead(@Nonnull DefaultTrainRecord r, @Nonnull Block block) {
+        if (Boolean.FALSE.equals(isMoving(r, System.nanoTime()))) {
+            return null; // told to stop long enough ago: a drop-out, not a departure
+        }
+        Map.Entry<Block, Candidate> found = null;
+        for (Map.Entry<Block, List<Candidate>> e : ambiguous.entrySet()) {
+            if (e.getKey() == block || e.getKey().getState() != Block.OCCUPIED) {
+                continue;
+            }
+            for (Candidate c : e.getValue()) {
+                if (c.record == r && c.end() != null) {
+                    if (found != null) {
+                        return null;
+                    }
+                    found = Map.entry(e.getKey(), c);
+                }
+            }
+        }
+        return found;
+    }
+
+    /**
+     * Of the trains that could have entered a Block, this one did: the others
+     * are as they were before.
+     *
+     * @param block the Block
+     * @param c     the train that entered it
+     */
+    private void settleByLeaving(@Nonnull Block block, @Nonnull Candidate c) {
+        List<Candidate> candidates = ambiguous.remove(block);
+        if (candidates != null) {
+            candidates.remove(c);
+            restore(block, candidates);
+        }
+        c.record.entered(c.through(Objects.requireNonNull(c.end(), "end")), block, c.end(), c.timeNanos, c.time,
+                Reason.Rule.SETTLED_BY_LEAVING);
+        beforeAmbiguity.remove(c.record);
+    }
+
+    /**
+     * The Block a train in one Block has gone into, if its Block emptied while
+     * the train was not known to have stopped, and exactly one neighbour,
+     * joined to it along a path that is set and not the Block the train came
+     * from, is occupied with no train to explain it.
+     *
+     * @param r     a train's record
+     * @param block its only Block, now empty
+     * @return the Block, or null if there isn't exactly one
+     */
+    @CheckForNull
+    private Block unexplainedAhead(@Nonnull DefaultTrainRecord r, @Nonnull Block block) {
+        if (Boolean.FALSE.equals(isMoving(r, System.nanoTime()))) {
+            return null; // told to stop long enough ago: a drop-out, not a departure
+        }
+        List<TrainRecord.TrailEntry> trail = r.getTrail();
+        Block from = null;
+        if (!trail.isEmpty() && trail.get(trail.size() - 1).getBlock() == block) {
+            from = trail.get(trail.size() - 1).getFrom();
+        }
+        Block found = null;
+        for (Path p : block.getPaths()) {
+            Block n = p.getBlock();
+            if (n == null || n == block || n == from || !unexplained.contains(n) || n.getState() != Block.OCCUPIED
+                    || !joinedBySetPath(block, n)) {
+                continue;
+            }
+            if (found != null && found != n) {
+                return null;
+            }
+            found = n;
+        }
+        return found;
+    }
+
+    /**
+     * Have the detectors of the Blocks behind one stopped seeing the train,
+     * though their Blocks still show occupied? A detector's delay to inactive
+     * (debounce) keeps its Block occupied for a while after the train has
+     * gone; where the Block behind waits longer than the one ahead, the one
+     * ahead empties first. Its raw state, before the delay, shows the train
+     * has gone.
+     *
+     * @param r      a moving train's record
+     * @param blocks its Blocks
+     * @param i      the index of one of them, not at an end
+     * @return true if the train's leading end is known, at least one Block
+     *         between this one and the trailing end has a detector, and
+     *         every such detector has stopped seeing the train
+     */
+    private boolean behindSeenEmpty(DefaultTrainRecord r, List<Block> blocks, int i) {
+        if (r.getLeadingEnd() == null) {
+            return false;
+        }
+        List<Block> behind = r.getLeadingEnd() == TrainRecord.End.REAR ? blocks.subList(0, i)
+                : blocks.subList(i + 1, blocks.size());
+        boolean any = false;
+        for (Block b : behind) {
+            if (detector(b) == null) {
+                continue;
+            }
+            Watched w = watched.get(b);
+            if (w == null || !w.rawEmpty) {
+                return false;
+            }
+            any = true;
+        }
+        return any;
     }
 
     /**
@@ -545,7 +1028,7 @@ public class TrainRecordWatcher {
         }
         List<Block> behind = leading == TrainRecord.End.REAR ? blocks.subList(0, i) : blocks.subList(i + 1, blocks.size());
         for (Block b : behind) {
-            if (b.getSensor() != null) {
+            if (detector(b) != null) {
                 return false;
             }
         }
@@ -558,7 +1041,7 @@ public class TrainRecordWatcher {
      */
     private static boolean anyDetectedOccupied(DefaultTrainRecord r) {
         for (Block b : r.getBlocks()) {
-            if (b.getSensor() != null && b.getState() == Block.OCCUPIED) {
+            if (detector(b) != null && b.getState() == Block.OCCUPIED) {
                 return true;
             }
         }
@@ -594,20 +1077,11 @@ public class TrainRecordWatcher {
     /**
      * @param from a Block
      * @param to   another
-     * @return true if a path from one to the other is set, either way
+     * @return true if a train can pass between them as the turnouts lie now
+     *         (see {@link Block#isJoinedBySetPath(Block)})
      */
     static boolean joinedBySetPath(@Nonnull Block from, @Nonnull Block to) {
-        for (Path p : from.getPaths()) {
-            if (p.getBlock() == to && p.checkPathSet()) {
-                return true;
-            }
-        }
-        for (Path p : to.getPaths()) {
-            if (p.getBlock() == from && p.checkPathSet()) {
-                return true;
-            }
-        }
-        return false;
+        return from.isJoinedBySetPath(to);
     }
 
     /**
@@ -673,6 +1147,22 @@ public class TrainRecordWatcher {
     }
 
     /**
+     * A Block's detector: its occupancy sensor, or null for a dark Block
+     * or a ghost Block. A ghost Block's sensor is set by Dispatcher, not by
+     * a detector: active while a train is still in the Block before it, and
+     * inactive when that Block empties, even with the train still partly in
+     * the ghost Block (Block Table help, Ghost Blocks). So a ghost Block is
+     * treated as a dark one.
+     *
+     * @param b a Block
+     * @return its sensor, or null
+     */
+    @CheckForNull
+    static Sensor detector(@Nonnull Block b) {
+        return b.getIsGhost() ? null : b.getSensor();
+    }
+
+    /**
      * One Block: its value always, its sensor while any record is placed.
      */
     private final class Watched {
@@ -681,6 +1171,8 @@ public class TrainRecordWatcher {
         private Sensor sensor = null;
         private long rawActiveNanos = 0;
         private Instant rawActiveTime = null;
+        /** The detector has stopped seeing a train, but its delay to inactive still shows it occupied. */
+        private boolean rawEmpty = false;
         private final PropertyChangeListener blockListener = this::blockChanged;
         private final PropertyChangeListener sensorListener = this::sensorChanged;
         private final Sensor.RawStateListener rawListener = this::rawChanged;
@@ -697,7 +1189,7 @@ public class TrainRecordWatcher {
             }
             sensorWatched = on;
             if (on) {
-                attachSensor(block.getSensor());
+                attachSensor(detector(block));
             } else {
                 attachSensor(null);
             }
@@ -710,6 +1202,7 @@ public class TrainRecordWatcher {
             }
             sensor = s;
             rawActiveTime = null;
+            rawEmpty = false;
             if (sensor != null) {
                 sensor.addPropertyChangeListener(sensorListener);
                 sensor.addRawStateListener(rawListener);
@@ -726,19 +1219,20 @@ public class TrainRecordWatcher {
             if (Block.OCC_SENSOR_CHANGE.equals(name)) {
                 onLayoutThread(() -> {
                     if (sensorWatched) {
-                        attachSensor(block.getSensor());
+                        attachSensor(detector(block));
                     }
                 });
             } else if (Block.PROPERTY_STATE.equals(name)) {
-                Object value = block.getValue();
+                Object value = usable(block);
                 boolean nowOccupied = Integer.valueOf(Block.OCCUPIED).equals(e.getNewValue());
                 onLayoutThread(() -> {
                     if (nowOccupied && value != null) {
                         placer.valueSet(block, value); // Block sets a value it takes before it goes occupied
                     }
                 });
-            } else if (Block.PROPERTY_VALUE.equals(name)) {
-                Object value = e.getNewValue();
+            } else if (Block.PROPERTY_VALUE.equals(name) || Block.PROPERTY_VALUE_FOLLOWED.equals(name)) {
+                // a new value, or the same value now set on the Block rather than passed along
+                Object value = usable(block);
                 onLayoutThread(() -> {
                     if (value != null) {
                         settleByValue(block, value);
@@ -757,12 +1251,15 @@ public class TrainRecordWatcher {
                     return;
                 }
                 if (newState == Sensor.ACTIVE) {
+                    rawEmpty = false;
                     if (rawActiveTime == null) {
                         rawActiveNanos = timeNanos;
                         rawActiveTime = now;
                     }
                 } else if (s.getKnownState() != Sensor.ACTIVE) {
                     rawActiveTime = null; // a flicker the debounce hid, or the sensor going inactive
+                } else if (newState == Sensor.INACTIVE) {
+                    rawEmpty = true; // its delay to inactive still shows the Block occupied
                 }
             });
         }
@@ -780,11 +1277,13 @@ public class TrainRecordWatcher {
                     return;
                 }
                 if (state == Sensor.ACTIVE) {
+                    rawEmpty = false;
                     long t = (rawActiveTime != null) ? rawActiveNanos : nowNanos;
                     Instant wall = (rawActiveTime != null) ? rawActiveTime : now;
                     occupied(block, t, wall);
                 } else if (state == Sensor.INACTIVE) {
                     rawActiveTime = null;
+                    rawEmpty = false;
                     unoccupied(block);
                 }
             });

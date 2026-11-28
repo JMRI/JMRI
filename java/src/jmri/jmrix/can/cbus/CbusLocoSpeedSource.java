@@ -70,6 +70,10 @@ public class CbusLocoSpeedSource implements LocoSpeedSource, CanListener, Dispos
     private final TrafficController tc;
     @GuardedBy("this")
     private final Map<Integer, Session> sessions = new HashMap<>();
+    @GuardedBy("this")
+    private boolean listening;
+    @GuardedBy("this")
+    private boolean unknownSessionSeen = false;
     private final CopyOnWriteArrayList<LocoSpeedSource.Listener> listeners = new CopyOnWriteArrayList<>();
 
     /**
@@ -80,6 +84,9 @@ public class CbusLocoSpeedSource implements LocoSpeedSource, CanListener, Dispos
      */
     public CbusLocoSpeedSource(@Nonnull CanSystemConnectionMemo memo) {
         this.tc = memo.getTrafficController();
+        synchronized (this) {
+            listening = tc != null;
+        }
         addTc(tc);
     }
 
@@ -187,6 +194,7 @@ public class CbusLocoSpeedSource implements LocoSpeedSource, CanListener, Dispos
         synchronized (this) {
             Session s = sessions.get(session);
             if (s == null) {
+                unknownSessionSeen = true; // a cab this source can't follow
                 return; // not known: can't say which loco
             }
             speed = toSpeedSetting(speedDir & 0x7f, s.stepMode);
@@ -287,6 +295,23 @@ public class CbusLocoSpeedSource implements LocoSpeedSource, CanListener, Dispos
     }
 
     /**
+     * Every cab's commands cross the bus to the command station, so a DCC
+     * loco is followed whichever cab drives it, as long as this source is
+     * listening and knows every session it has seen a command for. A
+     * command for a session it doesn't know, one that started before it
+     * began listening, means some cab's commands are not followed, so from
+     * then on it says no.
+     * {@inheritDoc}
+     */
+    @Override
+    public synchronized boolean hearsEveryCab(@Nonnull LocoAddress address) {
+        LocoAddress.Protocol p = address.getProtocol();
+        return listening && !unknownSessionSeen
+                && (p == LocoAddress.Protocol.DCC || p == LocoAddress.Protocol.DCC_SHORT
+                        || p == LocoAddress.Protocol.DCC_LONG);
+    }
+
+    /**
      * Stop listening.
      */
     @Override
@@ -294,6 +319,7 @@ public class CbusLocoSpeedSource implements LocoSpeedSource, CanListener, Dispos
         removeTc(tc);
         listeners.clear();
         synchronized (this) {
+            listening = false;
             sessions.clear();
         }
     }
