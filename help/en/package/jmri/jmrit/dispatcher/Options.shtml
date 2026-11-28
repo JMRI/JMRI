@@ -158,6 +158,29 @@
         </li>
 
         <li>
+          <a id="StopByDistanceAsBefore" name="StopByDistanceAsBefore"></a>
+          <p>Check <strong>Stop by Distance as in Earlier Versions</strong> only if your automatic
+          trains were set up to stop where earlier versions of JMRI stopped them, and you don't yet
+          want to change them. Earlier versions applied a train's speed factor a second time while it
+          slowed by distance, so a train with a speed factor below 100% ran on past its stopping
+          point and one above 100% stopped short; read a speed profile's overrun times as seconds
+          rather than milliseconds; and held an approach a little above the minimum reliable speed.
+          Unchecked, the default, trains stop where their speed profile says. Trains with a speed
+          factor of 100% and no overrun times stop in the same place either way.</p>
+        </li>
+
+        <li>
+          <a id="UseDarkBlocks" name="UseDarkBlocks"></a>
+          <p>Check <strong>Track Trains through Dark Blocks</strong> to run automatic trains through
+          dark blocks, blocks in Sections with no occupancy sensor, as through <a href=
+          "../beantable/BlockTable.shtml">ghost blocks</a>. Dispatcher shows each dark block
+          unoccupied, sets it occupied as an automatic train comes to it, and holds it occupied
+          until the train is clear of it. As for ghost blocks, there must not be two next to each
+          other on a route. Unchecked, the default, a dark block's occupancy is not known, and an
+          automatic train is stopped at it.</p>
+        </li>
+
+        <li>
           <p>Check <strong>Use short Active Train names</strong> to use the train name as the
           Active Train name in tables and selection boxes where Active Trains are referenced.
           Uncheck to use the full Active Train name in those locations.</p>

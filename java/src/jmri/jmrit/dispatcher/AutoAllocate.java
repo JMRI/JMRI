@@ -172,8 +172,13 @@ public class AutoAllocate implements Runnable {
                             break;
                         case ALLOCATE_IMMEDIATE:
                             ActiveTrain started = task.getAllocationRequest().getActiveTrain();
+                            if (started == null || task.getAllocationRequest().getSection() == null) {
+                                // allocated, or cancelled, since it was queued
+                                log.debug("Allocation request no longer wanted, not allocated");
+                                break;
+                            }
                             _dispatcher.allocateSection(task.getAllocationRequest(), null);
-                            if (_dispatcher.getPreventDeadlock() && started != null) {
+                            if (_dispatcher.getPreventDeadlock()) {
                                 avoidance.checkNow(started);
                             }
                             break;
@@ -221,6 +226,12 @@ public class AutoAllocate implements Runnable {
                 // Check to see if there is a sensor temporarily block
                 // allocation blocking allocation
                 ActiveTrain activeTrain = ar.getActiveTrain();
+                if (activeTrain == null || ar.getSection() == null) {
+                    // allocated or cancelled since the copy was taken, for
+                    // example an extra Section allocated from the Dispatcher
+                    // window: the request has been disposed of
+                    continue;
+                }
                 if (activeTrain.isTerminating()) {
                     // its requests are removed once the tasks before its terminate are done
                     continue;
@@ -1954,16 +1965,13 @@ public class AutoAllocate implements Runnable {
         }
 
         if (!sec.equals(mActiveTrain.getNextSectionToAllocate())) {
-            log.error("[{}]Allocation request section does not match active train next section to allocate",mActiveTrain.getActiveTrainName());
-            log.error("[{}]Section requested {}",mActiveTrain.getActiveTrainName(), sec.getDisplayName(USERSYS));
-            if (mActiveTrain.getNextSectionToAllocate() != null) {
-                log.error("[{}]Section expected {}",
-                        mActiveTrain.getActiveTrainName(), mActiveTrain.getNextSectionToAllocate().getDisplayName(USERSYS));
-            }
-            if (mActiveTrain.getLastAllocatedSection() != null) {
-                log.error("[{}]Last Section Allocated {}",
-                        mActiveTrain.getActiveTrainName(), mActiveTrain.getLastAllocatedSection().getDisplayName(USERSYS));
-            }
+            // An extra Section asked for from the Dispatcher window or by
+            // extendActiveTrainsPath: no signal at its start is checked here.
+            log.debug("[{}]Allocation request for {} is not the next Section to allocate ({}); last allocated {}",
+                    mActiveTrain.getActiveTrainName(), sec.getDisplayName(USERSYS),
+                    mActiveTrain.getNextSectionToAllocate() != null
+                            ? mActiveTrain.getNextSectionToAllocate().getDisplayName(USERSYS) : "none",
+                    lastSec.getDisplayName(USERSYS));
             return false;
         }
 

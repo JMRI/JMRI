@@ -210,19 +210,39 @@
         </li>
 
         <li>
-          <p><strong>Ghost</strong><span class="since">since 5.11.2</span> The Ghost option is used
-          by Dispatcher to simulate block occupancy for blocks that don't have real occupancy sensors.
-          This option can be used for very short blocks.  It can also be used when turnouts physically
-          have the same block as the throat track segment.  By using a ghost block for the turnout,
-          there are now block boundaries for signal masts and signal mast logic.</p>
+          <p><strong>Ghost</strong><span class="since">since 5.11.2</span> A ghost block is a
+          block with no real occupancy sensor whose occupancy Dispatcher sets for automatic trains.
+          It is used for a very short block, such as a join of no length between two turnouts, or for
+          a turnout given its own block, for example to give block boundaries at its throat for signal
+          masts and Signal Mast Logic.</p>
 
-          <p>A ghost block requires an internal sensor to simulate the occupancy.  The sensor is
-          only used by Dispatcher.  Logix, LogixNG or scripting must not change the sensor state.</p>
+          <p>A ghost block must meet these requirements:</p>
+          <ul>
+            <li>Its sensor is an internal sensor. Only Dispatcher sets it; Logix, LogixNG or scripts
+            must not change it.</li>
 
-          <p>Consecutive ghost blocks will result in errors when a transit is run.  There must be
-          at least one real block between ghost blocks.  Note:  This means ghost blocks cannot be
-          used for both halves of crossovers.  A ghost block could be used for the recommended
-          third block for double crossovers.</p>
+            <li>A ghost block that is real track, such as a turnout, must have its Length entered.
+            Dispatcher then holds it occupied until the train is clear of it: until the block before
+            it is empty, and the block after it has been entered and is empty again. A ghost block with
+            no length is taken as a join: it is cleared as soon as the block before it is empty, so a
+            turnout entered without a length can be cleared, and its Section given to another train,
+            while the end of the train is still on it.</li>
+
+            <li>There must be at least one real block between ghost blocks. If two ghost blocks are
+            next to each other on a train's route, Dispatcher stops the train before the second. So
+            ghost blocks cannot be used for both halves of a crossover; one could be used for the
+            recommended third block of a double crossover.</li>
+
+            <li>A train must not be stopped in a ghost block. A train that stops with its end still on
+            a ghost block with a length keeps it occupied, so its Section is not given to another
+            train, until the train moves on.</li>
+          </ul>
+
+          <p>With <a href="../dispatcher/Options.shtml#UseDarkBlocks">Track Trains through Dark
+          Blocks</a> checked in the Dispatcher options, a block with no sensor at all, a dark block,
+          can be used in the same way, without an internal sensor: Dispatcher sets the block itself,
+          which Signal Mast Logic follows. Simple Signal Logic for signal heads watches sensors, as
+          Logix, LogixNG or scripts may, and they need a ghost block.</p>
         </li>
 
         <li>

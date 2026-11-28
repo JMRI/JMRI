@@ -186,6 +186,14 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
                             dispatcher.setUseStrictTrainTracking(false);
                         }
                     }
+                    if (options.getAttribute("usedarkblocks") != null) {
+                        dispatcher.setUseDarkBlocks(
+                                options.getAttribute("usedarkblocks").getValue().equals("yes"));
+                    }
+                    if (options.getAttribute("stopbydistanceasbefore") != null) {
+                        dispatcher.setStopByDistanceAsBefore(
+                                options.getAttribute("stopbydistanceasbefore").getValue().equals("yes"));
+                    }
                     if (options.getAttribute("minthrottleinterval") != null) {
                         String s = (options.getAttribute("minthrottleinterval")).getValue();
                         dispatcher.setMinThrottleInterval(Integer.parseInt(s));
@@ -329,6 +337,8 @@ public class OptionsFile extends jmri.jmrit.XmlFile implements InstanceManagerAu
         options.setAttribute("waitwheretrainscanstop", "" + (dispatcher.getWaitWhereTrainsCanStop() ? "yes" : "no"));
         options.setAttribute("preventdeadlock", "" + (dispatcher.getPreventDeadlock() ? "yes" : "no"));
         options.setAttribute("usestricttraintracking", "" + (dispatcher.getUseStrictTrainTracking() ? "yes" : "no"));
+        options.setAttribute("stopbydistanceasbefore", "" + (dispatcher.getStopByDistanceAsBefore() ? "yes" : "no"));
+        options.setAttribute("usedarkblocks", "" + (dispatcher.getUseDarkBlocks() ? "yes" : "no"));
         options.setAttribute("minthrottleinterval", "" + (dispatcher.getMinThrottleInterval()));
         options.setAttribute("fullramptime", "" + (dispatcher.getFullRampTime()));
         options.setAttribute("hasoccupancydetection", "" + (dispatcher.getHasOccupancyDetection() ? "yes" : "no"));

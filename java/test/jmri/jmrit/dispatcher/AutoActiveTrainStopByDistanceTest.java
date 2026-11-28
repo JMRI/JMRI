@@ -197,7 +197,8 @@ public class AutoActiveTrainStopByDistanceTest {
         ActiveTrain at = dispatcher.getActiveTrainsList().get(0);
         aat = at.getAutoActiveTrain();
         assertNotNull(at.getRosterEntry(), "roster entry");
-        aat.setMinReliableOperatingSpeed(MIN_RELIABLE);
+        aat.setSpeedFactor(speedFactor);
+        aat.setMinReliableOperatingSpeed(MIN_RELIABLE); // also gives the engineer the speed factor
         aat.setStopByDistanceMm(stopDistanceMm);
 
         int sections = block5Occupied ? 2 : 3;
@@ -205,6 +206,28 @@ public class AutoActiveTrainStopByDistanceTest {
                 "Allocated sections should be " + sections);
         JUnitUtil.waitFor(() -> aat.getThrottle() != null && aat.getThrottle().getSpeedSetting() > 0.0f,
                 "Failed to start");
+    }
+
+    /** The train's speed factor, set when it is started. */
+    private float speedFactor = 1.0f;
+
+    /**
+     * A train with a speed factor slows to its minimum reliable speed, not to
+     * that speed divided by the factor: the stop is planned in the throttle's
+     * actual settings, against the speed profile.
+     */
+    @Test
+    public void testSlowsToMinimumWithASpeedFactor() {
+        speedFactor = 1.5f;
+        startTrain();
+        runToFinalSection();
+        // without the fix it holds MIN_RELIABLE / 1.5, below the minimum reliable speed
+        JUnitUtil.waitFor(() -> speed() < MIN_RELIABLE + 0.01f, () -> "did not slow to a crawl, speed " + speed());
+        JUnitUtil.waitFor(500);
+        assertEquals(MIN_RELIABLE, speed(), 0.01f, "keeps the minimum reliable speed, whatever the speed factor");
+        JUnitUtil.setBeanStateAndWait(stopSensor, Sensor.ACTIVE);
+        JUnitUtil.waitFor(() -> speed() < TOLERANCE, () -> "did not stop on the sensor, speed " + speed());
+        finish();
     }
 
     private void set(int block, int state) {
@@ -342,6 +365,28 @@ public class AutoActiveTrainStopByDistanceTest {
         JUnitUtil.waitFor(() -> speed() < TOLERANCE,
                 () -> "did not stop on entering the Block beyond its Section, speed " + speed());
         jmri.util.JUnitAppender.assertWarnMessageStartsWith("AAA: stopping sensor IS_STOP_B7 has not stopped the train");
+        finish();
+    }
+
+    /**
+     * The stopping sensor stops the train, but it is too near the end of the
+     * Section for the train to stop in, and the train runs on into Block 8:
+     * that is reported, with the sensor and the Section, so that the cause is
+     * clear.
+     */
+    @Test
+    public void testRunningPastTheSectionAfterTheSensorIsReported() {
+        startTrain(0.0f, null);
+        runToFinalSection();
+        headInto(6);
+        set(5, Sensor.INACTIVE);
+        headInto(7);
+        set(6, Sensor.INACTIVE);
+        JUnitUtil.setBeanStateAndWait(stopSensor, Sensor.ACTIVE);
+        JUnitUtil.waitFor(() -> speed() < TOLERANCE, () -> "did not stop on the sensor, speed " + speed());
+        JUnitUtil.setBeanStateAndWait(block8Sensor, Sensor.ACTIVE);  // the train coasted on past its Section
+        jmri.util.JUnitAppender.assertWarnMessageStartsWith(
+                "AAA: stopping sensor IS_STOP_B7 stopped the train, but it ran on past the end of Section");
         finish();
     }
 

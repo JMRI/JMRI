@@ -105,6 +105,45 @@ public class AutoTrainActionTest {
                 "an action cleared before it continued is not run");
     }
 
+    // A pre-start action with no delay runs at once and removes itself from the train's
+    // list of actions while isDelayedStart is still walking that list.
+    @Test
+    public void testPrestartActionsWithNoDelay() {
+        DispatcherFrame df = Mockito.mock(DispatcherFrame.class);
+        InstanceManager.setDefault(DispatcherFrame.class, df);
+        ActiveTrain at = new ActiveTrain(new jmri.implementation.DefaultTransit("TT1"), "Train", ActiveTrain.USER);
+
+        Section section = new DefaultSection("TS1");
+        AllocatedSection as = Mockito.mock(AllocatedSection.class);
+        Mockito.when(as.getSection()).thenReturn(section);
+        AutoActiveTrain.AutoEngineer engineer = Mockito.mock(AutoActiveTrain.AutoEngineer.class);
+        AutoActiveTrain aat = Mockito.mock(AutoActiveTrain.class);
+        Mockito.when(aat.getActiveTrain()).thenReturn(at);
+        Mockito.when(aat.getCurrentAllocatedSection()).thenReturn(as);
+        Mockito.when(aat.getAutoEngineer()).thenReturn(engineer);
+        AutoTrainAction action = new AutoTrainAction(aat);
+
+        TransitSection ts = new TransitSection(section, 1, Section.FORWARD);
+        ts.addAction(new TransitSectionAction(TransitSectionAction.PRESTARTDELAY,
+                TransitSectionAction.PRESTARTRESUME, 10000, 0, 0, "", ""));
+        ts.addAction(new TransitSectionAction(TransitSectionAction.PRESTARTACTION,
+                TransitSectionAction.LOCOFUNCTION, 0, 1, 0, "", "On"));
+        ts.addAction(new TransitSectionAction(TransitSectionAction.PRESTARTACTION,
+                TransitSectionAction.LOCOFUNCTION, 0, 2, 0, "", "On"));
+        ts.addAction(new TransitSectionAction(TransitSectionAction.PRESTARTACTION,
+                TransitSectionAction.LOCOFUNCTION, 0, 3, 0, "", "On"));
+        action.addTransitSection(ts);
+
+        try {
+            Assertions.assertTrue(action.isDelayedStart(-1.0f, 0.5f), "the start is held for the pre-start delay");
+            Mockito.verify(engineer).setFunction(1, true);
+            Mockito.verify(engineer).setFunction(2, true);
+            Mockito.verify(engineer).setFunction(3, true);
+        } finally {
+            action.clearRemainingActions(); // ends the pre-start delay's thread
+        }
+    }
+
     @BeforeEach
     public void setUp() {
         JUnitUtil.setUp();

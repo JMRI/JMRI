@@ -635,6 +635,20 @@ public class SimulatedLayoutTest {
     }
 
     @Test
+    public void testGhostBlock() {
+        Block[] b = line();
+        b[2].setIsGhost(true);
+        VirtualTrain t = train("T", 3, 200, Detection.entireTrain());
+        layout.place(t, b[1], b[0], 400.0);
+        speed(3, 100, true);
+        layout.runFor(2.0);
+        assertEquals(b[2], truthOf(t).getFrontBlock(), "crossed the ghost Block's boundary");
+        flush();
+        assertEquals(Sensor.INACTIVE, sensors.get(2).getKnownState(), "a ghost Block's sensor is left to Dispatcher");
+        assertTrue(layout.getSensorsNotReported().isEmpty(), "and is not one the simulator should report");
+    }
+
+    @Test
     public void testSensorOnAnotherConnection() {
         Block[] b = line();
         // a sensor of no connection the simulator has an output for

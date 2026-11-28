@@ -207,8 +207,9 @@ public class AutoActiveTrain implements ThrottleListener {
         if (_autoEngineer.isStopped() && getTargetSpeed() == 0.0f && speed > 0.0f) {
             boolean hold = _autoTrainAction.isDelayedStart(-1.0f, speed);
             log.debug("{}: delayedStart check (no-distance): hold={}", _activeTrain.getTrainName(), hold);
-            if (_autoTrainAction.isDelayedStart(-1.0f, speed))
+            if (hold) {
                 return;
+            }
         }
         _autoEngineer.setTargetSpeed(speed);
     }
@@ -1425,20 +1426,65 @@ public class AutoActiveTrain implements ThrottleListener {
         if ( !(getTargetSpeed() == 0.0f || isStopping())
                 && _nextBlock != null
                 && _currentBlock != null
-                && _nextBlock.getSensor() != null
-                && _nextBlock.getIsGhost()) {
-            if ( _currentBlock.getIsGhost()) {
+                && isUndetected(_nextBlock)) {
+            if (isUndetected(_currentBlock)) {
                 log.error("Stopping due to two consecutive no sensor blocks [{}], [{}]",
                         _currentBlock.getDisplayName(), _nextBlock.getDisplayName());
-            } else {
-                try {
-                    _currentBlock.addPropertyChangeListener(new DarkTerritoryListener(_nextBlock.getSensor()));
-                    _nextBlock.getSensor().setKnownState(Sensor.ACTIVE);
-                } catch (jmri.JmriException ex) {
-                    log.error("Error entering darkterratory");
-                }
+                saveSpeedAndDirection();
+                setSpeedImmediate(-1); // Estop
+                setSavedStatus(_activeTrain.getStatus());
+                _activeTrain.setStatus(ActiveTrain.STOPPED);
+            } else if (!GhostHold.isHeld(_nextBlock)) {
+                new GhostHold(_nextBlock, _currentBlock, blockAfterGhost(_nextBlock),
+                        holdUntilClear(_nextBlock)).start();
             }
         }
+    }
+
+    /**
+     * Whether Dispatcher drives a Block's occupancy itself: a ghost Block,
+     * through its internal sensor, or, with the Dark Blocks option, a Block
+     * with no sensor at all.
+     *
+     * @param b a Block
+     * @return true if b is a ghost Block, or a dark Block Dispatcher tracks
+     */
+    private boolean isUndetected(Block b) {
+        if (b.getSensor() == null) {
+            return _dispatcher.getUseDarkBlocks();
+        }
+        return b.getIsGhost();
+    }
+
+    /**
+     * Whether a ghost Block is held until the train is clear of it. A ghost
+     * Block of no length, a join between two turnouts as ghost Blocks were
+     * designed for, is cleared when the Block before it empties, as before:
+     * the train is past it then. A ghost Block with a length can still have
+     * the end of the train on it then, so it is held. A dark Block is always
+     * held.
+     *
+     * @param b a ghost Block, or a dark Block
+     * @return true to hold it until the train is clear of it
+     */
+    private static boolean holdUntilClear(Block b) {
+        return b.getSensor() == null || b.getLengthMm() > 0.0f;
+    }
+
+    /**
+     * The Block a train goes into after a ghost Block, on its route.
+     *
+     * @param ghost the ghost Block
+     * @return the Block after it, or null if not known yet
+     */
+    @CheckForNull
+    private Block blockAfterGhost(Block ghost) {
+        for (AllocatedSection as : _activeTrain.getAllocatedSectionList()) {
+            if (as.getSection().getBlockList().contains(ghost)) {
+                return getNextBlock(ghost, as);
+            }
+        }
+        return null;
     }
 
     /*
@@ -1542,24 +1588,88 @@ public class AutoActiveTrain implements ThrottleListener {
      * @return true if no errors else false
      */
     private boolean checkTurn(AllocatedSection as) {
-        if (as != null && as.getAutoTurnoutsResponse() != null) {
-            if (_turnoutStateNeeded  != null && _turnoutStateListener != null) {
-                _turnoutStateNeeded.removePropertyChangeListener("KnownState",_turnoutStateListener);
-                _turnoutStateNeeded = null;
-                _turnoutStateListener =null;
+        return checkTurn(as, _dispatcher.getAutoTurnoutsHelper());
+    }
+
+    /**
+     * Check that all turnouts in a section have finished setting, as
+     * {@link #checkTurn(AllocatedSection)}.
+     *
+     * @param as     Allocated section whose turnouts need to be checked.
+     * @param helper the Dispatcher's turnout checker
+     * @return true if no errors else false
+     */
+    // package access for testing
+    synchronized boolean checkTurn(AllocatedSection as, AutoTurnouts helper) {
+        stopWaitingForTurnout();
+        if (as == null || as.getAutoTurnoutsResponse() == null) {
+            return true;
+        }
+        while (true) {
+            Turnout to = helper.checkStateAgainstList(as.getAutoTurnoutsResponse());
+            if (to == null) {
+                return true;
             }
-            _turnoutStateNeeded = _dispatcher.getAutoTurnoutsHelper().checkStateAgainstList(as.getAutoTurnoutsResponse());
-            if (_turnoutStateNeeded != null) {
-                _turnoutStateNeeded.addPropertyChangeListener("KnownState",_turnoutStateListener = (PropertyChangeEvent e) -> {
-                    _turnoutStateNeeded.removePropertyChangeListener("KnownState",_turnoutStateListener);
-                    _turnoutStateListener=null;
-                    _turnoutStateNeeded=null;
-                    setSpeedBySignal();
-                });
+            waitForTurnout(to);
+            // it may have finished between the check and the listener being added,
+            // and then would not be heard of again
+            if (helper.checkStateAgainstList(as.getAutoTurnoutsResponse()) == to) {
                 return false;
             }
+            stopWaitingForTurnout();
         }
-        return true;
+    }
+
+    /**
+     * Listen for a turnout the train is waiting for to change. The listener
+     * knows its own turnout, so it doesn't depend on fields another thread
+     * may have changed by the time it is called.
+     *
+     * @param to the turnout
+     */
+    private synchronized void waitForTurnout(Turnout to) {
+        PropertyChangeListener listener = new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent e) {
+                turnoutChanged(to, this);
+            }
+        };
+        _turnoutStateNeeded = to;
+        _turnoutStateListener = listener;
+        to.addPropertyChangeListener("KnownState", listener);
+    }
+
+    /**
+     * Stop listening for the turnout the train is waiting for, if any.
+     */
+    private synchronized void stopWaitingForTurnout() {
+        if (_turnoutStateNeeded != null && _turnoutStateListener != null) {
+            _turnoutStateNeeded.removePropertyChangeListener("KnownState", _turnoutStateListener);
+        }
+        _turnoutStateNeeded = null;
+        _turnoutStateListener = null;
+    }
+
+    /**
+     * A turnout the train waited for has changed. Only the listener still
+     * waited on sets the speed again; one already replaced, or one left from
+     * before the train was disposed, just stops listening.
+     *
+     * @param to       the turnout
+     * @param listener the listener that heard the change
+     */
+    private synchronized void turnoutChanged(Turnout to, PropertyChangeListener listener) {
+        if (listener != _turnoutStateListener) {
+            to.removePropertyChangeListener("KnownState", listener);
+            return;
+        }
+        stopWaitingForTurnout();
+        setSpeedBySignal();
+    }
+
+    // package access for testing
+    synchronized Turnout getTurnoutWaitedFor() {
+        return _turnoutStateNeeded;
     }
 
     private void setSpeedBySignalMast() {
@@ -2426,18 +2536,43 @@ public class AutoActiveTrain implements ThrottleListener {
      */
     private synchronized void handleStopSensorChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("KnownState") && (int) e.getNewValue() == Sensor.ACTIVE) {
-            stopBackstop();
+            Sensor sensor = _stopSensor;
             _stopSensor.removePropertyChangeListener(_stopSensorListener);
             _stoppingBySensor = false;
             _stopSensorListener = null;
             _stopSensor = null;
             if (_needSetSpeed) {
                 _needSetSpeed = false;
+                stopBackstop();
                 setSpeedBySignal();
             } else {
+                StopBackstop backstop = _backstop;
+                if (backstop != null) {
+                    // keep watching beyond the Section until the train is given a speed again
+                    String section = _currentAllocatedSection == null ? ""
+                            : _currentAllocatedSection.getSection().getDisplayName(USERSYS);
+                    backstop.sensorStopped(reason -> reportRunPastStop(sensor, section, reason));
+                }
                 setStopNow();
             }
         }
+    }
+
+    /**
+     * The stopping sensor stopped the train, but it has run on past the end of
+     * the Section it was stopping in: say so, and why, as the sensor leaves the
+     * train too little room to stop. The train has already been told to stop.
+     *
+     * @param sensor  the stopping sensor
+     * @param section the name of the Section the train was stopping in
+     * @param reason  what showed the train beyond the Section
+     */
+    private void reportRunPastStop(Sensor sensor, String section, String reason) {
+        log.warn("{}: stopping sensor {} stopped the train, but it ran on past the end of Section {}: {}."
+                + " The train needs more room to stop than the sensor leaves before the end of the Section;"
+                + " move the sensor further from the end, or lower the stopping speed or the loco's"
+                + " deceleration (momentum)",
+                _activeTrain.getTrainName(), sensor.getDisplayName(USERSYS), section, reason);
     }
 
     private synchronized void setStopNow() {
@@ -2463,6 +2598,11 @@ public class AutoActiveTrain implements ThrottleListener {
      */
     private void setStopByBlockOccupancy(boolean ignoreNotOccupied) {
         // note: _stoppingBlock must be set before invoking this method
+        Block beforeGhost = GhostHold.blockBefore(_stoppingBlock);
+        if (beforeGhost != null) {
+            // a ghost Block is held until the train is clear of it: watch the Block the train came from
+            _stoppingBlock = beforeGhost;
+        }
         //  verify that _stoppingBlock is actually occupied, if not stop immediately
         if (_stoppingBlock.getState() == Block.OCCUPIED || ignoreNotOccupied) {
             setDecreasedSpeedBeforeStop();
@@ -2803,11 +2943,7 @@ public class AutoActiveTrain implements ThrottleListener {
         }
         _controllingSignalMast = null;
         _conSignalMastListener = null;
-        if (_turnoutStateNeeded != null && _turnoutStateListener != null) {
-            _turnoutStateNeeded.removePropertyChangeListener(_turnoutStateListener);
-        }
-        _turnoutStateNeeded = null;
-        _turnoutStateListener = null;
+        stopWaitingForTurnout();
     }
 
     // the wait for the train to stop whose stop tasks are still to run, null if none
@@ -2974,6 +3110,144 @@ public class AutoActiveTrain implements ThrottleListener {
     // _________________________________________________________________________________________
     // this class handles the interface with the throttle
     // (This class started from code by Pete Cressman contained in Warrant.java.)
+    /**
+     * The speed factor given to RosterSpeedProfile's planners: 1, since they
+     * send their settings straight to the throttle, so those settings must be
+     * the throttle's actual ones.
+     */
+    private static final float NO_SPEED_FACTOR = 1.0f;
+
+    /**
+     * Holds a ghost Block's sensor active, or a dark Block occupied, while a
+     * train is on it. A ghost Block of no length is held only until the Block
+     * before it empties, as before. Neither has a detector, so the train's tail can't be seen leaving it:
+     * it has left once the Blocks either side of the ghost on the train's
+     * route are both empty, the one before it emptied and the one after it
+     * entered and emptied. Clearing the sensor when only the Block before
+     * empties, as before, freed the ghost (often a turnout) with the end
+     * of the train still on it, so another train could be given it.
+     */
+    static class GhostHold implements PropertyChangeListener {
+        // by identity: Blocks are equal by system name, and a Block may be replaced by one of the same name
+        private static final java.util.Map<Block, GhostHold> HELD =
+                java.util.Collections.synchronizedMap(new java.util.IdentityHashMap<>());
+        private final Block ghost;
+        private final Block before;
+        private Block after;
+        private final boolean untilClear;
+        private boolean afterEntered = false;
+
+        /**
+         * @return true if a train is holding this ghost Block
+         * @param ghost a ghost Block
+         */
+        static boolean isHeld(Block ghost) {
+            return HELD.containsKey(ghost);
+        }
+
+        /**
+         * The Block a train came into a held ghost Block from. Its tail is
+         * off that Block when it empties, the moment the ghost's sensor
+         * used to be cleared, so a stop that watches the ghost watches it
+         * instead.
+         *
+         * @param ghost a Block
+         * @return the Block before it, if a train is holding it; else null
+         */
+        @CheckForNull
+        static Block blockBefore(Block ghost) {
+            GhostHold h = HELD.get(ghost);
+            return h == null ? null : h.before;
+        }
+
+        /**
+         * @param ghost      the ghost or dark Block
+         * @param before     the Block the train comes from
+         * @param after      the Block the train goes into after it, if known
+         * @param untilClear true to hold it until the train is clear of it;
+         *                   false to clear it when the Block before empties
+         */
+        GhostHold(Block ghost, Block before, @CheckForNull Block after, boolean untilClear) {
+            this.ghost = ghost;
+            this.before = before;
+            this.after = untilClear ? after : null;
+            this.untilClear = untilClear;
+        }
+
+        void start() {
+            HELD.put(ghost, this);
+            before.addPropertyChangeListener(this);
+            if (after != null) {
+                after.addPropertyChangeListener(this);
+            }
+            setGhost(Sensor.ACTIVE);
+        }
+
+        @Override
+        public void propertyChange(PropertyChangeEvent e) {
+            if (!"state".equals(e.getPropertyName())) {
+                return;
+            }
+            if (!untilClear) {
+                if (before.getState() == Block.UNOCCUPIED) {
+                    end(); // a ghost of no length: the train is past it
+                }
+                return;
+            }
+            if (after == null && before.getState() == Block.UNOCCUPIED) {
+                // not known when the ghost was set: the neighbour the train's front is in
+                for (Path p : ghost.getPaths()) {
+                    Block n = p.getBlock();
+                    if (n != null && n != before && n.getState() == Block.OCCUPIED) {
+                        after = n;
+                        after.addPropertyChangeListener(this);
+                        break;
+                    }
+                }
+                if (after == null) {
+                    end(); // nothing either side of the ghost: the train is not on it
+                    return;
+                }
+            }
+            if (after != null && after.getState() == Block.OCCUPIED) {
+                afterEntered = true;
+            }
+            if (before.getState() == Block.UNOCCUPIED && afterEntered
+                    && after.getState() == Block.UNOCCUPIED) {
+                end();
+            }
+        }
+
+        private void end() {
+            before.removePropertyChangeListener(this);
+            if (after != null) {
+                after.removePropertyChangeListener(this);
+            }
+            HELD.remove(ghost);
+            setGhost(Sensor.INACTIVE);
+        }
+
+        private void setGhost(int state) {
+            Sensor s = ghost.getSensor();
+            if (s == null) {
+                // a dark Block: no sensor, so set the Block itself
+                log.trace("Dark Block {} {}", ghost.getDisplayName(), state == Sensor.ACTIVE ? "occupied" : "unoccupied");
+                if (state == Sensor.ACTIVE) {
+                    ghost.goingActive();
+                } else {
+                    ghost.goingInactive();
+                }
+                return;
+            }
+            try {
+                log.trace("Ghost Block {} sensor {}", ghost.getDisplayName(), state == Sensor.ACTIVE ? "active" : "inactive");
+                s.setKnownState(state);
+            } catch (jmri.JmriException ex) {
+                log.error("Could not set ghost Block {}'s sensor", ghost.getDisplayName(), ex);
+            }
+        }
+    }
+
     class AutoEngineer  {
 
         AutoEngineer(DccThrottle throttle, RosterEntry rosterEntry) {
@@ -3120,14 +3394,20 @@ public class AutoActiveTrain implements ThrottleListener {
                             forward
                         );
                         // Delegate the acceleration plan & execution to RosterSpeedProfile
+                        // the target is the actual setting, speed factor and
+                        // limits applied, as for any other speed change; the
+                        // profile sends its settings straight to the throttle.
+                        // With Dispatcher's "as in earlier versions" option, the
+                        // requested speed and the speed factor, as before.
+                        boolean asBefore = _dispatcher.getStopByDistanceAsBefore();
                         re.getSpeedProfile().runPhysicsAccelerationToTargetThrottle(
                             throttle,
-                            speed,
+                            asBefore ? speed : targetSpeed,
                             AutoActiveTrain.this._driverPowerPercent,
                             AutoActiveTrain.this._additionalWeightTonnes,
                             AutoActiveTrain.this._rollingResistanceCoeff,
                             (float) AutoActiveTrain.this._dispatcher.getScale().getScaleRatio(),
-                            speedFactor
+                            asBefore ? speedFactor : NO_SPEED_FACTOR
                         );
                     }
                 }, "PhysicsRamp " + AutoActiveTrain.this._activeTrain.getTrainName());
@@ -3290,10 +3570,16 @@ public class AutoActiveTrain implements ThrottleListener {
             profile.setMinMaxLimitsKmh(minReliableOperatingSpeed, maxSpeed, _maxSpeedScaleKmh,
                     (float) _dispatcher.getScale().getScaleRatio(), getIsForward());
             speedProfileStoppingIsRunning = true;
+            // The profile sends its settings straight to the throttle, so they
+            // must be the throttle's actual settings: no speed factor, which
+            // only scales the speeds this train is asked to run at. With
+            // Dispatcher's "as in earlier versions" option, planned as before.
+            boolean asBefore = _dispatcher.getStopByDistanceAsBefore();
+            float plannerFactor = asBefore ? speedFactor : NO_SPEED_FACTOR;
             if (toMinimum) {
-                profile.planApproachToMinOverDistance(throttle, distanceMm, speedFactor);
+                profile.planApproachToMinOverDistance(throttle, distanceMm, plannerFactor, asBefore);
             } else {
-                profile.planStopToZeroOverDistance(throttle, distanceMm, speedFactor);
+                profile.planStopToZeroOverDistance(throttle, distanceMm, plannerFactor, asBefore);
             }
         }
 
@@ -3491,33 +3777,6 @@ public class AutoActiveTrain implements ThrottleListener {
             else if (rampRate.equals(Bundle.getMessage("RAMP_PHYSICS")))
                 return RAMP_PHYSICS;
             return RAMP_NONE;
-        }
-
-        /*
-         * Listener for switching Ghost blocks to unoccupied
-         */
-        static class DarkTerritoryListener implements PropertyChangeListener {
-            private Sensor sensor;
-
-            public DarkTerritoryListener(Sensor sensor) {
-                this.sensor = sensor;
-                log.trace("Sensor[{}]", sensor.getDisplayName());
-            }
-
-            @Override
-            public void propertyChange(PropertyChangeEvent e) {
-                if (e.getPropertyName().equals("state")) {
-                    ((Block) e.getSource()).removePropertyChangeListener(this);
-                    if (e.getNewValue().equals(Block.UNOCCUPIED)) {
-                        try {
-                            log.trace("Sensor INACTIVE[{}]", sensor.getDisplayName());
-                            sensor.setKnownState(Sensor.INACTIVE);
-                        } catch (jmri.JmriException ex) {
-                            log.error("Error leaving darkterratory");
-                        }
-                    }
-                }
-            }
         }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AutoActiveTrain.class);
