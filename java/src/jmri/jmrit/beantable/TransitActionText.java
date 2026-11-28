@@ -58,17 +58,17 @@ public final class TransitActionText {
             case TransitSectionAction.BLOCKENTRY:
                 if (tsa.getDataWhen() > 0) {
                     return MessageFormat.format(rbx.getString("OnBlockEntryDelayedFull"),
-                            new Object[]{"" + tsa.getDataWhen(), tsa.getStringWhen()});
+                            new Object[]{"" + tsa.getDataWhen(), block(tsa.getStringWhen())});
                 }
                 return MessageFormat.format(rbx.getString("OnBlockEntryFull"),
-                        new Object[]{tsa.getStringWhen()});
+                        new Object[]{block(tsa.getStringWhen())});
             case TransitSectionAction.BLOCKEXIT:
                 if (tsa.getDataWhen() > 0) {
                     return MessageFormat.format(rbx.getString("OnBlockExitDelayedFull"),
-                            new Object[]{"" + tsa.getDataWhen(), tsa.getStringWhen()});
+                            new Object[]{"" + tsa.getDataWhen(), block(tsa.getStringWhen())});
                 }
                 return MessageFormat.format(rbx.getString("OnBlockExitFull"),
-                        new Object[]{tsa.getStringWhen()});
+                        new Object[]{block(tsa.getStringWhen())});
             case TransitSectionAction.TRAINSTOP:
                 if (tsa.getDataWhen() > 0) {
                     return MessageFormat.format(rbx.getString("TrainStopDelayedFull"),
@@ -84,17 +84,17 @@ public final class TransitActionText {
             case TransitSectionAction.SENSORACTIVE:
                 if (tsa.getDataWhen() > 0) {
                     return MessageFormat.format(rbx.getString("OnSensorActiveDelayedFull"),
-                            new Object[]{"" + tsa.getDataWhen(), tsa.getStringWhen()});
+                            new Object[]{"" + tsa.getDataWhen(), sensor(tsa.getStringWhen())});
                 }
                 return MessageFormat.format(rbx.getString("OnSensorActiveFull"),
-                        new Object[]{tsa.getStringWhen()});
+                        new Object[]{sensor(tsa.getStringWhen())});
             case TransitSectionAction.SENSORINACTIVE:
                 if (tsa.getDataWhen() > 0) {
                     return MessageFormat.format(rbx.getString("OnSensorInactiveDelayedFull"),
-                            new Object[]{"" + tsa.getDataWhen(), tsa.getStringWhen()});
+                            new Object[]{"" + tsa.getDataWhen(), sensor(tsa.getStringWhen())});
                 }
                 return MessageFormat.format(rbx.getString("OnSensorInactiveFull"),
-                        new Object[]{tsa.getStringWhen()});
+                        new Object[]{sensor(tsa.getStringWhen())});
             case TransitSectionAction.PRESTARTDELAY:
                 return MessageFormat.format(rbx.getString("PreStartDelayFull"),
                         new Object[]{"" + tsa.getDataWhen(), tsa.getStringWhen()});
@@ -131,7 +131,7 @@ public final class TransitActionText {
             case TransitSectionAction.TOMANUALMODE:
                 if (tsa.getStringWhat().length() > 0) {
                     return MessageFormat.format(rbx.getString("ToManualModeAltFull"),
-                            new Object[]{tsa.getStringWhat()});
+                            new Object[]{sensor(tsa.getStringWhat())});
                 }
                 return rbx.getString("ToManualModeFull");
             case TransitSectionAction.SETLIGHT:
@@ -160,16 +160,16 @@ public final class TransitActionText {
                         new Object[]{"" + tsa.getDataWhat1(), Bundle.getMessage("StateOn")});
             case TransitSectionAction.SETSENSORACTIVE:
                 return MessageFormat.format(rbx.getString("SetSensorActiveFull"),
-                        new Object[]{tsa.getStringWhat()});
+                        new Object[]{sensor(tsa.getStringWhat())});
             case TransitSectionAction.SETSENSORINACTIVE:
                 return MessageFormat.format(rbx.getString("SetSensorInactiveFull"),
-                        new Object[]{tsa.getStringWhat()});
+                        new Object[]{sensor(tsa.getStringWhat())});
             case TransitSectionAction.HOLDSIGNAL:
                 return MessageFormat.format(rbx.getString("HoldSignalFull"),
-                        new Object[]{tsa.getStringWhat()});
+                        new Object[]{signal(tsa.getStringWhat())});
             case TransitSectionAction.RELEASESIGNAL:
                 return MessageFormat.format(rbx.getString("ReleaseSignalFull"),
-                        new Object[]{tsa.getStringWhat()});
+                        new Object[]{signal(tsa.getStringWhat())});
             case TransitSectionAction.PRESTARTRESUME:
                 return MessageFormat.format(rbx.getString("PreStartResumeFull"),
                         new Object[]{tsa.getDataWhen()});
@@ -278,7 +278,7 @@ public final class TransitActionText {
             Block b = InstanceManager.getDefault(BlockManager.class).getBlock(nonNull(tsa.getStringWhen()));
             if (b != null && !ts.getSection().getBlockList().contains(b)) {
                 found.add(MessageFormat.format(rbx.getString("ActionsReportBlockNotInSection"),
-                        tsa.getStringWhen(), ts.getSection().getDisplayName()));
+                        b.getDisplayName(), ts.getSection().getDisplayName()));
             }
         }
         if (tsa.getWhenCode() == TransitSectionAction.PRESTARTACTION) {
@@ -310,8 +310,9 @@ public final class TransitActionText {
 
     /**
      * Replace a name an action uses: a Block, Sensor, Signal Head or Mast,
-     * TrainInfo file or Roster entry. Only a whole name that matches exactly
-     * is replaced.
+     * TrainInfo file or Roster entry. Only a whole name is replaced: the name
+     * stored in the action, or, for a Block, Sensor or Signal, another name of
+     * the same one, such as its user name for a stored system name.
      *
      * @param tsa     the action
      * @param oldName the name to replace
@@ -323,9 +324,14 @@ public final class TransitActionText {
         switch (tsa.getWhenCode()) {
             case TransitSectionAction.BLOCKENTRY:
             case TransitSectionAction.BLOCKEXIT:
+                if (same(tsa.getStringWhen(), oldName, TransitActionText::findBlock)) {
+                    tsa.setStringWhen(newName);
+                    changed = true;
+                }
+                break;
             case TransitSectionAction.SENSORACTIVE:
             case TransitSectionAction.SENSORINACTIVE:
-                if (oldName.equals(tsa.getStringWhen())) {
+                if (same(tsa.getStringWhen(), oldName, TransitActionText::findSensor)) {
                     tsa.setStringWhen(newName);
                     changed = true;
                 }
@@ -337,8 +343,18 @@ public final class TransitActionText {
             case TransitSectionAction.SETSENSORACTIVE:
             case TransitSectionAction.SETSENSORINACTIVE:
             case TransitSectionAction.TOMANUALMODE:
+                if (same(tsa.getStringWhat(), oldName, TransitActionText::findSensor)) {
+                    tsa.setStringWhat(newName);
+                    changed = true;
+                }
+                break;
             case TransitSectionAction.HOLDSIGNAL:
             case TransitSectionAction.RELEASESIGNAL:
+                if (same(tsa.getStringWhat(), oldName, TransitActionText::signalBean)) {
+                    tsa.setStringWhat(newName);
+                    changed = true;
+                }
+                break;
             case TransitSectionAction.LOADTRAININFO:
                 if (oldName.equals(tsa.getStringWhat())) {
                     tsa.setStringWhat(newName);
@@ -361,6 +377,66 @@ public final class TransitActionText {
         if (name == null || InstanceManager.getDefault(SensorManager.class).getSensor(name) == null) {
             found.add(MessageFormat.format(rbx.getString("ActionsReportNoSensor"), name));
         }
+    }
+
+    /**
+     * The name to show for a Block an action names: its display name, or the
+     * name stored in the action if there is no such Block.
+     */
+    private static String block(String name) {
+        jmri.NamedBean b = name == null ? null : InstanceManager.getDefault(BlockManager.class).getBlock(name);
+        return b == null ? nonNull(name) : b.getDisplayName();
+    }
+
+    /**
+     * The name to show for a Sensor an action names: its display name, or the
+     * name stored in the action if there is no such Sensor.
+     */
+    private static String sensor(String name) {
+        jmri.NamedBean b = name == null || name.isEmpty() ? null
+                : InstanceManager.getDefault(SensorManager.class).getSensor(name);
+        return b == null ? nonNull(name) : b.getDisplayName();
+    }
+
+    /**
+     * The name to show for a Signal Head or Mast an action names: its display
+     * name, or the name stored in the action if there is no such signal.
+     */
+    private static String signal(String name) {
+        jmri.NamedBean b = signalBean(name);
+        return b == null ? nonNull(name) : b.getDisplayName();
+    }
+
+    private static jmri.NamedBean signalBean(String name) {
+        if (name == null || name.isEmpty()) {
+            return null;
+        }
+        jmri.NamedBean b = InstanceManager.getDefault(SignalHeadManager.class).getSignalHead(name);
+        return b != null ? b : InstanceManager.getDefault(SignalMastManager.class).getSignalMast(name);
+    }
+
+    /**
+     * Whether a name stored in an action and a name given for it are the same
+     * Block, Sensor or Signal: the same name, or names of the same bean, such
+     * as its user name and system name.
+     */
+    private static boolean same(String stored, String given, java.util.function.Function<String, jmri.NamedBean> find) {
+        if (given.equals(stored)) {
+            return true;
+        }
+        if (stored == null || stored.isEmpty()) {
+            return false;
+        }
+        jmri.NamedBean a = find.apply(stored);
+        return a != null && a == find.apply(given);
+    }
+
+    private static jmri.NamedBean findBlock(String name) {
+        return InstanceManager.getDefault(BlockManager.class).getBlock(name);
+    }
+
+    private static jmri.NamedBean findSensor(String name) {
+        return InstanceManager.getDefault(SensorManager.class).getSensor(name);
     }
 
     private static String nonNull(String s) {

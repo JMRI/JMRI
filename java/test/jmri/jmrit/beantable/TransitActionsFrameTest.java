@@ -70,6 +70,17 @@ public class TransitActionsFrameTest {
     }
 
     @Test
+    public void testCopyAsText() {
+        open();
+        String text = frame.reportText();
+        assertTrue(text.contains("Transit East\n  Section 1: SecE\n    When: On Entry to this Section\n"
+                + "    What: Set Sensor \"Gone\" to ACTIVE\n    Problem: Sensor \"Gone\" not found\n"), text);
+        assertTrue(text.contains("Transit West\n  Section 1: SecW\n    When: On Entry to this Section\n"
+                + "    What: Pause for \"2\" fast minutes\n    When: On Entry to this Section\n"
+                + "    What: Set Sensor \"IS1\" to ACTIVE\n"), text);
+    }
+
+    @Test
     public void testChooseOneTransit() {
         open();
         ThreadingUtil.runOnGUI(() -> frame.setTransit("West"));

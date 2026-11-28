@@ -112,12 +112,13 @@
       More information on Actions is located in the Actions. Read <a href=
       "ViewSpecialActions.shtml">more on Actions</a>.</p>
 
-      <h2 id="actionsReport">Listing the Actions of all Transits</h2>
+      <h2 id="actionsReport">Listing the Actions of all Transits<span class="since">since 5.19.2</span></h2>
 
-      <p><span class="since">since 5.19.2</span> Select <strong>Tools &gt; Transit Actions...</strong>
+      <p>Select <strong>Tools &gt; Transit Actions...</strong>
       in the Transit Table to see the Actions of every Transit in one table, with a row for each
       Action: its Transit, the sequence number and name of its Section, and its When and What
-      parts, worded as in the Special Actions table.</p>
+      parts, worded as in the Special Actions table. A Block, Sensor or Signal is shown by its
+      display name, usually its user name, whichever name the Action was set up with.</p>
 
       <ul>
         <li><strong>Transit</strong> shows one Transit, or all of them.</li>
@@ -147,14 +148,16 @@
 
         <li><strong>Replace Name...</strong> replaces a Block, Sensor, Signal Head or Mast,
         TrainInfo file or Roster entry name in the selected Actions, or, with none selected, in all
-        the Actions shown, for example after a Sensor is replaced. Only the whole name is
-        replaced, and it asks before changing anything.</li>
+        the Actions shown, for example after a Sensor is replaced. Only a whole name is
+        replaced; for a Block, Sensor or Signal, its user name or system name will do. It asks
+        before changing anything.</li>
 
         <li>Copying and replacing leave a Transit in use by an Active Train as it is. Use Store
         to save the changes.</li>
 
         <li><strong>Refresh</strong> reads the Transits again, after a change. <strong>Copy</strong>
-        puts the rows shown on the clipboard, to paste into a spreadsheet or a message;
+        puts the rows shown on the clipboard as text, each Transit with its Sections and their
+        Actions' When and What, to paste into a message or a support question;
         <strong>Save as CSV...</strong> saves them to a file; <strong>Print...</strong> prints
         them.</li>
       </ul>

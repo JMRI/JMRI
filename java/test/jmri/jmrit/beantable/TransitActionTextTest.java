@@ -167,6 +167,35 @@ public class TransitActionTextTest {
         assertFalse(TransitActionText.replaceName(pause, "S1", "S9"), "a Pause names nothing");
     }
 
+    @Test
+    public void testNamesShownAsDisplayNames() {
+        jmri.Sensor platform = InstanceManager.getDefault(SensorManager.class).provideSensor("IS5");
+        platform.setUserName("Platform 1");
+        InstanceManager.getDefault(jmri.BlockManager.class).createNewBlock("IB7", "Station");
+        assertEquals("When Sensor \"Platform 1\" becomes ACTIVE", TransitActionText.whenText(
+                act(TransitSectionAction.SENSORACTIVE, TransitSectionAction.PAUSE, 0, 1, 0, "IS5", "", "")),
+                "a Sensor stored by its system name is shown by its user name");
+        assertEquals("On Entry to Block \"Station\"", TransitActionText.whenText(
+                act(TransitSectionAction.BLOCKENTRY, TransitSectionAction.PAUSE, 0, 1, 0, "IB7", "", "")));
+        assertEquals("Set Sensor \"Platform 1\" to ACTIVE", TransitActionText.whatText(
+                act(TransitSectionAction.ENTRY, TransitSectionAction.SETSENSORACTIVE, 0, 0, 0, "", "IS5", "")));
+        assertEquals("Set Sensor \"Gone\" to ACTIVE", TransitActionText.whatText(
+                act(TransitSectionAction.ENTRY, TransitSectionAction.SETSENSORACTIVE, 0, 0, 0, "", "Gone", "")),
+                "a name not found is shown as stored");
+    }
+
+    @Test
+    public void testReplaceNameByAnotherNameOfTheSameBean() {
+        jmri.Sensor platform = InstanceManager.getDefault(SensorManager.class).provideSensor("IS5");
+        platform.setUserName("Platform 1");
+        TransitSectionAction a = act(TransitSectionAction.SENSORACTIVE, TransitSectionAction.SETSENSORACTIVE,
+                0, 0, 0, "IS5", "Platform 1", "");
+        assertTrue(TransitActionText.replaceName(a, "Platform 1", "IS9"), "the user name finds a stored system name");
+        assertEquals("IS9", a.getStringWhen());
+        assertEquals("IS9", a.getStringWhat());
+        assertFalse(TransitActionText.replaceName(a, "Platform 1", "IS8"), "no longer uses it");
+    }
+
     @BeforeEach
     public void setUp(@TempDir File tempDir) throws IOException {
         JUnitUtil.setUp();

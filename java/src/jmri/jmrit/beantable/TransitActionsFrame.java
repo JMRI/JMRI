@@ -106,8 +106,9 @@ public class TransitActionsFrame extends JmriJFrame {
         refresh.addActionListener(e -> refresh());
         buttons.add(refresh);
         JButton copy = new JButton(rbx.getString("ActionsReportCopy"));
+        copy.setToolTipText(rbx.getString("ActionsReportCopyHint"));
         copy.addActionListener(e -> Toolkit.getDefaultToolkit().getSystemClipboard()
-                .setContents(new StringSelection(visibleText()), null));
+                .setContents(new StringSelection(reportText()), null));
         buttons.add(copy);
         buttons.add(new JButton(new JTableToCsvAction(rbx.getString("ActionsReportSaveCsv"), table, model,
                 "TransitActions.csv", new int[]{})));
@@ -232,6 +233,40 @@ public class TransitActionsFrame extends JmriJFrame {
                 sb.append(c == 0 ? "" : "\t").append(model.getValueAt(m, c));
             }
             sb.append('\n');
+        }
+        return sb.toString();
+    }
+
+    /**
+     * The rows shown as text to read, as Copy puts on the clipboard: each
+     * Transit, then each of its Sections with actions, then each action's When
+     * and What, and any problems.
+     *
+     * @return the text
+     */
+    String reportText() {
+        StringBuilder sb = new StringBuilder();
+        String transit = null;
+        String section = null;
+        for (int v = 0; v < table.getRowCount(); v++) {
+            Row r = model.rows.get(table.convertRowIndexToModel(v));
+            if (!r.transitName.equals(transit)) {
+                transit = r.transitName;
+                section = null;
+                sb.append(MessageFormat.format(rbx.getString("ActionsReportTextTransit"), transit)).append('\n');
+            }
+            String thisSection = r.sequence + ": " + r.section;
+            if (!thisSection.equals(section)) {
+                section = thisSection;
+                sb.append("  ").append(MessageFormat.format(rbx.getString("ActionsReportTextSection"),
+                        String.valueOf(r.sequence), r.section)).append('\n');
+            }
+            sb.append("    ").append(MessageFormat.format(rbx.getString("ActionsReportTextWhen"), r.when)).append('\n');
+            sb.append("    ").append(MessageFormat.format(rbx.getString("ActionsReportTextWhat"), r.what)).append('\n');
+            for (String p : r.problems) {
+                sb.append("    ").append(MessageFormat.format(rbx.getString("ActionsReportTextProblem"), p))
+                        .append('\n');
+            }
         }
         return sb.toString();
     }
