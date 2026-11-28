@@ -78,6 +78,26 @@ BB 10 00 54 &crarr;
         At the bottom of the LocoNet Simulator pane a checkbox allows activating (a limited set of) replies from
         virtual hardware. This option is primarily intended for developers.
 
+        <h2 id="commandStation">Simulated command station</h2>
+        <p>The LocoNet Simulator includes a simulated command station. It keeps loco slots and
+        answers the slot messages JMRI's LocoNet throttles send, as a Digitrax command station does,
+        so throttles, Dispatcher and Warrants use LocoNet slots in simulation as on a layout, and you
+        can watch the slot messages in the LocoNet Monitor or the Slot Monitor. The number of slots
+        is the connection's <strong>Maximum Number of Slots</strong> (at most 119). To go back to the
+        debug throttles the Simulator used before, which send nothing on LocoNet, set
+        <strong>Simulated command station</strong> in the Additional Connection Settings to
+        <strong>none: debug throttles</strong>.</p>
+
+        <h2 id="simulatedTrains">Simulated trains</h2>
+        <p><a href="../../tools/simulatedtrains/index.shtml">Simulated Trains</a> obey the simulated
+        command station's slots, as locos obey a command station, and report occupancy on the
+        LocoNet sensors (LS) as an occupancy detector such as a BDL168 does: with sensor input
+        reports on the simulated LocoNet, which you can see in the LocoNet Monitor. To leave the
+        Simulator out of simulated trains, set <strong>Simulated trains</strong> in the Additional
+        Connection Settings to <strong>leave this connection out</strong>. Without the simulated
+        command station, simulated trains obey the debug throttles, as they do the Internal
+        connection's.</p>
+
         <h2 id="SeeAlso">Documentation</h2>
 
         <h3>JMRI Help</h3>

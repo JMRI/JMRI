@@ -59,6 +59,49 @@ public class LnHexFilePort extends LnPortController implements Runnable {
                         new String[]{Bundle.getMessage("BeanStateUnknown"),
                             Bundle.getMessage("SensorStateInactive"),
                             Bundle.getMessage("SensorStateActive")}, true));
+        options.put(COMMAND_STATION_OPTION, // NOI18N
+                new Option(Bundle.getMessage("SimulatedCommandStation") + ":", // NOI18N
+                        new String[]{Bundle.getMessage("SimulatedCommandStationYes"),
+                            Bundle.getMessage("SimulatedCommandStationNo")}, true));
+        addSimulatedTrainsOption();
+    }
+
+    /**
+     * The name of the option for a simulated command station, whose slots the
+     * LocoNet throttles use; without one they are debug throttles, as before.
+     *
+     * @since 5.19.2
+     */
+    public static final String COMMAND_STATION_OPTION = "SimulatedCommandStation"; // NOI18N
+
+    /**
+     * @return true unless the option for a simulated command station is set
+     *         to leave it out
+     * @since 5.19.2
+     */
+    public boolean hasSimulatedCommandStation() {
+        String[] choices = getOptionChoices(COMMAND_STATION_OPTION);
+        return choices == null || choices[0].equals(getOptionState(COMMAND_STATION_OPTION));
+    }
+
+    private volatile LnSimulatedCommandStation commandStation = null;
+
+    /**
+     * @return the simulated command station, once the connection is
+     *         configured with one, or null
+     * @since 5.19.2
+     */
+    public LnSimulatedCommandStation getSimulatedCommandStation() {
+        return commandStation;
+    }
+
+    /**
+     * @param commandStation the simulated command station the connection is
+     *                       configured with
+     * @since 5.19.2
+     */
+    void setSimulatedCommandStation(LnSimulatedCommandStation commandStation) {
+        this.commandStation = commandStation;
     }
 
     /**
