@@ -133,7 +133,11 @@
 
             <li>To use JMRI without a physical SPROG connected, select "SPROG Simulator". The
             Simulator will mimic basic operation as either a Programmer (default) or a Command
-            Station. You can set the mode under Additional Connection Settings.</li>
+            Station. You can set the mode under Additional Connection Settings. In either mode,
+            <a href="../../tools/simulatedtrains/index.shtml">Simulated Trains</a> obey its
+            throttles; a SPROG has no detection, so give the Blocks Internal sensors. To leave the
+            Simulator out of simulated trains, set <strong>Simulated trains</strong> in the
+            Additional Connection Settings to <strong>leave this connection out</strong>.</li>
           </ul>
         </li>
 
