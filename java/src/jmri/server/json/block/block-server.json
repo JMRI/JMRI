@@ -39,14 +39,15 @@
         },
         "state": {
             "type": "integer",
-            "description": "The state of the block"
+            "description": "The state of the block: 0 if unknown, 2 if occupied, 4 if unoccupied, 8 if inconsistent"
         },
         "value": {
             "type": [
                 "string",
+                "object",
                 "null"
             ],
-            "description": "The block's value, can be idTag, Reporter, or text"
+            "description": "The block's value, usually the train in it: text, or an object if the value is an idTag, reporter or roster entry"
         },
         "allocatedValue": {
             "type": [
@@ -116,6 +117,7 @@
         "name",
         "userName",
         "comment",
+        "state",
         "sensor",
         "reporter",
         "value",
@@ -126,6 +128,7 @@
         "length",
         "permissive",
         "speedLimit",
-        "denied"
+        "denied",
+        "properties"
     ]
 }

@@ -98,6 +98,7 @@
         "trackColor",
         "occupiedColor",
         "extraColor",
-        "useExtraColor"
+        "useExtraColor",
+        "properties"
     ]
 }

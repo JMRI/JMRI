@@ -39,37 +39,8 @@
         },
         "status": {
             "type": "integer",
-            "description": "The occupancy status of the OBlock",
-            "enum": [
-                0,
-                1,
-                2,
-                4,
-                8,
-                16,
-                18,
-                20,
-                24,
-                32,
-                34,
-                36,
-                40,
-                64,
-                66,
-                68,
-                72,
-                128,
-                130,
-                132,
-                136
-            ]
-        },
-        "value": {
-            "type": [
-                "string",
-                "null"
-            ],
-            "description": "The OBlock's value, can be idTag, Reporter, or text"
+            "minimum": 0,
+            "description": "The status of the OBlock, a sum of flags: 2 occupied, 4 unoccupied, 16 allocated to a warrant, 32 a running train has reached it, 64 out of service, 128 track error, 256 dark (no detector); 0 if unknown. A dark block with no other flags is sent as 0"
         },
         "sensor": {
             "type": [
@@ -98,6 +69,10 @@
         "name",
         "userName",
         "comment",
-        "status"
+        "status",
+        "properties",
+        "sensor",
+        "warrant",
+        "train"
     ]
 }

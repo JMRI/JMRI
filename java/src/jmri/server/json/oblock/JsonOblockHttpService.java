@@ -7,12 +7,14 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import jmri.*;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
+import jmri.jmrit.logix.Warrant;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpService;
 import jmri.server.json.JsonRequest;
 import jmri.server.json.sensor.JsonSensor;
 
+import javax.annotation.Nonnull;
 import javax.servlet.http.HttpServletResponse;
 
 import static jmri.server.json.oblock.JsonOblock.OBLOCK;
@@ -60,8 +62,33 @@ public class JsonOblockHttpService extends JsonNamedBeanHttpService<OBlock> {
     }
 
     @Override
+    public JsonNode doPut(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
+        // check before the base class creates the OBlock; a new OBlock has no warrant
+        checkTrain(null, data, type, name, request);
+        return super.doPut(type, name, data, request);
+    }
+
+    @Nonnull
+    @Override
+    protected OBlock postNamedBean(OBlock bean, JsonNode data, String name, String type, JsonRequest request) throws JsonException {
+        // check before the base class changes the user name or comment; a missing OBlock is still a 404
+        if (bean != null) {
+            checkTrain(bean.getWarrant(), data, type, name, request);
+        }
+        return super.postNamedBean(bean, data, name, type, request);
+    }
+
+    private void checkTrain(Warrant warrant, JsonNode data, String type, String name, JsonRequest request) throws JsonException {
+        // the train name belongs to the warrant and can't change while it runs
+        if (!data.path(JsonOblock.TRAIN).isMissingNode() && (warrant == null || warrant.getRunMode() != Warrant.MODE_NONE)) {
+            throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorInvalidProperty", JsonOblock.TRAIN, type, name), request.id);
+        }
+    }
+
+    @Override
     public ObjectNode doPost(OBlock oblock, String name, String type, JsonNode data, JsonRequest request)
             throws JsonException {
+        Warrant warrant = oblock.getWarrant();
         if (!data.path(JSON.VALUE).isMissingNode()) {
             if (data.path(JSON.VALUE).isNull()) {
                 oblock.setValue(null);
@@ -87,10 +114,10 @@ public class JsonOblockHttpService extends JsonNamedBeanHttpService<OBlock> {
                 oblock.setState(OBlock.RUNNING);
                 break;
             case JSON.OUT_OF_SERVICE:
-                oblock.setState(OBlock.OUT_OF_SERVICE);
+                oblock.setOutOfService(true);
                 break;
             case JSON.TRACK_ERROR:
-                oblock.setState(OBlock.TRACK_ERROR);
+                oblock.setError(true);
                 break;
             default:
                 throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorUnknownState", OBLOCK, status),
@@ -112,9 +139,8 @@ public class JsonOblockHttpService extends JsonNamedBeanHttpService<OBlock> {
                 }
             }
         }
-        if (!data.path(JsonOblock.TRAIN).isMissingNode()) {
-            String text = data.path(JsonOblock.TRAIN).asText(oblock.getBlockSpeed());
-            oblock.getWarrant().setTrainName(text);
+        if (warrant != null && !data.path(JsonOblock.TRAIN).isMissingNode()) {
+            warrant.setTrainName(data.path(JsonOblock.TRAIN).isNull() ? "" : data.path(JsonOblock.TRAIN).asText());
         }
         // TODO add Train, Warrant
         return this.doGet(oblock, name, type, request);
