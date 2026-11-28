@@ -13,8 +13,11 @@
             "description": "If present, set the user name of the light"
         },
         "comment": {
-            "type": "string",
-            "description": "If present, set the comment for the light"
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "If present, set the comment for the light; null clears it"
         },
         "state": {
             "type": "integer",

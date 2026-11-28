@@ -37,6 +37,17 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<IdTag, JsonIdTagHttpService> {
 
+    @Test
+    public void testClientSchema() throws JsonException {
+        IdTag idTag1 = InstanceManager.getDefault(IdTagManager.class).provideIdTag("ID1");
+        idTag1.setComment("a comment");
+        // null clears the comment
+        JsonNode data = mapper.createObjectNode().put(JSON.NAME, "ID1").putNull(JSON.COMMENT);
+        validateData(JsonIdTag.IDTAG, data, false);
+        service.doPost(JsonIdTag.IDTAG, "ID1", data, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        assertNull(idTag1.getComment());
+    }
+
     @BeforeEach
     @Override
     public void setUp() throws Exception {

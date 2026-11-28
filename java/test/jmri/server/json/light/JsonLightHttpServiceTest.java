@@ -134,6 +134,17 @@ public class JsonLightHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<L
         this.validate(result);
     }
 
+    @Test
+    public void testClientSchema() throws JsonException {
+        Light light1 = InstanceManager.getDefault(LightManager.class).provideLight("IL1");
+        light1.setComment("a comment");
+        // null clears the comment
+        JsonNode data = mapper.createObjectNode().put(JSON.NAME, "IL1").putNull(JSON.COMMENT);
+        validateData(JsonLight.LIGHT, data, false);
+        service.doPost(JsonLight.LIGHT, "IL1", data, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        assertNull(light1.getComment());
+    }
+
     @BeforeEach
     @Override
     public void setUp() throws Exception {

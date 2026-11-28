@@ -13,12 +13,18 @@
             "description": "If present, set the user name of the memory"
         },
         "comment": {
-            "type": "string",
-            "description": "If present, set the comment for the memory"
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "If present, set the comment for the memory; null clears it"
         },
         "value": {
-            "type": "string",
-            "description": "If present, sets the value of the memory"
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "If present, sets the value of the memory; null clears it"
         }
     },
     "additionalProperties": false,

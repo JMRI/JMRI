@@ -212,6 +212,17 @@ public class JsonSensorHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
         assertEquals(2, result.size());
     }
 
+    @Test
+    public void testClientSchema() throws JsonException {
+        Sensor sensor1 = InstanceManager.getDefault(SensorManager.class).provideSensor("IS1");
+        sensor1.setComment("a comment");
+        // null clears the comment
+        JsonNode data = mapper.createObjectNode().put(JSON.NAME, "IS1").putNull(JSON.COMMENT);
+        validateData(JsonSensor.SENSOR, data, false);
+        service.doPost(JsonSensor.SENSOR, "IS1", data, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        assertNull(sensor1.getComment());
+    }
+
     @BeforeEach
     @Override
     public void setUp() throws Exception {

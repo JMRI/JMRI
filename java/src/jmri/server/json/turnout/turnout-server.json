@@ -82,6 +82,8 @@
         "inverted",
         "state",
         "feedbackMode",
-        "feedbackModes"
+        "feedbackModes",
+        "properties",
+        "sensor"
     ]
 }

@@ -126,10 +126,11 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService<Turnout> {
                 turnout.provideFeedbackSensor(null, number);
             } else {
                 Sensor sensor = null;
+                String sensorName = data.isObject() ? data.path(JSON.NAME).asText() : data.asText();
                 if (data.isTextual()) {
-                    sensor = sensorService.getNamedBean(SENSOR, data.asText(), mapper.nullNode(), request);
+                    sensor = sensorService.getNamedBean(SENSOR, sensorName, mapper.nullNode(), request);
                 } else if (data.isObject()) {
-                    sensor = sensorService.getNamedBean(SENSOR, data.path(JSON.NAME).asText(), data, request);
+                    sensor = sensorService.getNamedBean(SENSOR, sensorName, data, request);
                 } else {
                     throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorInvalidProperty", SENSOR, TURNOUT, turnout.getSystemName()), request.id);
                 }
@@ -137,11 +138,35 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService<Turnout> {
                     turnout.provideFeedbackSensor(sensor.getSystemName(), number);
                 } else {
                     throw new JsonException(404,
-                            Bundle.getMessage(request.locale, "ErrorNotFound", SENSOR, data.asText()), request.id);
+                            Bundle.getMessage(request.locale, "ErrorNotFound", SENSOR, sensorName), request.id);
                 }
             }
         } catch (JmriException ex) {
             throw new JsonException(500, Bundle.getMessage(request.locale, "ErrorInternal", TURNOUT), request.id);
+        }
+    }
+
+    @Override
+    public JsonNode doPut(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
+        // check before the base class creates the turnout
+        checkSensorCount(data, type, name, request);
+        return super.doPut(type, name, data, request);
+    }
+
+    @Nonnull
+    @Override
+    protected Turnout postNamedBean(Turnout bean, JsonNode data, String name, String type, JsonRequest request) throws JsonException {
+        // check before the base class changes the user name or comment; a missing turnout is still a 404
+        if (bean != null) {
+            checkSensorCount(data, type, name, request);
+        }
+        return super.postNamedBean(bean, data, name, type, request);
+    }
+
+    private void checkSensorCount(JsonNode data, String type, String name, JsonRequest request) throws JsonException {
+        // a turnout has at most two feedback sensors
+        if (data.path(SENSOR).isArray() && data.path(SENSOR).size() > 2) {
+            throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorInvalidProperty", SENSOR, type, name), request.id);
         }
     }
 

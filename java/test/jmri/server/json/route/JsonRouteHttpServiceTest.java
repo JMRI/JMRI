@@ -215,6 +215,17 @@ public class JsonRouteHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<R
         assertEquals(2, result.size());
     }
 
+    @Test
+    public void testClientSchema() throws JsonException {
+        Route route1 = InstanceManager.getDefault(RouteManager.class).provideRoute("IO1", "Route1");
+        route1.setComment("a comment");
+        // null clears the comment
+        JsonNode data = mapper.createObjectNode().put(JSON.NAME, "IO1").putNull(JSON.COMMENT);
+        validateData(JSON.ROUTE, data, false);
+        service.doPost(JSON.ROUTE, "IO1", data, new JsonRequest(locale, JSON.V5, JSON.POST, 42));
+        assertNull(route1.getComment());
+    }
+
     @BeforeEach
     @Override
     public void setUp() throws Exception {

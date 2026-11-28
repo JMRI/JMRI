@@ -689,6 +689,10 @@
         <ul>
             <li>Web panels: a panel showing a sensor as text no longer
                 reloads in the browser each time the sensor changes.</li>
+            <li>JSON server: the JSON schemas for sensors, lights, memories,
+                routes, idTags and turnouts now match what the server sends
+                and accepts. Sending a turnout more than two feedback sensors
+                now gets a clear error instead of a server error.</li>
             <li>JSON server: signal heads and signal masts now accept
                 <code>lit</code> and <code>held</code> as true/false, the
                 same way the server sends them. Over a WebSocket or JSON

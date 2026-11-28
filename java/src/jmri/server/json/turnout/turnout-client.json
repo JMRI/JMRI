@@ -13,8 +13,11 @@
             "description": "If present, set the user name of the turnout"
         },
         "comment": {
-            "type": "string",
-            "description": "If present, set the comment for the turnout"
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "If present, set the comment for the turnout; null clears it"
         },
         "inverted": {
             "type": "boolean",
@@ -36,6 +39,7 @@
         "sensor": {
             "type": "array",
             "description": "The feedback sensor names for the turnout in order",
+            "maxItems": 2,
             "items": {
                 "type": [
                     "string",

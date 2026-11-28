@@ -13,12 +13,15 @@
             "description": "If present, set the user name of the route"
         },
         "comment": {
-            "type": "string",
-            "description": "If present, set the comment for the route"
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "If present, set the comment for the route; null clears it"
         },
         "state": {
             "type": "integer",
-            "description": "If present, sets the state of the route",
+            "description": "If present, 2 (active) or 8 (toggle) sets the route; 0 and 4 do nothing",
             "enum": [
                 0,
                 2,

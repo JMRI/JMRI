@@ -13,8 +13,11 @@
             "description": "If present, set the user name of the sensor"
         },
         "comment": {
-            "type": "string",
-            "description": "If present, set the comment for the sensor"
+            "type": [
+                "string",
+                "null"
+            ],
+            "description": "If present, set the comment for the sensor; null clears it"
         },
         "inverted": {
             "type": "boolean",

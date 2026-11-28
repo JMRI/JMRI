@@ -58,6 +58,7 @@
         "userName",
         "comment",
         "inverted",
-        "state"
+        "state",
+        "properties"
     ]
 }
