@@ -440,7 +440,8 @@
     <h3>Control Panel Editor</h3>
         <a id="CPE" name="CPE"></a>
         <ul>
-            <li></li>
+            <li>Include the <strong>Edit Memory Icon...</strong> menu item for <strong>Display Memory</strong>
+            context popups.</li>
         </ul>
         <h4>Circuit Builder</h4>
             <a id="CPE-CB" name="CPE-CB"></a>
