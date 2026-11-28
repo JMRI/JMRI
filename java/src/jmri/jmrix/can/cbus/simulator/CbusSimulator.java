@@ -147,9 +147,25 @@ public class CbusSimulator implements jmri.Disposable {
         return reporterOutput;
     }
 
+    /**
+     * Simulated turnout motors with feedback on this connection: off until
+     * enabled. Made when first asked for, and kept until disposed.
+     *
+     * @return the turnout feedback
+     * @since 5.19.2
+     */
+    @Nonnull
+    public synchronized CbusSimulatedTurnoutFeedback getTurnoutFeedback() {
+        if (turnoutFeedback == null) {
+            turnoutFeedback = new CbusSimulatedTurnoutFeedback(memo);
+        }
+        return turnoutFeedback;
+    }
+
     private CbusSimulatedSpeedSource speedSource;
     private CbusSimulatedSensorOutput sensorOutput;
     private CbusSimulatedReporterOutput reporterOutput;
+    private CbusSimulatedTurnoutFeedback turnoutFeedback;
 
     public CbusDummyCS getNewCS(){
         CbusDummyCS newcs = new CbusDummyCS(memo);
@@ -162,6 +178,44 @@ public class CbusSimulator implements jmri.Disposable {
         _evResponseArr.add(newcs);
         return newcs;
     }
+
+    /**
+     * The link between JMRI and the simulated modules: the interface and the
+     * bus, and the time frames take through them. Made when first asked for;
+     * off until an interface is chosen.
+     *
+     * @return the link
+     * @since 5.19.2
+     */
+    @Nonnull
+    public synchronized CbusSimulatedLink getLink() {
+        if (link == null) {
+            link = new CbusSimulatedLink(memo);
+        }
+        return link;
+    }
+
+    /**
+     * @return the link, or null if none has been asked for
+     */
+    @javax.annotation.CheckForNull
+    synchronized CbusSimulatedLink getLinkIfMade() {
+        return link;
+    }
+
+    /**
+     * Make a Link Timing menu for the simulator window: one choice for each
+     * interface.
+     *
+     * @return the menu
+     * @since 5.19.2
+     */
+    @Nonnull
+    public javax.swing.JMenu makeLinkMenu() {
+        return new jmri.jmrit.simulation.link.swing.SimulatedLinkMenu(getLink().getLink());
+    }
+
+    private CbusSimulatedLink link;
 
     /**
      * Disposes of all simulated objects.
@@ -180,6 +234,10 @@ public class CbusSimulator implements jmri.Disposable {
             if (reporterOutput != null) {
                 reporterOutput.dispose();
             }
+            if (turnoutFeedback != null) {
+                CbusSimulatedTurnoutFeedback f = turnoutFeedback;
+                jmri.util.ThreadingUtil.runOnLayout(f::dispose);
+            }
         }
         log.info("Stopping {} Simulations",_csArr.size()+_ndArr.size()+_evResponseArr.size());
         for ( CbusDummyCS cs : _csArr ) {
@@ -197,6 +255,10 @@ public class CbusSimulator implements jmri.Disposable {
         }
         _evResponseArr.clear();
 
+        CbusSimulatedLink l = getLinkIfMade();
+        if (l != null) {
+            l.dispose();
+        }
     }
 
     private static final Logger log = LoggerFactory.getLogger(CbusSimulator.class);

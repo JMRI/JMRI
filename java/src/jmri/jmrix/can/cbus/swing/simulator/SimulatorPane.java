@@ -126,6 +126,17 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
             _disposeSimOnWindowClose = closeSimOnDispose.isSelected();
         });
 
+        JCheckBoxMenuItem turnoutFeedback = new JCheckBoxMenuItem(Bundle.getMessage("SimTurnoutFeedback"));
+        if (_sim != null) {
+            turnoutFeedback.setToolTipText(Bundle.getMessage("SimTurnoutFeedbackTip",
+                _sim.getTurnoutFeedback().getTravelTimeMs()));
+            turnoutFeedback.setSelected(_sim.getTurnoutFeedback().isEnabled());
+            turnoutFeedback.addActionListener ((ActionEvent e) ->
+                _sim.getTurnoutFeedback().setEnabled(turnoutFeedback.isSelected()));
+        } else {
+            turnoutFeedback.setEnabled(false); // no simulator connection yet
+        }
+
         JMenuItem newCs = new JMenuItem(Bundle.getMessage("CommandStation"));
         newCs.addActionListener ((ActionEvent e) -> {
             CsPane thispane = new CsPane(_sim.getNewCS());
@@ -149,12 +160,16 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
 
 
         optionsMenu.add(closeSimOnDispose);
+        optionsMenu.add(turnoutFeedback);
         addMenu.add(newCs);
         addMenu.add(newEv);
         addMenu.add(newNd);
 
         menuList.add(optionsMenu);
         menuList.add(addMenu);
+        if (_sim != null) {
+            menuList.add(_sim.makeLinkMenu());
+        }
         return menuList;
     }
 

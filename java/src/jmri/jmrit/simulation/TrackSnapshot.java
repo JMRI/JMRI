@@ -318,6 +318,23 @@ final class TrackSnapshot {
     private final Map<TrackSegment, Segment> segments = new HashMap<>();
     private final Map<PositionablePoint, Point> points = new HashMap<>();
     private final Map<LayoutTrack, Node> nodes = new HashMap<>();
+
+    /**
+     * @return the turnouts of the turnouts, crossovers and slips drawn, each
+     *         once
+     */
+    @Nonnull
+    List<Turnout> turnouts() {
+        java.util.Set<Turnout> found = new java.util.LinkedHashSet<>();
+        for (Node n : nodes.values()) {
+            for (Turnout t : new Turnout[]{n.turnout, n.second, n.turnoutB}) {
+                if (t != null) {
+                    found.add(t);
+                }
+            }
+        }
+        return new ArrayList<>(found);
+    }
     private final List<LayoutTrack> pieces = new ArrayList<>();
     private final Map<LayoutTrack, LayoutEditor> panels = new HashMap<>();
     private final Map<Block, BlockData> blocks = new HashMap<>();

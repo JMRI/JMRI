@@ -63,6 +63,25 @@
         <li>Delay - Delay in simulation responding to requests ( ms )</li>
       </ul>
 
+      <h2 id="link">Link Timing</h2>
+
+      <p><span class="since">since 5.19.2</span> The Link Timing menu chooses the interface
+      between JMRI and the simulated modules. With None, the default, every frame arrives at once,
+      as before. With an interface chosen, each frame takes the time a real one would:</p>
+
+      <ul>
+        <li>through the interface, which adds its own delay (CANUSB4 about 1 ms each way, a network
+        gateway about 3 ms; these are typical figures, not measurements of one unit);</li>
+
+        <li>over the bus, one frame at a time at 125 kbit/s, about 0.8 ms for a five-byte frame,
+        the frame with the lowest CAN identifier going first when several are waiting.</li>
+      </ul>
+
+      <p>A frame JMRI sends crosses the bus once, however many simulated modules hear it. The
+      Delay of each simulated object still applies, on top of the link. This shows the time a
+      command takes to reach the layout, and a sensor's report to reach JMRI, for example when
+      trying how far a train runs after being told to stop.</p>
+
       <h2 id="cs">Command Stations</h2>
 
       <p>You can select between a standard command station, along with disabling the command
@@ -104,6 +123,26 @@
 
         <li>&gt;0 : Only responds to requests for a particular node</li>
       </ul>
+
+      <h2 id="turnouts">Turnout Motors with Feedback</h2>
+
+      <p><span class="since">since 5.19.2</span> With Options &gt; Turnout motors answer with
+      feedback selected, the simulator answers each command to a CBUS turnout of this connection,
+      from JMRI or from another node on the bus, as a turnout motor with feedback would. After
+      300 ms, the turnout's feedback sensors report the new position:</p>
+
+      <ul>
+        <li>One sensor: active when thrown, inactive when closed.</li>
+        <li>Two sensors: the first active and the second inactive when thrown, the other way
+        round when closed.</li>
+      </ul>
+
+      <p>Only feedback sensors that are CBUS sensors of this connection are reported. Turnouts
+      with other feedback modes get no answer. It is off by default.</p>
+
+      <p>On any connection, LogixNG's <a href=
+      "../../../../../../../html/tools/logixng/reference/chapter5.shtml#simfeedback">Simulate turnout
+      feedback</a> action answers turnout commands with feedback from within JMRI instead.</p>
 
       <h2 id="nodes">Nodes</h2>
 
