@@ -15,6 +15,7 @@ import javax.swing.JRadioButtonMenuItem;
 
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
+import jmri.NamedBean.DisplayOptions;
 import jmri.SignalHead;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.SignalHeadItemPanel;
@@ -175,10 +176,13 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     @Override
     public @Nonnull
     String getNameString() {
-        if (namedHead == null) {
-            return Bundle.getMessage("NotConnected");
+        String name;
+        if (getSignalHead() == null) {
+            name = Bundle.getMessage("NotConnected");
+        } else {
+            name = getSignalHead().getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
         }
-        return namedHead.getName(); // short NamedIcon name
+        return name;
     }
 
     /**
